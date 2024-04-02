@@ -80,46 +80,16 @@ else
 fi
 
 # Default values for running copy-code directly from host
-repo_bindings="-v ${postprocessing_target}:/workspace"
 repo_workspace="/workspace"
 preprocessed_libraries_binding="${owlbot_cli_source_folder}"
 
-# When running docker inside docker, we run into the issue of volume bindings
-# being mapped from the host machine to the child container (instead of the
-# parent container to child container) because we bind the `docker.sock` socket
-# to the parent container (i.e. docker calls use the host's filesystem context)
-# see https://serverfault.com/a/819371
-# We solve this by referencing environment variables that will be
-# set to produce the correct volume mapping.
-#
-# The workflow is: to check if we are in a docker container (via passed env var)
-# and use managed volumes (docker volume create) instead of bindings
-# (-v /path:/other-path). The volume names are also received as env vars.
+pushd "${postprocessing_target}"
 
-if [[ -n "${RUNNING_IN_DOCKER}" ]]; then
-  set -u # temporarily fail on unset variables
-  repo_bindings="${REPO_BINDING_VOLUMES}"
-  set +u
-  library_name=$(echo "${postprocessing_target}" | rev | cut -d'/' -f1 | rev)
-  repo_workspace="/workspace/"
-  if [[ "${is_monorepo}" == "true" ]]; then
-    monorepo_name=$(echo "${postprocessing_target}" | rev | cut -d'/' -f2 | rev)
-    repo_workspace+="${monorepo_name}/"
-  fi
-  repo_workspace+="${library_name}"
-fi
-
-docker run --rm \
-  --user "$(id -u)":"$(id -g)" \
-  ${repo_bindings} \
-  -v "/tmp:/tmp" \
-  -w "${repo_workspace}" \
-  --env HOME=/tmp \
-  gcr.io/cloud-devrel-public-resources/owlbot-cli@"${owlbot_cli_image_sha}" \
-  copy-code \
+owl-bot copy-code \
   --source-repo-commit-hash=none \
-  --source-repo="${preprocessed_libraries_binding}" \
+  --source-repo="${owlbot_cli_source_folder}" \
   --config-file="${owlbot_yaml_relative_path}"
+
 
 # clean the custom owlbot yaml
 if [[ "${is_monorepo}" == "true" ]]; then
@@ -128,6 +98,5 @@ fi
 
 # run the postprocessor
 echo 'running owl-bot post-processor'
-pushd "${postprocessing_target}"
 bash "${scripts_root}/owlbot/bin/entrypoint.sh" "${scripts_root}" "${versions_file}" "${configuration_yaml_path}"
 popd # postprocessing_target
