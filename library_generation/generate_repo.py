@@ -25,12 +25,12 @@ def generate_from_yaml(
     target_library_names: list[str] = None,
 ) -> None:
     """
-    Parses a config yaml and generates libraries via
+    Based on the generation config, generates libraries via
     generate_composed_library.py
-    :param config:
-    :param repository_path: If specified, the generated files will be sent to
-    this location. If not specified, the repository will be generated to the
-    current working directory.
+
+    :param config: a GenerationConfig object.
+    :param repository_path: The repository path to which the generated files
+    will be sent.
     :param target_library_names: a list of libraries to be generated.
     If specified, only the library whose library_name is in
     target-library-names will be generated.

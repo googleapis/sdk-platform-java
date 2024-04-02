@@ -25,16 +25,35 @@ from library_generation.utils.commit_message_formatter import wrap_override_comm
 def generate_pr_descriptions(
     config: GenerationConfig,
     baseline_commit: str,
+    description_path: str,
     repo_url: str = "https://github.com/googleapis/googleapis.git",
-) -> str:
+) -> None:
+    """
+    Generate pull request description from baseline_commit (exclusive) to the
+    googleapis commit (inclusive) in the given generation config.
+
+    :param config: a GenerationConfig object. The googleapis commit in this
+    configuration is the latest commit, inclusively, from which the commit
+    message is considered.
+    :param baseline_commit: The baseline (oldest) commit, exclusively, from
+    which the commit message is considered. This commit should be an ancestor
+    of googleapis commit in configuration.
+    :param description_path:
+    :param repo_url: the GitHub repository from which retrieves the commit
+    history.
+    :return:
+    """
     paths = config.get_proto_path_to_library_name()
-    return __get_commit_messages(
+    description = __get_commit_messages(
         repo_url=repo_url,
         latest_commit=config.googleapis_commitish,
         baseline_commit=baseline_commit,
         paths=paths,
         is_monorepo=config.is_monorepo,
     )
+
+    with open(f"{description_path}/pr_description.txt", "w+") as f:
+        f.write(description)
 
 
 def __get_commit_messages(

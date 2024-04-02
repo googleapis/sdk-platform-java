@@ -33,7 +33,10 @@ def main(ctx):
     required=True,
     type=str,
     help="""
-    
+    Path to generation_config.yaml that contains the metadata about
+    library generation.
+    The googleapis commit in the configuration is the baseline commit,
+    exclusively, from which the commit message is considered.
     """,
 )
 @click.option(
@@ -44,16 +47,19 @@ def main(ctx):
     Path to generation_config.yaml that contains the metadata about
     library generation.
     The googleapis commit in the configuration is the latest commit,
-    inclusively, from which the commit message is considered.
+    inclusively, to which the commit message is considered.
     """,
 )
 @click.option(
     "--repository-path",
     type=str,
-    default="https://github.com/googleapis/googleapis.git",
+    default=".",
     show_default=True,
     help="""
-    
+    The repository path to which the generated files
+    will be sent.
+    If not specified, the repository will be generated to the current working
+    directory.
     """,
 )
 def generate(
@@ -80,6 +86,7 @@ def generate(
     generate_pr_descriptions(
         config=config_change.latest_config,
         baseline_commit=config_change.baseline_config.googleapis_commitish,
+        description_path=repository_path,
     )
 
 
