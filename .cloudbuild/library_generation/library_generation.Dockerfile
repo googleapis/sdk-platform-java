@@ -14,7 +14,13 @@
 
 # build from the root of this repo:
 FROM gcr.io/cloud-devrel-public-resources/python
+
 ARG SYNTHTOOL_COMMITTISH=6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
+ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
+
+# build the image using bash
+RUN echo ~
+SHELL ["/bin/bash", "--login", "-c"]
 
 # install OS tools
 RUN apt-get update && apt-get install -y \
@@ -25,12 +31,28 @@ RUN apt-get update && apt-get install -y \
 COPY library_generation /src
 
 # install synthtool
-WORKDIR /synthtool
+WORKDIR /tools
 RUN git clone https://github.com/googleapis/synthtool
-WORKDIR /synthtool/synthtool
+WORKDIR /tools/synthtool
 RUN git checkout "${SYNTHTOOL_COMMITTISH}"
 RUN python3 -m pip install --no-deps -e .
 RUN python3 -m pip install -r requirements.in
+
+# install node
+ENV NODE_VERSION 20.12.0
+# Install nvm with node and npm
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+RUN ls /root/.nvm
+ENV PATH=${PATH}:/root/.nvm/versions/node/v${NODE_VERSION}/bin
+RUN node --version
+RUN npm --version
+
+# install the owl-bot CLI
+WORKDIR /tools
+RUN git clone https://github.com/googleapis/repo-automation-bots
+WORKDIR /tools/repo-automation-bots/packages/owl-bot
+RUN npm i && npm run compile && npm link
+RUN owl-bot copy-code --version
 
 
 # use python 3.11 (the base image has several python versions; here we define the default one)
