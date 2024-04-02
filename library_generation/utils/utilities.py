@@ -68,7 +68,7 @@ def sh_util(statement: str, **kwargs) -> str:
         [
             "bash",
             "-exc",
-            f"source library_generation/utils/utilities.sh && {statement}",
+            f"source {script_dir}/utilities.sh && {statement}",
         ],
         **kwargs,
     ) as proc:
