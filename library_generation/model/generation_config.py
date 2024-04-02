@@ -30,7 +30,6 @@ class GenerationConfig:
         gapic_generator_version: str,
         googleapis_commitish: str,
         owlbot_cli_image: str,
-        synthtool_commitish: str,
         template_excludes: List[str],
         path_to_yaml: str,
         libraries: List[LibraryConfig],
@@ -40,7 +39,6 @@ class GenerationConfig:
         self.gapic_generator_version = gapic_generator_version
         self.googleapis_commitish = googleapis_commitish
         self.owlbot_cli_image = owlbot_cli_image
-        self.synthtool_commitish = synthtool_commitish
         self.template_excludes = template_excludes
         self.path_to_yaml = path_to_yaml
         self.libraries = libraries
@@ -106,7 +104,6 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         protobuf_version=__optional(config, "protobuf_version", None),
         googleapis_commitish=__required(config, "googleapis_commitish"),
         owlbot_cli_image=__required(config, "owlbot_cli_image"),
-        synthtool_commitish=__required(config, "synthtool_commitish"),
         template_excludes=__required(config, "template_excludes"),
         path_to_yaml=path_to_yaml,
         libraries=parsed_libraries,

@@ -40,7 +40,6 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             owlbot_cli_image="",
-            synthtool_commitish="",
             template_excludes=[],
             path_to_yaml="",
             grpc_version="",
@@ -51,7 +50,6 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             owlbot_cli_image="",
-            synthtool_commitish="",
             template_excludes=[],
             path_to_yaml="",
             grpc_version="",
@@ -102,18 +100,6 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         config_change = result[ChangeType.REPO_LEVEL_CHANGE][0]
         self.assertEqual("owlbot_cli_image", config_change.changed_param)
         self.assertEqual("image_version_456", config_change.latest_value)
-
-    def test_compare_config_synthtool_update(self):
-        self.baseline_config.synthtool_commitish = "commit123"
-        self.latest_config.synthtool_commitish = "commit456"
-        result = compare_config(
-            baseline_config=self.baseline_config,
-            latest_config=self.latest_config,
-        )
-        self.assertTrue(len(result[ChangeType.REPO_LEVEL_CHANGE]) == 1)
-        config_change = result[ChangeType.REPO_LEVEL_CHANGE][0]
-        self.assertEqual("synthtool_commitish", config_change.changed_param)
-        self.assertEqual("commit456", config_change.latest_value)
 
     def test_compare_protobuf_update(self):
         self.baseline_config.protobuf_version = "3.25.2"

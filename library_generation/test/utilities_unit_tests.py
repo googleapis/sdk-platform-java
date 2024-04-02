@@ -146,7 +146,6 @@ class UtilitiesTest(unittest.TestCase):
                 f"{test_config_dir}/config_without_googleapis.yaml",
             ),
             ("owlbot_cli_image", f"{test_config_dir}/config_without_owlbot.yaml"),
-            ("synthtool_commitish", f"{test_config_dir}/config_without_synthtool.yaml"),
             (
                 "template_excludes",
                 f"{test_config_dir}/config_without_temp_excludes.yaml",
@@ -171,9 +170,6 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual(
             "sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409",
             config.owlbot_cli_image,
-        )
-        self.assertEqual(
-            "6612ab8f3afcd5e292aecd647f0fa68812c9f5b5", config.synthtool_commitish
         )
         self.assertEqual(
             [
@@ -526,7 +522,6 @@ class UtilitiesTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             owlbot_cli_image="",
-            synthtool_commitish="",
             template_excludes=[
                 ".github/*",
                 ".kokoro/*",

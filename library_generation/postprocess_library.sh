@@ -16,11 +16,9 @@
 # 4 - owlbot_cli_source_folder: alternative folder with a structure exactly like
 # googleapis-gen. It will be used instead of preprocessed_sources_path if
 # 5 - owlbot_cli_image_sha: SHA of the image containing the OwlBot CLI
-# 6 - synthtool_commitish: Commit SHA of the synthtool repo
-# provided
-# 7 - is_monorepo: whether this library is a monorepo, which implies slightly
+# 6 - is_monorepo: whether this library is a monorepo, which implies slightly
 # different logic
-# 8 - configuration_yaml_path: path to the configuration yaml containing library
+# 7 - configuration_yaml_path: path to the configuration yaml containing library
 # generation information for this library
 set -exo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
@@ -30,13 +28,12 @@ preprocessed_sources_path=$2
 versions_file=$3
 owlbot_cli_source_folder=$4
 owlbot_cli_image_sha=$5
-synthtool_commitish=$6
-is_monorepo=$7
-configuration_yaml_path=$8
+is_monorepo=$6
+configuration_yaml_path=$7
 
 source "${scripts_root}"/utilities.sh
 
-declare -a required_inputs=("postprocessing_target" "versions_file" "owlbot_cli_image_sha" "synthtool_commitish" "is_monorepo")
+declare -a required_inputs=("postprocessing_target" "versions_file" "owlbot_cli_image_sha" "is_monorepo")
 for required_input in "${required_inputs[@]}"; do
   if [[ -z "${!required_input}" ]]; then
     echo "missing required ${required_input} argument, please specify one"
@@ -128,24 +125,6 @@ docker run --rm \
 if [[ "${is_monorepo}" == "true" ]]; then
   rm "${postprocessing_target}/.OwlBot.hermetic.yaml"
 fi
-
-# we clone the synthtool library and manually build it
-mkdir -p /tmp/synthtool
-pushd /tmp/synthtool
-
-if [ ! -d "synthtool" ]; then
-  git clone https://github.com/googleapis/synthtool.git
-fi
-git config --global --add safe.directory /tmp/synthtool/synthtool
-pushd "synthtool"
-
-git fetch --all
-git reset --hard "${synthtool_commitish}"
-
-python3 -m pip install -e .
-python3 -m pip install -r requirements.in
-popd # synthtool
-popd # temp dir
 
 # run the postprocessor
 echo 'running owl-bot post-processor'
