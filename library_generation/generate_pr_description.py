@@ -21,7 +21,6 @@ from git import Commit, Repo
 from library_generation.model.generation_config import from_yaml
 from library_generation.utils.proto_path_utils import find_versioned_proto_path
 from library_generation.utils.commit_message_formatter import format_commit_message
-from library_generation.utils.proto_path_utils import get_proto_paths
 from library_generation.utils.commit_message_formatter import wrap_override_commit
 
 
@@ -86,7 +85,7 @@ def generate_pr_descriptions(
     baseline_commit: str,
 ) -> str:
     config = from_yaml(generation_config_yaml)
-    paths = get_proto_paths(config)
+    paths = config.get_proto_path_to_library_name()
     return __get_commit_messages(
         repo_url=repo_url,
         latest_commit=config.googleapis_commitish,
