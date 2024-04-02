@@ -157,7 +157,7 @@ class IntegrationTest(unittest.TestCase):
                 )
                 print("  pom.xml comparison succeed.")
                 # compare PR description
-                description_file = f"{config_dir}/{repo}/pr_description.txt"
+                description_file = f"{output_dir}/{repo}/pr_description.txt"
                 self.assertTrue(
                     cmp(
                         f"{config_dir}/{repo}/pr-description-golden.txt",

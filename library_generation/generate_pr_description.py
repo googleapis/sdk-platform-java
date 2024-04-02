@@ -52,7 +52,9 @@ def generate_pr_descriptions(
         is_monorepo=config.is_monorepo,
     )
 
-    with open(f"{description_path}/pr_description.txt", "w+") as f:
+    description_file = f"{description_path}/pr_description.txt"
+    print(f"Writing pull request description to {description_file}")
+    with open(description_file, "w+") as f:
         f.write(description)
 
 
