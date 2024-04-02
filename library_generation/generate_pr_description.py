@@ -15,76 +15,18 @@
 import os
 import shutil
 from typing import Dict
-
-import click
 from git import Commit, Repo
-from library_generation.model.generation_config import from_yaml
+from library_generation.model.generation_config import GenerationConfig
 from library_generation.utils.proto_path_utils import find_versioned_proto_path
 from library_generation.utils.commit_message_formatter import format_commit_message
 from library_generation.utils.commit_message_formatter import wrap_override_commit
 
 
-@click.group(invoke_without_command=False)
-@click.pass_context
-@click.version_option(message="%(version)s")
-def main(ctx):
-    pass
-
-
-@main.command()
-@click.option(
-    "--generation-config-yaml",
-    required=True,
-    type=str,
-    help="""
-    Path to generation_config.yaml that contains the metadata about
-    library generation.
-    The googleapis commit in the configuration is the latest commit,
-    inclusively, from which the commit message is considered.
-    """,
-)
-@click.option(
-    "--baseline-commit",
-    required=True,
-    type=str,
-    help="""
-    The baseline (oldest) commit, exclusively, from which the commit message is
-    considered.
-    This commit should be an ancestor of googleapis commit in configuration.
-    """,
-)
-@click.option(
-    "--repo-url",
-    type=str,
-    default="https://github.com/googleapis/googleapis.git",
-    show_default=True,
-    help="""
-    GitHub repository URL.
-    """,
-)
-def generate(
-    generation_config_yaml: str,
-    repo_url: str,
-    baseline_commit: str,
-) -> str:
-    description = generate_pr_descriptions(
-        generation_config_yaml=generation_config_yaml,
-        repo_url=repo_url,
-        baseline_commit=baseline_commit,
-    )
-    idx = generation_config_yaml.rfind("/")
-    config_path = generation_config_yaml[:idx]
-    with open(f"{config_path}/pr_description.txt", "w+") as f:
-        f.write(description)
-    return description
-
-
 def generate_pr_descriptions(
-    generation_config_yaml: str,
-    repo_url: str,
+    config: GenerationConfig,
     baseline_commit: str,
+    repo_url: str = "https://github.com/googleapis/googleapis.git",
 ) -> str:
-    config = from_yaml(generation_config_yaml)
     paths = config.get_proto_path_to_library_name()
     return __get_commit_messages(
         repo_url=repo_url,
@@ -181,7 +123,3 @@ def __combine_commit_messages(
     )
 
     return "\n".join(messages)
-
-
-if __name__ == "__main__":
-    main()
