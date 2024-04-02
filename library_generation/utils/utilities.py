@@ -65,7 +65,11 @@ def sh_util(statement: str, **kwargs) -> str:
         kwargs["stderr"] = subprocess.PIPE
     output = ""
     with subprocess.Popen(
-        ["bash", "-exc", f"source library_generation/utils/utilities.sh && {statement}"],
+        [
+            "bash",
+            "-exc",
+            f"source library_generation/utils/utilities.sh && {statement}",
+        ],
         **kwargs,
     ) as proc:
         print("command stderr:")
