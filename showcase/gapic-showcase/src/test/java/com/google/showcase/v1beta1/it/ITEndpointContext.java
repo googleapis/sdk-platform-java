@@ -153,7 +153,7 @@ public class ITEndpointContext {
   }
 
   @Test
-  public void endpointResolution_userSetUniverseDomain() throws IOException, InterruptedException {
+  public void endpointResolution_userSetUniverseDomainAndNoUserSetEndpoint() throws IOException, InterruptedException {
     String customUniverseDomain = "random.com";
     EchoClient echoClient = null;
     try {
