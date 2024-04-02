@@ -214,7 +214,8 @@ class IntegrationTest(unittest.TestCase):
 
     @classmethod
     def __bind_device_to_volumes(cls, volume_name: str, device_dir: str):
-        subprocess.check_call(["docker", "volume", "rm", volume_name])
+        if subprocess.check_output(["docker", "volume", "inspect", volume_name]) != "[]":
+            subprocess.check_call(["docker", "volume", "rm", volume_name])
         subprocess.check_call(
             [
                 "docker",
