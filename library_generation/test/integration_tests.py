@@ -214,6 +214,17 @@ class IntegrationTest(unittest.TestCase):
 
     @classmethod
     def __bind_device_to_volumes(cls, volume_name: str, device_dir: str):
+        # We use a volume to hold the repositories used in the integration
+        # tests. This is because the test container creates a child container
+        # using the host machine's docker socket, meaning that we can only
+        # reference volumes created from within the host machine (i.e. the
+        # machine running this script).
+        #
+        # To summarize, we create a special volume that can be referenced both
+        # in the main container and in any child containers created by this one.
+
+        # use subprocess.run because we don't care about the return value (we
+        # want to remove the volume in any case).
         subprocess.run(["docker", "volume", "rm", volume_name])
         subprocess.check_call(
             [
