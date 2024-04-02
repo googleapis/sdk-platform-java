@@ -5,7 +5,7 @@ set -xeo pipefail
 # Unit tests against ../utilities.sh
 script_dir=$(dirname "$(readlink -f "$0")")
 source "${script_dir}"/test_utilities.sh
-source "${script_dir}"/../utilities.sh
+source "${script_dir}"/../utils/utilities.sh
 
 # Unit tests
 extract_folder_name_test() {
