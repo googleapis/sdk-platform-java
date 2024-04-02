@@ -42,4 +42,9 @@
     <className>com/google/api/gax/rpc/ApiCallContext</className>
     <method>* validateUniverseDomain()</method>
   </difference>
+  <difference>
+    <differenceType>7009</differenceType>
+    <className>com/google/api/gax/rpc/StubSettings</className>
+    <method>* getServiceName()</method>
+  </difference>
 </differences>
