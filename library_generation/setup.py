@@ -12,7 +12,7 @@ setup(
     },
     package_data={
         "library_generation": [
-            "*.sh",
+            "**/*.sh",
             "templates/*.j2",
             "gapic-generator-java-wrapper",
             "requirements.*",
