@@ -21,6 +21,29 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: temurin
         cache: maven
+    - uses: actions/setup-python@v5
+      with:
+        python-version: 3.11
+    - name: install pyenv
+      shell: bash
+      run: |
+        set -ex
+        curl https://pyenv.run | bash
+        # setup environment
+        export PYENV_ROOT="$HOME/.pyenv"
+        export PATH="$PYENV_ROOT/bin:$PATH"
+        echo "PYENV_ROOT=${PYENV_ROOT}" >> $GITHUB_ENV
+        echo "PATH=${PATH}" >> $GITHUB_ENV
+
+        set +ex
+    - name: install python dependencies
+      shell: bash
+      run: |
+        set -ex
+        pushd library_generation
+        pip install -r requirements.in
+        pip install .
+        popd
     - name: Run integration tests
       shell: bash
       run: |
