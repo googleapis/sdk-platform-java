@@ -11,6 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import json
+from filecmp import dircmp
+
 from git import Repo
 import os
 import shutil
@@ -21,6 +24,7 @@ from distutils.file_util import copy_file
 from pathlib import Path
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.generation_config import from_yaml
+from library_generation.test.compare_poms import compare_xml
 from library_generation.utilities import sh_util as shell_call
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -50,36 +54,104 @@ class ContainerIntegrationTest(unittest.TestCase):
         config_files = self.__get_config_files(config_dir)
         for repo, config_file in config_files:
             config = from_yaml(config_file)
+            # 1. pull repository
             repo_dest = self.__pull_repo_to(
                 Path(f"{output_dir}/{repo}"), repo, committish_map[repo]
             )
+            # 2. prepare golden files
             library_names = self.__get_library_names_from_config(config)
-            # prepare golden files
-            for library_name in library_names:
-                if config.is_monorepo:
-                    copy_tree(
-                        f"{repo_dest}/{library_name}", f"{golden_dir}/{library_name}"
-                    )
-                    copy_tree(
-                        f"{repo_dest}/gapic-libraries-bom",
-                        f"{golden_dir}/gapic-libraries-bom",
-                    )
-                    copy_file(f"{repo_dest}/pom.xml", golden_dir)
-                else:
-                    copy_tree(f"{repo_dest}", f"{golden_dir}/{library_name}")
-            # bind repository to docker volumes
+            self.__prepare_golden_files(
+                config=config, library_names=library_names, repo_dest=repo_dest
+            )
+            # 3. bind repository and configuration to docker volumes
             self.__bind_device_to_volumes(
                 volume_name=f"repo-{repo}", device_dir=f"{output_dir}/{repo}"
             )
-            # bind configuration to docker volumes
             self.__bind_device_to_volumes(
                 volume_name=f"config-{repo}", device_dir=f"{golden_dir}/../{repo}"
             )
             repo_volumes = f"-v repo-{repo}:/workspace/{repo} -v config-{repo}:/workspace/config-{repo}"
-            # run docker container
+            # 4. run entry_point.py in docker container
             self.__run_entry_point_in_docker_container(
                 tag=image_tag, repo=repo, repo_volumes=repo_volumes
             )
+            # 5. compare generation result with golden files
+            print(
+                "Generation finished successfully. "
+                "Will now compare differences between generated and existing "
+                "libraries"
+            )
+            for library_name in library_names:
+                actual_library = (
+                    f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
+                )
+                print("*" * 50)
+                print(f"Checking for differences in '{library_name}'.")
+                print(f"  The expected library is in {golden_dir}/{library_name}.")
+                print(f"  The actual library is in {actual_library}. ")
+                target_repo_dest = (
+                    f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
+                )
+                compare_result = dircmp(
+                    f"{golden_dir}/{library_name}",
+                    target_repo_dest,
+                    ignore=[".repo-metadata.json"],
+                )
+                diff_files = []
+                golden_only = []
+                generated_only = []
+                # compare source code
+                self.__recursive_diff_files(
+                    compare_result, diff_files, golden_only, generated_only
+                )
+
+                # print all found differences for inspection
+                print_file = lambda f: print(f"   -  {f}")
+                if len(diff_files) > 0:
+                    print("  Some files (found in both folders) are differing:")
+                    [print_file(f) for f in diff_files]
+                if len(golden_only) > 0:
+                    print("  There were files found only in the golden dir:")
+                    [print_file(f) for f in golden_only]
+                if len(generated_only) > 0:
+                    print("  Some files were found to have differences:")
+                    [print_file(f) for f in generated_only]
+
+                self.assertTrue(len(golden_only) == 0)
+                self.assertTrue(len(generated_only) == 0)
+                self.assertTrue(len(diff_files) == 0)
+
+                print("  No differences found in {library_name}")
+                # compare .repo-metadata.json
+                self.assertTrue(
+                    self.__compare_json_files(
+                        f"{golden_dir}/{library_name}/.repo-metadata.json",
+                        f"{target_repo_dest}/.repo-metadata.json",
+                    ),
+                    msg=f"  The generated {library_name}/.repo-metadata.json is different from golden.",
+                )
+                print("  .repo-metadata.json comparison succeed.")
+
+                if not config.is_monorepo:
+                    continue
+
+                # compare gapic-libraries-bom/pom.xml and pom.xml
+                self.assertFalse(
+                    compare_xml(
+                        f"{golden_dir}/gapic-libraries-bom/pom.xml",
+                        f"{repo_dest}/gapic-libraries-bom/pom.xml",
+                        False,
+                    )
+                )
+                print("  gapic-libraries-bom/pom.xml comparison succeed.")
+                self.assertFalse(
+                    compare_xml(
+                        f"{golden_dir}/pom.xml",
+                        f"{repo_dest}/pom.xml",
+                        False,
+                    )
+                )
+                print("  pom.xml comparison succeed.")
 
     @classmethod
     def __build_image(cls, docker_file: str, tag: str, cwd: str):
@@ -104,6 +176,21 @@ class ContainerIntegrationTest(unittest.TestCase):
             library_names.append(f"java-{library.get_library_name()}")
 
         return library_names
+
+    @classmethod
+    def __prepare_golden_files(
+        cls, config: GenerationConfig, library_names: list[str], repo_dest: str
+    ):
+        for library_name in library_names:
+            if config.is_monorepo:
+                copy_tree(f"{repo_dest}/{library_name}", f"{golden_dir}/{library_name}")
+                copy_tree(
+                    f"{repo_dest}/gapic-libraries-bom",
+                    f"{golden_dir}/gapic-libraries-bom",
+                )
+                copy_file(f"{repo_dest}/pom.xml", golden_dir)
+            else:
+                copy_tree(f"{repo_dest}", f"{golden_dir}/{library_name}")
 
     @classmethod
     def __bind_device_to_volumes(cls, volume_name: str, device_dir: str):
@@ -168,3 +255,39 @@ class ContainerIntegrationTest(unittest.TestCase):
             config = f"{sub_dir}/{config_name}"
             config_files.append((repo, config))
         return config_files
+
+    @classmethod
+    def __compare_json_files(cls, expected: str, actual: str) -> bool:
+        return cls.__load_json_to_sorted_list(
+            expected
+        ) == cls.__load_json_to_sorted_list(actual)
+
+    @classmethod
+    def __load_json_to_sorted_list(cls, path: str) -> list[tuple]:
+        with open(path) as f:
+            data = json.load(f)
+        res = [(key, value) for key, value in data.items()]
+
+        return sorted(res, key=lambda x: x[0])
+
+    @classmethod
+    def __recursive_diff_files(
+        cls,
+        dcmp: dircmp,
+        diff_files: list[str],
+        left_only: list[str],
+        right_only: list[str],
+        dirname: str = "",
+    ):
+        """
+        Recursively compares two subdirectories. The found differences are
+        passed to three expected list references.
+        """
+        append_dirname = lambda d: dirname + d
+        diff_files.extend(map(append_dirname, dcmp.diff_files))
+        left_only.extend(map(append_dirname, dcmp.left_only))
+        right_only.extend(map(append_dirname, dcmp.right_only))
+        for sub_dirname, sub_dcmp in dcmp.subdirs.items():
+            cls.__recursive_diff_files(
+                sub_dcmp, diff_files, left_only, right_only, dirname + sub_dirname + "/"
+            )
