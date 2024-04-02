@@ -18,10 +18,6 @@ FROM gcr.io/cloud-devrel-public-resources/python
 ARG SYNTHTOOL_COMMITTISH=6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
 
-# build the image using bash
-RUN echo ~
-SHELL ["/bin/bash", "--login", "-c"]
-
 # install OS tools
 RUN apt-get update && apt-get install -y \
 	unzip openjdk-17-jdk rsync maven jq \
