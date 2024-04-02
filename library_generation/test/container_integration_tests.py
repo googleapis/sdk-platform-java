@@ -26,7 +26,7 @@ from library_generation.utilities import sh_util as shell_call
 script_dir = os.path.dirname(os.path.realpath(__file__))
 golden_dir = os.path.join(script_dir, "resources", "integration", "golden")
 repo_root_dir = os.path.join(script_dir, "..", "..")
-docker_file = os.path.join(
+build_file = os.path.join(
     repo_root_dir, ".cloudbuild", "library_generation", "library_generation.Dockerfile"
 )
 image_tag = f"test-image:latest"
@@ -43,11 +43,7 @@ config_name = "generation_config.yaml"
 
 class ContainerIntegrationTest(unittest.TestCase):
     def test_entry_point_running_in_container(self):
-        # build docker image
-        subprocess.check_call(
-            ["docker", "build", "--rm", "-f", docker_file, "-t", image_tag, "."],
-            cwd=repo_root_dir,
-        )
+        self.__build_image(docker_file=build_file, tag=image_tag, cwd=repo_root_dir)
 
         shutil.rmtree(f"{golden_dir}", ignore_errors=True)
         os.makedirs(f"{golden_dir}", exist_ok=True)
@@ -81,33 +77,16 @@ class ContainerIntegrationTest(unittest.TestCase):
             )
             repo_volumes = f"-v repo-{repo}:/workspace/{repo} -v config-{repo}:/workspace/config-{repo}"
             # run docker container
-            subprocess.check_call(
-                [
-                    "docker",
-                    "run",
-                    "--rm",
-                    "-v",
-                    f"repo-{repo}:/workspace/{repo}",
-                    "-v",
-                    f"config-{repo}:/workspace/config-{repo}",
-                    "-v",
-                    "/tmp:/tmp",
-                    "-v",
-                    "/var/run/docker.sock:/var/run/docker.sock",
-                    "-e",
-                    "RUNNING_IN_DOCKER=true",
-                    "-e",
-                    f"REPO_BINDING_VOLUMES={repo_volumes}",
-                    "-w",
-                    "/src",
-                    image_tag,
-                    "python",
-                    "/src/generate_repo.py",
-                    "generate",
-                    f"--generation-config-yaml=/workspace/config-{repo}/{config_name}",
-                    f"--repository-path=/workspace/{repo}",
-                ]
+            self.__run_entry_point_in_docker_container(
+                tag=image_tag, repo=repo, repo_volumes=repo_volumes
             )
+
+    @classmethod
+    def __build_image(cls, docker_file: str, tag: str, cwd: str):
+        subprocess.check_call(
+            ["docker", "build", "--rm", "-f", docker_file, "-t", tag, "."],
+            cwd=cwd,
+        )
 
     @classmethod
     def __pull_repo_to(cls, dest: Path, repo: str, committish: str) -> str:
@@ -142,6 +121,38 @@ class ContainerIntegrationTest(unittest.TestCase):
                 f"device={device_dir}",
                 "--opt",
                 "o=bind",
+            ]
+        )
+
+    @classmethod
+    def __run_entry_point_in_docker_container(
+        cls, tag: str, repo: str, repo_volumes: str
+    ):
+        subprocess.check_call(
+            [
+                "docker",
+                "run",
+                "--rm",
+                "-v",
+                f"repo-{repo}:/workspace/{repo}",
+                "-v",
+                f"config-{repo}:/workspace/config-{repo}",
+                "-v",
+                "/tmp:/tmp",
+                "-v",
+                "/var/run/docker.sock:/var/run/docker.sock",
+                "-e",
+                "RUNNING_IN_DOCKER=true",
+                "-e",
+                f"REPO_BINDING_VOLUMES={repo_volumes}",
+                "-w",
+                "/src",
+                tag,
+                "python",
+                "/src/generate_repo.py",
+                "generate",
+                f"--generation-config-yaml=/workspace/config-{repo}/{config_name}",
+                f"--repository-path=/workspace/{repo}",
             ]
         )
 
