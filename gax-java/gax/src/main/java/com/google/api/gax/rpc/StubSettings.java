@@ -165,7 +165,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
    * <p>This should be effectively treated as an abstract method.
    */
   @InternalApi
-  public String getServiceName() {
+  protected String getServiceName() {
     return "";
   }
 

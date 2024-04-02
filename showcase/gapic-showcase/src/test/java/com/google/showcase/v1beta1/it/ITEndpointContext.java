@@ -2,6 +2,7 @@ package com.google.showcase.v1beta1.it;
 
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.truth.Truth;
 import com.google.showcase.v1beta1.EchoClient;
@@ -10,7 +11,11 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import com.google.showcase.v1beta1.stub.EchoStub;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.io.IOException;
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import org.junit.After;
 import org.junit.Test;
 
 /**
@@ -105,104 +110,75 @@ public class ITEndpointContext {
   }
 
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com:443";
+  private EchoClient echoClient;
+
+  @After
+  public void cleanup() throws InterruptedException {
+    if (echoClient != null) {
+      echoClient.close();
+      echoClient.awaitTermination(
+          TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    }
+  }
 
   // Default (no configuration)
   @Test
-  public void endpointResolution_default() throws InterruptedException, IOException {
-    EchoClient echoClient = null;
-    try {
-      EchoSettings echoSettings =
-          ExtendedEchoSettings.newBuilder()
-              .setCredentialsProvider(NoCredentialsProvider.create())
-              .build();
-      echoClient = EchoClient.create(echoSettings);
-      Truth.assertThat(echoClient.getSettings().getEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
-      Truth.assertThat(echoClient.getSettings().getUniverseDomain())
-          .isEqualTo(GoogleCredentials.GOOGLE_DEFAULT_UNIVERSE);
-    } finally {
-      if (echoClient != null) {
-        echoClient.close();
-        echoClient.awaitTermination(
-            TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-      }
-    }
+  public void endpointResolution_default() throws IOException {
+    EchoSettings echoSettings =
+        ExtendedEchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .build();
+    echoClient = EchoClient.create(echoSettings);
+    Truth.assertThat(echoClient.getSettings().getEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
+    Truth.assertThat(echoClient.getSettings().getUniverseDomain())
+        .isEqualTo(GoogleCredentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   // User configuration
   @Test
-  public void endpointResolution_userSetEndpoint() throws InterruptedException, IOException {
+  public void endpointResolution_userSetEndpoint() throws IOException {
     String customEndpoint = "test.com:123";
-    EchoClient echoClient = null;
-    try {
-      EchoSettings echoSettings =
-          ExtendedEchoSettings.newBuilder()
-              .setCredentialsProvider(NoCredentialsProvider.create())
-              .setEndpoint(customEndpoint)
-              .build();
-      echoClient = EchoClient.create(echoSettings);
-      Truth.assertThat(echoClient.getSettings().getEndpoint()).isEqualTo(customEndpoint);
-      Truth.assertThat(echoClient.getSettings().getUniverseDomain())
-          .isEqualTo(GoogleCredentials.GOOGLE_DEFAULT_UNIVERSE);
-    } finally {
-      if (echoClient != null) {
-        echoClient.close();
-        echoClient.awaitTermination(
-            TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-      }
-    }
+    EchoSettings echoSettings =
+        ExtendedEchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setEndpoint(customEndpoint)
+            .build();
+    echoClient = EchoClient.create(echoSettings);
+    Truth.assertThat(echoClient.getSettings().getEndpoint()).isEqualTo(customEndpoint);
+    Truth.assertThat(echoClient.getSettings().getUniverseDomain())
+        .isEqualTo(GoogleCredentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @Test
   public void endpointResolution_userSetUniverseDomainAndNoUserSetEndpoint() throws IOException, InterruptedException {
     String customUniverseDomain = "random.com";
-    EchoClient echoClient = null;
-    try {
-      EchoSettings echoSettings =
-          ExtendedEchoSettings.newBuilder()
-              .setCredentialsProvider(NoCredentialsProvider.create())
-              .setUniverseDomain(customUniverseDomain)
-              .build();
-      echoClient = EchoClient.create(echoSettings);
-      // If user configured the universe domain, the endpoint is constructed from it
-      Truth.assertThat(echoClient.getSettings().getEndpoint()).isEqualTo("test.random.com:443");
-      Truth.assertThat(echoClient.getSettings().getUniverseDomain())
-          .isEqualTo(customUniverseDomain);
-    } finally {
-      if (echoClient != null) {
-        echoClient.close();
-        echoClient.awaitTermination(
-            TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-      }
-    }
+    EchoSettings echoSettings =
+        ExtendedEchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setUniverseDomain(customUniverseDomain)
+            .build();
+    echoClient = EchoClient.create(echoSettings);
+    // If user configured the universe domain, the endpoint is constructed from it
+    Truth.assertThat(echoClient.getSettings().getEndpoint()).isEqualTo("test.random.com:443");
+    Truth.assertThat(echoClient.getSettings().getUniverseDomain()).isEqualTo(customUniverseDomain);
   }
 
   @Test
-  public void endpointResolution_userSetEndpointAndUniverseDomain()
-      throws IOException, InterruptedException {
+  public void endpointResolution_userSetEndpointAndUniverseDomain() throws IOException {
     String customEndpoint = "custom.endpoint.com:443";
     String customUniverseDomain = "random.com";
-    EchoClient echoClient = null;
-    try {
-      EchoSettings echoSettings =
-          ExtendedEchoSettings.newBuilder()
-              .setCredentialsProvider(NoCredentialsProvider.create())
-              .setEndpoint(customEndpoint)
-              .setUniverseDomain(customUniverseDomain)
-              .build();
-      echoClient = EchoClient.create(echoSettings);
-      // Custom Endpoint sets the endpoint for the client to use
-      Truth.assertThat(echoClient.getSettings().getEndpoint()).isEqualTo(customEndpoint);
-      // The universe domain doesn't match the endpoint. The call will fail validation when RPC is
-      // called.
-      Truth.assertThat(echoClient.getSettings().getUniverseDomain())
-          .isEqualTo(customUniverseDomain);
-    } finally {
-      if (echoClient != null) {
-        echoClient.close();
-        echoClient.awaitTermination(
-            TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-      }
-    }
+    EchoSettings echoSettings =
+        ExtendedEchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setEndpoint(customEndpoint)
+            .setUniverseDomain(customUniverseDomain)
+            .build();
+    echoClient = EchoClient.create(echoSettings);
+    // Custom Endpoint sets the endpoint for the client to use
+    Truth.assertThat(echoClient.getSettings().getEndpoint()).isEqualTo(customEndpoint);
+    // The universe domain doesn't match the endpoint. The call will fail validation when RPC is
+    // called.
+    Truth.assertThat(echoClient.getSettings().getUniverseDomain()).isEqualTo(customUniverseDomain);
   }
 
   // Default in Builder (no configuration)
