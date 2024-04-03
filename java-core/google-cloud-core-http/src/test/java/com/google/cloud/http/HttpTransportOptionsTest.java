@@ -64,6 +64,7 @@ public class HttpTransportOptionsTest {
   private static final HttpTransportOptions DEFAULT_OPTIONS =
       HttpTransportOptions.newBuilder().build();
   private static final HttpTransportOptions OPTIONS_COPY = OPTIONS.toBuilder().build();
+  private static final String DEFAULT_PROJECT_ID = "testing";
 
   /**
    * The following interfaces and classes are from ServiceOptionsTest. Copied over here as
@@ -211,7 +212,8 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_initializeHasValidUniverseDomain() throws IOException {
+  public void testHttpRequestInitializer_defaultUniverseDomain_defaultCredentials()
+      throws IOException {
     Credentials credentials = EasyMock.createMock(Credentials.class);
     EasyMock.expect(credentials.getUniverseDomain()).andReturn(Credentials.GOOGLE_DEFAULT_UNIVERSE);
     EasyMock.expect(credentials.hasRequestMetadata()).andReturn(false);
@@ -237,8 +239,8 @@ public class HttpTransportOptionsTest {
         TestServiceOptions.newBuilder()
             .setCredentials(credentials)
             .setHeaderProvider(headerProvider)
-            .setQuotaProjectId("testing")
-            .setProjectId("testing")
+            .setQuotaProjectId(DEFAULT_PROJECT_ID)
+            .setProjectId(DEFAULT_PROJECT_ID)
             .build();
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
@@ -246,9 +248,8 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void
-      testHttpRequestInitializer_initializeHasInvalidUniverseDomain_throwsIllegalStateException()
-          throws IOException {
+  public void testHttpRequestInitializer_defaultUniverseDomain_customCredentials()
+      throws IOException {
     Credentials credentials = EasyMock.createMock(Credentials.class);
     EasyMock.expect(credentials.getUniverseDomain()).andReturn("random.com");
     EasyMock.expect(credentials.hasRequestMetadata()).andReturn(false);
@@ -274,8 +275,8 @@ public class HttpTransportOptionsTest {
         TestServiceOptions.newBuilder()
             .setCredentials(credentials)
             .setHeaderProvider(headerProvider)
-            .setQuotaProjectId("testing")
-            .setProjectId("testing")
+            .setQuotaProjectId(DEFAULT_PROJECT_ID)
+            .setProjectId(DEFAULT_PROJECT_ID)
             .build();
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
@@ -288,7 +289,86 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_initializeNoCredentials_noThrow() throws IOException {
+  public void testHttpRequestInitializer_customUniverseDomain_defaultCredentials()
+      throws IOException {
+    Credentials credentials = EasyMock.createMock(Credentials.class);
+    EasyMock.expect(credentials.getUniverseDomain()).andReturn(Credentials.GOOGLE_DEFAULT_UNIVERSE);
+    EasyMock.expect(credentials.hasRequestMetadata()).andReturn(false);
+    HeaderProvider headerProvider = EasyMock.createMock(HeaderProvider.class);
+    EasyMock.expect(headerProvider.getHeaders()).andReturn(new HashMap<>());
+    EasyMock.replay(credentials, headerProvider);
+
+    HttpTransport mockHttpTransport =
+        new MockHttpTransport() {
+          @Override
+          public LowLevelHttpRequest buildRequest(String method, String url) {
+            return new MockLowLevelHttpRequest() {
+              @Override
+              public LowLevelHttpResponse execute() {
+                return new MockLowLevelHttpResponse();
+              }
+            };
+          }
+        };
+    HttpRequest httpRequest =
+        mockHttpTransport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
+    TestServiceOptions testServiceOptions =
+        TestServiceOptions.newBuilder()
+            .setCredentials(credentials)
+            .setHeaderProvider(headerProvider)
+            .setQuotaProjectId(DEFAULT_PROJECT_ID)
+            .setProjectId(DEFAULT_PROJECT_ID)
+            .setUniverseDomain("random.com")
+            .build();
+    HttpRequestInitializer httpRequestInitializer =
+        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
+    IllegalStateException exception =
+        assertThrows(
+            IllegalStateException.class, () -> httpRequestInitializer.initialize(httpRequest));
+    assertEquals(
+        "The configured universe domain (random.com) does not match the universe domain found in the credentials (googleapis.com). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.",
+        exception.getMessage());
+  }
+
+  @Test
+  public void testHttpRequestInitializer_customUniverseDomain_customCredentials()
+      throws IOException {
+    Credentials credentials = EasyMock.createMock(Credentials.class);
+    EasyMock.expect(credentials.getUniverseDomain()).andReturn("random.com");
+    EasyMock.expect(credentials.hasRequestMetadata()).andReturn(false);
+    HeaderProvider headerProvider = EasyMock.createMock(HeaderProvider.class);
+    EasyMock.expect(headerProvider.getHeaders()).andReturn(new HashMap<>());
+    EasyMock.replay(credentials, headerProvider);
+
+    HttpTransport mockHttpTransport =
+        new MockHttpTransport() {
+          @Override
+          public LowLevelHttpRequest buildRequest(String method, String url) {
+            return new MockLowLevelHttpRequest() {
+              @Override
+              public LowLevelHttpResponse execute() {
+                return new MockLowLevelHttpResponse();
+              }
+            };
+          }
+        };
+    HttpRequest httpRequest =
+        mockHttpTransport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
+    TestServiceOptions testServiceOptions =
+        TestServiceOptions.newBuilder()
+            .setCredentials(credentials)
+            .setHeaderProvider(headerProvider)
+            .setQuotaProjectId(DEFAULT_PROJECT_ID)
+            .setProjectId(DEFAULT_PROJECT_ID)
+            .setUniverseDomain("random.com")
+            .build();
+    HttpRequestInitializer httpRequestInitializer =
+        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
+    httpRequestInitializer.initialize(httpRequest);
+  }
+
+  @Test
+  public void testHttpRequestInitializer_defaultUniverseDomain_noCredentials() throws IOException {
     NoCredentials credentials = NoCredentials.getInstance();
     HeaderProvider headerProvider = EasyMock.createMock(HeaderProvider.class);
     EasyMock.expect(headerProvider.getHeaders()).andReturn(new HashMap<>());
@@ -312,11 +392,50 @@ public class HttpTransportOptionsTest {
         TestServiceOptions.newBuilder()
             .setCredentials(credentials)
             .setHeaderProvider(headerProvider)
-            .setQuotaProjectId("testing")
-            .setProjectId("testing")
+            .setQuotaProjectId(DEFAULT_PROJECT_ID)
+            .setProjectId(DEFAULT_PROJECT_ID)
             .build();
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     httpRequestInitializer.initialize(httpRequest);
+  }
+
+  @Test
+  public void testHttpRequestInitializer_customUniverseDomain_noCredentials() throws IOException {
+    NoCredentials credentials = NoCredentials.getInstance();
+    HeaderProvider headerProvider = EasyMock.createMock(HeaderProvider.class);
+    EasyMock.expect(headerProvider.getHeaders()).andReturn(new HashMap<>());
+    EasyMock.replay(headerProvider);
+
+    HttpTransport mockHttpTransport =
+        new MockHttpTransport() {
+          @Override
+          public LowLevelHttpRequest buildRequest(String method, String url) {
+            return new MockLowLevelHttpRequest() {
+              @Override
+              public LowLevelHttpResponse execute() {
+                return new MockLowLevelHttpResponse();
+              }
+            };
+          }
+        };
+    HttpRequest httpRequest =
+        mockHttpTransport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
+    TestServiceOptions testServiceOptions =
+        TestServiceOptions.newBuilder()
+            .setCredentials(credentials)
+            .setHeaderProvider(headerProvider)
+            .setQuotaProjectId(DEFAULT_PROJECT_ID)
+            .setProjectId(DEFAULT_PROJECT_ID)
+            .setUniverseDomain("random.com")
+            .build();
+    HttpRequestInitializer httpRequestInitializer =
+        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
+    IllegalStateException exception =
+        assertThrows(
+            IllegalStateException.class, () -> httpRequestInitializer.initialize(httpRequest));
+    assertEquals(
+        "The configured universe domain (random.com) does not match the universe domain found in the credentials (googleapis.com). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.",
+        exception.getMessage());
   }
 }
