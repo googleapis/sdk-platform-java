@@ -43,7 +43,7 @@ committish_map = {
 }
 config_dir = f"{script_dir}/resources/integration"
 baseline_config_name = "baseline_generation_config.yaml"
-latest_config_name = "latest_generation_config.yaml"
+current_config_name = "current_generation_config.yaml"
 
 
 class IntegrationTest(unittest.TestCase):
@@ -77,7 +77,7 @@ class IntegrationTest(unittest.TestCase):
                 repo=repo,
                 repo_volumes=repo_volumes,
                 baseline_config=baseline_config_name,
-                latest_config=latest_config_name,
+                current_config=current_config_name,
             )
             # 5. compare generation result with golden files
             print(
@@ -238,7 +238,7 @@ class IntegrationTest(unittest.TestCase):
 
     @classmethod
     def __run_entry_point_in_docker_container(
-        cls, repo: str, repo_volumes: str, baseline_config: str, latest_config: str
+        cls, repo: str, repo_volumes: str, baseline_config: str, current_config: str
     ):
         subprocess.check_call(
             [
@@ -264,7 +264,7 @@ class IntegrationTest(unittest.TestCase):
                 "/src/cli/entry_point.py",
                 "generate",
                 f"--baseline-generation-config=/workspace/config-{repo}/{baseline_config}",
-                f"--latest-generation-config=/workspace/config-{repo}/{latest_config}",
+                f"--current-generation-config=/workspace/config-{repo}/{current_config}",
                 f"--repository-path=/workspace/{repo}",
             ]
         )
@@ -278,7 +278,7 @@ class IntegrationTest(unittest.TestCase):
             repo = sub_dir.name
             if repo in ["golden", "java-bigtable"]:
                 continue
-            config = f"{sub_dir}/{latest_config_name}"
+            config = f"{sub_dir}/{current_config_name}"
             config_files.append((repo, config))
         return config_files
 

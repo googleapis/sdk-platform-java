@@ -35,18 +35,18 @@ def main(ctx):
     help="""
     Path to generation_config.yaml that contains the metadata about
     library generation.
-    The googleapis commit in the configuration is the baseline commit,
+    The googleapis commit in the configuration is the oldest commit,
     exclusively, from which the commit message is considered.
     """,
 )
 @click.option(
-    "--latest-generation-config",
+    "--current-generation-config",
     required=True,
     type=str,
     help="""
     Path to generation_config.yaml that contains the metadata about
     library generation.
-    The googleapis commit in the configuration is the latest commit,
+    The googleapis commit in the configuration is the newest commit,
     inclusively, to which the commit message is considered.
     """,
 )
@@ -64,27 +64,27 @@ def main(ctx):
 )
 def generate(
     baseline_generation_config: str,
-    latest_generation_config: str,
+    current_generation_config: str,
     repository_path: str,
 ):
     # convert paths to absolute paths, so they can be correctly referenced in
     # downstream scripts
     baseline_generation_config = os.path.abspath(baseline_generation_config)
-    latest_generation_config = os.path.abspath(latest_generation_config)
+    current_generation_config = os.path.abspath(current_generation_config)
     repository_path = os.path.abspath(repository_path)
     config_change = compare_config(
         baseline_config=from_yaml(baseline_generation_config),
-        latest_config=from_yaml(latest_generation_config),
+        current_config=from_yaml(current_generation_config),
     )
     # generate libraries
     generate_from_yaml(
-        config=config_change.latest_config,
+        config=config_change.current_config,
         repository_path=repository_path,
         target_library_names=config_change.get_changed_libraries(),
     )
     # generate pull request description
     generate_pr_descriptions(
-        config=config_change.latest_config,
+        config=config_change.current_config,
         baseline_commit=config_change.baseline_config.googleapis_commitish,
         description_path=repository_path,
     )
