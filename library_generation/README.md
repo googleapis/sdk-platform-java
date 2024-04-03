@@ -10,6 +10,8 @@ configuration file.
 - Java runtime environment (8 or above)
 - Apache Maven (used in formatting source code)
 - Python (3.11.6 or above)
+- Docker 
+- Git
 
 ## Prerequisite
 
@@ -184,19 +186,26 @@ libraries:
       - proto_path: google/cloud/asset/v1p7beta1
 ```
 
+# Local Environment Setup before running `generate_repo.py`
+
+1. Assuming Python 3 is installed, follow official guide from [Python.org](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments) to create a virtual environment. The virtual environment can be installed to any folder, usually it is recommended to be installed under the root folder of the project(`sdk-platform-java` in this case).
+2. Assuming the virtual environment is installed under `sdk-platform-java`. Run the following command under the root folder of `sdk-platform-java` to install the dependencies of `library_generation`
+```bash
+python -m pip install -r library_generation/requirements.txt
+```
+3. Run the following command to install `library_generation` as a module, which allows the `library_generation` module to be imported from anywhere
+```bash
+python -m pip install library_generation/
+```
+
 ## An example to generate a repository using `generate_repo.py`
 
 ```bash
-# install python module (allows the `library_generation` module to be imported from anywhere)
-python -m pip install -r library_generation/requirements.in
 # generate the repository
-python -m library_generation/generate_repo.py generate \
---generation-config-yaml=/path/to/config-file \
---repository-path=/path/to/repository
+python library_generation/generate_repo.py generate \
+--generation-config-yaml=absolute/path/to/config-file \
+--repository-path=absolute/path/to/repository
 ```
-
-## An example of generated repository using `generate_repo.py`
-
 If you run `generate_repo.py` with the example [configuration](#an-example-of-generation-configuration)
 shown above, the repository structure is:
 ```

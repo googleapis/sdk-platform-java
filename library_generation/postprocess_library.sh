@@ -143,7 +143,7 @@ git fetch --all
 git reset --hard "${synthtool_commitish}"
 
 python3 -m pip install -e .
-python3 -m pip install -r requirements.in
+python3 -m pip install -r requirements.txt
 popd # synthtool
 popd # temp dir
 
