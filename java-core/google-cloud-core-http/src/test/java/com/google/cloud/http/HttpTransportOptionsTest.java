@@ -78,12 +78,13 @@ public class HttpTransportOptionsTest {
       HttpTransportOptions.newBuilder().build();
   private static final HttpTransportOptions OPTIONS_COPY = OPTIONS.toBuilder().build();
   private static final String DEFAULT_PROJECT_ID = "testing";
+  private static final String CUSTOM_UNIVERSE_DOMAIN = "random.com";
 
   private HeaderProvider defaultHeaderProvider;
   // Credentials' getUniverseDomain() returns GDU
-  private Credentials defaultGDUCredentials;
+  private Credentials defaultCredentials;
   // Credentials' getUniverseDomain() returns `random.com`
-  private Credentials defaultCustomCredentials;
+  private Credentials customCredentials;
   private HttpRequest defaultHttpRequest;
 
   /**
@@ -200,16 +201,16 @@ public class HttpTransportOptionsTest {
     defaultHeaderProvider = EasyMock.createMock(HeaderProvider.class);
     EasyMock.expect(defaultHeaderProvider.getHeaders()).andReturn(new HashMap<>());
 
-    defaultGDUCredentials = EasyMock.createMock(Credentials.class);
-    EasyMock.expect(defaultGDUCredentials.getUniverseDomain())
+    defaultCredentials = EasyMock.createMock(Credentials.class);
+    EasyMock.expect(defaultCredentials.getUniverseDomain())
         .andReturn(Credentials.GOOGLE_DEFAULT_UNIVERSE);
-    EasyMock.expect(defaultGDUCredentials.hasRequestMetadata()).andReturn(false);
+    EasyMock.expect(defaultCredentials.hasRequestMetadata()).andReturn(false);
 
-    defaultCustomCredentials = EasyMock.createMock(Credentials.class);
-    EasyMock.expect(defaultCustomCredentials.getUniverseDomain()).andReturn("random.com");
-    EasyMock.expect(defaultCustomCredentials.hasRequestMetadata()).andReturn(false);
+    customCredentials = EasyMock.createMock(Credentials.class);
+    EasyMock.expect(customCredentials.getUniverseDomain()).andReturn(CUSTOM_UNIVERSE_DOMAIN);
+    EasyMock.expect(customCredentials.hasRequestMetadata()).andReturn(false);
 
-    EasyMock.replay(defaultHeaderProvider, defaultGDUCredentials, defaultCustomCredentials);
+    EasyMock.replay(defaultHeaderProvider, defaultCredentials, customCredentials);
 
     defaultHttpRequest =
         MOCK_HTTP_TRANSPORT.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
@@ -252,10 +253,10 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_defaultUniverseDomain_defaultCredentials()
+  public void testHttpRequestInitializer_defaultUniverseDomainSettings_defaultCredentials()
       throws IOException {
     TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(defaultGDUCredentials, Credentials.GOOGLE_DEFAULT_UNIVERSE);
+        generateTestServiceOptions(defaultCredentials, Credentials.GOOGLE_DEFAULT_UNIVERSE);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     // Does not throw a validation exception
@@ -263,9 +264,9 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_defaultUniverseDomain_customCredentials() {
+  public void testHttpRequestInitializer_defaultUniverseDomainSettings_customCredentials() {
     TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(defaultCustomCredentials, Credentials.GOOGLE_DEFAULT_UNIVERSE);
+        generateTestServiceOptions(customCredentials, Credentials.GOOGLE_DEFAULT_UNIVERSE);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     IllegalStateException exception =
@@ -278,9 +279,9 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_customUniverseDomain_defaultCredentials() {
+  public void testHttpRequestInitializer_customUniverseDomainSettings_defaultCredentials() {
     TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(defaultGDUCredentials, "random.com");
+        generateTestServiceOptions(defaultCredentials, CUSTOM_UNIVERSE_DOMAIN);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     IllegalStateException exception =
@@ -293,10 +294,10 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_customUniverseDomain_customCredentials()
+  public void testHttpRequestInitializer_customUniverseDomainSettings_customCredentials()
       throws IOException {
     TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(defaultCustomCredentials, "random.com");
+        generateTestServiceOptions(customCredentials, CUSTOM_UNIVERSE_DOMAIN);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     // Does not throw a validation exception
@@ -304,7 +305,8 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_defaultUniverseDomain_noCredentials() throws IOException {
+  public void testHttpRequestInitializer_defaultUniverseDomainSettings_noCredentials()
+      throws IOException {
     NoCredentials credentials = NoCredentials.getInstance();
     TestServiceOptions testServiceOptions =
         generateTestServiceOptions(credentials, Credentials.GOOGLE_DEFAULT_UNIVERSE);
@@ -315,9 +317,10 @@ public class HttpTransportOptionsTest {
   }
 
   @Test
-  public void testHttpRequestInitializer_customUniverseDomain_noCredentials() throws IOException {
+  public void testHttpRequestInitializer_customUniverseDomainSettings_noCredentials() {
     NoCredentials credentials = NoCredentials.getInstance();
-    TestServiceOptions testServiceOptions = generateTestServiceOptions(credentials, "random.com");
+    TestServiceOptions testServiceOptions =
+        generateTestServiceOptions(credentials, CUSTOM_UNIVERSE_DOMAIN);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     IllegalStateException exception =
