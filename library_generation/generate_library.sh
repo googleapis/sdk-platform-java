@@ -74,7 +74,7 @@ done
 
 script_dir=$(dirname "$(readlink -f "$0")")
 # source utility functions
-source "${script_dir}"/utilities.sh
+source "${script_dir}"/utils/utilities.sh
 output_folder="$(get_output_folder)"
 
 if [ -z "${gapic_generator_version}" ]; then

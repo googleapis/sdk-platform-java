@@ -49,6 +49,18 @@ class GenerationConfig:
         # monorepos have more than one library defined in the config yaml
         self.is_monorepo = len(libraries) > 1
 
+    def get_proto_path_to_library_name(self) -> dict[str, str]:
+        """
+        Get versioned proto_path to library_name mapping from configuration.
+
+        :return: versioned proto_path to library_name mapping
+        """
+        paths = {}
+        for library in self.libraries:
+            for gapic_config in library.gapic_configs:
+                paths[gapic_config.proto_path] = library.get_library_name()
+        return paths
+
 
 def from_yaml(path_to_yaml: str) -> GenerationConfig:
     """

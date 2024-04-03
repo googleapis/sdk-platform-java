@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import library_generation.utilities as util
+import library_generation.utils.utilities as util
 import click
 import os
 from library_generation.generate_composed_library import generate_composed_library
