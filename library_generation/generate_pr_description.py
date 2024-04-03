@@ -17,11 +17,11 @@ import shutil
 import click as click
 from typing import Dict
 from git import Commit, Repo
-from library_generation.model.generation_config import GenerationConfig, \
-    from_yaml
+from library_generation.model.generation_config import GenerationConfig, from_yaml
 from library_generation.utils.proto_path_utils import find_versioned_proto_path
 from library_generation.utils.commit_message_formatter import format_commit_message
 from library_generation.utils.commit_message_formatter import wrap_override_commit
+
 
 @click.group(invoke_without_command=False)
 @click.pass_context
@@ -61,7 +61,7 @@ def generate(
     generate_pr_descriptions(
         config=from_yaml(generation_config_yaml),
         baseline_commit=baseline_commit,
-        description_path=config_path
+        description_path=config_path,
     )
 
 
