@@ -256,7 +256,7 @@ public class HttpTransportOptionsTest {
   public void testHttpRequestInitializer_defaultUniverseDomainSettings_defaultCredentials()
       throws IOException {
     TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(defaultCredentials, Credentials.GOOGLE_DEFAULT_UNIVERSE);
+        generateTestServiceOptions(Credentials.GOOGLE_DEFAULT_UNIVERSE, defaultCredentials);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     // Does not throw a validation exception
@@ -266,7 +266,7 @@ public class HttpTransportOptionsTest {
   @Test
   public void testHttpRequestInitializer_defaultUniverseDomainSettings_customCredentials() {
     TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(customCredentials, Credentials.GOOGLE_DEFAULT_UNIVERSE);
+        generateTestServiceOptions(Credentials.GOOGLE_DEFAULT_UNIVERSE, customCredentials);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     IllegalStateException exception =
@@ -281,7 +281,7 @@ public class HttpTransportOptionsTest {
   @Test
   public void testHttpRequestInitializer_customUniverseDomainSettings_defaultCredentials() {
     TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(defaultCredentials, CUSTOM_UNIVERSE_DOMAIN);
+        generateTestServiceOptions(CUSTOM_UNIVERSE_DOMAIN, defaultCredentials);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     IllegalStateException exception =
@@ -297,7 +297,7 @@ public class HttpTransportOptionsTest {
   public void testHttpRequestInitializer_customUniverseDomainSettings_customCredentials()
       throws IOException {
     TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(customCredentials, CUSTOM_UNIVERSE_DOMAIN);
+        generateTestServiceOptions(CUSTOM_UNIVERSE_DOMAIN, customCredentials);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     // Does not throw a validation exception
@@ -307,9 +307,9 @@ public class HttpTransportOptionsTest {
   @Test
   public void testHttpRequestInitializer_defaultUniverseDomainSettings_noCredentials()
       throws IOException {
-    NoCredentials credentials = NoCredentials.getInstance();
+    NoCredentials noCredentials = NoCredentials.getInstance();
     TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(credentials, Credentials.GOOGLE_DEFAULT_UNIVERSE);
+        generateTestServiceOptions(Credentials.GOOGLE_DEFAULT_UNIVERSE, noCredentials);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     // Does not throw a validation exception
@@ -318,9 +318,9 @@ public class HttpTransportOptionsTest {
 
   @Test
   public void testHttpRequestInitializer_customUniverseDomainSettings_noCredentials() {
-    NoCredentials credentials = NoCredentials.getInstance();
+    NoCredentials noCredentials = NoCredentials.getInstance();
     TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(credentials, CUSTOM_UNIVERSE_DOMAIN);
+        generateTestServiceOptions(CUSTOM_UNIVERSE_DOMAIN, noCredentials);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     IllegalStateException exception =
@@ -333,7 +333,7 @@ public class HttpTransportOptionsTest {
   }
 
   private TestServiceOptions generateTestServiceOptions(
-      Credentials credentials, String universeDomain) {
+      String universeDomain, Credentials credentials) {
     return TestServiceOptions.newBuilder()
         .setCredentials(credentials)
         .setHeaderProvider(defaultHeaderProvider)
