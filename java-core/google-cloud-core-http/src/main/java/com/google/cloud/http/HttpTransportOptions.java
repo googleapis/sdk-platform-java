@@ -156,8 +156,9 @@ public class HttpTransportOptions implements TransportOptions {
     return new HttpRequestInitializer() {
 
       /**
-       * Resolve the Universe Domain from ServiceOptions or the Environment Variable. Otherwise,
-       * resolve to the Google Default Universe.
+       * Helper method to resolve the Universe Domain. First checks the user configuration from
+       * ServiceOptions, then the Environment Variable. If both haven't been set, resolve the value
+       * to be the Google Default Universe.
        */
       private String determineUniverseDomain() {
         String universeDomain = serviceOptions.getUniverseDomain();
@@ -170,7 +171,7 @@ public class HttpTransportOptions implements TransportOptions {
       @Override
       public void initialize(HttpRequest httpRequest) throws IOException {
         String configuredUniverseDomain = determineUniverseDomain();
-        // Default to the GDU and override with value in the Credentials
+        // Default to the GDU. Override with value in the Credentials if needed
         String credentialsUniverseDomain = Credentials.GOOGLE_DEFAULT_UNIVERSE;
 
         // delegate is always HttpCredentialsAdapter or null (NoCredentials)

@@ -49,9 +49,22 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.regex.Pattern;
 import org.easymock.EasyMock;
+import org.junit.Before;
 import org.junit.Test;
 
 public class HttpTransportOptionsTest {
+  private static final HttpTransport MOCK_HTTP_TRANSPORT =
+      new MockHttpTransport() {
+        @Override
+        public LowLevelHttpRequest buildRequest(String method, String url) {
+          return new MockLowLevelHttpRequest() {
+            @Override
+            public LowLevelHttpResponse execute() {
+              return new MockLowLevelHttpResponse();
+            }
+          };
+        }
+      };
 
   private static final HttpTransportFactory MOCK_HTTP_TRANSPORT_FACTORY =
       EasyMock.createMock(HttpTransportFactory.class);
@@ -65,6 +78,13 @@ public class HttpTransportOptionsTest {
       HttpTransportOptions.newBuilder().build();
   private static final HttpTransportOptions OPTIONS_COPY = OPTIONS.toBuilder().build();
   private static final String DEFAULT_PROJECT_ID = "testing";
+
+  private HeaderProvider defaultHeaderProvider;
+  // Credentials' getUniverseDomain() returns GDU
+  private Credentials defaultGDUCredentials;
+  // Credentials' getUniverseDomain() returns `random.com`
+  private Credentials defaultCustomCredentials;
+  private HttpRequest defaultHttpRequest;
 
   /**
    * The following interfaces and classes are from ServiceOptionsTest. Copied over here as
@@ -175,6 +195,26 @@ public class HttpTransportOptionsTest {
     }
   }
 
+  @Before
+  public void setup() throws IOException {
+    defaultHeaderProvider = EasyMock.createMock(HeaderProvider.class);
+    EasyMock.expect(defaultHeaderProvider.getHeaders()).andReturn(new HashMap<>());
+
+    defaultGDUCredentials = EasyMock.createMock(Credentials.class);
+    EasyMock.expect(defaultGDUCredentials.getUniverseDomain())
+        .andReturn(Credentials.GOOGLE_DEFAULT_UNIVERSE);
+    EasyMock.expect(defaultGDUCredentials.hasRequestMetadata()).andReturn(false);
+
+    defaultCustomCredentials = EasyMock.createMock(Credentials.class);
+    EasyMock.expect(defaultCustomCredentials.getUniverseDomain()).andReturn("random.com");
+    EasyMock.expect(defaultCustomCredentials.hasRequestMetadata()).andReturn(false);
+
+    EasyMock.replay(defaultHeaderProvider, defaultGDUCredentials, defaultCustomCredentials);
+
+    defaultHttpRequest =
+        MOCK_HTTP_TRANSPORT.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
+  }
+
   @Test
   public void testBuilder() {
     assertEquals(1234, OPTIONS.getConnectTimeout());
@@ -214,117 +254,39 @@ public class HttpTransportOptionsTest {
   @Test
   public void testHttpRequestInitializer_defaultUniverseDomain_defaultCredentials()
       throws IOException {
-    Credentials credentials = EasyMock.createMock(Credentials.class);
-    EasyMock.expect(credentials.getUniverseDomain()).andReturn(Credentials.GOOGLE_DEFAULT_UNIVERSE);
-    EasyMock.expect(credentials.hasRequestMetadata()).andReturn(false);
-    HeaderProvider headerProvider = EasyMock.createMock(HeaderProvider.class);
-    EasyMock.expect(headerProvider.getHeaders()).andReturn(new HashMap<>());
-    EasyMock.replay(credentials, headerProvider);
-
-    HttpTransport mockHttpTransport =
-        new MockHttpTransport() {
-          @Override
-          public LowLevelHttpRequest buildRequest(String method, String url) {
-            return new MockLowLevelHttpRequest() {
-              @Override
-              public LowLevelHttpResponse execute() {
-                return new MockLowLevelHttpResponse();
-              }
-            };
-          }
-        };
-    HttpRequest httpRequest =
-        mockHttpTransport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
     TestServiceOptions testServiceOptions =
-        TestServiceOptions.newBuilder()
-            .setCredentials(credentials)
-            .setHeaderProvider(headerProvider)
-            .setQuotaProjectId(DEFAULT_PROJECT_ID)
-            .setProjectId(DEFAULT_PROJECT_ID)
-            .build();
+        generateTestServiceOptions(defaultGDUCredentials, Credentials.GOOGLE_DEFAULT_UNIVERSE);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
-    httpRequestInitializer.initialize(httpRequest);
+    // Does not throw a validation exception
+    httpRequestInitializer.initialize(defaultHttpRequest);
   }
 
   @Test
-  public void testHttpRequestInitializer_defaultUniverseDomain_customCredentials()
-      throws IOException {
-    Credentials credentials = EasyMock.createMock(Credentials.class);
-    EasyMock.expect(credentials.getUniverseDomain()).andReturn("random.com");
-    EasyMock.expect(credentials.hasRequestMetadata()).andReturn(false);
-    HeaderProvider headerProvider = EasyMock.createMock(HeaderProvider.class);
-    EasyMock.expect(headerProvider.getHeaders()).andReturn(new HashMap<>());
-    EasyMock.replay(credentials, headerProvider);
-
-    HttpTransport mockHttpTransport =
-        new MockHttpTransport() {
-          @Override
-          public LowLevelHttpRequest buildRequest(String method, String url) {
-            return new MockLowLevelHttpRequest() {
-              @Override
-              public LowLevelHttpResponse execute() {
-                return new MockLowLevelHttpResponse();
-              }
-            };
-          }
-        };
-    HttpRequest httpRequest =
-        mockHttpTransport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
+  public void testHttpRequestInitializer_defaultUniverseDomain_customCredentials() {
     TestServiceOptions testServiceOptions =
-        TestServiceOptions.newBuilder()
-            .setCredentials(credentials)
-            .setHeaderProvider(headerProvider)
-            .setQuotaProjectId(DEFAULT_PROJECT_ID)
-            .setProjectId(DEFAULT_PROJECT_ID)
-            .build();
+        generateTestServiceOptions(defaultCustomCredentials, Credentials.GOOGLE_DEFAULT_UNIVERSE);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     IllegalStateException exception =
         assertThrows(
-            IllegalStateException.class, () -> httpRequestInitializer.initialize(httpRequest));
+            IllegalStateException.class,
+            () -> httpRequestInitializer.initialize(defaultHttpRequest));
     assertEquals(
         "The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (random.com). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.",
         exception.getMessage());
   }
 
   @Test
-  public void testHttpRequestInitializer_customUniverseDomain_defaultCredentials()
-      throws IOException {
-    Credentials credentials = EasyMock.createMock(Credentials.class);
-    EasyMock.expect(credentials.getUniverseDomain()).andReturn(Credentials.GOOGLE_DEFAULT_UNIVERSE);
-    EasyMock.expect(credentials.hasRequestMetadata()).andReturn(false);
-    HeaderProvider headerProvider = EasyMock.createMock(HeaderProvider.class);
-    EasyMock.expect(headerProvider.getHeaders()).andReturn(new HashMap<>());
-    EasyMock.replay(credentials, headerProvider);
-
-    HttpTransport mockHttpTransport =
-        new MockHttpTransport() {
-          @Override
-          public LowLevelHttpRequest buildRequest(String method, String url) {
-            return new MockLowLevelHttpRequest() {
-              @Override
-              public LowLevelHttpResponse execute() {
-                return new MockLowLevelHttpResponse();
-              }
-            };
-          }
-        };
-    HttpRequest httpRequest =
-        mockHttpTransport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
+  public void testHttpRequestInitializer_customUniverseDomain_defaultCredentials() {
     TestServiceOptions testServiceOptions =
-        TestServiceOptions.newBuilder()
-            .setCredentials(credentials)
-            .setHeaderProvider(headerProvider)
-            .setQuotaProjectId(DEFAULT_PROJECT_ID)
-            .setProjectId(DEFAULT_PROJECT_ID)
-            .setUniverseDomain("random.com")
-            .build();
+        generateTestServiceOptions(defaultGDUCredentials, "random.com");
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     IllegalStateException exception =
         assertThrows(
-            IllegalStateException.class, () -> httpRequestInitializer.initialize(httpRequest));
+            IllegalStateException.class,
+            () -> httpRequestInitializer.initialize(defaultHttpRequest));
     assertEquals(
         "The configured universe domain (random.com) does not match the universe domain found in the credentials (googleapis.com). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.",
         exception.getMessage());
@@ -333,109 +295,48 @@ public class HttpTransportOptionsTest {
   @Test
   public void testHttpRequestInitializer_customUniverseDomain_customCredentials()
       throws IOException {
-    Credentials credentials = EasyMock.createMock(Credentials.class);
-    EasyMock.expect(credentials.getUniverseDomain()).andReturn("random.com");
-    EasyMock.expect(credentials.hasRequestMetadata()).andReturn(false);
-    HeaderProvider headerProvider = EasyMock.createMock(HeaderProvider.class);
-    EasyMock.expect(headerProvider.getHeaders()).andReturn(new HashMap<>());
-    EasyMock.replay(credentials, headerProvider);
-
-    HttpTransport mockHttpTransport =
-        new MockHttpTransport() {
-          @Override
-          public LowLevelHttpRequest buildRequest(String method, String url) {
-            return new MockLowLevelHttpRequest() {
-              @Override
-              public LowLevelHttpResponse execute() {
-                return new MockLowLevelHttpResponse();
-              }
-            };
-          }
-        };
-    HttpRequest httpRequest =
-        mockHttpTransport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
     TestServiceOptions testServiceOptions =
-        TestServiceOptions.newBuilder()
-            .setCredentials(credentials)
-            .setHeaderProvider(headerProvider)
-            .setQuotaProjectId(DEFAULT_PROJECT_ID)
-            .setProjectId(DEFAULT_PROJECT_ID)
-            .setUniverseDomain("random.com")
-            .build();
+        generateTestServiceOptions(defaultCustomCredentials, "random.com");
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
-    httpRequestInitializer.initialize(httpRequest);
+    // Does not throw a validation exception
+    httpRequestInitializer.initialize(defaultHttpRequest);
   }
 
   @Test
   public void testHttpRequestInitializer_defaultUniverseDomain_noCredentials() throws IOException {
     NoCredentials credentials = NoCredentials.getInstance();
-    HeaderProvider headerProvider = EasyMock.createMock(HeaderProvider.class);
-    EasyMock.expect(headerProvider.getHeaders()).andReturn(new HashMap<>());
-    EasyMock.replay(headerProvider);
-
-    HttpTransport mockHttpTransport =
-        new MockHttpTransport() {
-          @Override
-          public LowLevelHttpRequest buildRequest(String method, String url) {
-            return new MockLowLevelHttpRequest() {
-              @Override
-              public LowLevelHttpResponse execute() {
-                return new MockLowLevelHttpResponse();
-              }
-            };
-          }
-        };
-    HttpRequest httpRequest =
-        mockHttpTransport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
     TestServiceOptions testServiceOptions =
-        TestServiceOptions.newBuilder()
-            .setCredentials(credentials)
-            .setHeaderProvider(headerProvider)
-            .setQuotaProjectId(DEFAULT_PROJECT_ID)
-            .setProjectId(DEFAULT_PROJECT_ID)
-            .build();
+        generateTestServiceOptions(credentials, Credentials.GOOGLE_DEFAULT_UNIVERSE);
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
-    httpRequestInitializer.initialize(httpRequest);
+    // Does not throw a validation exception
+    httpRequestInitializer.initialize(defaultHttpRequest);
   }
 
   @Test
   public void testHttpRequestInitializer_customUniverseDomain_noCredentials() throws IOException {
     NoCredentials credentials = NoCredentials.getInstance();
-    HeaderProvider headerProvider = EasyMock.createMock(HeaderProvider.class);
-    EasyMock.expect(headerProvider.getHeaders()).andReturn(new HashMap<>());
-    EasyMock.replay(headerProvider);
-
-    HttpTransport mockHttpTransport =
-        new MockHttpTransport() {
-          @Override
-          public LowLevelHttpRequest buildRequest(String method, String url) {
-            return new MockLowLevelHttpRequest() {
-              @Override
-              public LowLevelHttpResponse execute() {
-                return new MockLowLevelHttpResponse();
-              }
-            };
-          }
-        };
-    HttpRequest httpRequest =
-        mockHttpTransport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
-    TestServiceOptions testServiceOptions =
-        TestServiceOptions.newBuilder()
-            .setCredentials(credentials)
-            .setHeaderProvider(headerProvider)
-            .setQuotaProjectId(DEFAULT_PROJECT_ID)
-            .setProjectId(DEFAULT_PROJECT_ID)
-            .setUniverseDomain("random.com")
-            .build();
+    TestServiceOptions testServiceOptions = generateTestServiceOptions(credentials, "random.com");
     HttpRequestInitializer httpRequestInitializer =
         DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
     IllegalStateException exception =
         assertThrows(
-            IllegalStateException.class, () -> httpRequestInitializer.initialize(httpRequest));
+            IllegalStateException.class,
+            () -> httpRequestInitializer.initialize(defaultHttpRequest));
     assertEquals(
         "The configured universe domain (random.com) does not match the universe domain found in the credentials (googleapis.com). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.",
         exception.getMessage());
+  }
+
+  private TestServiceOptions generateTestServiceOptions(
+      Credentials credentials, String universeDomain) {
+    return TestServiceOptions.newBuilder()
+        .setCredentials(credentials)
+        .setHeaderProvider(defaultHeaderProvider)
+        .setQuotaProjectId(DEFAULT_PROJECT_ID)
+        .setProjectId(DEFAULT_PROJECT_ID)
+        .setUniverseDomain(universeDomain)
+        .build();
   }
 }
