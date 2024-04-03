@@ -87,7 +87,7 @@ jobs:
         git reset --hard origin/no-java-templates
 
         python3 -m pip install -e .
-        python3 -m pip install -r requirements.txt
+        python3 -m pip install -r requirements.in
     - name: Run shell unit tests
       run: |
         set -x
