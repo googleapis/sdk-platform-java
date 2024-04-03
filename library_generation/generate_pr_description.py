@@ -32,16 +32,19 @@ def generate_pr_descriptions(
     Generate pull request description from baseline_commit (exclusive) to the
     googleapis commit (inclusive) in the given generation config.
 
+    The pull request description will be generated into
+    description_path/pr_description.txt.
+
     :param config: a GenerationConfig object. The googleapis commit in this
     configuration is the latest commit, inclusively, from which the commit
     message is considered.
     :param baseline_commit: The baseline (oldest) commit, exclusively, from
     which the commit message is considered. This commit should be an ancestor
     of googleapis commit in configuration.
-    :param description_path:
+    :param description_path: the path to which the pull request description
+    file goes.
     :param repo_url: the GitHub repository from which retrieves the commit
     history.
-    :return:
     """
     paths = config.get_proto_path_to_library_name()
     description = __get_commit_messages(

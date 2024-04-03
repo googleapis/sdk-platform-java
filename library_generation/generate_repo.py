@@ -32,8 +32,8 @@ def generate_from_yaml(
     :param repository_path: The repository path to which the generated files
     will be sent.
     :param target_library_names: a list of libraries to be generated.
-    If specified, only the library whose library_name is in
-    target-library-names will be generated.
+    If specified, only the library whose library_name is in target_library_names
+    will be generated.
     If specified with an empty list, then no library will be generated.
     If not specified, all libraries in the configuration yaml will be generated.
     """
@@ -45,7 +45,7 @@ def generate_from_yaml(
     )
 
     for library_path, library in repo_config.libraries.items():
-        print(f"generating library {library.api_shortname}")
+        print(f"generating library {library.get_library_name()}")
 
         generate_composed_library(
             config=config,
