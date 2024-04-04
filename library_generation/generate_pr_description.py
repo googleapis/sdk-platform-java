@@ -131,11 +131,12 @@ def get_commit_messages(
     os.mkdir(tmp_dir)
     repo = Repo.clone_from(repo_url, tmp_dir)
     commit = repo.commit(current_commit)
-    if (
-        commit.committed_datetime.utcnow()
-        < repo.commit(baseline_commit).committed_datetime.utcnow()
-    ):
-        raise ValueError(f"current_commit should be newer than baseline_commit.")
+    current_commit_time = commit.committed_datetime.utcnow()
+    baseline_commit_time = repo.commit(baseline_commit).committed_datetime.utcnow()
+    if current_commit_time < baseline_commit_time:
+        raise ValueError(
+            f"current_commit ({current_commit[:7]}, committed on {current_commit_time}) should be newer than baseline_commit ({baseline_commit[:7]}, committed on {baseline_commit_time})."
+        )
     qualified_commits = {}
     while str(commit.hexsha) != baseline_commit:
         commit_and_name = __filter_qualified_commit(paths=paths, commit=commit)
