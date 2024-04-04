@@ -132,12 +132,8 @@ def get_commit_messages(
     os.mkdir(tmp_dir)
     repo = Repo.clone_from(repo_url, tmp_dir)
     commit = repo.commit(current_commit)
-    # Convert datetime to UTC timestamp. For more info:
-    # https://stackoverflow.com/questions/5067218/get-utc-timestamp-in-python-with-datetime
-    current_commit_time = calendar.timegm(commit.committed_datetime.utctimetuple())
-    baseline_commit_time = calendar.timegm(
-        repo.commit(baseline_commit).committed_datetime.utctimetuple()
-    )
+    current_commit_time = __get_commit_timestamp(commit)
+    baseline_commit_time = __get_commit_timestamp(repo.commit(baseline_commit))
     if current_commit_time < baseline_commit_time:
         raise ValueError(
             f"current_commit ({current_commit[:7]}, committed on "
@@ -203,6 +199,17 @@ def __combine_commit_messages(
     )
 
     return "\n".join(messages)
+
+
+def __get_commit_timestamp(commit: Commit) -> int:
+    """
+    # Convert datetime to UTC timestamp. For more info:
+    # https://stackoverflow.com/questions/5067218/get-utc-timestamp-in-python-with-datetime
+
+    :param commit: a Commit object
+    :return: the timestamp of the commit
+    """
+    return calendar.timegm(commit.committed_datetime.utctimetuple())
 
 
 if __name__ == "__main__":
