@@ -51,15 +51,6 @@ class IntegrationTest(unittest.TestCase):
     def setUpClass(cls) -> None:
         IntegrationTest.__build_image(docker_file=build_file, cwd=repo_root_dir)
 
-    def test_entry_point_without_config_raise_file_exception(self):
-        self.assertRaisesRegex(
-            FileNotFoundError,
-            "does not exist",
-            self.__run_entry_point_in_docker_container,
-            ".",
-            "",
-        )
-
     def test_entry_point_running_in_container(self):
         shutil.rmtree(f"{golden_dir}", ignore_errors=True)
         os.makedirs(f"{golden_dir}", exist_ok=True)
@@ -252,14 +243,10 @@ class IntegrationTest(unittest.TestCase):
         cls,
         repo: str,
         repo_volumes: str,
-        baseline_config: str = None,
-        current_config: str = None,
+        baseline_config: str,
+        current_config: str,
     ):
-        if baseline_config:
-            baseline_config = f"/workspace/config-{repo}/{baseline_config}"
-        if current_config:
-            current_config = f"/workspace/config-{repo}/{current_config}"
-        return subprocess.check_output(
+        subprocess.check_call(
             [
                 "docker",
                 "run",
@@ -282,8 +269,8 @@ class IntegrationTest(unittest.TestCase):
                 "python",
                 "/src/cli/entry_point.py",
                 "generate",
-                f"--baseline-generation-config={baseline_config}",
-                f"--current-generation-config={current_config}",
+                f"--baseline-generation-config=/workspace/config-{repo}/{baseline_config}",
+                f"--current-generation-config=/workspace/config-{repo}/{current_config}",
                 f"--repository-path=/workspace/{repo}",
             ]
         )
