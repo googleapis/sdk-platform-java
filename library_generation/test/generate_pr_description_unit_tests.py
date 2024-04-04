@@ -18,13 +18,17 @@ from library_generation.generate_pr_description import get_commit_messages
 
 class GeneratePrDescriptionTest(unittest.TestCase):
     def test_get_commit_messages_current_is_older_raise_exception(self):
+        # committed on April 1st, 2024
+        current_commit = "36441693dddaf0ed73951ad3a15c215a332756aa"
+        # committed on April 2nd, 2024
+        baseline_commit = "d5020fff4cbe108bdf506074791c56cff7840bef"
         self.assertRaisesRegex(
             ValueError,
             "newer than",
             get_commit_messages,
             "https://github.com/googleapis/googleapis.git",
-            "36441693dddaf0ed73951ad3a15c215a332756aa",
-            "8d326d5a7e7146e41ecce7f921e51c97504f7487",
+            current_commit,
+            baseline_commit,
             {},
             True,
         )
