@@ -30,7 +30,8 @@ def main(ctx):
 @main.command()
 @click.option(
     "--baseline-generation-config",
-    required=True,
+    required=False,
+    default=None,
     type=str,
     help="""
     Path to generation_config.yaml that contains the metadata about
@@ -41,7 +42,8 @@ def main(ctx):
 )
 @click.option(
     "--current-generation-config",
-    required=True,
+    required=False,
+    default=None,
     type=str,
     help="""
     Path to generation_config.yaml that contains the metadata about
@@ -67,26 +69,47 @@ def generate(
     current_generation_config: str,
     repository_path: str,
 ):
-    # convert paths to absolute paths, so they can be correctly referenced in
-    # downstream scripts
-    baseline_generation_config = os.path.abspath(baseline_generation_config)
+    default_generation_config = f"{os.getcwd()}/generation_config.yaml"
+    if baseline_generation_config is None and current_generation_config is None:
+        if not os.path.isfile(default_generation_config):
+            raise FileNotFoundError(
+                f"]{default_generation_config} does not exist when"
+                f"both baseline_generation_config and current_generation_config"
+                f" are not specified."
+            )
+        current_generation_config = default_generation_config
+    elif current_generation_config is None:
+        # make sure current_generation_config is not None if only one config
+        # is specified.
+        current_generation_config = baseline_generation_config
+        baseline_generation_config = None
     current_generation_config = os.path.abspath(current_generation_config)
     repository_path = os.path.abspath(repository_path)
-    config_change = compare_config(
-        baseline_config=from_yaml(baseline_generation_config),
-        current_config=from_yaml(current_generation_config),
-    )
-    # generate libraries
+    if baseline_generation_config:
+        # Compare two generation configs and only generate changed libraries.
+        # Generate pull request description.
+        baseline_generation_config = os.path.abspath(baseline_generation_config)
+        config_change = compare_config(
+            baseline_config=from_yaml(baseline_generation_config),
+            current_config=from_yaml(current_generation_config),
+        )
+        generate_from_yaml(
+            config=config_change.current_config,
+            repository_path=repository_path,
+            target_library_names=config_change.get_changed_libraries(),
+        )
+        generate_pr_descriptions(
+            config=config_change.current_config,
+            baseline_commit=config_change.baseline_config.googleapis_commitish,
+            description_path=repository_path,
+        )
+        return
+    # Execute full generation based on current_generation_config if
+    # baseline_generation_config is not specified.
+    # Do not generate pull request description.
     generate_from_yaml(
-        config=config_change.current_config,
+        config=from_yaml(current_generation_config),
         repository_path=repository_path,
-        target_library_names=config_change.get_changed_libraries(),
-    )
-    # generate pull request description
-    generate_pr_descriptions(
-        config=config_change.current_config,
-        baseline_commit=config_change.baseline_config.googleapis_commitish,
-        description_path=repository_path,
     )
 
 
