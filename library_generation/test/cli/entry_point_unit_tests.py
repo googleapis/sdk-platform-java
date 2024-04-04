@@ -12,7 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import unittest
+from click.testing import CliRunner
+from library_generation.cli.entry_point import generate
 
 
 class EntryPointTest(unittest.TestCase):
-    pass
+    def test_entry_point_without_config_raise_file_exception(self):
+        runner = CliRunner()
+        # noinspection PyTypeChecker
+        result = runner.invoke(generate, ["--repository-path=."])
+        self.assertEqual(1, result.exit_code)
+        self.assertEqual(FileNotFoundError, result.exc_info[0])
