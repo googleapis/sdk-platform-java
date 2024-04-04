@@ -136,7 +136,7 @@ class IntegrationTest(unittest.TestCase):
                 self.assertTrue(len(generated_only) == 0)
                 self.assertTrue(len(diff_files) == 0)
 
-                print("  No differences found in {library_name}")
+                print(f"  No differences found in {library_name}")
                 # compare .repo-metadata.json
                 self.assertTrue(
                     self.__compare_json_files(
