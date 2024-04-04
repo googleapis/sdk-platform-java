@@ -255,9 +255,9 @@ class IntegrationTest(unittest.TestCase):
         baseline_config: str = None,
         current_config: str = None,
     ):
-        if not baseline_config:
+        if baseline_config:
             baseline_config = f"/workspace/config-{repo}/{baseline_config}"
-        if not current_config:
+        if current_config:
             current_config = f"/workspace/config-{repo}/{current_config}"
         return subprocess.check_output(
             [
