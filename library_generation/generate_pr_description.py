@@ -132,6 +132,8 @@ def get_commit_messages(
     os.mkdir(tmp_dir)
     repo = Repo.clone_from(repo_url, tmp_dir)
     commit = repo.commit(current_commit)
+    # Convert datetime to UTC timestamp. For more info:
+    # https://stackoverflow.com/questions/5067218/get-utc-timestamp-in-python-with-datetime
     current_commit_time = calendar.timegm(commit.committed_datetime.utctimetuple())
     baseline_commit_time = calendar.timegm(
         repo.commit(baseline_commit).committed_datetime.utctimetuple()
