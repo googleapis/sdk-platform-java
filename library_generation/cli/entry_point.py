@@ -85,31 +85,32 @@ def generate(
         baseline_generation_config = None
     current_generation_config = os.path.abspath(current_generation_config)
     repository_path = os.path.abspath(repository_path)
-    if baseline_generation_config:
-        # Compare two generation configs and only generate changed libraries.
-        # Generate pull request description.
-        baseline_generation_config = os.path.abspath(baseline_generation_config)
-        config_change = compare_config(
-            baseline_config=from_yaml(baseline_generation_config),
-            current_config=from_yaml(current_generation_config),
-        )
+    if not baseline_generation_config:
+        # Execute full generation based on current_generation_config if
+        # baseline_generation_config is not specified.
+        # Do not generate pull request description.
         generate_from_yaml(
-            config=config_change.current_config,
+            config=from_yaml(current_generation_config),
             repository_path=repository_path,
-            target_library_names=config_change.get_changed_libraries(),
-        )
-        generate_pr_descriptions(
-            config=config_change.current_config,
-            baseline_commit=config_change.baseline_config.googleapis_commitish,
-            description_path=repository_path,
         )
         return
-    # Execute full generation based on current_generation_config if
-    # baseline_generation_config is not specified.
-    # Do not generate pull request description.
+
+    # Compare two generation configs and only generate changed libraries.
+    # Generate pull request description.
+    baseline_generation_config = os.path.abspath(baseline_generation_config)
+    config_change = compare_config(
+        baseline_config=from_yaml(baseline_generation_config),
+        current_config=from_yaml(current_generation_config),
+    )
     generate_from_yaml(
-        config=from_yaml(current_generation_config),
+        config=config_change.current_config,
         repository_path=repository_path,
+        target_library_names=config_change.get_changed_libraries(),
+    )
+    generate_pr_descriptions(
+        config=config_change.current_config,
+        baseline_commit=config_change.baseline_config.googleapis_commitish,
+        description_path=repository_path,
     )
 
 
