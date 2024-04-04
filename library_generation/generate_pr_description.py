@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import calendar
 import os
 import shutil
 import click as click
@@ -131,11 +132,15 @@ def get_commit_messages(
     os.mkdir(tmp_dir)
     repo = Repo.clone_from(repo_url, tmp_dir)
     commit = repo.commit(current_commit)
-    current_commit_time = commit.committed_datetime.utcnow()
-    baseline_commit_time = repo.commit(baseline_commit).committed_datetime.utcnow()
+    current_commit_time = calendar.timegm(commit.committed_datetime.utctimetuple())
+    baseline_commit_time = calendar.timegm(
+        repo.commit(baseline_commit).committed_datetime.utctimetuple()
+    )
     if current_commit_time < baseline_commit_time:
         raise ValueError(
-            f"current_commit ({current_commit[:7]}, committed on {current_commit_time}) should be newer than baseline_commit ({baseline_commit[:7]}, committed on {baseline_commit_time})."
+            f"current_commit ({current_commit[:7]}, committed on "
+            f"{current_commit_time}) should be newer than baseline_commit "
+            f"({baseline_commit[:7]}, committed on {baseline_commit_time})."
         )
     qualified_commits = {}
     while str(commit.hexsha) != baseline_commit:
