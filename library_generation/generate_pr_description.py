@@ -90,9 +90,9 @@ def generate_pr_descriptions(
     history.
     """
     paths = config.get_proto_path_to_library_name()
-    description = __get_commit_messages(
+    description = get_commit_messages(
         repo_url=repo_url,
-        latest_commit=config.googleapis_commitish,
+        current_commit=config.googleapis_commitish,
         baseline_commit=baseline_commit,
         paths=paths,
         is_monorepo=config.is_monorepo,
@@ -104,9 +104,9 @@ def generate_pr_descriptions(
         f.write(description)
 
 
-def __get_commit_messages(
+def get_commit_messages(
     repo_url: str,
-    latest_commit: str,
+    current_commit: str,
     baseline_commit: str,
     paths: Dict[str, str],
     is_monorepo: bool,
@@ -118,7 +118,7 @@ def __get_commit_messages(
     Note that baseline_commit should be an ancestor of latest_commit.
 
     :param repo_url: the url of the repository.
-    :param latest_commit: the newest commit to be considered in
+    :param current_commit: the newest commit to be considered in
     selecting commit message.
     :param baseline_commit: the oldest commit to be considered in
     selecting commit message. This commit should be an ancestor of
@@ -130,7 +130,12 @@ def __get_commit_messages(
     shutil.rmtree(tmp_dir, ignore_errors=True)
     os.mkdir(tmp_dir)
     repo = Repo.clone_from(repo_url, tmp_dir)
-    commit = repo.commit(latest_commit)
+    commit = repo.commit(current_commit)
+    if (
+        commit.committed_datetime.utcnow()
+        < repo.commit(baseline_commit).committed_datetime.utcnow()
+    ):
+        raise ValueError(f"current_commit should be newer than baseline_commit.")
     qualified_commits = {}
     while str(commit.hexsha) != baseline_commit:
         commit_and_name = __filter_qualified_commit(paths=paths, commit=commit)
@@ -142,7 +147,7 @@ def __get_commit_messages(
         commit = commit_parents[0]
     shutil.rmtree(tmp_dir, ignore_errors=True)
     return __combine_commit_messages(
-        latest_commit=latest_commit,
+        current_commit=current_commit,
         baseline_commit=baseline_commit,
         commits=qualified_commits,
         is_monorepo=is_monorepo,
@@ -168,13 +173,13 @@ def __filter_qualified_commit(paths: Dict[str, str], commit: Commit) -> (Commit,
 
 
 def __combine_commit_messages(
-    latest_commit: str,
+    current_commit: str,
     baseline_commit: str,
     commits: Dict[Commit, str],
     is_monorepo: bool,
 ) -> str:
     messages = [
-        f"This pull request is generated with proto changes between googleapis commit {baseline_commit} (exclusive) and {latest_commit} (inclusive).",
+        f"This pull request is generated with proto changes between googleapis commit {baseline_commit} (exclusive) and {current_commit} (inclusive).",
         "Qualified commits are:",
     ]
     for commit in commits:
