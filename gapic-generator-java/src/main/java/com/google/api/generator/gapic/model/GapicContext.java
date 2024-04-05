@@ -40,7 +40,6 @@ public abstract class GapicContext {
       .setResourceNames(Collections.emptyMap())
       .setHelperResourceNames(Collections.emptySet())
       .setTransport(Transport.GRPC)
-      .setIsEmpty(true)
       .build();
 
   // Maps the message name (as it appears in the protobuf) to Messages.
@@ -70,7 +69,10 @@ public abstract class GapicContext {
   @Nullable
   public abstract com.google.api.Service serviceYamlProto();
 
-  public abstract boolean isEmpty();
+  public boolean isEmpty() {
+    return services().isEmpty() && messages().isEmpty() && resourceNames().isEmpty()
+        && helperResourceNames().isEmpty();
+  }
 
   public boolean hasServiceYamlProto() {
     return serviceYamlProto() != null;
@@ -97,14 +99,11 @@ public abstract class GapicContext {
     return new AutoValue_GapicContext.Builder()
         .setMixinServices(Collections.emptyList())
         .setGapicMetadataEnabled(false)
-        .setRestNumericEnumsEnabled(false)
-        .setIsEmpty(false);
+        .setRestNumericEnumsEnabled(false);
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-
-    abstract Builder setIsEmpty(boolean isEmpty);
 
     public abstract Builder setMessages(Map<String, Message> messages);
 
