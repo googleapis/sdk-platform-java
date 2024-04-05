@@ -73,9 +73,10 @@ def generate(
     if baseline_generation_config is None and current_generation_config is None:
         if not os.path.isfile(default_generation_config):
             raise FileNotFoundError(
-                f"{default_generation_config} does not exist when "
-                f"both baseline_generation_config and current_generation_config"
-                f" are not specified."
+                f"{default_generation_config} does not exist. "
+                "A valid generation config has to be passed in as "
+                "current_generation_config or exist in the current working "
+                "directory."
             )
         current_generation_config = default_generation_config
     elif current_generation_config is None:
