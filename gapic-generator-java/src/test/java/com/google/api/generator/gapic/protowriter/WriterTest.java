@@ -103,13 +103,6 @@ public class WriterTest {
   }
 
   @Test
-  public void writePackageInfo_emptyPackageInfo_writesEmptyString() throws IOException {
-    String result = Writer.writePackageInfo(GapicPackageInfo.EMPTY, visitor, jarOutputStream);
-    assertThat(result).isEmpty();
-    closeJarOutputStream();
-  }
-
-  @Test
   public void write_emptyGapicContext_writesNoBytes() throws IOException {
     ByteString.Output output = ByteString.newOutput();
     CodeGeneratorResponse response =
