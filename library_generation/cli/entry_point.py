@@ -34,10 +34,9 @@ def main(ctx):
     default=None,
     type=str,
     help="""
-    Absolute or relative path to generation_config.yaml that contains the
-    metadata about library generation.
-    The googleapis commit in the configuration is the oldest commit,
-    exclusively, from which the commit message is considered.
+    Absolute or relative path to a generation_config.yaml.
+    This config file is used for commit history generation, not library
+    generation.
     """,
 )
 @click.option(
@@ -46,10 +45,8 @@ def main(ctx):
     default=None,
     type=str,
     help="""
-    Absolute or relative path to generation_config.yaml that contains the
+    Absolute or relative path to a generation_config.yaml that contains the
     metadata about library generation.
-    The googleapis commit in the configuration is the newest commit,
-    inclusively, to which the commit message is considered.
     """,
 )
 @click.option(
@@ -71,12 +68,12 @@ def generate(
 ):
     """
     Compare baseline generation config and current generation config and
-    generate changed libraries based on current generation config with pull
-    request description.
+    generate changed libraries based on current generation config with commit
+    history.
 
     If baseline generation config is not specified but current generation
     config is specified, generate all libraries based on current generation
-    config without pull request description.
+    config without commit history.
 
     If current generation config is not specified but baseline generation
     config is specified, raise FileNotFoundError because current generation
@@ -87,7 +84,7 @@ def generate(
     which is generation_config.yaml in the current working directory. Raise
     FileNotFoundError if the default config does not exist.
 
-    The pull request description, if generated, will be available in
+    The commit history, if generated, will be available in
     repository_path/pr_description.txt.
     """
     default_generation_config = f"{os.getcwd()}/generation_config.yaml"
