@@ -172,7 +172,7 @@ public class ComposerTest {
   public void testEmptyGapicContext_succeeds() {
     Exception unexpected = null;
     try {
-      Composer.composeServiceClasses(GapicContext.empty());
+      Composer.composeServiceClasses(GapicContext.EMPTY);
     } catch (Exception ex) {
       unexpected = ex;
     }

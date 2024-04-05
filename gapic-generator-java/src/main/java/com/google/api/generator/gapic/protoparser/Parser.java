@@ -182,7 +182,7 @@ public class Parser {
 
     if (services.isEmpty()) {
       LOGGER.warning("No services found to generate. This will produce an empty generated srcjar");
-      return GapicContext.empty();
+      return GapicContext.EMPTY;
     }
 
     // TODO(vam-google): Figure out whether we should keep this allowlist or bring

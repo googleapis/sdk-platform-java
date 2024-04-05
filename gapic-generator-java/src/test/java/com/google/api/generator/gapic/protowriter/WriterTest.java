@@ -114,7 +114,7 @@ public class WriterTest {
     ByteString.Output output = ByteString.newOutput();
     CodeGeneratorResponse response =
         Writer.write(
-            GapicContext.empty(),
+            GapicContext.EMPTY,
             Collections.emptyList(),
             GapicPackageInfo.EMPTY,
             Collections.emptyList(),
@@ -130,7 +130,7 @@ public class WriterTest {
     ByteString.Output output = ByteString.newOutput();
     CodeGeneratorResponse response =
         Writer.write(
-            GapicContext.empty(),
+            GapicContext.EMPTY,
             ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
             GapicPackageInfo.with(PackageInfoDefinition.builder().setPakkage("com.test").build()),
             Collections.emptyList(),
@@ -150,7 +150,7 @@ public class WriterTest {
     Exception unexpected = null;
     try {
       Writer.write(
-          GapicContext.empty(),
+          GapicContext.EMPTY,
           ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
           GapicPackageInfo.with(PackageInfoDefinition.builder().setPakkage("com.test").build()),
           Collections.emptyList(),
