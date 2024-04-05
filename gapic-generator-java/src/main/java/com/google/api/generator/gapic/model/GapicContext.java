@@ -69,9 +69,8 @@ public abstract class GapicContext {
   @Nullable
   public abstract com.google.api.Service serviceYamlProto();
 
-  public boolean isEmpty() {
-    return services().isEmpty() && messages().isEmpty() && resourceNames().isEmpty()
-        && helperResourceNames().isEmpty();
+  public boolean containsServices() {
+    return !services().isEmpty();
   }
 
   public boolean hasServiceYamlProto() {

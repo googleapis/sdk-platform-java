@@ -59,7 +59,7 @@ public class ComposerTest {
 
   @Before
   public void initialSanityCheck() {
-    assertFalse(context.isEmpty());
+    assertTrue(context.containsServices());
   }
 
   @Test

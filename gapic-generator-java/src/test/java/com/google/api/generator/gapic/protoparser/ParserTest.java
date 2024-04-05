@@ -612,7 +612,7 @@ public class ParserTest {
   @Test
   public void testParse_noServices_returnsEmptyGapicContext() {
     GapicContext result = Parser.parse(CodeGeneratorRequest.newBuilder().build());
-    assertTrue(result.isEmpty());
+    assertFalse(result.containsServices());
   }
 
   @Test
