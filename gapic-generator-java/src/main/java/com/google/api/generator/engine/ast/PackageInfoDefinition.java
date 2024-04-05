@@ -23,6 +23,7 @@ import java.util.List;
 @AutoValue
 public abstract class PackageInfoDefinition implements AstNode {
   public static final PackageInfoDefinition EMPTY = builder().setPakkage("").build();
+
   public abstract String pakkage();
 
   public boolean shouldGenerateFile() {

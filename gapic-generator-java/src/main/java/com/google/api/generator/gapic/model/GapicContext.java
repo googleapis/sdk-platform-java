@@ -33,14 +33,15 @@ public abstract class GapicContext {
   // it iteratively as we generate client methods.
   private GapicMetadata gapicMetadata = defaultGapicMetadata();
 
-  public static final GapicContext EMPTY = builder()
-      .setServices(Collections.emptyList())
-      .setMessages(Collections.emptyMap())
-      .setServiceConfig(GapicServiceConfig.create(Optional.empty()))
-      .setResourceNames(Collections.emptyMap())
-      .setHelperResourceNames(Collections.emptySet())
-      .setTransport(Transport.GRPC)
-      .build();
+  public static final GapicContext EMPTY =
+      builder()
+          .setServices(Collections.emptyList())
+          .setMessages(Collections.emptyMap())
+          .setServiceConfig(GapicServiceConfig.create(Optional.empty()))
+          .setResourceNames(Collections.emptyMap())
+          .setHelperResourceNames(Collections.emptySet())
+          .setTransport(Transport.GRPC)
+          .build();
 
   // Maps the message name (as it appears in the protobuf) to Messages.
   public abstract ImmutableMap<String, Message> messages();
