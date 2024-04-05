@@ -85,7 +85,7 @@
         "^com.google.guava:"
       ],
       "versioning": "docker",
-      "rangeStrategy": "pin"
+      "enabled": false
     },
     {
       "matchPackagePatterns": [
@@ -150,7 +150,7 @@
         "^io.grpc"
       ],
       "groupName": "gRPC dependencies",
-      "rangeStrategy": "pin"
+      "enabled": false
     },
     {
       "matchPackagePatterns": [
