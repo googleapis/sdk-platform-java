@@ -1,7 +1,5 @@
 package com.google.cloud.model;
 
-import org.apache.bcel.generic.NEW;
-
 public class VersionKey {
   private final String system;
   private final String name;
