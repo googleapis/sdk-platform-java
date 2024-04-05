@@ -76,13 +76,15 @@ public class Writer {
     jos.finish();
     jos.flush();
 
-    CodeGeneratorResponse.Builder response = CodeGeneratorResponse.newBuilder();
-    response
-        .setSupportedFeatures(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL_VALUE)
-        .addFileBuilder()
-        .setName(outputFilePath)
-        .setContentBytes(output.toByteString());
-    return response.build();
+    CodeGeneratorResponse.Builder responseBuilder = CodeGeneratorResponse.newBuilder();
+    if (context.containsServices()) {
+      responseBuilder
+          .setSupportedFeatures(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL_VALUE)
+          .addFileBuilder()
+          .setName(outputFilePath)
+          .setContentBytes(output.toByteString());
+    }
+    return responseBuilder.build();
   }
 
   public static CodeGeneratorResponse write(
