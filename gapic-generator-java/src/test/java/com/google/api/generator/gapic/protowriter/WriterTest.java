@@ -53,6 +53,12 @@ public class WriterTest {
     visitor = new JavaWriterVisitor();
   }
 
+  public void closeJarOutputStream() throws IOException {
+    jarOutputStream.finish();
+    jarOutputStream.flush();
+    jarOutputStream.close();
+  }
+
   @After
   public void assertJarOutputStream_isClosed() {
     assertThrows(
@@ -63,9 +69,7 @@ public class WriterTest {
   public void reflectConfig_notWritten_ifEmptyInput() throws IOException {
     Writer.writeReflectConfigFile("com.google", Collections.emptyList(), jarOutputStream);
 
-    jarOutputStream.finish();
-    jarOutputStream.flush();
-    jarOutputStream.close();
+    closeJarOutputStream();
 
     try (JarFile jarFile = new JarFile(file)) {
       assertThat(jarFile.entries().hasMoreElements()).isFalse();
@@ -79,9 +83,7 @@ public class WriterTest {
         Collections.singletonList(new ReflectConfig("com.google.Class")),
         jarOutputStream);
 
-    jarOutputStream.finish();
-    jarOutputStream.flush();
-    jarOutputStream.close();
+    closeJarOutputStream();
 
     try (JarFile jarFile = new JarFile(file)) {
       Enumeration<JarEntry> entries = jarFile.entries();
@@ -104,9 +106,7 @@ public class WriterTest {
   public void writePackageInfo_emptyPackageInfo_writesEmptyString() throws IOException {
     String result = Writer.writePackageInfo(GapicPackageInfo.EMPTY, visitor, jarOutputStream);
     assertThat(result).isEmpty();
-    jarOutputStream.finish();
-    jarOutputStream.flush();
-    jarOutputStream.close();
+    closeJarOutputStream();
   }
 
   @Test
@@ -122,9 +122,7 @@ public class WriterTest {
             jarOutputStream,
             output);
     assertTrue(output.size() == 0);
-    jarOutputStream.finish();
-    jarOutputStream.flush();
-    jarOutputStream.close();
+    closeJarOutputStream();
   }
 
   @Test
@@ -140,15 +138,13 @@ public class WriterTest {
             jarOutputStream,
             output);
     assertTrue(output.size() == 0);
-    jarOutputStream.finish();
-    jarOutputStream.flush();
-    jarOutputStream.close();
+    closeJarOutputStream();
   }
 
   @Test
   public void productionWrite_emptyGapicContext_succeeds() throws IOException {
     // This is a special case test to confirm the production function work as expected.
-    // We don't need the outputstream
+    // We don't need the output stream
     jarOutputStream.close();
 
     Exception unexpected = null;
