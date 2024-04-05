@@ -47,9 +47,9 @@ class HashLibrary:
 
 
 class LibraryChange:
-    def __init__(self, changed_param: str, latest_value: str, library_name: str = ""):
+    def __init__(self, changed_param: str, current_value: str, library_name: str = ""):
         self.changed_param = changed_param
-        self.latest_value = latest_value
+        self.current_value = current_value
         self.library_name = library_name
 
 
@@ -66,17 +66,17 @@ class ConfigChange:
         self,
         change_to_libraries: dict[ChangeType, list[LibraryChange]],
         baseline_config: GenerationConfig,
-        latest_config: GenerationConfig,
+        current_config: GenerationConfig,
     ):
         self.change_to_libraries = change_to_libraries
         self.baseline_config = baseline_config
-        self.latest_config = latest_config
+        self.current_config = current_config
 
     def get_changed_libraries(self) -> Optional[list[str]]:
         """
         Returns a unique, sorted list of library name of changed libraries.
         None if there is a repository level change, which means all libraries
-        in the latest_config will be generated.
+        in the current_config will be generated.
         :return: library names of change libraries.
         """
         if ChangeType.REPO_LEVEL_CHANGE in self.change_to_libraries:
@@ -108,8 +108,8 @@ class ConfigChange:
         os.mkdir(tmp_dir)
         # we only need commit history, thus shadow clone is enough.
         repo = Repo.clone_from(url=repo_url, to_path=tmp_dir, filter=["blob:none"])
-        commit = repo.commit(self.latest_config.googleapis_commitish)
-        proto_paths = self.latest_config.get_proto_path_to_library_name()
+        commit = repo.commit(self.current_config.googleapis_commitish)
+        proto_paths = self.current_config.get_proto_path_to_library_name()
         qualified_commits = []
         while str(commit.hexsha) != self.baseline_config.googleapis_commitish:
             qualified_commit = ConfigChange.__create_qualified_commit(
