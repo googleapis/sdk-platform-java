@@ -21,6 +21,9 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class GapicPackageInfo {
 
+  public static final GapicPackageInfo EMPTY = builder()
+      .setPackageInfo(PackageInfoDefinition.empty())
+      .setIsEmpty(true).build();
   public abstract PackageInfoDefinition packageInfo();
 
   public abstract boolean isEmpty();

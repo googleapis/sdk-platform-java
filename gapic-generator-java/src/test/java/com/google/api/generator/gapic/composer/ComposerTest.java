@@ -84,7 +84,7 @@ public class ComposerTest {
 
   @Test
   public void testGapicPackageInfoAddLicense_emptyPackageInfo_noop() {
-    assertTrue(Composer.addApacheLicense(GapicPackageInfo.empty()).isEmpty());
+    assertTrue(Composer.addApacheLicense(GapicPackageInfo.EMPTY).isEmpty());
   }
 
   @Test
@@ -181,7 +181,7 @@ public class ComposerTest {
 
   @Test
   public void gapicClass_addApacheLicense_emptyPackageInfo_noop() {
-    assertTrue(Composer.addApacheLicense(GapicPackageInfo.empty()).isEmpty());
+    assertTrue(Composer.addApacheLicense(GapicPackageInfo.EMPTY).isEmpty());
   }
 
   private List<GapicClass> getTestClassListFromService(Service testService) {

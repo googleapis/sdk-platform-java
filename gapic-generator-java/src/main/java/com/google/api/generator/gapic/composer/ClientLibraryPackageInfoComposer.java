@@ -50,7 +50,7 @@ public class ClientLibraryPackageInfoComposer {
   public static GapicPackageInfo generatePackageInfo(GapicContext context) {
     if (context.services().isEmpty()) {
       LOGGER.warning("Generating empty package info since no services were found");
-      return GapicPackageInfo.empty();
+      return GapicPackageInfo.EMPTY;
     }
     // Pick some service's package, as we assume they are all the same.
     String libraryPakkage = context.services().get(0).pakkage();

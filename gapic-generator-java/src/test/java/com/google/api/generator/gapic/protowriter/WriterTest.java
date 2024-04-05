@@ -102,7 +102,7 @@ public class WriterTest {
 
   @Test
   public void writePackageInfo_emptyPackageInfo_writesEmptyString() throws IOException {
-    String result = Writer.writePackageInfo(GapicPackageInfo.empty(), visitor, jarOutputStream);
+    String result = Writer.writePackageInfo(GapicPackageInfo.EMPTY, visitor, jarOutputStream);
     assertThat(result).isEmpty();
     jarOutputStream.finish();
     jarOutputStream.flush();
@@ -116,7 +116,7 @@ public class WriterTest {
         Writer.write(
             GapicContext.empty(),
             Collections.emptyList(),
-            GapicPackageInfo.empty(),
+            GapicPackageInfo.EMPTY,
             Collections.emptyList(),
             "temp-codegen.srcjar",
             jarOutputStream,
