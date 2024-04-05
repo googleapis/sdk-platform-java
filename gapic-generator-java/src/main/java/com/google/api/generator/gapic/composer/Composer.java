@@ -240,7 +240,7 @@ public class Composer {
   }
 
   @VisibleForTesting
-  protected static GapicPackageInfo addApacheLicense(GapicPackageInfo gapicPackageInfo) {
+  static GapicPackageInfo addApacheLicense(GapicPackageInfo gapicPackageInfo) {
     if (gapicPackageInfo.isEmpty()) {
       return gapicPackageInfo;
     }
