@@ -134,7 +134,7 @@ def get_commit_messages(
     commit = repo.commit(current_commit)
     current_commit_time = __get_commit_timestamp(commit)
     baseline_commit_time = __get_commit_timestamp(repo.commit(baseline_commit))
-    if current_commit_time < baseline_commit_time:
+    if current_commit_time <= baseline_commit_time:
         raise ValueError(
             f"current_commit ({current_commit[:7]}, committed on "
             f"{current_commit_time}) should be newer than baseline_commit "

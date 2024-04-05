@@ -32,3 +32,18 @@ class GeneratePrDescriptionTest(unittest.TestCase):
             {},
             True,
         )
+
+    def test_get_commit_messages_current_and_baseline_are_same_raise_exception(self):
+        # committed on April 1st, 2024
+        current_commit = "36441693dddaf0ed73951ad3a15c215a332756aa"
+        baseline_commit = "36441693dddaf0ed73951ad3a15c215a332756aa"
+        self.assertRaisesRegex(
+            ValueError,
+            "newer than",
+            get_commit_messages,
+            "https://github.com/googleapis/googleapis.git",
+            current_commit,
+            baseline_commit,
+            {},
+            True,
+        )
