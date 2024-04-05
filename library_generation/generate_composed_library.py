@@ -30,7 +30,7 @@ Note: googleapis repo is found in https://github.com/googleapis/googleapis.
 import os
 from pathlib import Path
 from typing import List
-import library_generation.utilities as util
+import library_generation.utils.utilities as util
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.gapic_inputs import GapicInputs
@@ -62,7 +62,6 @@ def generate_composed_library(
         config=config, library=library, output_folder=output_folder
     )
 
-    is_monorepo = util.check_monorepo(config=config)
     base_arguments = __construct_tooling_arg(config=config)
     owlbot_cli_source_folder = util.sh_util("mktemp -d")
     os.makedirs(f"{library_path}", exist_ok=True)
@@ -80,8 +79,7 @@ def generate_composed_library(
             transport=gapic_inputs.transport,
             library_path=library_path,
         )
-        service_version = gapic.proto_path.split("/")[-1]
-        temp_destination_path = f"java-{library.api_shortname}-{service_version}"
+        temp_destination_path = f"java-{gapic.proto_path.replace('/','-')}"
         effective_arguments = __construct_effective_arg(
             base_arguments=base_arguments,
             gapic=gapic,
@@ -113,7 +111,7 @@ def generate_composed_library(
             owlbot_cli_source_folder,
             config.owlbot_cli_image,
             config.synthtool_commitish,
-            str(is_monorepo).lower(),
+            str(config.is_monorepo).lower(),
             config.path_to_yaml,
         ],
         "Library postprocessing",

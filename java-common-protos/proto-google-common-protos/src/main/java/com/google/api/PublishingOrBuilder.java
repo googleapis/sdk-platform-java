@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -383,4 +383,31 @@ public interface PublishingOrBuilder
    * @return The bytes for protoReferenceDocumentationUri.
    */
   com.google.protobuf.ByteString getProtoReferenceDocumentationUriBytes();
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to REST reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rest
+   * </pre>
+   *
+   * <code>string rest_reference_documentation_uri = 111;</code>
+   *
+   * @return The restReferenceDocumentationUri.
+   */
+  java.lang.String getRestReferenceDocumentationUri();
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to REST reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rest
+   * </pre>
+   *
+   * <code>string rest_reference_documentation_uri = 111;</code>
+   *
+   * @return The bytes for restReferenceDocumentationUri.
+   */
+  com.google.protobuf.ByteString getRestReferenceDocumentationUriBytes();
 }

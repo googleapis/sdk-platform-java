@@ -16,7 +16,6 @@
 
 package com.google.cloud.compute.v1small.stub;
 
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.LongRunningClient;
 import com.google.api.gax.rpc.UnaryCallable;
@@ -34,7 +33,6 @@ import javax.annotation.Generated;
 @Generated("by gapic-generator-java")
 public abstract class RegionOperationsStub implements BackgroundResource {
 
-  @BetaApi
   public LongRunningClient longRunningClient() {
     throw new UnsupportedOperationException("Not implemented: longRunningClient()");
   }

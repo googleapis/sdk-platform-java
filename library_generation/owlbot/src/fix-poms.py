@@ -559,7 +559,5 @@ def main(versions_file, monorepo):
 
 if __name__ == "__main__":
     versions_file = sys.argv[1]
-    monorepo = sys.argv[2]
-    if monorepo == "true":
-        monorepo = True
+    monorepo = True if sys.argv[2].lower() == "true" else False
     main(versions_file, monorepo)

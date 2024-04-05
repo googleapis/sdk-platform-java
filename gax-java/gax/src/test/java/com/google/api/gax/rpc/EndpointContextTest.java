@@ -340,6 +340,41 @@ public class EndpointContextTest {
         .isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
+  // This Universe Domain should match the `GOOGLE_CLOUD_UNIVERSE_DOMAIN` Env Var
+  // For this test running locally or in CI, check that the Env Var is set properly.
+  // This test should only run when the maven profile `EnvVarTest` is enabled.
+  @Test
+  public void endpointContextBuild_universeDomainEnvVarSet() throws IOException {
+    String envVarUniverseDomain = "random.com";
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder
+            .setUniverseDomain(null)
+            .setClientSettingsEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo("test.random.com:443");
+    Truth.assertThat(endpointContext.resolvedUniverseDomain()).isEqualTo(envVarUniverseDomain);
+  }
+
+  // This Universe Domain should match the `GOOGLE_CLOUD_UNIVERSE_DOMAIN` Env Var
+  // For this test running locally or in CI, check that the Env Var is set properly.
+  // This test should only run when the maven profile `EnvVarTest` is enabled.
+  @Test
+  public void endpointContextBuild_multipleUniverseDomainConfigurations_clientSettingsHasPriority()
+      throws IOException {
+    // This test has `GOOGLE_CLOUD_UNIVERSE_DOMAIN` = `random.com`
+    String clientSettingsUniverseDomain = "clientSettingsUniverseDomain.com";
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder
+            .setUniverseDomain(clientSettingsUniverseDomain)
+            .setClientSettingsEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedEndpoint())
+        .isEqualTo("test.clientSettingsUniverseDomain.com:443");
+    // Client Settings Universe Domain (if set) takes priority
+    Truth.assertThat(endpointContext.resolvedUniverseDomain())
+        .isEqualTo(clientSettingsUniverseDomain);
+  }
+
   @Test
   public void hasValidUniverseDomain_gdchFlow_anyCredentials() throws IOException {
     Credentials noCredentials = NoCredentialsProvider.create().getCredentials();

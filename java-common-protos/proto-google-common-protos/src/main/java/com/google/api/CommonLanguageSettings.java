@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,7 +78,7 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
    * <code>string reference_docs_uri = 1 [deprecated = true];</code>
    *
    * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
-   *     google/api/client.proto;l=106
+   *     google/api/client.proto;l=122
    * @return The referenceDocsUri.
    */
   @java.lang.Override
@@ -105,7 +105,7 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
    * <code>string reference_docs_uri = 1 [deprecated = true];</code>
    *
    * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
-   *     google/api/client.proto;l=106
+   *     google/api/client.proto;l=122
    * @return The bytes for referenceDocsUri.
    */
   @java.lang.Override
@@ -637,7 +637,7 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
      * <code>string reference_docs_uri = 1 [deprecated = true];</code>
      *
      * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
-     *     google/api/client.proto;l=106
+     *     google/api/client.proto;l=122
      * @return The referenceDocsUri.
      */
     @java.lang.Deprecated
@@ -663,7 +663,7 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
      * <code>string reference_docs_uri = 1 [deprecated = true];</code>
      *
      * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
-     *     google/api/client.proto;l=106
+     *     google/api/client.proto;l=122
      * @return The bytes for referenceDocsUri.
      */
     @java.lang.Deprecated
@@ -689,7 +689,7 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
      * <code>string reference_docs_uri = 1 [deprecated = true];</code>
      *
      * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
-     *     google/api/client.proto;l=106
+     *     google/api/client.proto;l=122
      * @param value The referenceDocsUri to set.
      * @return This builder for chaining.
      */
@@ -714,7 +714,7 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
      * <code>string reference_docs_uri = 1 [deprecated = true];</code>
      *
      * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
-     *     google/api/client.proto;l=106
+     *     google/api/client.proto;l=122
      * @return This builder for chaining.
      */
     @java.lang.Deprecated
@@ -735,7 +735,7 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
      * <code>string reference_docs_uri = 1 [deprecated = true];</code>
      *
      * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
-     *     google/api/client.proto;l=106
+     *     google/api/client.proto;l=122
      * @param value The bytes for referenceDocsUri to set.
      * @return This builder for chaining.
      */

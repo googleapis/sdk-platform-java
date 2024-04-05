@@ -22,7 +22,7 @@
 # different logic
 # 8 - configuration_yaml_path: path to the configuration yaml containing library
 # generation information for this library
-set -eo pipefail
+set -exo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
 
 postprocessing_target=$1
@@ -34,7 +34,7 @@ synthtool_commitish=$6
 is_monorepo=$7
 configuration_yaml_path=$8
 
-source "${scripts_root}"/utilities.sh
+source "${scripts_root}"/utils/utilities.sh
 
 declare -a required_inputs=("postprocessing_target" "versions_file" "owlbot_cli_image_sha" "synthtool_commitish" "is_monorepo")
 for required_input in "${required_inputs[@]}"; do
@@ -61,23 +61,73 @@ fi
 
 # we determine the location of the .OwlBot.yaml file by checking if the target
 # folder is a monorepo folder or not
-if [[ "${postprocessing_target}" == *google-cloud-java* ]]; then
-  owlbot_yaml_relative_path=".OwlBot.yaml"
+if [[ "${is_monorepo}" == "true" ]]; then
+  # the deep-remove-regex and deep-preserve-regex of the .OwlBot.yaml
+  # files in the monorepo libraries assume that `copy-code` is run
+  # from the root of the monorepo. However, we call `copy-code` from inside each
+  # library, so a path like `/java-asset/google-.*/src` will not have
+  # any effect. We solve this by creating a temporary owlbot yaml with
+  # the patched paths.
+  # For example, we convert 
+  # - "/java-asset/google-.*/src"
+  # to
+  # - "/google-.*/src"
+
+  library_name=$(basename "${postprocessing_target}")
+  cat "${postprocessing_target}/.OwlBot.yaml" \
+    | sed "s/- \"\/${library_name}/ - \"/" \
+    > "${postprocessing_target}/.OwlBot.hermetic.yaml"
+  owlbot_yaml_relative_path=".OwlBot.hermetic.yaml"
 else
   owlbot_yaml_relative_path=".github/.OwlBot.yaml"
 fi
 
+# Default values for running copy-code directly from host
+repo_bindings="-v ${postprocessing_target}:/workspace"
+repo_workspace="/workspace"
+preprocessed_libraries_binding="${owlbot_cli_source_folder}"
+
+# When running docker inside docker, we run into the issue of volume bindings
+# being mapped from the host machine to the child container (instead of the
+# parent container to child container) because we bind the `docker.sock` socket
+# to the parent container (i.e. docker calls use the host's filesystem context)
+# see https://serverfault.com/a/819371
+# We solve this by referencing environment variables that will be
+# set to produce the correct volume mapping.
+#
+# The workflow is: to check if we are in a docker container (via passed env var)
+# and use managed volumes (docker volume create) instead of bindings
+# (-v /path:/other-path). The volume names are also received as env vars.
+
+if [[ -n "${RUNNING_IN_DOCKER}" ]]; then
+  set -u # temporarily fail on unset variables
+  repo_bindings="${REPO_BINDING_VOLUMES}"
+  set +u
+  library_name=$(echo "${postprocessing_target}" | rev | cut -d'/' -f1 | rev)
+  repo_workspace="/workspace/"
+  if [[ "${is_monorepo}" == "true" ]]; then
+    monorepo_name=$(echo "${postprocessing_target}" | rev | cut -d'/' -f2 | rev)
+    repo_workspace+="${monorepo_name}/"
+  fi
+  repo_workspace+="${library_name}"
+fi
+
 docker run --rm \
   --user "$(id -u)":"$(id -g)" \
-  -v "${postprocessing_target}:/repo" \
-  -v "${owlbot_cli_source_folder}:/pre-processed-libraries" \
-  -w /repo \
+  ${repo_bindings} \
+  -v "/tmp:/tmp" \
+  -w "${repo_workspace}" \
   --env HOME=/tmp \
   gcr.io/cloud-devrel-public-resources/owlbot-cli@"${owlbot_cli_image_sha}" \
   copy-code \
   --source-repo-commit-hash=none \
-  --source-repo=/pre-processed-libraries \
+  --source-repo="${preprocessed_libraries_binding}" \
   --config-file="${owlbot_yaml_relative_path}"
+
+# clean the custom owlbot yaml
+if [[ "${is_monorepo}" == "true" ]]; then
+  rm "${postprocessing_target}/.OwlBot.hermetic.yaml"
+fi
 
 # we clone the synthtool library and manually build it
 mkdir -p /tmp/synthtool
@@ -86,8 +136,10 @@ pushd /tmp/synthtool
 if [ ! -d "synthtool" ]; then
   git clone https://github.com/googleapis/synthtool.git
 fi
+git config --global --add safe.directory /tmp/synthtool/synthtool
 pushd "synthtool"
 
+git fetch --all
 git reset --hard "${synthtool_commitish}"
 
 python3 -m pip install -e .

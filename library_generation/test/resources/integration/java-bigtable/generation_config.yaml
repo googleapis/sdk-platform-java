@@ -1,9 +1,8 @@
-gapic_generator_version: 2.32.0
-grpc_version: 1.61.0
+gapic_generator_version: 2.37.0
 protobuf_version: 25.2
-googleapis_commitish: 40203ca1880849480bbff7b8715491060bbccdf1
+googleapis_commitish: 9868a57470a969ffa1d21194a5c05d7a6e4e98cc
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
-synthtool_commitish: 6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
+synthtool_commitish: a6fb7d5f072b75698af1cbf06c5b001565753cfb
 template_excludes:
   - ".gitignore"
   - ".kokoro/presubmit/integration.cfg"
@@ -23,6 +22,18 @@ template_excludes:
 libraries:
 - api_shortname: bigtable
   name_pretty: Cloud Bigtable
+  api_description: "Java idiomatic client for Cloud Bigtable."
+  product_documentation: "https://cloud.google.com/bigtable"
+  client_documentation: "https://cloud.google.com/java/docs/reference/google-cloud-bigtable/latest/history"
+  issue_tracker: "https://issuetracker.google.com/savedsearches/559777"
+  release_level: "stable"
+  language: "java"
+  repo: "googleapis/java-bigtable"
+  repo_short: "java-bigtable"
+  distribution_name: "com.google.cloud:google-cloud-bigtable"
+  excluded_poms: "google-cloud-bigtable-bom"
+  extra_versioned_modules: "google-cloud-bigtable-emulator,google-cloud-bigtable-emulator-core"
+  codeowner_team: "@googleapis/api-bigtable @googleapis/api-bigtable-partners"
   library_type: GAPIC_COMBO
   GAPICs:
   - proto_path: google/bigtable/admin/v2

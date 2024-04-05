@@ -74,7 +74,7 @@ done
 
 script_dir=$(dirname "$(readlink -f "$0")")
 # source utility functions
-source "${script_dir}"/utilities.sh
+source "${script_dir}"/utils/utilities.sh
 output_folder="$(get_output_folder)"
 
 if [ -z "${gapic_generator_version}" ]; then
@@ -174,12 +174,6 @@ case "${proto_path}" in
     # this proto is excluded from //google/rpc:google-rpc-java
     removed_proto="google/rpc/http.proto"
     proto_files="${proto_files//${removed_proto}/}"
-    ;;
-  "google/shopping"*)
-    # this proto is included in //google/shopping/css/v1:google-cloud-shopping-css-v1-java
-    # and //google/shopping/merchant/inventories/v1beta:google-cloud-merchant-inventories-v1beta-java
-    # and //google/shopping/merchant/reports/v1beta:google-cloud-merchant-reports-v1beta-java
-    proto_files="${proto_files} google/shopping/type/types.proto"
     ;;
 esac
 # download gapic-generator-java, protobuf and grpc plugin.
@@ -284,8 +278,7 @@ case "${proto_path}" in
 esac
 # copy proto files to proto-*/src/main/proto
 for proto_src in ${proto_files}; do
-  if [[ "${proto_src}" == "google/cloud/common/operation_metadata.proto" ]] ||
-     [[ "${proto_src}" == "google/shopping/type/types.proto" ]]; then
+  if [[ "${proto_src}" == "google/cloud/common/operation_metadata.proto" ]]; then
     continue
   fi
   mkdir -p "${temp_destination_path}/proto-${folder_name}/src/main/proto"

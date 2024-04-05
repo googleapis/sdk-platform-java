@@ -155,6 +155,31 @@ public class WatchdogTest {
   }
 
   @Test
+  public void testTimedOutBeforeResponse() throws InterruptedException {
+    MockServerStreamingCallable<String, String> autoFlowControlCallable =
+        new MockServerStreamingCallable<>();
+    AutoFlowControlObserver<String> downstreamObserver = new AutoFlowControlObserver<>();
+
+    autoFlowControlCallable.call("request", watchdog.watch(downstreamObserver, waitTime, idleTime));
+    MockServerStreamingCall<String, String> call1 = autoFlowControlCallable.popLastCall();
+
+    clock.incrementNanoTime(idleTime.toNanos() + 1);
+    watchdog.run();
+    assertThat(downstreamObserver.done.isDone()).isFalse();
+    assertThat(call1.getController().isCancelled()).isTrue();
+    call1.getController().getObserver().onError(new CancellationException("cancelled"));
+
+    Throwable actualError = null;
+    try {
+      downstreamObserver.done.get();
+    } catch (ExecutionException e) {
+      actualError = e.getCause();
+    }
+    assertThat(actualError).isInstanceOf(WatchdogTimeoutException.class);
+    assertThat(actualError.getMessage()).contains("waiting for next response");
+  }
+
+  @Test
   public void testMultiple() throws Exception {
     // Start stream1
     AccumulatingObserver<String> downstreamObserver1 = new AccumulatingObserver<>();
@@ -292,6 +317,32 @@ public class WatchdogTest {
     @Override
     public void onStart(StreamController controller) {
       controller.disableAutoInboundFlowControl();
+      this.controller.set(controller);
+    }
+
+    @Override
+    public void onResponse(T response) {
+      responses.add(response);
+    }
+
+    @Override
+    public void onError(Throwable t) {
+      done.setException(t);
+    }
+
+    @Override
+    public void onComplete() {
+      done.set(null);
+    }
+  }
+
+  static class AutoFlowControlObserver<T> implements ResponseObserver<T> {
+    SettableApiFuture<StreamController> controller = SettableApiFuture.create();
+    Queue<T> responses = Queues.newLinkedBlockingDeque();
+    SettableApiFuture<Void> done = SettableApiFuture.create();
+
+    @Override
+    public void onStart(StreamController controller) {
       this.controller.set(controller);
     }
 

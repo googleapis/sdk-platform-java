@@ -165,7 +165,6 @@ public interface ApiService {
    * {@code A.compareTo(B) < 0} then there is <b>not</b> guaranteed to be a valid state transition
    * {@code A -> B}.
    */
-  @BetaApi
   enum State {
     /**
      * A service in this state has encountered a problem and may not be operational. It cannot be
@@ -198,7 +197,6 @@ public interface ApiService {
    *
    * <p>All methods are no-ops by default, implementors should override the ones they care about.
    */
-  @BetaApi
   abstract class Listener {
     /**
      * Called when the service transitions to the {@linkplain State#FAILED FAILED} state. The
