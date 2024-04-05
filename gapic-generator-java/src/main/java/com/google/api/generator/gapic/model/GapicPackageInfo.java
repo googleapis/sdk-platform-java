@@ -23,25 +23,25 @@ public abstract class GapicPackageInfo {
 
   public static final GapicPackageInfo EMPTY = builder()
       .setPackageInfo(PackageInfoDefinition.EMPTY)
-      .setIsEmpty(true).build();
+      .build();
   public abstract PackageInfoDefinition packageInfo();
 
-  public abstract boolean isEmpty();
+  public boolean isEmpty() {
+    return packageInfo().isEmpty();
+  }
 
   public static GapicPackageInfo with(PackageInfoDefinition packageInfo) {
     return builder().setPackageInfo(packageInfo).build();
   }
 
   static Builder builder() {
-    return new AutoValue_GapicPackageInfo.Builder().setIsEmpty(false);
+    return new AutoValue_GapicPackageInfo.Builder();
   }
 
   @AutoValue.Builder
   abstract static class Builder {
 
     abstract Builder setPackageInfo(PackageInfoDefinition packageInfo);
-
-    abstract Builder setIsEmpty(boolean isEmpty);
 
     abstract GapicPackageInfo build();
   }
