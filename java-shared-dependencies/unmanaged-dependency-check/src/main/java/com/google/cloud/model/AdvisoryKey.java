@@ -6,4 +6,8 @@ public class AdvisoryKey {
   public AdvisoryKey(String id) {
     this.id = id;
   }
+
+  public String getId() {
+    return id;
+  }
 }

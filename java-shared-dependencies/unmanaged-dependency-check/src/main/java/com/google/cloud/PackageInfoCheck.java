@@ -1,30 +1,31 @@
 package com.google.cloud;
 
 import com.google.cloud.external.DepsDevClient;
+import com.google.cloud.model.Advisory;
+import com.google.cloud.model.AdvisoryKey;
+import com.google.cloud.model.CheckResult;
 import com.google.cloud.model.MavenCoordinate;
 import com.google.cloud.model.PackageInfo;
+import com.google.cloud.model.Version;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-public class DependencyInfoCheck {
+public class PackageInfoCheck {
   private final DepsDevClient depsDevClient;
 
-  public DependencyInfoCheck(DepsDevClient depsDevClient) {
+  public PackageInfoCheck(DepsDevClient depsDevClient) {
     this.depsDevClient = depsDevClient;
   }
 
-  public Map<String, List<String>> infoCheck(String groupId, String artifactId, String version)
+  public CheckResult check(String groupId, String artifactId, String artifactVersion)
       throws URISyntaxException, IOException, InterruptedException {
-    MavenCoordinate initial = new MavenCoordinate(groupId, artifactId, version);
+    MavenCoordinate initial = new MavenCoordinate(groupId, artifactId, artifactVersion);
     Set<MavenCoordinate> seenCoordinate = new HashSet<>();
     seenCoordinate.add(initial);
     Queue<MavenCoordinate> queue = new ArrayDeque<>();
@@ -41,17 +42,21 @@ public class DependencyInfoCheck {
           .forEach(queue::offer);
     }
 
-    Map<String, List<String>> res = new HashMap<>();
+    CheckResult result = new CheckResult();
     for (MavenCoordinate coordinate : dependencies) {
       PackageInfo packageInfo = depsDevClient.getPackageInfo(coordinate);
-      List<String> licenses = packageInfo
-          .getVersions()
-          .stream()
-          .flatMap(v -> v.getLicenses().stream())
-          .collect(Collectors.toList());
-      res.put(coordinate.toString(), licenses);
+      List<String> licenses = new ArrayList<>();
+      List<Advisory> advisories = new ArrayList<>();
+      for (Version version : packageInfo.getVersions()) {
+        licenses.addAll(version.getLicenses());
+        for (AdvisoryKey advisoryKey : version.getAdvisoryKeys()) {
+          advisories.add(depsDevClient.getAdvisory(advisoryKey.getId()));
+        }
+      }
+
+      result.add(coordinate.toString(), licenses, advisories);
     }
 
-    return res;
+    return result;
   }
 }

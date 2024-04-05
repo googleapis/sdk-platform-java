@@ -1,5 +1,6 @@
 package com.google.cloud.model;
 
+import com.google.common.collect.ImmutableList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +12,7 @@ public class PackageInfo {
   }
 
   public List<Version> getVersions() {
-    return versions;
+    return ImmutableList.copyOf(versions);
   }
 
   public List<MavenCoordinate> toMavenCoordinates() {

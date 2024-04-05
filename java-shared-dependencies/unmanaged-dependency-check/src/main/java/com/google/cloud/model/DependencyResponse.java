@@ -1,5 +1,6 @@
 package com.google.cloud.model;
 
+import com.google.common.collect.ImmutableList;
 import java.util.List;
 
 public class DependencyResponse {
@@ -10,6 +11,6 @@ public class DependencyResponse {
   }
 
   public List<Node> getNodes() {
-    return nodes;
+    return ImmutableList.copyOf(nodes);
   }
 }
