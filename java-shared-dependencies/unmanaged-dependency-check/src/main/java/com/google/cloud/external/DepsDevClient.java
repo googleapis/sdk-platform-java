@@ -1,5 +1,6 @@
 package com.google.cloud.external;
 
+import com.google.cloud.model.Advisory;
 import com.google.cloud.model.DependencyResponse;
 import com.google.cloud.model.MavenCoordinate;
 import com.google.cloud.model.PackageInfo;
@@ -18,8 +19,9 @@ import java.util.stream.Collectors;
 public class DepsDevClient {
   private final HttpClient client;
   public final Gson gson;
-  private final static String packageInfoUrlBase = "https://api.deps.dev/v3alpha/query?versionKey.system=maven&versionKey.name=%s:%s&versionKey.version=%s";
-  private final static String dependencyUrlBase = "https://api.deps.dev/v3alpha/systems/maven/packages/%s:%s/versions/%s:dependencies";
+  private final static String advisoryUrlBase = "https://api.deps.dev/v3/advisories/%s";
+  private final static String packageInfoUrlBase = "https://api.deps.dev/v3/query?versionKey.system=maven&versionKey.name=%s:%s&versionKey.version=%s";
+  private final static String dependencyUrlBase = "https://api.deps.dev/v3/systems/maven/packages/%s:%s/versions/%s:dependencies";
 
   public DepsDevClient(HttpClient client,  Gson gson) {
     this.client = client;
@@ -55,6 +57,16 @@ public class DepsDevClient {
         )
     );
     return gson.fromJson(response.body(), PackageInfo.class);
+  }
+
+  public Advisory getAdvisory(String advisoryId)
+      throws URISyntaxException, IOException, InterruptedException {
+    HttpResponse<String> response = getResponse(getAdvisoryUrl(advisoryId));
+    return gson.fromJson(response.body(), Advisory.class);
+  }
+
+  private String getAdvisoryUrl(String advisoryId) {
+    return String.format(advisoryUrlBase, advisoryId);
   }
 
   private String getPackageInfoUrl(String groupId, String artifactId, String version) {
