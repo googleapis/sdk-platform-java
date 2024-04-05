@@ -27,7 +27,7 @@ public abstract class GapicPackageInfo {
   public abstract PackageInfoDefinition packageInfo();
 
   public boolean isEmpty() {
-    return packageInfo().isEmpty();
+    return packageInfo().shouldGenerateFile();
   }
 
   public static GapicPackageInfo with(PackageInfoDefinition packageInfo) {

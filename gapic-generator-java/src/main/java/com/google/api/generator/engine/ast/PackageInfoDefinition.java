@@ -22,10 +22,12 @@ import java.util.List;
 
 @AutoValue
 public abstract class PackageInfoDefinition implements AstNode {
-  public static final PackageInfoDefinition EMPTY = builder().setPakkage("").setIsEmpty(true).build();
+  public static final PackageInfoDefinition EMPTY = builder().setPakkage("").build();
   public abstract String pakkage();
 
-  public abstract boolean isEmpty();
+  public boolean shouldGenerateFile() {
+    return pakkage().isEmpty();
+  }
 
   public abstract ImmutableList<CommentStatement> fileHeader();
 
@@ -42,7 +44,6 @@ public abstract class PackageInfoDefinition implements AstNode {
 
   public static Builder builder() {
     return new AutoValue_PackageInfoDefinition.Builder()
-        .setIsEmpty(false)
         .setFileHeader(Collections.emptyList())
         .setHeaderCommentStatements(Collections.emptyList())
         .setAnnotations(Collections.emptyList());
@@ -51,8 +52,6 @@ public abstract class PackageInfoDefinition implements AstNode {
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setPakkage(String pakkage);
-
-    abstract Builder setIsEmpty(boolean isEmpty);
 
     public Builder setFileHeader(CommentStatement... headerComments) {
       return setFileHeader(Arrays.asList(headerComments));
