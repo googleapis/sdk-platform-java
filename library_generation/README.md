@@ -10,6 +10,8 @@ google-cloud-java) from a configuration file.
 - Java runtime environment (8 or above)
 - Apache Maven (used in formatting source code)
 - Python (3.11.6 or above)
+- Docker 
+- Git
 
 ## Prerequisite
 
@@ -188,22 +190,26 @@ libraries:
       - proto_path: google/cloud/asset/v1p7beta1
 ```
 
+# Local Environment Setup before running `entry_point.py`
+
+1. Assuming Python 3 is installed, follow official guide from [Python.org](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments) to create a virtual environment. The virtual environment can be installed to any folder, usually it is recommended to be installed under the root folder of the project(`sdk-platform-java` in this case).
+2. Assuming the virtual environment is installed under `sdk-platform-java`. Run the following command under the root folder of `sdk-platform-java` to install the dependencies of `library_generation`
+```bash
+python -m pip install -r library_generation/requirements.txt
+```
+3. Run the following command to install `library_generation` as a module, which allows the `library_generation` module to be imported from anywhere
+```bash
+python -m pip install library_generation/
+```
+
 ## An example to generate a repository using `entry_point.py`
 
 ```bash
-# install python module (allows the `library_generation` module to be imported from anywhere)
-python -m pip install -r library_generation/requirements.in
-# install library_generation module
-python -m pip install library_generation
-# generate the repository
-python -m library_generation/entry_point.py generate \
+python library_generation/entry_point.py generate \
 --baseline-generation-config=/path/to/baseline_config_file \
 --current-generation-config=/path/to/current_config_file \
---repository-path=/path/to/repository
+--repository-path=path/to/repository
 ```
-
-## An example of generated repository using `entry_point.py`
-
 If you run `entry_point.py` with the example [configuration](#an-example-of-generation-configuration)
 shown above, the repository structure is:
 ```
