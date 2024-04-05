@@ -1108,7 +1108,7 @@ public class Parser {
   }
 
   @VisibleForTesting
-  protected static String parseServiceJavaPackage(CodeGeneratorRequest request) {
+  static String parseServiceJavaPackage(CodeGeneratorRequest request) {
     Map<String, Integer> javaPackageCount = new HashMap<>();
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     for (String fileToGenerate : request.getFileToGenerateList()) {
