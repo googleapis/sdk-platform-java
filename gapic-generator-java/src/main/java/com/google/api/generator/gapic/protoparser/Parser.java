@@ -1147,9 +1147,6 @@ public class Parser {
     if (finalPackageEntry.isPresent()) {
       finalJavaPackage = finalPackageEntry.get().getKey();
     }
-    if (Strings.isNullOrEmpty(finalJavaPackage)) {
-      LOGGER.warning("No service Java package found");
-    }
     return finalJavaPackage;
   }
 
