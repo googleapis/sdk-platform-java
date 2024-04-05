@@ -42,15 +42,16 @@ committish_map = {
     "java-bigtable": "chore/test-hermetic-build",
 }
 config_dir = f"{script_dir}/resources/integration"
-config_name = "generation_config.yaml"
-monorepo_baseline_commit = "a17d4caf184b050d50cacf2b0d579ce72c31ce74"
-split_repo_baseline_commit = "679060c64136e85b52838f53cfe612ce51e60d1d"
+baseline_config_name = "baseline_generation_config.yaml"
+current_config_name = "current_generation_config.yaml"
 
 
 class IntegrationTest(unittest.TestCase):
-    def test_entry_point_running_in_container(self):
-        self.__build_image(docker_file=build_file, cwd=repo_root_dir)
+    @classmethod
+    def setUpClass(cls) -> None:
+        IntegrationTest.__build_image(docker_file=build_file, cwd=repo_root_dir)
 
+    def test_entry_point_running_in_container(self):
         shutil.rmtree(f"{golden_dir}", ignore_errors=True)
         os.makedirs(f"{golden_dir}", exist_ok=True)
         config_files = self.__get_config_files(config_dir)
@@ -74,15 +75,11 @@ class IntegrationTest(unittest.TestCase):
             )
             repo_volumes = f"-v repo-{repo}:/workspace/{repo} -v config-{repo}:/workspace/config-{repo}"
             # 4. run entry_point.py in docker container
-            baseline_commit = (
-                monorepo_baseline_commit
-                if repo == "google-cloud-java"
-                else split_repo_baseline_commit
-            )
             self.__run_entry_point_in_docker_container(
                 repo=repo,
                 repo_volumes=repo_volumes,
-                baseline_commit=baseline_commit,
+                baseline_config=baseline_config_name,
+                current_config=current_config_name,
             )
             # 5. compare generation result with golden files
             print(
@@ -130,7 +127,7 @@ class IntegrationTest(unittest.TestCase):
                 self.assertTrue(len(generated_only) == 0)
                 self.assertTrue(len(diff_files) == 0)
 
-                print("  No differences found in {library_name}")
+                print(f"  No differences found in {library_name}")
                 # compare .repo-metadata.json
                 self.assertTrue(
                     self.__compare_json_files(
@@ -162,7 +159,7 @@ class IntegrationTest(unittest.TestCase):
                 )
                 print("  pom.xml comparison succeed.")
                 # compare PR description
-                description_file = f"{config_dir}/{repo}/pr_description.txt"
+                description_file = f"{output_dir}/{repo}/pr_description.txt"
                 self.assertTrue(
                     cmp(
                         f"{config_dir}/{repo}/pr-description-golden.txt",
@@ -243,7 +240,11 @@ class IntegrationTest(unittest.TestCase):
 
     @classmethod
     def __run_entry_point_in_docker_container(
-        cls, repo: str, repo_volumes: str, baseline_commit: str
+        cls,
+        repo: str,
+        repo_volumes: str,
+        baseline_config: str,
+        current_config: str,
     ):
         subprocess.check_call(
             [
@@ -266,38 +267,11 @@ class IntegrationTest(unittest.TestCase):
                 "/src",
                 image_tag,
                 "python",
-                "/src/generate_repo.py",
+                "/src/cli/entry_point.py",
                 "generate",
-                f"--generation-config-yaml=/workspace/config-{repo}/{config_name}",
+                f"--baseline-generation-config=/workspace/config-{repo}/{baseline_config}",
+                f"--current-generation-config=/workspace/config-{repo}/{current_config}",
                 f"--repository-path=/workspace/{repo}",
-            ]
-        )
-
-        subprocess.check_call(
-            [
-                "docker",
-                "run",
-                "--rm",
-                "-v",
-                f"repo-{repo}:/workspace/{repo}",
-                "-v",
-                f"config-{repo}:/workspace/config-{repo}",
-                "-v",
-                "/tmp:/tmp",
-                "-v",
-                "/var/run/docker.sock:/var/run/docker.sock",
-                "-e",
-                "RUNNING_IN_DOCKER=true",
-                "-e",
-                f"REPO_BINDING_VOLUMES={repo_volumes}",
-                "-w",
-                "/src",
-                image_tag,
-                "python",
-                "/src/generate_pr_description.py",
-                "generate",
-                f"--generation-config-yaml=/workspace/config-{repo}/{config_name}",
-                f"--baseline-commit={baseline_commit}",
             ]
         )
 
@@ -310,7 +284,7 @@ class IntegrationTest(unittest.TestCase):
             repo = sub_dir.name
             if repo in ["golden", "java-bigtable"]:
                 continue
-            config = f"{sub_dir}/{config_name}"
+            config = f"{sub_dir}/{current_config_name}"
             config_files.append((repo, config))
         return config_files
 

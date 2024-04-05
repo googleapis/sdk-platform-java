@@ -12,13 +12,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import calendar
 import os
 import shutil
+import click as click
 from typing import Dict
-
-import click
 from git import Commit, Repo
-from library_generation.model.generation_config import from_yaml
+from library_generation.model.generation_config import GenerationConfig, from_yaml
 from library_generation.utils.proto_path_utils import find_versioned_proto_path
 from library_generation.utils.commit_message_formatter import format_commit_message
 from library_generation.utils.commit_message_formatter import wrap_override_commit
@@ -53,51 +53,61 @@ def main(ctx):
     This commit should be an ancestor of googleapis commit in configuration.
     """,
 )
-@click.option(
-    "--repo-url",
-    type=str,
-    default="https://github.com/googleapis/googleapis.git",
-    show_default=True,
-    help="""
-    GitHub repository URL.
-    """,
-)
 def generate(
     generation_config_yaml: str,
-    repo_url: str,
     baseline_commit: str,
-) -> str:
-    description = generate_pr_descriptions(
-        generation_config_yaml=generation_config_yaml,
-        repo_url=repo_url,
-        baseline_commit=baseline_commit,
-    )
+) -> None:
     idx = generation_config_yaml.rfind("/")
     config_path = generation_config_yaml[:idx]
-    with open(f"{config_path}/pr_description.txt", "w+") as f:
-        f.write(description)
-    return description
+    generate_pr_descriptions(
+        config=from_yaml(generation_config_yaml),
+        baseline_commit=baseline_commit,
+        description_path=config_path,
+    )
 
 
 def generate_pr_descriptions(
-    generation_config_yaml: str,
-    repo_url: str,
+    config: GenerationConfig,
     baseline_commit: str,
-) -> str:
-    config = from_yaml(generation_config_yaml)
+    description_path: str,
+    repo_url: str = "https://github.com/googleapis/googleapis.git",
+) -> None:
+    """
+    Generate pull request description from baseline_commit (exclusive) to the
+    googleapis commit (inclusive) in the given generation config.
+
+    The pull request description will be generated into
+    description_path/pr_description.txt.
+
+    :param config: a GenerationConfig object. The googleapis commit in this
+    configuration is the latest commit, inclusively, from which the commit
+    message is considered.
+    :param baseline_commit: The baseline (oldest) commit, exclusively, from
+    which the commit message is considered. This commit should be an ancestor
+    of googleapis commit in configuration.
+    :param description_path: the path to which the pull request description
+    file goes.
+    :param repo_url: the GitHub repository from which retrieves the commit
+    history.
+    """
     paths = config.get_proto_path_to_library_name()
-    return __get_commit_messages(
+    description = get_commit_messages(
         repo_url=repo_url,
-        latest_commit=config.googleapis_commitish,
+        current_commit=config.googleapis_commitish,
         baseline_commit=baseline_commit,
         paths=paths,
         is_monorepo=config.is_monorepo,
     )
 
+    description_file = f"{description_path}/pr_description.txt"
+    print(f"Writing pull request description to {description_file}")
+    with open(description_file, "w+") as f:
+        f.write(description)
 
-def __get_commit_messages(
+
+def get_commit_messages(
     repo_url: str,
-    latest_commit: str,
+    current_commit: str,
     baseline_commit: str,
     paths: Dict[str, str],
     is_monorepo: bool,
@@ -109,7 +119,7 @@ def __get_commit_messages(
     Note that baseline_commit should be an ancestor of latest_commit.
 
     :param repo_url: the url of the repository.
-    :param latest_commit: the newest commit to be considered in
+    :param current_commit: the newest commit to be considered in
     selecting commit message.
     :param baseline_commit: the oldest commit to be considered in
     selecting commit message. This commit should be an ancestor of
@@ -121,7 +131,15 @@ def __get_commit_messages(
     shutil.rmtree(tmp_dir, ignore_errors=True)
     os.mkdir(tmp_dir)
     repo = Repo.clone_from(repo_url, tmp_dir)
-    commit = repo.commit(latest_commit)
+    commit = repo.commit(current_commit)
+    current_commit_time = __get_commit_timestamp(commit)
+    baseline_commit_time = __get_commit_timestamp(repo.commit(baseline_commit))
+    if current_commit_time <= baseline_commit_time:
+        raise ValueError(
+            f"current_commit ({current_commit[:7]}, committed on "
+            f"{current_commit_time}) should be newer than baseline_commit "
+            f"({baseline_commit[:7]}, committed on {baseline_commit_time})."
+        )
     qualified_commits = {}
     while str(commit.hexsha) != baseline_commit:
         commit_and_name = __filter_qualified_commit(paths=paths, commit=commit)
@@ -133,7 +151,7 @@ def __get_commit_messages(
         commit = commit_parents[0]
     shutil.rmtree(tmp_dir, ignore_errors=True)
     return __combine_commit_messages(
-        latest_commit=latest_commit,
+        current_commit=current_commit,
         baseline_commit=baseline_commit,
         commits=qualified_commits,
         is_monorepo=is_monorepo,
@@ -159,13 +177,13 @@ def __filter_qualified_commit(paths: Dict[str, str], commit: Commit) -> (Commit,
 
 
 def __combine_commit_messages(
-    latest_commit: str,
+    current_commit: str,
     baseline_commit: str,
     commits: Dict[Commit, str],
     is_monorepo: bool,
 ) -> str:
     messages = [
-        f"This pull request is generated with proto changes between googleapis commit {baseline_commit} (exclusive) and {latest_commit} (inclusive).",
+        f"This pull request is generated with proto changes between googleapis commit {baseline_commit} (exclusive) and {current_commit} (inclusive).",
         "Qualified commits are:",
     ]
     for commit in commits:
@@ -181,6 +199,17 @@ def __combine_commit_messages(
     )
 
     return "\n".join(messages)
+
+
+def __get_commit_timestamp(commit: Commit) -> int:
+    """
+    # Convert datetime to UTC timestamp. For more info:
+    # https://stackoverflow.com/questions/5067218/get-utc-timestamp-in-python-with-datetime
+
+    :param commit: a Commit object
+    :return: the timestamp of the commit
+    """
+    return calendar.timegm(commit.committed_datetime.utctimetuple())
 
 
 if __name__ == "__main__":
