@@ -23,3 +23,21 @@ class EntryPointTest(unittest.TestCase):
         result = runner.invoke(generate, ["--repository-path=."])
         self.assertEqual(1, result.exit_code)
         self.assertEqual(FileNotFoundError, result.exc_info[0])
+        self.assertRegex(
+            result.exception.args[0], "generation_config.yaml does not exist."
+        )
+
+    def test_entry_point_with_baseline_without_current_raise_file_exception(self):
+        runner = CliRunner()
+        # noinspection PyTypeChecker
+        result = runner.invoke(
+            generate,
+            ["--baseline-generation-config=path/to/config.yaml", "--repository-path=."],
+        )
+        self.assertEqual(1, result.exit_code)
+        self.assertEqual(FileNotFoundError, result.exc_info[0])
+        self.assertRegex(
+            result.exception.args[0],
+            "current_generation_config is not specified when "
+            "baseline_generation_config is specified.",
+        )

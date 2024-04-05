@@ -70,6 +70,7 @@ def generate(
     repository_path: str,
 ):
     default_generation_config = f"{os.getcwd()}/generation_config.yaml"
+
     if baseline_generation_config is None and current_generation_config is None:
         if not os.path.isfile(default_generation_config):
             raise FileNotFoundError(
@@ -80,10 +81,13 @@ def generate(
             )
         current_generation_config = default_generation_config
     elif current_generation_config is None:
-        # make sure current_generation_config is not None if only one config
-        # is specified.
-        current_generation_config = baseline_generation_config
-        baseline_generation_config = None
+        raise FileNotFoundError(
+            "current_generation_config is not specified when "
+            "baseline_generation_config is specified. "
+            "current_generation_config should be the source of truth of "
+            "library generation."
+        )
+
     current_generation_config = os.path.abspath(current_generation_config)
     repository_path = os.path.abspath(repository_path)
     if not baseline_generation_config:
