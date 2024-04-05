@@ -2910,7 +2910,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeEmptyPackageInfoDefinition() {
-    PackageInfoDefinition definition = PackageInfoDefinition.empty();
+    PackageInfoDefinition definition = PackageInfoDefinition.EMPTY;
     definition.accept(writerVisitor);
     assertEquals("", writerVisitor.write());
   }

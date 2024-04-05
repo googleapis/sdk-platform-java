@@ -22,6 +22,7 @@ import java.util.List;
 
 @AutoValue
 public abstract class PackageInfoDefinition implements AstNode {
+  public static final PackageInfoDefinition EMPTY = builder().setPakkage("").setIsEmpty(true).build();
   public abstract String pakkage();
 
   public abstract boolean isEmpty();
@@ -45,10 +46,6 @@ public abstract class PackageInfoDefinition implements AstNode {
         .setFileHeader(Collections.emptyList())
         .setHeaderCommentStatements(Collections.emptyList())
         .setAnnotations(Collections.emptyList());
-  }
-
-  public static PackageInfoDefinition empty() {
-    return builder().setPakkage("").setIsEmpty(true).build();
   }
 
   @AutoValue.Builder

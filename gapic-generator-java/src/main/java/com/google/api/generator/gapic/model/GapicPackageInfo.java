@@ -22,7 +22,7 @@ import com.google.auto.value.AutoValue;
 public abstract class GapicPackageInfo {
 
   public static final GapicPackageInfo EMPTY = builder()
-      .setPackageInfo(PackageInfoDefinition.empty())
+      .setPackageInfo(PackageInfoDefinition.EMPTY)
       .setIsEmpty(true).build();
   public abstract PackageInfoDefinition packageInfo();
 
@@ -34,10 +34,6 @@ public abstract class GapicPackageInfo {
 
   static Builder builder() {
     return new AutoValue_GapicPackageInfo.Builder().setIsEmpty(false);
-  }
-
-  public static GapicPackageInfo empty() {
-    return builder().setPackageInfo(PackageInfoDefinition.empty()).setIsEmpty(true).build();
   }
 
   @AutoValue.Builder
