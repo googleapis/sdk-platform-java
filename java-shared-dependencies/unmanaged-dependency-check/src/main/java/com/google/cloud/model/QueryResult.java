@@ -4,10 +4,10 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PackageInfo {
+public class QueryResult {
   private final List<Version> versions;
 
-  public PackageInfo(List<Version> versions) {
+  public QueryResult(List<Version> versions) {
     this.versions = versions;
   }
 

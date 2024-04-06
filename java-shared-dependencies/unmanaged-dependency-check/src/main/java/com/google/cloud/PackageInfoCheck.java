@@ -5,7 +5,7 @@ import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
 import com.google.cloud.model.CheckResult;
 import com.google.cloud.model.MavenCoordinate;
-import com.google.cloud.model.PackageInfo;
+import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Version;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -44,7 +44,7 @@ public class PackageInfoCheck {
 
     CheckResult result = new CheckResult();
     for (MavenCoordinate coordinate : dependencies) {
-      PackageInfo packageInfo = depsDevClient.getPackageInfo(coordinate);
+      QueryResult packageInfo = depsDevClient.getPackageInfo(coordinate);
       List<String> licenses = new ArrayList<>();
       List<Advisory> advisories = new ArrayList<>();
       for (Version version : packageInfo.getVersions()) {

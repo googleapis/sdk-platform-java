@@ -3,7 +3,7 @@ package com.google.cloud.external;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.DependencyResponse;
 import com.google.cloud.model.MavenCoordinate;
-import com.google.cloud.model.PackageInfo;
+import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Relation;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class DepsDevClient {
   private final HttpClient client;
   public final Gson gson;
   private final static String advisoryUrlBase = "https://api.deps.dev/v3/advisories/%s";
-  private final static String packageInfoUrlBase = "https://api.deps.dev/v3/query?versionKey.system=maven&versionKey.name=%s:%s&versionKey.version=%s";
+  private final static String queryUrlBase = "https://api.deps.dev/v3/query?versionKey.system=maven&versionKey.name=%s:%s&versionKey.version=%s";
   private final static String dependencyUrlBase = "https://api.deps.dev/v3/systems/maven/packages/%s:%s/versions/%s:dependencies";
 
   public DepsDevClient(HttpClient client,  Gson gson) {
@@ -47,16 +47,16 @@ public class DepsDevClient {
         .collect(Collectors.toList());
   }
 
-  public PackageInfo getPackageInfo(MavenCoordinate mavenCoordinate)
+  public QueryResult getPackageInfo(MavenCoordinate mavenCoordinate)
       throws URISyntaxException, IOException, InterruptedException {
     HttpResponse<String> response = getResponse(
-        getPackageInfoUrl(
+        getQueryUrl(
             mavenCoordinate.getGroupId(),
             mavenCoordinate.getArtifactId(),
             mavenCoordinate.getVersion()
         )
     );
-    return gson.fromJson(response.body(), PackageInfo.class);
+    return gson.fromJson(response.body(), QueryResult.class);
   }
 
   public Advisory getAdvisory(String advisoryId)
@@ -69,8 +69,8 @@ public class DepsDevClient {
     return String.format(advisoryUrlBase, advisoryId);
   }
 
-  private String getPackageInfoUrl(String groupId, String artifactId, String version) {
-    return String.format(packageInfoUrlBase, groupId, artifactId, version);
+  private String getQueryUrl(String groupId, String artifactId, String version) {
+    return String.format(queryUrlBase, groupId, artifactId, version);
   }
 
   private String getDependencyUrl(String groupId, String artifactId, String version) {
