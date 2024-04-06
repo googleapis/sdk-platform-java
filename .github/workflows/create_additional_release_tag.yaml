@@ -11,7 +11,7 @@ jobs:
     permissions: write-all
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
     - name: Set up Git
@@ -34,14 +34,3 @@ jobs:
           git tag $TAG_NAME
           git push origin $TAG_NAME
         done
-        # Generate a tag for unmanaged dependencies check.
-        # Use fixed tag so that checks in handwritten libraries do not need to
-        # update the version.
-        CHECK_LATEST_TAG="unmanaged-dependencies-check-latest"
-        # delete and create the tag locally.
-        git tag --delete ${CHECK_LATEST_TAG}
-        git tag ${CHECK_LATEST_TAG}
-        # delete the tag in remote repo and push again.
-        git push --delete origin ${CHECK_LATEST_TAG}
-        git push origin ${CHECK_LATEST_TAG}
-
