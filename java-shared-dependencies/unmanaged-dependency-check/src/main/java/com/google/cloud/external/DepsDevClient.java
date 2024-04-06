@@ -47,7 +47,7 @@ public class DepsDevClient {
         .collect(Collectors.toList());
   }
 
-  public QueryResult getPackageInfo(MavenCoordinate mavenCoordinate)
+  public QueryResult getQueryResult(MavenCoordinate mavenCoordinate)
       throws URISyntaxException, IOException, InterruptedException {
     HttpResponse<String> response = getResponse(
         getQueryUrl(

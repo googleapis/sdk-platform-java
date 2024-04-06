@@ -3,7 +3,7 @@ package com.google.cloud;
 import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
-import com.google.cloud.model.CheckResult;
+import com.google.cloud.model.PackageInfo;
 import com.google.cloud.model.MavenCoordinate;
 import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Version;
@@ -23,7 +23,7 @@ public class PackageInfoCheck {
     this.depsDevClient = depsDevClient;
   }
 
-  public CheckResult check(String groupId, String artifactId, String artifactVersion)
+  public List<PackageInfo> check(String groupId, String artifactId, String artifactVersion)
       throws URISyntaxException, IOException, InterruptedException {
     MavenCoordinate initial = new MavenCoordinate(groupId, artifactId, artifactVersion);
     Set<MavenCoordinate> seenCoordinate = new HashSet<>();
@@ -42,9 +42,9 @@ public class PackageInfoCheck {
           .forEach(queue::offer);
     }
 
-    CheckResult result = new CheckResult();
+    List<PackageInfo> checkResult = new ArrayList<>();
     for (MavenCoordinate coordinate : dependencies) {
-      QueryResult packageInfo = depsDevClient.getPackageInfo(coordinate);
+      QueryResult packageInfo = depsDevClient.getQueryResult(coordinate);
       List<String> licenses = new ArrayList<>();
       List<Advisory> advisories = new ArrayList<>();
       for (Version version : packageInfo.getVersions()) {
@@ -54,9 +54,9 @@ public class PackageInfoCheck {
         }
       }
 
-      result.add(coordinate.toString(), licenses, advisories);
+      checkResult.add(new PackageInfo(coordinate, licenses, advisories));
     }
 
-    return result;
+    return checkResult;
   }
 }
