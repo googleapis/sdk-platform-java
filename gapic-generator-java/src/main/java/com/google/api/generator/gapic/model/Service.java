@@ -65,9 +65,9 @@ public abstract class Service {
     return "";
   }
 
-  public String apiVersion() {
+  public String apiMajorVersion() {
     if (!Strings.isNullOrEmpty(protoPakkage())) {
-      return parseApiVersion(protoPakkage());
+      return parseApiMajorVersion(protoPakkage());
     }
     return "";
   }
@@ -177,17 +177,17 @@ public abstract class Service {
     public abstract Service build();
   }
 
-  private static String parseApiVersion(String protoPackage) {
-    //  parse protoPackage for apiVersion
+  private static String parseApiMajorVersion(String protoPackage) {
+    //  parse protoPackage for apiMajorVersion
     String[] pakkage = protoPackage.split("\\.");
-    String apiVersion;
+    String apiMajorVersion;
     //  e.g. v1, v2, v1beta1
     if (pakkage[pakkage.length - 1].matches("v[0-9].*")) {
-      apiVersion = pakkage[pakkage.length - 1];
+      apiMajorVersion = pakkage[pakkage.length - 1];
     } else {
-      apiVersion = "";
+      apiMajorVersion = "";
     }
-    return apiVersion;
+    return apiMajorVersion;
   }
 
   // Parse the service name from the default host configured in the protos
