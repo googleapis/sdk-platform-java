@@ -2,6 +2,7 @@ package com.google.cloud.model;
 
 import com.google.cloud.exception.HasVulnerabilityException;
 import com.google.cloud.exception.NonCompliantLicenseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +13,13 @@ public class CheckReport {
 
   private final Map<MavenCoordinate, List<Advisory>> advisories;
   private final Map<MavenCoordinate, List<String>> nonCompliantLicenses;
+  private final List<LicenseCategory> nonCompliantCategories = List.of(LicenseCategory.Restricted);
 
   private final static Logger LOGGER = Logger.getLogger(CheckReport.class.getName());
 
   public CheckReport(List<PackageInfo> result) {
     advisories = getAdvisories(result);
-    nonCompliantLicenses = getLicenses(result);
+    nonCompliantLicenses = getNonCompliantLicenses(result);
   }
 
   public void generateReport() throws HasVulnerabilityException, NonCompliantLicenseException {
@@ -36,17 +38,33 @@ public class CheckReport {
 
   private Map<MavenCoordinate, List<Advisory>> getAdvisories(List<PackageInfo> result) {
     Map<MavenCoordinate, List<Advisory>> advisories = new HashMap<>();
-    result.forEach(packageInfo ->
-        advisories.put(packageInfo.getMavenCoordinate(), packageInfo.getAdvisories())
-    );
+    result.forEach(packageInfo -> {
+      List<Advisory> adv = packageInfo.getAdvisories();
+      if (!adv.isEmpty()) {
+        advisories.put(packageInfo.getMavenCoordinate(), packageInfo.getAdvisories());
+      }
+    });
     return advisories;
   }
 
-  private Map<MavenCoordinate, List<String>> getLicenses(List<PackageInfo> result) {
+  private Map<MavenCoordinate, List<String>> getNonCompliantLicenses(List<PackageInfo> result) {
     Map<MavenCoordinate, List<String>> licenses = new HashMap<>();
-    result.forEach(packageInfo ->
-        licenses.put(packageInfo.getMavenCoordinate(), packageInfo.getLicenses())
-    );
+
+    result.forEach(packageInfo -> {
+      List<String> nonCompliantLicenses = new ArrayList<>();
+      for (String licenseStr : packageInfo.getLicenses()) {
+        License license = License.valueOf(licenseStr);
+        for (LicenseCategory nonCompliantCategory : nonCompliantCategories) {
+          if (license.getCategories().contains(nonCompliantCategory)) {
+            nonCompliantLicenses.add(licenseStr);
+            break;
+          }
+        }
+      }
+      if (!nonCompliantLicenses.isEmpty()) {
+        licenses.put(packageInfo.getMavenCoordinate(), nonCompliantLicenses);
+      }
+    });
     return licenses;
   }
 

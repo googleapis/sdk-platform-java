@@ -4,13 +4,14 @@ package com.google.cloud.model;
 import static org.junit.Assert.assertThrows;
 
 import com.google.cloud.exception.HasVulnerabilityException;
+import com.google.cloud.exception.NonCompliantLicenseException;
 import java.util.List;
 import org.junit.Test;
 
 public class CheckReportTest {
 
   @Test
-  public void testGenerateReportWithAdvisoriesThrowException() {
+  public void testGenerateReportWithAdvisoriesThrowsException() {
     List<PackageInfo> results = List.of(
         new PackageInfo(
             new MavenCoordinate("com.example", "artifact", "1.2.3"),
@@ -27,5 +28,18 @@ public class CheckReportTest {
     );
     CheckReport report = new CheckReport(results);
     assertThrows("Found vulnerabilities in check report.", HasVulnerabilityException.class, report::generateReport);
+  }
+
+  @Test
+  public void testGenerateReportWithNonCompliantLicenseThrowsException() {
+    List<PackageInfo> results = List.of(
+        new PackageInfo(
+            new MavenCoordinate("com.example", "artifact", "1.2.3"),
+            List.of("BCL"),
+            List.of()
+        )
+    );
+    CheckReport report = new CheckReport(results);
+    assertThrows("Found non compliant licenses in check report.", NonCompliantLicenseException.class, report::generateReport);
   }
 }
