@@ -1,0 +1,34 @@
+name: Dependency Analyzer
+description: Get dependency information from deps.dev
+inputs:
+  group:
+    description: the group id of the dependency
+    required: true
+  artifact:
+    description: the artifact id of the dependency
+    required: true
+  version:
+    description: the version of the dependency
+    required: true
+runs:
+  using: composite
+  steps:
+  - uses: actions/setup-java@v4
+    with:
+      distribution: temurin
+      java-version: 11
+      cache: maven
+  - name: Set up Maven
+    uses: stCarolas/setup-maven@v4.5
+    with:
+      maven-version: 3.8.2
+  - name: Install dependency analyzer
+    shell: bash
+    run: |
+      cd ${{ github.action_path }}
+      echo "Install Dependency Analyzer"
+      mvn clean install -V --batch-mode --no-transfer-progress -DskipTests
+  - name: Check dependency information
+    shell: bash
+    run: |
+      mvn exec:java -Ddep.group=${inputs.group} -Ddep.artifact=${inputs.artifact} -Ddep.version=${inputs.version}
