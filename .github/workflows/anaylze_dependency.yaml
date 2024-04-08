@@ -1,0 +1,22 @@
+name: Run dependency analyzer
+inputs:
+  group:
+    description: the group id of the dependency
+    required: true
+  artifact:
+    description: the artifact id of the dependency
+    required: true
+  version:
+    description: the version of the dependency
+    required: true
+jobs:
+  Run-dependency-analyzer:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: run dependency analyzer
+      uses: java-shared-dependencies/dependency-analyzer
+      with:
+        group: ${inputs.group}
+        artifact: ${inputs.artifact}
+        version: ${inputs.version}
