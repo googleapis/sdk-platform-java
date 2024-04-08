@@ -33,13 +33,13 @@ class ConfigChangeTest(unittest.TestCase):
                 ChangeType.LIBRARY_LEVEL_CHANGE: [
                     LibraryChange(
                         changed_param="test",
-                        latest_value="test",
+                        current_value="test",
                         library_name="test-library",
                     )
                 ],
             },
             baseline_config=ConfigChangeTest.__get_a_gen_config(),
-            latest_config=ConfigChangeTest.__get_a_gen_config(),
+            current_config=ConfigChangeTest.__get_a_gen_config(),
         )
         self.assertEqual(
             ConfigChange.ALL_LIBRARIES_CHANGED,
@@ -52,32 +52,32 @@ class ConfigChangeTest(unittest.TestCase):
                 ChangeType.LIBRARY_LEVEL_CHANGE: [
                     LibraryChange(
                         changed_param="test",
-                        latest_value="test",
+                        current_value="test",
                         library_name="a-library",
                     ),
                     LibraryChange(
                         changed_param="test",
-                        latest_value="test",
+                        current_value="test",
                         library_name="another-library",
                     ),
                 ],
                 ChangeType.LIBRARIES_ADDITION: [
                     LibraryChange(
                         changed_param="test",
-                        latest_value="test",
+                        current_value="test",
                         library_name="new-library",
                     ),
                 ],
                 ChangeType.GAPIC_ADDITION: [
                     LibraryChange(
                         changed_param="test",
-                        latest_value="test",
+                        current_value="test",
                         library_name="library-with-new-version",
                     ),
                 ],
             },
             baseline_config=ConfigChangeTest.__get_a_gen_config(),
-            latest_config=ConfigChangeTest.__get_a_gen_config(),
+            current_config=ConfigChangeTest.__get_a_gen_config(),
         )
         self.assertEqual(
             ["a-library", "another-library", "library-with-new-version", "new-library"],
@@ -92,18 +92,18 @@ class ConfigChangeTest(unittest.TestCase):
                 ChangeType.LIBRARY_LEVEL_CHANGE: [
                     LibraryChange(
                         changed_param="a-param",
-                        latest_value="new_test",
+                        current_value="new_test",
                         library_name="a-library",
                     ),
                     LibraryChange(
                         changed_param="another-param",
-                        latest_value="new_value",
+                        current_value="new_value",
                         library_name="a-library",
                     ),
                 ],
             },
             baseline_config=ConfigChangeTest.__get_a_gen_config(),
-            latest_config=ConfigChangeTest.__get_a_gen_config(),
+            current_config=ConfigChangeTest.__get_a_gen_config(),
         )
         self.assertEqual(
             ["a-library"],
@@ -119,14 +119,14 @@ class ConfigChangeTest(unittest.TestCase):
                 ChangeType.LIBRARY_LEVEL_CHANGE: [
                     LibraryChange(
                         changed_param="test",
-                        latest_value="test",
+                        current_value="test",
                         library_name="a-library",
                     )
                 ],
                 ChangeType.LIBRARIES_ADDITION: [
                     LibraryChange(
                         changed_param="test",
-                        latest_value="test",
+                        current_value="test",
                         library_name="new-library",
                     ),
                 ],
@@ -134,7 +134,7 @@ class ConfigChangeTest(unittest.TestCase):
             baseline_config=ConfigChangeTest.__get_a_gen_config(
                 googleapis_commitish=baseline_commit
             ),
-            latest_config=ConfigChangeTest.__get_a_gen_config(
+            current_config=ConfigChangeTest.__get_a_gen_config(
                 googleapis_commitish=latest_commit,
                 libraries=[
                     ConfigChangeTest.__get_a_library_config(
@@ -163,7 +163,7 @@ class ConfigChangeTest(unittest.TestCase):
             baseline_config=ConfigChangeTest.__get_a_gen_config(
                 googleapis_commitish=baseline_commit
             ),
-            latest_config=ConfigChangeTest.__get_a_gen_config(
+            current_config=ConfigChangeTest.__get_a_gen_config(
                 googleapis_commitish=latest_commit,
                 libraries=[
                     ConfigChangeTest.__get_a_library_config(
@@ -216,7 +216,7 @@ class ConfigChangeTest(unittest.TestCase):
             baseline_config=ConfigChangeTest.__get_a_gen_config(
                 googleapis_commitish=baseline_commit
             ),
-            latest_config=ConfigChangeTest.__get_a_gen_config(
+            current_config=ConfigChangeTest.__get_a_gen_config(
                 googleapis_commitish=latest_commit,
                 libraries=[
                     ConfigChangeTest.__get_a_library_config(
