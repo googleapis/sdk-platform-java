@@ -1,12 +1,12 @@
 package com.google.cloud;
 
-import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
+import com.google.cloud.model.Version;
+import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.PackageInfo;
 import com.google.cloud.model.MavenCoordinate;
 import com.google.cloud.model.QueryResult;
-import com.google.cloud.model.Version;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayDeque;

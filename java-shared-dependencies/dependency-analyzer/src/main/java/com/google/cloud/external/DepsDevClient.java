@@ -1,10 +1,10 @@
 package com.google.cloud.external;
 
 import com.google.cloud.model.Advisory;
+import com.google.cloud.model.Relation;
 import com.google.cloud.model.DependencyResponse;
 import com.google.cloud.model.MavenCoordinate;
 import com.google.cloud.model.QueryResult;
-import com.google.cloud.model.Relation;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.URI;
