@@ -1,6 +1,6 @@
 name: Run dependency analyzer
 on:
-  workflow-dispatch:
+  workflow_dispatch:
     inputs:
       group:
         description: the group id of the dependency
