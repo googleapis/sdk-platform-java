@@ -1,0 +1,58 @@
+gapic_generator_version: 2.37.0
+protobuf_version: 25.2
+googleapis_commitish: a17d4caf184b050d50cacf2b0d579ce72c31ce74
+owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
+synthtool_commitish: 5e1fb2032fa44bc170677b38713023b4fec51a4e
+template_excludes:
+  - ".github/*"
+  - ".kokoro/*"
+  - "samples/*"
+  - "CODE_OF_CONDUCT.md"
+  - "CONTRIBUTING.md"
+  - "LICENSE"
+  - "SECURITY.md"
+  - "java.header"
+  - "license-checks.xml"
+  - "renovate.json"
+  - ".gitignore"
+libraries:
+  - api_shortname: apigeeconnect
+    name_pretty: Apigee Connect
+    product_documentation: "https://cloud.google.com/apigee/docs/hybrid/v1.3/apigee-connect/"
+    api_description: "allows the Apigee hybrid management plane to connect securely to the MART service in the runtime plane without requiring you to expose the MART endpoint on the internet."
+    release_level: "stable"
+    library_name: "apigee-connect"
+    GAPICs:
+      - proto_path: google/cloud/apigeeconnect/v1
+
+  - api_shortname: alloydb
+    name_pretty: AlloyDB
+    product_documentation: https://cloud.google.com/alloydb/
+    api_description: AlloyDB is a fully managed, PostgreSQL-compatible database service
+      with industry-leading performance, availability, and scale.
+    rest_documentation: https://cloud.google.com/alloydb/docs/reference/rest
+    GAPICs:
+    - proto_path: google/cloud/alloydb/v1
+    - proto_path: google/cloud/alloydb/v1alpha
+    - proto_path: google/cloud/alloydb/v1beta
+
+  - api_shortname: alloydb
+    name_pretty: AlloyDB connectors
+    product_documentation: https://cloud.google.com/alloydb/docs
+    api_description: AlloyDB is a fully-managed, PostgreSQL-compatible database for
+      demanding transactional workloads. It provides enterprise-grade performance and
+      availability while maintaining 100% compatibility with open-source PostgreSQL.
+    library_name: alloydb-connectors
+    rest_documentation: https://cloud.google.com/alloydb/docs/reference/rest
+    GAPICs:
+    - proto_path: google/cloud/alloydb/connectors/v1
+    - proto_path: google/cloud/alloydb/connectors/v1alpha
+    - proto_path: google/cloud/alloydb/connectors/v1beta
+
+  - api_shortname: cloudcontrolspartner
+    name_pretty: Cloud Controls Partner API
+    product_documentation: https://cloud.google.com/sovereign-controls-by-partners/docs/sovereign-partners
+    api_description: Provides insights about your customers and their Assured Workloads based on your Sovereign Controls by Partners offering.
+    GAPICs:
+    - proto_path: google/cloud/cloudcontrolspartner/v1
+    - proto_path: google/cloud/cloudcontrolspartner/v1beta

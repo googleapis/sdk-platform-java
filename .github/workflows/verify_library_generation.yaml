@@ -10,17 +10,9 @@ on:
 name: verify_library_generation
 jobs:
   integration_tests:
-    strategy:
-      matrix:
-        java: [ 11 ]
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-java@v4
-      with:
-        java-version: ${{ matrix.java }}
-        distribution: temurin
-        cache: maven
     - uses: actions/setup-python@v5
       with:
         python-version: 3.11
@@ -41,7 +33,7 @@ jobs:
       run: |
         set -ex
         pushd library_generation
-        pip install -r requirements.in
+        pip install -r requirements.txt
         pip install .
         popd
     - name: Run integration tests
@@ -71,7 +63,7 @@ jobs:
       run: |
         set -ex
         pushd library_generation
-        pip install -r requirements.in
+        pip install -r requirements.txt
         popd
     - name: install synthtool
       shell: bash
@@ -115,7 +107,7 @@ jobs:
       run: |
         set -ex
         pushd library_generation
-        pip install -r requirements.in
+        pip install -r requirements.txt
         popd
     - name: Lint
       shell: bash
