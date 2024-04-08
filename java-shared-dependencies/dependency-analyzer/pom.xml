@@ -28,6 +28,14 @@
         </executions>
         <configuration>
           <mainClass>com.google.cloud.PackageInfoCheck</mainClass>
+          <arguments>
+            <!--suppress UnresolvedMavenProperty -->
+            <argument>${dep.group}</argument>
+            <!--suppress UnresolvedMavenProperty -->
+            <argument>${dep.artifact}</argument>
+            <!--suppress UnresolvedMavenProperty -->
+            <argument>${dep.version}</argument>
+          </arguments>
         </configuration>
       </plugin>
     </plugins>
