@@ -5,7 +5,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.google.cloud.model.AdvisoryKey;
 import com.google.cloud.model.MavenCoordinate;
+import com.google.cloud.model.QueryResult;
+import com.google.cloud.model.Version;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -24,10 +27,12 @@ public class DepsDevClientTest {
   private DepsDevClient client;
 
   @Before
-  public void setUp() {
+  public void setUp() throws IOException, InterruptedException {
     httpClient = mock(HttpClient.class);
     client = new DepsDevClient(httpClient, new Gson());
     response = mock(HttpResponse.class);
+    when(httpClient.send(any(HttpRequest.class), any(BodyHandler.class)))
+        .thenReturn(response);
   }
 
   @Test
@@ -35,11 +40,23 @@ public class DepsDevClientTest {
       throws IOException, InterruptedException, URISyntaxException {
     String responseBody = "{\"nodes\":[{\"versionKey\":{\"system\":\"MAVEN\", \"name\":\"com.example:example\", \"version\":\"1.2.3\"}, \"bundled\":false, \"relation\":\"SELF\", \"errors\":[]}, {\"versionKey\":{\"system\":\"MAVEN\", \"name\":\"com.example:indirect-dep\", \"version\":\"4.0.0\"}, \"bundled\":false, \"relation\":\"INDIRECT\", \"errors\":[]}, {\"versionKey\":{\"system\":\"MAVEN\", \"name\":\"com.example:direct-dep\", \"version\":\"1.4.0\"}, \"bundled\":false, \"relation\":\"DIRECT\", \"errors\":[]}], \"edges\":[{\"fromNode\":0, \"toNode\":2, \"requirement\":\"^1.1.0\"}, {\"fromNode\":2, \"toNode\":1, \"requirement\":\"^3.0.0 || ^4.0.0\"}], \"error\":\"\"}";
     when(response.body()).thenReturn(responseBody);
-    when(httpClient.send(any(HttpRequest.class), any(BodyHandler.class)))
-        .thenReturn(response);
     MavenCoordinate base = new MavenCoordinate("com.example", "example", "1.2.3");
     MavenCoordinate direct = new MavenCoordinate("com.example", "direct-dep", "1.4.0");
     List<MavenCoordinate> coordinates = client.getDirectDependencies(base);
     assertThat(coordinates).containsExactlyElementsIn(List.of(direct));
+  }
+
+  @Test
+  public void testGetQueryResultSucceed()
+      throws URISyntaxException, IOException, InterruptedException {
+    String responseBody = "{\"results\":[{\"version\":{\"versionKey\":{\"system\":\"MAVEN\",\"name\":\"org.apache.logging.log4j:log4j-core\",\"version\":\"2.17.0\"},\"publishedAt\":\"2021-12-18T01:58:10Z\",\"isDefault\":false,\"licenses\":[\"Apache-2.0\"],\"advisoryKeys\":[{\"id\":\"GHSA-8489-44mv-ggj8\"}],\"links\":[{\"label\":\"SOURCE_REPO\",\"url\":\"https://gitbox.apache.org/repos/asf?p=logging-log4j2.git\"},{\"label\":\"ISSUE_TRACKER\",\"url\":\"https://issues.apache.org/jira/browse/LOG4J2\"},{\"label\":\"HOMEPAGE\",\"url\":\"https://logging.apache.org/log4j/2.x/\"}],\"slsaProvenances\":[],\"registries\":[\"https://repo.maven.apache.org/maven2/\"],\"relatedProjects\":[{\"projectKey\":{\"id\":\"\"},\"relationProvenance\":\"UNVERIFIED_METADATA\",\"relationType\":\"ISSUE_TRACKER\"}]}}]}";
+    when(response.body()).thenReturn(responseBody);
+    MavenCoordinate base = new MavenCoordinate("org.apache.logging.log4j", "log4j-core", "2.17.0");
+    QueryResult queryResult = client.getQueryResult(base);
+    assertThat(queryResult.getResults()).hasSize(1);
+    Version version = queryResult.getResults().get(0).getVersion();
+    assertThat(version.getAdvisoryKeys()).isEqualTo(List.of(new AdvisoryKey("GHSA-8489-44mv-ggj8")));
+    assertThat(version.getLicenses()).isEqualTo(List.of("Apache-2.0"));
+    assertThat(version.getVersionKey().toMavenCoordinate()).isEqualTo(base);
   }
 }

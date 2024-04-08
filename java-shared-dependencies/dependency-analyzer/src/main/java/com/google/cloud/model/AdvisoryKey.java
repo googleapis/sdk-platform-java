@@ -1,5 +1,7 @@
 package com.google.cloud.model;
 
+import com.google.common.base.Objects;
+
 public class AdvisoryKey {
   private final String id;
 
@@ -16,5 +18,22 @@ public class AdvisoryKey {
     return "AdvisoryKey{" +
         "id='" + id + '\'' +
         '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof AdvisoryKey)) {
+      return false;
+    }
+    AdvisoryKey that = (AdvisoryKey) o;
+    return Objects.equal(id, that.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id);
   }
 }
