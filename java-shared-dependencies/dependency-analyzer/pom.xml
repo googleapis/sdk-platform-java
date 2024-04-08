@@ -30,9 +30,7 @@
           <mainClass>com.google.cloud.PackageInfoCheck</mainClass>
           <arguments>
             <!--suppress UnresolvedMavenProperty -->
-            <argument>${dep.group}</argument>
-            <!--suppress UnresolvedMavenProperty -->
-            <argument>${dep.artifact}</argument>
+            <argument>${dep.name}</argument>
             <!--suppress UnresolvedMavenProperty -->
             <argument>${dep.version}</argument>
           </arguments>

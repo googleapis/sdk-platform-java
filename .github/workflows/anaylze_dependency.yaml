@@ -2,12 +2,8 @@ name: Run dependency analyzer
 on:
   workflow_dispatch:
     inputs:
-      group:
-        description: the group id of the dependency
-        required: true
-        type: string
-      artifact:
-        description: the artifact id of the dependency
+      name:
+        description: the name of the dependency, in the format of groupId:artifactId
         required: true
         type: string
       version:
@@ -36,5 +32,5 @@ jobs:
     - name: Check dependency information
       shell: bash
       run: |
-        mvn exec:java -Ddep.group=${{ github.event.inputs.group }} -Ddep.artifact=${{ github.event.inputs.artifact }} -Ddep.version=${{ github.event.inputs.version }}
+        mvn exec:java -Ddep.name=${{ github.event.inputs.name }} -Ddep.version=${{ github.event.inputs.version }}
       working-directory: java-shared-dependencies/dependency-analyzer

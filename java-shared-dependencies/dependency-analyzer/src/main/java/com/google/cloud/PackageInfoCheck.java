@@ -25,6 +25,7 @@ import java.util.Queue;
 import java.util.Set;
 
 public class PackageInfoCheck {
+
   private final DepsDevClient depsDevClient;
 
   public PackageInfoCheck(DepsDevClient depsDevClient) {
@@ -71,18 +72,19 @@ public class PackageInfoCheck {
 
   public static void main(String[] args)
       throws URISyntaxException, IOException, InterruptedException {
-    checkArgument(args.length == 3,
-        "The length of the inputs should be 3.\n" +
-                   "The 1st input should be the group ID.\n" +
-                   "The 2nd input should be the artifact ID.\n" +
-                   "The 3rd input should be the version.\n"
+    checkArgument(args.length == 2,
+        "The length of the inputs should be 2.\n" +
+            "The 1st input should be the dependency name.\n" +
+            "The 2nd input should be the version.\n"
     );
-    String groupId = args[0];
-    String artifactId = args[1];
-    String version = args[2];
+    String[] depName = args[0].split(":");
+    checkArgument(depName.length == 2,
+        "The format of the dependency name should be: groupId:artifactId."
+    );
+    String version = args[1];
     PackageInfoCheck packageInfoCheck = new PackageInfoCheck(
         new DepsDevClient(HttpClient.newHttpClient(), new Gson()));
-    CheckReport checkReport = packageInfoCheck.check(groupId, artifactId, version);
+    CheckReport checkReport = packageInfoCheck.check(depName[0], depName[1], version);
     try {
       checkReport.generateReport();
     } catch (NonCompliantLicenseException | HasVulnerabilityException ex) {
