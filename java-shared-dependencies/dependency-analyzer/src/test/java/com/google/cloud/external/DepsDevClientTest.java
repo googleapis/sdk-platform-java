@@ -14,8 +14,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandler;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 public class DepsDevClientTest {
 
@@ -23,15 +23,15 @@ public class DepsDevClientTest {
   private HttpResponse<String> response;
   private DepsDevClient client;
 
-  @BeforeEach
-  void setUp() {
+  @Before
+  public void setUp() {
     httpClient = mock(HttpClient.class);
     client = new DepsDevClient(httpClient, new Gson());
     response = mock(HttpResponse.class);
   }
 
   @Test
-  void testGetDirectDependenciesOnlyReturnsDirectDeps()
+  public void testGetDirectDependenciesOnlyReturnsDirectDeps()
       throws IOException, InterruptedException, URISyntaxException {
     String responseBody = "{\"nodes\":[{\"versionKey\":{\"system\":\"MAVEN\", \"name\":\"com.example:example\", \"version\":\"1.2.3\"}, \"bundled\":false, \"relation\":\"SELF\", \"errors\":[]}, {\"versionKey\":{\"system\":\"MAVEN\", \"name\":\"com.example:indirect-dep\", \"version\":\"4.0.0\"}, \"bundled\":false, \"relation\":\"INDIRECT\", \"errors\":[]}, {\"versionKey\":{\"system\":\"MAVEN\", \"name\":\"com.example:direct-dep\", \"version\":\"1.4.0\"}, \"bundled\":false, \"relation\":\"DIRECT\", \"errors\":[]}], \"edges\":[{\"fromNode\":0, \"toNode\":2, \"requirement\":\"^1.1.0\"}, {\"fromNode\":2, \"toNode\":1, \"requirement\":\"^3.0.0 || ^4.0.0\"}], \"error\":\"\"}";
     when(response.body()).thenReturn(responseBody);
