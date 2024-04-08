@@ -10,4 +10,11 @@ public class AdvisoryKey {
   public String getId() {
     return id;
   }
+
+  @Override
+  public String toString() {
+    return "AdvisoryKey{" +
+        "id='" + id + '\'' +
+        '}';
+  }
 }

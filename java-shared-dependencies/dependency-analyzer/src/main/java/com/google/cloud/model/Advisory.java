@@ -1,5 +1,7 @@
 package com.google.cloud.model;
 
+import java.util.Arrays;
+
 public class Advisory {
 
   private final AdvisoryKey advisoryKey;
@@ -19,4 +21,15 @@ public class Advisory {
     this.cvss3Vector = cvss3Vector;
   }
 
+  @Override
+  public String toString() {
+    return "Advisory{" +
+        "advisoryKey=" + advisoryKey +
+        ", url='" + url + '\'' +
+        ", title='" + title + '\'' +
+        ", aliases=" + Arrays.toString(aliases) +
+        ", cvss3Score=" + cvss3Score +
+        ", cvss3Vector='" + cvss3Vector + '\'' +
+        '}';
+  }
 }
