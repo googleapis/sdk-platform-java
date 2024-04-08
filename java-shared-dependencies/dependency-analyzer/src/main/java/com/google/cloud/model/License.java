@@ -7,6 +7,7 @@ import java.util.Set;
 
 
 public enum License {
+  APACHE_2_0(Set.of(NOTICE)),
   BCL(Set.of(Restricted, NOTICE)),
   GL2PS(Set.of(Restricted, NOTICE));
 
@@ -14,6 +15,14 @@ public enum License {
 
   License(Set<LicenseCategory> categories) {
     this.categories = categories;
+  }
+
+  public static License toLicense(String licenseStr) {
+    String value = licenseStr
+        .toUpperCase()
+        .replace('-', '_')
+        .replace('.', '_');
+    return License.valueOf(value);
   }
 
   public Set<LicenseCategory> getCategories() {

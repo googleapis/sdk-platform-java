@@ -1,24 +1,18 @@
 package com.google.cloud.model;
 
 import com.google.common.collect.ImmutableList;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class QueryResult {
-  private final List<Version> versions;
+  private final List<Result> results;
 
-  public QueryResult(List<Version> versions) {
-    this.versions = versions;
+  public QueryResult(List<Result> versions) {
+    this.results = versions;
   }
 
-  public List<Version> getVersions() {
-    return ImmutableList.copyOf(versions);
-  }
-
-  public List<MavenCoordinate> toMavenCoordinates() {
-    return getVersions()
-        .stream()
-        .map(version -> version.getVersionKey().toMavenCoordinate())
-        .collect(Collectors.toList());
+  public List<Result> getResults() {
+    return ImmutableList.copyOf(results);
   }
 }

@@ -53,7 +53,7 @@ public class CheckReport {
     result.forEach(packageInfo -> {
       List<String> nonCompliantLicenses = new ArrayList<>();
       for (String licenseStr : packageInfo.getLicenses()) {
-        License license = License.valueOf(licenseStr);
+        License license = License.toLicense(licenseStr);
         for (LicenseCategory nonCompliantCategory : nonCompliantCategories) {
           if (license.getCategories().contains(nonCompliantCategory)) {
             nonCompliantLicenses.add(licenseStr);
