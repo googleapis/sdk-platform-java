@@ -2,6 +2,7 @@ package com.google.cloud;
 
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
+import com.google.cloud.model.CheckReport;
 import com.google.cloud.model.Version;
 import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.PackageInfo;
@@ -23,7 +24,7 @@ public class PackageInfoCheck {
     this.depsDevClient = depsDevClient;
   }
 
-  public List<PackageInfo> check(String groupId, String artifactId, String artifactVersion)
+  public CheckReport check(String groupId, String artifactId, String artifactVersion)
       throws URISyntaxException, IOException, InterruptedException {
     MavenCoordinate initial = new MavenCoordinate(groupId, artifactId, artifactVersion);
     Set<MavenCoordinate> seenCoordinate = new HashSet<>();
@@ -42,7 +43,7 @@ public class PackageInfoCheck {
           .forEach(queue::offer);
     }
 
-    List<PackageInfo> checkResult = new ArrayList<>();
+    CheckReport report = new CheckReport();
     for (MavenCoordinate coordinate : dependencies) {
       QueryResult packageInfo = depsDevClient.getQueryResult(coordinate);
       List<String> licenses = new ArrayList<>();
@@ -54,9 +55,9 @@ public class PackageInfoCheck {
         }
       }
 
-      checkResult.add(new PackageInfo(coordinate, licenses, advisories));
+      report.addPackageInfo(new PackageInfo(coordinate, licenses, advisories));
     }
 
-    return checkResult;
+    return report;
   }
 }
