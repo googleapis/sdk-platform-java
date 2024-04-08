@@ -13,10 +13,22 @@ jobs:
   Run-dependency-analyzer:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v4
-    - name: run dependency analyzer
-      uses: java-shared-dependencies/dependency-analyzer
+    - uses: actions/setup-java@v4
       with:
-        group: ${inputs.group}
-        artifact: ${inputs.artifact}
-        version: ${inputs.version}
+        distribution: temurin
+        java-version: 11
+        cache: maven
+    - name: Set up Maven
+      uses: stCarolas/setup-maven@v4.5
+      with:
+        maven-version: 3.8.2
+    - name: Install dependency analyzer
+      shell: bash
+      run: |
+        mvn clean install -V --batch-mode --no-transfer-progress -DskipTests
+      working-directory: java-shared-dependencies/dependency-analyzer
+    - name: Check dependency information
+      shell: bash
+      run: |
+        mvn exec:java -Ddep.group=${inputs.group} -Ddep.artifact=${inputs.artifact} -Ddep.version=${inputs.version}
+      working-directory: java-shared-dependencies/dependency-analyzer
