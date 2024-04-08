@@ -1,4 +1,7 @@
 name: Run dependency analyzer
+on:
+  push:
+
 inputs:
   group:
     description: the group id of the dependency
