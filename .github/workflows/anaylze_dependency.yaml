@@ -36,7 +36,5 @@ jobs:
     - name: Check dependency information
       shell: bash
       run: |
-        echo "Print dependency"
-        echo 
         mvn exec:java -Ddep.group=${{ github.event.inputs.group }} -Ddep.artifact=${{ github.event.inputs.artifact }} -Ddep.version=${{ github.event.inputs.version }}
       working-directory: java-shared-dependencies/dependency-analyzer
