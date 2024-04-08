@@ -55,6 +55,6 @@ public class ServiceStubClassComposerTest {
     Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");
     Assert.assertEmptySamples(clazz.samples());
     Assert.assertCodeEquals(clazz.apiShortName(), apiShortNameExpected);
-    Assert.assertCodeEquals(clazz.apiVersion(), apiVersionExpected);
+    Assert.assertCodeEquals(clazz.apiMajorVersion(), apiVersionExpected);
   }
 }
