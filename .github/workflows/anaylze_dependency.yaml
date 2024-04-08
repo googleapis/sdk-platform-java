@@ -1,17 +1,19 @@
 name: Run dependency analyzer
 on:
-  push:
-
-inputs:
-  group:
-    description: the group id of the dependency
-    required: true
-  artifact:
-    description: the artifact id of the dependency
-    required: true
-  version:
-    description: the version of the dependency
-    required: true
+  workflow-dispatch:
+    inputs:
+      group:
+        description: the group id of the dependency
+        required: true
+        type: string
+      artifact:
+        description: the artifact id of the dependency
+        required: true
+        type: string
+      version:
+        description: the version of the dependency
+        required: true
+        type: string
 jobs:
   Run-dependency-analyzer:
     runs-on: ubuntu-22.04
