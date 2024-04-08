@@ -1,13 +1,13 @@
 package com.google.cloud;
 
+import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
 import com.google.cloud.model.CheckReport;
-import com.google.cloud.model.Version;
-import com.google.cloud.external.DepsDevClient;
-import com.google.cloud.model.PackageInfo;
 import com.google.cloud.model.MavenCoordinate;
+import com.google.cloud.model.PackageInfo;
 import com.google.cloud.model.QueryResult;
+import com.google.cloud.model.Version;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayDeque;
@@ -43,7 +43,7 @@ public class PackageInfoCheck {
           .forEach(queue::offer);
     }
 
-    CheckReport report = new CheckReport();
+    List<PackageInfo> result = new ArrayList<>();
     for (MavenCoordinate coordinate : dependencies) {
       QueryResult packageInfo = depsDevClient.getQueryResult(coordinate);
       List<String> licenses = new ArrayList<>();
@@ -55,9 +55,9 @@ public class PackageInfoCheck {
         }
       }
 
-      report.addPackageInfo(new PackageInfo(coordinate, licenses, advisories));
+      result.add(new PackageInfo(coordinate, licenses, advisories));
     }
 
-    return report;
+    return new CheckReport(result);
   }
 }
