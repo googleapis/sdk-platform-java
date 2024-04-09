@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.protoparser;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
@@ -605,6 +606,29 @@ public class ParserTest {
         "MutateJob.MutateJobMetadata",
         Parser.parseNestedProtoTypeName(
             "google.ads.googleads.v3.resources.MutateJob.MutateJobMetadata"));
+  }
+
+  @Test
+  public void testServiceApiVersionParsed() {
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), new HashSet<>());
+    com.google.api.generator.gapic.model.Service parsedEchoService = services.get(0);
+    assertEquals("v1_20230601", parsedEchoService.apiVersion());
+  }
+
+  @Test
+  public void testServiceWithoutApiVersionParsed() {
+    FileDescriptor bookshopFileDescriptor = BookshopProto.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(bookshopFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(bookshopFileDescriptor);
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            bookshopFileDescriptor, messageTypes, resourceNames, Optional.empty(), new HashSet<>());
+    com.google.api.generator.gapic.model.Service parsedBookshopService = services.get(0);
+    assertNull(parsedBookshopService.apiVersion());
   }
 
   private void assertMethodArgumentEquals(
