@@ -11,8 +11,8 @@ import java.util.logging.Logger;
 
 public class CheckReport {
 
-  private final Map<Dependency, List<Advisory>> advisories;
-  private final Map<Dependency, List<String>> nonCompliantLicenses;
+  private final Map<VersionKey, List<Advisory>> advisories;
+  private final Map<VersionKey, List<String>> nonCompliantLicenses;
   private final List<LicenseCategory> nonCompliantCategories = List.of(LicenseCategory.Restricted);
 
   private final static Logger LOGGER = Logger.getLogger(CheckReport.class.getName());
@@ -36,19 +36,19 @@ public class CheckReport {
     LOGGER.log(Level.INFO, "Dependencies have no known vulnerabilities and non compliant licenses");
   }
 
-  private Map<Dependency, List<Advisory>> getAdvisories(List<PackageInfo> result) {
-    Map<Dependency, List<Advisory>> advisories = new HashMap<>();
+  private Map<VersionKey, List<Advisory>> getAdvisories(List<PackageInfo> result) {
+    Map<VersionKey, List<Advisory>> advisories = new HashMap<>();
     result.forEach(packageInfo -> {
       List<Advisory> adv = packageInfo.getAdvisories();
       if (!adv.isEmpty()) {
-        advisories.put(packageInfo.getMavenCoordinate(), packageInfo.getAdvisories());
+        advisories.put(packageInfo.getVersionKey(), packageInfo.getAdvisories());
       }
     });
     return advisories;
   }
 
-  private Map<Dependency, List<String>> getNonCompliantLicenses(List<PackageInfo> result) {
-    Map<Dependency, List<String>> licenses = new HashMap<>();
+  private Map<VersionKey, List<String>> getNonCompliantLicenses(List<PackageInfo> result) {
+    Map<VersionKey, List<String>> licenses = new HashMap<>();
 
     result.forEach(packageInfo -> {
       List<String> nonCompliantLicenses = new ArrayList<>();
@@ -62,23 +62,23 @@ public class CheckReport {
         }
       }
       if (!nonCompliantLicenses.isEmpty()) {
-        licenses.put(packageInfo.getMavenCoordinate(), nonCompliantLicenses);
+        licenses.put(packageInfo.getVersionKey(), nonCompliantLicenses);
       }
     });
     return licenses;
   }
 
-  private <T> void formatLog(Map<Dependency, List<T>> map, String message) {
+  private <T> void formatLog(Map<VersionKey, List<T>> map, String message) {
     LOGGER.log(Level.SEVERE, message);
-    map.forEach((mavenCoordinate, list) -> {
-      LOGGER.log(Level.SEVERE, separator(mavenCoordinate));
+    map.forEach((versionKey, list) -> {
+      LOGGER.log(Level.SEVERE, separator(versionKey));
       list.forEach(item -> LOGGER.log(Level.SEVERE, item.toString()));
-      LOGGER.log(Level.SEVERE, separator(mavenCoordinate));
+      LOGGER.log(Level.SEVERE, separator(versionKey));
     });
   }
 
-  private String separator(Dependency mavenCoordinate) {
+  private String separator(VersionKey versionKey) {
     return String.format("====================== %s ======================",
-        mavenCoordinate.toString());
+        versionKey.toString());
   }
 }

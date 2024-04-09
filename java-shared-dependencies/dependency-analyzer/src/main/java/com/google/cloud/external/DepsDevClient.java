@@ -1,10 +1,11 @@
 package com.google.cloud.external;
 
 import com.google.cloud.model.Advisory;
-import com.google.cloud.model.Relation;
 import com.google.cloud.model.DependencyResponse;
-import com.google.cloud.model.Dependency;
+import com.google.cloud.model.Node;
 import com.google.cloud.model.QueryResult;
+import com.google.cloud.model.Relation;
+import com.google.cloud.model.VersionKey;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.URI;
@@ -28,13 +29,13 @@ public class DepsDevClient {
     this.gson = gson;
   }
 
-  public List<Dependency> getDirectDependencies(Dependency dependency)
+  public List<VersionKey> getDirectDependencies(VersionKey versionKey)
       throws URISyntaxException, IOException, InterruptedException {
     HttpResponse<String> response = getResponse(
         getDependencyUrl(
-            dependency.getPackageManagementSys().toString(),
-            dependency.getName(),
-            dependency.getVersion()
+            versionKey.getSystem().toString(),
+            versionKey.getName(),
+            versionKey.getVersion()
         )
     );
     DependencyResponse dependencyResponse = gson.fromJson(response.body(),
@@ -43,17 +44,17 @@ public class DepsDevClient {
         .getNodes()
         .stream()
         .filter(node -> Relation.DIRECT.equals(node.getRelation()))
-        .map(node -> node.getVersionKey().toDependency())
+        .map(Node::getVersionKey)
         .collect(Collectors.toList());
   }
 
-  public QueryResult getQueryResult(Dependency dependency)
+  public QueryResult getQueryResult(VersionKey versionKey)
       throws URISyntaxException, IOException, InterruptedException {
     HttpResponse<String> response = getResponse(
         getQueryUrl(
-            dependency.getPackageManagementSys().toString(),
-            dependency.getName(),
-            dependency.getVersion()
+            versionKey.getSystem().toString(),
+            versionKey.getName(),
+            versionKey.getVersion()
         )
     );
     return gson.fromJson(response.body(), QueryResult.class);

@@ -8,11 +8,11 @@ import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
 import com.google.cloud.model.CheckReport;
-import com.google.cloud.model.Dependency;
 import com.google.cloud.model.PackageInfo;
 import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Result;
 import com.google.cloud.model.Version;
+import com.google.cloud.model.VersionKey;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -34,26 +34,26 @@ public class PackageInfoCheck {
 
   public CheckReport check(String system, String dependencyName, String dependencyVersion)
       throws URISyntaxException, IOException, InterruptedException {
-    Dependency initial = new Dependency(system, dependencyName, dependencyVersion);
-    Set<Dependency> seenCoordinate = new HashSet<>();
-    seenCoordinate.add(initial);
-    Queue<Dependency> queue = new ArrayDeque<>();
+    VersionKey initial = new VersionKey(system, dependencyName, dependencyVersion);
+    Set<VersionKey> seenDependency = new HashSet<>();
+    seenDependency.add(initial);
+    Queue<VersionKey> queue = new ArrayDeque<>();
     queue.offer(initial);
-    List<Dependency> dependencies = new ArrayList<>();
+    List<VersionKey> dependencies = new ArrayList<>();
     while (!queue.isEmpty()) {
-      Dependency coordinate = queue.poll();
-      dependencies.add(coordinate);
-      List<Dependency> directDependencies = depsDevClient.getDirectDependencies(coordinate);
+      VersionKey versionKey = queue.poll();
+      dependencies.add(versionKey);
+      List<VersionKey> directDependencies = depsDevClient.getDirectDependencies(versionKey);
       // only add unseen dependencies to the queue.
       directDependencies
           .stream()
-          .filter(seenCoordinate::add)
+          .filter(seenDependency::add)
           .forEach(queue::offer);
     }
 
     List<PackageInfo> result = new ArrayList<>();
-    for (Dependency coordinate : dependencies) {
-      QueryResult packageInfo = depsDevClient.getQueryResult(coordinate);
+    for (VersionKey versionKey : dependencies) {
+      QueryResult packageInfo = depsDevClient.getQueryResult(versionKey);
       List<String> licenses = new ArrayList<>();
       List<Advisory> advisories = new ArrayList<>();
       for (Result res : packageInfo.getResults()) {
@@ -64,7 +64,7 @@ public class PackageInfoCheck {
         }
       }
 
-      result.add(new PackageInfo(coordinate, licenses, advisories));
+      result.add(new PackageInfo(versionKey, licenses, advisories));
     }
 
     return new CheckReport(result);

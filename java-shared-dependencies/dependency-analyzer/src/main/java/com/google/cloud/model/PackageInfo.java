@@ -4,18 +4,18 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 
 public class PackageInfo {
-  private final Dependency mavenCoordinate;
+  private final VersionKey versionKey;
   private final List<String> licenses;
   private final List<Advisory> advisories;
 
-  public PackageInfo(Dependency mavenCoordinate, List<String> licenses, List<Advisory> advisories) {
-    this.mavenCoordinate = mavenCoordinate;
+  public PackageInfo(VersionKey versionKey, List<String> licenses, List<Advisory> advisories) {
+    this.versionKey = versionKey;
     this.licenses = licenses;
     this.advisories = advisories;
   }
 
-  public Dependency getMavenCoordinate() {
-    return mavenCoordinate;
+  public VersionKey getVersionKey() {
+    return versionKey;
   }
 
   public List<String> getLicenses() {

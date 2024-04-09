@@ -14,7 +14,7 @@ public class CheckReportTest {
   public void testGenerateReportWithAdvisoriesThrowsException() {
     List<PackageInfo> results = List.of(
         new PackageInfo(
-            new Dependency("maven", "com.example:artifact", "1.2.3"),
+            new VersionKey("maven", "com.example:artifact", "1.2.3"),
             List.of(),
             List.of(new Advisory(
                 new AdvisoryKey("GHSA-2qrg-x229-3v8q"),
@@ -34,7 +34,7 @@ public class CheckReportTest {
   public void testGenerateReportWithNonCompliantLicenseThrowsException() {
     List<PackageInfo> results = List.of(
         new PackageInfo(
-            new Dependency("maven", "com.example:artifact", "1.2.3"),
+            new VersionKey("maven", "com.example:artifact", "1.2.3"),
             List.of("BCL"),
             List.of()
         )
