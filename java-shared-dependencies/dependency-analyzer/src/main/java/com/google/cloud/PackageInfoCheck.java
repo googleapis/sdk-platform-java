@@ -34,11 +34,11 @@ public class PackageInfoCheck {
 
   public CheckReport check(String system, String dependencyName, String dependencyVersion)
       throws URISyntaxException, IOException, InterruptedException, IllegalArgumentException {
-    VersionKey initial = new VersionKey(system, dependencyName, dependencyVersion);
+    VersionKey root = new VersionKey(system, dependencyName, dependencyVersion);
     Set<VersionKey> seenDependency = new HashSet<>();
-    seenDependency.add(initial);
+    seenDependency.add(root);
     Queue<VersionKey> queue = new ArrayDeque<>();
-    queue.offer(initial);
+    queue.offer(root);
     List<VersionKey> dependencies = new ArrayList<>();
     while (!queue.isEmpty()) {
       VersionKey versionKey = queue.poll();
@@ -67,7 +67,7 @@ public class PackageInfoCheck {
       result.add(new PackageInfo(versionKey, licenses, advisories));
     }
 
-    return new CheckReport(result);
+    return new CheckReport(root, result);
   }
 
   public static void main(String[] args)

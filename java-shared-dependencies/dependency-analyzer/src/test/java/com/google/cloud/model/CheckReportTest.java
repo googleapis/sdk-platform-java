@@ -13,9 +13,10 @@ public class CheckReportTest {
   @Test
   public void testGenerateReportWithAdvisoriesThrowsException()
       throws IllegalArgumentException {
+    VersionKey root = new VersionKey("maven", "com.example:artifact", "1.2.3");
     List<PackageInfo> results = List.of(
         new PackageInfo(
-            new VersionKey("maven", "com.example:artifact", "1.2.3"),
+            root,
             List.of(),
             List.of(new Advisory(
                 new AdvisoryKey("GHSA-2qrg-x229-3v8q"),
@@ -27,21 +28,22 @@ public class CheckReportTest {
             ))
         )
     );
-    CheckReport report = new CheckReport(results);
+    CheckReport report = new CheckReport(root, results);
     assertThrows("Found vulnerabilities in check report.", HasVulnerabilityException.class, report::generateReport);
   }
 
   @Test
   public void testGenerateReportWithNonCompliantLicenseThrowsException()
       throws IllegalArgumentException {
+    VersionKey root = new VersionKey("maven", "com.example:artifact", "1.2.3");
     List<PackageInfo> results = List.of(
         new PackageInfo(
-            new VersionKey("maven", "com.example:artifact", "1.2.3"),
+            root,
             List.of("BCL"),
             List.of()
         )
     );
-    CheckReport report = new CheckReport(results);
+    CheckReport report = new CheckReport(root, results);
     assertThrows("Found non compliant licenses in check report.", NonCompliantLicenseException.class, report::generateReport);
   }
 }

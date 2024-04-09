@@ -49,4 +49,13 @@ public class VersionKey {
   public int hashCode() {
     return Objects.hashCode(system, name, version);
   }
+
+  @Override
+  public String toString() {
+    return "VersionKey{" +
+        "system=" + system +
+        ", name='" + name + '\'' +
+        ", version='" + version + '\'' +
+        '}';
+  }
 }

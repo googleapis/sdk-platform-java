@@ -11,25 +11,27 @@ import java.util.logging.Logger;
 
 public class CheckReport {
 
+  private final VersionKey root;
   private final Map<VersionKey, List<Advisory>> advisories;
   private final Map<VersionKey, List<String>> nonCompliantLicenses;
   private final List<LicenseCategory> nonCompliantCategories = List.of(LicenseCategory.Restricted);
 
   private final static Logger LOGGER = Logger.getLogger(CheckReport.class.getName());
 
-  public CheckReport(List<PackageInfo> result) {
+  public CheckReport(VersionKey root, List<PackageInfo> result) {
+    this.root = root;
     advisories = getAdvisories(result);
     nonCompliantLicenses = getNonCompliantLicenses(result);
   }
 
   public void generateReport() throws HasVulnerabilityException, NonCompliantLicenseException {
     if (!advisories.isEmpty()) {
-      formatLog(advisories, "Known vulnerabilities in dependencies:");
+      formatLog(root, advisories, "New security vulnerability found in dependencies:");
       throw new HasVulnerabilityException("Found vulnerabilities in check report.");
     }
 
     if (!nonCompliantLicenses.isEmpty()) {
-      formatLog(nonCompliantLicenses, "Known non compliant licenses in dependencies:");
+      formatLog(root, nonCompliantLicenses, "Non-compliant license changed in dependencies:");
       throw new NonCompliantLicenseException("Found non compliant licenses in check report.");
     }
 
@@ -68,17 +70,17 @@ public class CheckReport {
     return licenses;
   }
 
-  private <T> void formatLog(Map<VersionKey, List<T>> map, String message) {
+  private <T> void formatLog(VersionKey root, Map<VersionKey, List<T>> map, String message) {
     LOGGER.log(Level.SEVERE, message);
     map.forEach((versionKey, list) -> {
-      LOGGER.log(Level.SEVERE, separator(versionKey));
+      LOGGER.log(Level.SEVERE, separator(versionKey, root));
       list.forEach(item -> LOGGER.log(Level.SEVERE, item.toString()));
-      LOGGER.log(Level.SEVERE, separator(versionKey));
+      LOGGER.log(Level.SEVERE, separator(versionKey, root));
     });
   }
 
-  private String separator(VersionKey versionKey) {
-    return String.format("====================== %s ======================",
-        versionKey.toString());
+  private String separator(VersionKey versionKey, VersionKey root) {
+    return String.format("====================== %s, dependency of %s ======================",
+        versionKey.toString(), root.toString());
   }
 }
