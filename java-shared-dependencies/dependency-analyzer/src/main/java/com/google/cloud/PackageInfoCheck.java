@@ -8,7 +8,7 @@ import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
 import com.google.cloud.model.CheckReport;
-import com.google.cloud.model.MavenCoordinate;
+import com.google.cloud.model.Dependency;
 import com.google.cloud.model.PackageInfo;
 import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Result;
@@ -32,18 +32,18 @@ public class PackageInfoCheck {
     this.depsDevClient = depsDevClient;
   }
 
-  public CheckReport check(String groupId, String artifactId, String artifactVersion)
+  public CheckReport check(String system, String dependencyName, String dependencyVersion)
       throws URISyntaxException, IOException, InterruptedException {
-    MavenCoordinate initial = new MavenCoordinate(groupId, artifactId, artifactVersion);
-    Set<MavenCoordinate> seenCoordinate = new HashSet<>();
+    Dependency initial = new Dependency(system, dependencyName, dependencyVersion);
+    Set<Dependency> seenCoordinate = new HashSet<>();
     seenCoordinate.add(initial);
-    Queue<MavenCoordinate> queue = new ArrayDeque<>();
+    Queue<Dependency> queue = new ArrayDeque<>();
     queue.offer(initial);
-    List<MavenCoordinate> dependencies = new ArrayList<>();
+    List<Dependency> dependencies = new ArrayList<>();
     while (!queue.isEmpty()) {
-      MavenCoordinate coordinate = queue.poll();
+      Dependency coordinate = queue.poll();
       dependencies.add(coordinate);
-      List<MavenCoordinate> directDependencies = depsDevClient.getDirectDependencies(coordinate);
+      List<Dependency> directDependencies = depsDevClient.getDirectDependencies(coordinate);
       // only add unseen dependencies to the queue.
       directDependencies
           .stream()
@@ -52,7 +52,7 @@ public class PackageInfoCheck {
     }
 
     List<PackageInfo> result = new ArrayList<>();
-    for (MavenCoordinate coordinate : dependencies) {
+    for (Dependency coordinate : dependencies) {
       QueryResult packageInfo = depsDevClient.getQueryResult(coordinate);
       List<String> licenses = new ArrayList<>();
       List<Advisory> advisories = new ArrayList<>();
@@ -72,19 +72,16 @@ public class PackageInfoCheck {
 
   public static void main(String[] args)
       throws URISyntaxException, IOException, InterruptedException {
-    checkArgument(args.length == 2,
-        "The length of the inputs should be 2.\n" +
-            "The 1st input should be the dependency name.\n" +
-            "The 2nd input should be the version.\n"
+    checkArgument(args.length == 3,
+        "The length of the inputs should be 3.\n" +
+            "The 1st input should be the package management system.\n" +
+            "The 2nd input should be the dependency name.\n" +
+            "The 3rd input should be the version.\n"
     );
-    String[] depName = args[0].split(":");
-    checkArgument(depName.length == 2,
-        "The format of the dependency name should be: groupId:artifactId."
-    );
-    String version = args[1];
+
     PackageInfoCheck packageInfoCheck = new PackageInfoCheck(
         new DepsDevClient(HttpClient.newHttpClient(), new Gson()));
-    CheckReport checkReport = packageInfoCheck.check(depName[0], depName[1], version);
+    CheckReport checkReport = packageInfoCheck.check(args[0], args[1], args[2]);
     try {
       checkReport.generateReport();
     } catch (NonCompliantLicenseException | HasVulnerabilityException ex) {

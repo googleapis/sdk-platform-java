@@ -3,7 +3,7 @@ package com.google.cloud.external;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.Relation;
 import com.google.cloud.model.DependencyResponse;
-import com.google.cloud.model.MavenCoordinate;
+import com.google.cloud.model.Dependency;
 import com.google.cloud.model.QueryResult;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -20,21 +20,21 @@ public class DepsDevClient {
   private final HttpClient client;
   public final Gson gson;
   private final static String advisoryUrlBase = "https://api.deps.dev/v3/advisories/%s";
-  private final static String queryUrlBase = "https://api.deps.dev/v3/query?versionKey.system=maven&versionKey.name=%s:%s&versionKey.version=%s";
-  private final static String dependencyUrlBase = "https://api.deps.dev/v3/systems/maven/packages/%s:%s/versions/%s:dependencies";
+  private final static String queryUrlBase = "https://api.deps.dev/v3/query?versionKey.system=%s&versionKey.name=%s&versionKey.version=%s";
+  private final static String dependencyUrlBase = "https://api.deps.dev/v3/systems/%s/packages/%s/versions/%s:dependencies";
 
   public DepsDevClient(HttpClient client,  Gson gson) {
     this.client = client;
     this.gson = gson;
   }
 
-  public List<MavenCoordinate> getDirectDependencies(MavenCoordinate mavenCoordinate)
+  public List<Dependency> getDirectDependencies(Dependency dependency)
       throws URISyntaxException, IOException, InterruptedException {
     HttpResponse<String> response = getResponse(
         getDependencyUrl(
-            mavenCoordinate.getGroupId(),
-            mavenCoordinate.getArtifactId(),
-            mavenCoordinate.getVersion()
+            dependency.getPackageManagementSys().toString(),
+            dependency.getName(),
+            dependency.getVersion()
         )
     );
     DependencyResponse dependencyResponse = gson.fromJson(response.body(),
@@ -43,17 +43,17 @@ public class DepsDevClient {
         .getNodes()
         .stream()
         .filter(node -> Relation.DIRECT.equals(node.getRelation()))
-        .map(node -> node.getVersionKey().toMavenCoordinate())
+        .map(node -> node.getVersionKey().toDependency())
         .collect(Collectors.toList());
   }
 
-  public QueryResult getQueryResult(MavenCoordinate mavenCoordinate)
+  public QueryResult getQueryResult(Dependency dependency)
       throws URISyntaxException, IOException, InterruptedException {
     HttpResponse<String> response = getResponse(
         getQueryUrl(
-            mavenCoordinate.getGroupId(),
-            mavenCoordinate.getArtifactId(),
-            mavenCoordinate.getVersion()
+            dependency.getPackageManagementSys().toString(),
+            dependency.getName(),
+            dependency.getVersion()
         )
     );
     return gson.fromJson(response.body(), QueryResult.class);
@@ -69,12 +69,12 @@ public class DepsDevClient {
     return String.format(advisoryUrlBase, advisoryId);
   }
 
-  private String getQueryUrl(String groupId, String artifactId, String version) {
-    return String.format(queryUrlBase, groupId, artifactId, version);
+  private String getQueryUrl(String system, String name, String version) {
+    return String.format(queryUrlBase, system, name, version);
   }
 
-  private String getDependencyUrl(String groupId, String artifactId, String version) {
-    return String.format(dependencyUrlBase, groupId, artifactId, version);
+  private String getDependencyUrl(String system, String name, String version) {
+    return String.format(dependencyUrlBase, system, name, version);
   }
 
   private HttpResponse<String> getResponse(String endpoint)

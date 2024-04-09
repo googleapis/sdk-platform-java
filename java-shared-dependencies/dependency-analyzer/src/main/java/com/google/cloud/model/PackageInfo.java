@@ -4,17 +4,17 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 
 public class PackageInfo {
-  private final MavenCoordinate mavenCoordinate;
+  private final Dependency mavenCoordinate;
   private final List<String> licenses;
   private final List<Advisory> advisories;
 
-  public PackageInfo(MavenCoordinate mavenCoordinate, List<String> licenses, List<Advisory> advisories) {
+  public PackageInfo(Dependency mavenCoordinate, List<String> licenses, List<Advisory> advisories) {
     this.mavenCoordinate = mavenCoordinate;
     this.licenses = licenses;
     this.advisories = advisories;
   }
 
-  public MavenCoordinate getMavenCoordinate() {
+  public Dependency getMavenCoordinate() {
     return mavenCoordinate;
   }
 

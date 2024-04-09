@@ -11,8 +11,7 @@ public class VersionKey {
     this.version = version;
   }
 
-  public MavenCoordinate toMavenCoordinate() {
-    String[] splits = name.split(":");
-    return new MavenCoordinate(splits[0], splits[1], version);
+  public Dependency toDependency() {
+    return new Dependency(system, name, version);
   }
 }
