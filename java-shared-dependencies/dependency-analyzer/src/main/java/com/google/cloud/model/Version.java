@@ -1,7 +1,6 @@
 package com.google.cloud.model;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Version {
