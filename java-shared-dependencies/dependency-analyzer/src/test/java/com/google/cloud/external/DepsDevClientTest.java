@@ -37,7 +37,7 @@ public class DepsDevClientTest {
 
   @Test
   public void testGetDirectDependenciesOnlyReturnsDirectDeps()
-      throws IOException, InterruptedException, URISyntaxException {
+      throws IOException, InterruptedException, URISyntaxException, IllegalArgumentException {
     String responseBody = "{\"nodes\":[{\"versionKey\":{\"system\":\"MAVEN\", \"name\":\"com.example:example\", \"version\":\"1.2.3\"}, \"bundled\":false, \"relation\":\"SELF\", \"errors\":[]}, {\"versionKey\":{\"system\":\"MAVEN\", \"name\":\"com.example:indirect-dep\", \"version\":\"4.0.0\"}, \"bundled\":false, \"relation\":\"INDIRECT\", \"errors\":[]}, {\"versionKey\":{\"system\":\"MAVEN\", \"name\":\"com.example:direct-dep\", \"version\":\"1.4.0\"}, \"bundled\":false, \"relation\":\"DIRECT\", \"errors\":[]}], \"edges\":[{\"fromNode\":0, \"toNode\":2, \"requirement\":\"^1.1.0\"}, {\"fromNode\":2, \"toNode\":1, \"requirement\":\"^3.0.0 || ^4.0.0\"}], \"error\":\"\"}";
     when(response.body()).thenReturn(responseBody);
     VersionKey base = new VersionKey("maven", "com.example:example", "1.2.3");
@@ -48,7 +48,7 @@ public class DepsDevClientTest {
 
   @Test
   public void testGetQueryResultSucceed()
-      throws URISyntaxException, IOException, InterruptedException {
+      throws URISyntaxException, IOException, InterruptedException, IllegalArgumentException {
     String responseBody = "{\"results\":[{\"version\":{\"versionKey\":{\"system\":\"MAVEN\",\"name\":\"org.apache.logging.log4j:log4j-core\",\"version\":\"2.17.0\"},\"publishedAt\":\"2021-12-18T01:58:10Z\",\"isDefault\":false,\"licenses\":[\"Apache-2.0\"],\"advisoryKeys\":[{\"id\":\"GHSA-8489-44mv-ggj8\"}],\"links\":[{\"label\":\"SOURCE_REPO\",\"url\":\"https://gitbox.apache.org/repos/asf?p=logging-log4j2.git\"},{\"label\":\"ISSUE_TRACKER\",\"url\":\"https://issues.apache.org/jira/browse/LOG4J2\"},{\"label\":\"HOMEPAGE\",\"url\":\"https://logging.apache.org/log4j/2.x/\"}],\"slsaProvenances\":[],\"registries\":[\"https://repo.maven.apache.org/maven2/\"],\"relatedProjects\":[{\"projectKey\":{\"id\":\"\"},\"relationProvenance\":\"UNVERIFIED_METADATA\",\"relationType\":\"ISSUE_TRACKER\"}]}}]}";
     when(response.body()).thenReturn(responseBody);
     VersionKey base = new VersionKey("maven", "org.apache.logging.log4j:log4j-core", "2.17.0");

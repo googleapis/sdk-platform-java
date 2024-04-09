@@ -3,12 +3,19 @@ package com.google.cloud.model;
 import com.google.common.base.Objects;
 
 public class VersionKey {
+
   private final PkgManagement system;
   private final String name;
   private final String version;
 
-  public VersionKey(String system, String name, String version) {
+  public VersionKey(String system, String name, String version)
+      throws IllegalArgumentException {
     this.system = PkgManagement.valueOf(system.toUpperCase());
+    if (!PkgManagement.checkDependencyName(this.system, name)) {
+      throw new IllegalArgumentException(
+          String.format("%s is an incorrect dependency name in %s package management system", name,
+              this.system));
+    }
     this.name = name;
     this.version = version;
   }

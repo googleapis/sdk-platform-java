@@ -11,7 +11,8 @@ import org.junit.Test;
 public class CheckReportTest {
 
   @Test
-  public void testGenerateReportWithAdvisoriesThrowsException() {
+  public void testGenerateReportWithAdvisoriesThrowsException()
+      throws IllegalArgumentException {
     List<PackageInfo> results = List.of(
         new PackageInfo(
             new VersionKey("maven", "com.example:artifact", "1.2.3"),
@@ -31,7 +32,8 @@ public class CheckReportTest {
   }
 
   @Test
-  public void testGenerateReportWithNonCompliantLicenseThrowsException() {
+  public void testGenerateReportWithNonCompliantLicenseThrowsException()
+      throws IllegalArgumentException {
     List<PackageInfo> results = List.of(
         new PackageInfo(
             new VersionKey("maven", "com.example:artifact", "1.2.3"),

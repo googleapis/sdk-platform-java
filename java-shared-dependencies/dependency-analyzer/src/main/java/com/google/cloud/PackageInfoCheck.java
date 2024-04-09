@@ -33,7 +33,7 @@ public class PackageInfoCheck {
   }
 
   public CheckReport check(String system, String dependencyName, String dependencyVersion)
-      throws URISyntaxException, IOException, InterruptedException {
+      throws URISyntaxException, IOException, InterruptedException, IllegalArgumentException {
     VersionKey initial = new VersionKey(system, dependencyName, dependencyVersion);
     Set<VersionKey> seenDependency = new HashSet<>();
     seenDependency.add(initial);
@@ -71,7 +71,7 @@ public class PackageInfoCheck {
   }
 
   public static void main(String[] args)
-      throws URISyntaxException, IOException, InterruptedException {
+      throws URISyntaxException, IOException, InterruptedException, IllegalArgumentException {
     checkArgument(args.length == 3,
         "The length of the inputs should be 3.\n" +
             "The 1st input should be the package management system.\n" +
