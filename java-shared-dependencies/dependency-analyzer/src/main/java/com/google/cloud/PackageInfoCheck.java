@@ -2,8 +2,7 @@ package com.google.cloud;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import com.google.cloud.exception.HasVulnerabilityException;
-import com.google.cloud.exception.NonCompliantLicenseException;
+import com.google.cloud.exception.DependencyRiskException;
 import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
@@ -84,7 +83,7 @@ public class PackageInfoCheck {
     CheckReport checkReport = packageInfoCheck.check(args[0], args[1], args[2]);
     try {
       checkReport.generateReport();
-    } catch (NonCompliantLicenseException | HasVulnerabilityException ex) {
+    } catch (DependencyRiskException ex) {
       System.out.println("Caught exception: " + ex);
       System.exit(1);
     }

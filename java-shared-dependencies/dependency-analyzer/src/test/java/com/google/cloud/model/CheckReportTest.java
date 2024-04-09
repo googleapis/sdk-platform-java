@@ -3,8 +3,7 @@ package com.google.cloud.model;
 
 import static org.junit.Assert.assertThrows;
 
-import com.google.cloud.exception.HasVulnerabilityException;
-import com.google.cloud.exception.NonCompliantLicenseException;
+import com.google.cloud.exception.DependencyRiskException;
 import java.util.List;
 import org.junit.Test;
 
@@ -29,7 +28,7 @@ public class CheckReportTest {
         )
     );
     CheckReport report = new CheckReport(root, results);
-    assertThrows("Found vulnerabilities in check report.", HasVulnerabilityException.class, report::generateReport);
+    assertThrows("Found vulnerabilities in check report.", DependencyRiskException.class, report::generateReport);
   }
 
   @Test
@@ -44,6 +43,6 @@ public class CheckReportTest {
         )
     );
     CheckReport report = new CheckReport(root, results);
-    assertThrows("Found non compliant licenses in check report.", NonCompliantLicenseException.class, report::generateReport);
+    assertThrows("Found non compliant licenses in check report.", DependencyRiskException.class, report::generateReport);
   }
 }

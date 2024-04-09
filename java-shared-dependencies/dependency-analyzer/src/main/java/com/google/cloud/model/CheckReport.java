@@ -1,7 +1,6 @@
 package com.google.cloud.model;
 
-import com.google.cloud.exception.HasVulnerabilityException;
-import com.google.cloud.exception.NonCompliantLicenseException;
+import com.google.cloud.exception.DependencyRiskException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,15 +23,18 @@ public class CheckReport {
     nonCompliantLicenses = getNonCompliantLicenses(result);
   }
 
-  public void generateReport() throws HasVulnerabilityException, NonCompliantLicenseException {
+  public void generateReport()
+      throws DependencyRiskException {
     if (!advisories.isEmpty()) {
       formatLog(root, advisories, "New security vulnerability found in dependencies:");
-      throw new HasVulnerabilityException("Found vulnerabilities in check report.");
     }
 
     if (!nonCompliantLicenses.isEmpty()) {
       formatLog(root, nonCompliantLicenses, "Non-compliant license changed in dependencies:");
-      throw new NonCompliantLicenseException("Found non compliant licenses in check report.");
+    }
+
+    if (!advisories.isEmpty() || !nonCompliantLicenses.isEmpty()) {
+      throw new DependencyRiskException(String.format("Found dependency risk in %s", root));
     }
 
     LOGGER.log(Level.INFO, "Dependencies have no known vulnerabilities and non compliant licenses");
@@ -73,14 +75,18 @@ public class CheckReport {
   private <T> void formatLog(VersionKey root, Map<VersionKey, List<T>> map, String message) {
     LOGGER.log(Level.SEVERE, message);
     map.forEach((versionKey, list) -> {
-      LOGGER.log(Level.SEVERE, separator(versionKey, root));
+      LOGGER.log(Level.SEVERE, beginSeparator(versionKey, root));
       list.forEach(item -> LOGGER.log(Level.SEVERE, item.toString()));
-      LOGGER.log(Level.SEVERE, separator(versionKey, root));
+      LOGGER.log(Level.SEVERE, endSeparator());
     });
   }
 
-  private String separator(VersionKey versionKey, VersionKey root) {
+  private String beginSeparator(VersionKey versionKey, VersionKey root) {
     return String.format("====================== %s, dependency of %s ======================",
         versionKey.toString(), root.toString());
+  }
+
+  private String endSeparator() {
+    return "===========================================================";
   }
 }
