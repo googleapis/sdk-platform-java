@@ -27,6 +27,9 @@ import javax.annotation.Nullable;
 public abstract class Service {
   public abstract String name();
 
+  @Nullable
+  public abstract String apiVersion();
+
   public abstract String defaultHost();
 
   public abstract ImmutableList<String> oauthScopes();
@@ -50,6 +53,10 @@ public abstract class Service {
 
   public boolean hasDescription() {
     return !Strings.isNullOrEmpty(description());
+  }
+
+  public boolean hasApiVersion() {
+    return !Strings.isNullOrEmpty(apiVersion());
   }
 
   public String hostServiceName() {
@@ -157,6 +164,8 @@ public abstract class Service {
     public abstract Builder setName(String name);
 
     public abstract Builder setOverriddenName(String overriddenName);
+
+    public abstract Builder setApiVersion(String apiVersion);
 
     public abstract Builder setDefaultHost(String defaultHost);
 
