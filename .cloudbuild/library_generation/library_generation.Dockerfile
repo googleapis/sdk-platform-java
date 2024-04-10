@@ -61,15 +61,15 @@ WORKDIR /tools/repo-automation-bots/packages/owl-bot
 RUN npm i && npm run compile && npm link
 RUN owl-bot copy-code --version
 
-
+# allow users to access the script folders
+RUN chmod -R 755 /src
 
 # set dummy git credentials for the empty commit used in postprocessing
 RUN git config --global user.email "cloud-java-bot@google.com"
 RUN git config --global user.name "Cloud Java Bot"
 
 WORKDIR /workspace
-RUN chmod 750 /workspace
-RUN chmod 750 /src/generate_repo.py
+RUN chmod 755 /workspace
 
 # define runtime env vars
 ENV RUNNING_IN_DOCKER=true
