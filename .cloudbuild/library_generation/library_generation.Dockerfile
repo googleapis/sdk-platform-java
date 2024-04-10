@@ -23,8 +23,19 @@ RUN apt-get update && apt-get install -y \
 	unzip openjdk-17-jdk rsync maven jq \
 	&& apt-get clean
 
+# use python 3.11 (the base image has several python versions; here we define the default one)
+RUN rm $(which python3)
+RUN ln -s $(which python3.11) /usr/local/bin/python
+RUN ln -s $(which python3.11) /usr/local/bin/python3
+RUN python -m pip install --upgrade pip
+
 # copy source code
 COPY library_generation /src
+
+# install scripts as a python package
+WORKDIR /src
+RUN python -m pip install -r requirements.txt
+RUN python -m pip install .
 
 # install synthtool
 WORKDIR /tools
@@ -51,14 +62,6 @@ RUN npm i && npm run compile && npm link
 RUN owl-bot copy-code --version
 
 
-# use python 3.11 (the base image has several python versions; here we define the default one)
-RUN rm $(which python3)
-RUN ln -s $(which python3.11) /usr/local/bin/python
-RUN ln -s $(which python3.11) /usr/local/bin/python3
-RUN python -m pip install --upgrade pip
-WORKDIR /src
-RUN python -m pip install -r requirements.txt
-RUN python -m pip install .
 
 # set dummy git credentials for the empty commit used in postprocessing
 RUN git config --global user.email "cloud-java-bot@google.com"
