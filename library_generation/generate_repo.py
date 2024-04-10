@@ -19,6 +19,7 @@ from library_generation.generate_composed_library import generate_composed_libra
 from library_generation.model.generation_config import GenerationConfig, from_yaml
 from library_generation.model.library_config import LibraryConfig
 from library_generation.utils.monorepo_postprocessor import monorepo_postprocessing
+from pathlib import Path
 
 
 @click.group(invoke_without_command=False)
@@ -75,7 +76,7 @@ def generate(
     repository_path: str,
 ):
     if generation_config_yaml is None:
-      generation_config_yaml = os.path.join(repository_path, 'generation_config.yaml')
+      generation_config_yaml = str(Path(os.path.join(repository_path, 'generation_config.yaml')).resolve())
     config = from_yaml(generation_config_yaml)
     generate_from_yaml(
         config=config,
