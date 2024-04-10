@@ -57,7 +57,7 @@ RUN ln -s $(which python3.11) /usr/local/bin/python
 RUN ln -s $(which python3.11) /usr/local/bin/python3
 RUN python -m pip install --upgrade pip
 WORKDIR /src
-RUN python -m pip install -r requirements.in
+RUN python -m pip install -r requirements.txt
 RUN python -m pip install .
 
 # set dummy git credentials for the empty commit used in postprocessing

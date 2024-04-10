@@ -30,7 +30,7 @@ Note: googleapis repo is found in https://github.com/googleapis/googleapis.
 import os
 from pathlib import Path
 from typing import List
-import library_generation.utilities as util
+import library_generation.utils.utilities as util
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.gapic_inputs import GapicInputs

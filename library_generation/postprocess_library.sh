@@ -31,7 +31,7 @@ owlbot_cli_image_sha=$5
 is_monorepo=$6
 configuration_yaml_path=$7
 
-source "${scripts_root}"/utilities.sh
+source "${scripts_root}"/utils/utilities.sh
 
 declare -a required_inputs=("postprocessing_target" "versions_file" "owlbot_cli_image_sha" "is_monorepo")
 for required_input in "${required_inputs[@]}"; do
