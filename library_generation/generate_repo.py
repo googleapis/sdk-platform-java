@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 import click as click
 import library_generation.utils.utilities as util
 from library_generation.generate_composed_library import generate_composed_library
@@ -30,11 +31,12 @@ def main(ctx):
 @main.command()
 @click.option(
     "--generation-config-yaml",
-    required=True,
+    required=False,
     type=str,
     help="""
     Path to generation_config.yaml that contains the metadata about
-    library generation
+    library generation. If not specified, it will be assumed to be found
+    at the root of --repository-path
     """,
 )
 @click.option(
@@ -72,6 +74,8 @@ def generate(
     target_library_names: str,
     repository_path: str,
 ):
+    if generation_config_yaml is None:
+      generation_config_yaml = os.path.join(repository_path, 'generation_config.yaml')
     config = from_yaml(generation_config_yaml)
     generate_from_yaml(
         config=config,
