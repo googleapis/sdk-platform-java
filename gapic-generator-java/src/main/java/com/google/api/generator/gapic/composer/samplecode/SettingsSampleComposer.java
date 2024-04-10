@@ -78,7 +78,6 @@ public final class SettingsSampleComposer {
             .setMethodName(
                 JavaStyle.toLowerCamelCase(String.format("%sSettings", methodNameOpt.get())))
             .build();
-    String disambiguation = "Settings";
     MethodInvocationExpr retrySettingsArgExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(settingBuilderMethodInvocationExpr)
