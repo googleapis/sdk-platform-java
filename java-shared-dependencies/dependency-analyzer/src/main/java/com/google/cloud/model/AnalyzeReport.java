@@ -1,6 +1,5 @@
 package com.google.cloud.model;
 
-import com.google.cloud.exception.DependencyRiskException;
 import com.google.common.collect.ImmutableSet;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,18 +14,18 @@ public class AnalyzeReport {
   private final VersionKey root;
   private final Map<VersionKey, List<Advisory>> advisories;
   private final Map<VersionKey, List<String>> nonCompliantLicenses;
-  private final ImmutableSet<LicenseCategory> compliantCategories = ImmutableSet.of(LicenseCategory.NOTICE);
+  private final ImmutableSet<LicenseCategory> compliantCategories = ImmutableSet.of(
+      LicenseCategory.NOTICE);
 
   private final static Logger LOGGER = Logger.getLogger(AnalyzeReport.class.getName());
 
-  public AnalyzeReport (VersionKey root, List<PackageInfo> result) {
+  public AnalyzeReport(VersionKey root, List<PackageInfo> result) {
     this.root = root;
     advisories = getAdvisories(result);
     nonCompliantLicenses = getNonCompliantLicenses(result);
   }
 
-  public void generateReport()
-      throws DependencyRiskException {
+  public AnalyzeResult generateReport() {
     if (!advisories.isEmpty()) {
       formatLog(root, advisories, "New security vulnerability found in dependencies:");
     }
@@ -36,10 +35,13 @@ public class AnalyzeReport {
     }
 
     if (!advisories.isEmpty() || !nonCompliantLicenses.isEmpty()) {
-      throw new DependencyRiskException(String.format("Found dependency risk in %s", root));
+      LOGGER.log(Level.SEVERE, String.format("Found dependency risk in %s", root));
+      return AnalyzeResult.FAIL;
     }
 
-    LOGGER.log(Level.INFO, "Dependencies have no known vulnerabilities and non compliant licenses");
+    LOGGER.log(Level.INFO,
+        String.format("%s have no known vulnerabilities and non compliant licenses", root));
+    return AnalyzeResult.PASS;
   }
 
   private Map<VersionKey, List<Advisory>> getAdvisories(List<PackageInfo> result) {

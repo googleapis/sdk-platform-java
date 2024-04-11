@@ -2,11 +2,11 @@ package com.google.cloud;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import com.google.cloud.exception.DependencyRiskException;
 import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
 import com.google.cloud.model.AnalyzeReport;
+import com.google.cloud.model.AnalyzeResult;
 import com.google.cloud.model.PackageInfo;
 import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Result;
@@ -82,9 +82,8 @@ public class DependencyAnalyzer {
    * <p>The 3rd element is the package version.</p>
    * @throws IllegalArgumentException if the format of package name is incorrect according to the
    * package management system.
-   * @throws DependencyRiskException if any risk information is found affecting the given package.
    */
-  public static void main(String[] args) throws IllegalArgumentException, DependencyRiskException {
+  public static void main(String[] args) throws IllegalArgumentException {
     checkArgument(args.length == 3,
         "The length of the inputs should be 3.\n" +
             "The 1st input should be the package management system.\n" +
@@ -106,6 +105,10 @@ public class DependencyAnalyzer {
       System.exit(1);
     }
 
-    analyzeReport.generateReport();
+    AnalyzeResult result = analyzeReport.generateReport();
+    System.out.println(result);
+    if (result.equals(AnalyzeResult.FAIL)) {
+      System.exit(1);
+    }
   }
 }

@@ -1,13 +1,12 @@
 package com.google.cloud.model;
 
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertEquals;
 
-import com.google.cloud.exception.DependencyRiskException;
 import java.util.List;
 import org.junit.Test;
 
-public class CheckReportTest {
+public class AnalyzeReportTest {
 
   @Test
   public void testGenerateReportWithAdvisoriesThrowsException()
@@ -27,8 +26,8 @@ public class CheckReportTest {
             ))
         )
     );
-    AnalyzeReport report = new AnalyzeReport(root, results);
-    assertThrows("Found vulnerabilities in check report.", DependencyRiskException.class, report::generateReport);
+    AnalyzeResult result = new AnalyzeReport(root, results).generateReport();
+    assertEquals(AnalyzeResult.FAIL, result);
   }
 
   @Test
@@ -42,13 +41,13 @@ public class CheckReportTest {
             List.of()
         )
     );
-    AnalyzeReport report = new AnalyzeReport(root, results);
-    assertThrows("Found non compliant licenses in check report.", DependencyRiskException.class, report::generateReport);
+    AnalyzeResult result = new AnalyzeReport(root, results).generateReport();
+    assertEquals(AnalyzeResult.FAIL, result);
   }
 
   @Test
   public void testGenerateReportWithoutRiskSucceeds()
-      throws IllegalArgumentException, DependencyRiskException {
+      throws IllegalArgumentException {
     VersionKey root = new VersionKey("maven", "com.example:artifact", "1.2.3");
     List<PackageInfo> results = List.of(
         new PackageInfo(
@@ -57,7 +56,7 @@ public class CheckReportTest {
             List.of()
         )
     );
-    // no exception should be thrown.
-    new AnalyzeReport(root, results).generateReport();
+    AnalyzeResult result = new AnalyzeReport(root, results).generateReport();
+    assertEquals(AnalyzeResult.PASS, result);
   }
 }
