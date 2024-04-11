@@ -2,18 +2,27 @@ package com.google.cloud.model;
 
 import com.google.common.base.Objects;
 
+/**
+ * The name of the package version.
+ */
 public class VersionKey {
 
   private final PkgManagement system;
+  /**
+   * The name of the package.
+   */
   private final String name;
+  /**
+   * The version of the package.
+   */
   private final String version;
 
   public VersionKey(String system, String name, String version)
       throws IllegalArgumentException {
     this.system = PkgManagement.valueOf(system.toUpperCase());
-    if (!PkgManagement.checkDependencyName(this.system, name)) {
+    if (!PkgManagement.checkPackageName(this.system, name)) {
       throw new IllegalArgumentException(
-          String.format("%s is an incorrect dependency name in %s package management system", name,
+          String.format("%s is an incorrect package name in %s package management system", name,
               this.system));
     }
     this.name = name;

@@ -9,7 +9,7 @@ public class VersionKeyTest {
 
   @Test
   public void testVersionKeyWithIncorrectNameThrowsException() {
-    assertThrows("artifact is an incorrect dependency name in MAVEN package management system", IllegalArgumentException.class,
+    assertThrows("artifact is an incorrect package name in MAVEN package management system", IllegalArgumentException.class,
         () -> new VersionKey("maven", "artifact", "1.2.3"));
   }
 

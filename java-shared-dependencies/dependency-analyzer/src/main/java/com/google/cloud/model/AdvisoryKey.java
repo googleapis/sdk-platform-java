@@ -2,7 +2,14 @@ package com.google.cloud.model;
 
 import com.google.common.base.Objects;
 
+/**
+ * The identifier for the security advisory.
+ */
 public class AdvisoryKey {
+
+  /**
+   * The OSV identifier for the security advisory.
+   */
   private final String id;
 
   public AdvisoryKey(String id) {
