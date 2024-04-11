@@ -81,4 +81,4 @@ RUN chmod -R 757 /home
 ENV RUNNING_IN_DOCKER=true
 
 WORKDIR /workspace
-ENTRYPOINT [ "python", "/src/generate_repo.py", "generate" ]
+ENTRYPOINT [ "python", "/src/cli/entry_point.py", "generate" ]

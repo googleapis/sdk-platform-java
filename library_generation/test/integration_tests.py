@@ -57,31 +57,25 @@ class IntegrationTest(unittest.TestCase):
         config_files = self.__get_config_files(config_dir)
         for repo, config_file in config_files:
             config = from_yaml(config_file)
+            repo_location=f"{output_dir}/{repo}"
+            config_location=f"{golden_dir}/../{repo}"
             # 1. pull repository
             repo_dest = self.__pull_repo_to(
-                Path(f"{output_dir}/{repo}"), repo, committish_map[repo]
+                Path(repo_location), repo, committish_map[repo]
             )
             # 2. prepare golden files
             library_names = self.__get_library_names_from_config(config)
             self.__prepare_golden_files(
                 config=config, library_names=library_names, repo_dest=repo_dest
             )
-            # 3. bind repository and configuration to docker volumes
-            self.__bind_device_to_volumes(
-                volume_name=f"repo-{repo}", device_dir=f"{output_dir}/{repo}"
-            )
-            self.__bind_device_to_volumes(
-                volume_name=f"config-{repo}", device_dir=f"{golden_dir}/../{repo}"
-            )
-            repo_volumes = f"-v repo-{repo}:/workspace/{repo} -v config-{repo}:/workspace/config-{repo}"
-            # 4. run entry_point.py in docker container
+            # 3. run entry_point.py in docker container
             self.__run_entry_point_in_docker_container(
-                repo=repo,
-                repo_volumes=repo_volumes,
+                repo_location=repo_location,
+                config_location=config_location,
                 baseline_config=baseline_config_name,
                 current_config=current_config_name,
             )
-            # 5. compare generation result with golden files
+            # 4. compare generation result with golden files
             print(
                 "Generation finished successfully. "
                 "Will now compare differences between generated and existing "
@@ -241,8 +235,8 @@ class IntegrationTest(unittest.TestCase):
     @classmethod
     def __run_entry_point_in_docker_container(
         cls,
-        repo: str,
-        repo_volumes: str,
+        repo_location: str,
+        config_location: str,
         baseline_config: str,
         current_config: str,
     ):
@@ -252,26 +246,14 @@ class IntegrationTest(unittest.TestCase):
                 "run",
                 "--rm",
                 "-v",
-                f"repo-{repo}:/workspace/{repo}",
+                f"{repo_location}:/workspace/repo",
                 "-v",
-                f"config-{repo}:/workspace/config-{repo}",
-                "-v",
-                "/tmp:/tmp",
-                "-v",
-                "/var/run/docker.sock:/var/run/docker.sock",
-                "-e",
-                "RUNNING_IN_DOCKER=true",
-                "-e",
-                f"REPO_BINDING_VOLUMES={repo_volumes}",
+                f"{config_location}:/workspace/config",
                 "-w",
-                "/src",
+                "/workspace/repo",
                 image_tag,
-                "python",
-                "/src/cli/entry_point.py",
-                "generate",
-                f"--baseline-generation-config=/workspace/config-{repo}/{baseline_config}",
-                f"--current-generation-config=/workspace/config-{repo}/{current_config}",
-                f"--repository-path=/workspace/{repo}",
+                f"--baseline-generation-config=/workspace/config/{baseline_config}",
+                f"--current-generation-config=/workspace/config/{current_config}",
             ]
         )
 
