@@ -9,7 +9,6 @@ import com.google.cloud.model.AdvisoryKey;
 import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Version;
 import com.google.cloud.model.VersionKey;
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -29,7 +28,7 @@ public class DepsDevClientTest {
   @Before
   public void setUp() throws IOException, InterruptedException {
     httpClient = mock(HttpClient.class);
-    client = new DepsDevClient(httpClient, new Gson());
+    client = new DepsDevClient(httpClient);
     response = mock(HttpResponse.class);
     when(httpClient.send(any(HttpRequest.class), any(BodyHandler.class)))
         .thenReturn(response);

@@ -24,9 +24,9 @@ public class DepsDevClient {
   private final static String queryUrlBase = "https://api.deps.dev/v3/query?versionKey.system=%s&versionKey.name=%s&versionKey.version=%s";
   private final static String dependencyUrlBase = "https://api.deps.dev/v3/systems/%s/packages/%s/versions/%s:dependencies";
 
-  public DepsDevClient(HttpClient client,  Gson gson) {
+  public DepsDevClient(HttpClient client) {
     this.client = client;
-    this.gson = gson;
+    this.gson = new Gson();
   }
 
   public List<VersionKey> getDirectDependencies(VersionKey versionKey)

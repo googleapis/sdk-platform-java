@@ -12,7 +12,6 @@ import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Result;
 import com.google.cloud.model.Version;
 import com.google.cloud.model.VersionKey;
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -94,7 +93,7 @@ public class PackageInfoCheck {
     );
 
     PackageInfoCheck packageInfoCheck = new PackageInfoCheck(
-        new DepsDevClient(HttpClient.newHttpClient(), new Gson()));
+        new DepsDevClient(HttpClient.newHttpClient()));
     CheckReport checkReport = null;
     try {
       checkReport = packageInfoCheck.check(args[0], args[1], args[2]);
