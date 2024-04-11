@@ -5,8 +5,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
-import com.google.cloud.model.AnalyzeReport;
 import com.google.cloud.model.AnalysisResult;
+import com.google.cloud.model.ReportResult;
 import com.google.cloud.model.PackageInfo;
 import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Result;
@@ -30,7 +30,7 @@ public class DependencyAnalyzer {
     this.depsDevClient = depsDevClient;
   }
 
-  public AnalyzeReport analyze(String system, String packageName, String packageVersion)
+  public AnalysisResult analyze(String system, String packageName, String packageVersion)
       throws URISyntaxException, IOException, InterruptedException, IllegalArgumentException {
     VersionKey root = new VersionKey(system, packageName, packageVersion);
     Set<VersionKey> seenPackage = new HashSet<>();
@@ -65,7 +65,7 @@ public class DependencyAnalyzer {
       result.add(new PackageInfo(versionKey, licenses, advisories));
     }
 
-    return new AnalyzeReport(root, result);
+    return new AnalysisResult(root, result);
   }
 
   /**
@@ -97,7 +97,7 @@ public class DependencyAnalyzer {
     String packageVersion = args[2];
     DependencyAnalyzer dependencyAnalyzer = new DependencyAnalyzer(
         new DepsDevClient(HttpClient.newHttpClient()));
-    AnalyzeReport analyzeReport = null;
+    AnalysisResult analyzeReport = null;
     try {
       analyzeReport = dependencyAnalyzer.analyze(system, packageName, packageVersion);
     } catch (URISyntaxException | IOException | InterruptedException ex) {
@@ -107,9 +107,9 @@ public class DependencyAnalyzer {
       System.exit(1);
     }
 
-    AnalysisResult result = analyzeReport.generateReport();
+    ReportResult result = analyzeReport.generateReport();
     System.out.println(result);
-    if (result.equals(AnalysisResult.FAIL)) {
+    if (result.equals(ReportResult.FAIL)) {
       System.out.println(
           "Please refer to go/cloud-java-rotations#security-advisories-monitoring for further actions");
       System.exit(1);

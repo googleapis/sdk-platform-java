@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import org.junit.Test;
 
-public class AnalyzeReportTest {
+public class AnalysisResultTest {
 
   @Test
   public void testGenerateReportWithAdvisoriesThrowsException()
@@ -26,8 +26,8 @@ public class AnalyzeReportTest {
             ))
         )
     );
-    AnalysisResult result = new AnalyzeReport(root, results).generateReport();
-    assertEquals(AnalysisResult.FAIL, result);
+    ReportResult result = new AnalysisResult(root, results).generateReport();
+    assertEquals(ReportResult.FAIL, result);
   }
 
   @Test
@@ -41,8 +41,8 @@ public class AnalyzeReportTest {
             List.of()
         )
     );
-    AnalysisResult result = new AnalyzeReport(root, results).generateReport();
-    assertEquals(AnalysisResult.FAIL, result);
+    ReportResult result = new AnalysisResult(root, results).generateReport();
+    assertEquals(ReportResult.FAIL, result);
   }
 
   @Test
@@ -56,7 +56,7 @@ public class AnalyzeReportTest {
             List.of()
         )
     );
-    AnalysisResult result = new AnalyzeReport(root, results).generateReport();
-    assertEquals(AnalysisResult.PASS, result);
+    ReportResult result = new AnalysisResult(root, results).generateReport();
+    assertEquals(ReportResult.PASS, result);
   }
 }
