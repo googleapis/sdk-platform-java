@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import javax.swing.text.SimpleAttributeSet;
 
 public class DependencyAnalyzer {
 
@@ -69,13 +70,14 @@ public class DependencyAnalyzer {
   }
 
   /**
-   * For a given package, checks the package information via <a href="https://deps.dev/">deps.dev</a>
-   * and reports error if risk information is found.
+   * For a given package, checks the package information via <a
+   * href="https://deps.dev/">deps.dev</a> and reports error if risk information is found.
    * <p>
    * The types of risk checked by the dependency analyzer are:
    * <p>1. Non-compliant licenses</p>
    * <p>2. Security vulnerability</p>
    * The analyzer will report all types of risk before existing with error.
+   *
    * @param args a package. A string array with three elements.
    * <p>The 1st element is the package management system, e.g., maven, npm, etc.</p>
    * <p>The 2nd element is the package name.</p>
@@ -100,7 +102,8 @@ public class DependencyAnalyzer {
     try {
       analyzeReport = dependencyAnalyzer.analyze(system, packageName, packageVersion);
     } catch (URISyntaxException | IOException | InterruptedException ex) {
-      System.out.println("Caught exception when fetching package information from https://deps.dev/");
+      System.out.println(
+          "Caught exception when fetching package information from https://deps.dev/");
       ex.printStackTrace();
       System.exit(1);
     }
@@ -108,6 +111,8 @@ public class DependencyAnalyzer {
     AnalyzeResult result = analyzeReport.generateReport();
     System.out.println(result);
     if (result.equals(AnalyzeResult.FAIL)) {
+      System.out.println(
+          "Please refer to go/cloud-java-rotations#security-advisories-monitoring for further actions");
       System.exit(1);
     }
   }
