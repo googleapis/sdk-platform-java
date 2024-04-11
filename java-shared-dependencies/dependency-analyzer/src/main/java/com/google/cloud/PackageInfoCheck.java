@@ -92,11 +92,14 @@ public class PackageInfoCheck {
             "The 3rd input should be the package version.\n"
     );
 
+    String system = args[0];
+    String packageName = args[1];
+    String packageVersion = args[2];
     PackageInfoCheck packageInfoCheck = new PackageInfoCheck(
         new DepsDevClient(HttpClient.newHttpClient()));
     CheckReport checkReport = null;
     try {
-      checkReport = packageInfoCheck.check(args[0], args[1], args[2]);
+      checkReport = packageInfoCheck.check(system, packageName, packageVersion);
     } catch (URISyntaxException | IOException | InterruptedException ex) {
       System.out.println("Caught exception when fetching package information from deps.dev: " + ex);
       System.exit(1);
