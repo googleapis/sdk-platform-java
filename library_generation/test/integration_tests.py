@@ -57,8 +57,8 @@ class IntegrationTest(unittest.TestCase):
         config_files = self.__get_config_files(config_dir)
         for repo, config_file in config_files:
             config = from_yaml(config_file)
-            repo_location=f"{output_dir}/{repo}"
-            config_location=f"{golden_dir}/../{repo}"
+            repo_location = f"{output_dir}/{repo}"
+            config_location = f"{golden_dir}/../{repo}"
             # 1. pull repository
             repo_dest = self.__pull_repo_to(
                 Path(repo_location), repo, committish_map[repo]

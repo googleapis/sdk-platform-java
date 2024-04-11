@@ -76,7 +76,9 @@ def generate(
     repository_path: str,
 ):
     if generation_config_yaml is None:
-      generation_config_yaml = str(Path(os.path.join(repository_path, 'generation_config.yaml')).resolve())
+        generation_config_yaml = str(
+            Path(os.path.join(repository_path, "generation_config.yaml")).resolve()
+        )
     config = from_yaml(generation_config_yaml)
     generate_from_yaml(
         config=config,
