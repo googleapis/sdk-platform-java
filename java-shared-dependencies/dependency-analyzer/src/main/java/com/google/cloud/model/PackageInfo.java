@@ -3,6 +3,10 @@ package com.google.cloud.model;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 
+/**
+ * Selected package information associated with a package version, including licenses and security
+ * advisories.
+ */
 public class PackageInfo {
   private final VersionKey versionKey;
   private final List<String> licenses;

@@ -1,5 +1,8 @@
 package com.google.cloud.model;
 
+/**
+ * The nodes of the dependency graph.
+ */
 public class Node {
   private final VersionKey versionKey;
   private final Relation relation;
