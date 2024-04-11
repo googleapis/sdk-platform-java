@@ -27,7 +27,7 @@
           </execution>
         </executions>
         <configuration>
-          <mainClass>com.google.cloud.PackageInfoCheck</mainClass>
+          <mainClass>com.google.cloud.DependencyAnalyzer</mainClass>
           <arguments>
             <!--suppress UnresolvedMavenProperty -->
             <argument>${dep.system}</argument>

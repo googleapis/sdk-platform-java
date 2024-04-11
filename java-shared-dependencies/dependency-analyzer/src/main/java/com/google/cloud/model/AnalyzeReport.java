@@ -10,16 +10,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class CheckReport {
+public class AnalyzeReport {
 
   private final VersionKey root;
   private final Map<VersionKey, List<Advisory>> advisories;
   private final Map<VersionKey, List<String>> nonCompliantLicenses;
   private final ImmutableSet<LicenseCategory> compliantCategories = ImmutableSet.of(LicenseCategory.NOTICE);
 
-  private final static Logger LOGGER = Logger.getLogger(CheckReport.class.getName());
+  private final static Logger LOGGER = Logger.getLogger(AnalyzeReport.class.getName());
 
-  public CheckReport(VersionKey root, List<PackageInfo> result) {
+  public AnalyzeReport (VersionKey root, List<PackageInfo> result) {
     this.root = root;
     advisories = getAdvisories(result);
     nonCompliantLicenses = getNonCompliantLicenses(result);

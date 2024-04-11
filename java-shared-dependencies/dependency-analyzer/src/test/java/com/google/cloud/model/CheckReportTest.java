@@ -27,7 +27,7 @@ public class CheckReportTest {
             ))
         )
     );
-    CheckReport report = new CheckReport(root, results);
+    AnalyzeReport report = new AnalyzeReport(root, results);
     assertThrows("Found vulnerabilities in check report.", DependencyRiskException.class, report::generateReport);
   }
 
@@ -42,7 +42,7 @@ public class CheckReportTest {
             List.of()
         )
     );
-    CheckReport report = new CheckReport(root, results);
+    AnalyzeReport report = new AnalyzeReport(root, results);
     assertThrows("Found non compliant licenses in check report.", DependencyRiskException.class, report::generateReport);
   }
 
@@ -58,6 +58,6 @@ public class CheckReportTest {
         )
     );
     // no exception should be thrown.
-    new CheckReport(root, results).generateReport();
+    new AnalyzeReport(root, results).generateReport();
   }
 }

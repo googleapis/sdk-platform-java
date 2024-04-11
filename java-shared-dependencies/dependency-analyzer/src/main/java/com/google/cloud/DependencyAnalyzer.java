@@ -6,7 +6,7 @@ import com.google.cloud.exception.DependencyRiskException;
 import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
-import com.google.cloud.model.CheckReport;
+import com.google.cloud.model.AnalyzeReport;
 import com.google.cloud.model.PackageInfo;
 import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Result;
@@ -22,15 +22,15 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
-public class PackageInfoCheck {
+public class DependencyAnalyzer {
 
   private final DepsDevClient depsDevClient;
 
-  public PackageInfoCheck(DepsDevClient depsDevClient) {
+  public DependencyAnalyzer(DepsDevClient depsDevClient) {
     this.depsDevClient = depsDevClient;
   }
 
-  public CheckReport check(String system, String packageName, String packageVersion)
+  public AnalyzeReport analyze(String system, String packageName, String packageVersion)
       throws URISyntaxException, IOException, InterruptedException, IllegalArgumentException {
     VersionKey root = new VersionKey(system, packageName, packageVersion);
     Set<VersionKey> seenPackage = new HashSet<>();
@@ -65,7 +65,7 @@ public class PackageInfoCheck {
       result.add(new PackageInfo(versionKey, licenses, advisories));
     }
 
-    return new CheckReport(root, result);
+    return new AnalyzeReport(root, result);
   }
 
   /**
@@ -95,17 +95,17 @@ public class PackageInfoCheck {
     String system = args[0];
     String packageName = args[1];
     String packageVersion = args[2];
-    PackageInfoCheck packageInfoCheck = new PackageInfoCheck(
+    DependencyAnalyzer dependencyAnalyzer = new DependencyAnalyzer(
         new DepsDevClient(HttpClient.newHttpClient()));
-    CheckReport checkReport = null;
+    AnalyzeReport analyzeReport = null;
     try {
-      checkReport = packageInfoCheck.check(system, packageName, packageVersion);
+      analyzeReport = dependencyAnalyzer.analyze(system, packageName, packageVersion);
     } catch (URISyntaxException | IOException | InterruptedException ex) {
       System.out.println("Caught exception when fetching package information from https://deps.dev/");
       ex.printStackTrace();
       System.exit(1);
     }
 
-    checkReport.generateReport();
+    analyzeReport.generateReport();
   }
 }
