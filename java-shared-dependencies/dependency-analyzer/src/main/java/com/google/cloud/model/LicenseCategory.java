@@ -1,6 +1,6 @@
 package com.google.cloud.model;
 
 public enum LicenseCategory {
-  Restricted,
+  RESTRICTED,
   NOTICE
 }
