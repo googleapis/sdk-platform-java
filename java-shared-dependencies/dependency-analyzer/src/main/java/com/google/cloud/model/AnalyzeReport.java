@@ -31,7 +31,7 @@ public class AnalyzeReport {
     }
 
     if (!nonCompliantLicenses.isEmpty()) {
-      formatLog(root, nonCompliantLicenses, "Non-compliant license changed in dependencies:");
+      formatLog(root, nonCompliantLicenses, "Non-compliant license found in dependencies:");
     }
 
     if (!advisories.isEmpty() || !nonCompliantLicenses.isEmpty()) {
