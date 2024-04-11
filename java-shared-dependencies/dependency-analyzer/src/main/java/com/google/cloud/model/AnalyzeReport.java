@@ -25,7 +25,7 @@ public class AnalyzeReport {
     nonCompliantLicenses = getNonCompliantLicenses(result);
   }
 
-  public AnalyzeResult generateReport() {
+  public AnalysisResult generateReport() {
     if (!advisories.isEmpty()) {
       formatLog(root, advisories, "New security vulnerability found in dependencies:");
     }
@@ -36,12 +36,12 @@ public class AnalyzeReport {
 
     if (!advisories.isEmpty() || !nonCompliantLicenses.isEmpty()) {
       LOGGER.log(Level.SEVERE, String.format("Found dependency risk in %s", root));
-      return AnalyzeResult.FAIL;
+      return AnalysisResult.FAIL;
     }
 
     LOGGER.log(Level.INFO,
         String.format("%s have no known vulnerabilities and non compliant licenses", root));
-    return AnalyzeResult.PASS;
+    return AnalysisResult.PASS;
   }
 
   private Map<VersionKey, List<Advisory>> getAdvisories(List<PackageInfo> result) {

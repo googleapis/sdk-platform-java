@@ -6,7 +6,7 @@ import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
 import com.google.cloud.model.AnalyzeReport;
-import com.google.cloud.model.AnalyzeResult;
+import com.google.cloud.model.AnalysisResult;
 import com.google.cloud.model.PackageInfo;
 import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Result;
@@ -21,7 +21,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
-import javax.swing.text.SimpleAttributeSet;
 
 public class DependencyAnalyzer {
 
@@ -108,9 +107,9 @@ public class DependencyAnalyzer {
       System.exit(1);
     }
 
-    AnalyzeResult result = analyzeReport.generateReport();
+    AnalysisResult result = analyzeReport.generateReport();
     System.out.println(result);
-    if (result.equals(AnalyzeResult.FAIL)) {
+    if (result.equals(AnalysisResult.FAIL)) {
       System.out.println(
           "Please refer to go/cloud-java-rotations#security-advisories-monitoring for further actions");
       System.exit(1);

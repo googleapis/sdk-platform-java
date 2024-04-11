@@ -26,8 +26,8 @@ public class AnalyzeReportTest {
             ))
         )
     );
-    AnalyzeResult result = new AnalyzeReport(root, results).generateReport();
-    assertEquals(AnalyzeResult.FAIL, result);
+    AnalysisResult result = new AnalyzeReport(root, results).generateReport();
+    assertEquals(AnalysisResult.FAIL, result);
   }
 
   @Test
@@ -41,8 +41,8 @@ public class AnalyzeReportTest {
             List.of()
         )
     );
-    AnalyzeResult result = new AnalyzeReport(root, results).generateReport();
-    assertEquals(AnalyzeResult.FAIL, result);
+    AnalysisResult result = new AnalyzeReport(root, results).generateReport();
+    assertEquals(AnalysisResult.FAIL, result);
   }
 
   @Test
@@ -56,7 +56,7 @@ public class AnalyzeReportTest {
             List.of()
         )
     );
-    AnalyzeResult result = new AnalyzeReport(root, results).generateReport();
-    assertEquals(AnalyzeResult.PASS, result);
+    AnalysisResult result = new AnalyzeReport(root, results).generateReport();
+    assertEquals(AnalysisResult.PASS, result);
   }
 }
