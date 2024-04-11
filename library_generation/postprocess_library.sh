@@ -15,10 +15,9 @@
 # 3 - versions_file: path to file containing versions to be applied to the poms
 # 4 - owlbot_cli_source_folder: alternative folder with a structure exactly like
 # googleapis-gen. It will be used instead of preprocessed_sources_path if
-# 5 - owlbot_cli_image_sha: SHA of the image containing the OwlBot CLI
-# 6 - is_monorepo: whether this library is a monorepo, which implies slightly
+# 5 - is_monorepo: whether this library is a monorepo, which implies slightly
 # different logic
-# 7 - configuration_yaml_path: path to the configuration yaml containing library
+# 6 - configuration_yaml_path: path to the configuration yaml containing library
 # generation information for this library
 set -exo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
@@ -27,9 +26,8 @@ postprocessing_target=$1
 preprocessed_sources_path=$2
 versions_file=$3
 owlbot_cli_source_folder=$4
-owlbot_cli_image_sha=$5
-is_monorepo=$6
-configuration_yaml_path=$7
+is_monorepo=$5
+configuration_yaml_path=$6
 
 source "${scripts_root}"/utils/utilities.sh
 

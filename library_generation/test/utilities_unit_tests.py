@@ -143,7 +143,6 @@ class UtilitiesTest(unittest.TestCase):
                 "googleapis_commitish",
                 f"{test_config_dir}/config_without_googleapis.yaml",
             ),
-            ("owlbot_cli_image", f"{test_config_dir}/config_without_owlbot.yaml"),
             (
                 "template_excludes",
                 f"{test_config_dir}/config_without_temp_excludes.yaml",
@@ -164,10 +163,6 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual(25.2, config.protobuf_version)
         self.assertEqual(
             "1a45bf7393b52407188c82e63101db7dc9c72026", config.googleapis_commitish
-        )
-        self.assertEqual(
-            "sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409",
-            config.owlbot_cli_image,
         )
         self.assertEqual(
             [
@@ -477,7 +472,6 @@ class UtilitiesTest(unittest.TestCase):
         return GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            owlbot_cli_image="",
             template_excludes=[
                 ".github/*",
                 ".kokoro/*",

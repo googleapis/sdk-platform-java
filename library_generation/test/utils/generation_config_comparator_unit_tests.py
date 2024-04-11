@@ -39,7 +39,6 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         self.baseline_config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            owlbot_cli_image="",
             template_excludes=[],
             path_to_yaml="",
             grpc_version="",
@@ -49,7 +48,6 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         self.latest_config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            owlbot_cli_image="",
             template_excludes=[],
             path_to_yaml="",
             grpc_version="",
@@ -90,20 +88,6 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         config_change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
         self.assertEqual("gapic_generator_version", config_change.changed_param)
         self.assertEqual("1.2.4", config_change.current_value)
-
-    def test_compare_config_owlbot_cli_update(self):
-        self.baseline_config.owlbot_cli_image = "image_version_123"
-        self.latest_config.owlbot_cli_image = "image_version_456"
-        result = compare_config(
-            baseline_config=self.baseline_config,
-            current_config=self.latest_config,
-        )
-        self.assertTrue(
-            len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 1
-        )
-        config_change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
-        self.assertEqual("owlbot_cli_image", config_change.changed_param)
-        self.assertEqual("image_version_456", config_change.current_value)
 
     def test_compare_protobuf_update(self):
         self.baseline_config.protobuf_version = "3.25.2"

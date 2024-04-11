@@ -45,8 +45,6 @@ class GenerateRepoTest(unittest.TestCase):
         return GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            synthtool_commitish="",
-            owlbot_cli_image="",
             template_excludes=[],
             path_to_yaml="",
             libraries=[],
