@@ -1,7 +1,7 @@
 package com.google.cloud.model;
 
 import static com.google.cloud.model.LicenseCategory.NOTICE;
-import static com.google.cloud.model.LicenseCategory.Restricted;
+import static com.google.cloud.model.LicenseCategory.RESTRICTED;
 
 import java.util.Set;
 import java.util.logging.Level;
@@ -10,8 +10,8 @@ import java.util.logging.Logger;
 
 public enum License {
   APACHE_2_0(Set.of(NOTICE)),
-  BCL(Set.of(Restricted, NOTICE)),
-  GL2PS(Set.of(Restricted, NOTICE)),
+  BCL(Set.of(RESTRICTED, NOTICE)),
+  GL2PS(Set.of(RESTRICTED, NOTICE)),
   MIT(Set.of(NOTICE)),
   NOT_RECOGNIZED(Set.of());
 

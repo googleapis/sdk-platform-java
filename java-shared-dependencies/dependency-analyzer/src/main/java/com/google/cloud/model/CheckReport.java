@@ -13,7 +13,7 @@ public class CheckReport {
   private final VersionKey root;
   private final Map<VersionKey, List<Advisory>> advisories;
   private final Map<VersionKey, List<String>> nonCompliantLicenses;
-  private final List<LicenseCategory> nonCompliantCategories = List.of(LicenseCategory.Restricted);
+  private final List<LicenseCategory> nonCompliantCategories = List.of(LicenseCategory.RESTRICTED);
 
   private final static Logger LOGGER = Logger.getLogger(CheckReport.class.getName());
 
