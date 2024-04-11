@@ -101,7 +101,8 @@ public class PackageInfoCheck {
     try {
       checkReport = packageInfoCheck.check(system, packageName, packageVersion);
     } catch (URISyntaxException | IOException | InterruptedException ex) {
-      System.out.println("Caught exception when fetching package information from deps.dev: " + ex);
+      System.out.println("Caught exception when fetching package information from https://deps.dev/");
+      ex.printStackTrace();
       System.exit(1);
     }
 
