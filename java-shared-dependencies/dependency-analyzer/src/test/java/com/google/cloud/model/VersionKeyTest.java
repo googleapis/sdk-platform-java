@@ -14,7 +14,7 @@ public class VersionKeyTest {
   }
 
   @Test
-  public void testVersionKeyWithCorrectNameSucceed() throws IllegalArgumentException {
+  public void testVersionKeyWithCorrectNameSucceeds() throws IllegalArgumentException {
     VersionKey versionKey = new VersionKey("maven", "group:artifact", "1.2.3");
     assertEquals(PkgManagement.MAVEN, versionKey.getSystem());
     assertEquals("group:artifact", versionKey.getName());

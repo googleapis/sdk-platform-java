@@ -3,11 +3,16 @@ package com.google.cloud.model;
 import static com.google.cloud.model.LicenseCategory.NOTICE;
 import static com.google.cloud.model.LicenseCategory.RESTRICTED;
 
+import com.google.common.collect.ImmutableSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * Third-party licenses associated with an open-source software.
+ * <p>
+ * For more information, please refer to go/thirdpartylicenses.
+ */
 public enum License {
   APACHE_2_0(Set.of(NOTICE)),
   BCL(Set.of(RESTRICTED, NOTICE)),
@@ -37,6 +42,6 @@ public enum License {
   }
 
   public Set<LicenseCategory> getCategories() {
-    return categories;
+    return ImmutableSet.copyOf(categories);
   }
 }

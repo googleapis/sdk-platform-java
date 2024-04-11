@@ -45,4 +45,19 @@ public class CheckReportTest {
     CheckReport report = new CheckReport(root, results);
     assertThrows("Found non compliant licenses in check report.", DependencyRiskException.class, report::generateReport);
   }
+
+  @Test
+  public void testGenerateReportWithoutRiskSucceeds()
+      throws IllegalArgumentException, DependencyRiskException {
+    VersionKey root = new VersionKey("maven", "com.example:artifact", "1.2.3");
+    List<PackageInfo> results = List.of(
+        new PackageInfo(
+            root,
+            List.of("Apache-2.0"),
+            List.of()
+        )
+    );
+    // no exception should be thrown.
+    new CheckReport(root, results).generateReport();
+  }
 }
