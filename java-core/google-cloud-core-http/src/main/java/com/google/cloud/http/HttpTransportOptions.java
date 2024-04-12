@@ -26,6 +26,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.httpjson.HttpHeadersUtils;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.auth.Credentials;
 import com.google.auth.http.HttpCredentialsAdapter;
@@ -42,7 +43,6 @@ import java.util.Objects;
 public class HttpTransportOptions implements TransportOptions {
 
   private static final long serialVersionUID = 7890117765045419810L;
-  private static final String GOOGLE_CLOUD_UNIVERSE_DOMAIN = "GOOGLE_CLOUD_UNIVERSE_DOMAIN";
   private final int connectTimeout;
   private final int readTimeout;
   private final String httpTransportFactoryClassName;
@@ -163,7 +163,7 @@ public class HttpTransportOptions implements TransportOptions {
       private String determineUniverseDomain() {
         String universeDomain = serviceOptions.getUniverseDomain();
         if (universeDomain == null) {
-          universeDomain = System.getenv(GOOGLE_CLOUD_UNIVERSE_DOMAIN);
+          universeDomain = System.getenv(EndpointContext.GOOGLE_CLOUD_UNIVERSE_DOMAIN);
         }
         return universeDomain == null ? Credentials.GOOGLE_DEFAULT_UNIVERSE : universeDomain;
       }
@@ -184,10 +184,9 @@ public class HttpTransportOptions implements TransportOptions {
         if (!configuredUniverseDomain.equals(credentialsUniverseDomain)) {
           throw new IllegalStateException(
               String.format(
-                  "The configured universe domain (%s) does not match the universe domain found"
-                      + " in the credentials (%s). If you haven't configured the universe domain"
-                      + " explicitly, `googleapis.com` is the default.",
-                  configuredUniverseDomain, credentialsUniverseDomain));
+                  EndpointContext.INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE,
+                  configuredUniverseDomain,
+                  credentialsUniverseDomain));
         }
 
         if (delegate != null) {
