@@ -103,6 +103,14 @@ def generate_from_yaml(
     target_libraries = get_target_libraries(
         config=config, target_library_names=target_library_names
     )
+
+    if not target_libraries:
+        print("All libraries are changed.")
+    elif len(target_libraries) == 0:
+        print("No library is changed.")
+    else:
+        print(f"Changed libraries: {target_libraries}.")
+
     repo_config = util.prepare_repo(
         gen_config=config, library_config=target_libraries, repo_path=repository_path
     )

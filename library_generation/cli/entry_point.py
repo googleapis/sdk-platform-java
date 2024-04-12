@@ -112,6 +112,7 @@ def generate(
         # Execute full generation based on current_generation_config if
         # baseline_generation_config is not specified.
         # Do not generate pull request description.
+        print("baseline_generation_config is not specified, start full generation.")
         generate_from_yaml(
             config=from_yaml(current_generation_config),
             repository_path=repository_path,
