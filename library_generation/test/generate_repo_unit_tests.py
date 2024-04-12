@@ -48,7 +48,6 @@ class GenerateRepoTest(unittest.TestCase):
             synthtool_commitish="",
             owlbot_cli_image="",
             template_excludes=[],
-            path_to_yaml="",
             libraries=[],
         )
 

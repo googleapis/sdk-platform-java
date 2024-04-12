@@ -15,11 +15,27 @@ import os
 import unittest
 from pathlib import Path
 
-from library_generation.model.generation_config import from_yaml
+from library_generation.model.generation_config import from_yaml, GenerationConfig
+from library_generation.model.library_config import LibraryConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "..", "resources")
 test_config_dir = Path(os.path.join(resources_dir, "test-config")).resolve()
+
+library_1 = LibraryConfig(
+    api_shortname="a_library",
+    api_description="",
+    name_pretty="",
+    product_documentation="",
+    gapic_configs=[],
+)
+library_2 = LibraryConfig(
+    api_shortname="another_library",
+    api_description="",
+    name_pretty="",
+    product_documentation="",
+    gapic_configs=[],
+)
 
 
 class GenerationConfigTest(unittest.TestCase):
@@ -37,3 +53,25 @@ class GenerationConfigTest(unittest.TestCase):
             },
             paths,
         )
+
+    def test_is_monorepo_with_one_library_returns_false(self):
+        config = GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish="",
+            owlbot_cli_image="",
+            synthtool_commitish="",
+            template_excludes=[],
+            libraries=[library_1],
+        )
+        self.assertFalse(config.is_monorepo())
+
+    def test_is_monorepo_with_two_libraries_returns_true(self):
+        config = GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish="",
+            owlbot_cli_image="",
+            synthtool_commitish="",
+            template_excludes=[],
+            libraries=[library_1, library_2],
+        )
+        self.assertTrue(config.is_monorepo())
