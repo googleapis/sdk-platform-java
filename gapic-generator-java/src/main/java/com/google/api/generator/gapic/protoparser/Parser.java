@@ -470,6 +470,11 @@ public class Parser {
                 }
               }
 
+              if (serviceOptions.hasExtension(ClientProto.apiVersion)) {
+                String apiVersion = serviceOptions.getExtension(ClientProto.apiVersion);
+                serviceBuilder.setApiVersion(apiVersion);
+              }
+
               String serviceName = s.getName();
               String overriddenServiceName = serviceName;
               String pakkage = TypeParser.getPackage(fileDescriptor);
@@ -483,33 +488,26 @@ public class Parser {
                 overriddenServiceName =
                     languageSettings.getJavaServiceName(fileDescriptor.getPackage(), s.getName());
               }
-              Service.Builder service =
-                  serviceBuilder
-                      .setName(serviceName)
-                      .setOverriddenName(overriddenServiceName)
-                      .setDefaultHost(defaultHost)
-                      .setOauthScopes(oauthScopes)
-                      .setPakkage(pakkage)
-                      .setOriginalJavaPackage(originalJavaPackage)
-                      .setProtoPakkage(fileDescriptor.getPackage())
-                      .setIsDeprecated(isDeprecated)
-                      .setMethods(
-                          parseMethods(
-                              s,
-                              pakkage,
-                              messageTypes,
-                              resourceNames,
-                              serviceConfigOpt,
-                              serviceYamlProtoOpt,
-                              outputArgResourceNames,
-                              transport));
-
-              String apiVersion = null;
-              if (serviceOptions.hasExtension(ClientProto.apiVersion)) {
-                apiVersion = serviceOptions.getExtension(ClientProto.apiVersion);
-                service.setApiVersion(apiVersion);
-              }
-              return service.build();
+              return serviceBuilder
+                  .setName(serviceName)
+                  .setOverriddenName(overriddenServiceName)
+                  .setDefaultHost(defaultHost)
+                  .setOauthScopes(oauthScopes)
+                  .setPakkage(pakkage)
+                  .setOriginalJavaPackage(originalJavaPackage)
+                  .setProtoPakkage(fileDescriptor.getPackage())
+                  .setIsDeprecated(isDeprecated)
+                  .setMethods(
+                      parseMethods(
+                          s,
+                          pakkage,
+                          messageTypes,
+                          resourceNames,
+                          serviceConfigOpt,
+                          serviceYamlProtoOpt,
+                          outputArgResourceNames,
+                          transport))
+                  .build();
             })
         .collect(Collectors.toList());
   }
