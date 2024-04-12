@@ -38,10 +38,12 @@ def compare_config(
     :return: a ConfigChange objects.
     """
     diff = defaultdict(list[LibraryChange])
+    # these params are not used in config comparison.
+    excluded_params = {"path_to_yaml"}
     baseline_params = __convert_params_to_sorted_list(baseline_config)
     current_params = __convert_params_to_sorted_list(current_config)
     for baseline_param, current_param in zip(baseline_params, current_params):
-        if baseline_param == current_param:
+        if baseline_param == current_param or baseline_param[0] in excluded_params:
             continue
         if baseline_param[0] == "googleapis_commitish":
             diff[ChangeType.GOOGLEAPIS_COMMIT] = []
