@@ -1,8 +1,8 @@
 # Generate a repository containing GAPIC Client Libraries
 
-The script, `generate_repo.py`, allows you to generate a repository containing
-GAPIC client libraries (a monorepo, for example, google-cloud-java) from a
-configuration file.
+The script, `entry_point.py`, allows you to generate a repository containing
+GAPIC client libraries with googleapis commit history (a monorepo, for example,
+google-cloud-java) from a configuration file.
 
 ## Environment
 
@@ -10,6 +10,8 @@ configuration file.
 - Java runtime environment (8 or above)
 - Apache Maven (used in formatting source code)
 - Python (3.11.6 or above)
+- Docker 
+- Git
 
 ## Prerequisite
 
@@ -17,30 +19,27 @@ In order to generate a version for each library, a versions.txt has to exist
 in `repository_path`.
 Please refer to [Repository path](#repository-path--repositorypath---optional) for more information.
 
-## Parameters to generate a repository using `generate_repo.py`
+## Parameters to generate a repository using `entry_point.py`
 
-### Generation configuration yaml (`generation_config_yaml`)
+### Baseline generation configuration yaml (`baseline_generation_config`)
 
-A path to a configuration file containing parameters to generate the repository.
-Please refer [Configuration to generate a repository](#configuration-to-generate-a-repository) 
+An absolute or relative path to a generation_config.yaml.
+This config file is used for commit history generation, not library
+generation.
+
+### Current generation configuration yaml (`current_generation_config`)
+
+An absolute or relative path to a configuration file containing parameters to
+generate the repository.
+Please refer [Configuration to generate a repository](#configuration-to-generate-a-repository)
 for more information.
-
-### Target library API shortname (`target_library_api_shortname`), optional
-
-If specified, the libray whose `api_shortname` equals to `target_library_api_shortname`
-will be generated; otherwise all libraries in the configuration file will be
-generated.
-This can be useful when you just want to generate one library for debugging
-purposes.
-
-The default value is an empty string, which means all libraries will be generated.
 
 ### Repository path (`repository_path`), optional
 
 The path to where the generated repository goes.
 
 The default value is the current working directory when running the script.
-For example, `cd google-cloud-java && python generate_repo.py ...` without
+For example, `cd google-cloud-java && python entry_point.py ...` without
 specifying the `--repository_path` option will modify the `google-cloud-java`
 repository the user `cd`'d into.
 
@@ -49,7 +48,9 @@ right version for each library.
 Please refer [here](go/java-client-releasing#versionstxt-manifest) for more info
 of versions.txt.
 
-## Output of `generate_repo.py`
+## Output of `entry_point.py`
+
+### GAPIC libraries
 
 For each module (e.g. `google-cloud-java/java-asset`), the following files/folders
 will be created/modified:
@@ -73,6 +74,11 @@ will be created/modified:
 | pom.xml (repo root dir)     | Always generated from inputs                                             |
 | versions.txt                | New entries will be added if they don’t exist                            |
 
+### googleapis commit history
+
+If both `baseline_generation_config` and `current_generation_config` are
+specified, and they contain different googleapis commit, the commit history will
+be generated into `pr_description.txt` in the `repository_path`.
 
 ## Configuration to generate a repository
 
@@ -184,20 +190,27 @@ libraries:
       - proto_path: google/cloud/asset/v1p7beta1
 ```
 
-## An example to generate a repository using `generate_repo.py`
+# Local Environment Setup before running `entry_point.py`
 
+1. Assuming Python 3 is installed, follow official guide from [Python.org](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments) to create a virtual environment. The virtual environment can be installed to any folder, usually it is recommended to be installed under the root folder of the project(`sdk-platform-java` in this case).
+2. Assuming the virtual environment is installed under `sdk-platform-java`. Run the following command under the root folder of `sdk-platform-java` to install the dependencies of `library_generation`
 ```bash
-# install python module (allows the `library_generation` module to be imported from anywhere)
-python -m pip install -r library_generation/requirements.in
-# generate the repository
-python -m library_generation/generate_repo.py generate \
---generation-config-yaml=/path/to/config-file \
---repository-path=/path/to/repository
+python -m pip install -r library_generation/requirements.txt
+```
+3. Run the following command to install `library_generation` as a module, which allows the `library_generation` module to be imported from anywhere
+```bash
+python -m pip install library_generation/
 ```
 
-## An example of generated repository using `generate_repo.py`
+## An example to generate a repository using `entry_point.py`
 
-If you run `generate_repo.py` with the example [configuration](#an-example-of-generation-configuration)
+```bash
+python library_generation/entry_point.py generate \
+--baseline-generation-config=/path/to/baseline_config_file \
+--current-generation-config=/path/to/current_config_file \
+--repository-path=path/to/repository
+```
+If you run `entry_point.py` with the example [configuration](#an-example-of-generation-configuration)
 shown above, the repository structure is:
 ```
 $repository_path

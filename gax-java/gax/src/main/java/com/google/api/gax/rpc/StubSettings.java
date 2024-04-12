@@ -71,9 +71,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   private final HeaderProvider internalHeaderProvider;
   private final TransportChannelProvider transportChannelProvider;
   private final ApiClock clock;
-  private final String serviceName;
-  private final String endpoint;
-  private final String mtlsEndpoint;
   private final String quotaProjectId;
   @Nullable private final String gdchApiAudience;
   @Nullable private final WatchdogProvider streamWatchdogProvider;
@@ -81,7 +78,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   @Nonnull private final ApiTracerFactory tracerFactory;
   // Track if deprecated setExecutorProvider is called
   private boolean deprecatedExecutorProviderSet;
-  private final String universeDomain;
+  @Nonnull private final EndpointContext endpointContext;
 
   /**
    * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -99,9 +96,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.headerProvider = builder.headerProvider;
     this.internalHeaderProvider = builder.internalHeaderProvider;
     this.clock = builder.clock;
-    this.serviceName = builder.serviceName;
-    this.endpoint = builder.endpoint;
-    this.mtlsEndpoint = builder.mtlsEndpoint;
     this.switchToMtlsEndpointAllowed = builder.switchToMtlsEndpointAllowed;
     this.quotaProjectId = builder.quotaProjectId;
     this.streamWatchdogProvider = builder.streamWatchdogProvider;
@@ -109,7 +103,28 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.tracerFactory = builder.tracerFactory;
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
     this.gdchApiAudience = builder.gdchApiAudience;
-    this.universeDomain = builder.universeDomain;
+    this.endpointContext = buildEndpointContext(builder);
+  }
+
+  /**
+   * Attempt to build the EndpointContext from the Builder based on all the user configurations
+   * passed in.
+   *
+   * @throws RuntimeException if there is an issue building the EndpointContext
+   */
+  private EndpointContext buildEndpointContext(Builder builder) {
+    try {
+      return EndpointContext.newBuilder()
+          .setServiceName(getServiceName())
+          .setClientSettingsEndpoint(builder.clientSettingsEndpoint)
+          .setTransportChannelProviderEndpoint(builder.transportChannelProviderEndpoint)
+          .setMtlsEndpoint(builder.mtlsEndpoint)
+          .setSwitchToMtlsEndpointAllowed(builder.switchToMtlsEndpointAllowed)
+          .setUniverseDomain(builder.universeDomain)
+          .build();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
@@ -142,34 +157,36 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return clock;
   }
 
-  // Intended for Internal Use and Overriden by generated ServiceStubSettings classes.
-  // Meant to be shared between StubSettings and ClientContext.
+  /**
+   * Marked with Internal Api and meant to overriden by the generated subclasses. This getter is
+   * used to set the serviceName to the EndpointContext. The value in generated StubSettings
+   * subclasses comes from the proto files.
+   *
+   * <p>This should be effectively treated as an abstract method.
+   */
   @InternalApi
-  public String getServiceName() {
+  protected String getServiceName() {
     return "";
   }
 
+  /** @return the fully resolved universe domain used by the client */
   public final String getUniverseDomain() {
-    return universeDomain;
+    return endpointContext.resolvedUniverseDomain();
   }
 
+  /** @return the fully resolved endpoint used by the client */
   public String getEndpoint() {
-    return endpoint;
+    return endpointContext.resolvedEndpoint();
   }
 
-  /**
-   * This is an internal api meant to either return the user set endpoint or null. The difference
-   * between this method and {@link #getEndpoint()}} is that {@link #getEndpoint()} is reimplemented
-   * by the child class and will return the default service endpoint if the user did not set an
-   * endpoint (does not return null).
-   */
+  /** @return the newly created EndpointContext */
   @InternalApi
-  String getUserSetEndpoint() {
-    return endpoint;
+  final EndpointContext getEndpointContext() {
+    return endpointContext;
   }
 
   public final String getMtlsEndpoint() {
-    return mtlsEndpoint;
+    return endpointContext.mtlsEndpoint();
   }
 
   /** Limit the visibility to this package only since only this package needs it. */
@@ -216,9 +233,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         .add("headerProvider", headerProvider)
         .add("internalHeaderProvider", internalHeaderProvider)
         .add("clock", clock)
-        .add("universeDomain", universeDomain)
-        .add("endpoint", endpoint)
-        .add("mtlsEndpoint", mtlsEndpoint)
+        .add("universeDomain", endpointContext.resolvedUniverseDomain())
+        .add("endpoint", endpointContext.resolvedEndpoint())
+        .add("mtlsEndpoint", endpointContext.mtlsEndpoint())
         .add("switchToMtlsEndpointAllowed", switchToMtlsEndpointAllowed)
         .add("quotaProjectId", quotaProjectId)
         .add("streamWatchdogProvider", streamWatchdogProvider)
@@ -239,8 +256,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     private HeaderProvider internalHeaderProvider;
     private TransportChannelProvider transportChannelProvider;
     private ApiClock clock;
-    private String serviceName;
-    private String endpoint;
+    private String clientSettingsEndpoint;
+    private String transportChannelProviderEndpoint;
     private String mtlsEndpoint;
     private String quotaProjectId;
     @Nullable private String gdchApiAudience;
@@ -266,9 +283,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.headerProvider = settings.headerProvider;
       this.internalHeaderProvider = settings.internalHeaderProvider;
       this.clock = settings.clock;
-      this.serviceName = settings.serviceName;
-      this.endpoint = settings.endpoint;
-      this.mtlsEndpoint = settings.mtlsEndpoint;
       this.switchToMtlsEndpointAllowed = settings.switchToMtlsEndpointAllowed;
       this.quotaProjectId = settings.quotaProjectId;
       this.streamWatchdogProvider = settings.streamWatchdogProvider;
@@ -276,7 +290,16 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.tracerFactory = settings.tracerFactory;
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
       this.gdchApiAudience = settings.gdchApiAudience;
-      this.universeDomain = settings.universeDomain;
+
+      // The follow settings will be set to the original user configurations as the
+      // EndpointContext will be rebuilt in the constructor.
+      this.clientSettingsEndpoint = settings.getEndpointContext().clientSettingsEndpoint();
+      this.transportChannelProviderEndpoint =
+          settings.getEndpointContext().transportChannelProviderEndpoint();
+      this.mtlsEndpoint = settings.getEndpointContext().mtlsEndpoint();
+      this.switchToMtlsEndpointAllowed =
+          settings.getEndpointContext().switchToMtlsEndpointAllowed();
+      this.universeDomain = settings.getEndpointContext().universeDomain();
     }
 
     /** Get Quota Project ID from Client Context * */
@@ -304,8 +327,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.headerProvider = new NoHeaderProvider();
         this.internalHeaderProvider = new NoHeaderProvider();
         this.clock = NanoClock.getDefaultClock();
-        this.serviceName = null;
-        this.endpoint = null;
+        this.clientSettingsEndpoint = null;
+        this.transportChannelProviderEndpoint = null;
         this.mtlsEndpoint = null;
         this.quotaProjectId = null;
         this.streamWatchdogProvider = InstantiatingWatchdogProvider.create();
@@ -326,18 +349,22 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.internalHeaderProvider =
             FixedHeaderProvider.create(clientContext.getInternalHeaders());
         this.clock = clientContext.getClock();
-        this.serviceName = clientContext.getServiceName();
-        this.endpoint = clientContext.getEndpoint();
-        if (this.endpoint != null) {
-          this.mtlsEndpoint = this.endpoint.replace("googleapis.com", "mtls.googleapis.com");
-        }
         this.streamWatchdogProvider =
             FixedWatchdogProvider.create(clientContext.getStreamWatchdog());
         this.streamWatchdogCheckInterval = clientContext.getStreamWatchdogCheckInterval();
         this.tracerFactory = clientContext.getTracerFactory();
         this.quotaProjectId = getQuotaProjectIdFromClientContext(clientContext);
         this.gdchApiAudience = clientContext.getGdchApiAudience();
-        this.universeDomain = clientContext.getUniverseDomain();
+
+        // The follow settings will be set to the original user configurations as the
+        // EndpointContext will be rebuilt in the constructor.
+        this.clientSettingsEndpoint = clientContext.getEndpointContext().clientSettingsEndpoint();
+        this.transportChannelProviderEndpoint =
+            clientContext.getEndpointContext().transportChannelProviderEndpoint();
+        this.mtlsEndpoint = clientContext.getEndpointContext().mtlsEndpoint();
+        this.switchToMtlsEndpointAllowed =
+            clientContext.getEndpointContext().switchToMtlsEndpointAllowed();
+        this.universeDomain = clientContext.getEndpointContext().universeDomain();
       }
     }
 
@@ -427,6 +454,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
      */
     public B setTransportChannelProvider(TransportChannelProvider transportChannelProvider) {
       this.transportChannelProvider = transportChannelProvider;
+      this.transportChannelProviderEndpoint = transportChannelProvider.getEndpoint();
       return self();
     }
 
@@ -456,10 +484,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
 
     public B setEndpoint(String endpoint) {
-      this.endpoint = endpoint;
+      this.clientSettingsEndpoint = endpoint;
       this.switchToMtlsEndpointAllowed = false;
-      if (this.endpoint != null && this.mtlsEndpoint == null) {
-        this.mtlsEndpoint = this.endpoint.replace("googleapis.com", "mtls.googleapis.com");
+      if (this.clientSettingsEndpoint != null && this.mtlsEndpoint == null) {
+        this.mtlsEndpoint =
+            this.clientSettingsEndpoint.replace("googleapis.com", "mtls.googleapis.com");
       }
       return self();
     }
@@ -556,7 +585,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
 
     public String getEndpoint() {
-      return endpoint;
+      return clientSettingsEndpoint;
     }
 
     public String getMtlsEndpoint() {
@@ -605,7 +634,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
           .add("internalHeaderProvider", internalHeaderProvider)
           .add("clock", clock)
           .add("universeDomain", universeDomain)
-          .add("endpoint", endpoint)
+          .add("endpoint", clientSettingsEndpoint)
           .add("mtlsEndpoint", mtlsEndpoint)
           .add("switchToMtlsEndpointAllowed", switchToMtlsEndpointAllowed)
           .add("quotaProjectId", quotaProjectId)

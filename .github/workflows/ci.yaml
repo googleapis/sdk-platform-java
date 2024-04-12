@@ -11,8 +11,8 @@ jobs:
       matrix:
         java: [ 11, 17]
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
@@ -61,8 +61,8 @@ jobs:
     # Support for Java 21 is available for all use cases except self-service clients.
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: 21
           distribution: temurin
@@ -91,9 +91,9 @@ jobs:
     name: "build(8) except for gapic-generator-java"
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       # Java 8 tests uses JDK 17 to compile and JDK 8 to run tests.
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           java-version: 8
           distribution: temurin
@@ -135,8 +135,8 @@ jobs:
     name: "build(8) for gapic-generator-java"
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: 11
           distribution: temurin
@@ -181,8 +181,8 @@ jobs:
   lint:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: 11
           distribution: temurin
@@ -195,8 +195,8 @@ jobs:
   compatibility:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: 11
           distribution: temurin
@@ -213,8 +213,8 @@ jobs:
       matrix:
         java: [ 11, 17 ]
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
@@ -256,7 +256,7 @@ jobs:
   showcase-native:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: graalvm/setup-graalvm@v1
         with:
           version: '22.3.2'
@@ -288,10 +288,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout @ target branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.base_ref }}
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: temurin
@@ -317,8 +317,8 @@ jobs:
   gapic-generator-java-bom:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-java@v3
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
       with:
         java-version: 11
         distribution: temurin
@@ -337,7 +337,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         ref: ${{ github.event.pull_request.head.sha }}
-    - uses: actions/setup-java@v3
+    - uses: actions/setup-java@v4
       with:
         java-version: 11
         distribution: temurin
@@ -353,3 +353,19 @@ jobs:
       uses: ./java-shared-dependencies/unmanaged-dependency-check
       with:
         bom-path: gapic-generator-java-bom/pom.xml
+
+  dependency_analyzer_unit_test:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - uses: actions/setup-java@v4
+      with:
+        java-version: 11
+        distribution: temurin
+    - run: mvn -version
+    - name: Unit Tests
+      run: |
+        mvn test --batch-mode --no-transfer-progress
+      working-directory: java-shared-dependencies/dependency-analyzer

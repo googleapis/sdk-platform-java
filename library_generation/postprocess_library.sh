@@ -34,7 +34,7 @@ synthtool_commitish=$6
 is_monorepo=$7
 configuration_yaml_path=$8
 
-source "${scripts_root}"/utilities.sh
+source "${scripts_root}"/utils/utilities.sh
 
 declare -a required_inputs=("postprocessing_target" "versions_file" "owlbot_cli_image_sha" "synthtool_commitish" "is_monorepo")
 for required_input in "${required_inputs[@]}"; do

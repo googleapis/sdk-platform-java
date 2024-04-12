@@ -105,6 +105,11 @@ public abstract class EndpointContext {
         .setUsingGDCH(false);
   }
 
+  /** Configure the existing EndpointContext to be using GDC-H */
+  EndpointContext withGDCH() throws IOException {
+    return toBuilder().setUsingGDCH(true).build();
+  }
+
   /**
    * Check that the User configured universe domain matches the Credentials' universe domain. The
    * status code parameter is passed in to this method as it's a limitation of Gax's modules. The
