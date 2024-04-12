@@ -96,7 +96,7 @@ def generate_pr_descriptions(
         current_commit=config.googleapis_commitish,
         baseline_commit=baseline_commit,
         paths=paths,
-        is_monorepo=config.is_monorepo,
+        is_monorepo=config.is_monorepo(),
     )
 
     description_file = f"{description_path}/pr_description.txt"

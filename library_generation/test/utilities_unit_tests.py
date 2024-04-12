@@ -496,7 +496,6 @@ class UtilitiesTest(unittest.TestCase):
                 "renovate.json",
                 ".gitignore",
             ],
-            path_to_yaml=".",
             libraries=libraries,
         )
 
