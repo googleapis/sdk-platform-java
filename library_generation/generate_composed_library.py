@@ -50,7 +50,8 @@ def generate_composed_library(
 ) -> None:
     """
     Generate libraries composed of more than one service or service version
-    :param config_path:
+
+    :param config_path: Path to generation configuration.
     :param config: a GenerationConfig object representing a parsed configuration
     yaml
     :param library_path: the path to which the generated file goes

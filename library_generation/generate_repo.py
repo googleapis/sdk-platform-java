@@ -93,7 +93,7 @@ def generate_from_yaml(
     Based on the generation config, generates libraries via
     generate_composed_library.py
 
-    :param config_path:
+    :param config_path: Path to generation configuration.
     :param config: a GenerationConfig object.
     :param repository_path: The repository path to which the generated files
     will be sent.
