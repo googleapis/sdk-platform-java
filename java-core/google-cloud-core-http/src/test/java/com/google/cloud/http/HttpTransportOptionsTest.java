@@ -32,6 +32,7 @@ import com.google.api.client.testing.http.MockHttpTransport;
 import com.google.api.client.testing.http.MockLowLevelHttpRequest;
 import com.google.api.client.testing.http.MockLowLevelHttpResponse;
 import com.google.api.gax.rpc.HeaderProvider;
+import com.google.api.gax.rpc.UnauthenticatedException;
 import com.google.auth.Credentials;
 import com.google.auth.http.HttpTransportFactory;
 import com.google.cloud.BaseService;
@@ -86,6 +87,153 @@ public class HttpTransportOptionsTest {
   // Credentials' getUniverseDomain() returns `random.com`
   private Credentials customCredentials;
   private HttpRequest defaultHttpRequest;
+
+  @Before
+  public void setup() throws IOException {
+    defaultHeaderProvider = EasyMock.createMock(HeaderProvider.class);
+    EasyMock.expect(defaultHeaderProvider.getHeaders()).andReturn(new HashMap<>());
+
+    defaultCredentials = EasyMock.createMock(Credentials.class);
+    EasyMock.expect(defaultCredentials.getUniverseDomain())
+        .andReturn(Credentials.GOOGLE_DEFAULT_UNIVERSE);
+    EasyMock.expect(defaultCredentials.hasRequestMetadata()).andReturn(false);
+
+    customCredentials = EasyMock.createMock(Credentials.class);
+    EasyMock.expect(customCredentials.getUniverseDomain()).andReturn(CUSTOM_UNIVERSE_DOMAIN);
+    EasyMock.expect(customCredentials.hasRequestMetadata()).andReturn(false);
+
+    EasyMock.replay(defaultHeaderProvider, defaultCredentials, customCredentials);
+
+    defaultHttpRequest =
+        MOCK_HTTP_TRANSPORT.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
+  }
+
+  @Test
+  public void testBuilder() {
+    assertEquals(1234, OPTIONS.getConnectTimeout());
+    assertSame(MOCK_HTTP_TRANSPORT_FACTORY, OPTIONS.getHttpTransportFactory());
+    assertEquals(5678, OPTIONS.getReadTimeout());
+    assertEquals(-1, DEFAULT_OPTIONS.getConnectTimeout());
+    assertTrue(DEFAULT_OPTIONS.getHttpTransportFactory() instanceof DefaultHttpTransportFactory);
+    assertEquals(-1, DEFAULT_OPTIONS.getReadTimeout());
+  }
+
+  @Test
+  public void testBaseEquals() {
+    assertEquals(OPTIONS, OPTIONS_COPY);
+    assertNotEquals(DEFAULT_OPTIONS, OPTIONS);
+  }
+
+  @Test
+  public void testBaseHashCode() {
+    assertEquals(OPTIONS.hashCode(), OPTIONS_COPY.hashCode());
+    assertNotEquals(DEFAULT_OPTIONS.hashCode(), OPTIONS.hashCode());
+  }
+
+  @Test
+  public void testHeader() {
+    String expectedHeaderPattern = "^gl-java/.+ gccl/.* gax/.+";
+    ServiceOptions<?, ?> serviceOptions = EasyMock.createMock(ServiceOptions.class);
+    HeaderProvider headerProvider =
+        OPTIONS.getInternalHeaderProviderBuilder(serviceOptions).build();
+
+    assertEquals(1, headerProvider.getHeaders().size());
+    assertTrue(
+        Pattern.compile(expectedHeaderPattern)
+            .matcher(headerProvider.getHeaders().values().iterator().next())
+            .find());
+  }
+
+  @Test
+  public void testHttpRequestInitializer_defaultUniverseDomainSettings_defaultCredentials()
+      throws IOException {
+    TestServiceOptions testServiceOptions =
+        generateTestServiceOptions(Credentials.GOOGLE_DEFAULT_UNIVERSE, defaultCredentials);
+    HttpRequestInitializer httpRequestInitializer =
+        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
+    // Does not throw a validation exception
+    httpRequestInitializer.initialize(defaultHttpRequest);
+  }
+
+  @Test
+  public void testHttpRequestInitializer_defaultUniverseDomainSettings_customCredentials() {
+    TestServiceOptions testServiceOptions =
+        generateTestServiceOptions(Credentials.GOOGLE_DEFAULT_UNIVERSE, customCredentials);
+    HttpRequestInitializer httpRequestInitializer =
+        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
+    UnauthenticatedException exception =
+        assertThrows(
+            UnauthenticatedException.class,
+            () -> httpRequestInitializer.initialize(defaultHttpRequest));
+    assertEquals(
+        "The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (random.com). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.",
+        exception.getCause().getMessage());
+  }
+
+  @Test
+  public void testHttpRequestInitializer_customUniverseDomainSettings_defaultCredentials() {
+    TestServiceOptions testServiceOptions =
+        generateTestServiceOptions(CUSTOM_UNIVERSE_DOMAIN, defaultCredentials);
+    HttpRequestInitializer httpRequestInitializer =
+        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
+    UnauthenticatedException exception =
+        assertThrows(
+            UnauthenticatedException.class,
+            () -> httpRequestInitializer.initialize(defaultHttpRequest));
+    assertEquals(
+        "The configured universe domain (random.com) does not match the universe domain found in the credentials (googleapis.com). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.",
+        exception.getCause().getMessage());
+  }
+
+  @Test
+  public void testHttpRequestInitializer_customUniverseDomainSettings_customCredentials()
+      throws IOException {
+    TestServiceOptions testServiceOptions =
+        generateTestServiceOptions(CUSTOM_UNIVERSE_DOMAIN, customCredentials);
+    HttpRequestInitializer httpRequestInitializer =
+        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
+    // Does not throw a validation exception
+    httpRequestInitializer.initialize(defaultHttpRequest);
+  }
+
+  @Test
+  public void testHttpRequestInitializer_defaultUniverseDomainSettings_noCredentials()
+      throws IOException {
+    NoCredentials noCredentials = NoCredentials.getInstance();
+    TestServiceOptions testServiceOptions =
+        generateTestServiceOptions(Credentials.GOOGLE_DEFAULT_UNIVERSE, noCredentials);
+    HttpRequestInitializer httpRequestInitializer =
+        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
+    // Does not throw a validation exception
+    httpRequestInitializer.initialize(defaultHttpRequest);
+  }
+
+  @Test
+  public void testHttpRequestInitializer_customUniverseDomainSettings_noCredentials() {
+    NoCredentials noCredentials = NoCredentials.getInstance();
+    TestServiceOptions testServiceOptions =
+        generateTestServiceOptions(CUSTOM_UNIVERSE_DOMAIN, noCredentials);
+    HttpRequestInitializer httpRequestInitializer =
+        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
+    UnauthenticatedException exception =
+        assertThrows(
+            UnauthenticatedException.class,
+            () -> httpRequestInitializer.initialize(defaultHttpRequest));
+    assertEquals(
+        "The configured universe domain (random.com) does not match the universe domain found in the credentials (googleapis.com). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.",
+        exception.getCause().getMessage());
+  }
+
+  private TestServiceOptions generateTestServiceOptions(
+      String universeDomain, Credentials credentials) {
+    return TestServiceOptions.newBuilder()
+        .setCredentials(credentials)
+        .setHeaderProvider(defaultHeaderProvider)
+        .setQuotaProjectId(DEFAULT_PROJECT_ID)
+        .setProjectId(DEFAULT_PROJECT_ID)
+        .setUniverseDomain(universeDomain)
+        .build();
+  }
 
   /**
    * The following interfaces and classes are from ServiceOptionsTest. Copied over here as
@@ -194,152 +342,5 @@ public class HttpTransportOptionsTest {
     public int hashCode() {
       return baseHashCode();
     }
-  }
-
-  @Before
-  public void setup() throws IOException {
-    defaultHeaderProvider = EasyMock.createMock(HeaderProvider.class);
-    EasyMock.expect(defaultHeaderProvider.getHeaders()).andReturn(new HashMap<>());
-
-    defaultCredentials = EasyMock.createMock(Credentials.class);
-    EasyMock.expect(defaultCredentials.getUniverseDomain())
-        .andReturn(Credentials.GOOGLE_DEFAULT_UNIVERSE);
-    EasyMock.expect(defaultCredentials.hasRequestMetadata()).andReturn(false);
-
-    customCredentials = EasyMock.createMock(Credentials.class);
-    EasyMock.expect(customCredentials.getUniverseDomain()).andReturn(CUSTOM_UNIVERSE_DOMAIN);
-    EasyMock.expect(customCredentials.hasRequestMetadata()).andReturn(false);
-
-    EasyMock.replay(defaultHeaderProvider, defaultCredentials, customCredentials);
-
-    defaultHttpRequest =
-        MOCK_HTTP_TRANSPORT.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
-  }
-
-  @Test
-  public void testBuilder() {
-    assertEquals(1234, OPTIONS.getConnectTimeout());
-    assertSame(MOCK_HTTP_TRANSPORT_FACTORY, OPTIONS.getHttpTransportFactory());
-    assertEquals(5678, OPTIONS.getReadTimeout());
-    assertEquals(-1, DEFAULT_OPTIONS.getConnectTimeout());
-    assertTrue(DEFAULT_OPTIONS.getHttpTransportFactory() instanceof DefaultHttpTransportFactory);
-    assertEquals(-1, DEFAULT_OPTIONS.getReadTimeout());
-  }
-
-  @Test
-  public void testBaseEquals() {
-    assertEquals(OPTIONS, OPTIONS_COPY);
-    assertNotEquals(DEFAULT_OPTIONS, OPTIONS);
-  }
-
-  @Test
-  public void testBaseHashCode() {
-    assertEquals(OPTIONS.hashCode(), OPTIONS_COPY.hashCode());
-    assertNotEquals(DEFAULT_OPTIONS.hashCode(), OPTIONS.hashCode());
-  }
-
-  @Test
-  public void testHeader() {
-    String expectedHeaderPattern = "^gl-java/.+ gccl/.* gax/.+";
-    ServiceOptions<?, ?> serviceOptions = EasyMock.createMock(ServiceOptions.class);
-    HeaderProvider headerProvider =
-        OPTIONS.getInternalHeaderProviderBuilder(serviceOptions).build();
-
-    assertEquals(1, headerProvider.getHeaders().size());
-    assertTrue(
-        Pattern.compile(expectedHeaderPattern)
-            .matcher(headerProvider.getHeaders().values().iterator().next())
-            .find());
-  }
-
-  @Test
-  public void testHttpRequestInitializer_defaultUniverseDomainSettings_defaultCredentials()
-      throws IOException {
-    TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(Credentials.GOOGLE_DEFAULT_UNIVERSE, defaultCredentials);
-    HttpRequestInitializer httpRequestInitializer =
-        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
-    // Does not throw a validation exception
-    httpRequestInitializer.initialize(defaultHttpRequest);
-  }
-
-  @Test
-  public void testHttpRequestInitializer_defaultUniverseDomainSettings_customCredentials() {
-    TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(Credentials.GOOGLE_DEFAULT_UNIVERSE, customCredentials);
-    HttpRequestInitializer httpRequestInitializer =
-        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
-    IllegalStateException exception =
-        assertThrows(
-            IllegalStateException.class,
-            () -> httpRequestInitializer.initialize(defaultHttpRequest));
-    assertEquals(
-        "The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (random.com). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.",
-        exception.getMessage());
-  }
-
-  @Test
-  public void testHttpRequestInitializer_customUniverseDomainSettings_defaultCredentials() {
-    TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(CUSTOM_UNIVERSE_DOMAIN, defaultCredentials);
-    HttpRequestInitializer httpRequestInitializer =
-        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
-    IllegalStateException exception =
-        assertThrows(
-            IllegalStateException.class,
-            () -> httpRequestInitializer.initialize(defaultHttpRequest));
-    assertEquals(
-        "The configured universe domain (random.com) does not match the universe domain found in the credentials (googleapis.com). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.",
-        exception.getMessage());
-  }
-
-  @Test
-  public void testHttpRequestInitializer_customUniverseDomainSettings_customCredentials()
-      throws IOException {
-    TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(CUSTOM_UNIVERSE_DOMAIN, customCredentials);
-    HttpRequestInitializer httpRequestInitializer =
-        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
-    // Does not throw a validation exception
-    httpRequestInitializer.initialize(defaultHttpRequest);
-  }
-
-  @Test
-  public void testHttpRequestInitializer_defaultUniverseDomainSettings_noCredentials()
-      throws IOException {
-    NoCredentials noCredentials = NoCredentials.getInstance();
-    TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(Credentials.GOOGLE_DEFAULT_UNIVERSE, noCredentials);
-    HttpRequestInitializer httpRequestInitializer =
-        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
-    // Does not throw a validation exception
-    httpRequestInitializer.initialize(defaultHttpRequest);
-  }
-
-  @Test
-  public void testHttpRequestInitializer_customUniverseDomainSettings_noCredentials() {
-    NoCredentials noCredentials = NoCredentials.getInstance();
-    TestServiceOptions testServiceOptions =
-        generateTestServiceOptions(CUSTOM_UNIVERSE_DOMAIN, noCredentials);
-    HttpRequestInitializer httpRequestInitializer =
-        DEFAULT_OPTIONS.getHttpRequestInitializer(testServiceOptions);
-    IllegalStateException exception =
-        assertThrows(
-            IllegalStateException.class,
-            () -> httpRequestInitializer.initialize(defaultHttpRequest));
-    assertEquals(
-        "The configured universe domain (random.com) does not match the universe domain found in the credentials (googleapis.com). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.",
-        exception.getMessage());
-  }
-
-  private TestServiceOptions generateTestServiceOptions(
-      String universeDomain, Credentials credentials) {
-    return TestServiceOptions.newBuilder()
-        .setCredentials(credentials)
-        .setHeaderProvider(defaultHeaderProvider)
-        .setQuotaProjectId(DEFAULT_PROJECT_ID)
-        .setProjectId(DEFAULT_PROJECT_ID)
-        .setUniverseDomain(universeDomain)
-        .build();
   }
 }

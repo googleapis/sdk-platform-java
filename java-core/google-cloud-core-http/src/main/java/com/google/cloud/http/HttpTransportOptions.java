@@ -25,9 +25,12 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.httpjson.HttpHeadersUtils;
+import com.google.api.gax.httpjson.HttpJsonStatusCode;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.HeaderProvider;
+import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.UnauthenticatedException;
 import com.google.auth.Credentials;
 import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.auth.http.HttpTransportFactory;
@@ -182,11 +185,14 @@ public class HttpTransportOptions implements TransportOptions {
 
         // Validate the universe domain before initializing the request
         if (!configuredUniverseDomain.equals(credentialsUniverseDomain)) {
-          throw new IllegalStateException(
-              String.format(
-                  EndpointContext.INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE,
-                  configuredUniverseDomain,
-                  credentialsUniverseDomain));
+          throw new UnauthenticatedException(
+              new Throwable(
+                  String.format(
+                      EndpointContext.INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE,
+                      configuredUniverseDomain,
+                      credentialsUniverseDomain)),
+              HttpJsonStatusCode.of(StatusCode.Code.UNAUTHENTICATED),
+              false);
         }
 
         if (delegate != null) {
