@@ -123,7 +123,9 @@ def prepare_repo(
     for library in library_config:
         library_name = f"{language}-{library.get_library_name()}"
         library_path = (
-            f"{repo_path}/{library_name}" if gen_config.is_monorepo else f"{repo_path}"
+            f"{repo_path}/{library_name}"
+            if gen_config.is_monorepo()
+            else f"{repo_path}"
         )
         # use absolute path because docker requires absolute path
         # in volume name.
@@ -215,7 +217,7 @@ def generate_prerequisite_files(
     distribution_name_short = re.split(r"[:/]", distribution_name)[-1]
     repo = (
         "googleapis/google-cloud-java"
-        if config.is_monorepo
+        if config.is_monorepo()
         else f"googleapis/{language}-{library_name}"
     )
     api_id = (
@@ -282,7 +284,7 @@ def generate_prerequisite_files(
     owlbot_yaml_file = ".OwlBot.yaml"
     path_to_owlbot_yaml_file = (
         f"{library_path}/{owlbot_yaml_file}"
-        if config.is_monorepo
+        if config.is_monorepo()
         else f"{library_path}/.github/{owlbot_yaml_file}"
     )
     if not os.path.exists(path_to_owlbot_yaml_file):

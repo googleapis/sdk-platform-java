@@ -89,14 +89,14 @@ class IntegrationTest(unittest.TestCase):
             )
             for library_name in library_names:
                 actual_library = (
-                    f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
+                    f"{repo_dest}/{library_name}" if config.is_monorepo() else repo_dest
                 )
                 print("*" * 50)
                 print(f"Checking for differences in '{library_name}'.")
                 print(f"  The expected library is in {golden_dir}/{library_name}.")
                 print(f"  The actual library is in {actual_library}. ")
                 target_repo_dest = (
-                    f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
+                    f"{repo_dest}/{library_name}" if config.is_monorepo() else repo_dest
                 )
                 compare_result = dircmp(
                     f"{golden_dir}/{library_name}",
@@ -138,7 +138,7 @@ class IntegrationTest(unittest.TestCase):
                 )
                 print("  .repo-metadata.json comparison succeed.")
 
-                if not config.is_monorepo:
+                if not config.is_monorepo():
                     continue
 
                 # compare gapic-libraries-bom/pom.xml and pom.xml
@@ -198,7 +198,7 @@ class IntegrationTest(unittest.TestCase):
         cls, config: GenerationConfig, library_names: list[str], repo_dest: str
     ):
         for library_name in library_names:
-            if config.is_monorepo:
+            if config.is_monorepo():
                 copy_tree(f"{repo_dest}/{library_name}", f"{golden_dir}/{library_name}")
                 copy_tree(
                     f"{repo_dest}/gapic-libraries-bom",

@@ -242,7 +242,6 @@ class ConfigChangeTest(unittest.TestCase):
             owlbot_cli_image="",
             synthtool_commitish="",
             template_excludes=[],
-            path_to_yaml="",
             grpc_version="",
             protobuf_version="",
             libraries=libraries,
