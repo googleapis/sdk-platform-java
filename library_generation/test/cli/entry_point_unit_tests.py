@@ -32,7 +32,10 @@ class EntryPointTest(unittest.TestCase):
         # noinspection PyTypeChecker
         result = runner.invoke(
             generate,
-            ["--baseline-generation-config=path/to/config.yaml", "--repository-path=."],
+            [
+                "--baseline-generation-config-path=path/to/config.yaml",
+                "--repository-path=.",
+            ],
         )
         self.assertEqual(1, result.exit_code)
         self.assertEqual(FileNotFoundError, result.exc_info[0])
