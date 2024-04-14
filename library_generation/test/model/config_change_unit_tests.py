@@ -239,6 +239,7 @@ class ConfigChangeTest(unittest.TestCase):
         return GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish=googleapis_commitish,
+            libraries_bom_version="",
             owlbot_cli_image="",
             synthtool_commitish="",
             template_excludes=[],

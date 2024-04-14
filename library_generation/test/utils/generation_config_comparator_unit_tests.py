@@ -39,6 +39,7 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         self.baseline_config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
+            libraries_bom_version="",
             owlbot_cli_image="",
             synthtool_commitish="",
             template_excludes=[],
@@ -49,6 +50,7 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         self.latest_config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
+            libraries_bom_version="",
             owlbot_cli_image="",
             synthtool_commitish="",
             template_excludes=[],
@@ -90,6 +92,20 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         config_change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
         self.assertEqual("gapic_generator_version", config_change.changed_param)
         self.assertEqual("1.2.4", config_change.current_value)
+
+    def test_compare_config_libraries_bom_update(self):
+        self.baseline_config.libraris_bom_version = "26.36.0"
+        self.latest_config.libraris_bom_version = "26.37.0"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            current_config=self.latest_config,
+        )
+        self.assertTrue(
+            len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 1
+        )
+        config_change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
+        self.assertEqual("libraris_bom_version", config_change.changed_param)
+        self.assertEqual("26.37.0", config_change.current_value)
 
     def test_compare_config_owlbot_cli_update(self):
         self.baseline_config.owlbot_cli_image = "image_version_123"
