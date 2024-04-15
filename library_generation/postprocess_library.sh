@@ -33,6 +33,7 @@ owlbot_cli_image_sha=$5
 synthtool_commitish=$6
 is_monorepo=$7
 configuration_yaml_path=$8
+owlbot_yaml_file_name=".OwlBot-hermetic.yaml"
 
 source "${scripts_root}"/utils/utilities.sh
 
@@ -44,7 +45,7 @@ for required_input in "${required_inputs[@]}"; do
   fi
 done
 
-for owlbot_file in ".repo-metadata.json" "owlbot.py" ".OwlBot-hermetic.yaml"
+for owlbot_file in ".repo-metadata.json" "owlbot.py" "${owlbot_yaml_file_name}"
 do
   if [[ $(find "${postprocessing_target}" -name "${owlbot_file}" | wc -l) -eq 0 ]]; then
     echo "necessary file for postprocessing '${owlbot_file}' was not found in postprocessing_target"
@@ -74,12 +75,12 @@ if [[ "${is_monorepo}" == "true" ]]; then
   # - "/google-.*/src"
 
   library_name=$(basename "${postprocessing_target}")
-  cat "${postprocessing_target}/.OwlBot-hermetic.yaml" \
+  cat "${postprocessing_target}/${owlbot_yaml_file_name}" \
     | sed "s/- \"\/${library_name}/ - \"/" \
     > "${postprocessing_target}/.OwlBot.hermetic.yaml"
   owlbot_yaml_relative_path=".OwlBot.hermetic.yaml"
 else
-  owlbot_yaml_relative_path=".github/.OwlBot-hermetic.yaml"
+  owlbot_yaml_relative_path=".github/${owlbot_yaml_file_name}"
 fi
 
 # Default values for running copy-code directly from host
