@@ -276,7 +276,7 @@ get_proto_path_from_preprocessed_sources() {
 
 # for a pre-processed library stored in $preprocessed_sources_path, a folder
 # tree is built on $target_folder so it looks like a googleapis-gen folder and
-# is therefore consumable by an .OwlBot.yaml file
+# is therefore consumable OwlBot CLI
 build_owlbot_cli_source_folder() {
   local postprocessing_target=$1
   local target_folder=$2
@@ -288,7 +288,7 @@ build_owlbot_cli_source_folder() {
   owlbot_staging_folder="${postprocessing_target}/owl-bot-staging"
   mkdir -p "${owlbot_staging_folder}"
 
-  # By default (thanks to generation templates), .OwlBot.yaml `deep-copy` section
+  # By default (thanks to generation templates), .OwlBot-hermetic.yaml `deep-copy` section
   # references a wildcard pattern matching a folder
   # ending with `-java` at the leaf of proto_path. We then use a generated-java
   # folder that will be picked up by copy-code

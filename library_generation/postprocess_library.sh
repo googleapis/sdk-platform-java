@@ -9,7 +9,7 @@
 # has the following requirements
 #   -  a .repo-metadata.json file must be present
 #   -  an owlbot.py file must be present
-#   -  an .OwlBot.yaml file must be present
+#   -  an .OwlBot-hermetic.yaml file must be present
 # 2 - preprocessed_sources_path: used to transfer the raw grpc, proto and gapic
 # libraries into the postprocessing_target via copy-code
 # 3 - versions_file: path to file containing versions to be applied to the poms
@@ -44,7 +44,7 @@ for required_input in "${required_inputs[@]}"; do
   fi
 done
 
-for owlbot_file in ".repo-metadata.json" "owlbot.py" ".OwlBot.yaml"
+for owlbot_file in ".repo-metadata.json" "owlbot.py" ".OwlBot-hermetic.yaml"
 do
   if [[ $(find "${postprocessing_target}" -name "${owlbot_file}" | wc -l) -eq 0 ]]; then
     echo "necessary file for postprocessing '${owlbot_file}' was not found in postprocessing_target"
@@ -59,10 +59,10 @@ if [[ -z "${owlbot_cli_source_folder}" ]]; then
 fi
 
 
-# we determine the location of the .OwlBot.yaml file by checking if the target
+# we determine the location of the .OwlBot-hermetic.yaml file by checking if the target
 # folder is a monorepo folder or not
 if [[ "${is_monorepo}" == "true" ]]; then
-  # the deep-remove-regex and deep-preserve-regex of the .OwlBot.yaml
+  # the deep-remove-regex and deep-preserve-regex of the .OwlBot-hermetic.yaml
   # files in the monorepo libraries assume that `copy-code` is run
   # from the root of the monorepo. However, we call `copy-code` from inside each
   # library, so a path like `/java-asset/google-.*/src` will not have
@@ -74,12 +74,12 @@ if [[ "${is_monorepo}" == "true" ]]; then
   # - "/google-.*/src"
 
   library_name=$(basename "${postprocessing_target}")
-  cat "${postprocessing_target}/.OwlBot.yaml" \
+  cat "${postprocessing_target}/.OwlBot-hermetic.yaml" \
     | sed "s/- \"\/${library_name}/ - \"/" \
     > "${postprocessing_target}/.OwlBot.hermetic.yaml"
   owlbot_yaml_relative_path=".OwlBot.hermetic.yaml"
 else
-  owlbot_yaml_relative_path=".github/.OwlBot.yaml"
+  owlbot_yaml_relative_path=".github/.OwlBot-hermetic.yaml"
 fi
 
 # Default values for running copy-code directly from host
@@ -150,5 +150,5 @@ popd # temp dir
 # run the postprocessor
 echo 'running owl-bot post-processor'
 pushd "${postprocessing_target}"
-bash "${scripts_root}/owlbot/bin/entrypoint.sh" "${scripts_root}" "${versions_file}" "${configuration_yaml_path}"
+bash "${scripts_root}/owlbot/bin/entrypoint.sh" "${scripts_root}" "${versions_file}" "${configuration_yaml_path}" "${is_monorepo}"
 popd # postprocessing_target
