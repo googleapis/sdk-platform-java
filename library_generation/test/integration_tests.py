@@ -269,8 +269,8 @@ class IntegrationTest(unittest.TestCase):
                 "python",
                 "/src/cli/entry_point.py",
                 "generate",
-                f"--baseline-generation-config=/workspace/config-{repo}/{baseline_config}",
-                f"--current-generation-config=/workspace/config-{repo}/{current_config}",
+                f"--baseline-generation-config-path=/workspace/config-{repo}/{baseline_config}",
+                f"--current-generation-config-path=/workspace/config-{repo}/{current_config}",
                 f"--repository-path=/workspace/{repo}",
             ]
         )
