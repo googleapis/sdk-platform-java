@@ -206,8 +206,8 @@ python -m pip install library_generation/
 
 ```bash
 python library_generation/entry_point.py generate \
---baseline-generation-config=/path/to/baseline_config_file \
---current-generation-config=/path/to/current_config_file \
+--baseline-generation-config-path=/path/to/baseline_config_file \
+--current-generation-config-path=/path/to/current_config_file \
 --repository-path=path/to/repository
 ```
 If you run `entry_point.py` with the example [configuration](#an-example-of-generation-configuration)
