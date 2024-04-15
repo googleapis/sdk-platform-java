@@ -95,10 +95,10 @@ class GenerationConfigComparatorTest(unittest.TestCase):
 
     def test_compare_config_libraries_bom_update(self):
         self.baseline_config.libraris_bom_version = "26.36.0"
-        self.latest_config.libraris_bom_version = "26.37.0"
+        self.current_config.libraris_bom_version = "26.37.0"
         result = compare_config(
             baseline_config=self.baseline_config,
-            current_config=self.latest_config,
+            current_config=self.current_config,
         )
         self.assertTrue(
             len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 1
