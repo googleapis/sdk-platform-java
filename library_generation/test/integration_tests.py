@@ -51,9 +51,16 @@ class IntegrationTest(unittest.TestCase):
     def setUpClass(cls) -> None:
         IntegrationTest.__build_image(docker_file=build_file, cwd=repo_root_dir)
 
-    def test_entry_point_running_in_container(self):
+    @classmethod
+    def setUp(cls) -> None:
         shutil.rmtree(f"{golden_dir}", ignore_errors=True)
         os.makedirs(f"{golden_dir}", exist_ok=True)
+
+    @classmethod
+    def tearDown(cls) -> None:
+        shutil.rmtree(f"{golden_dir}", ignore_errors=True)
+
+    def test_entry_point_running_in_container(self):
         config_files = self.__get_config_files(config_dir)
         for repo, config_file in config_files:
             config = from_yaml(config_file)
