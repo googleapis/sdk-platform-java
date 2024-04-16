@@ -57,12 +57,12 @@ class IntegrationTest(unittest.TestCase):
 
     @classmethod
     def setUp(cls) -> None:
-        cls.cleanUp()
+        cls.__remove_generated_files()
         os.makedirs(f"{golden_dir}", exist_ok=True)
 
     @classmethod
     def tearDown(cls) -> None:
-        cls.cleanUp()
+        cls.__remove_generated_files()
 
     def test_entry_point_running_in_container(self):
         config_files = self.__get_config_files(config_dir)
@@ -188,7 +188,7 @@ class IntegrationTest(unittest.TestCase):
         )
 
     @classmethod
-    def cleanUp(cls):
+    def __remove_generated_files(cls):
         shutil.rmtree(f"{output_dir}", ignore_errors=True)
         shutil.rmtree(f"{golden_dir}", ignore_errors=True)
 
