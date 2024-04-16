@@ -375,6 +375,7 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual("output", Path(repo_config.output_folder).name)
         library_path = sorted([Path(key).name for key in repo_config.libraries])
         self.assertEqual(["misc"], library_path)
+        shutil.rmtree(repo_config.output_folder, ignore_errors=True)
 
     def __setup_prerequisite_files(
         self, num_libraries: int, library_type: str = "GAPIC_AUTO"
