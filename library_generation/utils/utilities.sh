@@ -276,7 +276,7 @@ get_proto_path_from_preprocessed_sources() {
 
 # for a pre-processed library stored in $preprocessed_sources_path, a folder
 # tree is built on $target_folder so it looks like a googleapis-gen folder and
-# is therefore consumable OwlBot CLI
+# is therefore consumable by OwlBot CLI
 build_owlbot_cli_source_folder() {
   local postprocessing_target=$1
   local target_folder=$2
