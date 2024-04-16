@@ -52,6 +52,10 @@ class IntegrationTest(unittest.TestCase):
         IntegrationTest.__build_image(docker_file=build_file, cwd=repo_root_dir)
 
     @classmethod
+    def tearDownClass(cls) -> None:
+        cls.__remove_docker_image()
+
+    @classmethod
     def setUp(cls) -> None:
         cls.cleanUp()
         os.makedirs(f"{golden_dir}", exist_ok=True)
@@ -335,3 +339,7 @@ class IntegrationTest(unittest.TestCase):
             cls.__recursive_diff_files(
                 sub_dcmp, diff_files, left_only, right_only, dirname + sub_dirname + "/"
             )
+
+    @classmethod
+    def __remove_docker_image(cls):
+        subprocess.check_call(["docker", "image", "rmi", image_tag])
