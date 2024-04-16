@@ -53,12 +53,12 @@ class IntegrationTest(unittest.TestCase):
 
     @classmethod
     def setUp(cls) -> None:
-        shutil.rmtree(f"{golden_dir}", ignore_errors=True)
+        cls.cleanUp()
         os.makedirs(f"{golden_dir}", exist_ok=True)
 
     @classmethod
     def tearDown(cls) -> None:
-        shutil.rmtree(f"{golden_dir}", ignore_errors=True)
+        cls.cleanUp()
 
     def test_entry_point_running_in_container(self):
         config_files = self.__get_config_files(config_dir)
@@ -182,6 +182,11 @@ class IntegrationTest(unittest.TestCase):
             ["docker", "build", "--rm", "-f", docker_file, "-t", image_tag, "."],
             cwd=cwd,
         )
+
+    @classmethod
+    def cleanUp(cls):
+        shutil.rmtree(f"{output_dir}", ignore_errors=True)
+        shutil.rmtree(f"{golden_dir}", ignore_errors=True)
 
     @classmethod
     def __pull_repo_to(cls, dest: Path, repo: str, committish: str) -> str:
