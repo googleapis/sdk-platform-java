@@ -42,6 +42,8 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
   private static final long serialVersionUID = -8876627296793342119L;
   static final String QUOTA_PROJECT_ID_HEADER_KEY = "x-goog-user-project";
 
+  static final String API_VERSION_HEADER_KEY = "x-goog-api-version";
+
   private final Map<String, String> headers;
 
   protected ApiClientHeaderProvider(Builder builder) {
@@ -68,6 +70,9 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
       headersBuilder.put(QUOTA_PROJECT_ID_HEADER_KEY, builder.getQuotaProjectIdToken());
     }
 
+    if (builder.getApiVersionToken() != null) {
+      headersBuilder.put(API_VERSION_HEADER_KEY, builder.getApiVersionToken());
+    }
     this.headers = headersBuilder.build();
   }
 
@@ -109,6 +114,8 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     private String resourceHeaderKey;
     private String resourceToken;
 
+    private String apiVersionToken;
+
     protected Builder() {
       // Initialize with default values
       apiClientHeaderKey = getDefaultApiClientHeaderKey();
@@ -121,6 +128,8 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
 
       resourceHeaderKey = getDefaultResourceHeaderKey();
       resourceToken = null;
+
+      apiVersionToken = null;
     }
 
     public String getApiClientHeaderKey() {
@@ -203,6 +212,15 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
 
     public Builder setResourceToken(String resourceToken) {
       this.resourceToken = resourceToken;
+      return this;
+    }
+
+    public String getApiVersionToken() {
+      return apiVersionToken;
+    }
+
+    public Builder setApiVersionToken(String apiVersionToken) {
+      this.apiVersionToken = apiVersionToken;
       return this;
     }
 
