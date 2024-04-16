@@ -72,7 +72,7 @@ def generate_composed_library(
         build_file_folder = Path(f"{output_folder}/{gapic.proto_path}").resolve()
         print(f"build_file_folder: {build_file_folder}")
         gapic_inputs = parse_build_file(build_file_folder, gapic.proto_path)
-        # generate prerequisite files (.repo-metadata.json, .OwlBot.yaml,
+        # generate prerequisite files (.repo-metadata.json, .OwlBot-hermetic.yaml,
         # owlbot.py) here because transport is parsed from BUILD.bazel,
         # which lives in a versioned proto_path.
         util.generate_prerequisite_files(

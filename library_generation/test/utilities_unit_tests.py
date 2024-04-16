@@ -359,8 +359,8 @@ class UtilitiesTest(unittest.TestCase):
         # since this is a single library, we treat this as HW repository,
         # meaning that the owlbot yaml will be inside a .github folder
         file_comparator.compare_files(
-            f"{library_path}/.github/.OwlBot.yaml",
-            f"{library_path}/.OwlBot-golden.yaml",
+            f"{library_path}/.github/.OwlBot-hermetic.yaml",
+            f"{library_path}/.OwlBot-hermetic-golden.yaml",
         )
         file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
@@ -374,8 +374,8 @@ class UtilitiesTest(unittest.TestCase):
             f"{library_path}/.repo-metadata-monorepo-golden.json",
         )
         file_comparator.compare_files(
-            f"{library_path}/.OwlBot.yaml",
-            f"{library_path}/.OwlBot-golden.yaml",
+            f"{library_path}/.OwlBot-hermetic.yaml",
+            f"{library_path}/.OwlBot-hermetic-golden.yaml",
         )
         file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
@@ -432,7 +432,7 @@ class UtilitiesTest(unittest.TestCase):
         library_path = f"{resources_dir}/goldens"
         files = [
             f"{library_path}/.repo-metadata.json",
-            f"{library_path}/.OwlBot.yaml",
+            f"{library_path}/.OwlBot-hermetic.yaml",
             f"{library_path}/owlbot.py",
         ]
         cleanup(files)
