@@ -1,4 +1,4 @@
-absl-py==2.0.0
+absl-py==2.1.0
 attr==0.3.2
 attrs==23.2.0
 black==24.3.0
