@@ -121,7 +121,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
       ApiTracer tracer,
       RetrySettings defaultRetrySettings,
       Set<StatusCode.Code> defaultRetryableCodes,
-      EndpointContext endpointContext) {
+      @Nullable EndpointContext endpointContext) {
     this.channel = channel;
     this.callOptions = callOptions;
     this.timeout = timeout;
@@ -133,7 +133,14 @@ public final class HttpJsonCallContext implements ApiCallContext {
     this.retrySettings = defaultRetrySettings;
     this.retryableCodes =
         defaultRetryableCodes == null ? null : ImmutableSet.copyOf(defaultRetryableCodes);
-    this.endpointContext = endpointContext;
+    // Attempt to create an empty, non-functioning EndpointContext by default. The client will have
+    // a valid EndpointContext with user configurations after the client has been initialized.
+    try {
+      this.endpointContext =
+          endpointContext == null ? EndpointContext.newBuilder().build() : endpointContext;
+    } catch (IOException ex) {
+      throw new RuntimeException(ex);
+    }
   }
 
   /**

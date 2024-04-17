@@ -26,7 +26,7 @@ RUN rm $(which python3)
 RUN ln -s $(which python3.11) /usr/local/bin/python
 RUN ln -s $(which python3.11) /usr/local/bin/python3
 RUN python -m pip install --upgrade pip
-RUN cd /src && python -m pip install -r requirements.in
+RUN cd /src && python -m pip install -r requirements.txt
 RUN cd /src && python -m pip install .
 
 # set dummy git credentials for empty commit used in postprocessing

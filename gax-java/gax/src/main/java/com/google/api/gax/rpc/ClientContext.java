@@ -100,10 +100,6 @@ public abstract class ClientContext {
   @Nonnull
   public abstract Duration getStreamWatchdogCheckInterval();
 
-  // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
-  @Nullable
-  abstract String getServiceName();
-
   @Nullable
   public abstract String getUniverseDomain();
 
@@ -112,6 +108,9 @@ public abstract class ClientContext {
 
   @Nullable
   public abstract String getQuotaProjectId();
+
+  /** Package-Private as this is to be shared to StubSettings */
+  abstract EndpointContext getEndpointContext();
 
   /** Gets the {@link ApiTracerFactory} that will be used to generate traces for operations. */
   @BetaApi("The surface for tracing is not stable yet and may change in the future.")
@@ -125,18 +124,26 @@ public abstract class ClientContext {
   @Nullable
   public abstract String getGdchApiAudience();
 
+  /** Create a new ClientContext with default values */
   public static Builder newBuilder() {
-    return new AutoValue_ClientContext.Builder()
-        .setBackgroundResources(Collections.<BackgroundResource>emptyList())
-        .setExecutor(Executors.newScheduledThreadPool(0))
-        .setHeaders(Collections.<String, String>emptyMap())
-        .setInternalHeaders(Collections.<String, String>emptyMap())
-        .setClock(NanoClock.getDefaultClock())
-        .setStreamWatchdog(null)
-        .setStreamWatchdogCheckInterval(Duration.ZERO)
-        .setTracerFactory(BaseApiTracerFactory.getInstance())
-        .setQuotaProjectId(null)
-        .setGdchApiAudience(null);
+    try {
+      return new AutoValue_ClientContext.Builder()
+          .setBackgroundResources(Collections.<BackgroundResource>emptyList())
+          .setExecutor(Executors.newScheduledThreadPool(0))
+          .setHeaders(Collections.<String, String>emptyMap())
+          .setInternalHeaders(Collections.<String, String>emptyMap())
+          .setClock(NanoClock.getDefaultClock())
+          .setStreamWatchdog(null)
+          .setStreamWatchdogCheckInterval(Duration.ZERO)
+          .setTracerFactory(BaseApiTracerFactory.getInstance())
+          .setQuotaProjectId(null)
+          .setGdchApiAudience(null)
+          // Attempt to create an empty, non-functioning EndpointContext by default. This is
+          // not exposed to the user via getters/setters.
+          .setEndpointContext(EndpointContext.newBuilder().build());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public abstract Builder toBuilder();
@@ -159,23 +166,20 @@ public abstract class ClientContext {
     ExecutorProvider backgroundExecutorProvider = settings.getBackgroundExecutorProvider();
     final ScheduledExecutorService backgroundExecutor = backgroundExecutorProvider.getExecutor();
 
-    Credentials credentials = settings.getCredentialsProvider().getCredentials();
-    boolean usingGDCH = credentials instanceof GdchCredentials;
-    EndpointContext endpointContext =
-        EndpointContext.newBuilder()
-            .setServiceName(settings.getServiceName())
-            .setUniverseDomain(settings.getUniverseDomain())
-            .setClientSettingsEndpoint(settings.getUserSetEndpoint())
-            .setTransportChannelProviderEndpoint(
-                settings.getTransportChannelProvider().getEndpoint())
-            .setMtlsEndpoint(settings.getMtlsEndpoint())
-            .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
-            .setUsingGDCH(usingGDCH)
-            .build();
+    // A valid EndpointContext should have been created in the StubSettings
+    EndpointContext endpointContext = settings.getEndpointContext();
     String endpoint = endpointContext.resolvedEndpoint();
 
     String settingsGdchApiAudience = settings.getGdchApiAudience();
+    Credentials credentials = settings.getCredentialsProvider().getCredentials();
+    boolean usingGDCH = credentials instanceof GdchCredentials;
     if (usingGDCH) {
+      // Can only determine if the GDC-H is being used via the Credentials. The Credentials object
+      // is resolved in the ClientContext and must be passed to the EndpointContext. Rebuild the
+      // endpointContext only on GDC-H flows.
+      endpointContext = endpointContext.withGDCH();
+      // Resolve the new endpoint with the GDC-H flow
+      endpoint = endpointContext.resolvedEndpoint();
       // We recompute the GdchCredentials with the audience
       String audienceString;
       if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
@@ -270,13 +274,13 @@ public abstract class ClientContext {
         .setInternalHeaders(ImmutableMap.copyOf(settings.getInternalHeaderProvider().getHeaders()))
         .setClock(clock)
         .setDefaultCallContext(defaultCallContext)
-        .setServiceName(settings.getServiceName())
         .setUniverseDomain(settings.getUniverseDomain())
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
         .setStreamWatchdogCheckInterval(settings.getStreamWatchdogCheckInterval())
         .setTracerFactory(settings.getTracerFactory())
+        .setEndpointContext(endpointContext)
         .build();
   }
 
@@ -337,9 +341,6 @@ public abstract class ClientContext {
 
     public abstract Builder setDefaultCallContext(ApiCallContext defaultCallContext);
 
-    // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
-    abstract Builder setServiceName(String serviceName);
-
     public abstract Builder setUniverseDomain(String universeDomain);
 
     public abstract Builder setEndpoint(String endpoint);
@@ -368,6 +369,9 @@ public abstract class ClientContext {
      * @param gdchApiAudience the audience to be used - must be a valid URI string
      */
     public abstract Builder setGdchApiAudience(String gdchApiAudience);
+
+    /** Package-Private as this is to be shared to StubSettings */
+    abstract Builder setEndpointContext(EndpointContext endpointContext);
 
     public abstract ClientContext build();
   }
