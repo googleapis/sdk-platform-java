@@ -50,7 +50,7 @@ RUN python3 -m pip install -r requirements.in
 ENV NODE_VERSION 20.12.0
 WORKDIR /home
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-RUN chmod 755 /home/.nvm
+RUN chmod o+rx /home/.nvm
 ENV NODE_PATH=/home/.nvm/versions/node/v${NODE_VERSION}/bin
 ENV PATH=${PATH}:${NODE_PATH}
 RUN node --version
@@ -62,23 +62,23 @@ RUN git clone https://github.com/googleapis/repo-automation-bots
 WORKDIR /tools/repo-automation-bots/packages/owl-bot
 RUN npm i && npm run compile && npm link
 RUN owl-bot copy-code --version
-RUN chmod -R 755 ${NODE_PATH}
+RUN chmod -R o+rx ${NODE_PATH}
 RUN ln -sf ${NODE_PATH}/* /usr/local/bin
 
 # allow users to access the script folders
-RUN chmod -R 755 /src
+RUN chmod -R o+rx /src
 
 # set dummy git credentials for the empty commit used in postprocessing
 # we use system so all users using the container will use this configuration
 RUN git config --system user.email "cloud-java-bot@google.com"
 RUN git config --system user.name "Cloud Java Bot"
-RUN touch /home/.gitconfig
 
-# allow read-write for /home/.gitconfig and execution for binaries in /home/.nvm
-RUN chmod -R 757 /home
+# allow read-write for /home and execution for binaries in /home/.nvm
+RUN chmod -R a+rw /home
+RUN chmod -R a+rx /home/.nvm
 
-# define runtime env vars
-ENV RUNNING_IN_DOCKER=true
+COPY .cloudbuild/library_generation/entrypoint.sh /entrypoint.sh
+RUN chmod o+rx /entrypoint.sh
 
 WORKDIR /workspace
-ENTRYPOINT [ "python", "/src/cli/entry_point.py", "generate" ]
+ENTRYPOINT [ "bash", "/entrypoint.sh" ]

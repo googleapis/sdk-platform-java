@@ -31,7 +31,7 @@ configuration_yaml_path=$6
 
 source "${scripts_root}"/utils/utilities.sh
 
-declare -a required_inputs=("postprocessing_target" "versions_file" "owlbot_cli_image_sha" "is_monorepo")
+declare -a required_inputs=("postprocessing_target" "versions_file" "is_monorepo")
 for required_input in "${required_inputs[@]}"; do
   if [[ -z "${!required_input}" ]]; then
     echo "missing required ${required_input} argument, please specify one"

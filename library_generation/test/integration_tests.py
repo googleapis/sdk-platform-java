@@ -240,10 +240,16 @@ class IntegrationTest(unittest.TestCase):
         baseline_config: str,
         current_config: str,
     ):
+        # we use the calling user to prevent the mapped volumes from changing
+        # owners
+        user_id = shell_call("id -u")
+        group_id = shell_call("id -g")
         subprocess.check_call(
             [
                 "docker",
                 "run",
+                "-u",
+                f'{user_id}:{group_id}',
                 "--rm",
                 "-v",
                 f"{repo_location}:/workspace/repo",
@@ -254,7 +260,7 @@ class IntegrationTest(unittest.TestCase):
                 image_tag,
                 f"--baseline-generation-config=/workspace/config/{baseline_config}",
                 f"--current-generation-config=/workspace/config/{current_config}",
-            ]
+            ],
         )
 
     @classmethod
