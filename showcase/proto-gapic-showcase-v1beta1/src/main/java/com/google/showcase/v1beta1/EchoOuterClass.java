@@ -133,107 +133,110 @@ public final class EchoOuterClass {
       "ns.proto\032\031google/protobuf/any.proto\032\036goo" +
       "gle/protobuf/duration.proto\032\037google/prot" +
       "obuf/timestamp.proto\032\027google/rpc/status." +
-      "proto\"\312\001\n\013EchoRequest\022\021\n\007content\030\001 \001(\tH\000" +
+      "proto\"\210\002\n\013EchoRequest\022\021\n\007content\030\001 \001(\tH\000" +
       "\022#\n\005error\030\002 \001(\0132\022.google.rpc.StatusH\000\0223\n" +
       "\010severity\030\003 \001(\0162!.google.showcase.v1beta" +
       "1.Severity\022\016\n\006header\030\004 \001(\t\022\024\n\014other_head" +
-      "er\030\005 \001(\t\022\034\n\nrequest_id\030\007 \001(\tB\010\342\214\317\327\010\002\010\001B\n" +
-      "\n\010response\"T\n\014EchoResponse\022\017\n\007content\030\001 " +
-      "\001(\t\0223\n\010severity\030\002 \001(\0162!.google.showcase." +
-      "v1beta1.Severity\"P\n\027EchoErrorDetailsRequ" +
-      "est\022\032\n\022single_detail_text\030\001 \001(\t\022\031\n\021multi" +
-      "_detail_text\030\002 \003(\t\"\362\002\n\030EchoErrorDetailsR" +
-      "esponse\022U\n\rsingle_detail\030\001 \001(\0132>.google." +
-      "showcase.v1beta1.EchoErrorDetailsRespons" +
-      "e.SingleDetail\022[\n\020multiple_details\030\002 \001(\013" +
-      "2A.google.showcase.v1beta1.EchoErrorDeta" +
-      "ilsResponse.MultipleDetails\032M\n\014SingleDet" +
-      "ail\022=\n\005error\030\001 \001(\0132..google.showcase.v1b" +
-      "eta1.ErrorWithSingleDetail\032S\n\017MultipleDe" +
-      "tails\022@\n\005error\030\001 \001(\01321.google.showcase.v" +
-      "1beta1.ErrorWithMultipleDetails\">\n\025Error" +
-      "WithSingleDetail\022%\n\007details\030\001 \001(\0132\024.goog" +
-      "le.protobuf.Any\"A\n\030ErrorWithMultipleDeta" +
-      "ils\022%\n\007details\030\001 \003(\0132\024.google.protobuf.A" +
-      "ny\"x\n\rExpandRequest\022\017\n\007content\030\001 \001(\t\022!\n\005" +
-      "error\030\002 \001(\0132\022.google.rpc.Status\0223\n\020strea" +
-      "m_wait_time\030\003 \001(\0132\031.google.protobuf.Dura" +
-      "tion\"Q\n\022PagedExpandRequest\022\024\n\007content\030\001 " +
-      "\001(\tB\003\340A\002\022\021\n\tpage_size\030\002 \001(\005\022\022\n\npage_toke" +
-      "n\030\003 \001(\t\"Y\n\030PagedExpandLegacyRequest\022\024\n\007c" +
-      "ontent\030\001 \001(\tB\003\340A\002\022\023\n\013max_results\030\002 \001(\005\022\022" +
-      "\n\npage_token\030\003 \001(\t\"h\n\023PagedExpandRespons" +
-      "e\0228\n\tresponses\030\001 \003(\0132%.google.showcase.v" +
-      "1beta1.EchoResponse\022\027\n\017next_page_token\030\002" +
-      " \001(\t\"(\n\027PagedExpandResponseList\022\r\n\005words" +
-      "\030\001 \003(\t\"\203\002\n\037PagedExpandLegacyMappedRespon" +
-      "se\022`\n\014alphabetized\030\001 \003(\0132J.google.showca" +
-      "se.v1beta1.PagedExpandLegacyMappedRespon" +
-      "se.AlphabetizedEntry\022\027\n\017next_page_token\030" +
-      "\002 \001(\t\032e\n\021AlphabetizedEntry\022\013\n\003key\030\001 \001(\t\022" +
-      "?\n\005value\030\002 \001(\01320.google.showcase.v1beta1" +
-      ".PagedExpandResponseList:\0028\001\"\331\001\n\013WaitReq" +
-      "uest\022.\n\010end_time\030\001 \001(\0132\032.google.protobuf" +
-      ".TimestampH\000\022(\n\003ttl\030\004 \001(\0132\031.google.proto" +
-      "buf.DurationH\000\022#\n\005error\030\002 \001(\0132\022.google.r" +
-      "pc.StatusH\001\0228\n\007success\030\003 \001(\0132%.google.sh" +
-      "owcase.v1beta1.WaitResponseH\001B\005\n\003endB\n\n\010" +
-      "response\"\037\n\014WaitResponse\022\017\n\007content\030\001 \001(" +
-      "\t\"<\n\014WaitMetadata\022,\n\010end_time\030\001 \001(\0132\032.go" +
-      "ogle.protobuf.Timestamp\"\255\001\n\014BlockRequest" +
-      "\0221\n\016response_delay\030\001 \001(\0132\031.google.protob" +
-      "uf.Duration\022#\n\005error\030\002 \001(\0132\022.google.rpc." +
-      "StatusH\000\0229\n\007success\030\003 \001(\0132&.google.showc" +
-      "ase.v1beta1.BlockResponseH\000B\n\n\010response\"" +
-      " \n\rBlockResponse\022\017\n\007content\030\001 \001(\t*D\n\010Sev" +
-      "erity\022\017\n\013UNNECESSARY\020\000\022\r\n\tNECESSARY\020\001\022\n\n" +
-      "\006URGENT\020\002\022\014\n\010CRITICAL\020\0032\241\r\n\004Echo\022\224\003\n\004Ech" +
-      "o\022$.google.showcase.v1beta1.EchoRequest\032" +
-      "%.google.showcase.v1beta1.EchoResponse\"\276" +
-      "\002\202\323\344\223\002\027\"\022/v1beta1/echo:echo:\001*\212\323\344\223\002\232\002\022\010\n" +
-      "\006header\022\031\n\006header\022\017{routing_id=**}\022+\n\006he" +
-      "ader\022!{table_name=regions/*/zones/*/**}\022" +
-      "\"\n\006header\022\030{super_id=projects/*}/**\0220\n\006h" +
-      "eader\022&{table_name=projects/*/instances/" +
-      "*/**}\0221\n\006header\022\'projects/*/{instance_id" +
-      "=instances/*}/**\022\030\n\014other_header\022\010{baz=*" +
-      "*}\022#\n\014other_header\022\023{qux=projects/*}/**\022" +
-      "\237\001\n\020EchoErrorDetails\0220.google.showcase.v" +
-      "1beta1.EchoErrorDetailsRequest\0321.google." +
-      "showcase.v1beta1.EchoErrorDetailsRespons" +
-      "e\"&\202\323\344\223\002 \"\033/v1beta1/echo:error-details:\001" +
-      "*\022\212\001\n\006Expand\022&.google.showcase.v1beta1.E" +
-      "xpandRequest\032%.google.showcase.v1beta1.E" +
-      "choResponse\"/\332A\rcontent,error\202\323\344\223\002\031\"\024/v1" +
-      "beta1/echo:expand:\001*0\001\022z\n\007Collect\022$.goog" +
-      "le.showcase.v1beta1.EchoRequest\032%.google" +
-      ".showcase.v1beta1.EchoResponse\" \202\323\344\223\002\032\"\025" +
-      "/v1beta1/echo:collect:\001*(\001\022W\n\004Chat\022$.goo" +
-      "gle.showcase.v1beta1.EchoRequest\032%.googl" +
-      "e.showcase.v1beta1.EchoResponse(\0010\001\022\216\001\n\013" +
-      "PagedExpand\022+.google.showcase.v1beta1.Pa" +
-      "gedExpandRequest\032,.google.showcase.v1bet" +
-      "a1.PagedExpandResponse\"$\202\323\344\223\002\036\"\031/v1beta1" +
-      "/echo:pagedExpand:\001*\022\240\001\n\021PagedExpandLega" +
-      "cy\0221.google.showcase.v1beta1.PagedExpand" +
-      "LegacyRequest\032,.google.showcase.v1beta1." +
-      "PagedExpandResponse\"*\202\323\344\223\002$\"\037/v1beta1/ec" +
-      "ho:pagedExpandLegacy:\001*\022\262\001\n\027PagedExpandL" +
-      "egacyMapped\022+.google.showcase.v1beta1.Pa" +
-      "gedExpandRequest\0328.google.showcase.v1bet" +
-      "a1.PagedExpandLegacyMappedResponse\"0\202\323\344\223" +
-      "\002*\"%/v1beta1/echo:pagedExpandLegacyMappe" +
-      "d:\001*\022\211\001\n\004Wait\022$.google.showcase.v1beta1." +
-      "WaitRequest\032\035.google.longrunning.Operati" +
-      "on\"<\312A\034\n\014WaitResponse\022\014WaitMetadata\202\323\344\223\002" +
-      "\027\"\022/v1beta1/echo:wait:\001*\022v\n\005Block\022%.goog" +
-      "le.showcase.v1beta1.BlockRequest\032&.googl" +
-      "e.showcase.v1beta1.BlockResponse\"\036\202\323\344\223\002\030" +
-      "\"\023/v1beta1/echo:block:\001*\032\021\312A\016localhost:7" +
-      "469Bq\n\033com.google.showcase.v1beta1P\001Z4gi" +
-      "thub.com/googleapis/gapic-showcase/serve" +
-      "r/genproto\352\002\031Google::Showcase::V1beta1b\006" +
-      "proto3"
+      "er\030\005 \001(\t\022\034\n\nrequest_id\030\007 \001(\tB\010\342\214\317\327\010\002\010\001\022\'" +
+      "\n\020other_request_id\030\010 \001(\tB\010\342\214\317\327\010\002\010\001H\001\210\001\001B" +
+      "\n\n\010responseB\023\n\021_other_request_id\"\202\001\n\014Ech" +
+      "oResponse\022\017\n\007content\030\001 \001(\t\0223\n\010severity\030\002" +
+      " \001(\0162!.google.showcase.v1beta1.Severity\022" +
+      "\022\n\nrequest_id\030\003 \001(\t\022\030\n\020other_request_id\030" +
+      "\004 \001(\t\"P\n\027EchoErrorDetailsRequest\022\032\n\022sing" +
+      "le_detail_text\030\001 \001(\t\022\031\n\021multi_detail_tex" +
+      "t\030\002 \003(\t\"\362\002\n\030EchoErrorDetailsResponse\022U\n\r" +
+      "single_detail\030\001 \001(\0132>.google.showcase.v1" +
+      "beta1.EchoErrorDetailsResponse.SingleDet" +
+      "ail\022[\n\020multiple_details\030\002 \001(\0132A.google.s" +
+      "howcase.v1beta1.EchoErrorDetailsResponse" +
+      ".MultipleDetails\032M\n\014SingleDetail\022=\n\005erro" +
+      "r\030\001 \001(\0132..google.showcase.v1beta1.ErrorW" +
+      "ithSingleDetail\032S\n\017MultipleDetails\022@\n\005er" +
+      "ror\030\001 \001(\01321.google.showcase.v1beta1.Erro" +
+      "rWithMultipleDetails\">\n\025ErrorWithSingleD" +
+      "etail\022%\n\007details\030\001 \001(\0132\024.google.protobuf" +
+      ".Any\"A\n\030ErrorWithMultipleDetails\022%\n\007deta" +
+      "ils\030\001 \003(\0132\024.google.protobuf.Any\"x\n\rExpan" +
+      "dRequest\022\017\n\007content\030\001 \001(\t\022!\n\005error\030\002 \001(\013" +
+      "2\022.google.rpc.Status\0223\n\020stream_wait_time" +
+      "\030\003 \001(\0132\031.google.protobuf.Duration\"Q\n\022Pag" +
+      "edExpandRequest\022\024\n\007content\030\001 \001(\tB\003\340A\002\022\021\n" +
+      "\tpage_size\030\002 \001(\005\022\022\n\npage_token\030\003 \001(\t\"Y\n\030" +
+      "PagedExpandLegacyRequest\022\024\n\007content\030\001 \001(" +
+      "\tB\003\340A\002\022\023\n\013max_results\030\002 \001(\005\022\022\n\npage_toke" +
+      "n\030\003 \001(\t\"h\n\023PagedExpandResponse\0228\n\trespon" +
+      "ses\030\001 \003(\0132%.google.showcase.v1beta1.Echo" +
+      "Response\022\027\n\017next_page_token\030\002 \001(\t\"(\n\027Pag" +
+      "edExpandResponseList\022\r\n\005words\030\001 \003(\t\"\203\002\n\037" +
+      "PagedExpandLegacyMappedResponse\022`\n\014alpha" +
+      "betized\030\001 \003(\0132J.google.showcase.v1beta1." +
+      "PagedExpandLegacyMappedResponse.Alphabet" +
+      "izedEntry\022\027\n\017next_page_token\030\002 \001(\t\032e\n\021Al" +
+      "phabetizedEntry\022\013\n\003key\030\001 \001(\t\022?\n\005value\030\002 " +
+      "\001(\01320.google.showcase.v1beta1.PagedExpan" +
+      "dResponseList:\0028\001\"\331\001\n\013WaitRequest\022.\n\010end" +
+      "_time\030\001 \001(\0132\032.google.protobuf.TimestampH" +
+      "\000\022(\n\003ttl\030\004 \001(\0132\031.google.protobuf.Duratio" +
+      "nH\000\022#\n\005error\030\002 \001(\0132\022.google.rpc.StatusH\001" +
+      "\0228\n\007success\030\003 \001(\0132%.google.showcase.v1be" +
+      "ta1.WaitResponseH\001B\005\n\003endB\n\n\010response\"\037\n" +
+      "\014WaitResponse\022\017\n\007content\030\001 \001(\t\"<\n\014WaitMe" +
+      "tadata\022,\n\010end_time\030\001 \001(\0132\032.google.protob" +
+      "uf.Timestamp\"\255\001\n\014BlockRequest\0221\n\016respons" +
+      "e_delay\030\001 \001(\0132\031.google.protobuf.Duration" +
+      "\022#\n\005error\030\002 \001(\0132\022.google.rpc.StatusH\000\0229\n" +
+      "\007success\030\003 \001(\0132&.google.showcase.v1beta1" +
+      ".BlockResponseH\000B\n\n\010response\" \n\rBlockRes" +
+      "ponse\022\017\n\007content\030\001 \001(\t*D\n\010Severity\022\017\n\013UN" +
+      "NECESSARY\020\000\022\r\n\tNECESSARY\020\001\022\n\n\006URGENT\020\002\022\014" +
+      "\n\010CRITICAL\020\0032\262\r\n\004Echo\022\224\003\n\004Echo\022$.google." +
+      "showcase.v1beta1.EchoRequest\032%.google.sh" +
+      "owcase.v1beta1.EchoResponse\"\276\002\202\323\344\223\002\027\"\022/v" +
+      "1beta1/echo:echo:\001*\212\323\344\223\002\232\002\022\010\n\006header\022\031\n\006" +
+      "header\022\017{routing_id=**}\022+\n\006header\022!{tabl" +
+      "e_name=regions/*/zones/*/**}\022\"\n\006header\022\030" +
+      "{super_id=projects/*}/**\0220\n\006header\022&{tab" +
+      "le_name=projects/*/instances/*/**}\0221\n\006he" +
+      "ader\022\'projects/*/{instance_id=instances/" +
+      "*}/**\022\030\n\014other_header\022\010{baz=**}\022#\n\014other" +
+      "_header\022\023{qux=projects/*}/**\022\237\001\n\020EchoErr" +
+      "orDetails\0220.google.showcase.v1beta1.Echo" +
+      "ErrorDetailsRequest\0321.google.showcase.v1" +
+      "beta1.EchoErrorDetailsResponse\"&\202\323\344\223\002 \"\033" +
+      "/v1beta1/echo:error-details:\001*\022\212\001\n\006Expan" +
+      "d\022&.google.showcase.v1beta1.ExpandReques" +
+      "t\032%.google.showcase.v1beta1.EchoResponse" +
+      "\"/\332A\rcontent,error\202\323\344\223\002\031\"\024/v1beta1/echo:" +
+      "expand:\001*0\001\022z\n\007Collect\022$.google.showcase" +
+      ".v1beta1.EchoRequest\032%.google.showcase.v" +
+      "1beta1.EchoResponse\" \202\323\344\223\002\032\"\025/v1beta1/ec" +
+      "ho:collect:\001*(\001\022W\n\004Chat\022$.google.showcas" +
+      "e.v1beta1.EchoRequest\032%.google.showcase." +
+      "v1beta1.EchoResponse(\0010\001\022\216\001\n\013PagedExpand" +
+      "\022+.google.showcase.v1beta1.PagedExpandRe" +
+      "quest\032,.google.showcase.v1beta1.PagedExp" +
+      "andResponse\"$\202\323\344\223\002\036\"\031/v1beta1/echo:paged" +
+      "Expand:\001*\022\240\001\n\021PagedExpandLegacy\0221.google" +
+      ".showcase.v1beta1.PagedExpandLegacyReque" +
+      "st\032,.google.showcase.v1beta1.PagedExpand" +
+      "Response\"*\202\323\344\223\002$\"\037/v1beta1/echo:pagedExp" +
+      "andLegacy:\001*\022\262\001\n\027PagedExpandLegacyMapped" +
+      "\022+.google.showcase.v1beta1.PagedExpandRe" +
+      "quest\0328.google.showcase.v1beta1.PagedExp" +
+      "andLegacyMappedResponse\"0\202\323\344\223\002*\"%/v1beta" +
+      "1/echo:pagedExpandLegacyMapped:\001*\022\211\001\n\004Wa" +
+      "it\022$.google.showcase.v1beta1.WaitRequest" +
+      "\032\035.google.longrunning.Operation\"<\312A\034\n\014Wa" +
+      "itResponse\022\014WaitMetadata\202\323\344\223\002\027\"\022/v1beta1" +
+      "/echo:wait:\001*\022v\n\005Block\022%.google.showcase" +
+      ".v1beta1.BlockRequest\032&.google.showcase." +
+      "v1beta1.BlockResponse\"\036\202\323\344\223\002\030\"\023/v1beta1/" +
+      "echo:block:\001*\032\"\312A\016localhost:7469\212\324\333\322\017\013v1" +
+      "_20240408Bq\n\033com.google.showcase.v1beta1" +
+      "P\001Z4github.com/googleapis/gapic-showcase" +
+      "/server/genproto\352\002\031Google::Showcase::V1b" +
+      "eta1b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -254,13 +257,13 @@ public final class EchoOuterClass {
     internal_static_google_showcase_v1beta1_EchoRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_showcase_v1beta1_EchoRequest_descriptor,
-        new java.lang.String[] { "Content", "Error", "Severity", "Header", "OtherHeader", "RequestId", "Response", });
+        new java.lang.String[] { "Content", "Error", "Severity", "Header", "OtherHeader", "RequestId", "OtherRequestId", "Response", });
     internal_static_google_showcase_v1beta1_EchoResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_google_showcase_v1beta1_EchoResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_showcase_v1beta1_EchoResponse_descriptor,
-        new java.lang.String[] { "Content", "Severity", });
+        new java.lang.String[] { "Content", "Severity", "RequestId", "OtherRequestId", });
     internal_static_google_showcase_v1beta1_EchoErrorDetailsRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_google_showcase_v1beta1_EchoErrorDetailsRequest_fieldAccessorTable = new
@@ -371,6 +374,7 @@ public final class EchoOuterClass {
         new java.lang.String[] { "Content", });
     com.google.protobuf.ExtensionRegistry registry =
         com.google.protobuf.ExtensionRegistry.newInstance();
+    registry.add(com.google.api.ClientProto.apiVersion);
     registry.add(com.google.api.ClientProto.defaultHost);
     registry.add(com.google.api.FieldBehaviorProto.fieldBehavior);
     registry.add(com.google.api.FieldInfoProto.fieldInfo);

@@ -46,4 +46,44 @@ public interface EchoResponseOrBuilder extends
    * @return The severity.
    */
   com.google.showcase.v1beta1.Severity getSeverity();
+
+  /**
+   * <pre>
+   * The request ID specified or autopopulated in the request.
+   * </pre>
+   *
+   * <code>string request_id = 3;</code>
+   * @return The requestId.
+   */
+  java.lang.String getRequestId();
+  /**
+   * <pre>
+   * The request ID specified or autopopulated in the request.
+   * </pre>
+   *
+   * <code>string request_id = 3;</code>
+   * @return The bytes for requestId.
+   */
+  com.google.protobuf.ByteString
+      getRequestIdBytes();
+
+  /**
+   * <pre>
+   * The other request ID specified or autopopulated in the request.
+   * </pre>
+   *
+   * <code>string other_request_id = 4;</code>
+   * @return The otherRequestId.
+   */
+  java.lang.String getOtherRequestId();
+  /**
+   * <pre>
+   * The other request ID specified or autopopulated in the request.
+   * </pre>
+   *
+   * <code>string other_request_id = 4;</code>
+   * @return The bytes for otherRequestId.
+   */
+  com.google.protobuf.ByteString
+      getOtherRequestIdBytes();
 }
