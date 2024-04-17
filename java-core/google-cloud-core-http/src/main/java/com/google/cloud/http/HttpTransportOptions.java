@@ -25,8 +25,12 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.httpjson.HttpHeadersUtils;
+import com.google.api.gax.httpjson.HttpJsonStatusCode;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.HeaderProvider;
+import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.UnauthenticatedException;
 import com.google.auth.Credentials;
 import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.auth.http.HttpTransportFactory;
@@ -153,11 +157,48 @@ public class HttpTransportOptions implements TransportOptions {
         serviceOptions.getMergedHeaderProvider(internalHeaderProvider);
 
     return new HttpRequestInitializer() {
+
+      /**
+       * Helper method to resolve the Universe Domain. First checks the user configuration from
+       * ServiceOptions, then the Environment Variable. If both haven't been set, resolve the value
+       * to be the Google Default Universe.
+       */
+      private String determineUniverseDomain() {
+        String universeDomain = serviceOptions.getUniverseDomain();
+        if (universeDomain == null) {
+          universeDomain = System.getenv(EndpointContext.GOOGLE_CLOUD_UNIVERSE_DOMAIN);
+        }
+        return universeDomain == null ? Credentials.GOOGLE_DEFAULT_UNIVERSE : universeDomain;
+      }
+
       @Override
       public void initialize(HttpRequest httpRequest) throws IOException {
+        String configuredUniverseDomain = determineUniverseDomain();
+        // Default to the GDU. Override with value in the Credentials if needed
+        String credentialsUniverseDomain = Credentials.GOOGLE_DEFAULT_UNIVERSE;
+
+        // delegate is always HttpCredentialsAdapter or null (NoCredentials)
+        if (delegate != null) {
+          HttpCredentialsAdapter httpCredentialsAdapter = (HttpCredentialsAdapter) delegate;
+          credentialsUniverseDomain = httpCredentialsAdapter.getCredentials().getUniverseDomain();
+        }
+
+        // Validate the universe domain before initializing the request
+        if (!configuredUniverseDomain.equals(credentialsUniverseDomain)) {
+          throw new UnauthenticatedException(
+              new Throwable(
+                  String.format(
+                      EndpointContext.INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE,
+                      configuredUniverseDomain,
+                      credentialsUniverseDomain)),
+              HttpJsonStatusCode.of(StatusCode.Code.UNAUTHENTICATED),
+              false);
+        }
+
         if (delegate != null) {
           delegate.initialize(httpRequest);
         }
+
         if (connectTimeout >= 0) {
           httpRequest.setConnectTimeout(connectTimeout);
         }

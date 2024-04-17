@@ -18,12 +18,12 @@ import os
 import shutil
 import re
 from pathlib import Path
-from typing import Dict
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from typing import List
 from library_generation.model.repo_config import RepoConfig
 from library_generation.utils.file_render import render
+from library_generation.utils.proto_path_utils import remove_version_from
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -37,17 +37,6 @@ def create_argument(arg_key: str, arg_container: object) -> List[str]:
     if arg_val is not None:
         return [f"--{arg_key}", f"{arg_val}"]
     return []
-
-
-def get_library_name(
-    library: LibraryConfig,
-) -> str:
-    """
-    Return the library name of a given LibraryConfig object
-    :param library: an object of LibraryConfig
-    :return: the library name
-    """
-    return library.library_name if library.library_name else library.api_shortname
 
 
 def run_process_and_print_output(arguments: List[str], job_name: str = "Job"):
@@ -68,7 +57,7 @@ def run_process_and_print_output(arguments: List[str], job_name: str = "Job"):
 
 def sh_util(statement: str, **kwargs) -> str:
     """
-    Calls a function defined in library_generation/utilities.sh
+    Calls a function defined in library_generation/utils/utilities.sh
     """
     if "stdout" not in kwargs:
         kwargs["stdout"] = subprocess.PIPE
@@ -76,7 +65,11 @@ def sh_util(statement: str, **kwargs) -> str:
         kwargs["stderr"] = subprocess.PIPE
     output = ""
     with subprocess.Popen(
-        ["bash", "-exc", f"source {script_dir}/utilities.sh && {statement}"],
+        [
+            "bash",
+            "-exc",
+            f"source {script_dir}/utilities.sh && {statement}",
+        ],
         **kwargs,
     ) as proc:
         print("command stderr:")
@@ -104,20 +97,6 @@ def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 
-def remove_version_from(proto_path: str) -> str:
-    """
-    Remove the version of a proto_path
-    :param proto_path: versioned proto_path
-    :return: the proto_path without version
-    """
-    version_pattern = "^v[1-9]"
-    index = proto_path.rfind("/")
-    version = proto_path[index + 1 :]
-    if re.match(version_pattern, version):
-        return proto_path[:index]
-    return proto_path
-
-
 def prepare_repo(
     gen_config: GenerationConfig,
     library_config: List[LibraryConfig],
@@ -142,13 +121,11 @@ def prepare_repo(
     os.makedirs(output_folder, exist_ok=True)
     libraries = {}
     for library in library_config:
-        library_name = (
-            f"{language}-{library.library_name}"
-            if library.library_name
-            else f"{language}-{library.api_shortname}"
-        )
+        library_name = f"{language}-{library.get_library_name()}"
         library_path = (
-            f"{repo_path}/{library_name}" if gen_config.is_monorepo else f"{repo_path}"
+            f"{repo_path}/{library_name}"
+            if gen_config.is_monorepo()
+            else f"{repo_path}"
         )
         # use absolute path because docker requires absolute path
         # in volume name.
@@ -231,7 +208,7 @@ def generate_prerequisite_files(
     :return: None
     """
     cloud_prefix = "cloud-" if library.cloud_api else ""
-    library_name = get_library_name(library)
+    library_name = library.get_library_name()
     distribution_name = (
         library.distribution_name
         if library.distribution_name
@@ -240,7 +217,7 @@ def generate_prerequisite_files(
     distribution_name_short = re.split(r"[:/]", distribution_name)[-1]
     repo = (
         "googleapis/google-cloud-java"
-        if config.is_monorepo
+        if config.is_monorepo()
         else f"googleapis/{language}-{library_name}"
     )
     api_id = (
@@ -303,11 +280,11 @@ def generate_prerequisite_files(
         with open(f"{library_path}/{json_file}", "w") as fp:
             json.dump(repo_metadata, fp, indent=2)
 
-    # generate .OwlBot.yaml
-    owlbot_yaml_file = ".OwlBot.yaml"
+    # generate .OwlBot-hermetic.yaml
+    owlbot_yaml_file = ".OwlBot-hermetic.yaml"
     path_to_owlbot_yaml_file = (
         f"{library_path}/{owlbot_yaml_file}"
-        if config.is_monorepo
+        if config.is_monorepo()
         else f"{library_path}/.github/{owlbot_yaml_file}"
     )
     if not os.path.exists(path_to_owlbot_yaml_file):
@@ -329,36 +306,3 @@ def generate_prerequisite_files(
             should_include_templates=True,
             template_excludes=config.template_excludes,
         )
-
-
-def get_file_paths(config: GenerationConfig) -> Dict[str, str]:
-    """
-    Get versioned proto_path to library_name mapping from configuration file.
-
-    :param config: a GenerationConfig object.
-    :return: versioned proto_path to library_name mapping
-    """
-    paths = {}
-    for library in config.libraries:
-        for gapic_config in library.gapic_configs:
-            paths[gapic_config.proto_path] = get_library_name(library)
-    return paths
-
-
-def find_versioned_proto_path(file_path: str) -> str:
-    """
-    Returns a versioned proto_path from a given file_path; or file_path itself
-    if it doesn't contain a versioned proto_path.
-
-    :param file_path: a proto file path
-    :return: the versioned proto_path
-    """
-    version_regex = re.compile(r"^v[1-9].*")
-    directories = file_path.split("/")
-    for directory in directories:
-        result = version_regex.search(directory)
-        if result:
-            version = result[0]
-            idx = file_path.find(version)
-            return file_path[:idx] + version
-    return file_path

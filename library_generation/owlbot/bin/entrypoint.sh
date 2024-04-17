@@ -27,19 +27,10 @@ set -ex
 scripts_root=$1
 versions_file=$2
 configuration_yaml=$3
+is_monorepo=$4
 
 
-# This script can be used to process HW libraries and monorepo
-# (google-cloud-java) libraries, which require a slightly different treatment
-# monorepo folders have an .OwlBot.yaml file in the module folder (e.g.
-# java-asset/.OwlBot.yaml), whereas HW libraries have the yaml in
-# `.github/.OwlBot.yaml`
-monorepo="false"
-if [[ -f "$(pwd)/.OwlBot.yaml" ]]; then
-  monorepo="true"
-fi
-
-if [[ "${monorepo}" == "true" ]]; then
+if [[ "${is_monorepo}" == "true" ]]; then
   mv owl-bot-staging/* temp
   rm -rd owl-bot-staging/
   mv temp owl-bot-staging
@@ -50,7 +41,7 @@ fi
 
 # apply repo templates
 echo "Rendering templates"
-python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" "${configuration_yaml}" "${monorepo}"
+python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" "${configuration_yaml}" "${is_monorepo}"
 
 # templates as well as retrieving files from owl-bot-staging
 echo "Retrieving files from owl-bot-staging directory..."
@@ -66,7 +57,7 @@ echo "...done"
 
 # write or restore pom.xml files
 echo "Generating missing pom.xml..."
-python3 "${scripts_root}/owlbot/src/fix-poms.py" "${versions_file}" "${monorepo}"
+python3 "${scripts_root}/owlbot/src/fix-poms.py" "${versions_file}" "${is_monorepo}"
 echo "...done"
 
 # write or restore clirr-ignored-differences.xml
