@@ -15,14 +15,11 @@ target/
 # Vscode Settings
 .vscode/settings.json
 
-*.iml
-
 # Python
 **/__pycache__/
 .venv
 
 # library generation
-**/output/
 **/googleapis
 library_generation/test/resources/test_monorepo_postprocessing/
 **/*egg-info/

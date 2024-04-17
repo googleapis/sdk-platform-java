@@ -52,13 +52,17 @@ class IntegrationTest(unittest.TestCase):
         IntegrationTest.__build_image(docker_file=build_file, cwd=repo_root_dir)
 
     @classmethod
+    def tearDownClass(cls) -> None:
+        cls.__remove_docker_image()
+
+    @classmethod
     def setUp(cls) -> None:
-        shutil.rmtree(f"{golden_dir}", ignore_errors=True)
+        cls.__remove_generated_files()
         os.makedirs(f"{golden_dir}", exist_ok=True)
 
     @classmethod
     def tearDown(cls) -> None:
-        shutil.rmtree(f"{golden_dir}", ignore_errors=True)
+        cls.__remove_generated_files()
 
     def test_entry_point_running_in_container(self):
         config_files = self.__get_config_files(config_dir)
@@ -182,6 +186,11 @@ class IntegrationTest(unittest.TestCase):
             ["docker", "build", "--rm", "-f", docker_file, "-t", image_tag, "."],
             cwd=cwd,
         )
+
+    @classmethod
+    def __remove_generated_files(cls):
+        shutil.rmtree(f"{output_dir}", ignore_errors=True)
+        shutil.rmtree(f"{golden_dir}", ignore_errors=True)
 
     @classmethod
     def __pull_repo_to(cls, dest: Path, repo: str, committish: str) -> str:
@@ -330,3 +339,7 @@ class IntegrationTest(unittest.TestCase):
             cls.__recursive_diff_files(
                 sub_dcmp, diff_files, left_only, right_only, dirname + sub_dirname + "/"
             )
+
+    @classmethod
+    def __remove_docker_image(cls):
+        subprocess.check_call(["docker", "image", "rmi", image_tag])
