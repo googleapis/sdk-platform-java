@@ -37,7 +37,7 @@
     <!-- ensure checker-qual version matches what Guava uses -->
     <checker-qual.version>3.42.0</checker-qual.version>
     <perfmark-api.version>0.27.0</perfmark-api.version>
-    <google.cloud.opentelemetry.version>0.27.0</google.cloud.opentelemetry.version>
+    <google.cloud.opentelemetry.version>0.28.0</google.cloud.opentelemetry.version>
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
     <opentelemetry.version>1.36.0</opentelemetry.version>
     <opentelemetry-grpc-instrumentation.version>2.1.0-alpha</opentelemetry-grpc-instrumentation.version>
