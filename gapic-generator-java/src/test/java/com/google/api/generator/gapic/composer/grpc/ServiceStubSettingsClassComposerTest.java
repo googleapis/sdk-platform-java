@@ -81,6 +81,6 @@ public class ServiceStubSettingsClassComposerTest {
         clazz.classDefinition().packageString(),
         clazz.samples());
     Assert.assertCodeEquals(clazz.apiShortName(), apiShortNameExpected);
-    Assert.assertCodeEquals(clazz.apiMajorVersion(), apiVersionExpected);
+    Assert.assertCodeEquals(clazz.packageVersion(), apiVersionExpected);
   }
 }

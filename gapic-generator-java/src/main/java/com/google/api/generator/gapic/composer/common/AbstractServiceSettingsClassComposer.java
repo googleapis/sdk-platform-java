@@ -128,7 +128,7 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
             .build();
     return GapicClass.create(kind, classDef, SampleComposerUtil.handleDuplicateSamples(samples))
         .withApiShortName(service.apiShortName())
-        .withApiMajorVersion(service.apiMajorVersion());
+        .withPackageVersion(service.packageVersion());
   }
 
   private static List<CommentStatement> createClassHeaderComments(

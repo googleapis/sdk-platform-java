@@ -204,7 +204,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return GapicClass.create(
             GapicClass.Kind.STUB, classDef, SampleComposerUtil.handleDuplicateSamples(samples))
         .withApiShortName(service.apiShortName())
-        .withApiMajorVersion(service.apiMajorVersion());
+        .withPackageVersion(service.packageVersion());
   }
 
   protected MethodDefinition createDefaultCredentialsProviderBuilderMethod() {

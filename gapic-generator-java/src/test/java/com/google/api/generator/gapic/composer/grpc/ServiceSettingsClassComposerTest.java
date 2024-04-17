@@ -69,6 +69,6 @@ public class ServiceSettingsClassComposerTest {
         clazz.classDefinition().packageString(),
         clazz.samples());
     Assert.assertCodeEquals(clazz.apiShortName(), apiShortNameExpected);
-    Assert.assertCodeEquals(clazz.apiMajorVersion(), apiVersionExpected);
+    Assert.assertCodeEquals(clazz.packageVersion(), apiVersionExpected);
   }
 }

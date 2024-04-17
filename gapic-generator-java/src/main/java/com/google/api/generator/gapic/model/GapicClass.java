@@ -43,7 +43,7 @@ public abstract class GapicClass {
   public abstract String apiShortName();
 
   // Only used for generating the region tag for samples; therefore only used in select Composers.
-  public abstract String apiMajorVersion();
+  public abstract String packageVersion();
 
   /**
    * Create a GapicClass with minimal information. This is intended to be used for GapicClasses that
@@ -76,7 +76,7 @@ public abstract class GapicClass {
     return new AutoValue_GapicClass.Builder()
         .setSamples(Collections.emptyList())
         .setApiShortName("")
-        .setApiMajorVersion("");
+        .setPackageVersion("");
   }
 
   abstract Builder toBuilder();
@@ -89,8 +89,8 @@ public abstract class GapicClass {
     return toBuilder().setApiShortName(apiShortName).build();
   }
 
-  public final GapicClass withApiMajorVersion(String apiMajorVersion) {
-    return toBuilder().setApiMajorVersion(apiMajorVersion).build();
+  public final GapicClass withPackageVersion(String packageVersion) {
+    return toBuilder().setPackageVersion(packageVersion).build();
   }
 
   @AutoValue.Builder
@@ -103,7 +103,7 @@ public abstract class GapicClass {
 
     abstract Builder setApiShortName(String apiShortName);
 
-    abstract Builder setApiMajorVersion(String apiMajorVersion);
+    abstract Builder setPackageVersion(String packageVersion);
 
     abstract GapicClass build();
   }
