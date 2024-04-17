@@ -23,22 +23,45 @@ import com.google.api.generator.test.framework.GoldenFileWriter;
 import com.google.api.generator.test.protoloader.RestTestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collection;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class ServiceStubSettingsClassComposerTest {
+
+  @Parameterized.Parameters
+  public static Collection<Object[]> data() {
+    return Arrays.asList(
+        new Object[][] {
+            {
+                "ComplianceStubSettings.golden",
+                RestTestProtoLoader.instance().parseCompliance()
+            },
+            {
+                "HttpJsonEchoStubSettings.golden",
+                RestTestProtoLoader.instance().parseEcho()
+            }
+        });
+  }
+  @Parameterized.Parameter public String goldenFileName;
+
+  @Parameterized.Parameter(1)
+  public GapicContext context;
   @Test
   public void generateServiceClasses() {
-    GapicContext context = RestTestProtoLoader.instance().parseCompliance();
-    Service echoProtoService = context.services().get(0);
+    Service protoService = context.services().get(0);
     GapicClass clazz =
-        ServiceStubSettingsClassComposer.instance().generate(context, echoProtoService);
+        ServiceStubSettingsClassComposer.instance().generate(context, protoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     GoldenFileWriter.saveCodegenToFile(
-        this.getClass(), "ComplianceStubSettings.golden", visitor.write());
+        this.getClass(), goldenFileName, visitor.write());
     Path goldenFilePath =
-        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "ComplianceStubSettings.golden");
+        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), goldenFileName);
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }
