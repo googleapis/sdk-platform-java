@@ -79,7 +79,12 @@ echo "Fixing missing license headers..."
 python3 "${scripts_root}/owlbot/src/fix-license-headers.py"
 echo "...done"
 
-# ensure formatting on all .java files in the repository
+# Ensure formatting on all .java files in the repository.
+# Here we manually set the user.home system variable. Unfortunately, Maven
+# infers user.home involves the /etc/passwd file (confirmed empirically),
+# instead of the presumable $HOME env var, which may not work properly
+# when `docker run`ning with the -u flag because we may incur in users
+# not registered in the container's passwd file
 echo "Reformatting source..."
-mvn fmt:format -V --batch-mode --no-transfer-progress
+mvn fmt:format -Duser.home="${HOME}" -V --batch-mode --no-transfer-progress
 echo "...done"
