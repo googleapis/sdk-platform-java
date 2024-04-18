@@ -54,8 +54,8 @@ public class DepsDevClientTest {
     QueryResult queryResult = client.getQueryResult(log4jCore);
     assertThat(queryResult.getResults()).hasSize(1);
     Version version = queryResult.getResults().get(0).getVersion();
-    assertThat(version.getAdvisoryKeys()).isEqualTo(List.of(new AdvisoryKey("GHSA-8489-44mv-ggj8")));
-    assertThat(version.getLicenses()).isEqualTo(List.of("Apache-2.0"));
-    assertThat(version.getVersionKey()).isEqualTo(log4jCore);
+    assertThat(version.advisoryKeys()).isEqualTo(List.of(new AdvisoryKey("GHSA-8489-44mv-ggj8")));
+    assertThat(version.licenses()).isEqualTo(List.of("Apache-2.0"));
+    assertThat(version.versionKey()).isEqualTo(log4jCore);
   }
 }

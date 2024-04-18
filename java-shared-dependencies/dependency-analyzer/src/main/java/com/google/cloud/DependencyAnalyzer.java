@@ -56,9 +56,9 @@ public class DependencyAnalyzer {
       List<Advisory> advisories = new ArrayList<>();
       for (Result res : packageInfo.getResults()) {
         Version version = res.getVersion();
-        licenses.addAll(version.getLicenses());
-        for (AdvisoryKey advisoryKey : version.getAdvisoryKeys()) {
-          advisories.add(depsDevClient.getAdvisory(advisoryKey.getId()));
+        licenses.addAll(version.licenses());
+        for (AdvisoryKey advisoryKey : version.advisoryKeys()) {
+          advisories.add(depsDevClient.getAdvisory(advisoryKey.id()));
         }
       }
 
