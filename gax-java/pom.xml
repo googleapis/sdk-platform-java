@@ -62,7 +62,7 @@
       <dependency>
         <groupId>org.threeten</groupId>
         <artifactId>threetenbp</artifactId>
-        <version>1.6.8</version>
+        <version>${threetenbp.version}</version>
       </dependency>
       <dependency>
         <groupId>com.google.code.findbugs</groupId>
