@@ -143,6 +143,30 @@ service Echo {
   }
 }
 
+// This service is test service level settings.
+service EchoAgain {
+  // This service is meant to only run locally on the port 7469 (keypad digits
+  // for "show").
+  option (google.api.default_host) = "localhost:7469";
+  option (google.api.api_version) = "fake-version";
+  option (google.api.oauth_scopes) =
+    "https://www.googleapis.com/auth/cloud-platform";
+
+  // This method simply echos the request. This method is showcases unary rpcs.
+  rpc Echo(EchoRequest) returns (EchoResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/echo:echo"
+      body: "*"
+    };
+    option (google.api.method_signature) = "content";
+    option (google.api.method_signature) = "error";
+    option (google.api.method_signature) = "content,severity";
+    option (google.api.method_signature) = "name";
+    option (google.api.method_signature) = "parent";
+    option (google.api.method_signature) = "";
+  }
+}
+
 // A severity enum used to test enum capabilities in GAPIC surfaces
 enum Severity {
   UNNECESSARY = 0;

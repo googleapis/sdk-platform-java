@@ -617,6 +617,8 @@ public class ParserTest {
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), new HashSet<>());
     com.google.api.generator.gapic.model.Service parsedEchoService = services.get(0);
     assertEquals("v1_20230601", parsedEchoService.apiVersion());
+    com.google.api.generator.gapic.model.Service parsedEchoAgainService = services.get(1);
+    assertEquals("fake-version", parsedEchoAgainService.apiVersion());
   }
 
   @Test
