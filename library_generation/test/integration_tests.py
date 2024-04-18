@@ -191,7 +191,8 @@ class IntegrationTest(unittest.TestCase):
     def __remove_generated_files(cls):
         # uncomment this line when the generated files don't owned by root.
         # shutil.rmtree(f"{output_dir}", ignore_errors=True)
-        shutil.rmtree(f"{golden_dir}")
+        if os.path.isdir(f"{golden_dir}"):
+            shutil.rmtree(f"{golden_dir}")
 
     @classmethod
     def __pull_repo_to(cls, dest: Path, repo: str, committish: str) -> str:
