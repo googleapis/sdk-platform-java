@@ -29,21 +29,19 @@ class GenerationConfig:
         self,
         gapic_generator_version: str,
         googleapis_commitish: str,
+        libraries_bom_version: str,
         template_excludes: List[str],
-        path_to_yaml: str,
         libraries: List[LibraryConfig],
         grpc_version: Optional[str] = None,
         protobuf_version: Optional[str] = None,
     ):
         self.gapic_generator_version = gapic_generator_version
         self.googleapis_commitish = googleapis_commitish
+        self.libraris_bom_version = libraries_bom_version
         self.template_excludes = template_excludes
-        self.path_to_yaml = path_to_yaml
         self.libraries = libraries
         self.grpc_version = grpc_version
         self.protobuf_version = protobuf_version
-        # monorepos have more than one library defined in the config yaml
-        self.is_monorepo = len(libraries) > 1
 
     def get_proto_path_to_library_name(self) -> dict[str, str]:
         """
@@ -56,6 +54,9 @@ class GenerationConfig:
             for gapic_config in library.gapic_configs:
                 paths[gapic_config.proto_path] = library.get_library_name()
         return paths
+
+    def is_monorepo(self) -> bool:
+        return len(self.libraries) > 1
 
 
 def from_yaml(path_to_yaml: str) -> GenerationConfig:
@@ -113,8 +114,8 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         grpc_version=__optional(config, "grpc_version", None),
         protobuf_version=__optional(config, "protobuf_version", None),
         googleapis_commitish=__required(config, "googleapis_commitish"),
+        libraries_bom_version=__required(config, "libraries_bom_version"),
         template_excludes=__required(config, "template_excludes"),
-        path_to_yaml=path_to_yaml,
         libraries=parsed_libraries,
     )
 

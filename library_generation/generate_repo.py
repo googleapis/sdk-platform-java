@@ -81,6 +81,7 @@ def generate(
         )
     config = from_yaml(generation_config_yaml)
     generate_from_yaml(
+        config_path=generation_config_yaml,
         config=config,
         repository_path=repository_path,
         target_library_names=target_library_names.split(",")
@@ -90,6 +91,7 @@ def generate(
 
 
 def generate_from_yaml(
+    config_path: str,
     config: GenerationConfig,
     repository_path: str,
     target_library_names: list[str] = None,
@@ -98,6 +100,7 @@ def generate_from_yaml(
     Based on the generation config, generates libraries via
     generate_composed_library.py
 
+    :param config_path: Path to generation configuration.
     :param config: a GenerationConfig object.
     :param repository_path: The repository path to which the generated files
     will be sent.
@@ -118,6 +121,7 @@ def generate_from_yaml(
         print(f"generating library {library.get_library_name()}")
 
         generate_composed_library(
+            config_path=config_path,
             config=config,
             library_path=library_path,
             library=library,
@@ -126,7 +130,7 @@ def generate_from_yaml(
         )
 
     # we skip monorepo_postprocessing if not in a monorepo
-    if not config.is_monorepo:
+    if not config.is_monorepo():
         return
 
     monorepo_postprocessing(

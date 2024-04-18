@@ -45,8 +45,8 @@ class GenerateRepoTest(unittest.TestCase):
         return GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
+            libraries_bom_version="",
             template_excludes=[],
-            path_to_yaml="",
             libraries=[],
         )
 
