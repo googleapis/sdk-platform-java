@@ -70,7 +70,7 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     return TimedAttemptSettings.newBuilder()
         .setGlobalSettings(globalSettings)
         .setRetryDelay(Duration.ZERO)
-        .setRpcTimeout(globalSettings.getInitialRpcTimeout())
+        .setRpcTimeout(getInitialTimeout(globalSettings))
         .setRandomizedRetryDelay(Duration.ZERO)
         .setAttemptCount(0)
         .setOverallAttemptCount(0)
@@ -93,12 +93,13 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     }
 
     RetrySettings retrySettings = context.getRetrySettings();
+
     return TimedAttemptSettings.newBuilder()
         // Use the given retrySettings rather than the settings this was created with.
         // Attempts created using the TimedAttemptSettings built here will use these
         // retrySettings, but a new call will not (unless overridden again).
         .setGlobalSettings(retrySettings)
-        .setRpcTimeout(retrySettings.getInitialRpcTimeout())
+        .setRpcTimeout(getInitialTimeout(retrySettings))
         .setRetryDelay(Duration.ZERO)
         .setRandomizedRetryDelay(Duration.ZERO)
         .setAttemptCount(0)
@@ -260,5 +261,19 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     return bound > 0 && globalSettings.isJittered() // Jitter check needed for testing purposes.
         ? ThreadLocalRandom.current().nextLong(bound)
         : bound;
+  }
+
+  /**
+   * Returns the timeout of the first attempt. The initial timeout will be min(initialRpcTimeout,
+   * totalTimeout) if totalTimeout is set.
+   */
+  private Duration getInitialTimeout(RetrySettings retrySettings) {
+    // If the totalTimeout is zero (not set), then retries are capped by the max attempt
+    // number. The first attempt will use the initialRpcTimeout value for RPC timeout.
+    long totalTimeout = retrySettings.getTotalTimeout().toMillis();
+    return totalTimeout == 0
+        ? retrySettings.getInitialRpcTimeout()
+        : Duration.ofMillis(
+            Math.min(retrySettings.getInitialRpcTimeout().toMillis(), totalTimeout));
   }
 }
