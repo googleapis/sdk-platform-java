@@ -98,6 +98,48 @@ public class ExponentialRetryAlgorithmTest {
   }
 
   @Test
+  public void testCreateFirstAttemptHasCorrectTimeout() {
+    long rpcTimeout = 100;
+    long totalTimeout = 10;
+    RetrySettings retrySettings =
+        RetrySettings.newBuilder()
+            .setMaxAttempts(6)
+            .setInitialRetryDelay(Duration.ofMillis(1L))
+            .setRetryDelayMultiplier(2.0)
+            .setMaxRetryDelay(Duration.ofMillis(8L))
+            .setInitialRpcTimeout(Duration.ofMillis(rpcTimeout))
+            .setRpcTimeoutMultiplier(1.0)
+            .setMaxRpcTimeout(Duration.ofMillis(rpcTimeout))
+            .setTotalTimeout(Duration.ofMillis(totalTimeout))
+            .build();
+
+    ExponentialRetryAlgorithm algorithm = new ExponentialRetryAlgorithm(retrySettings, clock);
+
+    TimedAttemptSettings attempt = algorithm.createFirstAttempt();
+    assertEquals(Duration.ofMillis(totalTimeout), attempt.getRpcTimeout());
+
+    long overrideRpcTimeout = 100;
+    long overrideTotalTimeout = 20;
+    RetrySettings retrySettingsOverride =
+        retrySettings
+            .toBuilder()
+            .setInitialRpcTimeout(Duration.ofMillis(overrideRpcTimeout))
+            .setMaxRpcTimeout(Duration.ofMillis(overrideRpcTimeout))
+            .setTotalTimeout(Duration.ofMillis(overrideTotalTimeout))
+            .build();
+    RetryingContext retryingContext =
+        FakeCallContext.createDefault().withRetrySettings(retrySettingsOverride);
+    attempt = algorithm.createFirstAttempt(retryingContext);
+    assertEquals(Duration.ofMillis(overrideTotalTimeout), attempt.getRpcTimeout());
+
+    RetrySettings noTotalTimeout = retrySettings.toBuilder().setTotalTimeout(Duration.ZERO).build();
+
+    algorithm = new ExponentialRetryAlgorithm(noTotalTimeout, clock);
+    attempt = algorithm.createFirstAttempt();
+    assertEquals(attempt.getRpcTimeout(), retrySettings.getInitialRpcTimeout());
+  }
+
+  @Test
   public void testCreateNextAttempt() {
     TimedAttemptSettings firstAttempt = algorithm.createFirstAttempt();
     TimedAttemptSettings secondAttempt = algorithm.createNextAttempt(firstAttempt);
