@@ -199,7 +199,6 @@ public class TimeoutTest {
             .setMaxAttempts(1)
             .setJittered(true)
             .setRpcTimeoutMultiplier(1.0)
-            .setRpcTimeoutMultiplier(1.0)
             .build();
     CallOptions callOptionsUsed =
         setupUnaryCallable(retrySettings, emptyRetryCodes, defaultCallContext);
@@ -314,7 +313,6 @@ public class TimeoutTest {
             .setMaxRetryDelay(Duration.ZERO)
             .setMaxAttempts(1)
             .setJittered(true)
-            .setRpcTimeoutMultiplier(1.0)
             .setRpcTimeoutMultiplier(1.0)
             .build();
     CallOptions callOptionsUsed =

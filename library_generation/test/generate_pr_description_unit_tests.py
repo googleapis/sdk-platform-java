@@ -11,9 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 import unittest
 
-from library_generation.generate_pr_description import get_commit_messages
+from library_generation.generate_pr_description import (
+    get_commit_messages,
+    generate_pr_descriptions,
+)
+from library_generation.model.generation_config import GenerationConfig
 
 
 class GeneratePrDescriptionTest(unittest.TestCase):
@@ -47,3 +52,23 @@ class GeneratePrDescriptionTest(unittest.TestCase):
             {},
             True,
         )
+
+    def test_generate_pr_description_with_same_googleapis_commits(self):
+        commit_sha = "36441693dddaf0ed73951ad3a15c215a332756aa"
+        cwd = os.getcwd()
+        generate_pr_descriptions(
+            config=GenerationConfig(
+                gapic_generator_version="",
+                googleapis_commitish=commit_sha,
+                libraries_bom_version="",
+                owlbot_cli_image="",
+                synthtool_commitish="",
+                template_excludes=[],
+                grpc_version="",
+                protobuf_version="",
+                libraries=[],
+            ),
+            baseline_commit=commit_sha,
+            description_path=cwd,
+        )
+        self.assertFalse(os.path.isfile(f"{cwd}/pr_description.txt"))

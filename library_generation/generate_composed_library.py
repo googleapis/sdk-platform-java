@@ -41,6 +41,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 
 
 def generate_composed_library(
+    config_path: str,
     config: GenerationConfig,
     library_path: str,
     library: LibraryConfig,
@@ -49,6 +50,8 @@ def generate_composed_library(
 ) -> None:
     """
     Generate libraries composed of more than one service or service version
+
+    :param config_path: Path to generation configuration.
     :param config: a GenerationConfig object representing a parsed configuration
     yaml
     :param library_path: the path to which the generated file goes
@@ -69,7 +72,7 @@ def generate_composed_library(
         build_file_folder = Path(f"{output_folder}/{gapic.proto_path}").resolve()
         print(f"build_file_folder: {build_file_folder}")
         gapic_inputs = parse_build_file(build_file_folder, gapic.proto_path)
-        # generate prerequisite files (.repo-metadata.json, .OwlBot.yaml,
+        # generate prerequisite files (.repo-metadata.json, .OwlBot-hermetic.yaml,
         # owlbot.py) here because transport is parsed from BUILD.bazel,
         # which lives in a versioned proto_path.
         util.generate_prerequisite_files(
@@ -111,8 +114,8 @@ def generate_composed_library(
             owlbot_cli_source_folder,
             config.owlbot_cli_image,
             config.synthtool_commitish,
-            str(config.is_monorepo).lower(),
-            config.path_to_yaml,
+            str(config.is_monorepo()).lower(),
+            config_path,
         ],
         "Library postprocessing",
     )

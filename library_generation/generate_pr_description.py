@@ -79,6 +79,9 @@ def generate_pr_descriptions(
     The pull request description will be generated into
     description_path/pr_description.txt.
 
+    If baseline_commit is the same as googleapis commit in the given generation
+    config, no pr_description.txt will be generated.
+
     :param config: a GenerationConfig object. The googleapis commit in this
     configuration is the latest commit, inclusively, from which the commit
     message is considered.
@@ -90,13 +93,16 @@ def generate_pr_descriptions(
     :param repo_url: the GitHub repository from which retrieves the commit
     history.
     """
+    if baseline_commit == config.googleapis_commitish:
+        return
+
     paths = config.get_proto_path_to_library_name()
     description = get_commit_messages(
         repo_url=repo_url,
         current_commit=config.googleapis_commitish,
         baseline_commit=baseline_commit,
         paths=paths,
-        is_monorepo=config.is_monorepo,
+        is_monorepo=config.is_monorepo(),
     )
 
     description_file = f"{description_path}/pr_description.txt"
@@ -126,6 +132,8 @@ def get_commit_messages(
     :param paths: a mapping from file paths to library_name.
     :param is_monorepo: whether to generate commit messages in a monorepo.
     :return: commit messages.
+    :raise ValueError: if current_commit is older than or equal to
+    baseline_commit.
     """
     tmp_dir = "/tmp/repo"
     shutil.rmtree(tmp_dir, ignore_errors=True)
