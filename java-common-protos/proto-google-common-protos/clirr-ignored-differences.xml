@@ -19,12 +19,12 @@
   <difference>
     <differenceType>7012</differenceType>
     <className>com/google/apps/card/*/*OrBuilder</className>
-    <method>boolean get*(*)</method>
+    <method>* get*(*)</method>
   </difference>
   <difference>
     <differenceType>7012</differenceType>
     <className>com/google/apps/card/*/*OrBuilder</className>
-    <method>boolean has*(*)</method>
+    <method>* has*(*)</method>
   </difference>
   <difference>
     <differenceType>7012</differenceType>
