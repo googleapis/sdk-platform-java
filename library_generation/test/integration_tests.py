@@ -175,7 +175,7 @@ class IntegrationTest(unittest.TestCase):
                     "The generated PR description does not match the expected golden file",
                 )
                 print("  PR description comparison succeed.")
-            self.__remove_generated_files()
+        self.__remove_generated_files()
 
     @classmethod
     def __build_image(cls, docker_file: str, cwd: str):
