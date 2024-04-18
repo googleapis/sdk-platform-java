@@ -60,10 +60,6 @@ class IntegrationTest(unittest.TestCase):
         cls.__remove_generated_files()
         os.makedirs(f"{golden_dir}", exist_ok=True)
 
-    @classmethod
-    def tearDown(cls) -> None:
-        cls.__remove_generated_files()
-
     def test_entry_point_running_in_container(self):
         config_files = self.__get_config_files(config_dir)
         for repo, config_file in config_files:
@@ -179,6 +175,7 @@ class IntegrationTest(unittest.TestCase):
                     "The generated PR description does not match the expected golden file",
                 )
                 print("  PR description comparison succeed.")
+            self.__remove_generated_files()
 
     @classmethod
     def __build_image(cls, docker_file: str, cwd: str):
