@@ -258,8 +258,8 @@ class IntegrationTest(unittest.TestCase):
                 "-w",
                 "/workspace/repo",
                 image_tag,
-                f"--baseline-generation-config=/workspace/config/{baseline_config}",
-                f"--current-generation-config=/workspace/config/{current_config}",
+                f"--baseline-generation-config-path=/workspace/config/{baseline_config}",
+                f"--current-generation-config-path=/workspace/config/{current_config}",
             ],
         )
 
