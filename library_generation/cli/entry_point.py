@@ -29,7 +29,7 @@ def main(ctx):
 
 @main.command()
 @click.option(
-    "--baseline-generation-config",
+    "--baseline-generation-config-path",
     required=False,
     default=None,
     type=str,
@@ -40,7 +40,7 @@ def main(ctx):
     """,
 )
 @click.option(
-    "--current-generation-config",
+    "--current-generation-config-path",
     required=False,
     default=None,
     type=str,
@@ -62,8 +62,8 @@ def main(ctx):
     """,
 )
 def generate(
-    baseline_generation_config: str,
-    current_generation_config: str,
+    baseline_generation_config_path: str,
+    current_generation_config_path: str,
     repository_path: str,
 ):
     """
@@ -87,18 +87,21 @@ def generate(
     The commit history, if generated, will be available in
     repository_path/pr_description.txt.
     """
-    default_generation_config = f"{os.getcwd()}/generation_config.yaml"
+    default_generation_config_path = f"{os.getcwd()}/generation_config.yaml"
 
-    if baseline_generation_config is None and current_generation_config is None:
-        if not os.path.isfile(default_generation_config):
+    if (
+        baseline_generation_config_path is None
+        and current_generation_config_path is None
+    ):
+        if not os.path.isfile(default_generation_config_path):
             raise FileNotFoundError(
-                f"{default_generation_config} does not exist. "
+                f"{default_generation_config_path} does not exist. "
                 "A valid generation config has to be passed in as "
                 "current_generation_config or exist in the current working "
                 "directory."
             )
-        current_generation_config = default_generation_config
-    elif current_generation_config is None:
+        current_generation_config_path = default_generation_config_path
+    elif current_generation_config_path is None:
         raise FileNotFoundError(
             "current_generation_config is not specified when "
             "baseline_generation_config is specified. "
@@ -106,26 +109,28 @@ def generate(
             "library generation."
         )
 
-    current_generation_config = os.path.abspath(current_generation_config)
+    current_generation_config_path = os.path.abspath(current_generation_config_path)
     repository_path = os.path.abspath(repository_path)
-    if not baseline_generation_config:
+    if not baseline_generation_config_path:
         # Execute full generation based on current_generation_config if
         # baseline_generation_config is not specified.
         # Do not generate pull request description.
         generate_from_yaml(
-            config=from_yaml(current_generation_config),
+            config_path=current_generation_config_path,
+            config=from_yaml(current_generation_config_path),
             repository_path=repository_path,
         )
         return
 
     # Compare two generation configs and only generate changed libraries.
     # Generate pull request description.
-    baseline_generation_config = os.path.abspath(baseline_generation_config)
+    baseline_generation_config_path = os.path.abspath(baseline_generation_config_path)
     config_change = compare_config(
-        baseline_config=from_yaml(baseline_generation_config),
-        current_config=from_yaml(current_generation_config),
+        baseline_config=from_yaml(baseline_generation_config_path),
+        current_config=from_yaml(current_generation_config_path),
     )
     generate_from_yaml(
+        config_path=current_generation_config_path,
         config=config_change.current_config,
         repository_path=repository_path,
         target_library_names=config_change.get_changed_libraries(),

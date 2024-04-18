@@ -1,8 +1,9 @@
-gapic_generator_version: 2.37.0
+gapic_generator_version: 2.38.1
 protobuf_version: 25.2
 googleapis_commitish: a17d4caf184b050d50cacf2b0d579ce72c31ce74
+libraries_bom_version: 26.37.0
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
-synthtool_commitish: 5e1fb2032fa44bc170677b38713023b4fec51a4e
+synthtool_commitish: 63cc541da2c45fcfca2136c43e638da1fbae174d
 template_excludes:
   - ".github/*"
   - ".kokoro/*"
