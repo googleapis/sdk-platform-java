@@ -77,9 +77,11 @@ def generate(
         config_path=generation_config_yaml,
         config=config,
         repository_path=repository_path,
-        target_library_names=target_library_names.split(",")
-        if target_library_names is not None
-        else target_library_names,
+        target_library_names=(
+            target_library_names.split(",")
+            if target_library_names is not None
+            else target_library_names
+        ),
     )
 
 
