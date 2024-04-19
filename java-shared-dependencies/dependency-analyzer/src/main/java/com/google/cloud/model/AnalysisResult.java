@@ -110,11 +110,18 @@ public class AnalysisResult {
   private String packageInfoReport() {
     StringBuilder builder = new StringBuilder();
     builder.append("Please copy and paste the package information below to your ticket.\n");
+    builder.append("\n\n");
     appendToReport(builder, packageInfos.get(0));
-    builder.append("## Dependencies:");
-    for (int i = 1; i < packageInfos.size(); i++) {
-      appendToReport(builder, packageInfos.get(i));
+
+    builder.append("## Dependencies:\n");
+    if (packageInfos.size() <= 1) {
+      builder.append("None");
+    } else {
+      for (int i = 1; i < packageInfos.size(); i++) {
+        appendToReport(builder, packageInfos.get(i));
+      }
     }
+    builder.append("\n\n");
 
     return builder.toString();
   }
@@ -129,6 +136,7 @@ public class AnalysisResult {
                 versionKey.pkgManagement().toString(),
                 versionKey.name(),
                 versionKey.version())));
+    builder.append("\n");
   }
 
   private String getQueryUrl(String system, String name, String version) {
