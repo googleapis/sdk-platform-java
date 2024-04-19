@@ -11,7 +11,7 @@ public class AnalysisResultTest {
   @Test
   public void testGenerateReportWithAdvisoriesThrowsException()
       throws IllegalArgumentException {
-    VersionKey root = new VersionKey("maven", "com.example:artifact", "1.2.3");
+    VersionKey root = VersionKey.from("maven", "com.example:artifact", "1.2.3");
     List<PackageInfo> results = List.of(
         new PackageInfo(
             root,
@@ -33,7 +33,7 @@ public class AnalysisResultTest {
   @Test
   public void testGenerateReportWithNonCompliantLicenseThrowsException()
       throws IllegalArgumentException {
-    VersionKey root = new VersionKey("maven", "com.example:artifact", "1.2.3");
+    VersionKey root = VersionKey.from("maven", "com.example:artifact", "1.2.3");
     List<PackageInfo> results = List.of(
         new PackageInfo(
             root,
@@ -48,7 +48,7 @@ public class AnalysisResultTest {
   @Test
   public void testGenerateReportWithoutRiskSucceeds()
       throws IllegalArgumentException {
-    VersionKey root = new VersionKey("maven", "com.example:artifact", "1.2.3");
+    VersionKey root = VersionKey.from("maven", "com.example:artifact", "1.2.3");
     List<PackageInfo> results = List.of(
         new PackageInfo(
             root,

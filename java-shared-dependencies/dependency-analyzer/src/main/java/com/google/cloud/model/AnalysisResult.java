@@ -47,9 +47,9 @@ public class AnalysisResult {
   private Map<VersionKey, List<Advisory>> getAdvisories(List<PackageInfo> result) {
     Map<VersionKey, List<Advisory>> advisories = new HashMap<>();
     result.forEach(packageInfo -> {
-      List<Advisory> adv = packageInfo.getAdvisories();
+      List<Advisory> adv = packageInfo.advisories();
       if (!adv.isEmpty()) {
-        advisories.put(packageInfo.getVersionKey(), packageInfo.getAdvisories());
+        advisories.put(packageInfo.versionKey(), packageInfo.advisories());
       }
     });
     return advisories;
@@ -60,7 +60,7 @@ public class AnalysisResult {
 
     result.forEach(packageInfo -> {
       List<String> nonCompliantLicenses = new ArrayList<>();
-      for (String licenseStr : packageInfo.getLicenses()) {
+      for (String licenseStr : packageInfo.licenses()) {
         License license = License.toLicense(licenseStr);
         // fiter out all compliant categories, the remaining ones are non-compliant.
         List<LicenseCategory> nonCompliantCategories = license
@@ -73,7 +73,7 @@ public class AnalysisResult {
         }
       }
       if (!nonCompliantLicenses.isEmpty()) {
-        licenses.put(packageInfo.getVersionKey(), nonCompliantLicenses);
+        licenses.put(packageInfo.versionKey(), nonCompliantLicenses);
       }
     });
     return licenses;
