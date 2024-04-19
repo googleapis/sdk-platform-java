@@ -15,7 +15,7 @@
 """
 Unit tests for python scripts
 """
-
+import shutil
 import unittest
 import os
 import io
@@ -313,6 +313,7 @@ class UtilitiesTest(unittest.TestCase):
         file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
         )
+        self.__remove_prerequisite_files(path=library_path, is_monorepo=False)
 
     def test_generate_prerequisite_files_monorepo_success(self):
         library_path = self.__setup_prerequisite_files(num_libraries=2)
@@ -328,6 +329,7 @@ class UtilitiesTest(unittest.TestCase):
         file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
         )
+        self.__remove_prerequisite_files(path=library_path)
 
     def test_prepare_repo_monorepo_success(self):
         gen_config = self.__get_a_gen_config(2)
@@ -373,6 +375,7 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual("output", Path(repo_config.output_folder).name)
         library_path = sorted([Path(key).name for key in repo_config.libraries])
         self.assertEqual(["misc"], library_path)
+        shutil.rmtree(repo_config.output_folder)
 
     def __setup_prerequisite_files(
         self, num_libraries: int, library_type: str = "GAPIC_AUTO"
@@ -447,6 +450,16 @@ class UtilitiesTest(unittest.TestCase):
             ],
             libraries=libraries,
         )
+
+    @staticmethod
+    def __remove_prerequisite_files(path: str, is_monorepo: bool = True) -> None:
+        os.remove(f"{path}/.repo-metadata.json")
+        os.remove(f"{path}/owlbot.py")
+        if is_monorepo:
+            os.remove(f"{path}/.OwlBot-hermetic.yaml")
+            return
+        if os.path.isdir(f"{path}/.github"):
+            shutil.rmtree(f"{path}/.github", ignore_errors=True)
 
 
 if __name__ == "__main__":

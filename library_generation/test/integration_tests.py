@@ -51,9 +51,16 @@ class IntegrationTest(unittest.TestCase):
     def setUpClass(cls) -> None:
         IntegrationTest.__build_image(docker_file=build_file, cwd=repo_root_dir)
 
-    def test_entry_point_running_in_container(self):
-        shutil.rmtree(f"{golden_dir}", ignore_errors=True)
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.__remove_docker_image()
+
+    @classmethod
+    def setUp(cls) -> None:
+        cls.__remove_generated_files()
         os.makedirs(f"{golden_dir}", exist_ok=True)
+
+    def test_entry_point_running_in_container(self):
         config_files = self.__get_config_files(config_dir)
         for repo, config_file in config_files:
             config = from_yaml(config_file)
@@ -168,6 +175,7 @@ class IntegrationTest(unittest.TestCase):
                     "The generated PR description does not match the expected golden file",
                 )
                 print("  PR description comparison succeed.")
+        self.__remove_generated_files()
 
     @classmethod
     def __build_image(cls, docker_file: str, cwd: str):
@@ -175,6 +183,13 @@ class IntegrationTest(unittest.TestCase):
             ["docker", "build", "--rm", "-f", docker_file, "-t", image_tag, "."],
             cwd=cwd,
         )
+
+    @classmethod
+    def __remove_generated_files(cls):
+        # uncomment this line when the generated files don't owned by root.
+        # shutil.rmtree(f"{output_dir}", ignore_errors=True)
+        if os.path.isdir(f"{golden_dir}"):
+            shutil.rmtree(f"{golden_dir}")
 
     @classmethod
     def __pull_repo_to(cls, dest: Path, repo: str, committish: str) -> str:
@@ -323,3 +338,7 @@ class IntegrationTest(unittest.TestCase):
             cls.__recursive_diff_files(
                 sub_dcmp, diff_files, left_only, right_only, dirname + sub_dirname + "/"
             )
+
+    @classmethod
+    def __remove_docker_image(cls):
+        subprocess.check_call(["docker", "image", "rmi", image_tag])
