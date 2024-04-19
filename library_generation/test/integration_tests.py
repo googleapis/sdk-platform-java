@@ -264,7 +264,7 @@ class IntegrationTest(unittest.TestCase):
                 "docker",
                 "run",
                 "-u",
-                f'{user_id}:{group_id}',
+                f"{user_id}:{group_id}",
                 "--rm",
                 "-v",
                 f"{repo_location}:/workspace/repo",
