@@ -10,14 +10,14 @@ public class VersionKeyTest {
   @Test
   public void testVersionKeyWithIncorrectNameThrowsException() {
     assertThrows("artifact is an incorrect package name in MAVEN package management system", IllegalArgumentException.class,
-        () -> new VersionKey("maven", "artifact", "1.2.3"));
+        () -> VersionKey.from("maven", "artifact", "1.2.3"));
   }
 
   @Test
   public void testVersionKeyWithCorrectNameSucceeds() throws IllegalArgumentException {
-    VersionKey versionKey = new VersionKey("maven", "group:artifact", "1.2.3");
-    assertEquals(PkgManagement.MAVEN, versionKey.getSystem());
-    assertEquals("group:artifact", versionKey.getName());
-    assertEquals("1.2.3", versionKey.getVersion());
+    VersionKey versionKey = VersionKey.from("maven", "group:artifact", "1.2.3");
+    assertEquals(PkgManagement.MAVEN, versionKey.pkgManagement());
+    assertEquals("group:artifact", versionKey.name());
+    assertEquals("1.2.3", versionKey.version());
   }
 }
