@@ -8,20 +8,24 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public record AnalysisResult(
-    VersionKey root, Map<VersionKey,
-    List<Advisory>> advisories,
-    Map<VersionKey, List<String>> nonCompliantLicenses) {
+public class AnalysisResult {
 
-  private static final ImmutableSet<LicenseCategory> compliantCategories = ImmutableSet.of(
+  private final VersionKey root;
+  private final Map<VersionKey, List<Advisory>> advisories;
+  private final Map<VersionKey, List<String>> nonCompliantLicenses;
+  private final ImmutableSet<LicenseCategory> compliantCategories = ImmutableSet.of(
       LicenseCategory.NOTICE);
 
   private final static Logger LOGGER = Logger.getLogger(AnalysisResult.class.getName());
 
-  public static AnalysisResult from(VersionKey root, List<PackageInfo> result) {
-    Map<VersionKey, List<Advisory>> advisories = getAdvisories(result);
-    Map<VersionKey, List<String>> nonCompliantLicenses = getNonCompliantLicenses(result);
-    return new AnalysisResult(root, advisories, nonCompliantLicenses);
+  private AnalysisResult(VersionKey root, List<PackageInfo> result) {
+    this.root = root;
+    advisories = getAdvisories(result);
+    nonCompliantLicenses = getNonCompliantLicenses(result);
+  }
+
+  public static AnalysisResult of(VersionKey root, List<PackageInfo> result) {
+    return new AnalysisResult(root, result);
   }
 
   public ReportResult generateReport() {
@@ -43,7 +47,7 @@ public record AnalysisResult(
     return ReportResult.PASS;
   }
 
-  private static Map<VersionKey, List<Advisory>> getAdvisories(List<PackageInfo> result) {
+  private Map<VersionKey, List<Advisory>> getAdvisories(List<PackageInfo> result) {
     Map<VersionKey, List<Advisory>> advisories = new HashMap<>();
     result.forEach(packageInfo -> {
       List<Advisory> adv = packageInfo.advisories();
@@ -54,7 +58,7 @@ public record AnalysisResult(
     return advisories;
   }
 
-  private static Map<VersionKey, List<String>> getNonCompliantLicenses(List<PackageInfo> result) {
+  private Map<VersionKey, List<String>> getNonCompliantLicenses(List<PackageInfo> result) {
     Map<VersionKey, List<String>> licenses = new HashMap<>();
 
     result.forEach(packageInfo -> {
