@@ -77,8 +77,5 @@ RUN git config --system user.name "Cloud Java Bot"
 RUN chmod -R a+rw /home
 RUN chmod -R a+rx /home/.nvm
 
-COPY .cloudbuild/library_generation/entrypoint.sh /entrypoint.sh
-RUN chmod o+rx /entrypoint.sh
-
 WORKDIR /workspace
-ENTRYPOINT [ "bash", "/entrypoint.sh" ]
+ENTRYPOINT [ "python", "/src/cli/entry_point.py", "generate" ]
