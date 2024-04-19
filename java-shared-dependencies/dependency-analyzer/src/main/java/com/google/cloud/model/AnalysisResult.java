@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class AnalysisResult {
 
@@ -19,10 +18,14 @@ public class AnalysisResult {
 
   private final static Logger LOGGER = Logger.getLogger(AnalysisResult.class.getName());
 
-  public AnalysisResult(VersionKey root, List<PackageInfo> result) {
+  private AnalysisResult(VersionKey root, List<PackageInfo> result) {
     this.root = root;
     advisories = getAdvisories(result);
     nonCompliantLicenses = getNonCompliantLicenses(result);
+  }
+
+  public static AnalysisResult of(VersionKey root, List<PackageInfo> result) {
+    return new AnalysisResult(root, result);
   }
 
   public ReportResult generateReport() {
@@ -47,9 +50,9 @@ public class AnalysisResult {
   private Map<VersionKey, List<Advisory>> getAdvisories(List<PackageInfo> result) {
     Map<VersionKey, List<Advisory>> advisories = new HashMap<>();
     result.forEach(packageInfo -> {
-      List<Advisory> adv = packageInfo.getAdvisories();
+      List<Advisory> adv = packageInfo.advisories();
       if (!adv.isEmpty()) {
-        advisories.put(packageInfo.getVersionKey(), packageInfo.getAdvisories());
+        advisories.put(packageInfo.versionKey(), packageInfo.advisories());
       }
     });
     return advisories;
@@ -60,20 +63,20 @@ public class AnalysisResult {
 
     result.forEach(packageInfo -> {
       List<String> nonCompliantLicenses = new ArrayList<>();
-      for (String licenseStr : packageInfo.getLicenses()) {
+      for (String licenseStr : packageInfo.licenses()) {
         License license = License.toLicense(licenseStr);
         // fiter out all compliant categories, the remaining ones are non-compliant.
         List<LicenseCategory> nonCompliantCategories = license
             .getCategories()
             .stream()
             .filter(category -> !compliantCategories.contains(category))
-            .collect(Collectors.toList());
+            .toList();
         if (!nonCompliantCategories.isEmpty()) {
           nonCompliantLicenses.add(licenseStr);
         }
       }
       if (!nonCompliantLicenses.isEmpty()) {
-        licenses.put(packageInfo.getVersionKey(), nonCompliantLicenses);
+        licenses.put(packageInfo.versionKey(), nonCompliantLicenses);
       }
     });
     return licenses;

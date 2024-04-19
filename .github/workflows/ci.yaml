@@ -362,7 +362,7 @@ jobs:
         ref: ${{ github.event.pull_request.head.sha }}
     - uses: actions/setup-java@v4
       with:
-        java-version: 11
+        java-version: 17
         distribution: temurin
     - run: mvn -version
     - name: Unit Tests

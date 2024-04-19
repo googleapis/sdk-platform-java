@@ -32,7 +32,7 @@ public class DependencyAnalyzer {
 
   public AnalysisResult analyze(String system, String packageName, String packageVersion)
       throws URISyntaxException, IOException, InterruptedException, IllegalArgumentException {
-    VersionKey root = new VersionKey(system, packageName, packageVersion);
+    VersionKey root = VersionKey.from(system, packageName, packageVersion);
     Set<VersionKey> seenPackage = new HashSet<>();
     seenPackage.add(root);
     Queue<VersionKey> queue = new ArrayDeque<>();
@@ -54,18 +54,18 @@ public class DependencyAnalyzer {
       QueryResult packageInfo = depsDevClient.getQueryResult(versionKey);
       List<String> licenses = new ArrayList<>();
       List<Advisory> advisories = new ArrayList<>();
-      for (Result res : packageInfo.getResults()) {
-        Version version = res.getVersion();
-        licenses.addAll(version.getLicenses());
-        for (AdvisoryKey advisoryKey : version.getAdvisoryKeys()) {
-          advisories.add(depsDevClient.getAdvisory(advisoryKey.getId()));
+      for (Result res : packageInfo.results()) {
+        Version version = res.version();
+        licenses.addAll(version.licenses());
+        for (AdvisoryKey advisoryKey : version.advisoryKeys()) {
+          advisories.add(depsDevClient.getAdvisory(advisoryKey.id()));
         }
       }
 
       result.add(new PackageInfo(versionKey, licenses, advisories));
     }
 
-    return new AnalysisResult(root, result);
+    return AnalysisResult.of(root, result);
   }
 
   /**
