@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 public enum License {
   APACHE_2_0("Apache-2.0", Set.of(NOTICE)),
   BCL("BCL", Set.of(RESTRICTED, NOTICE)),
+  BSD_3_CLAUSE("BSD-3-Clause", Set.of(NOTICE)),
   GL2PS("GL2PS", Set.of(RESTRICTED, NOTICE)),
   MIT("MIT", Set.of(NOTICE)),
   NOT_RECOGNIZED("Not-Recognized", Set.of());
