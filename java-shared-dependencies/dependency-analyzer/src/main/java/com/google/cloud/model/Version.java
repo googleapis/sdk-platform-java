@@ -19,12 +19,10 @@ public record Version(
     List<String> licenses,
     List<AdvisoryKey> advisoryKeys) {
 
-  @Override
   public List<AdvisoryKey> advisoryKeys() {
     return ImmutableList.copyOf(advisoryKeys);
   }
 
-  @Override
   public List<String> licenses() {
     return ImmutableList.copyOf(licenses);
   }
