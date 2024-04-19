@@ -27,9 +27,11 @@ public class DepsDevClient {
 
   private final HttpClient client;
   public final Gson gson;
-  private final static String advisoryUrlBase = "https://api.deps.dev/v3/advisories/%s";
-  private final static String queryUrlBase = "https://api.deps.dev/v3/query?versionKey.system=%s&versionKey.name=%s&versionKey.version=%s";
-  private final static String dependencyUrlBase = "https://api.deps.dev/v3/systems/%s/packages/%s/versions/%s:dependencies";
+  private final static String ADVISORY_URL_BASE = "https://api.deps.dev/v3/advisories/%s";
+
+  private final static String DEPENDENCY_URLBASE = "https://api.deps.dev/v3/systems/%s/packages/%s/versions/%s:dependencies";
+
+  public final static String QUERY_URL_BASE = "https://api.deps.dev/v3/query?versionKey.system=%s&versionKey.name=%s&versionKey.version=%s";
 
   public DepsDevClient(HttpClient client) {
     this.client = client;
@@ -76,15 +78,15 @@ public class DepsDevClient {
   }
 
   private String getAdvisoryUrl(String advisoryId) {
-    return String.format(advisoryUrlBase, advisoryId);
+    return String.format(ADVISORY_URL_BASE, advisoryId);
   }
 
   private String getQueryUrl(String system, String name, String version) {
-    return String.format(queryUrlBase, system, name, version);
+    return String.format(QUERY_URL_BASE, system, name, version);
   }
 
   private String getDependencyUrl(String system, String name, String version) {
-    return String.format(dependencyUrlBase, system, name, version);
+    return String.format(DEPENDENCY_URLBASE, system, name, version);
   }
 
   private HttpResponse<String> getResponse(String endpoint)

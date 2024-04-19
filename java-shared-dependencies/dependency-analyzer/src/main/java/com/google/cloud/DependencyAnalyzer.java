@@ -86,10 +86,12 @@ public class DependencyAnalyzer {
    */
   public static void main(String[] args) throws IllegalArgumentException {
     checkArgument(args.length == 3,
-        "The length of the inputs should be 3.\n" +
-            "The 1st input should be the package management system.\n" +
-            "The 2nd input should be the package name.\n" +
-            "The 3rd input should be the package version.\n"
+        """
+            The length of the inputs should be 3.
+            The 1st input should be the package management system.
+            The 2nd input should be the package name.
+            The 3rd input should be the package version.
+            """
     );
 
     String system = args[0];

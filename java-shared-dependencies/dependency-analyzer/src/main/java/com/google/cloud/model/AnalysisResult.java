@@ -1,27 +1,29 @@
 package com.google.cloud.model;
 
-import com.google.common.collect.ImmutableSet;
+import static com.google.cloud.external.DepsDevClient.QUERY_URL_BASE;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AnalysisResult {
 
   private final VersionKey root;
+  private final List<PackageInfo> packageInfos;
   private final Map<VersionKey, List<Advisory>> advisories;
   private final Map<VersionKey, List<String>> nonCompliantLicenses;
-  private final ImmutableSet<LicenseCategory> compliantCategories = ImmutableSet.of(
-      LicenseCategory.NOTICE);
 
   private final static Logger LOGGER = Logger.getLogger(AnalysisResult.class.getName());
 
   private AnalysisResult(VersionKey root, List<PackageInfo> result) {
     this.root = root;
-    advisories = getAdvisories(result);
-    nonCompliantLicenses = getNonCompliantLicenses(result);
+    this.packageInfos = result;
+    this.advisories = getAdvisories(result);
+    this.nonCompliantLicenses = getNonCompliantLicenses(result);
   }
 
   public static AnalysisResult of(VersionKey root, List<PackageInfo> result) {
@@ -44,6 +46,9 @@ public class AnalysisResult {
 
     LOGGER.log(Level.INFO,
         String.format("%s have no known vulnerabilities and non compliant licenses", root));
+    LOGGER.log(Level.INFO, "Generate package information report...");
+    System.out.println(packageInfoReport());
+
     return ReportResult.PASS;
   }
 
@@ -60,6 +65,7 @@ public class AnalysisResult {
 
   private Map<VersionKey, List<String>> getNonCompliantLicenses(List<PackageInfo> result) {
     Map<VersionKey, List<String>> licenses = new HashMap<>();
+    Set<LicenseCategory> compliantCategories = LicenseCategory.compliantCategories();
 
     result.forEach(packageInfo -> {
       List<String> nonCompliantLicenses = new ArrayList<>();
@@ -92,11 +98,40 @@ public class AnalysisResult {
   }
 
   private String beginSeparator(VersionKey versionKey, VersionKey root) {
-    return String.format("====================== %s, dependency of %s ======================",
-        versionKey.toString(), root.toString());
+    String relation = versionKey.equals(root) ? "self" : "dependency";
+    return String.format("====================== %s, %s of %s ======================",
+        versionKey, relation, root);
   }
 
   private String endSeparator() {
     return "===========================================================";
+  }
+
+  private String packageInfoReport() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("Please copy and paste the package information below to your ticket.\n");
+    appendToReport(builder, packageInfos.get(0));
+    builder.append("## Dependencies:");
+    for (int i = 1; i < packageInfos.size(); i++) {
+      appendToReport(builder, packageInfos.get(i));
+    }
+
+    return builder.toString();
+  }
+
+  private void appendToReport(StringBuilder builder, PackageInfo packageInfo) {
+    VersionKey versionKey = packageInfo.versionKey();
+    builder.append(String.format("### %s\n", versionKey));
+    builder.append(String.format("Licenses: %s\n", packageInfo.licenses()));
+    builder.append(
+        String.format("Vulnerabilities: None. Checked in %s\n",
+            getQueryUrl(
+                versionKey.pkgManagement().toString(),
+                versionKey.name(),
+                versionKey.version())));
+  }
+
+  private String getQueryUrl(String system, String name, String version) {
+    return String.format(QUERY_URL_BASE, system, name, version);
   }
 }

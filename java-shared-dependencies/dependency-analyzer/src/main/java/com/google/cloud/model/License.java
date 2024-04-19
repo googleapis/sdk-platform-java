@@ -14,17 +14,20 @@ import java.util.logging.Logger;
  * For more information, please refer to go/thirdpartylicenses.
  */
 public enum License {
-  APACHE_2_0(Set.of(NOTICE)),
-  BCL(Set.of(RESTRICTED, NOTICE)),
-  GL2PS(Set.of(RESTRICTED, NOTICE)),
-  MIT(Set.of(NOTICE)),
-  NOT_RECOGNIZED(Set.of());
+  APACHE_2_0("Apache-2.0", Set.of(NOTICE)),
+  BCL("BCL", Set.of(RESTRICTED, NOTICE)),
+  GL2PS("GL2PS", Set.of(RESTRICTED, NOTICE)),
+  MIT("MIT", Set.of(NOTICE)),
+  NOT_RECOGNIZED("Not-Recognized", Set.of());
 
   private final static Logger LOGGER = Logger.getLogger(License.class.getName());
 
+  private final String licenseStr;
+
   private final Set<LicenseCategory> categories;
 
-  License(Set<LicenseCategory> categories) {
+  License(String licenseStr, Set<LicenseCategory> categories) {
+    this.licenseStr = licenseStr;
     this.categories = categories;
   }
 
@@ -43,5 +46,16 @@ public enum License {
 
   public Set<LicenseCategory> getCategories() {
     return ImmutableSet.copyOf(categories);
+  }
+
+  @Override
+  public String toString() {
+    Set<LicenseCategory> compliantCategories = LicenseCategory.compliantCategories();
+    for (LicenseCategory category : this.categories) {
+      if (!compliantCategories.contains(category)) {
+        return this.licenseStr;
+      }
+    }
+    return String.format("%s (Google-compliant)", this.licenseStr);
   }
 }
