@@ -26,7 +26,7 @@ public class AnalysisResultTest {
             ))
         )
     );
-    ReportResult result = new AnalysisResult(root, results).generateReport();
+    ReportResult result = AnalysisResult.from(root, results).generateReport();
     assertEquals(ReportResult.FAIL, result);
   }
 
@@ -41,7 +41,7 @@ public class AnalysisResultTest {
             List.of()
         )
     );
-    ReportResult result = new AnalysisResult(root, results).generateReport();
+    ReportResult result = AnalysisResult.from(root, results).generateReport();
     assertEquals(ReportResult.FAIL, result);
   }
 
@@ -56,7 +56,7 @@ public class AnalysisResultTest {
             List.of()
         )
     );
-    ReportResult result = new AnalysisResult(root, results).generateReport();
+    ReportResult result = AnalysisResult.from(root, results).generateReport();
     assertEquals(ReportResult.PASS, result);
   }
 }

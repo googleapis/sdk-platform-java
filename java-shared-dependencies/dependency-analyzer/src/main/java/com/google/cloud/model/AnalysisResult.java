@@ -7,22 +7,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
-public class AnalysisResult {
+public record AnalysisResult(
+    VersionKey root, Map<VersionKey,
+    List<Advisory>> advisories,
+    Map<VersionKey, List<String>> nonCompliantLicenses) {
 
-  private final VersionKey root;
-  private final Map<VersionKey, List<Advisory>> advisories;
-  private final Map<VersionKey, List<String>> nonCompliantLicenses;
-  private final ImmutableSet<LicenseCategory> compliantCategories = ImmutableSet.of(
+  private static final ImmutableSet<LicenseCategory> compliantCategories = ImmutableSet.of(
       LicenseCategory.NOTICE);
 
   private final static Logger LOGGER = Logger.getLogger(AnalysisResult.class.getName());
 
-  public AnalysisResult(VersionKey root, List<PackageInfo> result) {
-    this.root = root;
-    advisories = getAdvisories(result);
-    nonCompliantLicenses = getNonCompliantLicenses(result);
+  public static AnalysisResult from(VersionKey root, List<PackageInfo> result) {
+    Map<VersionKey, List<Advisory>> advisories = getAdvisories(result);
+    Map<VersionKey, List<String>> nonCompliantLicenses = getNonCompliantLicenses(result);
+    return new AnalysisResult(root, advisories, nonCompliantLicenses);
   }
 
   public ReportResult generateReport() {
@@ -44,7 +43,7 @@ public class AnalysisResult {
     return ReportResult.PASS;
   }
 
-  private Map<VersionKey, List<Advisory>> getAdvisories(List<PackageInfo> result) {
+  private static Map<VersionKey, List<Advisory>> getAdvisories(List<PackageInfo> result) {
     Map<VersionKey, List<Advisory>> advisories = new HashMap<>();
     result.forEach(packageInfo -> {
       List<Advisory> adv = packageInfo.advisories();
@@ -55,7 +54,7 @@ public class AnalysisResult {
     return advisories;
   }
 
-  private Map<VersionKey, List<String>> getNonCompliantLicenses(List<PackageInfo> result) {
+  private static Map<VersionKey, List<String>> getNonCompliantLicenses(List<PackageInfo> result) {
     Map<VersionKey, List<String>> licenses = new HashMap<>();
 
     result.forEach(packageInfo -> {
@@ -67,7 +66,7 @@ public class AnalysisResult {
             .getCategories()
             .stream()
             .filter(category -> !compliantCategories.contains(category))
-            .collect(Collectors.toList());
+            .toList();
         if (!nonCompliantCategories.isEmpty()) {
           nonCompliantLicenses.add(licenseStr);
         }

@@ -65,7 +65,7 @@ public class DependencyAnalyzer {
       result.add(new PackageInfo(versionKey, licenses, advisories));
     }
 
-    return new AnalysisResult(root, result);
+    return AnalysisResult.from(root, result);
   }
 
   /**
