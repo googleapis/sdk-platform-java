@@ -58,4 +58,18 @@ public class DepsDevClientTest {
     assertThat(version.licenses()).isEqualTo(List.of("Apache-2.0"));
     assertThat(version.versionKey()).isEqualTo(log4jCore);
   }
+
+  @Test
+  public void testGetQueryResult()
+      throws URISyntaxException, IOException, InterruptedException, IllegalArgumentException {
+    String responseBody = "{\"results\":[{\"version\":{\"versionKey\":{\"system\":\"MAVEN\",\"name\":\"com.google.api:gapic-generator-java\",\"version\":\"2.39.0\"},\"isDefault\":true,\"licenses\":[\"Apache-2.0\"],\"advisoryKeys\":[],\"links\":[{\"label\":\"SOURCE_REPO\",\"url\":\"https://github.com/googleapis/sdk-platform-java\"},{\"label\":\"ISSUE_TRACKER\",\"url\":\"https://github.com/googleapis/sdk-platform-java/issues\"},{\"label\":\"HOMEPAGE\",\"url\":\"https://github.com/googleapis/sdk-platform-java\"}],\"slsaProvenances\":[],\"registries\":[\"https://repo.maven.apache.org/maven2/\"],\"relatedProjects\":[{\"projectKey\":{\"id\":\"github.com/googleapis/sdk-platform-java\"},\"relationProvenance\":\"UNVERIFIED_METADATA\",\"relationType\":\"SOURCE_REPO\"},{\"projectKey\":{\"id\":\"github.com/googleapis/sdk-platform-java\"},\"relationProvenance\":\"UNVERIFIED_METADATA\",\"relationType\":\"ISSUE_TRACKER\"}]}}]}";
+    when(response.body()).thenReturn(responseBody);
+    VersionKey generator = VersionKey.from("maven", "com.google.api:gapic-generator-java", "2.39.0");
+    QueryResult queryResult = client.getQueryResult(generator);
+    assertThat(queryResult.results()).hasSize(1);
+    Version version = queryResult.results().get(0).version();
+    assertThat(version.advisoryKeys()).isEqualTo(List.of());
+    assertThat(version.licenses()).isEqualTo(List.of("Apache-2.0"));
+    assertThat(version.versionKey()).isEqualTo(generator);
+  }
 }

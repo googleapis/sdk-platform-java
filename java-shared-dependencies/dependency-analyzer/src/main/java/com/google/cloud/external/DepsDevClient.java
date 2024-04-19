@@ -16,10 +16,12 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,11 +84,15 @@ public class DepsDevClient {
   }
 
   private String getQueryUrl(String system, String name, String version) {
-    return String.format(QUERY_URL_BASE, system, name, version);
+    return String.format(QUERY_URL_BASE, system, name, encode(version));
   }
 
   private String getDependencyUrl(String system, String name, String version) {
-    return String.format(DEPENDENCY_URLBASE, system, name, version);
+    return String.format(DEPENDENCY_URLBASE, system, name, encode(version));
+  }
+
+  private String encode(String str) {
+    return URLEncoder.encode(str, StandardCharsets.UTF_8);
   }
 
   private HttpResponse<String> getResponse(String endpoint)
