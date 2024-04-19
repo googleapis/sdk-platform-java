@@ -98,7 +98,6 @@ They are shared by library level parameters.
 | grpc_version            |    No    | inferred from the generator if not specified |
 | googleapis-commitish    |   Yes    |                                              |
 | libraries_bom_version   |   Yes    |                                              |
-| owlbot-cli-image        |   Yes    |                                              |
 | template_excludes       |   Yes    |                                              |
 
 ### Library level parameters
