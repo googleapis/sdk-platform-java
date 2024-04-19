@@ -43,3 +43,4 @@ class MonorepoPostprocessorTest(unittest.TestCase):
             expect=f"{repository_path}/gapic-libraries-bom/pom-golden.xml",
             actual=f"{repository_path}/gapic-libraries-bom/pom.xml",
         )
+        cleanup(files)
