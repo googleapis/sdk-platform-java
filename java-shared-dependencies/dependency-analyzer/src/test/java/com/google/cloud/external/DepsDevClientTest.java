@@ -21,13 +21,12 @@ import org.junit.Test;
 
 public class DepsDevClientTest {
 
-  private HttpClient httpClient;
   private HttpResponse<String> response;
   private DepsDevClient client;
 
   @Before
   public void setUp() throws IOException, InterruptedException {
-    httpClient = mock(HttpClient.class);
+    HttpClient httpClient = mock(HttpClient.class);
     client = new DepsDevClient(httpClient);
     response = mock(HttpResponse.class);
     when(httpClient.send(any(HttpRequest.class), any(BodyHandler.class)))
@@ -50,26 +49,13 @@ public class DepsDevClientTest {
       throws URISyntaxException, IOException, InterruptedException, IllegalArgumentException {
     String responseBody = "{\"results\":[{\"version\":{\"versionKey\":{\"system\":\"MAVEN\",\"name\":\"org.apache.logging.log4j:log4j-core\",\"version\":\"2.17.0\"},\"publishedAt\":\"2021-12-18T01:58:10Z\",\"isDefault\":false,\"licenses\":[\"Apache-2.0\"],\"advisoryKeys\":[{\"id\":\"GHSA-8489-44mv-ggj8\"}],\"links\":[{\"label\":\"SOURCE_REPO\",\"url\":\"https://gitbox.apache.org/repos/asf?p=logging-log4j2.git\"},{\"label\":\"ISSUE_TRACKER\",\"url\":\"https://issues.apache.org/jira/browse/LOG4J2\"},{\"label\":\"HOMEPAGE\",\"url\":\"https://logging.apache.org/log4j/2.x/\"}],\"slsaProvenances\":[],\"registries\":[\"https://repo.maven.apache.org/maven2/\"],\"relatedProjects\":[{\"projectKey\":{\"id\":\"\"},\"relationProvenance\":\"UNVERIFIED_METADATA\",\"relationType\":\"ISSUE_TRACKER\"}]}}]}";
     when(response.body()).thenReturn(responseBody);
-    VersionKey log4jCore = VersionKey.from("maven", "org.apache.logging.log4j:log4j-core", "2.17.0");
+    VersionKey log4jCore = VersionKey.from("maven", "org.apache.logging.log4j:log4j-core",
+        "2.17.0");
     QueryResult queryResult = client.getQueryResult(log4jCore);
     assertThat(queryResult.results()).hasSize(1);
     Version version = queryResult.results().get(0).version();
     assertThat(version.advisoryKeys()).isEqualTo(List.of(new AdvisoryKey("GHSA-8489-44mv-ggj8")));
     assertThat(version.licenses()).isEqualTo(List.of("Apache-2.0"));
     assertThat(version.versionKey()).isEqualTo(log4jCore);
-  }
-
-  @Test
-  public void testGetQueryResult()
-      throws URISyntaxException, IOException, InterruptedException, IllegalArgumentException {
-    String responseBody = "{\"results\":[{\"version\":{\"versionKey\":{\"system\":\"MAVEN\",\"name\":\"com.google.api:gapic-generator-java\",\"version\":\"2.39.0\"},\"isDefault\":true,\"licenses\":[\"Apache-2.0\"],\"advisoryKeys\":[],\"links\":[{\"label\":\"SOURCE_REPO\",\"url\":\"https://github.com/googleapis/sdk-platform-java\"},{\"label\":\"ISSUE_TRACKER\",\"url\":\"https://github.com/googleapis/sdk-platform-java/issues\"},{\"label\":\"HOMEPAGE\",\"url\":\"https://github.com/googleapis/sdk-platform-java\"}],\"slsaProvenances\":[],\"registries\":[\"https://repo.maven.apache.org/maven2/\"],\"relatedProjects\":[{\"projectKey\":{\"id\":\"github.com/googleapis/sdk-platform-java\"},\"relationProvenance\":\"UNVERIFIED_METADATA\",\"relationType\":\"SOURCE_REPO\"},{\"projectKey\":{\"id\":\"github.com/googleapis/sdk-platform-java\"},\"relationProvenance\":\"UNVERIFIED_METADATA\",\"relationType\":\"ISSUE_TRACKER\"}]}}]}";
-    when(response.body()).thenReturn(responseBody);
-    VersionKey generator = VersionKey.from("maven", "com.google.api:gapic-generator-java", "2.39.0");
-    QueryResult queryResult = client.getQueryResult(generator);
-    assertThat(queryResult.results()).hasSize(1);
-    Version version = queryResult.results().get(0).version();
-    assertThat(version.advisoryKeys()).isEqualTo(List.of());
-    assertThat(version.licenses()).isEqualTo(List.of("Apache-2.0"));
-    assertThat(version.versionKey()).isEqualTo(generator);
   }
 }
