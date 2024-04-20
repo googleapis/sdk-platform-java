@@ -49,8 +49,8 @@ public class DepsDevClientTest {
       throws URISyntaxException, IOException, InterruptedException, IllegalArgumentException {
     String responseBody = "{\"results\":[{\"version\":{\"versionKey\":{\"system\":\"MAVEN\",\"name\":\"org.apache.logging.log4j:log4j-core\",\"version\":\"2.17.0\"},\"publishedAt\":\"2021-12-18T01:58:10Z\",\"isDefault\":false,\"licenses\":[\"Apache-2.0\"],\"advisoryKeys\":[{\"id\":\"GHSA-8489-44mv-ggj8\"}],\"links\":[{\"label\":\"SOURCE_REPO\",\"url\":\"https://gitbox.apache.org/repos/asf?p=logging-log4j2.git\"},{\"label\":\"ISSUE_TRACKER\",\"url\":\"https://issues.apache.org/jira/browse/LOG4J2\"},{\"label\":\"HOMEPAGE\",\"url\":\"https://logging.apache.org/log4j/2.x/\"}],\"slsaProvenances\":[],\"registries\":[\"https://repo.maven.apache.org/maven2/\"],\"relatedProjects\":[{\"projectKey\":{\"id\":\"\"},\"relationProvenance\":\"UNVERIFIED_METADATA\",\"relationType\":\"ISSUE_TRACKER\"}]}}]}";
     when(response.body()).thenReturn(responseBody);
-    VersionKey log4jCore = VersionKey.from("maven", "org.apache.logging.log4j:log4j-core",
-        "2.17.0");
+    VersionKey log4jCore =
+        VersionKey.from("maven", "org.apache.logging.log4j:log4j-core", "2.17.0");
     QueryResult queryResult = client.getQueryResult(log4jCore);
     assertThat(queryResult.results()).hasSize(1);
     Version version = queryResult.results().get(0).version();
