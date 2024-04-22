@@ -75,6 +75,7 @@ import javax.annotation.Generated;
  *           .setHeader("header-1221270899")
  *           .setOtherHeader("otherHeader-2026585667")
  *           .setRequestId("requestId693933066")
+ *           .setOtherRequestId("otherRequestId1248995034")
  *           .build();
  *   EchoResponse response = echoClient.echo(request);
  * }
@@ -440,6 +441,7 @@ public class EchoClient implements BackgroundResource {
    *           .setHeader("header-1221270899")
    *           .setOtherHeader("otherHeader-2026585667")
    *           .setRequestId("requestId693933066")
+   *           .setOtherRequestId("otherRequestId1248995034")
    *           .build();
    *   EchoResponse response = echoClient.echo(request);
    * }
@@ -471,6 +473,7 @@ public class EchoClient implements BackgroundResource {
    *           .setHeader("header-1221270899")
    *           .setOtherHeader("otherHeader-2026585667")
    *           .setRequestId("requestId693933066")
+   *           .setOtherRequestId("otherRequestId1248995034")
    *           .build();
    *   ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);
    *   // Do something.
@@ -620,6 +623,7 @@ public class EchoClient implements BackgroundResource {
    *           .setHeader("header-1221270899")
    *           .setOtherHeader("otherHeader-2026585667")
    *           .setRequestId("requestId693933066")
+   *           .setOtherRequestId("otherRequestId1248995034")
    *           .build();
    *   requestObserver.onNext(request);
    * }
@@ -650,6 +654,7 @@ public class EchoClient implements BackgroundResource {
    *           .setHeader("header-1221270899")
    *           .setOtherHeader("otherHeader-2026585667")
    *           .setRequestId("requestId693933066")
+   *           .setOtherRequestId("otherRequestId1248995034")
    *           .build();
    *   bidiStream.send(request);
    *   for (EchoResponse response : bidiStream) {
