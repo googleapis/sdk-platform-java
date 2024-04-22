@@ -76,6 +76,7 @@
  *           .setHeader("header-1221270899")
  *           .setOtherHeader("otherHeader-2026585667")
  *           .setRequestId("requestId693933066")
+ *           .setOtherRequestId("otherRequestId1248995034")
  *           .build();
  *   EchoResponse response = echoClient.echo(request);
  * }
