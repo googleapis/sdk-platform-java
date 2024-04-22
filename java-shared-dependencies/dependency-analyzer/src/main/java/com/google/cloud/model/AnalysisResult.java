@@ -129,10 +129,10 @@ public class AnalysisResult {
   private void appendToReport(StringBuilder builder, PackageInfo packageInfo) {
     VersionKey versionKey = packageInfo.versionKey();
     // generate the report using Markdown format.
-    builder.append(String.format("### %s\n", versionKey));
+    builder.append(String.format("## Package information of %s\n", versionKey));
     builder.append(String.format("Licenses: %s\n", packageInfo.licenses()));
     builder.append(
-        String.format("Vulnerabilities: None\n. Checked in [deps.dev query](%s)\n",
+        String.format("Vulnerabilities: None.\nChecked in [deps.dev query](%s)\n",
             getQueryUrl(
                 versionKey.pkgManagement().toString(),
                 versionKey.name(),
