@@ -125,7 +125,7 @@ public interface EchoRequestOrBuilder extends
 
   /**
    * <pre>
-   * Based on go/client-populate-request-id-design; subject to change
+   * To facilitate testing of https://google.aip.dev/client-libraries/4235
    * </pre>
    *
    * <code>string request_id = 7 [(.google.api.field_info) = { ... }</code>
@@ -134,7 +134,7 @@ public interface EchoRequestOrBuilder extends
   java.lang.String getRequestId();
   /**
    * <pre>
-   * Based on go/client-populate-request-id-design; subject to change
+   * To facilitate testing of https://google.aip.dev/client-libraries/4235
    * </pre>
    *
    * <code>string request_id = 7 [(.google.api.field_info) = { ... }</code>
@@ -142,6 +142,35 @@ public interface EchoRequestOrBuilder extends
    */
   com.google.protobuf.ByteString
       getRequestIdBytes();
+
+  /**
+   * <pre>
+   * To facilitate testing of https://google.aip.dev/client-libraries/4235
+   * </pre>
+   *
+   * <code>optional string other_request_id = 8 [(.google.api.field_info) = { ... }</code>
+   * @return Whether the otherRequestId field is set.
+   */
+  boolean hasOtherRequestId();
+  /**
+   * <pre>
+   * To facilitate testing of https://google.aip.dev/client-libraries/4235
+   * </pre>
+   *
+   * <code>optional string other_request_id = 8 [(.google.api.field_info) = { ... }</code>
+   * @return The otherRequestId.
+   */
+  java.lang.String getOtherRequestId();
+  /**
+   * <pre>
+   * To facilitate testing of https://google.aip.dev/client-libraries/4235
+   * </pre>
+   *
+   * <code>optional string other_request_id = 8 [(.google.api.field_info) = { ... }</code>
+   * @return The bytes for otherRequestId.
+   */
+  com.google.protobuf.ByteString
+      getOtherRequestIdBytes();
 
   com.google.showcase.v1beta1.EchoRequest.ResponseCase getResponseCase();
 }
