@@ -15,7 +15,7 @@
 """
 Unit tests for python scripts
 """
-
+import shutil
 import unittest
 import os
 import io
@@ -143,6 +143,10 @@ class UtilitiesTest(unittest.TestCase):
                 "googleapis_commitish",
                 f"{test_config_dir}/config_without_googleapis.yaml",
             ),
+            (
+                "libraries_bom_version",
+                f"{test_config_dir}/config_without_libraries_bom_version.yaml",
+            ),
             ("owlbot_cli_image", f"{test_config_dir}/config_without_owlbot.yaml"),
             ("synthtool_commitish", f"{test_config_dir}/config_without_synthtool.yaml"),
             (
@@ -158,62 +162,6 @@ class UtilitiesTest(unittest.TestCase):
             from_yaml,
             path_to_yaml,
         )
-
-    def test_from_yaml_succeeds(self):
-        config = from_yaml(f"{test_config_dir}/generation_config.yaml")
-        self.assertEqual("2.34.0", config.gapic_generator_version)
-        self.assertEqual(25.2, config.protobuf_version)
-        self.assertEqual(
-            "1a45bf7393b52407188c82e63101db7dc9c72026", config.googleapis_commitish
-        )
-        self.assertEqual(
-            "sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409",
-            config.owlbot_cli_image,
-        )
-        self.assertEqual(
-            "6612ab8f3afcd5e292aecd647f0fa68812c9f5b5", config.synthtool_commitish
-        )
-        self.assertEqual(
-            [
-                ".github/*",
-                ".kokoro/*",
-                "samples/*",
-                "CODE_OF_CONDUCT.md",
-                "CONTRIBUTING.md",
-                "LICENSE",
-                "SECURITY.md",
-                "java.header",
-                "license-checks.xml",
-                "renovate.json",
-                ".gitignore",
-            ],
-            config.template_excludes,
-        )
-        library = config.libraries[0]
-        self.assertEqual("cloudasset", library.api_shortname)
-        self.assertEqual("Cloud Asset Inventory", library.name_pretty)
-        self.assertEqual(
-            "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview",
-            library.product_documentation,
-        )
-        self.assertEqual(
-            "provides inventory services based on a time series database.",
-            library.api_description,
-        )
-        self.assertEqual("asset", library.library_name)
-        self.assertEqual("@googleapis/analytics-dpe", library.codeowner_team)
-        self.assertEqual(
-            "proto-google-iam-v1-bom,google-iam-policy,proto-google-iam-v1",
-            library.excluded_poms,
-        )
-        self.assertEqual("google-iam-policy", library.excluded_dependencies)
-        gapics = library.gapic_configs
-        self.assertEqual(5, len(gapics))
-        self.assertEqual("google/cloud/asset/v1", gapics[0].proto_path)
-        self.assertEqual("google/cloud/asset/v1p1beta1", gapics[1].proto_path)
-        self.assertEqual("google/cloud/asset/v1p2beta1", gapics[2].proto_path)
-        self.assertEqual("google/cloud/asset/v1p5beta1", gapics[3].proto_path)
-        self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
 
     @parameterized.expand(
         [
@@ -359,12 +307,13 @@ class UtilitiesTest(unittest.TestCase):
         # since this is a single library, we treat this as HW repository,
         # meaning that the owlbot yaml will be inside a .github folder
         file_comparator.compare_files(
-            f"{library_path}/.github/.OwlBot.yaml",
-            f"{library_path}/.OwlBot-golden.yaml",
+            f"{library_path}/.github/.OwlBot-hermetic.yaml",
+            f"{library_path}/.OwlBot-hermetic-golden.yaml",
         )
         file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
         )
+        self.__remove_prerequisite_files(path=library_path, is_monorepo=False)
 
     def test_generate_prerequisite_files_monorepo_success(self):
         library_path = self.__setup_prerequisite_files(num_libraries=2)
@@ -374,12 +323,13 @@ class UtilitiesTest(unittest.TestCase):
             f"{library_path}/.repo-metadata-monorepo-golden.json",
         )
         file_comparator.compare_files(
-            f"{library_path}/.OwlBot.yaml",
-            f"{library_path}/.OwlBot-golden.yaml",
+            f"{library_path}/.OwlBot-hermetic.yaml",
+            f"{library_path}/.OwlBot-hermetic-golden.yaml",
         )
         file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
         )
+        self.__remove_prerequisite_files(path=library_path)
 
     def test_prepare_repo_monorepo_success(self):
         gen_config = self.__get_a_gen_config(2)
@@ -425,6 +375,7 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual("output", Path(repo_config.output_folder).name)
         library_path = sorted([Path(key).name for key in repo_config.libraries])
         self.assertEqual(["misc"], library_path)
+        shutil.rmtree(repo_config.output_folder)
 
     def __setup_prerequisite_files(
         self, num_libraries: int, library_type: str = "GAPIC_AUTO"
@@ -432,7 +383,7 @@ class UtilitiesTest(unittest.TestCase):
         library_path = f"{resources_dir}/goldens"
         files = [
             f"{library_path}/.repo-metadata.json",
-            f"{library_path}/.OwlBot.yaml",
+            f"{library_path}/.OwlBot-hermetic.yaml",
             f"{library_path}/owlbot.py",
         ]
         cleanup(files)
@@ -481,6 +432,7 @@ class UtilitiesTest(unittest.TestCase):
         return GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
+            libraries_bom_version="",
             owlbot_cli_image="",
             synthtool_commitish="",
             template_excludes=[
@@ -498,6 +450,16 @@ class UtilitiesTest(unittest.TestCase):
             ],
             libraries=libraries,
         )
+
+    @staticmethod
+    def __remove_prerequisite_files(path: str, is_monorepo: bool = True) -> None:
+        os.remove(f"{path}/.repo-metadata.json")
+        os.remove(f"{path}/owlbot.py")
+        if is_monorepo:
+            os.remove(f"{path}/.OwlBot-hermetic.yaml")
+            return
+        if os.path.isdir(f"{path}/.github"):
+            shutil.rmtree(f"{path}/.github", ignore_errors=True)
 
 
 if __name__ == "__main__":

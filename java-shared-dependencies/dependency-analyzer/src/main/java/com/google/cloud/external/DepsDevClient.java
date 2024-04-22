@@ -7,7 +7,13 @@ import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Relation;
 import com.google.cloud.model.VersionKey;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -18,6 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DepsDevClient {
+
   private final HttpClient client;
   public final Gson gson;
   private final static String advisoryUrlBase = "https://api.deps.dev/v3/advisories/%s";
@@ -26,25 +33,27 @@ public class DepsDevClient {
 
   public DepsDevClient(HttpClient client) {
     this.client = client;
-    this.gson = new Gson();
+    this.gson = new GsonBuilder()
+        .registerTypeAdapter(VersionKey.class, new VersionKeyDeserializer())
+        .create();
   }
 
   public List<VersionKey> getDirectDependencies(VersionKey versionKey)
       throws URISyntaxException, IOException, InterruptedException {
     HttpResponse<String> response = getResponse(
         getDependencyUrl(
-            versionKey.getSystem().toString(),
-            versionKey.getName(),
-            versionKey.getVersion()
+            versionKey.pkgManagement().toString(),
+            versionKey.name(),
+            versionKey.version()
         )
     );
     DependencyResponse dependencyResponse = gson.fromJson(response.body(),
         DependencyResponse.class);
     return dependencyResponse
-        .getNodes()
+        .nodes()
         .stream()
-        .filter(node -> Relation.DIRECT.equals(node.getRelation()))
-        .map(Node::getVersionKey)
+        .filter(node -> Relation.DIRECT.equals(node.relation()))
+        .map(Node::versionKey)
         .collect(Collectors.toList());
   }
 
@@ -52,9 +61,9 @@ public class DepsDevClient {
       throws URISyntaxException, IOException, InterruptedException {
     HttpResponse<String> response = getResponse(
         getQueryUrl(
-            versionKey.getSystem().toString(),
-            versionKey.getName(),
-            versionKey.getVersion()
+            versionKey.pkgManagement().toString(),
+            versionKey.name(),
+            versionKey.version()
         )
     );
     return gson.fromJson(response.body(), QueryResult.class);
@@ -82,5 +91,17 @@ public class DepsDevClient {
       throws URISyntaxException, IOException, InterruptedException {
     HttpRequest request = HttpRequest.newBuilder().uri(new URI(endpoint)).GET().build();
     return client.send(request, BodyHandlers.ofString());
+  }
+
+  static class VersionKeyDeserializer implements JsonDeserializer<VersionKey> {
+
+    @Override
+    public VersionKey deserialize(JsonElement json, Type typeOfT,
+        JsonDeserializationContext context) throws JsonParseException {
+      String system = context.deserialize(json.getAsJsonObject().get("system"), String.class);
+      String name = context.deserialize(json.getAsJsonObject().get("name"), String.class);
+      String version = context.deserialize(json.getAsJsonObject().get("version"), String.class);
+      return VersionKey.from(system, name, version);
+    }
   }
 }

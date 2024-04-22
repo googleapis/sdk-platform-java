@@ -7,31 +7,23 @@ import java.util.List;
  * Information about a specific package version, including its licenses and any security advisories
  * known to affect it.
  * <p>
- * For more information, please refer to <a href="https://docs.deps.dev/api/v3/#getversion">GetVersion</a>.
+ * For more information, please refer to <a
+ * href="https://docs.deps.dev/api/v3/#getversion">GetVersion</a>.
+ *
+ * @param versionKey The name of the package version.
+ * @param licenses The licenses governing the use of this package version.
+ * @param advisoryKeys Security advisories known to affect this package version.
  */
-public class Version {
-  private final VersionKey versionKey;
-  /**
-   * The licenses governing the use of this package version.
-   */
-  private final List<String> licenses;
-  private final List<AdvisoryKey> advisoryKeys;
+public record Version(
+    VersionKey versionKey,
+    List<String> licenses,
+    List<AdvisoryKey> advisoryKeys) {
 
-  public Version(VersionKey versionKey, List<String> licenses, List<AdvisoryKey> advisoryKeys) {
-    this.versionKey = versionKey;
-    this.licenses = licenses;
-    this.advisoryKeys = advisoryKeys;
-  }
-
-  public List<AdvisoryKey> getAdvisoryKeys() {
+  public List<AdvisoryKey> advisoryKeys() {
     return ImmutableList.copyOf(advisoryKeys);
   }
 
-  public List<String> getLicenses() {
+  public List<String> licenses() {
     return ImmutableList.copyOf(licenses);
-  }
-
-  public VersionKey getVersionKey() {
-    return versionKey;
   }
 }

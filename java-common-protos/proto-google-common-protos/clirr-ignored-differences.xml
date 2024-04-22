@@ -15,7 +15,18 @@
     <differenceType>7012</differenceType>
     <className>com/google/api/*OrBuilder</className>
     <method>boolean has*(*)</method>
-  </difference>  <difference>
+  </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/apps/card/*/*OrBuilder</className>
+    <method>* get*(*)</method>
+  </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/apps/card/*/*OrBuilder</className>
+    <method>* has*(*)</method>
+  </difference>
+  <difference>
     <differenceType>7012</differenceType>
     <className>com/google/cloud/audit/*OrBuilder</className>
     <method>* get*(*)</method>

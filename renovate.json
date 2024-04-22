@@ -84,7 +84,8 @@
       "matchPackagePatterns": [
         "^com.google.guava:"
       ],
-      "versioning": "docker"
+      "versioning": "docker",
+      "enabled": false
     },
     {
       "matchPackagePatterns": [
@@ -142,13 +143,15 @@
       "matchPackagePatterns": [
         "^com.google.protobuf"
       ],
-      "groupName": "Protobuf dependencies"
+      "groupName": "Protobuf dependencies",
+      "enabled": false
     },
     {
       "matchPackagePatterns": [
         "^io.grpc"
       ],
-      "groupName": "gRPC dependencies"
+      "groupName": "gRPC dependencies",
+      "enabled": false
     },
     {
       "matchPackagePatterns": [

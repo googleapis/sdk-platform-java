@@ -1,5 +1,47 @@
 # Changelog
 
+## [2.39.0](https://github.com/googleapis/sdk-platform-java/compare/v2.38.1...v2.39.0) (2024-04-18)
+
+
+### Features
+
+* add `libraries_bom_version` to generation configuration  ([#2639](https://github.com/googleapis/sdk-platform-java/issues/2639)) ([56c7ca5](https://github.com/googleapis/sdk-platform-java/commit/56c7ca51d4ca99629251e0aa9cac316eb349c974))
+* Add ChannelPoolSettings Getter for gRPC's ChannelProvider ([#2612](https://github.com/googleapis/sdk-platform-java/issues/2612)) ([d0c5191](https://github.com/googleapis/sdk-platform-java/commit/d0c5191525d5d157812cae9551fc15bb70caab7e))
+* add config change ([#2604](https://github.com/googleapis/sdk-platform-java/issues/2604)) ([8312706](https://github.com/googleapis/sdk-platform-java/commit/8312706db6352fca05a5858b513e88f162e5de0b))
+* add entry point ([#2616](https://github.com/googleapis/sdk-platform-java/issues/2616)) ([b19fa33](https://github.com/googleapis/sdk-platform-java/commit/b19fa3373d3fa17531d627d4581d154374a231ff))
+* add generation config comparator ([#2587](https://github.com/googleapis/sdk-platform-java/issues/2587)) ([a94c2f0](https://github.com/googleapis/sdk-platform-java/commit/a94c2f0e8a99f0ddf17106cbc8117cefe6b0e127))
+* Add JavadocJar Task to build.gradle for self service libraries ([#2593](https://github.com/googleapis/sdk-platform-java/issues/2593)) ([993f5ac](https://github.com/googleapis/sdk-platform-java/commit/993f5acf91de3a9d2c7f9fdb10ea47387b240554))
+* Client/StubSettings' getEndpoint() returns the resolved endpoint ([#2440](https://github.com/googleapis/sdk-platform-java/issues/2440)) ([4942bc1](https://github.com/googleapis/sdk-platform-java/commit/4942bc17e9c7261242ba3d03d85cd8b131ca2e5e))
+* generate selected libraries ([#2598](https://github.com/googleapis/sdk-platform-java/issues/2598)) ([739ddbb](https://github.com/googleapis/sdk-platform-java/commit/739ddbbbc662f43e46b9f420bbae685de9b3dbc6))
+* Validate the Universe Domain inside Java-Core ([#2592](https://github.com/googleapis/sdk-platform-java/issues/2592)) ([35d789f](https://github.com/googleapis/sdk-platform-java/commit/35d789fdf488feff41d4bdaa5992013450954870))
+
+
+### Bug Fixes
+
+* add main to `generate_repo.py` ([#2607](https://github.com/googleapis/sdk-platform-java/issues/2607)) ([fedeb32](https://github.com/googleapis/sdk-platform-java/commit/fedeb3237b6d25245f4d770ec105bd538dfee405))
+* correct deep-remove and deep-preserve regexes ([#2572](https://github.com/googleapis/sdk-platform-java/issues/2572)) ([4c7fd88](https://github.com/googleapis/sdk-platform-java/commit/4c7fd880a90d08448db366bde40d0d385b45f75e))
+* first attempt should use the min of RPC timeout and total timeout ([#2641](https://github.com/googleapis/sdk-platform-java/issues/2641)) ([0349232](https://github.com/googleapis/sdk-platform-java/commit/034923277750171418d74060e225ffd68ef38bf2))
+* remove duplicated calls to AutoValue builders ([#2636](https://github.com/googleapis/sdk-platform-java/issues/2636)) ([53a3727](https://github.com/googleapis/sdk-platform-java/commit/53a3727e4a9548bf0417d4ee6ed3e9ab571642ed))
+* remove unnecessary slf4j and AbstractGoogleClientRequest native image configs ([0cb7d0e](https://github.com/googleapis/sdk-platform-java/commit/0cb7d0e0c03f2dd2853a86d67c9529a50ed8238f))
+* remove unnecessary slf4j and AbstractGoogleClientRequest native image configs ([#2628](https://github.com/googleapis/sdk-platform-java/issues/2628)) ([0cb7d0e](https://github.com/googleapis/sdk-platform-java/commit/0cb7d0e0c03f2dd2853a86d67c9529a50ed8238f))
+
+
+### Dependencies
+
+* update arrow.version to v15.0.2 ([#2589](https://github.com/googleapis/sdk-platform-java/issues/2589)) ([777acf3](https://github.com/googleapis/sdk-platform-java/commit/777acf3df4b5379cd8a8cf52b844203dd514ee24))
+* update dependency com.google.cloud.opentelemetry:detector-resources-support to v0.28.0 ([#2649](https://github.com/googleapis/sdk-platform-java/issues/2649)) ([e4ed176](https://github.com/googleapis/sdk-platform-java/commit/e4ed1765f3dbb950d498df307d79577abf71a66a))
+* update dependency gitpython to v3.1.41 [security] ([#2625](https://github.com/googleapis/sdk-platform-java/issues/2625)) ([e41bd8f](https://github.com/googleapis/sdk-platform-java/commit/e41bd8f00ffcb271b2a008364f334693d9dfdc9d))
+* update dependency net.bytebuddy:byte-buddy to v1.14.13 ([#2646](https://github.com/googleapis/sdk-platform-java/issues/2646)) ([73ac5a4](https://github.com/googleapis/sdk-platform-java/commit/73ac5a4bfe05ac11a121664f52a4013cb4bb33a9))
+* update dependency org.threeten:threeten-extra to v1.8.0 ([#2650](https://github.com/googleapis/sdk-platform-java/issues/2650)) ([226325a](https://github.com/googleapis/sdk-platform-java/commit/226325a5b7c93c1ad1b4af5da4283e369887fa42))
+* update dependency org.threeten:threetenbp to v1.6.9 ([#2602](https://github.com/googleapis/sdk-platform-java/issues/2602)) ([371753e](https://github.com/googleapis/sdk-platform-java/commit/371753ebbd83d703f314dd5f4e34e16c255836c6))
+* update dependency org.threeten:threetenbp to v1.6.9 ([#2665](https://github.com/googleapis/sdk-platform-java/issues/2665)) ([8935bc8](https://github.com/googleapis/sdk-platform-java/commit/8935bc87307e73101df72a85f98a8ec1bdde0c14))
+* update google api dependencies ([#2584](https://github.com/googleapis/sdk-platform-java/issues/2584)) ([cd20604](https://github.com/googleapis/sdk-platform-java/commit/cd20604f3128d2efc1802065c63b6663186ce3af))
+* update googleapis/java-cloud-bom digest to 7071341 ([#2608](https://github.com/googleapis/sdk-platform-java/issues/2608)) ([8d74140](https://github.com/googleapis/sdk-platform-java/commit/8d7414029984c073e9bae2952971d2337dbf81ab))
+* update netty dependencies to v4.1.109.final ([#2597](https://github.com/googleapis/sdk-platform-java/issues/2597)) ([8990693](https://github.com/googleapis/sdk-platform-java/commit/8990693abf157a1adf2723c6db1bce71a5efa810))
+* update opentelemetry-java monorepo to v1.37.0 ([#2652](https://github.com/googleapis/sdk-platform-java/issues/2652)) ([f8fa2e9](https://github.com/googleapis/sdk-platform-java/commit/f8fa2e9f7316f17f1e753a74a6839d9e331c010a))
+* update protobuf dependencies to v3.25.3 ([#2491](https://github.com/googleapis/sdk-platform-java/issues/2491)) ([b0e5041](https://github.com/googleapis/sdk-platform-java/commit/b0e5041ff0fafaf900a7cf1929f0d85fc582a0d7))
+* update slf4j monorepo to v2.0.13 ([#2647](https://github.com/googleapis/sdk-platform-java/issues/2647)) ([f030e29](https://github.com/googleapis/sdk-platform-java/commit/f030e29b1538ad28ad9628ec03d8e3eb2f21d6c2))
+
 ## [2.38.1](https://github.com/googleapis/sdk-platform-java/compare/v2.38.0...v2.38.1) (2024-03-15)
 
 

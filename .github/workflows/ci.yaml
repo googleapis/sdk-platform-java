@@ -327,7 +327,7 @@ jobs:
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: Validate gapic-generator-java-bom
-      uses: googleapis/java-cloud-bom/tests/validate-bom@659764fa38f3c80b36319e9692d5a46b23f599eb
+      uses: googleapis/java-cloud-bom/tests/validate-bom@7071341075a2aea70d84ac92c90411988a690560
       with:
         bom-path: gapic-generator-java-bom/pom.xml
 
@@ -362,7 +362,7 @@ jobs:
         ref: ${{ github.event.pull_request.head.sha }}
     - uses: actions/setup-java@v4
       with:
-        java-version: 11
+        java-version: 17
         distribution: temurin
     - run: mvn -version
     - name: Unit Tests

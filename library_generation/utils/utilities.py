@@ -280,8 +280,8 @@ def generate_prerequisite_files(
         with open(f"{library_path}/{json_file}", "w") as fp:
             json.dump(repo_metadata, fp, indent=2)
 
-    # generate .OwlBot.yaml
-    owlbot_yaml_file = ".OwlBot.yaml"
+    # generate .OwlBot-hermetic.yaml
+    owlbot_yaml_file = ".OwlBot-hermetic.yaml"
     path_to_owlbot_yaml_file = (
         f"{library_path}/{owlbot_yaml_file}"
         if config.is_monorepo()
