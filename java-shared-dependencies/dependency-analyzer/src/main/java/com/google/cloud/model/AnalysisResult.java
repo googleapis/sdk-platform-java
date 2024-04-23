@@ -107,7 +107,7 @@ public class AnalysisResult {
     return "===========================================================";
   }
 
-  private String packageInfoReport() {
+  public String packageInfoReport() {
     StringBuilder builder = new StringBuilder();
     PackageInfo root = packageInfos.get(0);
     String title = String.format("""
