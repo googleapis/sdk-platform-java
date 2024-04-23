@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import difflib
 import json
 from filecmp import cmp
 from filecmp import dircmp
@@ -102,12 +103,9 @@ class IntegrationTest(unittest.TestCase):
                 print(f"Checking for differences in '{library_name}'.")
                 print(f"  The expected library is in {golden_dir}/{library_name}.")
                 print(f"  The actual library is in {actual_library}. ")
-                target_repo_dest = (
-                    f"{repo_dest}/{library_name}" if config.is_monorepo() else repo_dest
-                )
                 compare_result = dircmp(
                     f"{golden_dir}/{library_name}",
-                    target_repo_dest,
+                    actual_library,
                     ignore=[".repo-metadata.json"],
                 )
                 diff_files = []
@@ -122,12 +120,24 @@ class IntegrationTest(unittest.TestCase):
                 print_file = lambda f: print(f"   -  {f}")
                 if len(diff_files) > 0:
                     print("  Some files (found in both folders) are differing:")
-                    [print_file(f) for f in diff_files]
+                    for diff_file in diff_files:
+                        print(f"Difference in {diff_file}:")
+                        with open(
+                            f"{golden_dir}/{library_name}/{diff_file}"
+                        ) as expected_file:
+                            with open(f"{actual_library}/{diff_file}") as actual_file:
+                                [
+                                    print(line)
+                                    for line in difflib.unified_diff(
+                                        expected_file.readlines(),
+                                        actual_file.readlines(),
+                                    )
+                                ]
                 if len(golden_only) > 0:
                     print("  There were files found only in the golden dir:")
                     [print_file(f) for f in golden_only]
                 if len(generated_only) > 0:
-                    print("  Some files were found to have differences:")
+                    print("  There were files found only in the generated dir:")
                     [print_file(f) for f in generated_only]
 
                 self.assertTrue(len(golden_only) == 0)
@@ -139,7 +149,7 @@ class IntegrationTest(unittest.TestCase):
                 self.assertTrue(
                     self.__compare_json_files(
                         f"{golden_dir}/{library_name}/.repo-metadata.json",
-                        f"{target_repo_dest}/.repo-metadata.json",
+                        f"{actual_library}/.repo-metadata.json",
                     ),
                     msg=f"  The generated {library_name}/.repo-metadata.json is different from golden.",
                 )
