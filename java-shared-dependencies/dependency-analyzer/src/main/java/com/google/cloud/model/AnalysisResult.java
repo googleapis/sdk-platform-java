@@ -111,14 +111,14 @@ public class AnalysisResult {
     StringBuilder builder = new StringBuilder();
     builder.append("Please copy and paste the package information below to your ticket.\n");
     builder.append("\n\n");
-    appendToReport(builder, packageInfos.get(0));
+    appendToReport(builder, packageInfos.get(0), true);
 
     builder.append("## Dependencies:\n");
     if (packageInfos.size() <= 1) {
       builder.append("None");
     } else {
       for (int i = 1; i < packageInfos.size(); i++) {
-        appendToReport(builder, packageInfos.get(i));
+        appendToReport(builder, packageInfos.get(i), false);
       }
     }
     builder.append("\n\n");
@@ -126,13 +126,23 @@ public class AnalysisResult {
     return builder.toString();
   }
 
-  private void appendToReport(StringBuilder builder, PackageInfo packageInfo) {
+  private void appendToReport(StringBuilder builder, PackageInfo packageInfo, boolean isRoot) {
     VersionKey versionKey = packageInfo.versionKey();
     // generate the report using Markdown format.
-    builder.append(String.format("## Package information of %s\n", versionKey));
+    String title = "## Package information of %s\n";
+    if (isRoot) {
+      builder.append(String.format(title, versionKey));
+    } else {
+      // add an extra "#" at the beginning of the title to emphasize that
+      // this section is a subsection of Dependencies.
+      builder.append(String.format("#" + title, versionKey));
+    }
+
     builder.append(String.format("Licenses: %s\n", packageInfo.licenses()));
     builder.append(
-        String.format("Vulnerabilities: None.\nChecked in [deps.dev query](%s)\n",
+        String.format("Vulnerabilities: None.\nChecked in [%s (%s)](%s)\n",
+            versionKey.name(),
+            versionKey.version(),
             getQueryUrl(
                 versionKey.pkgManagement().toString(),
                 versionKey.name(),
