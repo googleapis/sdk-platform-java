@@ -120,13 +120,7 @@ class IntegrationTest(unittest.TestCase):
                 print_file = lambda f: print(f"   -  {f}")
                 if len(diff_files) > 0:
                     print("  Some files (found in both folders) are differing:")
-                    [print_file(f) for f in diff_files]
-                if len(golden_only) > 0:
-                    print("  There were files found only in the golden dir:")
-                    [print_file(f) for f in golden_only]
-                if len(generated_only) > 0:
-                    print("  Some files were found to have differences:")
-                    for diff_file in generated_only:
+                    for diff_file in diff_files:
                         print(f"Difference in {diff_file}:")
                         with open(
                             f"{golden_dir}/{library_name}/{diff_file}"
@@ -139,6 +133,12 @@ class IntegrationTest(unittest.TestCase):
                                         actual_file.readlines(),
                                     )
                                 ]
+                if len(golden_only) > 0:
+                    print("  There were files found only in the golden dir:")
+                    [print_file(f) for f in golden_only]
+                if len(generated_only) > 0:
+                    print("  There were files found only in the generated dir:")
+                    [print_file(f) for f in generated_only]
 
                 self.assertTrue(len(golden_only) == 0)
                 self.assertTrue(len(generated_only) == 0)
