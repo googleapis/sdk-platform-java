@@ -109,45 +109,49 @@ public class AnalysisResult {
 
   private String packageInfoReport() {
     StringBuilder builder = new StringBuilder();
-    builder.append("Please copy and paste the package information below to your ticket.\n");
-    builder.append("\n\n");
-    appendToReport(builder, packageInfos.get(0), true);
+    PackageInfo root = packageInfos.get(0);
+    String title = String.format("""
+        Please copy and paste the package information below to your ticket.
+                
+        ## Package information of %s
+        %s
+        """, root.versionKey(), packageInfoSection(root));
+    builder.append(title);
 
     builder.append("## Dependencies:\n");
-    if (packageInfos.size() <= 1) {
+    if (packageInfos.size() == 1) {
       builder.append("None");
     } else {
       for (int i = 1; i < packageInfos.size(); i++) {
-        appendToReport(builder, packageInfos.get(i), false);
+        PackageInfo info = packageInfos.get(i);
+        String dependencyInfo = String.format("""
+            ### Package information of %s
+            %s
+            """, info.versionKey(), packageInfoSection(info));
+        builder.append(dependencyInfo);
       }
     }
-    builder.append("\n\n");
+    builder.append("\n");
 
     return builder.toString();
   }
 
-  private void appendToReport(StringBuilder builder, PackageInfo packageInfo, boolean isRoot) {
+  private String packageInfoSection(PackageInfo packageInfo) {
     VersionKey versionKey = packageInfo.versionKey();
     // generate the report using Markdown format.
-    String title = "## Package information of %s\n";
-    if (isRoot) {
-      builder.append(String.format(title, versionKey));
-    } else {
-      // add an extra "#" at the beginning of the title to emphasize that
-      // this section is a subsection of Dependencies.
-      builder.append(String.format("#" + title, versionKey));
-    }
-
-    builder.append(String.format("Licenses: %s\n", packageInfo.licenses()));
-    builder.append(
-        String.format("Vulnerabilities: None.\nChecked in [%s (%s)](%s)\n",
+    String packageInfoReport = """
+        Licenses: %s
+        Vulnerabilities: None.
+        Checked in [%s (%s)](%s)
+        """;
+    return String.format(packageInfoReport,
+        packageInfo.licenses(),
+        versionKey.name(),
+        versionKey.version(),
+        getQueryUrl(
+            versionKey.pkgManagement().toString(),
             versionKey.name(),
-            versionKey.version(),
-            getQueryUrl(
-                versionKey.pkgManagement().toString(),
-                versionKey.name(),
-                versionKey.version())));
-    builder.append("\n");
+            versionKey.version()));
   }
 
   private String getQueryUrl(String system, String name, String version) {
