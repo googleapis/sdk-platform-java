@@ -88,10 +88,17 @@ public class ServiceTest {
   }
 
   @Test
-  public void apiVersion_shouldReturnVersionIfMatch() {
+  public void packageVersion_shouldReturnVersionIfMatch() {
     String protoPackage = "com.google.showcase.v1";
     Service testService = testServiceBuilder.setProtoPakkage(protoPackage).build();
     assertEquals("v1", testService.packageVersion());
+  }
+
+  @Test
+  public void packageVersion_shouldReturnEmptyIfNoMatch() {
+    String protoPackage = "com.google.showcase";
+    Service testService = testServiceBuilder.setProtoPakkage(protoPackage).build();
+    assertEquals("", testService.packageVersion());
   }
 
   @Test
@@ -107,13 +114,6 @@ public class ServiceTest {
     Service testService = testServiceBuilder.build();
     assertNull(testService.apiVersion());
     assertFalse(testService.hasApiVersion());
-  }
-
-  @Test
-  public void apiVersion_shouldReturnEmptyIfNoMatch() {
-    String protoPackage = "com.google.showcase";
-    Service testService = testServiceBuilder.setProtoPakkage(protoPackage).build();
-    assertEquals("", testService.packageVersion());
   }
 
   @Test
