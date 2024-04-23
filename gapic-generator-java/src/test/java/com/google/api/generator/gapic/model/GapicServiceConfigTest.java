@@ -244,7 +244,8 @@ public class GapicServiceConfigTest {
     List<Service> services =
         Parser.parseService(
             fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
-    assertEquals(2, services.size());
+    assertEquals(1, services.size());
+
     return services.get(0);
   }
 

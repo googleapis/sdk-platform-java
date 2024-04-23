@@ -36,6 +36,7 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Transport;
+import com.google.api.version.test.ApiVersionTestingOuterClass;
 import com.google.auto.populate.field.AutoPopulateFieldTestingOuterClass;
 import com.google.bookshop.v1beta1.BookshopProto;
 import com.google.common.collect.ImmutableList;
@@ -609,16 +610,61 @@ public class ParserTest {
   }
 
   @Test
-  public void testServiceApiVersionParsed() {
-    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+  public void parseServiceApiVersionTest() {
+    FileDescriptor apiVersionFileDescriptor = ApiVersionTestingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(apiVersionFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(apiVersionFileDescriptor);
     List<com.google.api.generator.gapic.model.Service> services =
         Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), new HashSet<>());
+            apiVersionFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            new HashSet<>());
     com.google.api.generator.gapic.model.Service parsedEchoService = services.get(0);
-    assertEquals("v1_20230601", parsedEchoService.apiVersion());
-    com.google.api.generator.gapic.model.Service parsedEchoAgainService = services.get(1);
-    assertEquals("fake-version", parsedEchoAgainService.apiVersion());
+
+    assertEquals("Echo", parsedEchoService.overriddenName());
+    assertTrue(parsedEchoService.hasApiVersion());
+    assertEquals("fake_version", parsedEchoService.apiVersion());
+  }
+
+  @Test
+  public void parseServiceWithoutApiVersionTest() {
+    FileDescriptor apiVersionFileDescriptor = ApiVersionTestingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(apiVersionFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(apiVersionFileDescriptor);
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            apiVersionFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            new HashSet<>());
+    com.google.api.generator.gapic.model.Service parsedEchoWithoutVersionService = services.get(1);
+
+    assertNull(parsedEchoWithoutVersionService.apiVersion());
+    assertFalse(parsedEchoWithoutVersionService.hasApiVersion());
+    assertEquals("EchoWithoutVersion", parsedEchoWithoutVersionService.overriddenName());
+  }
+
+  @Test
+  public void parseServiceWithEmptyApiVersionTest() {
+    FileDescriptor apiVersionFileDescriptor = ApiVersionTestingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(apiVersionFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(apiVersionFileDescriptor);
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            apiVersionFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            new HashSet<>());
+    com.google.api.generator.gapic.model.Service parsedEchoWithEmptyVersionService =
+        services.get(2);
+
+    assertEquals("EchoWithEmptyVersion", parsedEchoWithEmptyVersionService.overriddenName());
+    assertEquals("", parsedEchoWithEmptyVersionService.apiVersion());
+    assertFalse(parsedEchoWithEmptyVersionService.hasApiVersion());
   }
 
   @Test

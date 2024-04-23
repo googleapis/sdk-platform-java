@@ -24,26 +24,26 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "google/rpc/status.proto";
 
-package google.showcase.v1beta1;
+package google.api.version.test;
 
-option go_package = "github.com/googleapis/gapic-showcase/server/genproto";
-option java_package = "com.google.showcase.v1beta1";
+option java_package = "com.google.api.version.test";
 option java_multiple_files = true;
+option java_outer_classname = "ApiVersionTestingOuterClass";
 
 option (google.api.resource_definition) = {
   type: "showcase.googleapis.com/AnythingGoes"
   pattern: "*"
 };
+// This proto is used to test scenarios related to api_version feature.
+// api_version is set on service level, so this proto includes various services
+// to test different scenarios.
 
-// This service is used showcase the four main types of rpcs - unary, server
-// side streaming, client side streaming, and bidirectional streaming. This
-// service also exposes methods that explicitly implement server delay, and
-// paginated calls. Set the 'showcase-trailer' metadata key on any method
-// to have the values echoed in the response trailers.
+// This service is used to test when api_version string is provided.
 service Echo {
   // This service is meant to only run locally on the port 7469 (keypad digits
   // for "show").
   option (google.api.default_host) = "localhost:7469";
+  option (google.api.api_version) = "fake_version";
   option (google.api.oauth_scopes) =
       "https://www.googleapis.com/auth/cloud-platform";
 
@@ -60,85 +60,52 @@ service Echo {
     option (google.api.method_signature) = "parent";
     option (google.api.method_signature) = "";
   }
+}
 
-  // This method split the given content into words and will pass each word back
-  // through the stream. This method showcases server-side streaming rpcs.
-  rpc Expand(ExpandRequest) returns (stream EchoResponse) {
+// This service is used to test when api_version is not provided.
+service EchoWithoutVersion {
+  // This service is meant to only run locally on the port 7469 (keypad digits
+  // for "show").
+  option (google.api.default_host) = "localhost:7469";
+  option (google.api.oauth_scopes) =
+    "https://www.googleapis.com/auth/cloud-platform";
+
+  // This method simply echos the request. This method is showcases unary rpcs.
+  rpc Echo(EchoRequest) returns (EchoResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/echo:expand"
+      post: "/v1beta1/echo:echo"
       body: "*"
     };
-    option (google.api.method_signature) = "content,error";
-  }
-
-  // This method will collect the words given to it. When the stream is closed
-  // by the client, this method will return the a concatenation of the strings
-  // passed to it. This method showcases client-side streaming rpcs.
-  rpc Collect(stream EchoRequest) returns (EchoResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/echo:collect"
-      body: "*"
-    };
-  }
-
-  // This method, upon receiving a request on the stream, the same content will
-  // be passed  back on the stream. This method showcases bidirectional
-  // streaming rpcs.
-  rpc Chat(stream EchoRequest) returns (stream EchoResponse);
-
-  rpc ChatAgain(stream EchoRequest) returns (stream EchoResponse) {
     option (google.api.method_signature) = "content";
-  }
-
-  // This is similar to the Expand method but instead of returning a stream of
-  // expanded words, this method returns a paged list of expanded words.
-  rpc PagedExpand(PagedExpandRequest) returns (PagedExpandResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/echo:pagedExpand"
-      body: "*"
-    };
-  }
-
-  rpc SimplePagedExpand(PagedExpandRequest) returns (PagedExpandResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/echo:pagedExpand"
-      body: "*"
-    };
+    option (google.api.method_signature) = "error";
+    option (google.api.method_signature) = "content,severity";
+    option (google.api.method_signature) = "name";
+    option (google.api.method_signature) = "parent";
     option (google.api.method_signature) = "";
   }
+}
 
-  // This method will wait the requested amount of and then return.
-  // This method showcases how a client handles a request timing out.
-  rpc Wait(WaitRequest) returns (google.longrunning.Operation) {
+// This service is to test api_version is empty.
+service EchoWithEmptyVersion {
+  // This service is meant to only run locally on the port 7469 (keypad digits
+  // for "show").
+  option (google.api.default_host) = "localhost:7469";
+  option (google.api.api_version) = "";
+  option (google.api.oauth_scopes) =
+    "https://www.googleapis.com/auth/cloud-platform";
+
+  // This method simply echos the request. This method is showcases unary rpcs.
+  rpc Echo(EchoRequest) returns (EchoResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/echo:wait"
+      post: "/v1beta1/echo:echo"
       body: "*"
     };
-    option (google.longrunning.operation_info) = {
-      response_type: "WaitResponse"
-      metadata_type: "WaitMetadata"
-    };
-    option (google.api.method_signature) = "end_time";
-    option (google.api.method_signature) = "ttl";
-  }
-
-  // This method will block (wait) for the requested amount of time
-  // and then return the response or error.
-  // This method showcases how a client handles delays or retries.
-  rpc Block(BlockRequest) returns (BlockResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/echo:block"
-      body: "*"
-    };
-  };
-
-  // This method primarily tests Java name collisions by using the Object
-  // message.
-  rpc CollideName(EchoRequest) returns (Object) {
-    option (google.api.http) = {
-      post: "/v1beta1/echo:foo"
-      body: "*"
-    };
+    option (google.api.method_signature) = "content";
+    option (google.api.method_signature) = "error";
+    option (google.api.method_signature) = "content,severity";
+    option (google.api.method_signature) = "name";
+    option (google.api.method_signature) = "parent";
+    option (google.api.method_signature) = "";
   }
 }
 

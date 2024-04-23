@@ -148,7 +148,7 @@ public class RetrySettingsComposerTest {
     List<Service> services =
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
-    assertEquals(2, services.size());
+    assertEquals(1, services.size());
 
     Service service = services.get(0);
 
@@ -184,7 +184,7 @@ public class RetrySettingsComposerTest {
     List<Service> services =
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
-    assertEquals(2, services.size());
+    assertEquals(1, services.size());
 
     Service service = services.get(0);
 
@@ -223,7 +223,7 @@ public class RetrySettingsComposerTest {
     List<Service> services =
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
-    assertEquals(2, services.size());
+    assertEquals(1, services.size());
 
     Service service = services.get(0);
 
@@ -304,7 +304,7 @@ public class RetrySettingsComposerTest {
     List<Service> services =
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
-    assertEquals(2, services.size());
+    assertEquals(1, services.size());
 
     Service service = services.get(0);
 
