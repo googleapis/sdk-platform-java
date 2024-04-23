@@ -110,9 +110,17 @@ public class ServiceTest {
   }
 
   @Test
-  public void apiVersion_shouldReturnNullApiVersion() {
+  public void apiVersion_shouldReturnNoApiVersionWhenNull() {
     Service testService = testServiceBuilder.build();
     assertNull(testService.apiVersion());
+    assertFalse(testService.hasApiVersion());
+  }
+
+  @Test
+  public void apiVersion_shouldReturnNoApiVersionWhenEmpty() {
+    String apiVersion = "";
+    Service testService = testServiceBuilder.setApiVersion(apiVersion).build();
+    assertEquals("", testService.apiVersion());
     assertFalse(testService.hasApiVersion());
   }
 
