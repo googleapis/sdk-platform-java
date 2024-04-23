@@ -1,27 +1,29 @@
 package com.google.cloud.model;
 
-import com.google.common.collect.ImmutableSet;
+import static com.google.cloud.external.DepsDevClient.QUERY_URL_BASE;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AnalysisResult {
 
   private final VersionKey root;
+  private final List<PackageInfo> packageInfos;
   private final Map<VersionKey, List<Advisory>> advisories;
   private final Map<VersionKey, List<String>> nonCompliantLicenses;
-  private final ImmutableSet<LicenseCategory> compliantCategories = ImmutableSet.of(
-      LicenseCategory.NOTICE);
 
   private final static Logger LOGGER = Logger.getLogger(AnalysisResult.class.getName());
 
   private AnalysisResult(VersionKey root, List<PackageInfo> result) {
     this.root = root;
-    advisories = getAdvisories(result);
-    nonCompliantLicenses = getNonCompliantLicenses(result);
+    this.packageInfos = result;
+    this.advisories = getAdvisories(result);
+    this.nonCompliantLicenses = getNonCompliantLicenses(result);
   }
 
   public static AnalysisResult of(VersionKey root, List<PackageInfo> result) {
@@ -44,6 +46,9 @@ public class AnalysisResult {
 
     LOGGER.log(Level.INFO,
         String.format("%s have no known vulnerabilities and non compliant licenses", root));
+    LOGGER.log(Level.INFO, "Generate package information report...");
+    System.out.println(packageInfoReport());
+
     return ReportResult.PASS;
   }
 
@@ -60,6 +65,7 @@ public class AnalysisResult {
 
   private Map<VersionKey, List<String>> getNonCompliantLicenses(List<PackageInfo> result) {
     Map<VersionKey, List<String>> licenses = new HashMap<>();
+    Set<LicenseCategory> compliantCategories = LicenseCategory.compliantCategories();
 
     result.forEach(packageInfo -> {
       List<String> nonCompliantLicenses = new ArrayList<>();
@@ -92,11 +98,63 @@ public class AnalysisResult {
   }
 
   private String beginSeparator(VersionKey versionKey, VersionKey root) {
-    return String.format("====================== %s, dependency of %s ======================",
-        versionKey.toString(), root.toString());
+    String relation = versionKey.equals(root) ? "self" : "dependency";
+    return String.format("====================== %s, %s of %s ======================",
+        versionKey, relation, root);
   }
 
   private String endSeparator() {
     return "===========================================================";
+  }
+
+  public String packageInfoReport() {
+    StringBuilder builder = new StringBuilder();
+    PackageInfo root = packageInfos.get(0);
+    String title = String.format("""
+        Please copy and paste the package information below to your ticket.
+                
+        ## Package information of %s
+        %s
+        """, root.versionKey(), packageInfoSection(root));
+    builder.append(title);
+
+    builder.append("## Dependencies:\n");
+    if (packageInfos.size() == 1) {
+      builder.append("None");
+    } else {
+      for (int i = 1; i < packageInfos.size(); i++) {
+        PackageInfo info = packageInfos.get(i);
+        String dependencyInfo = String.format("""
+            ### Package information of %s
+            %s
+            """, info.versionKey(), packageInfoSection(info));
+        builder.append(dependencyInfo);
+      }
+    }
+    builder.append("\n");
+
+    return builder.toString();
+  }
+
+  private String packageInfoSection(PackageInfo packageInfo) {
+    VersionKey versionKey = packageInfo.versionKey();
+    // generate the report using Markdown format.
+    String packageInfoReport = """
+        Licenses: %s
+        Vulnerabilities: None.
+        Checked in [%s (%s)](%s)
+        """;
+    return String.format(packageInfoReport,
+        packageInfo.licenses(),
+        versionKey.name(),
+        versionKey.version(),
+        getQueryUrl(
+            versionKey.pkgManagement().toString(),
+            versionKey.name(),
+            versionKey.version()));
+  }
+
+  private String getQueryUrl(String system, String name, String version) {
+    return String.format(QUERY_URL_BASE, system, name, version);
   }
 }

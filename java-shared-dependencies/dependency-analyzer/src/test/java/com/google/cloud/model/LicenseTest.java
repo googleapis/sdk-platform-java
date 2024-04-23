@@ -16,4 +16,16 @@ public class LicenseTest {
     String license = "Non-existent-license";
     assertEquals(License.NOT_RECOGNIZED, License.toLicense(license));
   }
+
+  @Test
+  public void testToStringOfACompliantLicense() {
+    String license = "Apache-2.0";
+    assertEquals("Apache-2.0 (Google-compliant)", License.toLicense(license).toString());
+  }
+
+  @Test
+  public void testToStringOfANonCompliantLicense() {
+    String license = "BCL";
+    assertEquals("BCL", License.toLicense(license).toString());
+  }
 }
