@@ -93,28 +93,13 @@ public class AnalysisResultTest {
         Licenses: [Apache-2.0, MIT]
         Vulnerabilities: None.
         Checked in [com.example:dependency (4.5.6)](https://api.deps.dev/v3/query?versionKey.system=MAVEN&versionKey.name=com.example:dependency&versionKey.version=4.5.6)
-        
+                
         ### Package information of com.example:nested-dependency:2.3.1
         Licenses: [Apache-2.0, MIT]
         Vulnerabilities: None.
         Checked in [com.example:nested-dependency (2.3.1)](https://api.deps.dev/v3/query?versionKey.system=MAVEN&versionKey.name=com.example:nested-dependency&versionKey.version=2.3.1)
-        
-        
+                
+                
         """, AnalysisResult.of(root, results).packageInfoReport());
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
