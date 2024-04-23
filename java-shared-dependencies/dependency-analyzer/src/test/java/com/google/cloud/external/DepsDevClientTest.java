@@ -1,6 +1,7 @@
 package com.google.cloud.external;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -31,6 +32,20 @@ public class DepsDevClientTest {
     response = mock(HttpResponse.class);
     when(httpClient.send(any(HttpRequest.class), any(BodyHandler.class)))
         .thenReturn(response);
+  }
+
+  @Test
+  public void testGetQueryUrlReturnsEncodedUrl() {
+    assertEquals(
+        "https://api.deps.dev/v3/query?versionKey.system=MAVEN&versionKey.name=com.google.errorprone:javac-shaded&versionKey.version=9%2B181-r4173-1",
+        client.getQueryUrl("MAVEN", "com.google.errorprone:javac-shaded", "9+181-r4173-1"));
+  }
+
+  @Test
+  public void testGetDependenciesReturnsEncodedUrl() {
+    assertEquals(
+        "https://api.deps.dev/v3/systems/MAVEN/packages/com.google.errorprone:javac-shaded/versions/9%2B181-r4173-1:dependencies",
+        client.getDependencyUrl("MAVEN", "com.google.errorprone:javac-shaded", "9+181-r4173-1"));
   }
 
   @Test

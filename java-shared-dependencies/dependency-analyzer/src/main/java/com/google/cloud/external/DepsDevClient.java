@@ -6,6 +6,7 @@ import com.google.cloud.model.Node;
 import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Relation;
 import com.google.cloud.model.VersionKey;
+import com.google.errorprone.annotations.RestrictedApi;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -83,11 +84,17 @@ public class DepsDevClient {
     return String.format(ADVISORY_URL_BASE, advisoryId);
   }
 
-  private String getQueryUrl(String system, String name, String version) {
+  @RestrictedApi(
+      explanation = "This method is for internal use only.",
+      allowedOnPath = "test/java/com/google/cloud/external")
+  public String getQueryUrl(String system, String name, String version) {
     return String.format(QUERY_URL_BASE, system, name, encode(version));
   }
 
-  private String getDependencyUrl(String system, String name, String version) {
+  @RestrictedApi(
+      explanation = "This method is for internal use only.",
+      allowedOnPath = "test/java/com/google/cloud/external")
+  public String getDependencyUrl(String system, String name, String version) {
     return String.format(DEPENDENCY_URLBASE, system, name, encode(version));
   }
 
