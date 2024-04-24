@@ -54,7 +54,7 @@ public enum License {
     Set<LicenseCategory> compliantCategories = LicenseCategory.compliantCategories();
     for (LicenseCategory category : this.categories) {
       if (!compliantCategories.contains(category)) {
-        return this.licenseStr;
+        return String.format("%s (Not Google-compliant!)", this.licenseStr);
       }
     }
     return String.format("%s (Google-compliant)", this.licenseStr);

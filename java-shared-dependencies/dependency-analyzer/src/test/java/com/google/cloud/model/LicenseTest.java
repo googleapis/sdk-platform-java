@@ -26,6 +26,6 @@ public class LicenseTest {
   @Test
   public void testToStringOfANonCompliantLicense() {
     String license = "BCL";
-    assertEquals("BCL", License.toLicense(license).toString());
+    assertEquals("BCL (Not Google-compliant!)", License.toLicense(license).toString());
   }
 }
