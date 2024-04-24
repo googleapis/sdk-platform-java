@@ -40,7 +40,6 @@ public class ApiClientHeaderProviderTest {
 
   private static final String X_GOOG_API_CLIENT = "x-goog-api-client";
   private static final String CLOUD_RESOURCE_PREFIX = "google-cloud-resource-prefix";
-  private static final String API_VERSION_HEADER_KEY = "x-goog-api-version";
 
   @Test
   public void testServiceHeaderDefault() {
@@ -145,10 +144,12 @@ public class ApiClientHeaderProviderTest {
     ApiClientHeaderProvider provider =
         ApiClientHeaderProvider.newBuilder().setApiVersionToken("fake-version-string").build();
     assertThat(provider.getHeaders().size()).isEqualTo(2);
-    assertThat(provider.getHeaders().get(API_VERSION_HEADER_KEY)).matches("fake-version-string");
+    assertThat(provider.getHeaders().get(ApiClientHeaderProvider.API_VERSION_HEADER_KEY))
+        .matches("fake-version-string");
 
     ApiClientHeaderProvider emptyProvider =
         ApiClientHeaderProvider.newBuilder().setApiVersionToken("").build();
-    assertThat(emptyProvider.getHeaders().get(API_VERSION_HEADER_KEY).isEmpty());
+    assertThat(
+        emptyProvider.getHeaders().get(ApiClientHeaderProvider.API_VERSION_HEADER_KEY).isEmpty());
   }
 }
