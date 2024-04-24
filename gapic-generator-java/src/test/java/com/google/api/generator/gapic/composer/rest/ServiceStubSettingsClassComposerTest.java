@@ -36,32 +36,28 @@ public class ServiceStubSettingsClassComposerTest {
   public static Collection<Object[]> data() {
     return Arrays.asList(
         new Object[][] {
-            {
-                "ComplianceStubSettings.golden",
-                RestTestProtoLoader.instance().parseCompliance()
-            },
-            {
-                "HttpJsonEchoStubSettings.golden",
-                RestTestProtoLoader.instance().parseEcho()
-            }
+          {"ComplianceStubSettings.golden", RestTestProtoLoader.instance().parseCompliance()},
+          {
+            "HttpJsonApiVersionTestingStubSettings.golden",
+            RestTestProtoLoader.instance().parseApiVersionTesting()
+          }
         });
   }
+
   @Parameterized.Parameter public String goldenFileName;
 
   @Parameterized.Parameter(1)
   public GapicContext context;
+
   @Test
   public void generateServiceClasses() {
     Service protoService = context.services().get(0);
-    GapicClass clazz =
-        ServiceStubSettingsClassComposer.instance().generate(context, protoService);
+    GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, protoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    GoldenFileWriter.saveCodegenToFile(
-        this.getClass(), goldenFileName, visitor.write());
-    Path goldenFilePath =
-        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), goldenFileName);
+    GoldenFileWriter.saveCodegenToFile(this.getClass(), goldenFileName, visitor.write());
+    Path goldenFilePath = Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), goldenFileName);
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }
