@@ -79,7 +79,7 @@ google_java_format_verification = rule(
         "srcs": attr.label_list(allow_files = True),
         "formatter": attr.label(
             executable = True,
-            cfg = "host",
+            cfg = "exec",
         ),
     },
     outputs = {"output_file": "%{name}.txt"},

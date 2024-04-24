@@ -20,4 +20,16 @@ public record VersionKey(
     return new VersionKey(pkg, name, version);
   }
 
+  @Override
+  public String toString() {
+    if (pkgManagement == PkgManagement.MAVEN) {
+      return String.format("%s:%s", name, version);
+    }
+
+    return "VersionKey{" +
+        "pkgManagement=" + pkgManagement +
+        ", name='" + name + '\'' +
+        ", version='" + version + '\'' +
+        '}';
+  }
 }
