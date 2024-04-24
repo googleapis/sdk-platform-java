@@ -51,12 +51,17 @@ public enum License {
 
   @Override
   public String toString() {
+    String nonCompliantPrefix = "%s (Not Google-compliant!)";
+    String compliantPrefix = "%s (Google-compliant)";
     Set<LicenseCategory> compliantCategories = LicenseCategory.compliantCategories();
+    if (this.categories.isEmpty()) {
+      return String.format(nonCompliantPrefix, this.licenseStr);
+    }
     for (LicenseCategory category : this.categories) {
       if (!compliantCategories.contains(category)) {
-        return String.format("%s (Not Google-compliant!)", this.licenseStr);
+        return String.format(nonCompliantPrefix, this.licenseStr);
       }
     }
-    return String.format("%s (Google-compliant)", this.licenseStr);
+    return String.format(compliantPrefix, this.licenseStr);
   }
 }
