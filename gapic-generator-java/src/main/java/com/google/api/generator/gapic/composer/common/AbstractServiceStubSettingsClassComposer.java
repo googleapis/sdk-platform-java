@@ -370,7 +370,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnType(returnType)
             .build();
 
-    if (!Strings.isNullOrEmpty(service.apiVersion())) {
+    if (service.hasApiVersion()) {
 
       returnExpr =
           MethodInvocationExpr.builder()
