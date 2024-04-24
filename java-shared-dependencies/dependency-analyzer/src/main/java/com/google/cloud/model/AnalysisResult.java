@@ -30,26 +30,17 @@ public class AnalysisResult {
     return new AnalysisResult(root, result);
   }
 
-  public ReportResult generateReport() {
-    if (!advisories.isEmpty()) {
-      formatLog(root, advisories, "New security vulnerability found in dependencies:");
+  public ReportResult getAnalysisResult() {
+    if (advisories.isEmpty() && nonCompliantLicenses.isEmpty()) {
+      return ReportResult.PASS;
     }
 
-    if (!nonCompliantLicenses.isEmpty()) {
-      formatLog(root, nonCompliantLicenses, "Non-compliant license found in dependencies:");
-    }
+    return ReportResult.FAIL;
+  }
 
-    if (!advisories.isEmpty() || !nonCompliantLicenses.isEmpty()) {
-      LOGGER.log(Level.SEVERE, String.format("Found dependency risk in %s", root));
-      return ReportResult.FAIL;
-    }
-
-    LOGGER.log(Level.INFO,
-        String.format("%s have no known vulnerabilities and non compliant licenses", root));
-    LOGGER.log(Level.INFO, "Generate package information report...");
-    System.out.println(packageInfoReport());
-
-    return ReportResult.PASS;
+  @Override
+  public String toString() {
+    return packageInfoReport();
   }
 
   private Map<VersionKey, List<Advisory>> getAdvisories(List<PackageInfo> result) {
@@ -88,26 +79,7 @@ public class AnalysisResult {
     return licenses;
   }
 
-  private <T> void formatLog(VersionKey root, Map<VersionKey, List<T>> map, String message) {
-    LOGGER.log(Level.SEVERE, message);
-    map.forEach((versionKey, list) -> {
-      LOGGER.log(Level.SEVERE, beginSeparator(versionKey, root));
-      list.forEach(item -> LOGGER.log(Level.SEVERE, item.toString()));
-      LOGGER.log(Level.SEVERE, endSeparator());
-    });
-  }
-
-  private String beginSeparator(VersionKey versionKey, VersionKey root) {
-    String relation = versionKey.equals(root) ? "self" : "dependency";
-    return String.format("====================== %s, %s of %s ======================",
-        versionKey, relation, root);
-  }
-
-  private String endSeparator() {
-    return "===========================================================";
-  }
-
-  public String packageInfoReport() {
+  private String packageInfoReport() {
     StringBuilder builder = new StringBuilder();
     PackageInfo root = packageInfos.get(0);
     String title = String.format("""
@@ -120,7 +92,7 @@ public class AnalysisResult {
 
     builder.append("## Dependencies:\n");
     if (packageInfos.size() == 1) {
-      builder.append("None");
+      builder.append(String.format("%s has no dependency.", root.versionKey()));
     } else {
       for (int i = 1; i < packageInfos.size(); i++) {
         PackageInfo info = packageInfos.get(i);
@@ -141,11 +113,12 @@ public class AnalysisResult {
     // generate the report using Markdown format.
     String packageInfoReport = """
         Licenses: %s
-        Vulnerabilities: None.
+        Vulnerabilities: %s.
         Checked in [%s (%s)](%s)
         """;
     return String.format(packageInfoReport,
         packageInfo.licenses(),
+        packageInfo.advisories(),
         versionKey.name(),
         versionKey.version(),
         getQueryUrl(

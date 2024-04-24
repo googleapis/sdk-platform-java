@@ -109,7 +109,8 @@ public class DependencyAnalyzer {
       System.exit(1);
     }
 
-    ReportResult result = analyzeReport.generateReport();
+    System.out.println(analyzeReport.toString());
+    ReportResult result = analyzeReport.getAnalysisResult();
     System.out.println(result);
     if (result.equals(ReportResult.FAIL)) {
       System.out.println(
