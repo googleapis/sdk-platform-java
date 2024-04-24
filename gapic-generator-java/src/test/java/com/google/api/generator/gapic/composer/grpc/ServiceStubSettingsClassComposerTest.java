@@ -67,7 +67,7 @@ public class ServiceStubSettingsClassComposerTest {
   public String apiShortNameExpected;
 
   @Parameterized.Parameter(3)
-  public String apiVersionExpected;
+  public String packageVersionExpected;
 
   @Test
   public void generateServiceStubSettingsClasses() {
@@ -81,6 +81,6 @@ public class ServiceStubSettingsClassComposerTest {
         clazz.classDefinition().packageString(),
         clazz.samples());
     Assert.assertCodeEquals(clazz.apiShortName(), apiShortNameExpected);
-    Assert.assertCodeEquals(clazz.apiVersion(), apiVersionExpected);
+    Assert.assertCodeEquals(clazz.packageVersion(), packageVersionExpected);
   }
 }

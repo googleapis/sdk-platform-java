@@ -470,6 +470,11 @@ public class Parser {
                 }
               }
 
+              if (serviceOptions.hasExtension(ClientProto.apiVersion)) {
+                String apiVersion = serviceOptions.getExtension(ClientProto.apiVersion);
+                serviceBuilder.setApiVersion(apiVersion);
+              }
+
               String serviceName = s.getName();
               String overriddenServiceName = serviceName;
               String pakkage = TypeParser.getPackage(fileDescriptor);
