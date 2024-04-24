@@ -327,8 +327,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
         .setGeneratedLibToken("gapic", GaxProperties.getLibraryVersion(EchoStubSettings.class))
         .setTransportToken(
             GaxHttpJsonProperties.getHttpJsonTokenName(),
-            GaxHttpJsonProperties.getHttpJsonVersion())
-        .setApiVersionToken("v1_20230601");
+            GaxHttpJsonProperties.getHttpJsonVersion());
   }
 
   /** Returns a new builder for this class. */
