@@ -244,7 +244,7 @@ class ConfigChangeTest(unittest.TestCase):
             synthtool_commitish="",
             template_excludes=[],
             grpc_version="",
-            protobuf_version="",
+            protoc_version="",
             libraries=libraries,
         )
 

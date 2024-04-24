@@ -35,7 +35,7 @@ class GenerationConfig:
         template_excludes: List[str],
         libraries: List[LibraryConfig],
         grpc_version: Optional[str] = None,
-        protobuf_version: Optional[str] = None,
+        protoc_version: Optional[str] = None,
     ):
         self.gapic_generator_version = gapic_generator_version
         self.googleapis_commitish = googleapis_commitish
@@ -45,7 +45,7 @@ class GenerationConfig:
         self.template_excludes = template_excludes
         self.libraries = libraries
         self.grpc_version = grpc_version
-        self.protobuf_version = protobuf_version
+        self.protoc_version = protoc_version
 
     def get_proto_path_to_library_name(self) -> dict[str, str]:
         """
@@ -116,7 +116,7 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
     parsed_config = GenerationConfig(
         gapic_generator_version=__required(config, "gapic_generator_version"),
         grpc_version=__optional(config, "grpc_version", None),
-        protobuf_version=__optional(config, "protobuf_version", None),
+        protoc_version=__optional(config, "protoc_version", None),
         googleapis_commitish=__required(config, "googleapis_commitish"),
         libraries_bom_version=__required(config, "libraries_bom_version"),
         owlbot_cli_image=__required(config, "owlbot_cli_image"),
