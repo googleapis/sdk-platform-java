@@ -24,7 +24,6 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "google/rpc/status.proto";
 
-package google.api.version.test;
 package google.api.version.test.v1;
 
 option java_package = "com.google.api.version.test";
