@@ -6,6 +6,7 @@ import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
 import com.google.cloud.model.AnalysisResult;
+import com.google.cloud.model.License;
 import com.google.cloud.model.ReportResult;
 import com.google.cloud.model.PackageInfo;
 import com.google.cloud.model.QueryResult;
@@ -52,11 +53,13 @@ public class DependencyAnalyzer {
     List<PackageInfo> result = new ArrayList<>();
     for (VersionKey versionKey : dependencies) {
       QueryResult packageInfo = depsDevClient.getQueryResult(versionKey);
-      List<String> licenses = new ArrayList<>();
+      List<License> licenses = new ArrayList<>();
       List<Advisory> advisories = new ArrayList<>();
       for (Result res : packageInfo.results()) {
         Version version = res.version();
-        licenses.addAll(version.licenses());
+        for (String license : version.licenses()) {
+          licenses.add(License.toLicense(license));
+        }
         for (AdvisoryKey advisoryKey : version.advisoryKeys()) {
           advisories.add(depsDevClient.getAdvisory(advisoryKey.id()));
         }
@@ -65,7 +68,7 @@ public class DependencyAnalyzer {
       result.add(new PackageInfo(versionKey, licenses, advisories));
     }
 
-    return AnalysisResult.of(root, result);
+    return AnalysisResult.of(result);
   }
 
   /**

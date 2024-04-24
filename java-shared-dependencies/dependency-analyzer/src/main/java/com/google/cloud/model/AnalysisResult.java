@@ -7,27 +7,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class AnalysisResult {
 
-  private final VersionKey root;
   private final List<PackageInfo> packageInfos;
   private final Map<VersionKey, List<Advisory>> advisories;
-  private final Map<VersionKey, List<String>> nonCompliantLicenses;
+  private final Map<VersionKey, List<License>> nonCompliantLicenses;
 
-  private final static Logger LOGGER = Logger.getLogger(AnalysisResult.class.getName());
-
-  private AnalysisResult(VersionKey root, List<PackageInfo> result) {
-    this.root = root;
+  private AnalysisResult(List<PackageInfo> result) {
     this.packageInfos = result;
     this.advisories = getAdvisories(result);
     this.nonCompliantLicenses = getNonCompliantLicenses(result);
   }
 
-  public static AnalysisResult of(VersionKey root, List<PackageInfo> result) {
-    return new AnalysisResult(root, result);
+  public static AnalysisResult of(List<PackageInfo> result) {
+    return new AnalysisResult(result);
   }
 
   public ReportResult getAnalysisResult() {
@@ -54,14 +48,13 @@ public class AnalysisResult {
     return advisories;
   }
 
-  private Map<VersionKey, List<String>> getNonCompliantLicenses(List<PackageInfo> result) {
-    Map<VersionKey, List<String>> licenses = new HashMap<>();
+  private Map<VersionKey, List<License>> getNonCompliantLicenses(List<PackageInfo> result) {
+    Map<VersionKey, List<License>> licenses = new HashMap<>();
     Set<LicenseCategory> compliantCategories = LicenseCategory.compliantCategories();
 
     result.forEach(packageInfo -> {
-      List<String> nonCompliantLicenses = new ArrayList<>();
-      for (String licenseStr : packageInfo.licenses()) {
-        License license = License.toLicense(licenseStr);
+      List<License> nonCompliantLicenses = new ArrayList<>();
+      for (License license : packageInfo.licenses()) {
         // fiter out all compliant categories, the remaining ones are non-compliant.
         List<LicenseCategory> nonCompliantCategories = license
             .getCategories()
@@ -69,7 +62,7 @@ public class AnalysisResult {
             .filter(category -> !compliantCategories.contains(category))
             .toList();
         if (!nonCompliantCategories.isEmpty()) {
-          nonCompliantLicenses.add(licenseStr);
+          nonCompliantLicenses.add(license);
         }
       }
       if (!nonCompliantLicenses.isEmpty()) {
