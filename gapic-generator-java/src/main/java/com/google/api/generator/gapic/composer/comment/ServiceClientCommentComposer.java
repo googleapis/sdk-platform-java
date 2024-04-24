@@ -40,6 +40,8 @@ public class ServiceClientCommentComposer {
   private static final String EXCEPTION_CONDITION = "if the remote call fails";
 
   // Constants.
+  private static final String SERVICE_API_VERSION_STRING =
+      "This service client implements API version: %s.";
   private static final String SERVICE_DESCRIPTION_INTRO_STRING =
       "This class provides the ability to make remote calls to the backing service through method "
           + "calls that map to API methods. Sample code to get started:";
@@ -112,6 +114,11 @@ public class ServiceClientCommentComposer {
           CommentFormatter.formatAsJavaDocComment(
               service.description(), SERVICE_DESCRIPTION_SUMMARY_PATTERN);
       classHeaderJavadocBuilder = classHeaderJavadocBuilder.addUnescapedComment(descriptionComment);
+    }
+
+    if (service.hasApiVersion()) {
+      classHeaderJavadocBuilder.addParagraph(
+          String.format(SERVICE_API_VERSION_STRING, service.apiVersion()));
     }
 
     // Service introduction.
