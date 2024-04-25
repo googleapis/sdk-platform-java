@@ -41,7 +41,7 @@ class GenerationConfigTest(unittest.TestCase):
     def test_from_yaml_succeeds(self):
         config = from_yaml(f"{test_config_dir}/generation_config.yaml")
         self.assertEqual("2.34.0", config.gapic_generator_version)
-        self.assertEqual(25.2, config.protobuf_version)
+        self.assertEqual(25.2, config.protoc_version)
         self.assertEqual(
             "1a45bf7393b52407188c82e63101db7dc9c72026", config.googleapis_commitish
         )
