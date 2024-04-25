@@ -133,3 +133,33 @@ class GenerationConfigTest(unittest.TestCase):
             libraries=[library_1, library_2],
         )
         self.assertTrue(config.is_monorepo())
+
+    def test_validate_with_duplicate_library_name_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "the same library name",
+            GenerationConfig,
+            gapic_generator_version="",
+            googleapis_commitish="",
+            libraries_bom_version="",
+            owlbot_cli_image="",
+            synthtool_commitish="",
+            template_excludes=[],
+            libraries=[
+                LibraryConfig(
+                    api_shortname="secretmanager",
+                    name_pretty="Secret API",
+                    product_documentation="",
+                    api_description="",
+                    gapic_configs=list(),
+                ),
+                LibraryConfig(
+                    api_shortname="another-secret",
+                    name_pretty="Another Secret API",
+                    product_documentation="",
+                    api_description="",
+                    gapic_configs=list(),
+                    library_name="secretmanager",
+                ),
+            ],
+        )
