@@ -69,8 +69,10 @@ class GenerationConfig:
             library_name = library.get_library_name()
             if library_name in seen_library_names:
                 raise ValueError(
-                    f"{library.name_pretty} has the same library name with "
-                    f"{seen_library_names.get(library_name)}"
+                    f"Both {library.name_pretty} and "
+                    f"{seen_library_names.get(library_name)} have the same "
+                    f"library name: {library_name}, please update one of the "
+                    f"library to have a different library name."
                 )
             seen_library_names[library_name] = library.name_pretty
 
@@ -142,9 +144,7 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
 
 def __required(config: Dict, key: str):
     if key not in config:
-        raise ValueError(
-            f"required key {key} not found in {config} " f"when parsing yaml"
-        )
+        raise ValueError(f"required key {key} is not found in yaml.")
     return config[key]
 
 
