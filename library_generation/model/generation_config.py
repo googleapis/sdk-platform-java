@@ -46,6 +46,7 @@ class GenerationConfig:
         self.libraries = libraries
         self.grpc_version = grpc_version
         self.protoc_version = protoc_version
+        self.__validate()
 
     def get_proto_path_to_library_name(self) -> dict[str, str]:
         """
@@ -61,6 +62,17 @@ class GenerationConfig:
 
     def is_monorepo(self) -> bool:
         return len(self.libraries) > 1
+
+    def __validate(self) -> None:
+        seen_library_names = dict()
+        for library in self.libraries:
+            library_name = library.get_library_name()
+            if library_name in seen_library_names:
+                raise ValueError(
+                    f"{library.name_pretty} has the same library name with "
+                    f"{seen_library_names.get(library_name)}"
+                )
+            seen_library_names[library_name] = library.name_pretty
 
 
 def from_yaml(path_to_yaml: str) -> GenerationConfig:
@@ -130,7 +142,9 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
 
 def __required(config: Dict, key: str):
     if key not in config:
-        raise ValueError(f"required key {key} not found in yaml")
+        raise ValueError(
+            f"required key {key} not found in {config} " f"when parsing yaml"
+        )
     return config[key]
 
 
