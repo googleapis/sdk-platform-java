@@ -14,6 +14,7 @@
 import os
 import unittest
 from pathlib import Path
+from parameterized import parameterized
 from library_generation.model.generation_config import from_yaml, GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 
@@ -162,4 +163,53 @@ class GenerationConfigTest(unittest.TestCase):
                     library_name="secretmanager",
                 ),
             ],
+        )
+
+    # parameterized tests need to run from the class, see
+    # https://github.com/wolever/parameterized/issues/37 for more info.
+    # This test confirms that a ValueError with an error message about a
+    # missing key (specified in the first parameter of each `parameterized`
+    # tuple) when parsing a test configuration yaml (second parameter) will
+    # be raised.
+    @parameterized.expand(
+        [
+            ("libraries", f"{test_config_dir}/config_without_libraries.yaml"),
+            ("GAPICs", f"{test_config_dir}/config_without_gapics.yaml"),
+            ("proto_path", f"{test_config_dir}/config_without_proto_path.yaml"),
+            ("api_shortname", f"{test_config_dir}/config_without_api_shortname.yaml"),
+            (
+                "api_description",
+                f"{test_config_dir}/config_without_api_description.yaml",
+            ),
+            ("name_pretty", f"{test_config_dir}/config_without_name_pretty.yaml"),
+            (
+                "product_documentation",
+                f"{test_config_dir}/config_without_product_docs.yaml",
+            ),
+            (
+                "gapic_generator_version",
+                f"{test_config_dir}/config_without_generator.yaml",
+            ),
+            (
+                "googleapis_commitish",
+                f"{test_config_dir}/config_without_googleapis.yaml",
+            ),
+            (
+                "libraries_bom_version",
+                f"{test_config_dir}/config_without_libraries_bom_version.yaml",
+            ),
+            ("owlbot_cli_image", f"{test_config_dir}/config_without_owlbot.yaml"),
+            ("synthtool_commitish", f"{test_config_dir}/config_without_synthtool.yaml"),
+            (
+                "template_excludes",
+                f"{test_config_dir}/config_without_temp_excludes.yaml",
+            ),
+        ]
+    )
+    def test_from_yaml_without_key_fails(self, error_message_contains, path_to_yaml):
+        self.assertRaisesRegex(
+            ValueError,
+            error_message_contains,
+            from_yaml,
+            path_to_yaml,
         )

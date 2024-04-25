@@ -74,6 +74,6 @@ class EntryPointTest(unittest.TestCase):
         self.assertEqual(1, result.exit_code)
         self.assertEqual(SystemExit, result.exc_info[0])
         self.assertRegex(
-            result.output.title(),
-            "Cloud Asset Inventory Has The Same Library Name With Cloud Asset",
+            result.output,
+            "have the same library name",
         )
