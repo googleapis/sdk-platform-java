@@ -9,10 +9,10 @@ import java.util.List;
  */
 public record PackageInfo(
     VersionKey versionKey,
-    List<String> licenses,
+    List<License> licenses,
     List<Advisory> advisories) {
 
-  public List<String> licenses() {
+  public List<License> licenses() {
     return ImmutableList.copyOf(licenses);
   }
 
