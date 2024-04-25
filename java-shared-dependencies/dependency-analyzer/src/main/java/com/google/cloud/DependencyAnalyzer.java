@@ -112,6 +112,7 @@ public class DependencyAnalyzer {
       System.exit(1);
     }
 
+    System.out.println("Please copy and paste the package information below to your ticket.\n");
     System.out.println(analyzeReport.toString());
     ReportResult result = analyzeReport.getAnalysisResult();
     System.out.println(result);

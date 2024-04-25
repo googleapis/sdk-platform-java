@@ -76,14 +76,12 @@ public class AnalysisResult {
     StringBuilder builder = new StringBuilder();
     PackageInfo root = packageInfos.get(0);
     String title = String.format("""
-        Please copy and paste the package information below to your ticket.
-                
         ## Package information of %s
         %s
         """, root.versionKey(), packageInfoSection(root));
     builder.append(title);
 
-    builder.append("## Dependencies:\n");
+    builder.append("## Dependencies\n");
     if (packageInfos.size() == 1) {
       builder.append(String.format("%s has no dependency.", root.versionKey()));
     } else {

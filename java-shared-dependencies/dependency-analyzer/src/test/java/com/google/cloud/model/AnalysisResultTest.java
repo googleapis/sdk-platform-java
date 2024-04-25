@@ -81,14 +81,12 @@ public class AnalysisResultTest {
         )
     );
     assertEquals("""
-        Please copy and paste the package information below to your ticket.
-                
         ## Package information of com.example:artifact:1.2.3
         Licenses: [Apache-2.0 (Google-compliant)]
         Vulnerabilities: [].
         Checked in [com.example:artifact (1.2.3)](https://api.deps.dev/v3/query?versionKey.system=MAVEN&versionKey.name=com.example:artifact&versionKey.version=1.2.3)
                 
-        ## Dependencies:
+        ## Dependencies
         ### Package information of com.example:dependency:4.5.6
         Licenses: [Apache-2.0 (Google-compliant), MIT (Google-compliant)]
         Vulnerabilities: [].
@@ -131,14 +129,12 @@ public class AnalysisResultTest {
         )
     );
     assertEquals("""
-        Please copy and paste the package information below to your ticket.
-                
         ## Package information of com.example:artifact:1.2.3
         Licenses: [Apache-2.0 (Google-compliant), BCL (Not Google-compliant!)]
         Vulnerabilities: [].
         Checked in [com.example:artifact (1.2.3)](https://api.deps.dev/v3/query?versionKey.system=MAVEN&versionKey.name=com.example:artifact&versionKey.version=1.2.3)
                 
-        ## Dependencies:
+        ## Dependencies
         ### Package information of com.example:dependency:4.5.6
         Licenses: [MIT (Google-compliant)]
         Vulnerabilities: [Advisory (id: GHSA-2qrg-x229-3v8q, more info: [Deserialization of Untrusted Data in Log4j](https://osv.dev/vulnerability/GHSA-2qrg-x229-3v8q))].
