@@ -11,9 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 import unittest
 from click.testing import CliRunner
 from library_generation.cli.entry_point import generate, validate_generation_config
+
+script_dir = os.path.dirname(os.path.realpath(__file__))
+test_resource_dir = os.path.join(script_dir, "..", "resources", "test-config")
 
 
 class EntryPointTest(unittest.TestCase):
@@ -52,9 +56,7 @@ class EntryPointTest(unittest.TestCase):
         # noinspection PyTypeChecker
         result = runner.invoke(
             validate_generation_config,
-            [
-                "--generation-config-path=../resources/test-config/generation_config.yaml"
-            ],
+            [f"--generation-config-path={test_resource_dir}/generation_config.yaml"],
         )
         self.assertEqual(0, result.exit_code)
 
@@ -66,7 +68,7 @@ class EntryPointTest(unittest.TestCase):
         result = runner.invoke(
             validate_generation_config,
             [
-                "--generation-config-path=../resources/test-config/generation_config_with_duplicate_library_name.yaml"
+                f"--generation-config-path={test_resource_dir}/generation_config_with_duplicate_library_name.yaml"
             ],
         )
         self.assertEqual(1, result.exit_code)

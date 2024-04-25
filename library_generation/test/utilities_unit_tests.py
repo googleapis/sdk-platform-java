@@ -344,17 +344,6 @@ class UtilitiesTest(unittest.TestCase):
             ["java-bare-metal-solution", "java-secretmanager"], library_path
         )
 
-    def test_prepare_repo_monorepo_duplicated_library_name_failed(self):
-        gen_config = self.__get_a_gen_config(3)
-        self.assertRaisesRegex(
-            ValueError,
-            "secretmanager",
-            util.prepare_repo,
-            gen_config,
-            gen_config.libraries,
-            f"{resources_dir}/misc",
-        )
-
     def test_prepare_repo_monorepo_failed(self):
         gen_config = self.__get_a_gen_config(2)
         self.assertRaises(
