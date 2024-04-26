@@ -12,12 +12,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-
 import yaml
-from typing import List, Optional, Dict
+from typing import Optional
 from library_generation.model.library_config import LibraryConfig
 from library_generation.model.gapic_config import GapicConfig
+
+REPO_LEVEL_PARAMETER = "Repo level parameter"
+LIBRARY_LEVEL_PARAMETER = "Library level parameter"
+GAPIC_LEVEL_PARAMETER = "GAPIC level parameter"
 
 
 class GenerationConfig:
@@ -32,8 +34,8 @@ class GenerationConfig:
         libraries_bom_version: str,
         owlbot_cli_image: str,
         synthtool_commitish: str,
-        template_excludes: List[str],
-        libraries: List[LibraryConfig],
+        template_excludes: list[str],
+        libraries: list[LibraryConfig],
         grpc_version: Optional[str] = None,
         protoc_version: Optional[str] = None,
     ):
@@ -46,6 +48,7 @@ class GenerationConfig:
         self.libraries = libraries
         self.grpc_version = grpc_version
         self.protoc_version = protoc_version
+        self.__validate()
 
     def get_proto_path_to_library_name(self) -> dict[str, str]:
         """
@@ -62,6 +65,19 @@ class GenerationConfig:
     def is_monorepo(self) -> bool:
         return len(self.libraries) > 1
 
+    def __validate(self) -> None:
+        seen_library_names = dict()
+        for library in self.libraries:
+            library_name = library.get_library_name()
+            if library_name in seen_library_names:
+                raise ValueError(
+                    f"Both {library.name_pretty} and "
+                    f"{seen_library_names.get(library_name)} have the same "
+                    f"library name: {library_name}, please update one of the "
+                    f"library to have a different library name."
+                )
+            seen_library_names[library_name] = library.name_pretty
+
 
 def from_yaml(path_to_yaml: str) -> GenerationConfig:
     """
@@ -72,15 +88,19 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
     with open(path_to_yaml, "r") as file_stream:
         config = yaml.safe_load(file_stream)
 
-    libraries = __required(config, "libraries")
+    libraries = __required(config, "libraries", REPO_LEVEL_PARAMETER)
+    if not libraries:
+        raise ValueError(f"Library is None in {path_to_yaml}.")
 
     parsed_libraries = list()
     for library in libraries:
         gapics = __required(library, "GAPICs")
 
         parsed_gapics = list()
+        if not gapics:
+            raise ValueError(f"GAPICs is None in {library}.")
         for gapic in gapics:
-            proto_path = __required(gapic, "proto_path")
+            proto_path = __required(gapic, "proto_path", GAPIC_LEVEL_PARAMETER)
             new_gapic = GapicConfig(proto_path)
             parsed_gapics.append(new_gapic)
 
@@ -114,27 +134,40 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         parsed_libraries.append(new_library)
 
     parsed_config = GenerationConfig(
-        gapic_generator_version=__required(config, "gapic_generator_version"),
+        gapic_generator_version=__required(
+            config, "gapic_generator_version", REPO_LEVEL_PARAMETER
+        ),
         grpc_version=__optional(config, "grpc_version", None),
         protoc_version=__optional(config, "protoc_version", None),
-        googleapis_commitish=__required(config, "googleapis_commitish"),
-        libraries_bom_version=__required(config, "libraries_bom_version"),
-        owlbot_cli_image=__required(config, "owlbot_cli_image"),
-        synthtool_commitish=__required(config, "synthtool_commitish"),
-        template_excludes=__required(config, "template_excludes"),
+        googleapis_commitish=__required(
+            config, "googleapis_commitish", REPO_LEVEL_PARAMETER
+        ),
+        libraries_bom_version=__required(
+            config, "libraries_bom_version", REPO_LEVEL_PARAMETER
+        ),
+        owlbot_cli_image=__required(config, "owlbot_cli_image", REPO_LEVEL_PARAMETER),
+        synthtool_commitish=__required(
+            config, "synthtool_commitish", REPO_LEVEL_PARAMETER
+        ),
+        template_excludes=__required(config, "template_excludes", REPO_LEVEL_PARAMETER),
         libraries=parsed_libraries,
     )
 
     return parsed_config
 
 
-def __required(config: Dict, key: str):
+def __required(config: dict, key: str, level: str = LIBRARY_LEVEL_PARAMETER):
     if key not in config:
-        raise ValueError(f"required key {key} not found in yaml")
+        message = (
+            f"{level}, {key}, is not found in {config} in yaml."
+            if level != REPO_LEVEL_PARAMETER
+            else f"{level}, {key}, is not found in yaml."
+        )
+        raise ValueError(message)
     return config[key]
 
 
-def __optional(config: Dict, key: str, default: any):
+def __optional(config: dict, key: str, default: any):
     if key not in config:
         return default
     return config[key]
