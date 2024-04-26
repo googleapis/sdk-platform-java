@@ -231,7 +231,7 @@ class GenerationConfigTest(unittest.TestCase):
     def test_from_yaml_without_api_description_raise_exception(self):
         self.assertRaisesRegex(
             ValueError,
-            "Library level parameter, api_description",
+            r"Library level parameter, api_description.*'api_shortname': 'apigeeconnect'.*",
             from_yaml,
             f"{test_config_dir}/config_without_api_description.yaml",
         )
@@ -239,7 +239,7 @@ class GenerationConfigTest(unittest.TestCase):
     def test_from_yaml_without_name_pretty_raise_exception(self):
         self.assertRaisesRegex(
             ValueError,
-            "Library level parameter, name_pretty",
+            r"Library level parameter, name_pretty.*'api_shortname': 'apigeeconnect'.*",
             from_yaml,
             f"{test_config_dir}/config_without_name_pretty.yaml",
         )
@@ -247,7 +247,7 @@ class GenerationConfigTest(unittest.TestCase):
     def test_from_yaml_without_product_documentation_raise_exception(self):
         self.assertRaisesRegex(
             ValueError,
-            "Library level parameter, product_documentation",
+            r"Library level parameter, product_documentation.*'api_shortname': 'apigeeconnect'.*",
             from_yaml,
             f"{test_config_dir}/config_without_product_docs.yaml",
         )
@@ -255,9 +255,9 @@ class GenerationConfigTest(unittest.TestCase):
     def test_from_yaml_without_gapics_raise_exception(self):
         self.assertRaisesRegex(
             ValueError,
-            "Library level parameter, GAPICs",
+            "Library level parameter, GAPICs.*'api_shortname': 'apigeeconnect'.*",
             from_yaml,
-            f"{test_config_dir}/config_without_gapics.yaml",
+            f"{test_config_dir}/config_without_gapics_key.yaml",
         )
 
     def test_from_yaml_without_proto_path_raise_exception(self):
@@ -266,4 +266,20 @@ class GenerationConfigTest(unittest.TestCase):
             "GAPIC level parameter, proto_path",
             from_yaml,
             f"{test_config_dir}/config_without_proto_path.yaml",
+        )
+
+    def test_from_yaml_with_zero_library_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "Library is None",
+            from_yaml,
+            f"{test_config_dir}/config_without_library_value.yaml",
+        )
+
+    def test_from_yaml_with_zero_proto_path_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            r"GAPICs is None in.*'api_shortname': 'apigeeconnect'.*",
+            from_yaml,
+            f"{test_config_dir}/config_without_gapics_value.yaml",
         )

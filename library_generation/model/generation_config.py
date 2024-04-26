@@ -91,12 +91,16 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         config = yaml.safe_load(file_stream)
 
     libraries = __required(config, "libraries", REPO_LEVEL_PARAMETER)
+    if not libraries:
+        raise ValueError(f"Library is None in {path_to_yaml}.")
 
     parsed_libraries = list()
     for library in libraries:
         gapics = __required(library, "GAPICs")
 
         parsed_gapics = list()
+        if not gapics:
+            raise ValueError(f"GAPICs is None in {library}.")
         for gapic in gapics:
             proto_path = __required(gapic, "proto_path", GAPIC_LEVEL_PARAMETER)
             new_gapic = GapicConfig(proto_path)
