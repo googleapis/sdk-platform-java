@@ -12,10 +12,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-
 import yaml
-from typing import List, Optional, Dict
+from typing import Optional
 from library_generation.model.library_config import LibraryConfig
 from library_generation.model.gapic_config import GapicConfig
 
@@ -36,8 +34,8 @@ class GenerationConfig:
         libraries_bom_version: str,
         owlbot_cli_image: str,
         synthtool_commitish: str,
-        template_excludes: List[str],
-        libraries: List[LibraryConfig],
+        template_excludes: list[str],
+        libraries: list[LibraryConfig],
         grpc_version: Optional[str] = None,
         protoc_version: Optional[str] = None,
     ):
@@ -158,7 +156,7 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
     return parsed_config
 
 
-def __required(config: Dict, key: str, level: str = LIBRARY_LEVEL_PARAMETER):
+def __required(config: dict, key: str, level: str = LIBRARY_LEVEL_PARAMETER):
     if key not in config:
         message = (
             f"{level}, {key}, is not found in {config} in yaml."
@@ -169,7 +167,7 @@ def __required(config: Dict, key: str, level: str = LIBRARY_LEVEL_PARAMETER):
     return config[key]
 
 
-def __optional(config: Dict, key: str, default: any):
+def __optional(config: dict, key: str, default: any):
     if key not in config:
         return default
     return config[key]
