@@ -19,8 +19,9 @@ from typing import List, Optional, Dict
 from library_generation.model.library_config import LibraryConfig
 from library_generation.model.gapic_config import GapicConfig
 
-LIBRARY_LEVEL_PARAMETER = "Library-level parameter"
-REPO_LEVEL_PARAMETER = "Repo-level parameter"
+REPO_LEVEL_PARAMETER = "Repo level parameter"
+LIBRARY_LEVEL_PARAMETER = "Library level parameter"
+GAPIC_LEVEL_PARAMETER = "GAPIC level parameter"
 
 
 class GenerationConfig:
@@ -97,7 +98,7 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
 
         parsed_gapics = list()
         for gapic in gapics:
-            proto_path = __required(gapic, "proto_path")
+            proto_path = __required(gapic, "proto_path", GAPIC_LEVEL_PARAMETER)
             new_gapic = GapicConfig(proto_path)
             parsed_gapics.append(new_gapic)
 
@@ -157,7 +158,7 @@ def __required(config: Dict, key: str, level: str = LIBRARY_LEVEL_PARAMETER):
     if key not in config:
         message = (
             f"{level}, {key}, is not found in {config} in yaml."
-            if level == LIBRARY_LEVEL_PARAMETER
+            if level != REPO_LEVEL_PARAMETER
             else f"{level}, {key}, is not found in yaml."
         )
         raise ValueError(message)
