@@ -19,6 +19,9 @@ from typing import List, Optional, Dict
 from library_generation.model.library_config import LibraryConfig
 from library_generation.model.gapic_config import GapicConfig
 
+LIBRARY_LEVEL_PARAMETER = "Library-level parameter"
+REPO_LEVEL_PARAMETER = "Repo-level parameter"
+
 
 class GenerationConfig:
     """
@@ -86,7 +89,7 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
     with open(path_to_yaml, "r") as file_stream:
         config = yaml.safe_load(file_stream)
 
-    libraries = __required(config, "libraries")
+    libraries = __required(config, "libraries", REPO_LEVEL_PARAMETER)
 
     parsed_libraries = list()
     for library in libraries:
@@ -128,23 +131,36 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         parsed_libraries.append(new_library)
 
     parsed_config = GenerationConfig(
-        gapic_generator_version=__required(config, "gapic_generator_version"),
+        gapic_generator_version=__required(
+            config, "gapic_generator_version", REPO_LEVEL_PARAMETER
+        ),
         grpc_version=__optional(config, "grpc_version", None),
         protoc_version=__optional(config, "protoc_version", None),
-        googleapis_commitish=__required(config, "googleapis_commitish"),
-        libraries_bom_version=__required(config, "libraries_bom_version"),
-        owlbot_cli_image=__required(config, "owlbot_cli_image"),
-        synthtool_commitish=__required(config, "synthtool_commitish"),
-        template_excludes=__required(config, "template_excludes"),
+        googleapis_commitish=__required(
+            config, "googleapis_commitish", REPO_LEVEL_PARAMETER
+        ),
+        libraries_bom_version=__required(
+            config, "libraries_bom_version", REPO_LEVEL_PARAMETER
+        ),
+        owlbot_cli_image=__required(config, "owlbot_cli_image", REPO_LEVEL_PARAMETER),
+        synthtool_commitish=__required(
+            config, "synthtool_commitish", REPO_LEVEL_PARAMETER
+        ),
+        template_excludes=__required(config, "template_excludes", REPO_LEVEL_PARAMETER),
         libraries=parsed_libraries,
     )
 
     return parsed_config
 
 
-def __required(config: Dict, key: str):
+def __required(config: Dict, key: str, level: str = LIBRARY_LEVEL_PARAMETER):
     if key not in config:
-        raise ValueError(f"required key {key} is not found in yaml.")
+        message = (
+            f"{level}, {key}, is not found in {config} in yaml."
+            if level == LIBRARY_LEVEL_PARAMETER
+            else f"{level}, {key}, is not found in yaml."
+        )
+        raise ValueError(message)
     return config[key]
 
 
