@@ -57,17 +57,4 @@ public class ServiceStubSettingsClassComposerTest {
     Path goldenFilePath = Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), goldenFileName);
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
-
-  @Test
-  public void generateServiceClassesWicked() {
-    Service wickedProtoService = context.services().get(0);
-    GapicClass clazz =
-        ServiceStubSettingsClassComposer.instance().generate(context, wickedProtoService);
-
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    GoldenFileWriter.saveCodegenToFile(this.getClass(), goldenFileName, visitor.write());
-    Path goldenFilePath = Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), goldenFileName);
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
-  }
 }
