@@ -54,6 +54,12 @@ public class ServiceStubSettingsClassComposerTest {
             GrpcTestProtoLoader.instance().parseDeprecatedService(),
             "localhost:7469",
             "v1"
+          },
+          {
+            "ApiVersionTestingStubSettings",
+            GrpcTestProtoLoader.instance().parseApiVersionTesting(),
+            "localhost:7469",
+            "v1"
           }
         });
   }
