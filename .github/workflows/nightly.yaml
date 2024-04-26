@@ -23,7 +23,7 @@ jobs:
           distribution: temurin
           cache: maven
       - run: mvn -version
-      - name: Unit Tests
+      - name: Install
         run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -T 1C
       - name: Create issue if previous step fails
         if: ${{ failure() }}
