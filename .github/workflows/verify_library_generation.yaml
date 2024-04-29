@@ -18,7 +18,7 @@ jobs:
       shell: bash
       run: |
         set -ex
-        echo "changed_directories=$(git diff --name-only ${{ github.event.pull_request.base.ref }} HEAD)"
+        echo "changed_directories=$(git diff --name-only ${{ github.event.pull_request.base.sha }} HEAD)"
         if [[ "${changed_directories}" == "*library_generation*" ]]; then
           echo "should_run=true" >> $GITHUB_ENV
         else
