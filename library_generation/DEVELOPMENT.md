@@ -1,3 +1,7 @@
+> [!IMPORTANT]
+> All examples assume you are inside the `library_generation` folder
+
+
 # Linting
 
 When contributing, ensure your changes to python code have a valid
@@ -5,7 +9,7 @@ format.
 
 ```
 python -m pip install black
-black library_generation
+black .
 ```
 
 # Running the integration tests
@@ -18,11 +22,25 @@ code declared in a "golden branch" of the repo.
 It requires docker and python 3.x to be installed.
 
 ```
-cd library_generation
 python -m pip install .
 python -m pip install -r requirements.txt
 python -m unittest test/integration_tests.py
 ```
+
+# Running the unit tests
+
+The unit tests of the hermetic build scripts are contained in several scripts,
+corresponding to a specific component. Every unit test script ends with
+`unit_tests.py`. To avoid them specifying them
+individually, we can use the following command:
+
+```bash
+python -m unittest discover -s test/ -p "*unit_tests.py"
+```
+
+> [!NOTE]
+> The output of this command may look erratic during the first 30 seconds.
+> This is normal. After the tests are done, an "OK" message should be shown.
 
 # Running the scripts in your local environment
 
@@ -89,13 +107,44 @@ export path_to_repo="$(pwd)/google-cloud-java"
 
 ### Install the scripts
 ```
-cd library_generation
 python -m pip install .
 ```
 
 ### Run the script
 ```
-cd library_generation
 python cli/entry_point.py --repository-path "${path_to_repo}"
 ```
 
+
+# Running the scripts using the docker container image
+This is convenient in order to avoid installing the dependencies manually. 
+
+> [!IMPORTANT]
+> From now, the examples assume you are in the root of your sdk-platform-java
+> folder
+
+## Build the docker image
+```bash
+docker build --file .cloudbuild/library_generation/library_generation.Dockerfile --iidfile image-id .
+```
+
+This will create an `image-id` file at the root of the repo with the hash ID of
+the image.
+
+## Run the docker image
+The docker image will perform changes on its internal `/workspace` folder, to which you
+need to map a folder on your host machine (i.e. map your downloaded repo to this
+folder).
+
+To run the docker container on the google-cloud-java repo, you must run:
+```bash
+docker run -u "$(id -u)":"$(id -g)"  -v/path/to/google-cloud-java:/workspace $(cat image-id)
+```
+
+ * `-u "$(id -u)":"$(id -g)"` makes docker run the container impersonating
+   yourself. This avoids folder ownership changes since it runs as root by
+   default.
+ * `-v/path/to/google-cloud-java:/workspace` maps the host machine's
+   google-cloud-java folder to the /workspace folder. The image is configured to
+   perform changes in this directory
+ * `$(cat image-id)` obtains the image ID created in the build step
