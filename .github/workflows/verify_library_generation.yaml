@@ -3,14 +3,34 @@ on:
     branches:
     - main
   pull_request:
-    paths:
-    - library_generation/**
 
   workflow_dispatch:
 name: verify_library_generation
 jobs:
+  should-run-library-generation-tests:
+    runs-on: ubuntu-22.04
+    outputs:
+      should_run: ${{ steps.get_changed_directories.outputs.should_run }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: get changed directories
+    - id: get_changed_directories
+    - shell: bash
+    - run: |
+        set -ex
+        echo "changed_directories=$(git diff --name-only ${{ github.event.pull_request.base.ref }} HEAD)"
+        if [[ "${changed_directories}" == "*library_generation*" ]]; then
+          echo "should_run=true" >> $GITHUB_ENV
+        else
+          echo "should_run=false" >> $GITHUB_ENV
+        fi
   integration_tests:
     runs-on: ubuntu-22.04
+    needs: should-run-library-generation-tests
+    env:
+      should_run: ${{needs.should-run-library-generation-tests.outputs.should_run }}
+    if: |
+      "${should_run}" == "true"
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
