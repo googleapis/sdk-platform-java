@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: should-run-library-generation-tests
     if: |
-      needs.should-run-library-generation-tests.outputs.should_run == 'true'
+      ${{ needs.should-run-library-generation-tests.outputs.should_run == 'true' }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
@@ -70,7 +70,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs: should-run-library-generation-tests
     if: |
-      needs.should-run-library-generation-tests.outputs.should_run == 'true'
+      ${{ needs.should-run-library-generation-tests.outputs.should_run == 'true' }}
     strategy:
       matrix:
         java: [ 8 ]
@@ -120,7 +120,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: should-run-library-generation-tests
     if: |
-      needs.should-run-library-generation-tests.outputs.should_run == 'true'
+      ${{ needs.should-run-library-generation-tests.outputs.should_run == 'true' }}
     steps:
     - uses: actions/checkout@v4
     - name: Run ShellCheck
@@ -133,7 +133,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: should-run-library-generation-tests
     if: |
-      needs.should-run-library-generation-tests.outputs.should_run == 'true'
+      ${{ needs.should-run-library-generation-tests.outputs.should_run == 'true' }}
     steps:
     - uses: actions/checkout@v4
     - name: install python dependencies
