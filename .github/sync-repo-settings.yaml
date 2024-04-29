@@ -20,11 +20,11 @@ branchProtectionRules:
   - cla/google
   - enforcer
   - lint
+  - header-check
+  - OwlBot Post Processor
   # checks for library generation
   - unit_tests (8, ubuntu-22.04)
   - unit_tests (8, macos-12)
   - integration_tests
   - lint-python
   - lint-shell
-  - header-check
-  - OwlBot Post Processor
