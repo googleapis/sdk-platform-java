@@ -94,7 +94,7 @@ They are shared by library level parameters.
 | Name                    | Required | Notes                                        |
 |:------------------------|:--------:|:---------------------------------------------|
 | gapic_generator_version |   Yes    |                                              |
-| protobuf_version        |    No    | inferred from the generator if not specified |
+| protoc_version          |    No    | inferred from the generator if not specified |
 | grpc_version            |    No    | inferred from the generator if not specified |
 | googleapis-commitish    |   Yes    |                                              |
 | libraries_bom_version   |   Yes    |                                              |
@@ -144,7 +144,7 @@ The GAPIC level parameters define how to generate a GAPIC library.
 
 ```yaml
 gapic_generator_version: 2.34.0
-protobuf_version: 25.2
+protoc_version: 25.2
 googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
 libraries_bom_version: 26.37.0
 destination_path: google-cloud-java

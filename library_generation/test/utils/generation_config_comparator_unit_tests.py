@@ -42,7 +42,7 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             libraries_bom_version="",
             template_excludes=[],
             grpc_version="",
-            protobuf_version="",
+            protoc_version="",
             libraries=[self.baseline_library],
         )
         self.current_config = GenerationConfig(
@@ -51,7 +51,7 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             libraries_bom_version="",
             template_excludes=[],
             grpc_version="",
-            protobuf_version="",
+            protoc_version="",
             libraries=[self.current_library],
         )
 
@@ -104,8 +104,8 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         self.assertEqual("26.37.0", config_change.current_value)
 
     def test_compare_protobuf_update(self):
-        self.baseline_config.protobuf_version = "3.25.2"
-        self.current_config.protobuf_version = "3.27.0"
+        self.baseline_config.protoc_version = "3.25.2"
+        self.current_config.protoc_version = "3.27.0"
         result = compare_config(
             baseline_config=self.baseline_config,
             current_config=self.current_config,
@@ -114,7 +114,7 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 1
         )
         config_change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
-        self.assertEqual("protobuf_version", config_change.changed_param)
+        self.assertEqual("protoc_version", config_change.changed_param)
         self.assertEqual("3.27.0", config_change.current_value)
 
     def test_compare_config_grpc_update(self):

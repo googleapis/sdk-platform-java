@@ -1,5 +1,5 @@
 gapic_generator_version: 2.38.1
-protobuf_version: 25.2
+protoc_version: 25.2
 googleapis_commitish: a17d4caf184b050d50cacf2b0d579ce72c31ce74
 libraries_bom_version: 26.37.0
 template_excludes:

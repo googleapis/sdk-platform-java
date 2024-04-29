@@ -63,7 +63,7 @@ class GeneratePrDescriptionTest(unittest.TestCase):
                 libraries_bom_version="",
                 template_excludes=[],
                 grpc_version="",
-                protobuf_version="",
+                protoc_version="",
                 libraries=[],
             ),
             baseline_commit=commit_sha,

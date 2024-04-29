@@ -26,7 +26,6 @@ from library_generation.utils import utilities as util
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.gapic_inputs import parse as parse_build_file
-from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
 from library_generation.test.test_utils import FileComparator
 from library_generation.test.test_utils import cleanup
@@ -113,53 +112,6 @@ class UtilitiesTest(unittest.TestCase):
         result = stderr_capture.getvalue()
         # print() appends a `\n` each time it's called
         self.assertEqual(test_input + "\n", result)
-
-    # parameterized tests need to run from the class, see
-    # https://github.com/wolever/parameterized/issues/37 for more info.
-    # This test confirms that a ValueError with an error message about a
-    # missing key (specified in the first parameter of each `parameterized`
-    # tuple) when parsing a test configuration yaml (second parameter) will
-    # be raised.
-    @parameterized.expand(
-        [
-            ("libraries", f"{test_config_dir}/config_without_libraries.yaml"),
-            ("GAPICs", f"{test_config_dir}/config_without_gapics.yaml"),
-            ("proto_path", f"{test_config_dir}/config_without_proto_path.yaml"),
-            ("api_shortname", f"{test_config_dir}/config_without_api_shortname.yaml"),
-            (
-                "api_description",
-                f"{test_config_dir}/config_without_api_description.yaml",
-            ),
-            ("name_pretty", f"{test_config_dir}/config_without_name_pretty.yaml"),
-            (
-                "product_documentation",
-                f"{test_config_dir}/config_without_product_docs.yaml",
-            ),
-            (
-                "gapic_generator_version",
-                f"{test_config_dir}/config_without_generator.yaml",
-            ),
-            (
-                "googleapis_commitish",
-                f"{test_config_dir}/config_without_googleapis.yaml",
-            ),
-            (
-                "libraries_bom_version",
-                f"{test_config_dir}/config_without_libraries_bom_version.yaml",
-            ),
-            (
-                "template_excludes",
-                f"{test_config_dir}/config_without_temp_excludes.yaml",
-            ),
-        ]
-    )
-    def test_from_yaml_without_key_fails(self, error_message_contains, path_to_yaml):
-        self.assertRaisesRegex(
-            ValueError,
-            error_message_contains,
-            from_yaml,
-            path_to_yaml,
-        )
 
     @parameterized.expand(
         [
@@ -340,17 +292,6 @@ class UtilitiesTest(unittest.TestCase):
         library_path = sorted([Path(key).name for key in repo_config.libraries])
         self.assertEqual(
             ["java-bare-metal-solution", "java-secretmanager"], library_path
-        )
-
-    def test_prepare_repo_monorepo_duplicated_library_name_failed(self):
-        gen_config = self.__get_a_gen_config(3)
-        self.assertRaisesRegex(
-            ValueError,
-            "secretmanager",
-            util.prepare_repo,
-            gen_config,
-            gen_config.libraries,
-            f"{resources_dir}/misc",
         )
 
     def test_prepare_repo_monorepo_failed(self):

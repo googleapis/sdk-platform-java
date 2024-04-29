@@ -17,37 +17,58 @@ syntax = "proto3";
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
+import "google/api/field_info.proto";
 import "google/api/resource.proto";
 import "google/longrunning/operations.proto";
 import "google/protobuf/duration.proto";
-import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/rpc/status.proto";
-import "google/protobuf/field_mask.proto";
 
-package google.showcase.grpcrest.v1beta1;
+package google.api.version.test.v1;
 
-option go_package = "github.com/googleapis/gapic-showcase-grpcrest/server/genproto";
-option java_package = "com.google.showcase.grpcrest.v1beta1";
+option java_package = "com.google.api.version.test";
 option java_multiple_files = true;
+option java_outer_classname = "ApiVersionTestingOuterClass";
 
 option (google.api.resource_definition) = {
   type: "showcase.googleapis.com/AnythingGoes"
   pattern: "*"
 };
+// This proto is used to test scenarios related to api_version feature.
+// api_version is set on service level, so this proto includes various services
+// to test different scenarios.
 
-// This service is used showcase the four main types of rpcs - unary, server
-// side streaming, client side streaming, and bidirectional streaming. This
-// service also exposes methods that explicitly implement server delay, and
-// paginated calls. Set the 'showcase-trailer' metadata key on any method
-// to have the values echoed in the response trailers.
-service Echo {
+// This service is used to test when api_version string is provided.
+service EchoWithVersion {
+  // This service is meant to only run locally on the port 7469 (keypad digits
+  // for "show").
+  option (google.api.default_host) = "localhost:7469";
+  option (google.api.api_version) = "fake_version";
+  option (google.api.oauth_scopes) =
+      "https://www.googleapis.com/auth/cloud-platform";
+
+  // This method simply echos the request. This method is showcases unary rpcs.
+  rpc EchoWithVersionMethod(EchoRequest) returns (EchoResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/echo:echo"
+      body: "*"
+    };
+    option (google.api.method_signature) = "content";
+    option (google.api.method_signature) = "error";
+    option (google.api.method_signature) = "content,severity";
+    option (google.api.method_signature) = "name";
+    option (google.api.method_signature) = "parent";
+    option (google.api.method_signature) = "";
+  }
+}
+
+// This service is used to test when api_version is not provided.
+service EchoWithoutVersion {
   // This service is meant to only run locally on the port 7469 (keypad digits
   // for "show").
   option (google.api.default_host) = "localhost:7469";
   option (google.api.oauth_scopes) =
-      "https://www.googleapis.com/auth/cloud-platform";
-  option (google.api.api_version) = "foo_version_for_tests";
+    "https://www.googleapis.com/auth/cloud-platform";
 
   // This method simply echos the request. This method is showcases unary rpcs.
   rpc Echo(EchoRequest) returns (EchoResponse) {
@@ -62,110 +83,30 @@ service Echo {
     option (google.api.method_signature) = "parent";
     option (google.api.method_signature) = "";
   }
-
-  // This method split the given content into words and will pass each word back
-  // through the stream. This method showcases server-side streaming rpcs.
-  rpc Expand(ExpandRequest) returns (stream EchoResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/echo:expand"
-      body: "error"
-    };
-    option (google.api.method_signature) = "content,error";
-  }
-
-  // This is similar to the Expand method but instead of returning a stream of
-  // expanded words, this method returns a paged list of expanded words.
-  rpc PagedExpand(PagedExpandRequest) returns (PagedExpandResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/echo:pagedExpand"
-      body: "*"
-    };
-  }
-
-  rpc SimplePagedExpand(PagedExpandRequest) returns (PagedExpandResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/echo:pagedExpand"
-      body: "*"
-    };
-    option (google.api.method_signature) = "";
-  }
-
-  // This method will wait the requested amount of and then return.
-  // This method showcases how a client handles a request timing out.
-  rpc Wait(WaitRequest) returns (google.longrunning.Operation) {
-    option (google.api.http) = {
-      post: "/v1beta1/echo:wait"
-      body: "*"
-    };
-    option (google.longrunning.operation_info) = {
-      response_type: "WaitResponse"
-      metadata_type: "WaitMetadata"
-    };
-    option (google.api.method_signature) = "end_time";
-    option (google.api.method_signature) = "ttl";
-  }
-
-  // This method will block (wait) for the requested amount of time
-  // and then return the response or error.
-  // This method showcases how a client handles delays or retries.
-  rpc Block(BlockRequest) returns (BlockResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/echo:block"
-      body: "*"
-    };
-  };
-
-  // This method primarily tests Java name collisions by using the Object
-  // message.
-  rpc CollideName(EchoRequest) returns (Object) {
-    option (google.api.http) = {
-      post: "/v1beta1/echo:foo"
-      body: "*"
-    };
-  }
-
-  rpc NestedBinding(EchoRequest) returns (Object) {
-    option (google.api.http) = {
-      post: "/v1beta1/{foo_bar.name=projects/*/foobars/*}/echo:foo"
-      body: "*"
-      additional_bindings {
-        post: "/v1beta1/{foo_bar.name=cats/*/dogs/*}/echo:foo"
-        body: "*"
-      }
-      additional_bindings {
-        post: "/v1beta1/{foo_bar.name=turtles/*/parrots/*}/echo:foo"
-        body: "*"
-      }
-    };
-  }
-
-  rpc Chat(stream EchoRequest) returns (stream EchoResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/chat:chat"
-      body: "error"
-    };
-  }
-
-  rpc NoBinding(EchoRequest) returns (EchoResponse);
-
-  //The request message contains a field name that is a Java keyword(case),
-  //the field is also a resource and used in http annotations
-  rpc UpdateCase(UpdateCaseRequest) returns (Case) {
-    option (google.api.http) = {
-      patch: "/v2beta/{case.name=projects/*/cases/*}"
-      body: "case"
-      additional_bindings {
-        patch: "/v2beta/{case.name=organizations/*/cases/*}"
-        body: "case"
-      }
-    };
-    option (google.api.method_signature) = "case,update_mask";
-  }
 }
 
-// Generator should not fail when encounter a service without methods
-service EchoEmpy {
+// This service is to test api_version is empty.
+service EchoWithEmptyVersion {
+  // This service is meant to only run locally on the port 7469 (keypad digits
+  // for "show").
   option (google.api.default_host) = "localhost:7469";
+  option (google.api.api_version) = "";
+  option (google.api.oauth_scopes) =
+    "https://www.googleapis.com/auth/cloud-platform";
+
+  // This method simply echos the request. This method is showcases unary rpcs.
+  rpc Echo(EchoRequest) returns (EchoResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/echo:echo"
+      body: "*"
+    };
+    option (google.api.method_signature) = "content";
+    option (google.api.method_signature) = "error";
+    option (google.api.method_signature) = "content,severity";
+    option (google.api.method_signature) = "name";
+    option (google.api.method_signature) = "parent";
+    option (google.api.method_signature) = "";
+  }
 }
 
 // A severity enum used to test enum capabilities in GAPIC surfaces
@@ -174,27 +115,6 @@ enum Severity {
   NECESSARY = 1;
   URGENT = 2;
   CRITICAL = 3;
-}
-
-message UpdateCaseRequest {
-  Case case = 1 [(google.api.field_behavior) = REQUIRED];
-
-  google.protobuf.FieldMask update_mask = 2;
-}
-
-message Case {
-  option (google.api.resource) = {
-    type: "cloudsupport.googleapis.com/Case"
-    pattern: "organizations/{organization}/cases/{case}"
-    pattern: "projects/{project}/cases/{case}"
-  };
-
-  // The resource name for the case.
-  string name = 1;
-
-  string display_name = 2;
-
-  string description = 3;
 }
 
 message Foobar {
@@ -238,7 +158,7 @@ message EchoRequest {
   // The severity to be echoed by the server.
   Severity severity = 3;
 
-  Foobar foo_bar = 4;
+  Foobar foobar = 4;
 }
 
 // The response message for the Echo methods.
@@ -248,9 +168,6 @@ message EchoResponse {
 
   // The severity specified in the request.
   Severity severity = 2;
-
-  // Value field to test special case in Value type serialization.
-  google.protobuf.Value value_field = 3;
 }
 
 // Tests name collisions with java.lang.Object.
@@ -267,7 +184,8 @@ message ExpandRequest {
   // The error that is thrown after all words are sent on the stream.
   google.rpc.Status error = 2;
 
-  repeated string info = 3;
+  string info = 3;
+
 }
 
 // The request for the PagedExpand method.

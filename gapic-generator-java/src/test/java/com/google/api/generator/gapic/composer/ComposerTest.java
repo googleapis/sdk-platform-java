@@ -45,7 +45,7 @@ public class ComposerTest {
           GrpcServiceCallableFactoryClassComposer.instance()
               .generate(context, echoProtoService)
               .withApiShortName(echoProtoService.apiShortName())
-              .withApiVersion(echoProtoService.apiVersion()));
+              .withPackageVersion(echoProtoService.packageVersion()));
   private final Sample sample =
       Sample.builder()
           .setRegionTag(
@@ -160,7 +160,7 @@ public class ComposerTest {
             .generate(context, testService)
             .withSamples(ListofSamples)
             .withApiShortName(testService.apiShortName())
-            .withApiVersion(testService.apiVersion());
+            .withPackageVersion(testService.packageVersion());
     List<GapicClass> testClassList = Arrays.asList(new GapicClass[] {testClass});
     return testClassList;
   }
