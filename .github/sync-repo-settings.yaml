@@ -26,8 +26,5 @@ branchProtectionRules:
   - integration_tests
   - lint-python
   - lint-shell
-  - 'Kokoro - Test: Integration'
-  - 'Kokoro - Test: Java GraalVM Native Image'
-  - 'Kokoro - Test: Java 17 GraalVM Native Image'
   - header-check
   - OwlBot Post Processor
