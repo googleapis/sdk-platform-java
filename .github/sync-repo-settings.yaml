@@ -1,3 +1,33 @@
 rebaseMergeAllowed: true
 squashMergeAllowed: true
 mergeCommitAllowed: false
+branchProtectionRules:
+- pattern: main
+  isAdminEnforced: true
+  requiredApprovingReviewCount: 1
+  requiresCodeOwnerReviews: true
+  requiresStrictStatusChecks: false
+  requiredStatusCheckContexts:
+  - build(8) for gapic-generator-java
+  - build(8) except for gapic-generator-java
+  - build (11)
+  - build (17)
+  - showcase (11)
+  - showcase (17)
+  - graalvm-presubmit-sdk-platform-java-a
+  - graalvm-presubmit-sdk-platform-java-b
+  - compatibility
+  - cla/google
+  - enforcer
+  - lint
+  # checks for library generation
+  - unit_tests (8, ubuntu-22.04)
+  - unit_tests (8, macos-12)
+  - integration_tests
+  - lint-python
+  - lint-shell
+  - 'Kokoro - Test: Integration'
+  - 'Kokoro - Test: Java GraalVM Native Image'
+  - 'Kokoro - Test: Java 17 GraalVM Native Image'
+  - header-check
+  - OwlBot Post Processor
