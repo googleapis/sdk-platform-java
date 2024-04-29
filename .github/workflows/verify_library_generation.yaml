@@ -22,7 +22,7 @@ jobs:
         set -ex
         git checkout "${base_ref}"
         git checkout "${head_ref}"
-        echo "changed_directories=$(git diff --name-only ${base_ref} ${head_ref})"
+        changed_directories=$(git diff --name-only ${base_ref} ${head_ref})
         if [[ "${changed_directories}" == "*library_generation*" ]]; then
           echo "should_run=true" >> $GITHUB_ENV
         else
