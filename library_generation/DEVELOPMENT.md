@@ -96,6 +96,6 @@ python -m pip install .
 ### Run the script
 ```
 cd library_generation
-python cli/entry_point.py --repository-path "${path_to_repo}"
+python cli/entry_point.py generate --repository-path="${path_to_repo}"
 ```
 
