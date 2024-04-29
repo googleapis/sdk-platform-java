@@ -161,6 +161,7 @@ def validate_generation_config(generation_config_path: str) -> None:
         generation_config_path = "generation_config.yaml"
     try:
         from_yaml(os.path.abspath(generation_config_path))
+        print(f"{generation_config_path} is validated without error.")
     except ValueError as err:
         print(err)
         sys.exit(1)
