@@ -13,17 +13,24 @@ jobs:
       should_run: ${{ steps.get_changed_directories.outputs.should_run }}
     steps:
     - uses: actions/checkout@v4
-    - name: get changed directories
+      with:
+        fetch-depth: 0
+    - name: get changed directories in the pull request
       id: get_changed_directories
       shell: bash
       run: |
         set -ex
-        echo "changed_directories=$(git diff --name-only ${{ github.event.pull_request.base.sha }} HEAD)"
+        git checkout "${base_ref}"
+        git checkout "${head_ref}"
+        echo "changed_directories=$(git diff --name-only ${base_ref} ${head_ref})"
         if [[ "${changed_directories}" == "*library_generation*" ]]; then
           echo "should_run=true" >> $GITHUB_ENV
         else
           echo "should_run=false" >> $GITHUB_ENV
         fi
+      env:
+        base_ref: ${{ github.event.pull_request.base.ref }}
+        head_ref: ${{ github.event.pull_request.head.ref }}
   integration_tests:
     runs-on: ubuntu-22.04
     needs: should-run-library-generation-tests
