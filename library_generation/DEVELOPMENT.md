@@ -112,7 +112,7 @@ python -m pip install .
 
 ### Run the script
 ```
-python cli/entry_point.py --repository-path "${path_to_repo}"
+python cli/entry_point.py generate --repository-path="${path_to_repo}"
 ```
 
 
