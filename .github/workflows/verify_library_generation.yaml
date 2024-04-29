@@ -14,9 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: get changed directories
-    - id: get_changed_directories
-    - shell: bash
-    - run: |
+      id: get_changed_directories
+      shell: bash
+      run: |
         set -ex
         echo "changed_directories=$(git diff --name-only ${{ github.event.pull_request.base.ref }} HEAD)"
         if [[ "${changed_directories}" == "*library_generation*" ]]; then
