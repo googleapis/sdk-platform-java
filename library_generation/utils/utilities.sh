@@ -167,7 +167,7 @@ download_protoc() {
     && [[ "${DOCKER_PROTOC_VERSION}" == "${protoc_version}" ]]; then
     # if the specified protoc_version matches the one baked in the docker
     # container, we just copy it into the output folder
-    cp -r "${DOCKER_PROTOC_LOCATION}" "${outut_folder}"
+    cp -r "${DOCKER_PROTOC_LOCATION}"/* "${output_folder}"
   fi
 
   if [ ! -d "${protoc_path}" ]; then
