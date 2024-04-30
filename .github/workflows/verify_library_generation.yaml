@@ -24,9 +24,9 @@ jobs:
         git checkout "${head_ref}"
         changed_directories="$(git diff --name-only ${base_ref} ${head_ref})"
         if [[ ${changed_directories} =~ "library_generation/" ]]; then
-          echo "should_run=true" >> $GITHUB_ENV
+          echo "should_run=true" >> $GITHUB_OUTPUT
         else
-          echo "should_run=false" >> $GITHUB_ENV
+          echo "should_run=false" >> $GITHUB_OUTPUT
         fi
       env:
         base_ref: ${{ github.event.pull_request.base.ref }}
@@ -34,7 +34,7 @@ jobs:
   integration_tests:
     runs-on: ubuntu-22.04
     needs: should-run-library-generation-tests
-    if: needs.should-run-library-generation-tests.outputs.should_run == true
+    if: needs.should-run-library-generation-tests.outputs.should_run == 'true'
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
