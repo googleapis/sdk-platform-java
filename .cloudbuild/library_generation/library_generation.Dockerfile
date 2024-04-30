@@ -21,7 +21,7 @@ ENV HOME=/home
 
 # install OS tools
 RUN apt-get update && apt-get install -y \
-	unzip openjdk-17-jdk rsync maven jq less vim \
+	unzip openjdk-17-jdk rsync maven jq \
 	&& apt-get clean
 
 # use python 3.11 (the base image has several python versions; here we define the default one)

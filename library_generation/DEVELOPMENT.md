@@ -148,3 +148,24 @@ docker run -u "$(id -u)":"$(id -g)"  -v/path/to/google-cloud-java:/workspace $(c
    google-cloud-java folder to the /workspace folder. The image is configured to
    perform changes in this directory
  * `$(cat image-id)` obtains the image ID created in the build step
+
+## Debug the created containers
+If you are working on changing the way the containers are created, you may want
+to inspect the containers to check the setup. It would be convenient in such
+case to have a text editor/viewer available. You can achieve this by modifying
+the Dockerfile as follows:
+
+```docker
+# install OS tools
+RUN apt-get update && apt-get install -y \
+	unzip openjdk-17-jdk rsync maven jq less vim \
+	&& apt-get clean
+```
+
+We add `less` and `vim` as text tools for further inspection.
+
+You can also run a shell in a new container by running:
+
+```bash
+docker run --rm -it -u=$(id -u):$(id -g)  -v/path/to/google-cloud-java:/workspace --entrypoint="bash" $(cat image-id)
+```
