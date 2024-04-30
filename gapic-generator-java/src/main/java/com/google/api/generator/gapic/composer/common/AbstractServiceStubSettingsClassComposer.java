@@ -204,7 +204,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return GapicClass.create(
             GapicClass.Kind.STUB, classDef, SampleComposerUtil.handleDuplicateSamples(samples))
         .withApiShortName(service.apiShortName())
-        .withApiVersion(service.apiVersion());
+        .withPackageVersion(service.packageVersion());
   }
 
   protected MethodDefinition createDefaultCredentialsProviderBuilderMethod() {
@@ -370,6 +370,16 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnType(returnType)
             .build();
 
+    if (service.hasApiVersion()) {
+
+      returnExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(returnExpr)
+              .setMethodName("setApiVersionToken")
+              .setArguments(ValueExpr.withValue(StringObjectValue.withValue(service.apiVersion())))
+              .setReturnType(returnType)
+              .build();
+    }
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)

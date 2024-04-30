@@ -106,17 +106,6 @@ http_archive(
     urls = ["https://github.com/googleapis/disco-to-proto3-converter/archive/%s.zip" % _disco_to_proto3_converter_commit],
 )
 
-# Showcase
-_showcase_version = "0.28.2"
-
-http_archive(
-    name = "com_google_gapic_showcase",
-    strip_prefix = "gapic-showcase-%s" % _showcase_version,
-    urls = [
-        "https://github.com/googleapis/gapic-showcase/archive/refs/tags/v%s.zip" % _showcase_version,
-    ],
-)
-
 http_archive(
     name = "rules_pkg",
     sha256 = "8a298e832762eda1830597d64fe7db58178aa84cd5926d76d5b744d6558941c2",

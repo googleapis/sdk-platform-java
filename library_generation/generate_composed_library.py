@@ -130,7 +130,7 @@ def __construct_tooling_arg(config: GenerationConfig) -> List[str]:
     arguments = []
     arguments += util.create_argument("gapic_generator_version", config)
     arguments += util.create_argument("grpc_version", config)
-    arguments += util.create_argument("protobuf_version", config)
+    arguments += util.create_argument("protoc_version", config)
 
     return arguments
 

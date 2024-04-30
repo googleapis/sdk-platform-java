@@ -26,13 +26,15 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+load("@rules_java//java:defs.bzl", "java_test")
+
 def java_tests(name, srcs, runtime_deps, size):
     classNames = []
     for src in srcs:
         # convert .java file path to fully qualified class name
         className = src[(src.index("/com/") + 1):-5].replace("/", ".")
         classNames.append(className)
-        native.java_test(
+        java_test(
             name = className,
             test_class = className,
             runtime_deps = runtime_deps,
@@ -77,7 +79,7 @@ google_java_format_verification = rule(
         "srcs": attr.label_list(allow_files = True),
         "formatter": attr.label(
             executable = True,
-            cfg = "host",
+            cfg = "exec",
         ),
     },
     outputs = {"output_file": "%{name}.txt"},

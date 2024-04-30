@@ -94,7 +94,7 @@ _java_gapic_postprocess_srcjar = rule(
         "formatter": attr.label(
             default = Label("//:google_java_format_binary"),
             executable = True,
-            cfg = "host",
+            cfg = "exec",
         ),
     },
     outputs = {
@@ -152,7 +152,7 @@ _java_gapic_samples_srcjar = rule(
         "formatter": attr.label(
             default = Label("//:google_java_format_binary"),
             executable = True,
-            cfg = "host",
+            cfg = "exec",
         ),
     },
     outputs = {

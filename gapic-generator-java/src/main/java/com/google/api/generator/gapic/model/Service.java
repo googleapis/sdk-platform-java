@@ -27,6 +27,9 @@ import javax.annotation.Nullable;
 public abstract class Service {
   public abstract String name();
 
+  @Nullable
+  public abstract String apiVersion();
+
   public abstract String defaultHost();
 
   public abstract ImmutableList<String> oauthScopes();
@@ -52,6 +55,10 @@ public abstract class Service {
     return !Strings.isNullOrEmpty(description());
   }
 
+  public boolean hasApiVersion() {
+    return !Strings.isNullOrEmpty(apiVersion());
+  }
+
   public String hostServiceName() {
     // Host Service Name is guaranteed to exist and be non-null and non-empty
     // Parser will fail if the default host is not supplied
@@ -65,9 +72,9 @@ public abstract class Service {
     return "";
   }
 
-  public String apiVersion() {
+  public String packageVersion() {
     if (!Strings.isNullOrEmpty(protoPakkage())) {
-      return parseApiVersion(protoPakkage());
+      return parsePackageVersion(protoPakkage());
     }
     return "";
   }
@@ -158,6 +165,8 @@ public abstract class Service {
 
     public abstract Builder setOverriddenName(String overriddenName);
 
+    public abstract Builder setApiVersion(String apiVersion);
+
     public abstract Builder setDefaultHost(String defaultHost);
 
     public abstract Builder setOauthScopes(List<String> oauthScopes);
@@ -177,17 +186,17 @@ public abstract class Service {
     public abstract Service build();
   }
 
-  private static String parseApiVersion(String protoPackage) {
-    //  parse protoPackage for apiVersion
+  private static String parsePackageVersion(String protoPackage) {
+    //  parse protoPackage for packageVersion
     String[] pakkage = protoPackage.split("\\.");
-    String apiVersion;
+    String packageVersion;
     //  e.g. v1, v2, v1beta1
     if (pakkage[pakkage.length - 1].matches("v[0-9].*")) {
-      apiVersion = pakkage[pakkage.length - 1];
+      packageVersion = pakkage[pakkage.length - 1];
     } else {
-      apiVersion = "";
+      packageVersion = "";
     }
-    return apiVersion;
+    return packageVersion;
   }
 
   // Parse the service name from the default host configured in the protos

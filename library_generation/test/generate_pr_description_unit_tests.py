@@ -65,7 +65,7 @@ class GeneratePrDescriptionTest(unittest.TestCase):
                 synthtool_commitish="",
                 template_excludes=[],
                 grpc_version="",
-                protobuf_version="",
+                protoc_version="",
                 libraries=[],
             ),
             baseline_commit=commit_sha,

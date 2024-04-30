@@ -108,25 +108,25 @@ get_grpc_version() {
   echo "${grpc_version}"
 }
 
-get_protobuf_version() {
+get_protoc_version() {
   local gapic_generator_version=$1
-  local protobuf_version
+  local protoc_version
   pushd "${output_folder}" > /dev/null
   # get protobuf version from gapic-generator-java-pom-parent/pom.xml
   download_gapic_generator_pom_parent "${gapic_generator_version}"
-  protobuf_version=$(grep protobuf.version "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" | sed 's/<protobuf\.version>\(.*\)<\/protobuf\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | cut -d "." -f2-)
+  protoc_version=$(grep protobuf.version "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" | sed 's/<protobuf\.version>\(.*\)<\/protobuf\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | cut -d "." -f2-)
   popd > /dev/null
-  echo "${protobuf_version}"
+  echo "${protoc_version}"
 }
 
 download_tools() {
   local gapic_generator_version=$1
-  local protobuf_version=$2
+  local protoc_version=$2
   local grpc_version=$3
   local os_architecture=$4
   pushd "${output_folder}"
   download_generator_artifact "${gapic_generator_version}" "gapic-generator-java-${gapic_generator_version}.jar"
-  download_protobuf "${protobuf_version}" "${os_architecture}"
+  download_protoc "${protoc_version}" "${os_architecture}"
   download_grpc_plugin "${grpc_version}" "${os_architecture}"
   popd
 }
@@ -154,22 +154,22 @@ download_generator_artifact() {
   fi
 }
 
-download_protobuf() {
-  local protobuf_version=$1
+download_protoc() {
+  local protoc_version=$1
   local os_architecture=$2
-  if [ ! -d "protobuf-${protobuf_version}" ]; then
+  if [ ! -d "protoc-${protoc_version}" ]; then
     # pull proto files and protoc from protobuf repository as maven central
     # doesn't have proto files
     download_from \
-    "https://github.com/protocolbuffers/protobuf/releases/download/v${protobuf_version}/protoc-${protobuf_version}-${os_architecture}.zip" \
-    "protobuf-${protobuf_version}.zip" \
+    "https://github.com/protocolbuffers/protobuf/releases/download/v${protoc_version}/protoc-${protoc_version}-${os_architecture}.zip" \
+    "protoc-${protoc_version}.zip" \
     "GitHub"
-    unzip -o -q "protobuf-${protobuf_version}.zip" -d "protobuf-${protobuf_version}"
-    cp -r "protobuf-${protobuf_version}/include/google" .
-    rm "protobuf-${protobuf_version}.zip"
+    unzip -o -q "protoc-${protoc_version}.zip" -d "protoc-${protoc_version}"
+    cp -r "protoc-${protoc_version}/include/google" .
+    rm "protoc-${protoc_version}.zip"
   fi
 
-  protoc_path="${output_folder}/protobuf-${protobuf_version}/bin"
+  protoc_path="${output_folder}/protoc-${protoc_version}/bin"
 }
 
 download_grpc_plugin() {

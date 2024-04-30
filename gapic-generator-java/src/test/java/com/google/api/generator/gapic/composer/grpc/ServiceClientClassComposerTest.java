@@ -72,7 +72,7 @@ public class ServiceClientClassComposerTest {
   public String apiShortNameExpected;
 
   @Parameterized.Parameter(3)
-  public String apiVersionExpected;
+  public String packageVersionExpected;
 
   @Test
   public void generateServiceClientClasses() {
@@ -83,6 +83,6 @@ public class ServiceClientClassComposerTest {
     Assert.assertGoldenSamples(
         this.getClass(), name, clazz.classDefinition().packageString(), clazz.samples());
     Assert.assertCodeEquals(clazz.apiShortName(), apiShortNameExpected);
-    Assert.assertCodeEquals(clazz.apiVersion(), apiVersionExpected);
+    Assert.assertCodeEquals(clazz.packageVersion(), packageVersionExpected);
   }
 }

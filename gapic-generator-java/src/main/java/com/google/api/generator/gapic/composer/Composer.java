@@ -207,7 +207,7 @@ public class Composer {
                   sample ->
                       samples.add(
                           addRegionTagAndHeaderToSample(
-                              sample, gapicClass.apiShortName(), gapicClass.apiVersion())));
+                              sample, gapicClass.apiShortName(), gapicClass.packageVersion())));
           clazzesWithSamples.add(gapicClass.withSamples(samples));
         });
     return clazzesWithSamples;
