@@ -15,8 +15,11 @@
 # build from the root of this repo:
 FROM gcr.io/cloud-devrel-public-resources/python
 
+SHELL [ "/bin/bash", "-c" ]
+
 ARG SYNTHTOOL_COMMITTISH=63cc541da2c45fcfca2136c43e638da1fbae174d
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
+ARG PROTOC_VERSION=25.3
 ENV HOME=/home
 
 # install OS tools
@@ -24,14 +27,23 @@ RUN apt-get update && apt-get install -y \
 	unzip openjdk-17-jdk rsync maven jq less vim \
 	&& apt-get clean
 
+# copy source code
+COPY library_generation /src
+
+# install protobuf
+WORKDIR /protoc
+RUN ls /src
+RUN source /src/utils/utilities.sh \
+	&& download_protoc "${PROTOC_VERSION}" "linux-x86_64"
+# we indicate protoc is available in the container via env vars
+ENV DOCKER_PROTOC_LOCATION=/protoc
+ENV DOCKER_PROTOC_VERSION="${PROTOC_VERSION}"
+
 # use python 3.11 (the base image has several python versions; here we define the default one)
 RUN rm $(which python3)
 RUN ln -s $(which python3.11) /usr/local/bin/python
 RUN ln -s $(which python3.11) /usr/local/bin/python3
 RUN python -m pip install --upgrade pip
-
-# copy source code
-COPY library_generation /src
 
 # install scripts as a python package
 WORKDIR /src

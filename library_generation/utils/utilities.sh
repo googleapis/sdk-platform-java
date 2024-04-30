@@ -157,7 +157,20 @@ download_generator_artifact() {
 download_protoc() {
   local protoc_version=$1
   local os_architecture=$2
-  if [ ! -d "protoc-${protoc_version}" ]; then
+
+  protoc_path="${output_folder}/protoc-${protoc_version}/bin"
+  if [[ -f "${protoc_path}/protoc" ]]; then
+    return
+  fi
+
+  if [[ -n "${DOCKER_PROTOC_VERSION}" ]] \
+    && [[ "${DOCKER_PROTOC_VERSION}" == "${protoc_version}" ]]; then
+    # if the specified protoc_version matches the one baked in the docker
+    # container, we just copy it into the output folder
+    cp -r "${DOCKER_PROTOC_LOCATION}" "${outut_folder}"
+  fi
+
+  if [ ! -d "${protoc_path}" ]; then
     # pull proto files and protoc from protobuf repository as maven central
     # doesn't have proto files
     download_from \
@@ -169,7 +182,6 @@ download_protoc() {
     rm "protoc-${protoc_version}.zip"
   fi
 
-  protoc_path="${output_folder}/protoc-${protoc_version}/bin"
 }
 
 download_grpc_plugin() {
