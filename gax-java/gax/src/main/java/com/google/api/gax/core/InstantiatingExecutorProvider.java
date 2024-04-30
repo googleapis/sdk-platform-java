@@ -34,6 +34,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * InstantiatingChannelProvider is an ExecutorProvider which constructs a new
@@ -41,6 +43,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @AutoValue
 public abstract class InstantiatingExecutorProvider implements ExecutorProvider {
+  private static final Logger LOGGER =
+      Logger.getLogger(InstantiatingExecutorProvider.class.getName());
+
   // Thread factory to use to create our worker threads
   private static final ThreadFactory DEFAULT_THREAD_FACTORY =
       new ThreadFactory() {
@@ -95,6 +100,8 @@ public abstract class InstantiatingExecutorProvider implements ExecutorProvider 
   public static Builder newIOBuilder() {
     int numCpus = Runtime.getRuntime().availableProcessors();
     int numThreads = IO_THREAD_MULTIPLIER * Math.max(MIN_THREAD_AMOUNT, numCpus);
+    LOGGER.log(
+        Level.CONFIG, String.format("Thread Pool for requests has Core Pool Size: %d", numThreads));
 
     return new AutoValue_InstantiatingExecutorProvider.Builder()
         .setExecutorThreadCount(numThreads)
