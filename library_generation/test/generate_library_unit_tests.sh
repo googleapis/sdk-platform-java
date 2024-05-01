@@ -135,9 +135,14 @@ download_protoc_failed_with_invalid_arch_test() {
 }
 
 download_protoc_succeed_with_baked_protoc() {
-  # this mimics a docker container scenario.
-  # if the specified version matches the docker env var, then it will be just
-  # copied from the docker protoc location (also specified in an env var).
+  # This mimics a docker container scenario.
+  # This test consists of creating an empty /tmp/.../protoc-99.99/bin folder and map
+  # it to the DOCKER_PROTOC_LOCATION env var (which is treated specially in the
+  # `download_protoc` function). If `DOCKER_PROTOC_VERSION` matches exactly as
+  # the version passed to `download_protoc`, then we will not download protoc
+  # but simply copy it from DOCKER_PROTOC_LOCATION into ${output_folder} (which
+  # we manually created in this test), so we should expect ${output_folder} to
+  # contain a folder called protoc-99.99.
   export DOCKER_PROTOC_LOCATION=$(mktemp -d)
   export DOCKER_PROTOC_VERSION="99.99"
   export output_folder=$(get_output_folder)
