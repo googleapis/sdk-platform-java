@@ -138,12 +138,13 @@ download_protoc_succeed_with_baked_protoc() {
   # this mimics a docker container scenario.
   # if the specified version matches the docker env var, then it will be just
   # copied from the docker protoc location (also specified in an env var).
-  export DOCKER_PROTOC_LOCATION=$(mktmp -d)
-  mkdir "${DOCKER_PROTOC_LOCATION}/protoc-99.99"
+  export DOCKER_PROTOC_LOCATION=$(mktemp -d)
   export DOCKER_PROTOC_VERSION="99.99"
+  export output_folder=$(get_output_folder)
+  mkdir -p "${DOCKER_PROTOC_LOCATION}/protoc-99.99/bin"
   download_protoc "99.99" "linux-x86_64"
-  assertFileOrDirectoryExists "protoc-99.99"
-  rm -rf "protoc-99.99"
+  assertFileOrDirectoryExists "${output_folder}/protoc-99.99"
+  rm -rf "${output_folder}/protoc-99.99"
 }
 
 download_grpc_plugin_succeed_with_valid_version_linux_test() {
@@ -280,6 +281,7 @@ test_list=(
   download_protoc_succeed_with_valid_version_macos_test
   download_protoc_failed_with_invalid_version_linux_test
   download_protoc_failed_with_invalid_arch_test
+  download_protoc_succeed_with_baked_protoc
   download_grpc_plugin_succeed_with_valid_version_linux_test
   download_grpc_plugin_succeed_with_valid_version_macos_test
   download_grpc_plugin_failed_with_invalid_version_linux_test

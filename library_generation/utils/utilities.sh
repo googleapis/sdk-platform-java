@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
+set -exo pipefail
 utilities_script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 
 # Utility functions used in `generate_library.sh` and showcase generation.
@@ -167,7 +167,7 @@ download_protoc() {
     && [[ "${DOCKER_PROTOC_VERSION}" == "${protoc_version}" ]]; then
     # if the specified protoc_version matches the one baked in the docker
     # container, we just copy it into the output folder
-    cp -r "${DOCKER_PROTOC_LOCATION}"/* "${output_folder}"
+    cp -r "${DOCKER_PROTOC_LOCATION}/protoc-${protoc_version}" "${output_folder}"
   fi
 
   if [ ! -d "${protoc_path}" ]; then
