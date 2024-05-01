@@ -6,6 +6,7 @@ import com.google.cloud.model.Node;
 import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Relation;
 import com.google.cloud.model.VersionKey;
+import com.google.errorprone.annotations.RestrictedApi;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -16,10 +17,12 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +30,11 @@ public class DepsDevClient {
 
   private final HttpClient client;
   public final Gson gson;
-  private final static String advisoryUrlBase = "https://api.deps.dev/v3/advisories/%s";
-  private final static String queryUrlBase = "https://api.deps.dev/v3/query?versionKey.system=%s&versionKey.name=%s&versionKey.version=%s";
-  private final static String dependencyUrlBase = "https://api.deps.dev/v3/systems/%s/packages/%s/versions/%s:dependencies";
+  private final static String ADVISORY_URL_BASE = "https://api.deps.dev/v3/advisories/%s";
+
+  private final static String DEPENDENCY_URLBASE = "https://api.deps.dev/v3/systems/%s/packages/%s/versions/%s:dependencies";
+
+  public final static String QUERY_URL_BASE = "https://api.deps.dev/v3/query?versionKey.system=%s&versionKey.name=%s&versionKey.version=%s";
 
   public DepsDevClient(HttpClient client) {
     this.client = client;
@@ -76,15 +81,25 @@ public class DepsDevClient {
   }
 
   private String getAdvisoryUrl(String advisoryId) {
-    return String.format(advisoryUrlBase, advisoryId);
+    return String.format(ADVISORY_URL_BASE, advisoryId);
   }
 
-  private String getQueryUrl(String system, String name, String version) {
-    return String.format(queryUrlBase, system, name, version);
+  @RestrictedApi(
+      explanation = "This method is for internal use only.",
+      allowedOnPath = "test/java/com/google/cloud/external")
+  public String getQueryUrl(String system, String name, String version) {
+    return String.format(QUERY_URL_BASE, system, name, encode(version));
   }
 
-  private String getDependencyUrl(String system, String name, String version) {
-    return String.format(dependencyUrlBase, system, name, version);
+  @RestrictedApi(
+      explanation = "This method is for internal use only.",
+      allowedOnPath = "test/java/com/google/cloud/external")
+  public String getDependencyUrl(String system, String name, String version) {
+    return String.format(DEPENDENCY_URLBASE, system, name, encode(version));
+  }
+
+  private String encode(String str) {
+    return URLEncoder.encode(str, StandardCharsets.UTF_8);
   }
 
   private HttpResponse<String> getResponse(String endpoint)

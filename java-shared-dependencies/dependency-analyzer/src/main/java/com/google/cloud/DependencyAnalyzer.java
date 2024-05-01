@@ -6,6 +6,7 @@ import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
 import com.google.cloud.model.AnalysisResult;
+import com.google.cloud.model.License;
 import com.google.cloud.model.ReportResult;
 import com.google.cloud.model.PackageInfo;
 import com.google.cloud.model.QueryResult;
@@ -52,11 +53,13 @@ public class DependencyAnalyzer {
     List<PackageInfo> result = new ArrayList<>();
     for (VersionKey versionKey : dependencies) {
       QueryResult packageInfo = depsDevClient.getQueryResult(versionKey);
-      List<String> licenses = new ArrayList<>();
+      List<License> licenses = new ArrayList<>();
       List<Advisory> advisories = new ArrayList<>();
       for (Result res : packageInfo.results()) {
         Version version = res.version();
-        licenses.addAll(version.licenses());
+        for (String license : version.licenses()) {
+          licenses.add(License.toLicense(license));
+        }
         for (AdvisoryKey advisoryKey : version.advisoryKeys()) {
           advisories.add(depsDevClient.getAdvisory(advisoryKey.id()));
         }
@@ -65,7 +68,7 @@ public class DependencyAnalyzer {
       result.add(new PackageInfo(versionKey, licenses, advisories));
     }
 
-    return AnalysisResult.of(root, result);
+    return AnalysisResult.of(result);
   }
 
   /**
@@ -86,10 +89,12 @@ public class DependencyAnalyzer {
    */
   public static void main(String[] args) throws IllegalArgumentException {
     checkArgument(args.length == 3,
-        "The length of the inputs should be 3.\n" +
-            "The 1st input should be the package management system.\n" +
-            "The 2nd input should be the package name.\n" +
-            "The 3rd input should be the package version.\n"
+        """
+            The length of the inputs should be 3.
+            The 1st input should be the package management system.
+            The 2nd input should be the package name.
+            The 3rd input should be the package version.
+            """
     );
 
     String system = args[0];
@@ -107,7 +112,9 @@ public class DependencyAnalyzer {
       System.exit(1);
     }
 
-    ReportResult result = analyzeReport.generateReport();
+    System.out.println("Please copy and paste the package information below to your ticket.\n");
+    System.out.println(analyzeReport.toString());
+    ReportResult result = analyzeReport.getAnalysisResult();
     System.out.println(result);
     if (result.equals(ReportResult.FAIL)) {
       System.out.println(

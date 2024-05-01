@@ -40,22 +40,18 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries_bom_version="",
-            owlbot_cli_image="",
-            synthtool_commitish="",
             template_excludes=[],
             grpc_version="",
-            protobuf_version="",
+            protoc_version="",
             libraries=[self.baseline_library],
         )
         self.current_config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
             libraries_bom_version="",
-            owlbot_cli_image="",
-            synthtool_commitish="",
             template_excludes=[],
             grpc_version="",
-            protobuf_version="",
+            protoc_version="",
             libraries=[self.current_library],
         )
 
@@ -107,37 +103,9 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         self.assertEqual("libraris_bom_version", config_change.changed_param)
         self.assertEqual("26.37.0", config_change.current_value)
 
-    def test_compare_config_owlbot_cli_update(self):
-        self.baseline_config.owlbot_cli_image = "image_version_123"
-        self.current_config.owlbot_cli_image = "image_version_456"
-        result = compare_config(
-            baseline_config=self.baseline_config,
-            current_config=self.current_config,
-        )
-        self.assertTrue(
-            len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 1
-        )
-        config_change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
-        self.assertEqual("owlbot_cli_image", config_change.changed_param)
-        self.assertEqual("image_version_456", config_change.current_value)
-
-    def test_compare_config_synthtool_update(self):
-        self.baseline_config.synthtool_commitish = "commit123"
-        self.current_config.synthtool_commitish = "commit456"
-        result = compare_config(
-            baseline_config=self.baseline_config,
-            current_config=self.current_config,
-        )
-        self.assertTrue(
-            len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 1
-        )
-        config_change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
-        self.assertEqual("synthtool_commitish", config_change.changed_param)
-        self.assertEqual("commit456", config_change.current_value)
-
     def test_compare_protobuf_update(self):
-        self.baseline_config.protobuf_version = "3.25.2"
-        self.current_config.protobuf_version = "3.27.0"
+        self.baseline_config.protoc_version = "3.25.2"
+        self.current_config.protoc_version = "3.27.0"
         result = compare_config(
             baseline_config=self.baseline_config,
             current_config=self.current_config,
@@ -146,7 +114,7 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 1
         )
         config_change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
-        self.assertEqual("protobuf_version", config_change.changed_param)
+        self.assertEqual("protoc_version", config_change.changed_param)
         self.assertEqual("3.27.0", config_change.current_value)
 
     def test_compare_config_grpc_update(self):

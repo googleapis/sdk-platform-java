@@ -383,7 +383,7 @@ def main(versions_file, monorepo):
     # Missing Case 2: There's a new proto-XXX and grpc-XXX directory. It's a new
     # version in the proto file to a library. Both a new library and existing
     # library.
-    for path in glob.glob("proto-google-*"):
+    for path in glob.glob("proto-*"):
         if not path in existing_modules:
             existing_modules[path] = module.Module(
                 group_id=__proto_group_id(group_id),
@@ -422,7 +422,7 @@ def main(versions_file, monorepo):
                     release_version=main_module.release_version,
                 )
 
-    for path in glob.glob("grpc-google-*"):
+    for path in glob.glob("grpc-*"):
         if not path in existing_modules:
             existing_modules[path] = module.Module(
                 group_id=__proto_group_id(group_id),

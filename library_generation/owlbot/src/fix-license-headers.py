@@ -21,10 +21,10 @@ root = Path(".").resolve()
 
 # Until the generator generates license headers on generated proto
 # classes, add the license headers in
-for path in glob.glob("proto-google-*"):
+for path in glob.glob("proto-*"):
     java.fix_proto_headers(root / path)
 
 # Until the generator generates license headers on generated grpc
 # classes, add the license headers in
-for path in glob.glob("grpc-google-*"):
+for path in glob.glob("grpc-*"):
     java.fix_grpc_headers(root / path, "unused")

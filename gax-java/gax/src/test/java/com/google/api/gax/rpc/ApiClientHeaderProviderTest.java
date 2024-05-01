@@ -138,4 +138,18 @@ public class ApiClientHeaderProviderTest {
     assertThat(provider.getHeaders().get(ApiClientHeaderProvider.QUOTA_PROJECT_ID_HEADER_KEY))
         .matches(quotaProjectHeaderValue);
   }
+
+  @Test
+  public void testApiVersionHeader() {
+    ApiClientHeaderProvider provider =
+        ApiClientHeaderProvider.newBuilder().setApiVersionToken("fake-version-string").build();
+    assertThat(provider.getHeaders().size()).isEqualTo(2);
+    assertThat(provider.getHeaders().get(ApiClientHeaderProvider.API_VERSION_HEADER_KEY))
+        .matches("fake-version-string");
+
+    ApiClientHeaderProvider emptyProvider =
+        ApiClientHeaderProvider.newBuilder().setApiVersionToken("").build();
+    assertThat(
+        emptyProvider.getHeaders().get(ApiClientHeaderProvider.API_VERSION_HEADER_KEY).isEmpty());
+  }
 }

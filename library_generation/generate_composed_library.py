@@ -112,8 +112,6 @@ def generate_composed_library(
             "",
             versions_file,
             owlbot_cli_source_folder,
-            config.owlbot_cli_image,
-            config.synthtool_commitish,
             str(config.is_monorepo()).lower(),
             config_path,
         ],
@@ -130,7 +128,7 @@ def __construct_tooling_arg(config: GenerationConfig) -> List[str]:
     arguments = []
     arguments += util.create_argument("gapic_generator_version", config)
     arguments += util.create_argument("grpc_version", config)
-    arguments += util.create_argument("protobuf_version", config)
+    arguments += util.create_argument("protoc_version", config)
 
     return arguments
 
