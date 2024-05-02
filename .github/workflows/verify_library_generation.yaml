@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    - name: get changed directories in the pull request
+    - name: Get changed directories in the pull request
       id: get_changed_directories
       shell: bash
       run: |
@@ -40,7 +40,7 @@ jobs:
     - uses: actions/setup-python@v5
       with:
         python-version: 3.11
-    - name: install pyenv
+    - name: Install pyenv
       shell: bash
       run: |
         set -ex
@@ -52,7 +52,7 @@ jobs:
         echo "PATH=${PATH}" >> $GITHUB_ENV
 
         set +ex
-    - name: install python dependencies
+    - name: Install python dependencies
       shell: bash
       run: |
         set -ex
@@ -75,7 +75,7 @@ jobs:
         os: [ ubuntu-22.04, macos-12 ]
     steps:
     - uses: actions/checkout@v4
-    - name: install utils (macos)
+    - name: Install utils (macos)
       if: matrix.os == 'macos-12'
       shell: bash
       run: |
@@ -84,14 +84,14 @@ jobs:
     - uses: actions/setup-python@v5
       with:
         python-version: 3.11
-    - name: install python dependencies
+    - name: Install python dependencies
       shell: bash
       run: |
         set -ex
         pushd library_generation
         pip install -r requirements.txt
         popd
-    - name: install synthtool
+    - name: Install synthtool
       shell: bash
       run: |
         set -ex
@@ -132,7 +132,7 @@ jobs:
     if: needs.should-run-library-generation-tests.outputs.should_run == 'true'
     steps:
     - uses: actions/checkout@v4
-    - name: install python dependencies
+    - name: Install python dependencies
       shell: bash
       run: |
         set -ex
@@ -145,3 +145,17 @@ jobs:
         # exclude generated golden files
         # exclude owlbot until further refaction
         black --check library_generation --exclude "(library_generation/test/resources/goldens)"
+  # see https://github.com/orgs/community/discussions/26822#discussioncomment-3305794
+  check-status:
+    runs-on: ubuntu-22.04
+    needs:
+    - library-generation-integration-tests
+    - library-generation-unit-tests
+    - library-generation-lint-python
+    - library-generation-lint-shell
+    if: ${{ always() }}
+    steps:
+    - name: Check all job status
+      # see https://stackoverflow.com/a/67532120/4907315
+      if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+      run: exit 1
