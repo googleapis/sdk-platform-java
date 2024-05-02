@@ -15,25 +15,31 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
+        ref: ${{ github.head_ref }} # Check out the head branch from the fork
         fetch-depth: 0
     - name: get changed directories in the pull request
       id: get_changed_directories
       shell: bash
       run: |
         set -ex
-        git checkout "${base_ref}" # Checkout a detached head, and then fetch the base ref to populate the detached head.
-        git fetch --no-tags --prune origin +${base_ref}:refs/remotes/origin/${base_ref}
-        git checkout "${head_ref}" # Checkout a detached head, and then fetch the head ref to populate the detached head.
-        git fetch --no-tags --prune origin +${head_ref}:refs/remotes/origin/${head_ref}
-        changed_directories="$(git diff --name-only ${base_ref} ${head_ref})"
+        echo "base_ref=${{ github.event.pull_request.base.ref }}"
+        echo "head_ref=${{ github.event.pull_request.head.ref }}"
+        echo "GITHUB_BASE_REF=${{ github.base_ref }}"
+         # Checkout base ref
+        git fetch --no-tags --prune origin +${{ github.event.pull_request.base.ref }}:refs/remotes/origin/${{ github.base_ref }}
+        git checkout ${{ github.event.pull_request.base.ref }}
+        echo "current branch after checking out base_ref is: $(git branch --show-current)"
+        # Checkout head ref
+        git fetch --no-tags --prune origin +${{ github.event.pull_request.head.ref }}:refs/remotes/origin/${{ github.event.pull_request.head.ref }}
+        git checkout ${{ github.event.pull_request.head.ref }}
+        echo "current branch after checking out head_ref is: $(git branch --show-current)"
+        # HEAD is a dynamic reference that points to the currently checked-out commit
+        changed_directories="$(git diff --name-only ${{ github.base_ref }} HEAD)"
         if [[ ${changed_directories} =~ "library_generation/" ]]; then
           echo "should_run=true" >> $GITHUB_OUTPUT
         else
           echo "should_run=false" >> $GITHUB_OUTPUT
         fi
-      env:
-        base_ref: ${{ github.event.pull_request.base.ref }}
-        head_ref: ${{ github.event.pull_request.head.ref }}
   library-generation-integration-tests:
     runs-on: ubuntu-22.04
     needs: should-run-library-generation-tests
