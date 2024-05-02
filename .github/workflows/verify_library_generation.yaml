@@ -28,7 +28,7 @@ jobs:
           git remote add fork ${{ github.event.pull_request.head.repo.html_url }}
           git fetch fork # create a mapping of the fork
           git checkout -b "${head_ref}" fork/${head_ref}
-          changed_directories="$(git diff --name-only "fork/${head_ref}" "origin/${base_ref}""
+          changed_directories="$(git diff --name-only "fork/${head_ref}" "origin/${base_ref}")"
         fi
         if [[ ${changed_directories} =~ "library_generation/" ]]; then
           echo "should_run=true" >> $GITHUB_OUTPUT
