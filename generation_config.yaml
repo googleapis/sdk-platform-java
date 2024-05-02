@@ -44,3 +44,17 @@ libraries:
   - proto_path: google/rpc/context
   - proto_path: google/shopping/type
   - proto_path: google/type
+- api_shortname: iam
+  name_pretty: IAM
+  product_documentation: https://cloud.google.com/iam
+  api_description: Manages access control for Google Cloud Platform resources
+  release_level: stable
+  client_documentation: https://cloud.google.com/java/docs/reference/proto-google-iam-v1/latest/overview
+  distribution_name: com.google.api.grpc:proto-google-iam-v1
+  excluded_dependencies: "grpc-google-iam-v1"
+  excluded_poms: "proto-google-iam-v1-bom,google-iam-policy,proto-google-iam-v1"
+  library_type: OTHER
+  GAPICs:
+  - proto_path: google/iam/v1
+  - proto_path: google/iam/v2
+  - proto_path: google/iam/v2beta
