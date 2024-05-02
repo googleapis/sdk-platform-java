@@ -31,8 +31,8 @@ is_monorepo=$4
 
 
 if [[ "${is_monorepo}" == "true" ]]; then
-  mv owl-bot-staging/* temp
-  rm -rd owl-bot-staging/
+  mv owl-bot-staging temp
+  rm -rf owl-bot-staging
   mv temp owl-bot-staging
 fi
 
@@ -77,5 +77,5 @@ echo "...done"
 # when `docker run`ning with the -u flag because we may incur in users
 # not registered in the container's /etc/passwd file
 echo "Reformatting source..."
-mvn fmt:format -Duser.home="${HOME}" -V --batch-mode --no-transfer-progress
+#mvn fmt:format -Duser.home="${HOME}" -V --batch-mode --no-transfer-progress
 echo "...done"
