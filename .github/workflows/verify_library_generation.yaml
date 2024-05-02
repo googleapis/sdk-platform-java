@@ -27,7 +27,7 @@ jobs:
         sender_login="${{ github.event.sender.login }}"
         # Renovate-bot works from a fork, so need to handle their PRs as a special case.
         if [[ $sender_login != 'renovate-bot' ]]; then
-          git checkout "${base_ref}"
+          git checkout ${base_ref}
           changed_directories="$(git diff --name-only ${base_ref} ${head_ref})"
         else
           git remote add fork https://github.com/renovate-bot/gapic-generator-java.git
