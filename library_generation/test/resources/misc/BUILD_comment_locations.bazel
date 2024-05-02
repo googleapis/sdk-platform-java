@@ -3,4 +3,3 @@ proto_library_with_info(
     # "//google/cloud/location:location_proto",
   ]
 )
-
