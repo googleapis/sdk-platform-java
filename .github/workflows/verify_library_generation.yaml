@@ -1,6 +1,6 @@
 on:
   pull_request:
--
+
 name: verify_library_generation
 jobs:
   should-run-library-generation-tests:
