@@ -54,8 +54,8 @@ public abstract class EndpointContext {
   static {
     try {
       INSTANCE = EndpointContext.newBuilder().build();
-    } catch (Exception e) {
-      throw new RuntimeException("Unable to create empty EndpointContext");
+    } catch (IOException e) {
+      throw new RuntimeException("Unable to create a default empty EndpointContext", e);
     }
   }
 
