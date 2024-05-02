@@ -598,11 +598,17 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
 
     /**
-     * @return the resolved endpoint when the Builder was created. If other parameters are then set
-     *     in the builder, the resolved endpoint is not automatically updated. The resolved endpoint
-     *     will only be recomputed when the StubSettings is built again.
+     * @return the resolved endpoint when the Builder was created. If invoked after
+     *     `StubSettings.newBuilder()` is called, it will return the clientSettingsEndpoint value.
+     *     If other parameters are then set in the builder, the resolved endpoint is not
+     *     automatically updated. The resolved endpoint will only be recomputed when the
+     *     StubSettings is built again.
      */
     public String getEndpoint() {
+      // For the `StubSettings.newBuilder()` case
+      if (endpointContext.equals(EndpointContext.getDefaultInstance())) {
+        return clientSettingsEndpoint;
+      }
       return endpointContext.resolvedEndpoint();
     }
 

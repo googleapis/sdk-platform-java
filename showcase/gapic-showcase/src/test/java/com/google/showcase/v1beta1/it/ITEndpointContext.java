@@ -416,9 +416,8 @@ public class ITEndpointContext {
   @Test
   public void endpointResolution_defaultViaBuilder() {
     EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();
-    // Showcase clients do not have a serviceName. The resolved endpoint will use `""`
-    // as the serviceName.
-    Truth.assertThat(echoSettingsBuilder.getEndpoint()).isEqualTo(".googleapis.com:443");
+    // `StubSettings.newBuilder()` will return the clientSettingsEndpoint
+    Truth.assertThat(echoSettingsBuilder.getEndpoint()).isEqualTo(null);
   }
 
   // User configuration in Builder
@@ -426,19 +425,17 @@ public class ITEndpointContext {
   public void endpointResolution_userConfigurationViaBuilder() {
     EchoSettings.Builder echoSettingsBuilder =
         EchoSettings.newBuilder().setEndpoint("test.com:123");
-    // EndpointContext is not automatically recomputed for every setter called in the Builder.
-    // It is initially computed when the Builder is created.
-    Truth.assertThat(echoSettingsBuilder.getEndpoint()).isEqualTo(".googleapis.com:443");
+    // `StubSettings.newBuilder()` will return the clientSettingsEndpoint
+    Truth.assertThat(echoSettingsBuilder.getEndpoint()).isEqualTo("test.com:123");
   }
 
   @Test
   public void endpointResolution_builderBuilderBackToBuilder() throws IOException {
     String customEndpoint = "test.com:123";
     EchoStubSettings.Builder echoStubSettingsBuilder =
-            EchoStubSettings.newBuilder().setEndpoint(customEndpoint);
-    // EndpointContext is not automatically recomputed for every setter called in the Builder.
-    // It is initially computed when the Builder is created.
-    Truth.assertThat(echoStubSettingsBuilder.getEndpoint()).isEqualTo(".googleapis.com:443");
+        EchoStubSettings.newBuilder().setEndpoint(customEndpoint);
+    // `StubSettings.newBuilder()` will return the clientSettingsEndpoint
+    Truth.assertThat(echoStubSettingsBuilder.getEndpoint()).isEqualTo(customEndpoint);
 
     // EndpointContext is recomputed when the Builder is re-built
     EchoStubSettings echoStubSettings = echoStubSettingsBuilder.build();
