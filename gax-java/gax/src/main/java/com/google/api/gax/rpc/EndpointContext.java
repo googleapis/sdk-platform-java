@@ -53,7 +53,7 @@ public abstract class EndpointContext {
   // static block initialization for exception handling
   static {
     try {
-      INSTANCE = EndpointContext.newBuilder().build();
+      INSTANCE = EndpointContext.newBuilder().setServiceName("").build();
     } catch (IOException e) {
       throw new RuntimeException("Unable to create a default empty EndpointContext", e);
     }
