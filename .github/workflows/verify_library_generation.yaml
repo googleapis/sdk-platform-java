@@ -21,11 +21,20 @@ jobs:
       shell: bash
       run: |
         set -ex
-        git checkout "${base_ref}" # Checkout a detached head, and then fetch the base ref to populate the detached head.
-        git fetch --no-tags --prune origin +${base_ref}:refs/remotes/origin/${base_ref}
-        git checkout "${head_ref}" # Checkout a detached head, and then fetch the head ref to populate the detached head.
-        git fetch --no-tags --prune origin +${head_ref}:refs/remotes/origin/${head_ref}
-        changed_directories="$(git diff --name-only ${base_ref} ${head_ref})"
+        echo "base_ref=${{ github.event.pull_request.base.ref }}"
+        echo "head_ref=${{ github.event.pull_request.head.ref }}"
+        echo "Head repo URL: ${{ github.event.pull_request.head.repo.html_url }}"
+        # PRs that come from a fork need to be handled differently
+        if [[ ${{ github.event.pull_request.head.repo.full_name  }} == ${{ github.repository }} ]]; then
+          git checkout ${base_ref}
+          git checkout ${head_ref}
+          changed_directories="$(git diff --name-only ${base_ref} ${head_ref})"
+        else
+          git remote add fork ${{ github.event.pull_request.head.repo.html_url }}
+          git fetch fork # create a mapping of the fork
+          git checkout -b "${head_ref}" fork/${head_ref}
+          changed_directories="$(git diff --name-only ${{ github.base_ref }} HEAD)"
+        fi
         if [[ ${changed_directories} =~ "library_generation/" ]]; then
           echo "should_run=true" >> $GITHUB_OUTPUT
         else
