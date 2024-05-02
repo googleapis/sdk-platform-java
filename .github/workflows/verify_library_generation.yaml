@@ -1,11 +1,5 @@
 on:
-  push:
-    branches:
-    - main
   pull_request:
-    # do not run this workflow when merging the pull request.
-    types: [opened, reopened, edited, synchronize]
-  workflow_dispatch:
 name: verify_library_generation
 jobs:
   should-run-library-generation-tests:
