@@ -266,6 +266,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     @Nonnull private ApiTracerFactory tracerFactory;
     private boolean deprecatedExecutorProviderSet;
     private String universeDomain;
+    private final EndpointContext endpointContext;
 
     /**
      * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -300,6 +301,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.switchToMtlsEndpointAllowed =
           settings.getEndpointContext().switchToMtlsEndpointAllowed();
       this.universeDomain = settings.getEndpointContext().universeDomain();
+      // Store the EndpointContext that was already created. This is used to return the state
+      // of the EndpointContext prior to any new modifications
+      this.endpointContext = settings.getEndpointContext();
     }
 
     /** Get Quota Project ID from Client Context * */
@@ -327,16 +331,22 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.headerProvider = new NoHeaderProvider();
         this.internalHeaderProvider = new NoHeaderProvider();
         this.clock = NanoClock.getDefaultClock();
-        this.clientSettingsEndpoint = null;
-        this.transportChannelProviderEndpoint = null;
-        this.mtlsEndpoint = null;
         this.quotaProjectId = null;
         this.streamWatchdogProvider = InstantiatingWatchdogProvider.create();
         this.streamWatchdogCheckInterval = Duration.ofSeconds(10);
         this.tracerFactory = BaseApiTracerFactory.getInstance();
         this.deprecatedExecutorProviderSet = false;
         this.gdchApiAudience = null;
+
+        this.clientSettingsEndpoint = null;
+        this.transportChannelProviderEndpoint = null;
+        this.mtlsEndpoint = null;
+        this.switchToMtlsEndpointAllowed = false;
         this.universeDomain = null;
+        // Attempt to create an empty, non-functioning EndpointContext by default. The client will
+        // have
+        // a valid EndpointContext with user configurations after the client has been initialized.
+        this.endpointContext = EndpointContext.getDefaultInstance();
       } else {
         ExecutorProvider fixedExecutorProvider =
             FixedExecutorProvider.create(clientContext.getExecutor());
@@ -365,6 +375,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.switchToMtlsEndpointAllowed =
             clientContext.getEndpointContext().switchToMtlsEndpointAllowed();
         this.universeDomain = clientContext.getEndpointContext().universeDomain();
+        // Store the EndpointContext that was already created. This is used to return the state
+        // of the EndpointContext prior to any new modifications
+        this.endpointContext = clientContext.getEndpointContext();
       }
     }
 
@@ -584,8 +597,19 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return clock;
     }
 
+    /**
+     * @return the resolved endpoint when the Builder was created. If invoked after
+     *     `StubSettings.newBuilder()` is called, it will return the clientSettingsEndpoint value.
+     *     If other parameters are then set in the builder, the resolved endpoint is not
+     *     automatically updated. The resolved endpoint will only be recomputed when the
+     *     StubSettings is built again.
+     */
     public String getEndpoint() {
-      return clientSettingsEndpoint;
+      // For the `StubSettings.newBuilder()` case
+      if (endpointContext.equals(EndpointContext.getDefaultInstance())) {
+        return clientSettingsEndpoint;
+      }
+      return endpointContext.resolvedEndpoint();
     }
 
     public String getMtlsEndpoint() {
