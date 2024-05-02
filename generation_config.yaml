@@ -32,4 +32,15 @@ libraries:
   excluded_poms: "proto-google-common-protos-bom,proto-google-common-protos"
   library_type: OTHER
   GAPICs:
-  - proto_path:
+  - proto_path: google/api
+  - proto_path: google/apps/card/v1
+  - proto_path: google/cloud
+  - proto_path: google/cloud/audit
+  - proto_path: google/cloud/location
+  - proto_path: google/geo/type
+  - proto_path: google/logging/type
+  - proto_path: google/longruning
+  - proto_path: google/rpc
+  - proto_path: google/rpc/context
+  - proto_path: google/shopping/type
+  - proto_path: google/type
