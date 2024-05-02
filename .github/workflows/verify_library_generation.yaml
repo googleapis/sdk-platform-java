@@ -24,16 +24,16 @@ jobs:
         set -ex
         echo "base_ref=${{ github.event.pull_request.base.ref }}"
         echo "head_ref=${{ github.event.pull_request.head.ref }}"
-        echo "GITHUB_BASE_REF=${{ github.base_ref }}"
-         # Checkout base ref
-        git checkout "${base_ref}"
-        echo "current branch after checking out base_ref is: $(git branch --show-current)"
-        # Checkout head ref
-        git fetch --no-tags --prune origin +${{ github.event.pull_request.head.ref }}:refs/remotes/origin/${{ github.event.pull_request.head.ref }}
-        git checkout ${{ github.event.pull_request.head.ref }}
-        echo "current branch after checking out head_ref is: $(git branch --show-current)"
-        # HEAD is a dynamic reference that points to the currently checked-out commit
-        changed_directories="$(git diff --name-only ${{ github.base_ref }} HEAD)"
+        # Renovate-bot works from a fork, so need to handle their PRs as a special case.
+        if [[ ${{ github.event.sender.login }} != 'renovate-bot' ]]; then
+          git checkout "${base_ref}"
+          changed_directories="$(git diff --name-only ${base_ref} ${head_ref})"
+        else
+          git remote add fork https://github.com/renovate-bot/gapic-generator-java.git
+          git fetch fork # create a mapping of the fork
+          git checkout -b "${head_ref}" fork/${head_ref}
+          changed_directories="$(git diff --name-only ${{ github.base_ref }} HEAD)"
+        fi
         if [[ ${changed_directories} =~ "library_generation/" ]]; then
           echo "should_run=true" >> $GITHUB_OUTPUT
         else
