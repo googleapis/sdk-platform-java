@@ -16,7 +16,9 @@ jobs:
       shell: bash
       run: |
         set -ex
-        echo ${{ toJson(github.event.pull_request) }}
+        cat << OBJECT
+          ${{ toJson(github.event.pull_request) }}
+        OBJECT
         # Checkout a detached head, and then fetch the base ref to populate the detached head.
         git checkout "${base_ref}"
         git fetch --no-tags --prune origin +${base_ref}:refs/remotes/origin/${base_ref}
