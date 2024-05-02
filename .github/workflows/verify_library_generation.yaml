@@ -1,10 +1,6 @@
 on:
-  push:
-    branches:
-    - main
   pull_request:
 
-  workflow_dispatch:
 name: verify_library_generation
 jobs:
   should-run-library-generation-tests:
@@ -20,8 +16,12 @@ jobs:
       shell: bash
       run: |
         set -ex
+        # Checkout a detached head, and then fetch the base ref to populate the detached head.
         git checkout "${base_ref}"
+        git fetch --no-tags --prune origin +${base_ref}:refs/remotes/origin/${base_ref}
+        # Checkout a detached head, and then fetch the head ref to populate the detached head.
         git checkout "${head_ref}"
+        git fetch --no-tags --prune origin +${head_ref}:refs/remotes/origin/${head_ref}
         changed_directories="$(git diff --name-only ${base_ref} ${head_ref})"
         if [[ ${changed_directories} =~ "library_generation/" ]]; then
           echo "should_run=true" >> $GITHUB_OUTPUT
