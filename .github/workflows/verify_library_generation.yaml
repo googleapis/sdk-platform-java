@@ -24,11 +24,13 @@ jobs:
         set -ex
         echo "base_ref=${{ github.event.pull_request.base.ref }}"
         echo "head_ref=${{ github.event.pull_request.head.ref }}"
+        echo "everything: ${{ github.event.pull_request }}"
         # PRs that come from a fork need to be handled differently
         if [[ ${{ github.event.pull_request.head.repo.full_name  }} == ${{ github.repository }} ]]; then
           git checkout ${base_ref}
           changed_directories="$(git diff --name-only ${base_ref} ${head_ref})"
         else
+          # TODO: update this to be a generic URL if possible
           git remote add fork https://github.com/renovate-bot/gapic-generator-java.git
           git fetch fork # create a mapping of the fork
           git checkout -b "${head_ref}" fork/${head_ref}
