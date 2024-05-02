@@ -190,8 +190,7 @@ class IntegrationTest(unittest.TestCase):
 
     @classmethod
     def __remove_generated_files(cls):
-        # uncomment this line when the generated files don't owned by root.
-        # shutil.rmtree(f"{output_dir}", ignore_errors=True)
+        shutil.rmtree(f"{output_dir}", ignore_errors=True)
         if os.path.isdir(f"{golden_dir}"):
             shutil.rmtree(f"{golden_dir}")
 
