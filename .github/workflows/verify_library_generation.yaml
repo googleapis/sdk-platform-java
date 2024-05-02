@@ -23,7 +23,7 @@ jobs:
         set -ex
         git checkout "${base_ref}" # Checkout a detached head, and then fetch the base ref to populate the detached head.
         git fetch --no-tags --prune origin +${base_ref}:refs/remotes/origin/${base_ref}
-        git checkout "${head_ref}" # Checkout a detached head, and then fetch the base ref to populate the detached head.
+        git checkout "${head_ref}" # Checkout a detached head, and then fetch the head ref to populate the detached head.
         git fetch --no-tags --prune origin +${head_ref}:refs/remotes/origin/${head_ref}
         changed_directories="$(git diff --name-only ${base_ref} ${head_ref})"
         if [[ ${changed_directories} =~ "library_generation/" ]]; then
