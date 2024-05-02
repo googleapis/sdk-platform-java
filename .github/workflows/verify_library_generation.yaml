@@ -24,7 +24,8 @@ jobs:
         set -ex
         echo "base_ref=${{ github.event.pull_request.base.ref }}"
         echo "head_ref=${{ github.event.pull_request.head.ref }}"
-        echo "Head repo URL: ${{ github.event.pull_request.head.repo.html_url }}
+        echo "${{ github.event.pull_request.toString() }}"
+        echo "Head repo URL: ${{ github.event.pull_request.head.repo.html_url }}"
         # PRs that come from a fork need to be handled differently
         if [[ ${{ github.event.pull_request.head.repo.full_name  }} == ${{ github.repository }} ]]; then
           git checkout ${base_ref}
