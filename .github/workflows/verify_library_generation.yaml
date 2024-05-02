@@ -26,7 +26,7 @@ jobs:
         echo "head_ref=${{ github.event.pull_request.head.ref }}"
         echo "GITHUB_BASE_REF=${{ github.base_ref }}"
          # Checkout base ref
-        git checkout ${{ github.event.pull_request.base.ref }}
+        git checkout "${base_ref}"
         echo "current branch after checking out base_ref is: $(git branch --show-current)"
         # Checkout head ref
         git fetch --no-tags --prune origin +${{ github.event.pull_request.head.ref }}:refs/remotes/origin/${{ github.event.pull_request.head.ref }}
