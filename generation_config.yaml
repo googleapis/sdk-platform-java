@@ -39,7 +39,7 @@ libraries:
   - proto_path: google/cloud/location
   - proto_path: google/geo/type
   - proto_path: google/logging/type
-  - proto_path: google/longruning
+  - proto_path: google/longrunning
   - proto_path: google/rpc
   - proto_path: google/rpc/context
   - proto_path: google/shopping/type
