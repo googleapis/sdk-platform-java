@@ -39,6 +39,9 @@ def load_versions(filename: str, default_group_id: str) -> Mapping[str, module.M
                     __proto_group_id(default_group_id)
                     if artifact_id.startswith("proto-")
                     or artifact_id.startswith("grpc-")
+                    # artifact id may not start with `google-`, e.g.,
+                    # ad-manager, we don't want to change group id
+                    # in this case.
                     else default_group_id
                 )
                 modules[artifact_id] = module.Module(
