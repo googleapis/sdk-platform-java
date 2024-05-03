@@ -45,8 +45,6 @@ public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassCo
       String newBuilderMethodName,
       String createDefaultMethodName,
       List<AnnotationNode> annotations) {
-    AnnotationNode betaApiAnnotaiton =
-        AnnotationNode.builder().setType(FIXED_TYPESTORE.get("BetaApi")).build();
 
     List<MethodDefinition> methods = new ArrayList<>();
     methods.addAll(
@@ -59,10 +57,7 @@ public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassCo
               typeStore,
               "newHttpJsonBuilder",
               "createHttpJsonDefault",
-              ImmutableList.<AnnotationNode>builder()
-                  .addAll(annotations)
-                  .add(betaApiAnnotaiton)
-                  .build()));
+              ImmutableList.<AnnotationNode>builder().addAll(annotations).build()));
     }
     return methods;
   }
@@ -76,9 +71,6 @@ public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassCo
       List<AnnotationNode> annotations,
       CommentStatement comment) {
     List<MethodDefinition> methods = new ArrayList<>();
-
-    AnnotationNode betaApiAnnotaiton =
-        AnnotationNode.builder().setType(FIXED_TYPESTORE.get("BetaApi")).build();
 
     Iterator<String> transportNames = getTransportContext().transportNames().iterator();
 
@@ -98,10 +90,7 @@ public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassCo
               typeStore,
               "newHttpJsonBuilder",
               "createHttpJsonDefault",
-              ImmutableList.<AnnotationNode>builder()
-                  .addAll(annotations)
-                  .add(betaApiAnnotaiton)
-                  .build(),
+              ImmutableList.<AnnotationNode>builder().addAll(annotations).build(),
               new SettingsCommentComposer(transportNames.next())
                   .getNewTransportBuilderMethodComment()));
     }

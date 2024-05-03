@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -273,7 +273,8 @@ public class GrpcComplianceStub extends ComplianceStub {
                   builder.add("info.f_bool", String.valueOf(request.getInfo().getFBool()));
                   builder.add("info.f_double", String.valueOf(request.getInfo().getFDouble()));
                   builder.add("info.f_int32", String.valueOf(request.getInfo().getFInt32()));
-                  builder.add("info.f_kingdom", String.valueOf(request.getInfo().getFKingdom()));
+                  builder.add(
+                      "info.f_kingdom", String.valueOf(request.getInfo().getFKingdomValue()));
                   builder.add("info.f_string", String.valueOf(request.getInfo().getFString()));
                   return builder.build();
                 })

@@ -4,3 +4,4 @@ ignoreFiles:
   - src/test/**
   - test/**
   - showcase/**
+  - library_generation/owlbot/templates/java_library/samples/install-without-bom/pom.xml

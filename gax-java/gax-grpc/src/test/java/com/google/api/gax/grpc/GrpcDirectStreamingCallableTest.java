@@ -42,7 +42,9 @@ import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientStream;
 import com.google.api.gax.rpc.ClientStreamingCallable;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode.Code;
+import com.google.auth.Credentials;
 import com.google.type.Color;
 import com.google.type.Money;
 import io.grpc.CallOptions;
@@ -58,6 +60,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mockito;
 
 @RunWith(JUnit4.class)
 public class GrpcDirectStreamingCallableTest {
@@ -73,10 +76,16 @@ public class GrpcDirectStreamingCallableTest {
     inprocessServer = new InProcessServer<>(serviceImpl, serverName);
     inprocessServer.start();
     channel = InProcessChannelBuilder.forName(serverName).directExecutor().usePlaintext().build();
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
     clientContext =
         ClientContext.newBuilder()
             .setTransportChannel(GrpcTransportChannel.create(channel))
-            .setDefaultCallContext(GrpcCallContext.of(channel, CallOptions.DEFAULT))
+            .setDefaultCallContext(
+                GrpcCallContext.of(channel, CallOptions.DEFAULT)
+                    .withEndpointContext(endpointContext))
             .build();
   }
 

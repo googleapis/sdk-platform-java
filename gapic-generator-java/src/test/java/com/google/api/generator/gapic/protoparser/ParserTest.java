@@ -17,9 +17,14 @@ package com.google.api.generator.gapic.protoparser;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import com.google.api.FieldInfo.Format;
+import com.google.api.MethodSettings;
+import com.google.api.Publishing;
+import com.google.api.Service;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -31,14 +36,19 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Transport;
+import com.google.api.version.test.ApiVersionTestingOuterClass;
+import com.google.auto.populate.field.AutoPopulateFieldTestingOuterClass;
 import com.google.bookshop.v1beta1.BookshopProto;
 import com.google.common.collect.ImmutableList;
+import com.google.common.truth.Truth;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -55,10 +65,17 @@ public class ParserTest {
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
 
+  private static final String YAML_DIRECTORY = "src/test/resources/";
+
+  private Optional<com.google.api.Service> serviceYamlProtoOpt;
+
   @Before
   public void setUp() {
     echoFileDescriptor = EchoOuterClass.getDescriptor();
     echoService = echoFileDescriptor.getServices().get(0);
+    String yamlFilename = "echo_v1beta1.yaml";
+    Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
+    serviceYamlProtoOpt = ServiceYamlParser.parse(yamlPath.toString());
     assertEquals("Echo", echoService.getName());
   }
 
@@ -121,6 +138,7 @@ public class ParserTest {
             messageTypes,
             resourceNames,
             Optional.empty(),
+            serviceYamlProtoOpt,
             outputResourceNames,
             Transport.GRPC);
 
@@ -130,6 +148,7 @@ public class ParserTest {
     Method echoMethod = methods.get(0);
     assertEquals(echoMethod.name(), "Echo");
     assertEquals(echoMethod.stream(), Method.Stream.NONE);
+    assertEquals(false, echoMethod.hasAutoPopulatedFields());
 
     // Detailed method signature parsing tests are in a separate unit test.
     List<List<MethodArgument>> methodSignatures = echoMethod.methodSignatures();
@@ -157,14 +176,17 @@ public class ParserTest {
         TypeNode.withReference(createStatusReference()),
         ImmutableList.of(),
         expandMethod.methodSignatures().get(0).get(1));
+    assertEquals(false, expandMethod.hasAutoPopulatedFields());
 
     Method collectMethod = methods.get(2);
     assertEquals("Collect", collectMethod.name());
     assertEquals(Method.Stream.CLIENT, collectMethod.stream());
+    assertEquals(false, collectMethod.hasAutoPopulatedFields());
 
     Method chatMethod = methods.get(3);
     assertEquals("Chat", chatMethod.name());
     assertEquals(Method.Stream.BIDI, chatMethod.stream());
+    assertEquals(false, chatMethod.hasAutoPopulatedFields());
   }
 
   @Test
@@ -178,6 +200,7 @@ public class ParserTest {
             ECHO_PACKAGE,
             messageTypes,
             resourceNames,
+            Optional.empty(),
             Optional.empty(),
             outputResourceNames,
             Transport.GRPC);
@@ -419,6 +442,132 @@ public class ParserTest {
   }
 
   @Test
+  public void parseFields_autoPopulated() {
+    Map<String, Message> messageTypes =
+        Parser.parseMessages(AutoPopulateFieldTestingOuterClass.getDescriptor());
+    Message message =
+        messageTypes.get("com.google.auto.populate.field.AutoPopulateFieldTestingEchoRequest");
+    Field field = message.fieldMap().get("request_id");
+    assertEquals(false, field.isRequired());
+    assertEquals(Format.UUID4, field.fieldInfoFormat());
+    field = message.fieldMap().get("second_request_id");
+    assertEquals(false, field.isRequired());
+    assertEquals(Format.UUID4, field.fieldInfoFormat());
+    field = message.fieldMap().get("third_request_id");
+    assertEquals(false, field.isRequired());
+    assertEquals(Format.UUID4, field.fieldInfoFormat());
+    field = message.fieldMap().get("fourth_request_id");
+    assertEquals(false, field.isRequired());
+    assertEquals(Format.IPV4_OR_IPV6, field.fieldInfoFormat());
+    field = message.fieldMap().get("fifth_request_id");
+    assertEquals(false, field.isRequired());
+    assertEquals(Format.UUID4, field.fieldInfoFormat());
+    field = message.fieldMap().get("sixth_request_id");
+    assertEquals(true, field.isRequired());
+    assertEquals(Format.UUID4, field.fieldInfoFormat());
+
+    message =
+        messageTypes.get("com.google.auto.populate.field.AutoPopulateFieldTestingExpandRequest");
+    field = message.fieldMap().get("request_id");
+    assertEquals(false, field.isRequired());
+    assertEquals(Format.UUID4, field.fieldInfoFormat());
+  }
+
+  @Test
+  public void parseAutoPopulatedMethodsAndFields_exists() {
+    String yamlFilename = "auto_populate_field_testing.yaml";
+    Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
+    Map<String, List<String>> autoPopulatedMethodsWithFields =
+        Parser.parseAutoPopulatedMethodsAndFields(ServiceYamlParser.parse(yamlPath.toString()));
+
+    assertEquals(
+        true,
+        autoPopulatedMethodsWithFields.containsKey(
+            "google.auto.populate.field.AutoPopulateFieldTesting.AutoPopulateFieldTestingEcho"));
+    assertEquals(
+        Arrays.asList(
+            "request_id",
+            "second_request_id",
+            "third_request_id",
+            "fourth_request_id",
+            "non_existent_field"),
+        autoPopulatedMethodsWithFields.get(
+            "google.auto.populate.field.AutoPopulateFieldTesting.AutoPopulateFieldTestingEcho"));
+  }
+
+  @Test
+  public void parseAutoPopulatedMethodsAndFields_doesNotExist() {
+    String yamlFilename = "logging.yaml";
+    Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
+    Optional<Service> serviceYamlProtoOpt_Null = ServiceYamlParser.parse(yamlPath.toString());
+
+    Map<String, List<String>> autoPopulatedMethodsWithFields =
+        Parser.parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt_Null);
+    assertEquals(true, autoPopulatedMethodsWithFields.isEmpty());
+  }
+
+  @Test
+  public void parseAutoPopulatedMethodsAndFields_returnsEmptyMapIfServiceYamlIsNull() {
+    assertEquals(true, Parser.parseAutoPopulatedMethodsAndFields(Optional.empty()).isEmpty());
+  }
+
+  @Test
+  public void parseAutoPopulatedMethodsAndFields_returnsMapOfMethodsAndAutoPopulatedFields() {
+    MethodSettings testMethodSettings =
+        MethodSettings.newBuilder()
+            .setSelector("test_method")
+            .addAutoPopulatedFields("test_field")
+            .addAutoPopulatedFields("test_field_2")
+            .build();
+    MethodSettings testMethodSettings2 =
+        MethodSettings.newBuilder()
+            .setSelector("test_method_2")
+            .addAutoPopulatedFields("test_field_3")
+            .build();
+    MethodSettings testMethodSettings3 =
+        MethodSettings.newBuilder().setSelector("test_method_3").build();
+    Publishing testPublishing =
+        Publishing.newBuilder()
+            .addMethodSettings(testMethodSettings)
+            .addMethodSettings(testMethodSettings2)
+            .addMethodSettings(testMethodSettings3)
+            .build();
+    Optional<Service> testService =
+        Optional.of(Service.newBuilder().setPublishing(testPublishing).build());
+    Truth.assertThat(Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method"))
+        .containsExactly("test_field", "test_field_2");
+    Truth.assertThat(Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method_2"))
+        .containsExactly("test_field_3");
+    Truth.assertThat(Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method_3"))
+        .isEmpty();
+    Truth.assertThat(
+            Parser.parseAutoPopulatedMethodsAndFields(testService).containsKey("test_method_4"))
+        .isEqualTo(false);
+  }
+
+  @Test
+  public void hasMethodSettings_shouldReturnFalseIfServiceYamlDoesNotExist() {
+    assertEquals(false, Parser.hasMethodSettings(Optional.empty()));
+  }
+
+  @Test
+  public void hasMethodSettings_shouldReturnFalseIfServiceYamlDoesNotHavePublishing() {
+    assertEquals(false, Parser.hasMethodSettings(Optional.of(Service.newBuilder().build())));
+  }
+
+  @Test
+  public void hasMethodSettings_shouldReturnTrueIfServiceYamlHasNonEmptyMethodSettings() {
+    MethodSettings testMethodSettings =
+        MethodSettings.newBuilder().setSelector("test_method").build();
+    Publishing testPublishing =
+        Publishing.newBuilder().addMethodSettings(testMethodSettings).build();
+    assertEquals(
+        true,
+        Parser.hasMethodSettings(
+            Optional.of(Service.newBuilder().setPublishing(testPublishing).build())));
+  }
+
+  @Test
   public void parseResourceNames_inputTypeHasReferenceNotInMethodSignature() {
     FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
@@ -458,6 +607,76 @@ public class ParserTest {
         "MutateJob.MutateJobMetadata",
         Parser.parseNestedProtoTypeName(
             "google.ads.googleads.v3.resources.MutateJob.MutateJobMetadata"));
+  }
+
+  @Test
+  public void parseServiceApiVersionTest() {
+    FileDescriptor apiVersionFileDescriptor = ApiVersionTestingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(apiVersionFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(apiVersionFileDescriptor);
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            apiVersionFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            new HashSet<>());
+    com.google.api.generator.gapic.model.Service parsedEchoService = services.get(0);
+
+    assertEquals("EchoWithVersion", parsedEchoService.overriddenName());
+    assertTrue(parsedEchoService.hasApiVersion());
+    assertEquals("fake_version", parsedEchoService.apiVersion());
+  }
+
+  @Test
+  public void parseServiceWithoutApiVersionTest() {
+    FileDescriptor apiVersionFileDescriptor = ApiVersionTestingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(apiVersionFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(apiVersionFileDescriptor);
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            apiVersionFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            new HashSet<>());
+    com.google.api.generator.gapic.model.Service parsedEchoWithoutVersionService = services.get(1);
+
+    assertNull(parsedEchoWithoutVersionService.apiVersion());
+    assertFalse(parsedEchoWithoutVersionService.hasApiVersion());
+    assertEquals("EchoWithoutVersion", parsedEchoWithoutVersionService.overriddenName());
+  }
+
+  @Test
+  public void parseServiceWithEmptyApiVersionTest() {
+    FileDescriptor apiVersionFileDescriptor = ApiVersionTestingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(apiVersionFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(apiVersionFileDescriptor);
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            apiVersionFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            new HashSet<>());
+    com.google.api.generator.gapic.model.Service parsedEchoWithEmptyVersionService =
+        services.get(2);
+
+    assertEquals("EchoWithEmptyVersion", parsedEchoWithEmptyVersionService.overriddenName());
+    assertEquals("", parsedEchoWithEmptyVersionService.apiVersion());
+    assertFalse(parsedEchoWithEmptyVersionService.hasApiVersion());
+  }
+
+  @Test
+  public void testServiceWithoutApiVersionParsed() {
+    FileDescriptor bookshopFileDescriptor = BookshopProto.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(bookshopFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(bookshopFileDescriptor);
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            bookshopFileDescriptor, messageTypes, resourceNames, Optional.empty(), new HashSet<>());
+    com.google.api.generator.gapic.model.Service parsedBookshopService = services.get(0);
+    assertNull(parsedBookshopService.apiVersion());
   }
 
   private void assertMethodArgumentEquals(

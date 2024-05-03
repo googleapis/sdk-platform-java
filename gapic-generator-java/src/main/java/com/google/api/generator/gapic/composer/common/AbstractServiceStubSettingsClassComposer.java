@@ -97,6 +97,7 @@ import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -203,7 +204,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     return GapicClass.create(
             GapicClass.Kind.STUB, classDef, SampleComposerUtil.handleDuplicateSamples(samples))
         .withApiShortName(service.apiShortName())
-        .withApiVersion(service.apiVersion());
+        .withPackageVersion(service.packageVersion());
   }
 
   protected MethodDefinition createDefaultCredentialsProviderBuilderMethod() {
@@ -369,15 +370,17 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnType(returnType)
             .build();
 
-    AnnotationNode annotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "The surface for customizing headers is not stable yet and may change in the"
-                    + " future.")
-            .build();
+    if (service.hasApiVersion()) {
+
+      returnExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(returnExpr)
+              .setMethodName("setApiVersionToken")
+              .setArguments(ValueExpr.withValue(StringObjectValue.withValue(service.apiVersion())))
+              .setReturnType(returnType)
+              .build();
+    }
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(annotation))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(returnType)
@@ -1137,9 +1140,27 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   private List<MethodDefinition> createDefaultHelperAndGetterMethods(
       Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
+    TypeNode returnType;
+
+    // Create the getServiceName method.
+    if (!Strings.isNullOrEmpty(service.hostServiceName())) {
+      returnType = TypeNode.STRING;
+      javaMethods.add(
+          MethodDefinition.builder()
+              .setHeaderCommentStatements(
+                  SettingsCommentComposer.DEFAULT_SERVICE_NAME_METHOD_COMMENT)
+              .setIsOverride(true)
+              .setScope(ScopeNode.PUBLIC)
+              .setIsStatic(false)
+              .setReturnType(returnType)
+              .setName("getServiceName")
+              .setReturnExpr(
+                  ValueExpr.withValue(StringObjectValue.withValue(service.hostServiceName())))
+              .build());
+    }
 
     // Create the defaultExecutorProviderBuilder method.
-    TypeNode returnType =
+    returnType =
         TypeNode.withReference(
             ConcreteReference.withClazz(InstantiatingExecutorProvider.Builder.class));
     javaMethods.add(
@@ -1876,14 +1897,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     .setMethodName("build")
                     .build())
             .build());
-
-    bodyExprs.add(
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(builderVarExpr)
-            .setMethodName("setEndpoint")
-            .setArguments(
-                MethodInvocationExpr.builder().setMethodName("getDefaultEndpoint").build())
-            .build());
     bodyExprs.add(
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(builderVarExpr)
@@ -1979,13 +1992,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             t.reference()
                 .copyAndSetGenerics(ImmutableList.of())
                 .equals(operationCallSettingsBuilderRef);
-    AnnotationNode lroBetaAnnotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "The surface for use by generated code is not stable yet and may change in the"
-                    + " future.")
-            .build();
     AnnotationNode deprecatedAnnotation = AnnotationNode.withType(TypeNode.DEPRECATED);
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
@@ -1993,13 +1999,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         nestedMethodSettingsMemberVarExprs.entrySet()) {
       String varName = settingsVarEntry.getKey();
       VariableExpr settingsVarExpr = settingsVarEntry.getValue();
-      boolean isOperationCallSettings =
-          isOperationCallSettingsBuilderFn.apply(settingsVarExpr.type());
-
       List<AnnotationNode> annotations = new ArrayList<>();
-      if (isOperationCallSettings) {
-        annotations.add(lroBetaAnnotation);
-      }
 
       boolean isDeprecated = nestedDeprecatedSettingVarNames.contains(varName);
       if (isDeprecated) {

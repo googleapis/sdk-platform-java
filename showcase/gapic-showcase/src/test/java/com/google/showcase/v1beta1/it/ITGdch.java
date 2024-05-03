@@ -186,7 +186,8 @@ public class ITGdch {
     // audience. It should
     // be created without issues
     String testAudience = "valid-audience";
-    settings = settings.toBuilder().setGdchApiAudience(testAudience).build();
+    settings =
+        settings.toBuilder().setGdchApiAudience(testAudience).setEndpoint("localhost:7469").build();
     context = ClientContext.create(settings);
     stubSettings = EchoStubSettings.newBuilder(context).build();
     client = EchoClient.create(stubSettings.createStub());

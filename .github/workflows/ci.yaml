@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        java: [ 11, 17 ]
+        java: [ 11, 17]
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
@@ -22,6 +22,14 @@ jobs:
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip -DenableTestCoverage
+      # The `envVarTest` profile runs tests that require an environment variable
+      - name: Env Var Tests
+        run: |
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage -PenvVarTest
+        # Set the Env Var for this step only
+        env:
+          GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
       - run: bazelisk version
       - name: Install Maven modules
         run: |
@@ -48,14 +56,44 @@ jobs:
           pushd /tmp/java-compute/google-cloud-compute-small-v1-java
           ./gradlew clean build publishToMavenLocal sourcesJar allJars
           popd
-
+  build-java-21:
+    name: "build(21) except self-service clients"
+    # Support for Java 21 is available for all use cases except self-service clients.
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: maven
+      - run: java -version
+      - name: Unit Tests
+        run: |
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage
+      # The `envVarTest` profile runs tests that require an environment variable
+      - name: Env Var Tests
+        run: |
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage -PenvVarTest
+        # Set the Env Var for this step only
+        env:
+          GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
+      - run: bazelisk version
+      - name: Install Maven modules
+        run: |
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+      - name: Integration Tests
+        run: |
+          bazelisk --batch test //test/integration/...
   build-java8-except-gapic-generator-java:
     name: "build(8) except for gapic-generator-java"
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      # Java 8 tests uses JDK 11 to compile and JDK 8 to run tests.
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      # Java 8 tests uses JDK 17 to compile and JDK 8 to run tests.
+      - uses: actions/setup-java@v4
         with:
           java-version: 8
           distribution: temurin
@@ -69,20 +107,36 @@ jobs:
         shell: bash
         run: |
           set -x
-          export JAVA_HOME=$JAVA11_HOME
+          export JAVA_HOME=$JAVA_HOME
           export PATH=${JAVA_HOME}/bin:$PATH
           # Maven surefire plugin lets us to specify the JVM when running tests via
           # the "jvm" system property.
           mvn verify --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip \
               -Djvm="${JAVA8_HOME}/bin/java"
+      # The `envVarTest` profile runs tests that require an environment variable
+      - name: Compile with Java 17 and run tests with Java 8 (Env Var Tests)
+        shell: bash
+        run: |
+          set -x
+          export JAVA_HOME=$JAVA_HOME
+          export PATH=${JAVA_HOME}/bin:$PATH
+          # Maven surefire plugin lets us to specify the JVM when running tests via
+          # the "jvm" system property.
+          export GOOGLE_CLOUD_UNIVERSE_DOMAIN=random.com
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage -Dsurefire.failIfNoSpecifiedTests=false \
+              -PenvVarTest
+        # Set the Env Var for this step only
+        env:
+          GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
 
   build-java8-gapic-generator-java:
     name: "build(8) for gapic-generator-java"
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: 11
           distribution: temurin
@@ -127,8 +181,8 @@ jobs:
   lint:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: 11
           distribution: temurin
@@ -141,8 +195,8 @@ jobs:
   compatibility:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: 11
           distribution: temurin
@@ -153,23 +207,14 @@ jobs:
         #  testlib modules of gax
         run: mvn package clirr:check -DskipTests
 
-  requirements-kokoro:
-    runs-on: ubuntu-latest
-    container: gcr.io/cloud-devrel-public-resources/java11
-    steps:
-      - uses: actions/checkout@v3
-      - run: python3 --version
-      - run: python3 -m pip install --require-hashes -r .kokoro/requirements.txt
-      - run: python3 -m releasetool publish-reporter-script > /dev/null
-
   showcase:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
         java: [ 11, 17 ]
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
@@ -211,7 +256,7 @@ jobs:
   showcase-native:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: graalvm/setup-graalvm@v1
         with:
           version: '22.3.2'
@@ -243,10 +288,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout @ target branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.base_ref }}
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: temurin
@@ -272,8 +317,8 @@ jobs:
   gapic-generator-java-bom:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-java@v3
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
       with:
         java-version: 11
         distribution: temurin
@@ -282,7 +327,45 @@ jobs:
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: Validate gapic-generator-java-bom
-      uses: googleapis/java-cloud-bom/tests/validate-bom@a0bfee488b0d74f9b68918ae01d4bf130520d2c5
+      uses: googleapis/java-cloud-bom/tests/validate-bom@7071341075a2aea70d84ac92c90411988a690560
       with:
         bom-path: gapic-generator-java-bom/pom.xml
 
+  unmanaged_dependency_check:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - uses: actions/setup-java@v4
+      with:
+        java-version: 11
+        distribution: temurin
+    - run: mvn -version
+    - name: Unit Tests
+      run: |
+        mvn test --batch-mode --no-transfer-progress
+      working-directory: java-shared-dependencies/unmanaged-dependency-check
+    - name: Install Maven modules
+      run: |
+        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+    - name: Unmanaged dependency check
+      uses: ./java-shared-dependencies/unmanaged-dependency-check
+      with:
+        bom-path: gapic-generator-java-bom/pom.xml
+
+  dependency_analyzer_unit_test:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - uses: actions/setup-java@v4
+      with:
+        java-version: 17
+        distribution: temurin
+    - run: mvn -version
+    - name: Unit Tests
+      run: |
+        mvn test --batch-mode --no-transfer-progress
+      working-directory: java-shared-dependencies/dependency-analyzer

@@ -211,19 +211,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   }
 
   @Override
-  protected List<AnnotationNode> createClassAnnotations(Service service) {
-    List<AnnotationNode> annotations = super.createClassAnnotations(service);
-
-    TypeNode betaApiType = FIXED_TYPESTORE.get("BetaApi");
-
-    if (annotations.stream().noneMatch(a -> betaApiType.equals(a.type()))) {
-      annotations.add(AnnotationNode.builder().setType(betaApiType).build());
-    }
-
-    return annotations;
-  }
-
-  @Override
   protected List<MethodDefinition> createGetMethodDescriptorsMethod(
       Service service,
       TypeStore typeStore,

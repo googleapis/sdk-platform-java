@@ -105,7 +105,6 @@ public class WickedSettings extends ClientSettings<WickedSettings> {
     return WickedStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return WickedStubSettings.defaultApiClientHeaderProviderBuilder();
   }

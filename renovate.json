@@ -49,6 +49,25 @@
       ],
       "depNameTemplate": "io.grpc:grpc-core",
       "datasourceTemplate": "maven"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["^.kokoro/presubmit/graalvm-native.*.cfg$"],
+      "matchStrings": ["value: \"gcr.io/cloud-devrel-kokoro-resources/graalvm:(?<currentValue>.*?)\"",
+        "value: \"gcr.io/cloud-devrel-kokoro-resources/graalvm17:(?<currentValue>.*?)\""],
+      "depNameTemplate": "ghcr.io/graalvm/graalvm-ce",
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "^.cloudbuild/*"
+      ],
+      "matchStrings": [
+        "  _JAVA_SHARED_CONFIG_VERSION: '(?<currentValue>.+?)'"
+      ],
+      "depNameTemplate": "com.google.cloud:google-cloud-shared-config",
+      "datasourceTemplate": "maven"
     }
   ],
   "packageRules": [
@@ -65,7 +84,8 @@
       "matchPackagePatterns": [
         "^com.google.guava:"
       ],
-      "versioning": "docker"
+      "versioning": "docker",
+      "enabled": false
     },
     {
       "matchPackagePatterns": [
@@ -84,7 +104,8 @@
         "^com.google.cloud:google-cloud-shared-config"
       ],
       "semanticCommitType": "build",
-      "semanticCommitScope": "deps"
+      "semanticCommitScope": "deps",
+      "enabled": true
     },
     {
       "matchPackagePatterns": [
@@ -122,13 +143,15 @@
       "matchPackagePatterns": [
         "^com.google.protobuf"
       ],
-      "groupName": "Protobuf dependencies"
+      "groupName": "Protobuf dependencies",
+      "enabled": false
     },
     {
       "matchPackagePatterns": [
         "^io.grpc"
       ],
-      "groupName": "gRPC dependencies"
+      "groupName": "gRPC dependencies",
+      "enabled": false
     },
     {
       "matchPackagePatterns": [

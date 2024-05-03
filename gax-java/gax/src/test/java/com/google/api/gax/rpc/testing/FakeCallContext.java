@@ -36,6 +36,7 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.TransportChannel;
 import com.google.api.gax.rpc.internal.ApiCallContextOptions;
@@ -46,6 +47,7 @@ import com.google.auth.Credentials;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -64,6 +66,7 @@ public class FakeCallContext implements ApiCallContext {
   private final ApiTracer tracer;
   private final RetrySettings retrySettings;
   private final ImmutableSet<StatusCode.Code> retryableCodes;
+  private final EndpointContext endpointContext;
 
   private FakeCallContext(
       Credentials credentials,
@@ -75,7 +78,8 @@ public class FakeCallContext implements ApiCallContext {
       ApiCallContextOptions options,
       ApiTracer tracer,
       RetrySettings retrySettings,
-      Set<StatusCode.Code> retryableCodes) {
+      Set<StatusCode.Code> retryableCodes,
+      EndpointContext endpointContext) {
     this.credentials = credentials;
     this.channel = channel;
     this.timeout = timeout;
@@ -86,6 +90,12 @@ public class FakeCallContext implements ApiCallContext {
     this.tracer = tracer;
     this.retrySettings = retrySettings;
     this.retryableCodes = retryableCodes == null ? null : ImmutableSet.copyOf(retryableCodes);
+    try {
+      this.endpointContext =
+          endpointContext == null ? EndpointContext.newBuilder().build() : endpointContext;
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public static FakeCallContext createDefault() {
@@ -97,6 +107,7 @@ public class FakeCallContext implements ApiCallContext {
         null,
         ImmutableMap.<String, List<String>>of(),
         ApiCallContextOptions.getDefaultOptions(),
+        null,
         null,
         null,
         null);
@@ -185,7 +196,8 @@ public class FakeCallContext implements ApiCallContext {
         newOptions,
         newTracer,
         newRetrySettings,
-        newRetryableCodes);
+        newRetryableCodes,
+        endpointContext);
   }
 
   public RetrySettings getRetrySettings() {
@@ -203,7 +215,8 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   public Set<StatusCode.Code> getRetryableCodes() {
@@ -221,7 +234,8 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        retryableCodes);
+        retryableCodes,
+        this.endpointContext);
   }
 
   public Credentials getCredentials() {
@@ -273,7 +287,8 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   @Override
@@ -285,6 +300,23 @@ public class FakeCallContext implements ApiCallContext {
     }
     FakeTransportChannel transportChannel = (FakeTransportChannel) inputChannel;
     return withChannel(transportChannel.getChannel());
+  }
+
+  @Override
+  public FakeCallContext withEndpointContext(EndpointContext endpointContext) {
+    Preconditions.checkNotNull(endpointContext);
+    return new FakeCallContext(
+        this.credentials,
+        this.channel,
+        this.timeout,
+        this.streamWaitTimeout,
+        this.streamIdleTimeout,
+        this.extraHeaders,
+        this.options,
+        this.tracer,
+        this.retrySettings,
+        this.retryableCodes,
+        endpointContext);
   }
 
   @Override
@@ -303,7 +335,8 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   @Override
@@ -328,7 +361,8 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   @Nullable
@@ -349,7 +383,8 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   @Nullable
@@ -371,7 +406,8 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   @Nullable
@@ -395,7 +431,8 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   @Override
@@ -417,7 +454,8 @@ public class FakeCallContext implements ApiCallContext {
         newOptions,
         tracer,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        this.endpointContext);
   }
 
   @Override
@@ -451,7 +489,8 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   public static FakeCallContext create(ClientContext clientContext) {

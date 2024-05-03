@@ -6,6 +6,9 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * <pre>
  * A service to facilitate running discrete sets of tests
  * against Showcase.
+ * Adding this comment with special characters for comment formatting tests:
+ * 1. (abra-&gt;kadabra-&gt;alakazam)
+ * 2) [Nonsense][]: `pokemon/&#42;&#47;psychic/&#42;`
  * </pre>
  */
 @javax.annotation.Generated(
@@ -315,6 +318,9 @@ public final class TestingGrpc {
    * <pre>
    * A service to facilitate running discrete sets of tests
    * against Showcase.
+   * Adding this comment with special characters for comment formatting tests:
+   * 1. (abra-&gt;kadabra-&gt;alakazam)
+   * 2) [Nonsense][]: `pokemon/&#42;&#47;psychic/&#42;`
    * </pre>
    */
   public interface AsyncService {
@@ -322,6 +328,9 @@ public final class TestingGrpc {
     /**
      * <pre>
      * Creates a new testing session.
+     * Adding this comment with special characters for comment formatting tests:
+     * 1. (abra-&gt;kadabra-&gt;alakazam)
+     * 2) [Nonsense][]: `pokemon/&#42;&#47;psychic/&#42;`
      * </pre>
      */
     default void createSession(com.google.showcase.v1beta1.CreateSessionRequest request,
@@ -412,6 +421,9 @@ public final class TestingGrpc {
    * <pre>
    * A service to facilitate running discrete sets of tests
    * against Showcase.
+   * Adding this comment with special characters for comment formatting tests:
+   * 1. (abra-&gt;kadabra-&gt;alakazam)
+   * 2) [Nonsense][]: `pokemon/&#42;&#47;psychic/&#42;`
    * </pre>
    */
   public static abstract class TestingImplBase
@@ -427,6 +439,9 @@ public final class TestingGrpc {
    * <pre>
    * A service to facilitate running discrete sets of tests
    * against Showcase.
+   * Adding this comment with special characters for comment formatting tests:
+   * 1. (abra-&gt;kadabra-&gt;alakazam)
+   * 2) [Nonsense][]: `pokemon/&#42;&#47;psychic/&#42;`
    * </pre>
    */
   public static final class TestingStub
@@ -445,6 +460,9 @@ public final class TestingGrpc {
     /**
      * <pre>
      * Creates a new testing session.
+     * Adding this comment with special characters for comment formatting tests:
+     * 1. (abra-&gt;kadabra-&gt;alakazam)
+     * 2) [Nonsense][]: `pokemon/&#42;&#47;psychic/&#42;`
      * </pre>
      */
     public void createSession(com.google.showcase.v1beta1.CreateSessionRequest request,
@@ -543,6 +561,9 @@ public final class TestingGrpc {
    * <pre>
    * A service to facilitate running discrete sets of tests
    * against Showcase.
+   * Adding this comment with special characters for comment formatting tests:
+   * 1. (abra-&gt;kadabra-&gt;alakazam)
+   * 2) [Nonsense][]: `pokemon/&#42;&#47;psychic/&#42;`
    * </pre>
    */
   public static final class TestingBlockingStub
@@ -561,6 +582,9 @@ public final class TestingGrpc {
     /**
      * <pre>
      * Creates a new testing session.
+     * Adding this comment with special characters for comment formatting tests:
+     * 1. (abra-&gt;kadabra-&gt;alakazam)
+     * 2) [Nonsense][]: `pokemon/&#42;&#47;psychic/&#42;`
      * </pre>
      */
     public com.google.showcase.v1beta1.Session createSession(com.google.showcase.v1beta1.CreateSessionRequest request) {
@@ -651,6 +675,9 @@ public final class TestingGrpc {
    * <pre>
    * A service to facilitate running discrete sets of tests
    * against Showcase.
+   * Adding this comment with special characters for comment formatting tests:
+   * 1. (abra-&gt;kadabra-&gt;alakazam)
+   * 2) [Nonsense][]: `pokemon/&#42;&#47;psychic/&#42;`
    * </pre>
    */
   public static final class TestingFutureStub
@@ -669,6 +696,9 @@ public final class TestingGrpc {
     /**
      * <pre>
      * Creates a new testing session.
+     * Adding this comment with special characters for comment formatting tests:
+     * 1. (abra-&gt;kadabra-&gt;alakazam)
+     * 2) [Nonsense][]: `pokemon/&#42;&#47;psychic/&#42;`
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.Session> createSession(

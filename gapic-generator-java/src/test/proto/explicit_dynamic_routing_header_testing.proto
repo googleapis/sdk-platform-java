@@ -265,9 +265,37 @@ service ExplicitDynamicRoutingHeaderTesting {
       }
     };
   }
+
+  // This method echoes the request. This method exercises
+  // including a non-proto3-optional enum field in the URL path while sending the
+  // entire request object in the REST body.
+  rpc ImplicitRoutingHeaderWithEnumTest(EnumRequest) returns (EnumResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/{info.enum_test}"
+      body: "*"
+    };
+  }
 }
 
+message EnumRequest {
+  string name = 1;
+  EnumMessage info = 2;
+}
 
+message EnumResponse {
+  EnumRequest request = 1;
+}
+
+message EnumMessage {
+  enum EnumValues {
+    ENUM_VALUE_1 = 0;
+    ENUM_VALUE_2 = 1;
+    ENUM_VALUE_3 = 2;
+    ENUM_VALUE_4 = 3;
+  }
+  // scalar types
+  EnumValues enum_test = 22;
+}
 
 // Example message:
 //

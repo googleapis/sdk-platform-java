@@ -33,8 +33,10 @@ import com.google.api.gax.grpc.testing.FakeServiceGrpc;
 import com.google.api.gax.grpc.testing.FakeServiceGrpc.FakeServiceImplBase;
 import com.google.api.gax.grpc.testing.InProcessServer;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.auth.Credentials;
 import com.google.type.Color;
 import com.google.type.Money;
 import io.grpc.CallOptions;
@@ -133,10 +135,18 @@ public class GrpcResponseMetadataTest {
             .usePlaintext()
             .intercept(new GrpcMetadataHandlerInterceptor())
             .build();
+
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
+
     clientContext =
         ClientContext.newBuilder()
             .setTransportChannel(GrpcTransportChannel.create(channel))
-            .setDefaultCallContext(GrpcCallContext.of(channel, CallOptions.DEFAULT))
+            .setDefaultCallContext(
+                GrpcCallContext.of(channel, CallOptions.DEFAULT)
+                    .withEndpointContext(endpointContext))
             .build();
   }
 

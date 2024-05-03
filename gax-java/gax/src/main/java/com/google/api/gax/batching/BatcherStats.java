@@ -31,7 +31,9 @@ package com.google.api.gax.batching;
 
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.StatusCode.Code;
+import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
+import com.google.common.collect.EvictingQueue;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -53,6 +55,21 @@ class BatcherStats {
   private final Map<Code, Integer> entryStatusCounts = new HashMap<>();
 
   /**
+   * The maximum number of error messages that a Batcher instance will retain. By default, a Batcher
+   * instance will retain 50 entry error messages and 50 RPC error messages. This limit can be
+   * temporarily increased by setting the {@code com.google.api.gax.batching.errors.max-samples}
+   * system property. This should only be needed in very rare situations and should not be
+   * considered part of the public api.
+   */
+  private final int MAX_ERROR_MSG_SAMPLES =
+      Integer.getInteger("com.google.api.gax.batching.errors.max-samples", 50);
+
+  private final EvictingQueue<String> sampleOfRpcErrors =
+      EvictingQueue.create(MAX_ERROR_MSG_SAMPLES);
+  private final EvictingQueue<String> sampleOfEntryErrors =
+      EvictingQueue.create(MAX_ERROR_MSG_SAMPLES);
+
+  /**
    * Records the count of the exception and it's type when a complete batch failed to apply.
    *
    * <p>Note: This method aggregates all the subclasses of {@link ApiException} under ApiException
@@ -68,6 +85,8 @@ class BatcherStats {
       int oldStatusCount = MoreObjects.firstNonNull(requestStatusCounts.get(code), 0);
       requestStatusCounts.put(code, oldStatusCount + 1);
     }
+
+    sampleOfRpcErrors.add(throwable.toString());
 
     int oldExceptionCount = MoreObjects.firstNonNull(requestExceptionCounts.get(exceptionClass), 0);
     requestExceptionCounts.put(exceptionClass, oldExceptionCount + 1);
@@ -95,6 +114,8 @@ class BatcherStats {
         }
         Throwable actualCause = throwable.getCause();
         Class exceptionClass = actualCause.getClass();
+
+        sampleOfEntryErrors.add(actualCause.toString());
 
         if (actualCause instanceof ApiException) {
           Code code = ((ApiException) actualCause).getStatusCode().getCode();
@@ -143,6 +164,17 @@ class BatcherStats {
                   requestPartialFailureCount, totalEntriesCount))
           .append(buildExceptionList(entryExceptionCounts, entryStatusCounts))
           .append(".");
+    }
+
+    if (!sampleOfRpcErrors.isEmpty()) {
+      messageBuilder.append(" Sample of RPC errors: ");
+      messageBuilder.append(Joiner.on(", ").join(sampleOfRpcErrors));
+      messageBuilder.append(".");
+    }
+    if (!sampleOfEntryErrors.isEmpty()) {
+      messageBuilder.append(" Sample of entry errors: ");
+      messageBuilder.append(Joiner.on(", ").join(sampleOfEntryErrors));
+      messageBuilder.append(".");
     }
     return new BatchingException(messageBuilder.toString());
   }

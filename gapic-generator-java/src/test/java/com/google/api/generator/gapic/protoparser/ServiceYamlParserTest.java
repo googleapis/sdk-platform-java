@@ -17,8 +17,12 @@ package com.google.api.generator.gapic.protoparser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.google.api.MethodSettings;
+import com.google.api.Publishing;
+import com.google.common.truth.Truth;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 import org.junit.Test;
 
@@ -36,5 +40,38 @@ public class ServiceYamlParserTest {
 
     com.google.api.Service serviceYamlProto = serviceYamlProtoOpt.get();
     assertEquals("logging.googleapis.com", serviceYamlProto.getName());
+  }
+
+  // TODO: Add more scenarios (e.g. null MethodSettings, null PublishingSettings, incorrect
+  // FieldNames, etc.)
+  @Test
+  public void parseServiceYaml_autoPopulatedFields() {
+    String yamlFilename = "auto_populate_field_testing.yaml";
+    Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
+    Optional<com.google.api.Service> serviceYamlProtoOpt =
+        ServiceYamlParser.parse(yamlPath.toString());
+    assertTrue(serviceYamlProtoOpt.isPresent());
+
+    com.google.api.Service serviceYamlProto = serviceYamlProtoOpt.get();
+    assertEquals("autopopulatefieldtesting.googleapis.com", serviceYamlProto.getName());
+
+    Publishing publishingSettings = serviceYamlProto.getPublishing();
+    List<MethodSettings> methodSettings = publishingSettings.getMethodSettingsList();
+    Truth.assertThat(methodSettings.size() == 2);
+    Truth.assertThat(methodSettings.get(0).getSelector())
+        .isEqualTo(
+            "google.auto.populate.field.AutoPopulateFieldTesting.AutoPopulateFieldTestingEcho");
+    Truth.assertThat(methodSettings.get(0).getAutoPopulatedFieldsList())
+        .containsExactly(
+            "request_id",
+            "second_request_id",
+            "third_request_id",
+            "fourth_request_id",
+            "non_existent_field");
+    Truth.assertThat(methodSettings.get(1).getSelector())
+        .isEqualTo(
+            "google.auto.populate.field.AutoPopulateFieldTesting.AutoPopulateFieldTestingExpand");
+    Truth.assertThat(methodSettings.get(1).getAutoPopulatedFieldsList())
+        .containsExactly("request_id");
   }
 }

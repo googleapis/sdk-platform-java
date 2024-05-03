@@ -46,6 +46,7 @@ import com.google.common.truth.Truth;
 import io.grpc.CallOptions;
 import io.grpc.ManagedChannel;
 import io.grpc.Metadata.Key;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -395,7 +396,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testMergeOptions() {
+  public void testMergeOptions() throws IOException {
     GrpcCallContext emptyCallContext = GrpcCallContext.createDefault();
     ApiCallContext.Key<String> contextKey1 = ApiCallContext.Key.create("testKey1");
     ApiCallContext.Key<String> contextKey2 = ApiCallContext.Key.create("testKey2");

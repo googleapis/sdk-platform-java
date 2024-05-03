@@ -235,7 +235,7 @@ public abstract class AbstractServiceStubClassComposer implements ClassComposer 
         createCallableGetterMethodDefinition(
             TypeNode.withReference(ConcreteReference.withClazz(LongRunningClient.class)),
             "longRunningClient",
-            ImmutableList.of(AnnotationNode.withType(typeStore.get("BetaApi"))),
+            Collections.emptyList(),
             typeStore));
   }
 

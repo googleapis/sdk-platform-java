@@ -84,6 +84,8 @@ import org.mockito.Mockito;
 @RunWith(JUnit4.class)
 public class BatcherImplTest {
 
+  private static final Logger logger = Logger.getLogger(BatcherImplTest.class.getName());
+
   private static final ScheduledExecutorService EXECUTOR =
       Executors.newSingleThreadScheduledExecutor();
 
@@ -873,6 +875,7 @@ public class BatcherImplTest {
                 public void run() {
                   batcherAddThreadHolder.add(Thread.currentThread());
                   batcher.add(1);
+                  logger.fine("Called batcher.add(1)");
                 }
               });
 
@@ -887,20 +890,38 @@ public class BatcherImplTest {
       } while (batcherAddThreadHolder.isEmpty()
           || batcherAddThreadHolder.get(0).getState() != Thread.State.WAITING);
 
+      long beforeGetCall = System.currentTimeMillis();
       executor.submit(
           () -> {
             try {
               Thread.sleep(throttledTime);
+              logger.fine("Calling flowController.release");
               flowController.release(1, 1);
+              logger.fine("Called flowController.release");
             } catch (InterruptedException e) {
             }
           });
 
       try {
+        logger.fine("Calling future.get(10 ms)");
         future.get(10, TimeUnit.MILLISECONDS);
-        assertWithMessage("adding elements to batcher should be blocked by FlowControlled").fail();
+        long afterGetCall = System.currentTimeMillis();
+        long actualWaitTimeMs = afterGetCall - beforeGetCall;
+
+        logger.fine("future.get(10 ms) unexpectedly returned. Wait time: " + actualWaitTimeMs);
+        // In a flaky test troubleshooting
+        // (https://github.com/googleapis/sdk-platform-java/issues/1931), we observed that
+        // "future.get" method did not throw TimeoutException in this multithreaded test.
+        // It's because the thread calling "future.get" was not being run (i.e. in the wait queue of
+        // CPUs) in a timely manner.
+        // To avoid the flakiness, as long as the "future.get" does not return before the specified
+        // timeout, this assertion is considered as good.
+        assertWithMessage("adding elements to batcher should be blocked by FlowControlled")
+            .that(actualWaitTimeMs)
+            .isAtLeast(10);
       } catch (TimeoutException e) {
         // expected
+        logger.fine("future.get(10 ms) timed out expectedly.");
       }
 
       try {

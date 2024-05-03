@@ -14,7 +14,6 @@
 
 package com.google.api.generator.gapic.composer.resourcename;
 
-import com.google.api.core.BetaApi;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AssignmentOperationExpr;
@@ -60,7 +59,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -503,13 +501,6 @@ public class ResourceNameHelperClassComposer {
       ResourceName resourceName, List<List<String>> tokenHierarchies, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String newMethodNameFormat = "new%s";
-    AnnotationNode betaAnnotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "The per-pattern Builders are not stable yet and may be changed in the future.")
-            .build();
-    List<AnnotationNode> annotations = Arrays.asList(betaAnnotation);
 
     // Create the newBuilder and variation methods here.
     // Variation example: newProjectLocationAutoscalingPolicyBuilder().
@@ -533,17 +524,13 @@ public class ResourceNameHelperClassComposer {
 
       String variantName = getBuilderTypeName(tokenHierarchies, i);
       javaMethods.add(
-          methodDefStarterFn
-              .apply(String.format(newMethodNameFormat, variantName))
-              .setAnnotations(i == 0 ? Collections.emptyList() : annotations)
-              .build());
+          methodDefStarterFn.apply(String.format(newMethodNameFormat, variantName)).build());
       if (i == 0 && tokenHierarchies.size() > 1) {
         // Create another builder creator method, but with the per-variant name.
         javaMethods.add(
             methodDefStarterFn
                 .apply(
                     String.format(newMethodNameFormat, getBuilderTypeName(tokenHierarchies.get(i))))
-                .setAnnotations(annotations)
                 .build());
       }
     }
@@ -597,15 +584,6 @@ public class ResourceNameHelperClassComposer {
     String setMethodNameFormat = "set%s";
     String buildMethodName = "build";
     String toStringMethodName = "toString";
-    AnnotationNode betaAnnotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                String.format(
-                    "The static %s methods are not stable yet and may be changed in the future.",
-                    isFormatMethod ? "format" : "create"))
-            .build();
-    List<AnnotationNode> annotations = Arrays.asList(betaAnnotation);
 
     TypeNode thisClassType = typeStore.get(getThisClassName(resourceName));
     TypeNode returnType = isFormatMethod ? TypeNode.STRING : thisClassType;
@@ -624,7 +602,6 @@ public class ResourceNameHelperClassComposer {
             MethodDefinition.builder()
                 .setScope(ScopeNode.PUBLIC)
                 .setIsStatic(true)
-                .setAnnotations(annotations)
                 .setReturnType(returnType)
                 .setName(
                     String.format(methodNameFormat, concatToUpperCamelCaseName(tokens) + "Name"))
@@ -682,7 +659,6 @@ public class ResourceNameHelperClassComposer {
           MethodDefinition.builder()
               .setScope(ScopeNode.PUBLIC)
               .setIsStatic(true)
-              .setAnnotations(i == 0 ? Collections.emptyList() : annotations)
               .setReturnType(returnType)
               .setName(
                   String.format(
@@ -696,7 +672,6 @@ public class ResourceNameHelperClassComposer {
             MethodDefinition.builder()
                 .setScope(ScopeNode.PUBLIC)
                 .setIsStatic(true)
-                .setAnnotations(annotations)
                 .setReturnType(returnType)
                 .setName(
                     String.format(
@@ -1701,21 +1676,12 @@ public class ResourceNameHelperClassComposer {
     nestedClassMethods.add(buildMethod);
 
     // Return the class.
-    AnnotationNode betaAnnotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "The per-pattern Builders are not stable yet and may be changed in the future.")
-            .build();
-    List<AnnotationNode> classAnnotations =
-        isDefaultClass ? Collections.emptyList() : Arrays.asList(betaAnnotation);
 
     return ClassDefinition.builder()
         .setHeaderCommentStatements(
             CommentStatement.withComment(
                 JavaDocComment.withComment(
                     String.format(BUILDER_CLASS_HEADER_PATTERN, resourceNamePattern))))
-        .setAnnotations(classAnnotations)
         .setIsNested(true)
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
@@ -1729,7 +1695,6 @@ public class ResourceNameHelperClassComposer {
     List<Class<?>> concreteClazzes =
         Arrays.asList(
             ArrayList.class,
-            BetaApi.class,
             Generated.class,
             ImmutableMap.class,
             List.class,

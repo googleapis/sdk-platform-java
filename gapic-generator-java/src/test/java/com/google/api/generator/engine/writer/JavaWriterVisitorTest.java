@@ -71,6 +71,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
+import com.google.api.generator.engine.writer.JavaFormatter.FormatException;
 import com.google.api.generator.gapic.composer.grpc.ServiceClientClassComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -958,6 +959,25 @@ public class JavaWriterVisitorTest {
             "*/\n");
     javaDocComment.accept(writerVisitor);
     assertEquals(expected, writerVisitor.write());
+  }
+
+  @Test
+  public void writeFailingComment_specialChar() {
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addUnescapedComment(
+                "This resource reference needs to be CommentFormatted or it will fail: `bookShelves/*/`")
+            .build();
+
+    FormatException exceptionForIncorrectlyFormattedComment =
+        assertThrows(
+            FormatException.class,
+            () -> {
+              javaDocComment.accept(writerVisitor);
+            });
+    assertThat(exceptionForIncorrectlyFormattedComment)
+        .hasMessageThat()
+        .contains("The input resource can not be parsed");
   }
 
   @Test

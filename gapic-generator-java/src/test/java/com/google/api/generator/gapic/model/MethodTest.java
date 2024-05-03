@@ -15,14 +15,18 @@
 package com.google.api.generator.gapic.model;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.HttpBindings.HttpVerb;
+import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.RoutingHeaderRule.RoutingHeaderParam;
 import com.google.common.collect.ImmutableSet;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.Test;
 
 public class MethodTest {
@@ -112,6 +116,55 @@ public class MethodTest {
   public void shouldSetParamsExtractor_shouldReturnFalseIfHasNoHttpBindingsAndNoRoutingHeaders() {
     Method method = METHOD.toBuilder().setHttpBindings(null).setRoutingHeaderRule(null).build();
     assertThat(method.shouldSetParamsExtractor()).isFalse();
+  }
+
+  @Test
+  public void hasAutoPopulatedFields_shouldReturnTrueIfMethodIsUnary() {
+    List<String> autoPopulatedFields = Arrays.asList("field1", "field2");
+    Method method = METHOD.toBuilder().setAutoPopulatedFields(autoPopulatedFields).build();
+    method.toStream(false, false);
+    assertEquals(true, method.hasAutoPopulatedFields());
+  }
+
+  @Test
+  public void hasAutoPopulatedFields_shouldReturnFalseIfMethodIsStreaming() {
+    List<String> autoPopulatedFields = Arrays.asList("field1", "field2");
+    Method method =
+        METHOD
+            .toBuilder()
+            .setAutoPopulatedFields(autoPopulatedFields)
+            .setStream(Stream.SERVER)
+            .build();
+    assertEquals(false, method.hasAutoPopulatedFields());
+
+    method =
+        METHOD
+            .toBuilder()
+            .setAutoPopulatedFields(autoPopulatedFields)
+            .setStream(Stream.BIDI)
+            .build();
+    assertEquals(false, method.hasAutoPopulatedFields());
+
+    method =
+        METHOD
+            .toBuilder()
+            .setAutoPopulatedFields(autoPopulatedFields)
+            .setStream(Stream.CLIENT)
+            .build();
+    assertEquals(false, method.hasAutoPopulatedFields());
+  }
+
+  @Test
+  public void hasAutoPopulatedFields_shouldReturnFalseIfAutoPopulatedFieldsIsEmpty() {
+    List<String> autoPopulatedFields = new ArrayList<>();
+    Method method =
+        METHOD
+            .toBuilder()
+            .setAutoPopulatedFields(autoPopulatedFields)
+            .setStream(Stream.NONE)
+            .build();
+    method.toStream(false, false);
+    assertEquals(false, method.hasAutoPopulatedFields());
   }
 
   @Test

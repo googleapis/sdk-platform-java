@@ -32,7 +32,10 @@ package com.google.api.gax.tracing;
 import com.google.api.core.InternalApi;
 
 /**
- * A base implementation of {@link ApiTracer} that does nothing.
+ * A base implementation of {@link ApiTracer} that does nothing. With the deprecation of Java 7
+ * support, all the methods in {@link ApiTracer} are now made default, we no longer need a base
+ * class that does nothing. This class should be removed once all the references to it are removed
+ * in Google Cloud Client Libraries.
  *
  * <p>For internal use only.
  */

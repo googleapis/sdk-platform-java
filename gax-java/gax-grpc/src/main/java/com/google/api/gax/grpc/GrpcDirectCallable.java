@@ -30,6 +30,7 @@
 package com.google.api.gax.grpc;
 
 import com.google.api.core.ApiFuture;
+import com.google.api.core.InternalApi;
 import com.google.api.core.ListenableFutureToApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.UnaryCallable;
@@ -43,6 +44,7 @@ import io.grpc.stub.ClientCalls;
  *
  * <p>Package-private for internal use.
  */
+@InternalApi
 class GrpcDirectCallable<RequestT, ResponseT> extends UnaryCallable<RequestT, ResponseT> {
   private final MethodDescriptor<RequestT, ResponseT> descriptor;
   private final boolean awaitTrailers;

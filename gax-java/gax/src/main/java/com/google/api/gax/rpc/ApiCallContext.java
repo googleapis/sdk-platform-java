@@ -67,6 +67,9 @@ public interface ApiCallContext extends RetryingContext {
   @ObsoleteApi("Use withTimeout(java.time.Duration) instead")
   ApiCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout);
 
+  /** Returns a new ApiCallContext with the given Endpoint Context. */
+  ApiCallContext withEndpointContext(EndpointContext endpointContext);
+
   /**
    * Returns a new ApiCallContext with the given timeout set.
    *

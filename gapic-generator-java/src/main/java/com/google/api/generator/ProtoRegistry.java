@@ -17,6 +17,7 @@ package com.google.api.generator;
 import com.google.api.AnnotationsProto;
 import com.google.api.ClientProto;
 import com.google.api.FieldBehaviorProto;
+import com.google.api.FieldInfoProto;
 import com.google.api.ResourceProto;
 import com.google.api.RoutingProto;
 import com.google.cloud.ExtendedOperationsProto;
@@ -31,6 +32,7 @@ public class ProtoRegistry {
     ClientProto.registerAllExtensions(extensionRegistry);
     ResourceProto.registerAllExtensions(extensionRegistry);
     FieldBehaviorProto.registerAllExtensions(extensionRegistry);
+    FieldInfoProto.registerAllExtensions(extensionRegistry);
     ExtendedOperationsProto.registerAllExtensions(extensionRegistry);
     RoutingProto.registerAllExtensions(extensionRegistry);
   }

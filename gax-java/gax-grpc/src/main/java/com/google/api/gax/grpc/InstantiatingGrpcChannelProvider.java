@@ -148,7 +148,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         builder.directPathServiceConfig == null
             ? getDefaultDirectPathServiceConfig()
             : builder.directPathServiceConfig;
-    logDirectPathMisconfig();
   }
 
   /**
@@ -237,6 +236,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     } else if (needsEndpoint()) {
       throw new IllegalStateException("getTransportChannel() called when needsEndpoint() is true");
     } else {
+      logDirectPathMisconfig();
       return createChannel();
     }
   }
@@ -275,6 +275,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return false;
   }
 
+  // This method should be called once per client initialization, hence can not be called in the
+  // builder or createSingleChannel, only in getTransportChannel which creates the first channel
+  // for a client.
   private void logDirectPathMisconfig() {
     if (isDirectPathXdsEnabled()) {
       // Case 1: does not enable DirectPath
@@ -285,7 +288,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
                 + " attemptDirectPathXds option.");
       } else {
         // Case 2: credential is not correctly set
-        if (!isNonDefaultServiceAccountAllowed()) {
+        if (!isCredentialDirectPathCompatible()) {
           LOG.log(
               Level.WARNING,
               "DirectPath is misconfigured. Please make sure the credential is an instance of "
@@ -302,7 +305,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
   }
 
-  private boolean isNonDefaultServiceAccountAllowed() {
+  @VisibleForTesting
+  boolean isCredentialDirectPathCompatible() {
+    // DirectPath requires a call credential during gRPC channel construction.
+    if (needsCredentials()) {
+      return false;
+    }
     if (allowNonDefaultServiceAccount != null && allowNonDefaultServiceAccount) {
       return true;
     }
@@ -326,6 +334,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       }
     }
     return false;
+  }
+
+  // Universe Domain configuration is currently only supported in the GDU
+  @VisibleForTesting
+  boolean canUseDirectPathWithUniverseDomain() {
+    return endpoint.contains(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @VisibleForTesting
@@ -359,7 +373,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
-    if (isDirectPathEnabled() && isNonDefaultServiceAccountAllowed() && isOnComputeEngine()) {
+    if (isDirectPathEnabled()
+        && isCredentialDirectPathCompatible()
+        && isOnComputeEngine()
+        && canUseDirectPathWithUniverseDomain()) {
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       ChannelCredentials channelCreds =
           GoogleDefaultChannelCredentials.newBuilder().callCredentials(callCreds).build();
@@ -433,6 +450,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   /** The endpoint to be used for the channel. */
+  @Override
   public String getEndpoint() {
     return endpoint;
   }
@@ -466,6 +484,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @BetaApi("The surface for maximum metadata size is not stable yet and may change in the future.")
   public Integer getMaxInboundMetadataSize() {
     return maxInboundMetadataSize;
+  }
+
+  /** The configured channel pool settings used for gRPC's ChannelProvider */
+  @BetaApi("Channel pool sizing api is not yet stable")
+  public ChannelPoolSettings getChannelPoolSettings() {
+    return channelPoolSettings;
   }
 
   @Override

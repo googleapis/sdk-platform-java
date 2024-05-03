@@ -2,4 +2,5 @@ releaseType: java-yoshi
 bumpMinorPreMajor: true
 handleGHRelease: true
 primaryBranch: main
-extraFiles: ["WORKSPACE"]
+manifest: true
+extraFiles: ["WORKSPACE", ".cloudbuild/graalvm/cloudbuild.yaml", ".cloudbuild/graalvm/cloudbuild-test-a.yaml", ".cloudbuild/graalvm/cloudbuild-test-b.yaml", ".cloudbuild/library_generation/cloudbuild-library-generation-release.yaml" ]

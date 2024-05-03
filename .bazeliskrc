@@ -1,2 +1,3 @@
 # See https://github.com/bazelbuild/bazelisk
-USE_BAZEL_VERSION=6.0.0
+# As per b/302171264#comment5, 6.4.0 supports Java 21. 
+USE_BAZEL_VERSION=6.4.0

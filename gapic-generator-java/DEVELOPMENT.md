@@ -50,6 +50,8 @@ than the "test" phase.
 To run integration test for gapic-generator-java, run this Bazel command in the
 root of the repository (where you have WORKSPACE file for Bazel.)
 
+*Note* Make sure you run `mvn clean install` to gather any changes you have made before updating the integration tests.
+
 ```sh
 # In the repository root directory
 bazelisk test //...  # integration tests
@@ -71,6 +73,13 @@ bazelisk test //...  # integration tests
     ```sh
     # In the repository root directory
     bazelisk run //test/integration:update_redis
+    ```
+
+- To update all integration tests you can use this command:
+
+  ```sh
+    # In the repository root directory
+    bazelisk run //test/integration:update_asset && bazelisk run //test/integration:update_credentials && bazelisk run //test/integration:update_iam && bazelisk run //test/integration:update_kms && bazelisk run //test/integration:update_pubsub && bazelisk run //test/integration:update_logging && bazelisk run //test/integration:update_redis && bazelisk run //test/integration:update_storage && bazelisk run //test/integration:update_library && bazelisk run //test/integration:update_compute && bazelisk run //test/integration:update_bigtable && bazelisk run //test/integration:update_apigeeconnect 
     ```
 
 ## Running the Plugin under googleapis with local gapic-generator-java

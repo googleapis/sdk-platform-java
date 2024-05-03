@@ -207,7 +207,9 @@ public class ClientSettingsTest {
   public void testBuilderFromClientContext() throws Exception {
     final String QUOTA_PROJECT_ID_FROM_CONTEXT = "some_quota_project_id_from_context";
     ApiClock clock = Mockito.mock(ApiClock.class);
-    ApiCallContext callContext = FakeCallContext.createDefault();
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    ApiCallContext callContext =
+        FakeCallContext.createDefault().withEndpointContext(endpointContext);
     Map<String, String> headers = Collections.singletonMap("spiffykey", "spiffyvalue");
     Watchdog watchdog =
         Watchdog.create(
@@ -445,7 +447,9 @@ public class ClientSettingsTest {
 
   @Test
   public void testBuilderFromClientContext_QuotaProjectId() {
-    ApiCallContext callContext = FakeCallContext.createDefault();
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    ApiCallContext callContext =
+        FakeCallContext.createDefault().withEndpointContext(endpointContext);
 
     ClientContext clientContextQuotaOnly =
         ClientContext.newBuilder()

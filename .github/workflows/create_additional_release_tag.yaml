@@ -11,19 +11,17 @@ jobs:
     permissions: write-all
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Set up Git
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-
     - name: Fetch all tags
       run: git fetch --tags
-
     - name: Create additional tags
+      shell: bash
       run: |
         ARTIFACT_IDS=('google-cloud-shared-dependencies' 'api-common' 'gax')
         for ARTIFACT_ID in "${ARTIFACT_IDS[@]}"; do

@@ -261,11 +261,11 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
             .setInitialRetryDelay(java.time.Duration.ofMillis(25L))
             .setMaxRetryDelay(java.time.Duration.ofMillis(1000L))
             .setRetryDelayMultiplier(4.0)
-            .setTotalTimeout(java.time.Duration.ofMillis(2000L))
+            .setTotalTimeout(java.time.Duration.ofMillis(60000L))
             // Set this test to not use jitter as the randomized retry delay (RRD) may introduce
             // flaky results. For example, if every RRD value is calculated to be a small value
             // (i.e. 2ms), four retries would result a "SUCCESS" result after 8ms, far below
-            // both the sleep value (150ms) and timeout (2000ms). This could potentially result
+            // both the sleep value (150ms) and timeout (60000ms). This could potentially result
             // in the future.cancel() returning false as you can't cancel a future that has
             // already succeeded. The possibility of having each of the four retries produce a
             // tiny RRD value is small, but not impossible.
@@ -287,6 +287,11 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
       boolean res = future.cancel(false);
       assertTrue(res);
       assertFutureCancel(future);
+
+      // Verify that the cancelled future is traced. Every attempt increases the number
+      // of cancellation attempts from the tracer.
+      Mockito.verify(tracer, Mockito.times(executionsCount + 1)).attemptCancelled();
+
       // Assert that future has at least been attempted once
       // i.e. The future from executor.submit() has been run by the ScheduledExecutor
       assertTrue(future.getAttemptSettings().getAttemptCount() > 0);
@@ -294,34 +299,6 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
     }
     localExecutor.shutdown();
     localExecutor.awaitTermination(10, TimeUnit.SECONDS);
-  }
-
-  @Test
-  public void testCancelIsTraced() throws Exception {
-    ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
-    FailingCallable callable = new FailingCallable(4, "request", "SUCCESS", tracer);
-    RetrySettings retrySettings =
-        FAST_RETRY_SETTINGS
-            .toBuilder()
-            .setInitialRetryDelay(java.time.Duration.ofMillis(1_000L))
-            .setMaxRetryDelay(java.time.Duration.ofMillis(1_000L))
-            .setTotalTimeout(java.time.Duration.ofMillis(10_0000L))
-            .build();
-    RetryingExecutorWithContext<String> executor =
-        getRetryingExecutor(getAlgorithm(retrySettings, 0, null), localExecutor);
-    RetryingFuture<String> future =
-        executor.createFuture(callable, FakeCallContext.createDefault().withTracer(tracer));
-    callable.setExternalFuture(future);
-    future.setAttemptFuture(executor.submit(future));
-
-    Thread.sleep(30L);
-
-    boolean res = future.cancel(false);
-    assertTrue(res);
-    assertFutureCancel(future);
-
-    Mockito.verify(tracer).attemptCancelled();
-    localExecutor.shutdownNow();
   }
 
   @Test

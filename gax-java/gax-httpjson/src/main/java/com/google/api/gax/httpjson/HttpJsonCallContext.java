@@ -35,11 +35,15 @@ import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 import static com.google.api.gax.util.TimeConversionUtils.toThreetenInstant;
 
 import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
 import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
+import com.google.api.gax.rpc.ApiExceptionFactory;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.TransportChannel;
+import com.google.api.gax.rpc.UnauthenticatedException;
 import com.google.api.gax.rpc.internal.ApiCallContextOptions;
 import com.google.api.gax.rpc.internal.Headers;
 import com.google.api.gax.tracing.ApiTracer;
@@ -48,6 +52,7 @@ import com.google.auth.Credentials;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -64,6 +69,8 @@ import javax.annotation.Nullable;
  * arguments solely depends on the arguments themselves.
  */
 public final class HttpJsonCallContext implements ApiCallContext {
+  private static final HttpJsonStatusCode UNAUTHENTICATED_STATUS_CODE =
+      HttpJsonStatusCode.of(StatusCode.Code.UNAUTHENTICATED);
   private final HttpJsonChannel channel;
   private final HttpJsonCallOptions callOptions;
   @Nullable private final java.time.Duration timeout;
@@ -74,6 +81,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   private final ApiTracer tracer;
   @Nullable private final RetrySettings retrySettings;
   @Nullable private final ImmutableSet<StatusCode.Code> retryableCodes;
+  private final EndpointContext endpointContext;
 
   /** Returns an empty instance. */
   public static HttpJsonCallContext createDefault() {
@@ -85,6 +93,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         null,
         ImmutableMap.of(),
         ApiCallContextOptions.getDefaultOptions(),
+        null,
         null,
         null,
         null);
@@ -101,6 +110,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         ApiCallContextOptions.getDefaultOptions(),
         null,
         null,
+        null,
         null);
   }
 
@@ -114,7 +124,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
       ApiCallContextOptions options,
       ApiTracer tracer,
       RetrySettings defaultRetrySettings,
-      Set<StatusCode.Code> defaultRetryableCodes) {
+      Set<StatusCode.Code> defaultRetryableCodes,
+      @Nullable EndpointContext endpointContext) {
     this.channel = channel;
     this.callOptions = callOptions;
     this.timeout = timeout;
@@ -126,6 +137,14 @@ public final class HttpJsonCallContext implements ApiCallContext {
     this.retrySettings = defaultRetrySettings;
     this.retryableCodes =
         defaultRetryableCodes == null ? null : ImmutableSet.copyOf(defaultRetryableCodes);
+    // Attempt to create an empty, non-functioning EndpointContext by default. The client will have
+    // a valid EndpointContext with user configurations after the client has been initialized.
+    try {
+      this.endpointContext =
+          endpointContext == null ? EndpointContext.newBuilder().build() : endpointContext;
+    } catch (IOException ex) {
+      throw new RuntimeException(ex);
+    }
   }
 
   /**
@@ -205,6 +224,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
       newRetryableCodes = this.retryableCodes;
     }
 
+    // The EndpointContext is not updated as there should be no reason for a user
+    // to update this.
     return new HttpJsonCallContext(
         newChannel,
         newCallOptions,
@@ -215,7 +236,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
         newOptions,
         newTracer,
         newRetrySettings,
-        newRetryableCodes);
+        newRetryableCodes,
+        endpointContext);
   }
 
   @Override
@@ -244,6 +266,23 @@ public final class HttpJsonCallContext implements ApiCallContext {
   }
 
   @Override
+  public HttpJsonCallContext withEndpointContext(EndpointContext endpointContext) {
+    Preconditions.checkNotNull(endpointContext);
+    return new HttpJsonCallContext(
+        this.channel,
+        this.callOptions,
+        this.timeout,
+        this.streamWaitTimeout,
+        this.streamIdleTimeout,
+        this.extraHeaders,
+        this.options,
+        this.tracer,
+        this.retrySettings,
+        this.retryableCodes,
+        endpointContext);
+  }
+
+  @Override
   public HttpJsonCallContext withTimeout(java.time.Duration timeout) {
     // Default RetrySettings use 0 for RPC timeout. Treat that as disabled timeouts.
     if (timeout != null && (timeout.isZero() || timeout.isNegative())) {
@@ -265,7 +304,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   /** Backport of {@link #getTimeoutDuration()} */
@@ -310,7 +350,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   /** Backport of {@link #getStreamWaitTimeoutDuration()} */
@@ -360,7 +401,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   /** Backport of {@link #getStreamIdleTimeoutDuration()} */
@@ -398,7 +440,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   @BetaApi("The surface for extra headers is not stable yet and may change in the future.")
@@ -421,13 +464,39 @@ public final class HttpJsonCallContext implements ApiCallContext {
         newOptions,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   /** {@inheritDoc} */
   @Override
   public <T> T getOption(Key<T> key) {
     return options.getOption(key);
+  }
+
+  /**
+   * Validate the Universe Domain to ensure that the user configured Universe Domain and the
+   * Credentials' Universe Domain match. An exception will be raised if there are any issues when
+   * trying to validate (i.e. unable to access the universe domain).
+   *
+   * @throws UnauthenticatedException Thrown if the universe domain that the user configured does
+   *     not match the Credential's universe domain or if the client library is unable to retrieve
+   *     the Universe Domain from the Credentials.
+   */
+  @InternalApi
+  public void validateUniverseDomain() {
+    try {
+      endpointContext.validateUniverseDomain(
+          getCallOptions().getCredentials(), UNAUTHENTICATED_STATUS_CODE);
+    } catch (IOException e) {
+      // All instances of IOException from endpointContext's `validateUniverseDomain()`
+      // call should be an Auth Exception
+      throw ApiExceptionFactory.createException(
+          EndpointContext.UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE,
+          e,
+          UNAUTHENTICATED_STATUS_CODE,
+          false);
+    }
   }
 
   public HttpJsonChannel getChannel() {
@@ -475,7 +544,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   @Override
@@ -495,7 +565,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        retryableCodes);
+        retryableCodes,
+        this.endpointContext);
   }
 
   public HttpJsonCallContext withChannel(HttpJsonChannel newChannel) {
@@ -509,7 +580,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   public HttpJsonCallContext withCallOptions(HttpJsonCallOptions newCallOptions) {
@@ -523,7 +595,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   /** Overload of {@link #withDeadline(java.time.Instant)} using {@link org.threeten.bp.Instant} */
@@ -564,7 +637,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.options,
         newTracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext);
   }
 
   @Override
@@ -583,7 +657,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
         && Objects.equals(this.options, that.options)
         && Objects.equals(this.tracer, that.tracer)
         && Objects.equals(this.retrySettings, that.retrySettings)
-        && Objects.equals(this.retryableCodes, that.retryableCodes);
+        && Objects.equals(this.retryableCodes, that.retryableCodes)
+        && Objects.equals(this.endpointContext, that.endpointContext);
   }
 
   @Override
@@ -596,6 +671,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         options,
         tracer,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        endpointContext);
   }
 }

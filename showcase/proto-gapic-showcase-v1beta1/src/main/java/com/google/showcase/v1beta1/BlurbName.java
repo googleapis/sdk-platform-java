@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package com.google.showcase.v1beta1;
 
-import com.google.api.core.BetaApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.pathtemplate.ValidationException;
 import com.google.api.resourcenames.ResourceName;
@@ -118,22 +117,18 @@ public class BlurbName implements ResourceName {
     return new Builder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static Builder newUserLegacyUserBlurbBuilder() {
     return new Builder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static UserBlurbBuilder newUserBlurbBuilder() {
     return new UserBlurbBuilder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static RoomBlurbBuilder newRoomBlurbBuilder() {
     return new RoomBlurbBuilder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static RoomLegacyRoomBlurbBuilder newRoomLegacyRoomBlurbBuilder() {
     return new RoomLegacyRoomBlurbBuilder();
   }
@@ -146,22 +141,18 @@ public class BlurbName implements ResourceName {
     return newBuilder().setUser(user).setLegacyUser(legacyUser).setBlurb(blurb).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static BlurbName ofUserLegacyUserBlurbName(String user, String legacyUser, String blurb) {
     return newBuilder().setUser(user).setLegacyUser(legacyUser).setBlurb(blurb).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static BlurbName ofUserBlurbName(String user, String blurb) {
     return newUserBlurbBuilder().setUser(user).setBlurb(blurb).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static BlurbName ofRoomBlurbName(String room, String blurb) {
     return newRoomBlurbBuilder().setRoom(room).setBlurb(blurb).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static BlurbName ofRoomLegacyRoomBlurbName(String room, String legacyRoom, String blurb) {
     return newRoomLegacyRoomBlurbBuilder()
         .setRoom(room)
@@ -174,22 +165,18 @@ public class BlurbName implements ResourceName {
     return newBuilder().setUser(user).setLegacyUser(legacyUser).setBlurb(blurb).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatUserLegacyUserBlurbName(String user, String legacyUser, String blurb) {
     return newBuilder().setUser(user).setLegacyUser(legacyUser).setBlurb(blurb).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatUserBlurbName(String user, String blurb) {
     return newUserBlurbBuilder().setUser(user).setBlurb(blurb).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatRoomBlurbName(String room, String blurb) {
     return newRoomBlurbBuilder().setRoom(room).setBlurb(blurb).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatRoomLegacyRoomBlurbName(String room, String legacyRoom, String blurb) {
     return newRoomLegacyRoomBlurbBuilder()
         .setRoom(room)
@@ -369,7 +356,6 @@ public class BlurbName implements ResourceName {
   }
 
   /** Builder for users/{user}/profile/blurbs/{blurb}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class UserBlurbBuilder {
     private String user;
     private String blurb;
@@ -400,7 +386,6 @@ public class BlurbName implements ResourceName {
   }
 
   /** Builder for rooms/{room}/blurbs/{blurb}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class RoomBlurbBuilder {
     private String room;
     private String blurb;
@@ -431,7 +416,6 @@ public class BlurbName implements ResourceName {
   }
 
   /** Builder for rooms/{room}/blurbs/legacy/{legacy_room}.{blurb}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class RoomLegacyRoomBlurbBuilder {
     private String room;
     private String legacyRoom;

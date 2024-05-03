@@ -22,6 +22,8 @@ update the goldens using source files. Run the command below to overwrite the go
 in `redis` folder.
 
 ```sh
+# In repository's root directory
+mvn clean install -DskipTests
 bazelisk run //test/integration:update_redis
 ```
 

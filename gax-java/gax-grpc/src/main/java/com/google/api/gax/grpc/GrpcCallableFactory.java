@@ -85,7 +85,13 @@ public class GrpcCallableFactory {
         GrpcRawCallableFactory.createUnaryCallable(
             grpcCallSettings, callSettings.getRetryableCodes());
 
-    callable = Callables.retrying(callable, callSettings, clientContext);
+    if (grpcCallSettings.getRequestMutator() != null) {
+      callable =
+          Callables.retrying(
+              callable, callSettings, clientContext, grpcCallSettings.getRequestMutator());
+    } else {
+      callable = Callables.retrying(callable, callSettings, clientContext);
+    }
 
     return callable;
   }
