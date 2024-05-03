@@ -157,12 +157,8 @@ public final class GrpcCallContext implements ApiCallContext {
     this.retryableCodes = retryableCodes == null ? null : ImmutableSet.copyOf(retryableCodes);
     // Attempt to create an empty, non-functioning EndpointContext by default. The client will have
     // a valid EndpointContext with user configurations after the client has been initialized.
-    try {
-      this.endpointContext =
-          endpointContext == null ? EndpointContext.newBuilder().build() : endpointContext;
-    } catch (IOException ex) {
-      throw new RuntimeException(ex);
-    }
+    this.endpointContext =
+        endpointContext == null ? EndpointContext.getDefaultInstance() : endpointContext;
   }
 
   /**

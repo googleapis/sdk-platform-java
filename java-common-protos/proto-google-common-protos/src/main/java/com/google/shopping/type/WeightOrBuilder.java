@@ -19,18 +19,20 @@
 // Protobuf Java Version: 3.25.3
 package com.google.shopping.type;
 
-public interface PriceOrBuilder
+public interface WeightOrBuilder
     extends
-    // @@protoc_insertion_point(interface_extends:google.shopping.type.Price)
+    // @@protoc_insertion_point(interface_extends:google.shopping.type.Weight)
     com.google.protobuf.MessageOrBuilder {
 
   /**
    *
    *
    * <pre>
-   * The price represented as a number in micros (1 million micros is an
-   * equivalent to one's currency standard unit, for example, 1 USD = 1000000
+   * Required. The weight represented as a number in micros (1 million micros is
+   * an equivalent to one's currency standard unit, for example, 1 kg = 1000000
    * micros).
+   * This field can also be set as infinity by setting to -1.
+   * This field only support -1 and positive value.
    * </pre>
    *
    * <code>optional int64 amount_micros = 1;</code>
@@ -42,9 +44,11 @@ public interface PriceOrBuilder
    *
    *
    * <pre>
-   * The price represented as a number in micros (1 million micros is an
-   * equivalent to one's currency standard unit, for example, 1 USD = 1000000
+   * Required. The weight represented as a number in micros (1 million micros is
+   * an equivalent to one's currency standard unit, for example, 1 kg = 1000000
    * micros).
+   * This field can also be set as infinity by setting to -1.
+   * This field only support -1 and positive value.
    * </pre>
    *
    * <code>optional int64 amount_micros = 1;</code>
@@ -57,39 +61,26 @@ public interface PriceOrBuilder
    *
    *
    * <pre>
-   * The currency of the price using three-letter acronyms according to [ISO
-   * 4217](http://en.wikipedia.org/wiki/ISO_4217).
+   * Required. The weight unit.
+   * Acceptable values are: kg and lb
    * </pre>
    *
-   * <code>optional string currency_code = 2;</code>
+   * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
    *
-   * @return Whether the currencyCode field is set.
+   * @return The enum numeric value on the wire for unit.
    */
-  boolean hasCurrencyCode();
+  int getUnitValue();
   /**
    *
    *
    * <pre>
-   * The currency of the price using three-letter acronyms according to [ISO
-   * 4217](http://en.wikipedia.org/wiki/ISO_4217).
+   * Required. The weight unit.
+   * Acceptable values are: kg and lb
    * </pre>
    *
-   * <code>optional string currency_code = 2;</code>
+   * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
    *
-   * @return The currencyCode.
+   * @return The unit.
    */
-  java.lang.String getCurrencyCode();
-  /**
-   *
-   *
-   * <pre>
-   * The currency of the price using three-letter acronyms according to [ISO
-   * 4217](http://en.wikipedia.org/wiki/ISO_4217).
-   * </pre>
-   *
-   * <code>optional string currency_code = 2;</code>
-   *
-   * @return The bytes for currencyCode.
-   */
-  com.google.protobuf.ByteString getCurrencyCodeBytes();
+  com.google.shopping.type.Weight.WeightUnit getUnit();
 }
