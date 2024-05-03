@@ -1,5 +1,39 @@
 # Changelog
 
+## [2.40.0](https://github.com/googleapis/sdk-platform-java/compare/v2.39.0...v2.40.0) (2024-05-02)
+
+
+### Features
+
+* [common-protos] add `Weight` to common types for Shopping APIs to be used for accounts bundle ([#2699](https://github.com/googleapis/sdk-platform-java/issues/2699)) ([5bb9770](https://github.com/googleapis/sdk-platform-java/commit/5bb97700ddcef1b0494808b1e7d8029d92c74d13))
+* add a CLI tool to validate generation configuration  ([#2691](https://github.com/googleapis/sdk-platform-java/issues/2691)) ([f2ce524](https://github.com/googleapis/sdk-platform-java/commit/f2ce52478a03048b9daffc3fc535f12cf2a9f856))
+* Parser to consume the api-versioning value from proto ([#2630](https://github.com/googleapis/sdk-platform-java/issues/2630)) ([40711fd](https://github.com/googleapis/sdk-platform-java/commit/40711fd69468a2021108bb5fba00bb02ac4bb19f))
+* Update Gapic generator and Gax to emit api-versioning via header ([#2671](https://github.com/googleapis/sdk-platform-java/issues/2671)) ([e63d1b4](https://github.com/googleapis/sdk-platform-java/commit/e63d1b49159be07f0bb32bfe9d15c8445ac883c8))
+
+
+### Bug Fixes
+
+* change folder prefix for adding headers ([#2688](https://github.com/googleapis/sdk-platform-java/issues/2688)) ([4e92be8](https://github.com/googleapis/sdk-platform-java/commit/4e92be8885af8633ea5b3371c43be9423a0f95ef))
+* Log HttpJson's async thread pool core size ([#2697](https://github.com/googleapis/sdk-platform-java/issues/2697)) ([34b4bc3](https://github.com/googleapis/sdk-platform-java/commit/34b4bc3362f3c30bd77f5a59c3cb3aea36358eee))
+* replace `cfg = "host"` with `cfg = "exec"` ([#2637](https://github.com/googleapis/sdk-platform-java/issues/2637)) ([6d673f3](https://github.com/googleapis/sdk-platform-java/commit/6d673f39dc10b072ba6012fecc17deb22136650e))
+* Return resolved endpoint from StubSettings' Builder ([#2715](https://github.com/googleapis/sdk-platform-java/issues/2715)) ([32c9995](https://github.com/googleapis/sdk-platform-java/commit/32c99953496fe3e0ab47c67aad4117c242d1c798))
+
+
+### Dependencies
+
+* Make opentelemetry-api an optional dependency. ([#2681](https://github.com/googleapis/sdk-platform-java/issues/2681)) ([3967a19](https://github.com/googleapis/sdk-platform-java/commit/3967a19e8b68c3a95cf1ced737f3a1aa73b02e93))
+* update dependency absl-py to v2.1.0 ([#2659](https://github.com/googleapis/sdk-platform-java/issues/2659)) ([cae6d79](https://github.com/googleapis/sdk-platform-java/commit/cae6d79ed29fd9e64abe4e9390a46b1f9f1d305f))
+* update dependency gitpython to v3.1.43 ([#2656](https://github.com/googleapis/sdk-platform-java/issues/2656)) ([208bef4](https://github.com/googleapis/sdk-platform-java/commit/208bef468b11d49e85d4df4008d99c7a2de9233c))
+* update dependency lxml to v5.2.1 ([#2661](https://github.com/googleapis/sdk-platform-java/issues/2661)) ([b95ad49](https://github.com/googleapis/sdk-platform-java/commit/b95ad49834e0422e79f884b42cf5c81c89bb25fb))
+* update dependency net.bytebuddy:byte-buddy to v1.14.14 ([#2703](https://github.com/googleapis/sdk-platform-java/issues/2703)) ([87069bc](https://github.com/googleapis/sdk-platform-java/commit/87069bc9618704e2607aeae486d8481e4454dc17))
+* update dependency typing to v3.10.0.0 ([#2663](https://github.com/googleapis/sdk-platform-java/issues/2663)) ([7fb5653](https://github.com/googleapis/sdk-platform-java/commit/7fb565324427a98948c6d253066b734a4b5832bc))
+* update gapic-showcase to v0.33.0 ([#2653](https://github.com/googleapis/sdk-platform-java/issues/2653)) ([0a71cbf](https://github.com/googleapis/sdk-platform-java/commit/0a71cbf7092279c50f9f5114b79d8c674cdef997))
+
+
+### Documentation
+
+* Add contributing guidelines to PR and issue templates ([#2682](https://github.com/googleapis/sdk-platform-java/issues/2682)) ([42526dc](https://github.com/googleapis/sdk-platform-java/commit/42526dc03e00a2e01e8f7a075817560089f378ee))
+
 ## [2.39.0](https://github.com/googleapis/sdk-platform-java/compare/v2.38.1...v2.39.0) (2024-04-18)
 
 
