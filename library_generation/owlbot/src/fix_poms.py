@@ -19,7 +19,7 @@ from lxml import etree
 import os
 import re
 from typing import List, Mapping
-from poms import module, templates
+from library_generation.owlbot.src.poms import module, templates
 
 
 def load_versions(filename: str, default_group_id: str) -> Mapping[str, module.Module]:
