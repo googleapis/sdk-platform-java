@@ -15,16 +15,14 @@ import os
 import shutil
 import unittest
 from library_generation.owlbot.src.fix_poms import main
-from library_generation.test.compare_poms import compare_xml
-from library_generation.test.test_utils import FileComparator
+from library_generation.test.compare_poms import compare_pom_in_subdir
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "..", "resources", "test-owlbot")
-file_comparator = FileComparator()
 
 
 class FixPomsTest(unittest.TestCase):
-    def test_fix_poms_update_poms_for_ad_manager_correctly(self):
+    def test_update_poms_group_id_does_not_start_with_google_correctly(self):
         ad_manager_resource = os.path.join(resources_dir, "java-admanager")
         versions_file = os.path.join(ad_manager_resource, "versions.txt")
         os.chdir(ad_manager_resource)
@@ -33,7 +31,7 @@ class FixPomsTest(unittest.TestCase):
             self.__copy__golden(ad_manager_resource, sub_dir)
         main(versions_file, "true")
         for sub_dir in sub_dirs:
-            self.assertFalse(self.__compare_pom_in_subdir(ad_manager_resource, sub_dir))
+            self.assertFalse(compare_pom_in_subdir(ad_manager_resource, sub_dir))
         for sub_dir in sub_dirs:
             self.__remove_file_in_subdir(ad_manager_resource, sub_dir)
 
@@ -42,16 +40,6 @@ class FixPomsTest(unittest.TestCase):
         golden = os.path.join(base_dir, subdir, "pom-golden.xml")
         pom = os.path.join(base_dir, subdir, "pom.xml")
         shutil.copyfile(golden, pom)
-
-    @classmethod
-    def __compare_pom_in_subdir(cls, base_dir: str, subdir: str):
-        golden = os.path.join(base_dir, subdir, "pom-golden.xml")
-        pom = os.path.join(base_dir, subdir, "pom.xml")
-        return compare_xml(
-            golden,
-            pom,
-            False,
-        )
 
     @classmethod
     def __remove_file_in_subdir(cls, base_dir: str, subdir: str):
