@@ -32,8 +32,6 @@ class GenerationConfig:
         gapic_generator_version: str,
         googleapis_commitish: str,
         libraries_bom_version: str,
-        owlbot_cli_image: str,
-        synthtool_commitish: str,
         template_excludes: list[str],
         libraries: list[LibraryConfig],
         grpc_version: Optional[str] = None,
@@ -42,8 +40,6 @@ class GenerationConfig:
         self.gapic_generator_version = gapic_generator_version
         self.googleapis_commitish = googleapis_commitish
         self.libraris_bom_version = libraries_bom_version
-        self.owlbot_cli_image = owlbot_cli_image
-        self.synthtool_commitish = synthtool_commitish
         self.template_excludes = template_excludes
         self.libraries = libraries
         self.grpc_version = grpc_version
@@ -144,10 +140,6 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         ),
         libraries_bom_version=__required(
             config, "libraries_bom_version", REPO_LEVEL_PARAMETER
-        ),
-        owlbot_cli_image=__required(config, "owlbot_cli_image", REPO_LEVEL_PARAMETER),
-        synthtool_commitish=__required(
-            config, "synthtool_commitish", REPO_LEVEL_PARAMETER
         ),
         template_excludes=__required(config, "template_excludes", REPO_LEVEL_PARAMETER),
         libraries=parsed_libraries,
