@@ -14,7 +14,6 @@
 import click as click
 
 from library_generation.utils.pom_generator import generate_gapic_bom
-from library_generation.utils.pom_generator import generate_root_pom
 
 
 @click.group(invoke_without_command=False)
