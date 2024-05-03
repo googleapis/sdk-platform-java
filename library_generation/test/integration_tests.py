@@ -65,31 +65,25 @@ class IntegrationTest(unittest.TestCase):
         config_files = self.__get_config_files(config_dir)
         for repo, config_file in config_files:
             config = from_yaml(config_file)
+            repo_location = f"{output_dir}/{repo}"
+            config_location = f"{golden_dir}/../{repo}"
             # 1. pull repository
             repo_dest = self.__pull_repo_to(
-                Path(f"{output_dir}/{repo}"), repo, committish_map[repo]
+                Path(repo_location), repo, committish_map[repo]
             )
             # 2. prepare golden files
             library_names = self.__get_library_names_from_config(config)
             self.__prepare_golden_files(
                 config=config, library_names=library_names, repo_dest=repo_dest
             )
-            # 3. bind repository and configuration to docker volumes
-            self.__bind_device_to_volumes(
-                volume_name=f"repo-{repo}", device_dir=f"{output_dir}/{repo}"
-            )
-            self.__bind_device_to_volumes(
-                volume_name=f"config-{repo}", device_dir=f"{golden_dir}/../{repo}"
-            )
-            repo_volumes = f"-v repo-{repo}:/workspace/{repo} -v config-{repo}:/workspace/config-{repo}"
-            # 4. run entry_point.py in docker container
+            # 3. run entry_point.py in docker container
             self.__run_entry_point_in_docker_container(
-                repo=repo,
-                repo_volumes=repo_volumes,
+                repo_location=repo_location,
+                config_location=config_location,
                 baseline_config=baseline_config_name,
                 current_config=current_config_name,
             )
-            # 5. compare generation result with golden files
+            # 4. compare generation result with golden files
             print(
                 "Generation finished successfully. "
                 "Will now compare differences between generated and existing "
@@ -196,8 +190,7 @@ class IntegrationTest(unittest.TestCase):
 
     @classmethod
     def __remove_generated_files(cls):
-        # uncomment this line when the generated files don't owned by root.
-        # shutil.rmtree(f"{output_dir}", ignore_errors=True)
+        shutil.rmtree(f"{output_dir}", ignore_errors=True)
         if os.path.isdir(f"{golden_dir}"):
             shutil.rmtree(f"{golden_dir}")
 
@@ -234,70 +227,34 @@ class IntegrationTest(unittest.TestCase):
                 copy_tree(f"{repo_dest}", f"{golden_dir}/{library_name}")
 
     @classmethod
-    def __bind_device_to_volumes(cls, volume_name: str, device_dir: str):
-        # We use a volume to hold the repositories used in the integration
-        # tests. This is because the test container creates a child container
-        # using the host machine's docker socket, meaning that we can only
-        # reference volumes created from within the host machine (i.e. the
-        # machine running this script).
-        #
-        # To summarize, we create a special volume that can be referenced both
-        # in the main container and in any child containers created by this one.
-
-        # use subprocess.run because we don't care about the return value (we
-        # want to remove the volume in any case).
-        subprocess.run(["docker", "volume", "rm", volume_name])
-        subprocess.check_call(
-            [
-                "docker",
-                "volume",
-                "create",
-                "--name",
-                volume_name,
-                "--opt",
-                "type=none",
-                "--opt",
-                f"device={device_dir}",
-                "--opt",
-                "o=bind",
-            ]
-        )
-
-    @classmethod
     def __run_entry_point_in_docker_container(
         cls,
-        repo: str,
-        repo_volumes: str,
+        repo_location: str,
+        config_location: str,
         baseline_config: str,
         current_config: str,
     ):
+        # we use the calling user to prevent the mapped volumes from changing
+        # owners
+        user_id = shell_call("id -u")
+        group_id = shell_call("id -g")
         subprocess.check_call(
             [
                 "docker",
                 "run",
+                "-u",
+                f"{user_id}:{group_id}",
                 "--rm",
                 "-v",
-                f"repo-{repo}:/workspace/{repo}",
+                f"{repo_location}:/workspace/repo",
                 "-v",
-                f"config-{repo}:/workspace/config-{repo}",
-                "-v",
-                "/tmp:/tmp",
-                "-v",
-                "/var/run/docker.sock:/var/run/docker.sock",
-                "-e",
-                "RUNNING_IN_DOCKER=true",
-                "-e",
-                f"REPO_BINDING_VOLUMES={repo_volumes}",
+                f"{config_location}:/workspace/config",
                 "-w",
-                "/src",
+                "/workspace/repo",
                 image_tag,
-                "python",
-                "/src/cli/entry_point.py",
-                "generate",
-                f"--baseline-generation-config-path=/workspace/config-{repo}/{baseline_config}",
-                f"--current-generation-config-path=/workspace/config-{repo}/{current_config}",
-                f"--repository-path=/workspace/{repo}",
-            ]
+                f"--baseline-generation-config-path=/workspace/config/{baseline_config}",
+                f"--current-generation-config-path=/workspace/config/{current_config}",
+            ],
         )
 
     @classmethod
