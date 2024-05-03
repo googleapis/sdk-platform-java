@@ -14,15 +14,12 @@
 
 import sys
 import glob
-import inspect
-import itertools
 import json
 from lxml import etree
 import os
 import re
 from typing import List, Mapping
 from poms import module, templates
-from pathlib import Path
 
 
 def load_versions(filename: str, default_group_id: str) -> Mapping[str, module.Module]:
@@ -39,9 +36,10 @@ def load_versions(filename: str, default_group_id: str) -> Mapping[str, module.M
             if len(parts) == 3:
                 artifact_id = parts[0]
                 group_id = (
-                    default_group_id
-                    if artifact_id.startswith("google-")
-                    else __proto_group_id(default_group_id)
+                    __proto_group_id(default_group_id)
+                    if artifact_id.startswith("proto-")
+                    or artifact_id.startswith("grpc-")
+                    else default_group_id
                 )
                 modules[artifact_id] = module.Module(
                     group_id=group_id,
