@@ -135,12 +135,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
         defaultRetryableCodes == null ? null : ImmutableSet.copyOf(defaultRetryableCodes);
     // Attempt to create an empty, non-functioning EndpointContext by default. The client will have
     // a valid EndpointContext with user configurations after the client has been initialized.
-    try {
-      this.endpointContext =
-          endpointContext == null ? EndpointContext.newBuilder().build() : endpointContext;
-    } catch (IOException ex) {
-      throw new RuntimeException(ex);
-    }
+    this.endpointContext =
+        endpointContext == null ? EndpointContext.getDefaultInstance() : endpointContext;
   }
 
   /**
