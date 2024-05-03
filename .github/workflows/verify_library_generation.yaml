@@ -1,27 +1,50 @@
 on:
-  push:
-    branches:
-    - main
   pull_request:
-    paths:
-    - library_generation/**
 
-  workflow_dispatch:
 name: verify_library_generation
 jobs:
-  integration_tests:
-    strategy:
-      matrix:
-        java: [ 11 ]
+  should-run-library-generation-tests:
     runs-on: ubuntu-22.04
+    outputs:
+      should_run: ${{ steps.get_changed_directories.outputs.should_run }}
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-java@v3
+    - uses: actions/checkout@v4
       with:
-        java-version: ${{ matrix.java }}
-        distribution: temurin
-        cache: maven
-    - uses: actions/setup-python@v4
+        fetch-depth: 0
+    - name: get changed directories in the pull request
+      id: get_changed_directories
+      shell: bash
+      run: |
+        set -ex
+        # PRs that come from a fork need to be handled differently
+        if [[ ${head_repo_name} == ${base_repo} ]]; then
+          git checkout ${base_ref}
+          git checkout ${head_ref}
+          changed_directories="$(git diff --name-only ${base_ref} ${head_ref})"
+        else
+          git remote add fork ${head_repo_url}
+          git fetch fork # create a mapping of the fork
+          git checkout -b "${head_ref}" fork/${head_ref}
+          changed_directories="$(git diff --name-only "fork/${head_ref}" "origin/${base_ref}")"
+        fi
+        if [[ ${changed_directories} =~ "library_generation/" ]]; then
+          echo "should_run=true" >> $GITHUB_OUTPUT
+        else
+          echo "should_run=false" >> $GITHUB_OUTPUT
+        fi
+      env:
+        base_ref: ${{ github.event.pull_request.base.ref }}
+        head_ref: ${{ github.event.pull_request.head.ref }}
+        head_repo_url: ${{ github.event.pull_request.head.repo.html_url }}
+        head_repo_name: ${{ github.event.pull_request.head.repo.full_name  }}
+        base_repo: ${{ github.repository }}
+  library-generation-integration-tests:
+    runs-on: ubuntu-22.04
+    needs: should-run-library-generation-tests
+    if: needs.should-run-library-generation-tests.outputs.should_run == 'true'
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
       with:
         python-version: 3.11
     - name: install pyenv
@@ -41,31 +64,31 @@ jobs:
       run: |
         set -ex
         pushd library_generation
-        pip install -r requirements.in
+        pip install -r requirements.txt
         pip install .
         popd
     - name: Run integration tests
       shell: bash
       run: |
         set -x
-        git config --global user.email "github-workflow@github.com"
-        git config --global user.name "Github Workflow"
         python -m unittest library_generation/test/integration_tests.py
-  unit_tests:
+  library-generation-unit-tests:
+    runs-on: ${{ matrix.os }}
+    needs: should-run-library-generation-tests
+    if: needs.should-run-library-generation-tests.outputs.should_run == 'true'
     strategy:
       matrix:
         java: [ 8 ]
         os: [ ubuntu-22.04, macos-12 ]
-    runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: install utils (macos)
       if: matrix.os == 'macos-12'
       shell: bash
       run: |
         brew update --preinstall
         brew install coreutils
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
       with:
         python-version: 3.11
     - name: install python dependencies
@@ -73,7 +96,7 @@ jobs:
       run: |
         set -ex
         pushd library_generation
-        pip install -r requirements.in
+        pip install -r requirements.txt
         popd
     - name: install synthtool
       shell: bash
@@ -97,27 +120,31 @@ jobs:
     - name: Run python unit tests
       run: |
         set -x
-        python -m unittest library_generation/test/unit_tests.py
-  lint-shell:
+        python -m unittest discover -s library_generation/test/ -p "*unit_tests.py"
+  library-generation-lint-shell:
     runs-on: ubuntu-22.04
+    needs: should-run-library-generation-tests
+    if: needs.should-run-library-generation-tests.outputs.should_run == 'true'
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@2.0.0
       with:
         scandir: 'library_generation'
         format: tty
         severity: error
-  lint-python:
+  library-generation-lint-python:
     runs-on: ubuntu-22.04
+    needs: should-run-library-generation-tests
+    if: needs.should-run-library-generation-tests.outputs.should_run == 'true'
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: install python dependencies
       shell: bash
       run: |
         set -ex
         pushd library_generation
-        pip install -r requirements.in
+        pip install -r requirements.txt
         popd
     - name: Lint
       shell: bash

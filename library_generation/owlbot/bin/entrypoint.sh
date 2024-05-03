@@ -27,19 +27,10 @@ set -ex
 scripts_root=$1
 versions_file=$2
 configuration_yaml=$3
+is_monorepo=$4
 
 
-# This script can be used to process HW libraries and monorepo
-# (google-cloud-java) libraries, which require a slightly different treatment
-# monorepo folders have an .OwlBot.yaml file in the module folder (e.g.
-# java-asset/.OwlBot.yaml), whereas HW libraries have the yaml in
-# `.github/.OwlBot.yaml`
-monorepo="false"
-if [[ -f "$(pwd)/.OwlBot.yaml" ]]; then
-  monorepo="true"
-fi
-
-if [[ "${monorepo}" == "true" ]]; then
+if [[ "${is_monorepo}" == "true" ]]; then
   mv owl-bot-staging/* temp
   rm -rd owl-bot-staging/
   mv temp owl-bot-staging
@@ -50,7 +41,7 @@ fi
 
 # apply repo templates
 echo "Rendering templates"
-python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" "${configuration_yaml}" "${monorepo}"
+python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" "${configuration_yaml}" "${is_monorepo}"
 
 # templates as well as retrieving files from owl-bot-staging
 echo "Retrieving files from owl-bot-staging directory..."
@@ -66,7 +57,7 @@ echo "...done"
 
 # write or restore pom.xml files
 echo "Generating missing pom.xml..."
-python3 "${scripts_root}/owlbot/src/fix-poms.py" "${versions_file}" "${monorepo}"
+python3 "${scripts_root}/owlbot/src/fix-poms.py" "${versions_file}" "${is_monorepo}"
 echo "...done"
 
 # write or restore clirr-ignored-differences.xml
@@ -79,7 +70,12 @@ echo "Fixing missing license headers..."
 python3 "${scripts_root}/owlbot/src/fix-license-headers.py"
 echo "...done"
 
-# ensure formatting on all .java files in the repository
+# Ensure formatting on all .java files in the repository.
+# Here we manually set the user.home system variable. Unfortunately, Maven
+# user.home inference involves the /etc/passwd file (confirmed empirically),
+# instead of the presumable $HOME env var, which may not work properly
+# when `docker run`ning with the -u flag because we may incur in users
+# not registered in the container's /etc/passwd file
 echo "Reformatting source..."
-mvn fmt:format -V --batch-mode --no-transfer-progress
+mvn fmt:format -Duser.home="${HOME}" -V --batch-mode --no-transfer-progress
 echo "...done"

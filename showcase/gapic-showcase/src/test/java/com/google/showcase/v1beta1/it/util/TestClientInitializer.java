@@ -24,6 +24,7 @@ import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.ComplianceClient;
 import com.google.showcase.v1beta1.ComplianceSettings;
@@ -32,6 +33,7 @@ import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.IdentitySettings;
 import com.google.showcase.v1beta1.WaitRequest;
+import com.google.showcase.v1beta1.stub.EchoStub;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import io.grpc.ClientInterceptor;
 import io.grpc.ManagedChannelBuilder;
@@ -41,6 +43,12 @@ import java.util.Set;
 public class TestClientInitializer {
 
   public static final int AWAIT_TERMINATION_SECONDS = 10;
+
+  // gRPC's endpoint must follow the format of {host}:{port}
+  public static final String DEFAULT_GRPC_ENDPOINT = "localhost:7469";
+  // httpjson's endpoint uses `https://` by default if the scheme is not specified
+  // local test requires `http://` as not SSL/TLS has been set up for showcase
+  public static final String DEFAULT_HTTPJSON_ENDPOINT = "http://localhost:7469";
 
   public static EchoClient createGrpcEchoClient() throws Exception {
     return createGrpcEchoClient(ImmutableList.of());
@@ -56,7 +64,7 @@ public class TestClientInitializer {
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .setInterceptorProvider(() -> interceptorList)
                     .build())
-            .setEndpoint("localhost:7469")
+            .setEndpoint(DEFAULT_GRPC_ENDPOINT)
             .build();
     return EchoClient.create(grpcEchoSettings);
   }
@@ -81,7 +89,7 @@ public class TestClientInitializer {
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .setInterceptorProvider(() -> interceptorList)
                     .build())
-            .setEndpoint("localhost:7469")
+            .setEndpoint(DEFAULT_GRPC_ENDPOINT)
             .build();
     return EchoClient.create(grpcEchoSettings);
   }
@@ -99,7 +107,7 @@ public class TestClientInitializer {
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
+                    .setEndpoint(DEFAULT_HTTPJSON_ENDPOINT)
                     .setInterceptorProvider(() -> interceptorList)
                     .build())
             .build();
@@ -126,7 +134,7 @@ public class TestClientInitializer {
                     .setHttpTransport(
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
                     .setInterceptorProvider(() -> interceptorList)
-                    .setEndpoint("http://localhost:7469")
+                    .setEndpoint(DEFAULT_HTTPJSON_ENDPOINT)
                     .build())
             .build();
     return EchoClient.create(httpJsonEchoSettings);
@@ -148,7 +156,7 @@ public class TestClientInitializer {
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
-            .setEndpoint("localhost:7469")
+            .setEndpoint(DEFAULT_GRPC_ENDPOINT)
             .build();
     return EchoClient.create(grpcEchoSettings);
   }
@@ -169,7 +177,7 @@ public class TestClientInitializer {
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
+                    .setEndpoint(DEFAULT_HTTPJSON_ENDPOINT)
                     .build())
             .build();
     return EchoClient.create(httpJsonEchoSettings);
@@ -195,7 +203,7 @@ public class TestClientInitializer {
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
-            .setEndpoint("localhost:7469")
+            .setEndpoint(DEFAULT_GRPC_ENDPOINT)
             .build();
     return EchoClient.create(grpcEchoSettings);
   }
@@ -220,7 +228,7 @@ public class TestClientInitializer {
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
+                    .setEndpoint(DEFAULT_HTTPJSON_ENDPOINT)
                     .build())
             .build();
     return EchoClient.create(httpJsonEchoSettings);
@@ -234,7 +242,7 @@ public class TestClientInitializer {
                 IdentitySettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
-            .setEndpoint("localhost:7469")
+            .setEndpoint(DEFAULT_GRPC_ENDPOINT)
             .build();
     return IdentityClient.create(grpcIdentitySettings);
   }
@@ -247,7 +255,7 @@ public class TestClientInitializer {
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
+                    .setEndpoint(DEFAULT_HTTPJSON_ENDPOINT)
                     .build())
             .build();
     return IdentityClient.create(httpjsonIdentitySettings);
@@ -264,7 +272,7 @@ public class TestClientInitializer {
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .setInterceptorProvider(() -> interceptorList)
                     .build())
-            .setEndpoint("localhost:7469")
+            .setEndpoint(DEFAULT_GRPC_ENDPOINT)
             .build();
     return ComplianceClient.create(grpcComplianceSettings);
   }
@@ -278,10 +286,61 @@ public class TestClientInitializer {
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
+                    .setEndpoint(DEFAULT_HTTPJSON_ENDPOINT)
                     .setInterceptorProvider(() -> interceptorList)
                     .build())
             .build();
     return ComplianceClient.create(httpJsonComplianceSettings);
+  }
+
+  public static EchoClient createGrpcEchoClientOpentelemetry(ApiTracerFactory metricsTracerFactory)
+      throws Exception {
+
+    EchoSettings grpcEchoSettings =
+        EchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .setEndpoint(DEFAULT_GRPC_ENDPOINT)
+            .build();
+
+    EchoStubSettings echoStubSettings =
+        (EchoStubSettings)
+            grpcEchoSettings
+                .getStubSettings()
+                .toBuilder()
+                .setTracerFactory(metricsTracerFactory)
+                .build();
+    EchoStub stub = echoStubSettings.createStub();
+
+    return EchoClient.create(stub);
+  }
+
+  public static EchoClient createHttpJsonEchoClientOpentelemetry(
+      ApiTracerFactory metricsTracerFactory) throws Exception {
+
+    EchoSettings httpJsonEchoSettings =
+        EchoSettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint(DEFAULT_HTTPJSON_ENDPOINT)
+                    .build())
+            .build();
+
+    EchoStubSettings echoStubSettings =
+        (EchoStubSettings)
+            httpJsonEchoSettings
+                .getStubSettings()
+                .toBuilder()
+                .setTracerFactory(metricsTracerFactory)
+                .build();
+    EchoStub stub = echoStubSettings.createStub();
+
+    return EchoClient.create(stub);
   }
 }

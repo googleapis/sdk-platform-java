@@ -20,8 +20,8 @@ case $key in
     export gapic_generator_version
     shift
     ;;
-  --protobuf_version)
-    protobuf_version="$2"
+  --protoc_version)
+    protoc_version="$2"
     shift
     ;;
   --grpc_version)
@@ -74,7 +74,7 @@ done
 
 script_dir=$(dirname "$(readlink -f "$0")")
 # source utility functions
-source "${script_dir}"/utilities.sh
+source "${script_dir}"/utils/utilities.sh
 output_folder="$(get_output_folder)"
 
 if [ -z "${gapic_generator_version}" ]; then
@@ -82,8 +82,8 @@ if [ -z "${gapic_generator_version}" ]; then
   exit 1
 fi
 
-if [ -z "${protobuf_version}" ]; then
-  protobuf_version=$(get_protobuf_version "${gapic_generator_version}")
+if [ -z "${protoc_version}" ]; then
+  protoc_version=$(get_protoc_version "${gapic_generator_version}")
 fi
 
 if [ -z "${grpc_version}" ]; then
@@ -175,15 +175,9 @@ case "${proto_path}" in
     removed_proto="google/rpc/http.proto"
     proto_files="${proto_files//${removed_proto}/}"
     ;;
-  "google/shopping"*)
-    # this proto is included in //google/shopping/css/v1:google-cloud-shopping-css-v1-java
-    # and //google/shopping/merchant/inventories/v1beta:google-cloud-merchant-inventories-v1beta-java
-    # and //google/shopping/merchant/reports/v1beta:google-cloud-merchant-reports-v1beta-java
-    proto_files="${proto_files} google/shopping/type/types.proto"
-    ;;
 esac
 # download gapic-generator-java, protobuf and grpc plugin.
-download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_version}" "${os_architecture}"
+download_tools "${gapic_generator_version}" "${protoc_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
@@ -284,8 +278,7 @@ case "${proto_path}" in
 esac
 # copy proto files to proto-*/src/main/proto
 for proto_src in ${proto_files}; do
-  if [[ "${proto_src}" == "google/cloud/common/operation_metadata.proto" ]] ||
-     [[ "${proto_src}" == "google/shopping/type/types.proto" ]]; then
+  if [[ "${proto_src}" == "google/cloud/common/operation_metadata.proto" ]]; then
     continue
   fi
   mkdir -p "${temp_destination_path}/proto-${folder_name}/src/main/proto"

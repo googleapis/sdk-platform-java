@@ -47,11 +47,27 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
-  private static final String GOOGLE_CLOUD_UNIVERSE_DOMAIN = "GOOGLE_CLOUD_UNIVERSE_DOMAIN";
-  private static final String INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE =
+
+  private static final EndpointContext INSTANCE;
+
+  // static block initialization for exception handling
+  static {
+    try {
+      INSTANCE = EndpointContext.newBuilder().setServiceName("").build();
+    } catch (IOException e) {
+      throw new RuntimeException("Unable to create a default empty EndpointContext", e);
+    }
+  }
+
+  public static final String GOOGLE_CLOUD_UNIVERSE_DOMAIN = "GOOGLE_CLOUD_UNIVERSE_DOMAIN";
+  public static final String INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE =
       "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
   public static final String UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE =
       "Unable to retrieve the Universe Domain from the Credentials.";
+
+  public static EndpointContext getDefaultInstance() {
+    return INSTANCE;
+  }
 
   /**
    * ServiceName is host URI for Google Cloud Services. It follows the format of
@@ -103,6 +119,11 @@ public abstract class EndpointContext {
     return new AutoValue_EndpointContext.Builder()
         .setSwitchToMtlsEndpointAllowed(false)
         .setUsingGDCH(false);
+  }
+
+  /** Configure the existing EndpointContext to be using GDC-H */
+  EndpointContext withGDCH() throws IOException {
+    return toBuilder().setUsingGDCH(true).build();
   }
 
   /**

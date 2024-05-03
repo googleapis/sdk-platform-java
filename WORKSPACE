@@ -60,7 +60,7 @@ maven_install(
     repositories = ["https://repo.maven.apache.org/maven2/"],
 )
 
-_gapic_generator_java_version = "2.37.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
+_gapic_generator_java_version = "2.40.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
 
 maven_install(
     artifacts = [
@@ -104,17 +104,6 @@ http_archive(
     name = "com_google_disco_to_proto3_converter",
     strip_prefix = "disco-to-proto3-converter-%s" % _disco_to_proto3_converter_commit,
     urls = ["https://github.com/googleapis/disco-to-proto3-converter/archive/%s.zip" % _disco_to_proto3_converter_commit],
-)
-
-# Showcase
-_showcase_version = "0.28.2"
-
-http_archive(
-    name = "com_google_gapic_showcase",
-    strip_prefix = "gapic-showcase-%s" % _showcase_version,
-    urls = [
-        "https://github.com/googleapis/gapic-showcase/archive/refs/tags/v%s.zip" % _showcase_version,
-    ],
 )
 
 http_archive(

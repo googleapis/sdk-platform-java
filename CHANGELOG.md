@@ -1,5 +1,138 @@
 # Changelog
 
+## [2.40.0](https://github.com/googleapis/sdk-platform-java/compare/v2.39.0...v2.40.0) (2024-05-02)
+
+
+### Features
+
+* [common-protos] add `Weight` to common types for Shopping APIs to be used for accounts bundle ([#2699](https://github.com/googleapis/sdk-platform-java/issues/2699)) ([5bb9770](https://github.com/googleapis/sdk-platform-java/commit/5bb97700ddcef1b0494808b1e7d8029d92c74d13))
+* add a CLI tool to validate generation configuration  ([#2691](https://github.com/googleapis/sdk-platform-java/issues/2691)) ([f2ce524](https://github.com/googleapis/sdk-platform-java/commit/f2ce52478a03048b9daffc3fc535f12cf2a9f856))
+* Parser to consume the api-versioning value from proto ([#2630](https://github.com/googleapis/sdk-platform-java/issues/2630)) ([40711fd](https://github.com/googleapis/sdk-platform-java/commit/40711fd69468a2021108bb5fba00bb02ac4bb19f))
+* Update Gapic generator and Gax to emit api-versioning via header ([#2671](https://github.com/googleapis/sdk-platform-java/issues/2671)) ([e63d1b4](https://github.com/googleapis/sdk-platform-java/commit/e63d1b49159be07f0bb32bfe9d15c8445ac883c8))
+
+
+### Bug Fixes
+
+* change folder prefix for adding headers ([#2688](https://github.com/googleapis/sdk-platform-java/issues/2688)) ([4e92be8](https://github.com/googleapis/sdk-platform-java/commit/4e92be8885af8633ea5b3371c43be9423a0f95ef))
+* Log HttpJson's async thread pool core size ([#2697](https://github.com/googleapis/sdk-platform-java/issues/2697)) ([34b4bc3](https://github.com/googleapis/sdk-platform-java/commit/34b4bc3362f3c30bd77f5a59c3cb3aea36358eee))
+* replace `cfg = "host"` with `cfg = "exec"` ([#2637](https://github.com/googleapis/sdk-platform-java/issues/2637)) ([6d673f3](https://github.com/googleapis/sdk-platform-java/commit/6d673f39dc10b072ba6012fecc17deb22136650e))
+* Return resolved endpoint from StubSettings' Builder ([#2715](https://github.com/googleapis/sdk-platform-java/issues/2715)) ([32c9995](https://github.com/googleapis/sdk-platform-java/commit/32c99953496fe3e0ab47c67aad4117c242d1c798))
+
+
+### Dependencies
+
+* Make opentelemetry-api an optional dependency. ([#2681](https://github.com/googleapis/sdk-platform-java/issues/2681)) ([3967a19](https://github.com/googleapis/sdk-platform-java/commit/3967a19e8b68c3a95cf1ced737f3a1aa73b02e93))
+* update dependency absl-py to v2.1.0 ([#2659](https://github.com/googleapis/sdk-platform-java/issues/2659)) ([cae6d79](https://github.com/googleapis/sdk-platform-java/commit/cae6d79ed29fd9e64abe4e9390a46b1f9f1d305f))
+* update dependency gitpython to v3.1.43 ([#2656](https://github.com/googleapis/sdk-platform-java/issues/2656)) ([208bef4](https://github.com/googleapis/sdk-platform-java/commit/208bef468b11d49e85d4df4008d99c7a2de9233c))
+* update dependency lxml to v5.2.1 ([#2661](https://github.com/googleapis/sdk-platform-java/issues/2661)) ([b95ad49](https://github.com/googleapis/sdk-platform-java/commit/b95ad49834e0422e79f884b42cf5c81c89bb25fb))
+* update dependency net.bytebuddy:byte-buddy to v1.14.14 ([#2703](https://github.com/googleapis/sdk-platform-java/issues/2703)) ([87069bc](https://github.com/googleapis/sdk-platform-java/commit/87069bc9618704e2607aeae486d8481e4454dc17))
+* update dependency typing to v3.10.0.0 ([#2663](https://github.com/googleapis/sdk-platform-java/issues/2663)) ([7fb5653](https://github.com/googleapis/sdk-platform-java/commit/7fb565324427a98948c6d253066b734a4b5832bc))
+* update gapic-showcase to v0.33.0 ([#2653](https://github.com/googleapis/sdk-platform-java/issues/2653)) ([0a71cbf](https://github.com/googleapis/sdk-platform-java/commit/0a71cbf7092279c50f9f5114b79d8c674cdef997))
+
+
+### Documentation
+
+* Add contributing guidelines to PR and issue templates ([#2682](https://github.com/googleapis/sdk-platform-java/issues/2682)) ([42526dc](https://github.com/googleapis/sdk-platform-java/commit/42526dc03e00a2e01e8f7a075817560089f378ee))
+
+## [2.39.0](https://github.com/googleapis/sdk-platform-java/compare/v2.38.1...v2.39.0) (2024-04-18)
+
+
+### Features
+
+* add `libraries_bom_version` to generation configuration  ([#2639](https://github.com/googleapis/sdk-platform-java/issues/2639)) ([56c7ca5](https://github.com/googleapis/sdk-platform-java/commit/56c7ca51d4ca99629251e0aa9cac316eb349c974))
+* Add ChannelPoolSettings Getter for gRPC's ChannelProvider ([#2612](https://github.com/googleapis/sdk-platform-java/issues/2612)) ([d0c5191](https://github.com/googleapis/sdk-platform-java/commit/d0c5191525d5d157812cae9551fc15bb70caab7e))
+* add config change ([#2604](https://github.com/googleapis/sdk-platform-java/issues/2604)) ([8312706](https://github.com/googleapis/sdk-platform-java/commit/8312706db6352fca05a5858b513e88f162e5de0b))
+* add entry point ([#2616](https://github.com/googleapis/sdk-platform-java/issues/2616)) ([b19fa33](https://github.com/googleapis/sdk-platform-java/commit/b19fa3373d3fa17531d627d4581d154374a231ff))
+* add generation config comparator ([#2587](https://github.com/googleapis/sdk-platform-java/issues/2587)) ([a94c2f0](https://github.com/googleapis/sdk-platform-java/commit/a94c2f0e8a99f0ddf17106cbc8117cefe6b0e127))
+* Add JavadocJar Task to build.gradle for self service libraries ([#2593](https://github.com/googleapis/sdk-platform-java/issues/2593)) ([993f5ac](https://github.com/googleapis/sdk-platform-java/commit/993f5acf91de3a9d2c7f9fdb10ea47387b240554))
+* Client/StubSettings' getEndpoint() returns the resolved endpoint ([#2440](https://github.com/googleapis/sdk-platform-java/issues/2440)) ([4942bc1](https://github.com/googleapis/sdk-platform-java/commit/4942bc17e9c7261242ba3d03d85cd8b131ca2e5e))
+* generate selected libraries ([#2598](https://github.com/googleapis/sdk-platform-java/issues/2598)) ([739ddbb](https://github.com/googleapis/sdk-platform-java/commit/739ddbbbc662f43e46b9f420bbae685de9b3dbc6))
+* Validate the Universe Domain inside Java-Core ([#2592](https://github.com/googleapis/sdk-platform-java/issues/2592)) ([35d789f](https://github.com/googleapis/sdk-platform-java/commit/35d789fdf488feff41d4bdaa5992013450954870))
+
+
+### Bug Fixes
+
+* add main to `generate_repo.py` ([#2607](https://github.com/googleapis/sdk-platform-java/issues/2607)) ([fedeb32](https://github.com/googleapis/sdk-platform-java/commit/fedeb3237b6d25245f4d770ec105bd538dfee405))
+* correct deep-remove and deep-preserve regexes ([#2572](https://github.com/googleapis/sdk-platform-java/issues/2572)) ([4c7fd88](https://github.com/googleapis/sdk-platform-java/commit/4c7fd880a90d08448db366bde40d0d385b45f75e))
+* first attempt should use the min of RPC timeout and total timeout ([#2641](https://github.com/googleapis/sdk-platform-java/issues/2641)) ([0349232](https://github.com/googleapis/sdk-platform-java/commit/034923277750171418d74060e225ffd68ef38bf2))
+* remove duplicated calls to AutoValue builders ([#2636](https://github.com/googleapis/sdk-platform-java/issues/2636)) ([53a3727](https://github.com/googleapis/sdk-platform-java/commit/53a3727e4a9548bf0417d4ee6ed3e9ab571642ed))
+* remove unnecessary slf4j and AbstractGoogleClientRequest native image configs ([0cb7d0e](https://github.com/googleapis/sdk-platform-java/commit/0cb7d0e0c03f2dd2853a86d67c9529a50ed8238f))
+* remove unnecessary slf4j and AbstractGoogleClientRequest native image configs ([#2628](https://github.com/googleapis/sdk-platform-java/issues/2628)) ([0cb7d0e](https://github.com/googleapis/sdk-platform-java/commit/0cb7d0e0c03f2dd2853a86d67c9529a50ed8238f))
+
+
+### Dependencies
+
+* update arrow.version to v15.0.2 ([#2589](https://github.com/googleapis/sdk-platform-java/issues/2589)) ([777acf3](https://github.com/googleapis/sdk-platform-java/commit/777acf3df4b5379cd8a8cf52b844203dd514ee24))
+* update dependency com.google.cloud.opentelemetry:detector-resources-support to v0.28.0 ([#2649](https://github.com/googleapis/sdk-platform-java/issues/2649)) ([e4ed176](https://github.com/googleapis/sdk-platform-java/commit/e4ed1765f3dbb950d498df307d79577abf71a66a))
+* update dependency gitpython to v3.1.41 [security] ([#2625](https://github.com/googleapis/sdk-platform-java/issues/2625)) ([e41bd8f](https://github.com/googleapis/sdk-platform-java/commit/e41bd8f00ffcb271b2a008364f334693d9dfdc9d))
+* update dependency net.bytebuddy:byte-buddy to v1.14.13 ([#2646](https://github.com/googleapis/sdk-platform-java/issues/2646)) ([73ac5a4](https://github.com/googleapis/sdk-platform-java/commit/73ac5a4bfe05ac11a121664f52a4013cb4bb33a9))
+* update dependency org.threeten:threeten-extra to v1.8.0 ([#2650](https://github.com/googleapis/sdk-platform-java/issues/2650)) ([226325a](https://github.com/googleapis/sdk-platform-java/commit/226325a5b7c93c1ad1b4af5da4283e369887fa42))
+* update dependency org.threeten:threetenbp to v1.6.9 ([#2602](https://github.com/googleapis/sdk-platform-java/issues/2602)) ([371753e](https://github.com/googleapis/sdk-platform-java/commit/371753ebbd83d703f314dd5f4e34e16c255836c6))
+* update dependency org.threeten:threetenbp to v1.6.9 ([#2665](https://github.com/googleapis/sdk-platform-java/issues/2665)) ([8935bc8](https://github.com/googleapis/sdk-platform-java/commit/8935bc87307e73101df72a85f98a8ec1bdde0c14))
+* update google api dependencies ([#2584](https://github.com/googleapis/sdk-platform-java/issues/2584)) ([cd20604](https://github.com/googleapis/sdk-platform-java/commit/cd20604f3128d2efc1802065c63b6663186ce3af))
+* update googleapis/java-cloud-bom digest to 7071341 ([#2608](https://github.com/googleapis/sdk-platform-java/issues/2608)) ([8d74140](https://github.com/googleapis/sdk-platform-java/commit/8d7414029984c073e9bae2952971d2337dbf81ab))
+* update netty dependencies to v4.1.109.final ([#2597](https://github.com/googleapis/sdk-platform-java/issues/2597)) ([8990693](https://github.com/googleapis/sdk-platform-java/commit/8990693abf157a1adf2723c6db1bce71a5efa810))
+* update opentelemetry-java monorepo to v1.37.0 ([#2652](https://github.com/googleapis/sdk-platform-java/issues/2652)) ([f8fa2e9](https://github.com/googleapis/sdk-platform-java/commit/f8fa2e9f7316f17f1e753a74a6839d9e331c010a))
+* update protobuf dependencies to v3.25.3 ([#2491](https://github.com/googleapis/sdk-platform-java/issues/2491)) ([b0e5041](https://github.com/googleapis/sdk-platform-java/commit/b0e5041ff0fafaf900a7cf1929f0d85fc582a0d7))
+* update slf4j monorepo to v2.0.13 ([#2647](https://github.com/googleapis/sdk-platform-java/issues/2647)) ([f030e29](https://github.com/googleapis/sdk-platform-java/commit/f030e29b1538ad28ad9628ec03d8e3eb2f21d6c2))
+
+## [2.38.1](https://github.com/googleapis/sdk-platform-java/compare/v2.38.0...v2.38.1) (2024-03-15)
+
+
+### Bug Fixes
+
+* **deps:** add detector-resource-support dependencies ([#2559](https://github.com/googleapis/sdk-platform-java/issues/2559)) ([53f2c85](https://github.com/googleapis/sdk-platform-java/commit/53f2c85ff700e114ca88ab74360733144581b861))
+* Update shopping and chat common protos. ([#2580](https://github.com/googleapis/sdk-platform-java/issues/2580)) ([f472756](https://github.com/googleapis/sdk-platform-java/commit/f472756590215308305bbb370097e300439f168b))
+
+
+### Dependencies
+
+* update google api dependencies ([#2582](https://github.com/googleapis/sdk-platform-java/issues/2582)) ([dd03d93](https://github.com/googleapis/sdk-platform-java/commit/dd03d9378c6efbaf7a0785f235461cc5951c50d2))
+
+## [2.38.0](https://github.com/googleapis/sdk-platform-java/compare/v2.37.0...v2.38.0) (2024-03-15)
+
+
+### Features
+
+* [common-protos] add `api_version` extension to `ServiceOptions`, for collaborative versioning ([d343be9](https://github.com/googleapis/sdk-platform-java/commit/d343be9416d2521145a8c5d1e8abea6203ff6214))
+* [common-protos] add `api_version` extension to `ServiceOptions`, for collaborative versioning ([#2551](https://github.com/googleapis/sdk-platform-java/issues/2551)) ([d343be9](https://github.com/googleapis/sdk-platform-java/commit/d343be9416d2521145a8c5d1e8abea6203ff6214))
+* add `ErrorReason.LOCATION_POLICY_VIOLATED` enum value ([d343be9](https://github.com/googleapis/sdk-platform-java/commit/d343be9416d2521145a8c5d1e8abea6203ff6214))
+* add `ErrorReason.LOCATION_POLICY_VIOLATED` enum value ([d343be9](https://github.com/googleapis/sdk-platform-java/commit/d343be9416d2521145a8c5d1e8abea6203ff6214))
+* add `Publishing.rest_reference_documentation_uri` to aid client library publication ([d343be9](https://github.com/googleapis/sdk-platform-java/commit/d343be9416d2521145a8c5d1e8abea6203ff6214))
+* add `Publishing.rest_reference_documentation_uri` to aid client library publication ([d343be9](https://github.com/googleapis/sdk-platform-java/commit/d343be9416d2521145a8c5d1e8abea6203ff6214))
+* Add shopping and chat common protos. ([#2553](https://github.com/googleapis/sdk-platform-java/issues/2553)) ([5f2d4e7](https://github.com/googleapis/sdk-platform-java/commit/5f2d4e73ec5511613a97f463e28567487f47cd44)), closes [#2018](https://github.com/googleapis/sdk-platform-java/issues/2018)
+* get PR description from googleapis commits ([#2531](https://github.com/googleapis/sdk-platform-java/issues/2531)) ([c2ea697](https://github.com/googleapis/sdk-platform-java/commit/c2ea697fdfd9127a203524424e93e1d32ae2b8fa))
+* Introduce OpenTelemetry Metrics Recording ([#2500](https://github.com/googleapis/sdk-platform-java/issues/2500)) ([b936580](https://github.com/googleapis/sdk-platform-java/commit/b936580e905716a7fdf78d9219eb55889ee9274e))
+* skip build only commit ([#2555](https://github.com/googleapis/sdk-platform-java/issues/2555)) ([180c8a9](https://github.com/googleapis/sdk-platform-java/commit/180c8a964893b3dc8e40c51adc4d76e570a87e04))
+* Universe Domain Environment Variable Support ([#2485](https://github.com/googleapis/sdk-platform-java/issues/2485)) ([1463d64](https://github.com/googleapis/sdk-platform-java/commit/1463d645edf96087335618542f7bbca722a97b71))
+
+
+### Dependencies
+
+* normalize dependencies ([#2574](https://github.com/googleapis/sdk-platform-java/issues/2574)) ([6622238](https://github.com/googleapis/sdk-platform-java/commit/66222380977e7cba3a7951fba6102481af130d2e))
+* update arrow.version to v15.0.1 ([#2565](https://github.com/googleapis/sdk-platform-java/issues/2565)) ([b2c3f6a](https://github.com/googleapis/sdk-platform-java/commit/b2c3f6a0bb6bd33063516060851ebbae628c8fed))
+* update dependency com.fasterxml.jackson:jackson-bom to v2.17.0 ([#2564](https://github.com/googleapis/sdk-platform-java/issues/2564)) ([40ae7f9](https://github.com/googleapis/sdk-platform-java/commit/40ae7f9a628ec7b34b5b001ffc54d49e4059dd81))
+* update dependency com.google.api-client:google-api-client-bom to v2.4.0 ([#2570](https://github.com/googleapis/sdk-platform-java/issues/2570)) ([f60441f](https://github.com/googleapis/sdk-platform-java/commit/f60441ff4c1fb530ac27a8c492cd1b45196ea13c))
+* update dependency com.google.errorprone:error_prone_annotations to v2.26.1 ([#2530](https://github.com/googleapis/sdk-platform-java/issues/2530)) ([7c1aaab](https://github.com/googleapis/sdk-platform-java/commit/7c1aaabb0ef5f3664b6065b89ca74a1075ab74c7))
+* update dependency com.google.errorprone:error_prone_annotations to v2.26.1 ([#2532](https://github.com/googleapis/sdk-platform-java/issues/2532)) ([447b4e1](https://github.com/googleapis/sdk-platform-java/commit/447b4e1d8a9079506bde78ab7ec0831a90e19b82))
+* update dependency io.netty:netty-tcnative-boringssl-static to v2.0.65.final ([#2547](https://github.com/googleapis/sdk-platform-java/issues/2547)) ([46e0e0f](https://github.com/googleapis/sdk-platform-java/commit/46e0e0f1d5b0f9d70a9d5cff67a692e802f8992a))
+* update dependency net.bytebuddy:byte-buddy to v1.14.12 ([#2522](https://github.com/googleapis/sdk-platform-java/issues/2522)) ([edfec32](https://github.com/googleapis/sdk-platform-java/commit/edfec3232c99591093a8d9f9a9ff43edeb9878e9))
+* update google api dependencies ([#2484](https://github.com/googleapis/sdk-platform-java/issues/2484)) ([92e91bc](https://github.com/googleapis/sdk-platform-java/commit/92e91bc0d91a2619a87abf9b072229a3ab3f4d91))
+* update google api dependencies ([#2538](https://github.com/googleapis/sdk-platform-java/issues/2538)) ([d9355cf](https://github.com/googleapis/sdk-platform-java/commit/d9355cf5e6751de8bb8a7ff7e101b7f52425e19a))
+* update googleapis/java-cloud-bom digest to 3f93d58 ([#2499](https://github.com/googleapis/sdk-platform-java/issues/2499)) ([5fd4d5e](https://github.com/googleapis/sdk-platform-java/commit/5fd4d5e3a9f864064587eec4d11b14b3c037efcf))
+* update googleapis/java-cloud-bom digest to 659764f ([#2545](https://github.com/googleapis/sdk-platform-java/issues/2545)) ([d6c8be6](https://github.com/googleapis/sdk-platform-java/commit/d6c8be6e7da262ecc1ac61fbc052af24c59d94ef))
+* update netty dependencies ([#2480](https://github.com/googleapis/sdk-platform-java/issues/2480)) ([40753c3](https://github.com/googleapis/sdk-platform-java/commit/40753c3ca3d0d3d6e83bfd38764071a57c9e7c8b))
+* update opentelemetry-java monorepo to v1.35.0 ([#2477](https://github.com/googleapis/sdk-platform-java/issues/2477)) ([3ecefff](https://github.com/googleapis/sdk-platform-java/commit/3ecefff9f1e458119db24da729094b5a1ca22279))
+* update opentelemetry-java monorepo to v1.36.0 ([#2550](https://github.com/googleapis/sdk-platform-java/issues/2550)) ([9669c21](https://github.com/googleapis/sdk-platform-java/commit/9669c21d4e01017b4aa65abc0fb1e80de31ff0c6))
+* update opentelemetry-java monorepo to v1.36.0 ([#2573](https://github.com/googleapis/sdk-platform-java/issues/2573)) ([f5f201e](https://github.com/googleapis/sdk-platform-java/commit/f5f201e9846c46f6e7241a15674d28711fe984f4))
+* update slf4j monorepo to v2.0.12 ([#2481](https://github.com/googleapis/sdk-platform-java/issues/2481)) ([363a354](https://github.com/googleapis/sdk-platform-java/commit/363a3549b2bda040e55ec59ef21010b6c99a021e))
+
+
+### Documentation
+
+* minor tweaks to various comments ([d343be9](https://github.com/googleapis/sdk-platform-java/commit/d343be9416d2521145a8c5d1e8abea6203ff6214))
+* minor tweaks to various comments ([d343be9](https://github.com/googleapis/sdk-platform-java/commit/d343be9416d2521145a8c5d1e8abea6203ff6214))
+
 ## [2.37.0](https://github.com/googleapis/sdk-platform-java/compare/v2.36.0...v2.37.0) (2024-02-29)
 
 

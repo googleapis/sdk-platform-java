@@ -313,6 +313,9 @@ public class GrpcEchoStub extends EchoStub {
                   if (Strings.isNullOrEmpty(request.getRequestId())) {
                     requestBuilder.setRequestId(UUID.randomUUID().toString());
                   }
+                  if (Strings.isNullOrEmpty(request.getOtherRequestId())) {
+                    requestBuilder.setOtherRequestId(UUID.randomUUID().toString());
+                  }
                   return requestBuilder.build();
                 })
             .build();

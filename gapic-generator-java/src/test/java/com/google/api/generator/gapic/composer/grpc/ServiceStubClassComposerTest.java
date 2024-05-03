@@ -45,7 +45,7 @@ public class ServiceStubClassComposerTest {
   public String apiShortNameExpected;
 
   @Parameterized.Parameter(3)
-  public String apiVersionExpected;
+  public String packageVersionExpected;
 
   @Test
   public void generateServiceStubClasses() {
@@ -55,6 +55,6 @@ public class ServiceStubClassComposerTest {
     Assert.assertGoldenClass(this.getClass(), clazz, name + ".golden");
     Assert.assertEmptySamples(clazz.samples());
     Assert.assertCodeEquals(clazz.apiShortName(), apiShortNameExpected);
-    Assert.assertCodeEquals(clazz.apiVersion(), apiVersionExpected);
+    Assert.assertCodeEquals(clazz.packageVersion(), packageVersionExpected);
   }
 }
