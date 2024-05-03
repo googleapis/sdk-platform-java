@@ -23,43 +23,200 @@ package com.google.shopping.type;
  *
  *
  * <pre>
- * The price represented as a number and currency.
+ * The weight represented as the value in string and the unit.
  * </pre>
  *
- * Protobuf type {@code google.shopping.type.Price}
+ * Protobuf type {@code google.shopping.type.Weight}
  */
-public final class Price extends com.google.protobuf.GeneratedMessageV3
+public final class Weight extends com.google.protobuf.GeneratedMessageV3
     implements
-    // @@protoc_insertion_point(message_implements:google.shopping.type.Price)
-    PriceOrBuilder {
+    // @@protoc_insertion_point(message_implements:google.shopping.type.Weight)
+    WeightOrBuilder {
   private static final long serialVersionUID = 0L;
-  // Use Price.newBuilder() to construct.
-  private Price(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use Weight.newBuilder() to construct.
+  private Weight(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
 
-  private Price() {
-    currencyCode_ = "";
+  private Weight() {
+    unit_ = 0;
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-    return new Price();
+    return new Weight();
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.shopping.type.TypesProto
-        .internal_static_google_shopping_type_Price_descriptor;
+        .internal_static_google_shopping_type_Weight_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.shopping.type.TypesProto
-        .internal_static_google_shopping_type_Price_fieldAccessorTable
+        .internal_static_google_shopping_type_Weight_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.shopping.type.Price.class, com.google.shopping.type.Price.Builder.class);
+            com.google.shopping.type.Weight.class, com.google.shopping.type.Weight.Builder.class);
+  }
+
+  /**
+   *
+   *
+   * <pre>
+   * The weight unit.
+   * </pre>
+   *
+   * Protobuf enum {@code google.shopping.type.Weight.WeightUnit}
+   */
+  public enum WeightUnit implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     *
+     *
+     * <pre>
+     * unit unspecified
+     * </pre>
+     *
+     * <code>WEIGHT_UNIT_UNSPECIFIED = 0;</code>
+     */
+    WEIGHT_UNIT_UNSPECIFIED(0),
+    /**
+     *
+     *
+     * <pre>
+     * lb unit.
+     * </pre>
+     *
+     * <code>POUND = 1;</code>
+     */
+    POUND(1),
+    /**
+     *
+     *
+     * <pre>
+     * kg unit.
+     * </pre>
+     *
+     * <code>KILOGRAM = 2;</code>
+     */
+    KILOGRAM(2),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     *
+     *
+     * <pre>
+     * unit unspecified
+     * </pre>
+     *
+     * <code>WEIGHT_UNIT_UNSPECIFIED = 0;</code>
+     */
+    public static final int WEIGHT_UNIT_UNSPECIFIED_VALUE = 0;
+    /**
+     *
+     *
+     * <pre>
+     * lb unit.
+     * </pre>
+     *
+     * <code>POUND = 1;</code>
+     */
+    public static final int POUND_VALUE = 1;
+    /**
+     *
+     *
+     * <pre>
+     * kg unit.
+     * </pre>
+     *
+     * <code>KILOGRAM = 2;</code>
+     */
+    public static final int KILOGRAM_VALUE = 2;
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static WeightUnit valueOf(int value) {
+      return forNumber(value);
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
+    public static WeightUnit forNumber(int value) {
+      switch (value) {
+        case 0:
+          return WEIGHT_UNIT_UNSPECIFIED;
+        case 1:
+          return POUND;
+        case 2:
+          return KILOGRAM;
+        default:
+          return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<WeightUnit> internalGetValueMap() {
+      return internalValueMap;
+    }
+
+    private static final com.google.protobuf.Internal.EnumLiteMap<WeightUnit> internalValueMap =
+        new com.google.protobuf.Internal.EnumLiteMap<WeightUnit>() {
+          public WeightUnit findValueByNumber(int number) {
+            return WeightUnit.forNumber(number);
+          }
+        };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
+      return getDescriptor().getValues().get(ordinal());
+    }
+
+    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
+      return getDescriptor();
+    }
+
+    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
+      return com.google.shopping.type.Weight.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final WeightUnit[] VALUES = values();
+
+    public static WeightUnit valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private WeightUnit(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:google.shopping.type.Weight.WeightUnit)
   }
 
   private int bitField0_;
@@ -69,9 +226,11 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The price represented as a number in micros (1 million micros is an
-   * equivalent to one's currency standard unit, for example, 1 USD = 1000000
+   * Required. The weight represented as a number in micros (1 million micros is
+   * an equivalent to one's currency standard unit, for example, 1 kg = 1000000
    * micros).
+   * This field can also be set as infinity by setting to -1.
+   * This field only support -1 and positive value.
    * </pre>
    *
    * <code>optional int64 amount_micros = 1;</code>
@@ -86,9 +245,11 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The price represented as a number in micros (1 million micros is an
-   * equivalent to one's currency standard unit, for example, 1 USD = 1000000
+   * Required. The weight represented as a number in micros (1 million micros is
+   * an equivalent to one's currency standard unit, for example, 1 kg = 1000000
    * micros).
+   * This field can also be set as infinity by setting to -1.
+   * This field only support -1 and positive value.
    * </pre>
    *
    * <code>optional int64 amount_micros = 1;</code>
@@ -100,73 +261,41 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
     return amountMicros_;
   }
 
-  public static final int CURRENCY_CODE_FIELD_NUMBER = 2;
-
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object currencyCode_ = "";
+  public static final int UNIT_FIELD_NUMBER = 2;
+  private int unit_ = 0;
   /**
    *
    *
    * <pre>
-   * The currency of the price using three-letter acronyms according to [ISO
-   * 4217](http://en.wikipedia.org/wiki/ISO_4217).
+   * Required. The weight unit.
+   * Acceptable values are: kg and lb
    * </pre>
    *
-   * <code>optional string currency_code = 2;</code>
+   * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
    *
-   * @return Whether the currencyCode field is set.
+   * @return The enum numeric value on the wire for unit.
    */
   @java.lang.Override
-  public boolean hasCurrencyCode() {
-    return ((bitField0_ & 0x00000002) != 0);
+  public int getUnitValue() {
+    return unit_;
   }
   /**
    *
    *
    * <pre>
-   * The currency of the price using three-letter acronyms according to [ISO
-   * 4217](http://en.wikipedia.org/wiki/ISO_4217).
+   * Required. The weight unit.
+   * Acceptable values are: kg and lb
    * </pre>
    *
-   * <code>optional string currency_code = 2;</code>
+   * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
    *
-   * @return The currencyCode.
+   * @return The unit.
    */
   @java.lang.Override
-  public java.lang.String getCurrencyCode() {
-    java.lang.Object ref = currencyCode_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      currencyCode_ = s;
-      return s;
-    }
-  }
-  /**
-   *
-   *
-   * <pre>
-   * The currency of the price using three-letter acronyms according to [ISO
-   * 4217](http://en.wikipedia.org/wiki/ISO_4217).
-   * </pre>
-   *
-   * <code>optional string currency_code = 2;</code>
-   *
-   * @return The bytes for currencyCode.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString getCurrencyCodeBytes() {
-    java.lang.Object ref = currencyCode_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-      currencyCode_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public com.google.shopping.type.Weight.WeightUnit getUnit() {
+    com.google.shopping.type.Weight.WeightUnit result =
+        com.google.shopping.type.Weight.WeightUnit.forNumber(unit_);
+    return result == null ? com.google.shopping.type.Weight.WeightUnit.UNRECOGNIZED : result;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -186,8 +315,8 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
     if (((bitField0_ & 0x00000001) != 0)) {
       output.writeInt64(1, amountMicros_);
     }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, currencyCode_);
+    if (unit_ != com.google.shopping.type.Weight.WeightUnit.WEIGHT_UNIT_UNSPECIFIED.getNumber()) {
+      output.writeEnum(2, unit_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -201,8 +330,8 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
     if (((bitField0_ & 0x00000001) != 0)) {
       size += com.google.protobuf.CodedOutputStream.computeInt64Size(1, amountMicros_);
     }
-    if (((bitField0_ & 0x00000002) != 0)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, currencyCode_);
+    if (unit_ != com.google.shopping.type.Weight.WeightUnit.WEIGHT_UNIT_UNSPECIFIED.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream.computeEnumSize(2, unit_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -214,19 +343,16 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
     if (obj == this) {
       return true;
     }
-    if (!(obj instanceof com.google.shopping.type.Price)) {
+    if (!(obj instanceof com.google.shopping.type.Weight)) {
       return super.equals(obj);
     }
-    com.google.shopping.type.Price other = (com.google.shopping.type.Price) obj;
+    com.google.shopping.type.Weight other = (com.google.shopping.type.Weight) obj;
 
     if (hasAmountMicros() != other.hasAmountMicros()) return false;
     if (hasAmountMicros()) {
       if (getAmountMicros() != other.getAmountMicros()) return false;
     }
-    if (hasCurrencyCode() != other.hasCurrencyCode()) return false;
-    if (hasCurrencyCode()) {
-      if (!getCurrencyCode().equals(other.getCurrencyCode())) return false;
-    }
+    if (unit_ != other.unit_) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -242,79 +368,77 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + AMOUNT_MICROS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getAmountMicros());
     }
-    if (hasCurrencyCode()) {
-      hash = (37 * hash) + CURRENCY_CODE_FIELD_NUMBER;
-      hash = (53 * hash) + getCurrencyCode().hashCode();
-    }
+    hash = (37 * hash) + UNIT_FIELD_NUMBER;
+    hash = (53 * hash) + unit_;
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static com.google.shopping.type.Price parseFrom(java.nio.ByteBuffer data)
+  public static com.google.shopping.type.Weight parseFrom(java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
 
-  public static com.google.shopping.type.Price parseFrom(
+  public static com.google.shopping.type.Weight parseFrom(
       java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
 
-  public static com.google.shopping.type.Price parseFrom(com.google.protobuf.ByteString data)
+  public static com.google.shopping.type.Weight parseFrom(com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
 
-  public static com.google.shopping.type.Price parseFrom(
+  public static com.google.shopping.type.Weight parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
 
-  public static com.google.shopping.type.Price parseFrom(byte[] data)
+  public static com.google.shopping.type.Weight parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
 
-  public static com.google.shopping.type.Price parseFrom(
+  public static com.google.shopping.type.Weight parseFrom(
       byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
 
-  public static com.google.shopping.type.Price parseFrom(java.io.InputStream input)
+  public static com.google.shopping.type.Weight parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
   }
 
-  public static com.google.shopping.type.Price parseFrom(
+  public static com.google.shopping.type.Weight parseFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
         PARSER, input, extensionRegistry);
   }
 
-  public static com.google.shopping.type.Price parseDelimitedFrom(java.io.InputStream input)
+  public static com.google.shopping.type.Weight parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
   }
 
-  public static com.google.shopping.type.Price parseDelimitedFrom(
+  public static com.google.shopping.type.Weight parseDelimitedFrom(
       java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
         PARSER, input, extensionRegistry);
   }
 
-  public static com.google.shopping.type.Price parseFrom(com.google.protobuf.CodedInputStream input)
-      throws java.io.IOException {
+  public static com.google.shopping.type.Weight parseFrom(
+      com.google.protobuf.CodedInputStream input) throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
   }
 
-  public static com.google.shopping.type.Price parseFrom(
+  public static com.google.shopping.type.Weight parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -331,7 +455,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
     return DEFAULT_INSTANCE.toBuilder();
   }
 
-  public static Builder newBuilder(com.google.shopping.type.Price prototype) {
+  public static Builder newBuilder(com.google.shopping.type.Weight prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
 
@@ -349,30 +473,30 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The price represented as a number and currency.
+   * The weight represented as the value in string and the unit.
    * </pre>
    *
-   * Protobuf type {@code google.shopping.type.Price}
+   * Protobuf type {@code google.shopping.type.Weight}
    */
   public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
       implements
-      // @@protoc_insertion_point(builder_implements:google.shopping.type.Price)
-      com.google.shopping.type.PriceOrBuilder {
+      // @@protoc_insertion_point(builder_implements:google.shopping.type.Weight)
+      com.google.shopping.type.WeightOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.google.shopping.type.TypesProto
-          .internal_static_google_shopping_type_Price_descriptor;
+          .internal_static_google_shopping_type_Weight_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.shopping.type.TypesProto
-          .internal_static_google_shopping_type_Price_fieldAccessorTable
+          .internal_static_google_shopping_type_Weight_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.shopping.type.Price.class, com.google.shopping.type.Price.Builder.class);
+              com.google.shopping.type.Weight.class, com.google.shopping.type.Weight.Builder.class);
     }
 
-    // Construct using com.google.shopping.type.Price.newBuilder()
+    // Construct using com.google.shopping.type.Weight.newBuilder()
     private Builder() {}
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
@@ -384,24 +508,24 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
       super.clear();
       bitField0_ = 0;
       amountMicros_ = 0L;
-      currencyCode_ = "";
+      unit_ = 0;
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
       return com.google.shopping.type.TypesProto
-          .internal_static_google_shopping_type_Price_descriptor;
+          .internal_static_google_shopping_type_Weight_descriptor;
     }
 
     @java.lang.Override
-    public com.google.shopping.type.Price getDefaultInstanceForType() {
-      return com.google.shopping.type.Price.getDefaultInstance();
+    public com.google.shopping.type.Weight getDefaultInstanceForType() {
+      return com.google.shopping.type.Weight.getDefaultInstance();
     }
 
     @java.lang.Override
-    public com.google.shopping.type.Price build() {
-      com.google.shopping.type.Price result = buildPartial();
+    public com.google.shopping.type.Weight build() {
+      com.google.shopping.type.Weight result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -409,8 +533,8 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
     }
 
     @java.lang.Override
-    public com.google.shopping.type.Price buildPartial() {
-      com.google.shopping.type.Price result = new com.google.shopping.type.Price(this);
+    public com.google.shopping.type.Weight buildPartial() {
+      com.google.shopping.type.Weight result = new com.google.shopping.type.Weight(this);
       if (bitField0_ != 0) {
         buildPartial0(result);
       }
@@ -418,7 +542,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
       return result;
     }
 
-    private void buildPartial0(com.google.shopping.type.Price result) {
+    private void buildPartial0(com.google.shopping.type.Weight result) {
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000001) != 0)) {
@@ -426,8 +550,7 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
         to_bitField0_ |= 0x00000001;
       }
       if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.currencyCode_ = currencyCode_;
-        to_bitField0_ |= 0x00000002;
+        result.unit_ = unit_;
       }
       result.bitField0_ |= to_bitField0_;
     }
@@ -467,23 +590,21 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
 
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.shopping.type.Price) {
-        return mergeFrom((com.google.shopping.type.Price) other);
+      if (other instanceof com.google.shopping.type.Weight) {
+        return mergeFrom((com.google.shopping.type.Weight) other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.shopping.type.Price other) {
-      if (other == com.google.shopping.type.Price.getDefaultInstance()) return this;
+    public Builder mergeFrom(com.google.shopping.type.Weight other) {
+      if (other == com.google.shopping.type.Weight.getDefaultInstance()) return this;
       if (other.hasAmountMicros()) {
         setAmountMicros(other.getAmountMicros());
       }
-      if (other.hasCurrencyCode()) {
-        currencyCode_ = other.currencyCode_;
-        bitField0_ |= 0x00000002;
-        onChanged();
+      if (other.unit_ != 0) {
+        setUnitValue(other.getUnitValue());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -517,12 +638,12 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
                 bitField0_ |= 0x00000001;
                 break;
               } // case 8
-            case 18:
+            case 16:
               {
-                currencyCode_ = input.readStringRequireUtf8();
+                unit_ = input.readEnum();
                 bitField0_ |= 0x00000002;
                 break;
-              } // case 18
+              } // case 16
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -547,9 +668,11 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The price represented as a number in micros (1 million micros is an
-     * equivalent to one's currency standard unit, for example, 1 USD = 1000000
+     * Required. The weight represented as a number in micros (1 million micros is
+     * an equivalent to one's currency standard unit, for example, 1 kg = 1000000
      * micros).
+     * This field can also be set as infinity by setting to -1.
+     * This field only support -1 and positive value.
      * </pre>
      *
      * <code>optional int64 amount_micros = 1;</code>
@@ -564,9 +687,11 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The price represented as a number in micros (1 million micros is an
-     * equivalent to one's currency standard unit, for example, 1 USD = 1000000
+     * Required. The weight represented as a number in micros (1 million micros is
+     * an equivalent to one's currency standard unit, for example, 1 kg = 1000000
      * micros).
+     * This field can also be set as infinity by setting to -1.
+     * This field only support -1 and positive value.
      * </pre>
      *
      * <code>optional int64 amount_micros = 1;</code>
@@ -581,9 +706,11 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The price represented as a number in micros (1 million micros is an
-     * equivalent to one's currency standard unit, for example, 1 USD = 1000000
+     * Required. The weight represented as a number in micros (1 million micros is
+     * an equivalent to one's currency standard unit, for example, 1 kg = 1000000
      * micros).
+     * This field can also be set as infinity by setting to -1.
+     * This field only support -1 and positive value.
      * </pre>
      *
      * <code>optional int64 amount_micros = 1;</code>
@@ -602,9 +729,11 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The price represented as a number in micros (1 million micros is an
-     * equivalent to one's currency standard unit, for example, 1 USD = 1000000
+     * Required. The weight represented as a number in micros (1 million micros is
+     * an equivalent to one's currency standard unit, for example, 1 kg = 1000000
      * micros).
+     * This field can also be set as infinity by setting to -1.
+     * This field only support -1 and positive value.
      * </pre>
      *
      * <code>optional int64 amount_micros = 1;</code>
@@ -618,86 +747,38 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
-    private java.lang.Object currencyCode_ = "";
+    private int unit_ = 0;
     /**
      *
      *
      * <pre>
-     * The currency of the price using three-letter acronyms according to [ISO
-     * 4217](http://en.wikipedia.org/wiki/ISO_4217).
+     * Required. The weight unit.
+     * Acceptable values are: kg and lb
      * </pre>
      *
-     * <code>optional string currency_code = 2;</code>
+     * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
      *
-     * @return Whether the currencyCode field is set.
+     * @return The enum numeric value on the wire for unit.
      */
-    public boolean hasCurrencyCode() {
-      return ((bitField0_ & 0x00000002) != 0);
+    @java.lang.Override
+    public int getUnitValue() {
+      return unit_;
     }
     /**
      *
      *
      * <pre>
-     * The currency of the price using three-letter acronyms according to [ISO
-     * 4217](http://en.wikipedia.org/wiki/ISO_4217).
+     * Required. The weight unit.
+     * Acceptable values are: kg and lb
      * </pre>
      *
-     * <code>optional string currency_code = 2;</code>
+     * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
      *
-     * @return The currencyCode.
-     */
-    public java.lang.String getCurrencyCode() {
-      java.lang.Object ref = currencyCode_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        currencyCode_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The currency of the price using three-letter acronyms according to [ISO
-     * 4217](http://en.wikipedia.org/wiki/ISO_4217).
-     * </pre>
-     *
-     * <code>optional string currency_code = 2;</code>
-     *
-     * @return The bytes for currencyCode.
-     */
-    public com.google.protobuf.ByteString getCurrencyCodeBytes() {
-      java.lang.Object ref = currencyCode_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
-        currencyCode_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The currency of the price using three-letter acronyms according to [ISO
-     * 4217](http://en.wikipedia.org/wiki/ISO_4217).
-     * </pre>
-     *
-     * <code>optional string currency_code = 2;</code>
-     *
-     * @param value The currencyCode to set.
+     * @param value The enum numeric value on the wire for unit to set.
      * @return This builder for chaining.
      */
-    public Builder setCurrencyCode(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      currencyCode_ = value;
+    public Builder setUnitValue(int value) {
+      unit_ = value;
       bitField0_ |= 0x00000002;
       onChanged();
       return this;
@@ -706,40 +787,57 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The currency of the price using three-letter acronyms according to [ISO
-     * 4217](http://en.wikipedia.org/wiki/ISO_4217).
+     * Required. The weight unit.
+     * Acceptable values are: kg and lb
      * </pre>
      *
-     * <code>optional string currency_code = 2;</code>
+     * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
+     *
+     * @return The unit.
+     */
+    @java.lang.Override
+    public com.google.shopping.type.Weight.WeightUnit getUnit() {
+      com.google.shopping.type.Weight.WeightUnit result =
+          com.google.shopping.type.Weight.WeightUnit.forNumber(unit_);
+      return result == null ? com.google.shopping.type.Weight.WeightUnit.UNRECOGNIZED : result;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Required. The weight unit.
+     * Acceptable values are: kg and lb
+     * </pre>
+     *
+     * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
+     *
+     * @param value The unit to set.
+     * @return This builder for chaining.
+     */
+    public Builder setUnit(com.google.shopping.type.Weight.WeightUnit value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      bitField0_ |= 0x00000002;
+      unit_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Required. The weight unit.
+     * Acceptable values are: kg and lb
+     * </pre>
+     *
+     * <code>.google.shopping.type.Weight.WeightUnit unit = 2;</code>
      *
      * @return This builder for chaining.
      */
-    public Builder clearCurrencyCode() {
-      currencyCode_ = getDefaultInstance().getCurrencyCode();
+    public Builder clearUnit() {
       bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
-      return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The currency of the price using three-letter acronyms according to [ISO
-     * 4217](http://en.wikipedia.org/wiki/ISO_4217).
-     * </pre>
-     *
-     * <code>optional string currency_code = 2;</code>
-     *
-     * @param value The bytes for currencyCode to set.
-     * @return This builder for chaining.
-     */
-    public Builder setCurrencyCodeBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      currencyCode_ = value;
-      bitField0_ |= 0x00000002;
+      unit_ = 0;
       onChanged();
       return this;
     }
@@ -755,24 +853,24 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
       return super.mergeUnknownFields(unknownFields);
     }
 
-    // @@protoc_insertion_point(builder_scope:google.shopping.type.Price)
+    // @@protoc_insertion_point(builder_scope:google.shopping.type.Weight)
   }
 
-  // @@protoc_insertion_point(class_scope:google.shopping.type.Price)
-  private static final com.google.shopping.type.Price DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:google.shopping.type.Weight)
+  private static final com.google.shopping.type.Weight DEFAULT_INSTANCE;
 
   static {
-    DEFAULT_INSTANCE = new com.google.shopping.type.Price();
+    DEFAULT_INSTANCE = new com.google.shopping.type.Weight();
   }
 
-  public static com.google.shopping.type.Price getDefaultInstance() {
+  public static com.google.shopping.type.Weight getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Price> PARSER =
-      new com.google.protobuf.AbstractParser<Price>() {
+  private static final com.google.protobuf.Parser<Weight> PARSER =
+      new com.google.protobuf.AbstractParser<Weight>() {
         @java.lang.Override
-        public Price parsePartialFrom(
+        public Weight parsePartialFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
@@ -791,17 +889,17 @@ public final class Price extends com.google.protobuf.GeneratedMessageV3
         }
       };
 
-  public static com.google.protobuf.Parser<Price> parser() {
+  public static com.google.protobuf.Parser<Weight> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<Price> getParserForType() {
+  public com.google.protobuf.Parser<Weight> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.shopping.type.Price getDefaultInstanceForType() {
+  public com.google.shopping.type.Weight getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 }
