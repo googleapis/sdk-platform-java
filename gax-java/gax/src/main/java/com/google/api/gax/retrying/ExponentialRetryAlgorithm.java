@@ -69,7 +69,7 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     return TimedAttemptSettings.newBuilder()
         .setGlobalSettings(globalSettings)
         .setRetryDelay(java.time.Duration.ZERO)
-        .setRpcTimeout(getInitialTimeout(globalSettings))
+        .setRpcTimeout(getInitialTimeoutDuration(globalSettings))
         .setRandomizedRetryDelay(java.time.Duration.ZERO)
         .setAttemptCount(0)
         .setOverallAttemptCount(0)
@@ -272,13 +272,13 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
    * Returns the timeout of the first attempt. The initial timeout will be min(initialRpcTimeout,
    * totalTimeout) if totalTimeout is set.
    */
-  private Duration getInitialTimeout(RetrySettings retrySettings) {
+  private java.time.Duration getInitialTimeoutDuration(RetrySettings retrySettings) {
     // If the totalTimeout is zero (not set), then retries are capped by the max attempt
     // number. The first attempt will use the initialRpcTimeout value for RPC timeout.
     long totalTimeout = retrySettings.getTotalTimeout().toMillis();
     return totalTimeout == 0
-        ? retrySettings.getInitialRpcTimeout()
-        : Duration.ofMillis(
+        ? retrySettings.getInitialRpcTimeoutDuration()
+        : java.time.Duration.ofMillis(
             Math.min(retrySettings.getInitialRpcTimeout().toMillis(), totalTimeout));
   }
 }

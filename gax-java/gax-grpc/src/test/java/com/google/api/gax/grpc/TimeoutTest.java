@@ -83,7 +83,7 @@ public class TimeoutTest {
       java.time.Duration.ofMinutes(DEADLINE_IN_MINUTES);
   private static final java.time.Duration initialRpcTimeout =
       java.time.Duration.ofSeconds(DEADLINE_IN_SECONDS);
-  private static final GrpcCallContext defaultCallContext = GrpcCallContext.createDefault();
+  private static GrpcCallContext defaultCallContext;
 
   @Rule public MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
   @Mock private Marshaller<String> stringMarshaller;
