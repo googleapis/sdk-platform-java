@@ -47,13 +47,6 @@ class GenerationConfigTest(unittest.TestCase):
         )
         self.assertEqual("26.37.0", config.libraris_bom_version)
         self.assertEqual(
-            "sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409",
-            config.owlbot_cli_image,
-        )
-        self.assertEqual(
-            "6612ab8f3afcd5e292aecd647f0fa68812c9f5b5", config.synthtool_commitish
-        )
-        self.assertEqual(
             [
                 ".github/*",
                 ".kokoro/*",
@@ -115,8 +108,6 @@ class GenerationConfigTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries_bom_version="",
-            owlbot_cli_image="",
-            synthtool_commitish="",
             template_excludes=[],
             libraries=[library_1],
         )
@@ -127,9 +118,157 @@ class GenerationConfigTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries_bom_version="",
-            owlbot_cli_image="",
-            synthtool_commitish="",
             template_excludes=[],
             libraries=[library_1, library_2],
         )
         self.assertTrue(config.is_monorepo())
+
+    def test_validate_with_duplicate_library_name_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "the same library name",
+            GenerationConfig,
+            gapic_generator_version="",
+            googleapis_commitish="",
+            libraries_bom_version="",
+            owlbot_cli_image="",
+            synthtool_commitish="",
+            template_excludes=[],
+            libraries=[
+                LibraryConfig(
+                    api_shortname="secretmanager",
+                    name_pretty="Secret API",
+                    product_documentation="",
+                    api_description="",
+                    gapic_configs=list(),
+                ),
+                LibraryConfig(
+                    api_shortname="another-secret",
+                    name_pretty="Another Secret API",
+                    product_documentation="",
+                    api_description="",
+                    gapic_configs=list(),
+                    library_name="secretmanager",
+                ),
+            ],
+        )
+
+    def test_from_yaml_without_gapic_generator_version_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "Repo level parameter, gapic_generator_version",
+            from_yaml,
+            f"{test_config_dir}/config_without_generator.yaml",
+        )
+
+    def test_from_yaml_without_googleapis_commitish_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "Repo level parameter, googleapis_commitish",
+            from_yaml,
+            f"{test_config_dir}/config_without_googleapis.yaml",
+        )
+
+    def test_from_yaml_without_libraries_bom_version_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "Repo level parameter, libraries_bom_version",
+            from_yaml,
+            f"{test_config_dir}/config_without_libraries_bom_version.yaml",
+        )
+
+    def test_from_yaml_without_owlbot_cli_image_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "Repo level parameter, owlbot_cli_image",
+            from_yaml,
+            f"{test_config_dir}/config_without_owlbot.yaml",
+        )
+
+    def test_from_yaml_without_synthtool_commitish_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "Repo level parameter, synthtool_commitish",
+            from_yaml,
+            f"{test_config_dir}/config_without_synthtool.yaml",
+        )
+
+    def test_from_yaml_without_template_excludes_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "Repo level parameter, template_excludes",
+            from_yaml,
+            f"{test_config_dir}/config_without_temp_excludes.yaml",
+        )
+
+    def test_from_yaml_without_libraries_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "Repo level parameter, libraries",
+            from_yaml,
+            f"{test_config_dir}/config_without_libraries.yaml",
+        )
+
+    def test_from_yaml_without_api_shortname_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "Library level parameter, api_shortname",
+            from_yaml,
+            f"{test_config_dir}/config_without_api_shortname.yaml",
+        )
+
+    def test_from_yaml_without_api_description_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            r"Library level parameter, api_description.*'api_shortname': 'apigeeconnect'.*",
+            from_yaml,
+            f"{test_config_dir}/config_without_api_description.yaml",
+        )
+
+    def test_from_yaml_without_name_pretty_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            r"Library level parameter, name_pretty.*'api_shortname': 'apigeeconnect'.*",
+            from_yaml,
+            f"{test_config_dir}/config_without_name_pretty.yaml",
+        )
+
+    def test_from_yaml_without_product_documentation_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            r"Library level parameter, product_documentation.*'api_shortname': 'apigeeconnect'.*",
+            from_yaml,
+            f"{test_config_dir}/config_without_product_docs.yaml",
+        )
+
+    def test_from_yaml_without_gapics_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "Library level parameter, GAPICs.*'api_shortname': 'apigeeconnect'.*",
+            from_yaml,
+            f"{test_config_dir}/config_without_gapics_key.yaml",
+        )
+
+    def test_from_yaml_without_proto_path_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "GAPIC level parameter, proto_path",
+            from_yaml,
+            f"{test_config_dir}/config_without_proto_path.yaml",
+        )
+
+    def test_from_yaml_with_zero_library_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "Library is None",
+            from_yaml,
+            f"{test_config_dir}/config_without_library_value.yaml",
+        )
+
+    def test_from_yaml_with_zero_proto_path_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            r"GAPICs is None in.*'api_shortname': 'apigeeconnect'.*",
+            from_yaml,
+            f"{test_config_dir}/config_without_gapics_value.yaml",
+        )

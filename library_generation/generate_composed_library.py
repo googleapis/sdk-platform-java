@@ -112,8 +112,6 @@ def generate_composed_library(
             "",
             versions_file,
             owlbot_cli_source_folder,
-            config.owlbot_cli_image,
-            config.synthtool_commitish,
             str(config.is_monorepo()).lower(),
             config_path,
         ],

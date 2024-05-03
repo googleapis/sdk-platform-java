@@ -479,8 +479,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   public static ApiClientHeaderProvider.Builder defaultGrpcApiClientHeaderProviderBuilder() {
     return ApiClientHeaderProvider.newBuilder()
         .setGeneratedLibToken("gapic", GaxProperties.getLibraryVersion(EchoStubSettings.class))
-        .setTransportToken(
-            GaxGrpcProperties.getGrpcTokenName(), GaxGrpcProperties.getGrpcVersion());
+        .setTransportToken(GaxGrpcProperties.getGrpcTokenName(), GaxGrpcProperties.getGrpcVersion())
+        .setApiVersionToken("v1_20240408");
   }
 
   public static ApiClientHeaderProvider.Builder defaultHttpJsonApiClientHeaderProviderBuilder() {
@@ -488,7 +488,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
         .setGeneratedLibToken("gapic", GaxProperties.getLibraryVersion(EchoStubSettings.class))
         .setTransportToken(
             GaxHttpJsonProperties.getHttpJsonTokenName(),
-            GaxHttpJsonProperties.getHttpJsonVersion());
+            GaxHttpJsonProperties.getHttpJsonVersion())
+        .setApiVersionToken("v1_20240408");
   }
 
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
