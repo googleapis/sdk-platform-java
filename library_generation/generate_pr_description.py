@@ -17,7 +17,7 @@ import os
 import shutil
 from typing import Dict
 from git import Commit, Repo
-from library_generation.model.generation_config import GenerationConfig, from_yaml
+from library_generation.model.generation_config import GenerationConfig
 from library_generation.utils.proto_path_utils import find_versioned_proto_path
 from library_generation.utils.commit_message_formatter import format_commit_message
 from library_generation.utils.commit_message_formatter import wrap_override_commit

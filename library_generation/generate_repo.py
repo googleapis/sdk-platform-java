@@ -14,7 +14,7 @@
 # limitations under the License.
 import library_generation.utils.utilities as util
 from library_generation.generate_composed_library import generate_composed_library
-from library_generation.model.generation_config import GenerationConfig, from_yaml
+from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from library_generation.utils.monorepo_postprocessor import monorepo_postprocessing
 
