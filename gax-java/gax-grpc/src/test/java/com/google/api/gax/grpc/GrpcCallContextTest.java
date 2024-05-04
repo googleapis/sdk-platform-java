@@ -129,8 +129,31 @@ public class GrpcCallContextTest {
 
   @Test
   public void testWithTimeout() {
-    java.time.Duration timeout = null;
-    assertNull(GrpcCallContext.createDefault().withTimeout(timeout).getTimeoutDuration());
+    java.time.Duration javaTimeTimeout = null;
+    org.threeten.bp.Duration threetenTimeout = null;
+    assertNull(GrpcCallContext.createDefault().withTimeout(javaTimeTimeout).getTimeoutDuration());
+    assertNull(GrpcCallContext.createDefault().withTimeout(threetenTimeout).getTimeoutDuration());
+    final int millis = 123;
+    javaTimeTimeout = java.time.Duration.ofMillis(millis);
+    assertEquals(
+        millis,
+        GrpcCallContext.createDefault().withTimeout(javaTimeTimeout).getTimeout().toMillis());
+    assertEquals(
+        millis,
+        GrpcCallContext.createDefault()
+            .withTimeout(javaTimeTimeout)
+            .getTimeoutDuration()
+            .toMillis());
+    threetenTimeout = org.threeten.bp.Duration.ofMillis(millis);
+    assertEquals(
+        millis,
+        GrpcCallContext.createDefault().withTimeout(threetenTimeout).getTimeout().toMillis());
+    assertEquals(
+        millis,
+        GrpcCallContext.createDefault()
+            .withTimeout(threetenTimeout)
+            .getTimeoutDuration()
+            .toMillis());
   }
 
   @Test
@@ -207,9 +230,18 @@ public class GrpcCallContextTest {
 
   @Test
   public void testWithStreamingWaitTimeout() {
-    java.time.Duration timeout = java.time.Duration.ofSeconds(15);
-    GrpcCallContext context = GrpcCallContext.createDefault().withStreamWaitTimeout(timeout);
-    Truth.assertThat(context.getStreamWaitTimeoutDuration()).isEqualTo(timeout);
+    final int seconds = 15;
+    java.time.Duration javaTimeTimeout = java.time.Duration.ofSeconds(seconds);
+    org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofSeconds(seconds);
+
+    GrpcCallContext context =
+        GrpcCallContext.createDefault().withStreamWaitTimeout(javaTimeTimeout);
+    Truth.assertThat(context.getStreamWaitTimeoutDuration()).isEqualTo(javaTimeTimeout);
+    Truth.assertThat(context.getStreamWaitTimeout()).isEqualTo(threetenTimeout);
+
+    context = GrpcCallContext.createDefault().withStreamWaitTimeout(threetenTimeout);
+    Truth.assertThat(context.getStreamWaitTimeoutDuration()).isEqualTo(javaTimeTimeout);
+    Truth.assertThat(context.getStreamWaitTimeout()).isEqualTo(threetenTimeout);
   }
 
   @Test
@@ -249,9 +281,16 @@ public class GrpcCallContextTest {
 
   @Test
   public void testWithStreamingIdleTimeout() {
-    java.time.Duration timeout = java.time.Duration.ofSeconds(15);
-    GrpcCallContext context = GrpcCallContext.createDefault().withStreamIdleTimeout(timeout);
-    Truth.assertThat(context.getStreamIdleTimeoutDuration()).isEqualTo(timeout);
+    final int seconds = 15;
+    java.time.Duration javaTimeTimeout = java.time.Duration.ofSeconds(seconds);
+    org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofSeconds(seconds);
+    GrpcCallContext context =
+        GrpcCallContext.createDefault().withStreamIdleTimeout(javaTimeTimeout);
+    Truth.assertThat(context.getStreamIdleTimeoutDuration()).isEqualTo(javaTimeTimeout);
+    Truth.assertThat(context.getStreamIdleTimeout()).isEqualTo(threetenTimeout);
+    context = GrpcCallContext.createDefault().withStreamIdleTimeout(threetenTimeout);
+    Truth.assertThat(context.getStreamIdleTimeoutDuration()).isEqualTo(javaTimeTimeout);
+    Truth.assertThat(context.getStreamIdleTimeout()).isEqualTo(threetenTimeout);
   }
 
   @Test
