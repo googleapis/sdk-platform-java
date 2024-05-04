@@ -93,20 +93,33 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
 
   @Test
   public void testKeepAlive() {
-    java.time.Duration keepaliveTime = java.time.Duration.ofSeconds(1);
-    java.time.Duration keepaliveTimeout = java.time.Duration.ofSeconds(2);
+    java.time.Duration javaTimeKeepAliveTime = java.time.Duration.ofSeconds(1);
+    java.time.Duration javaTimeKeepAliveTimeout = java.time.Duration.ofSeconds(2);
+    org.threeten.bp.Duration threetenKeepAliveTime = org.threeten.bp.Duration.ofSeconds(1);
+    org.threeten.bp.Duration threetenKeepAliveTimeout = org.threeten.bp.Duration.ofSeconds(2);
+
     boolean keepaliveWithoutCalls = true;
-
-    InstantiatingGrpcChannelProvider provider =
+    List<InstantiatingGrpcChannelProvider> providers = ImmutableList.of(
         InstantiatingGrpcChannelProvider.newBuilder()
-            .setKeepAliveTime(keepaliveTime)
-            .setKeepAliveTimeout(keepaliveTimeout)
+            .setKeepAliveTime(javaTimeKeepAliveTime)
+            .setKeepAliveTimeout(javaTimeKeepAliveTimeout)
             .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
-            .build();
+            .build(),
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setKeepAliveTime(threetenKeepAliveTime)
+            .setKeepAliveTimeout(threetenKeepAliveTimeout)
+            .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
+            .build()
+    );
 
-    assertEquals(provider.getKeepAliveTimeDuration(), keepaliveTime);
-    assertEquals(provider.getKeepAliveTimeoutDuration(), keepaliveTimeout);
-    assertEquals(provider.getKeepAliveWithoutCalls(), keepaliveWithoutCalls);
+    for (InstantiatingGrpcChannelProvider provider : providers) {
+      assertEquals(provider.getKeepAliveWithoutCalls(), keepaliveWithoutCalls);
+      assertEquals(provider.getKeepAliveTimeDuration(), javaTimeKeepAliveTime);
+      assertEquals(provider.getKeepAliveTimeoutDuration(), javaTimeKeepAliveTimeout);
+      assertEquals(provider.getKeepAliveTime(), threetenKeepAliveTime);
+      assertEquals(provider.getKeepAliveTimeout(), threetenKeepAliveTimeout);
+    }
+
   }
 
   @Test
@@ -618,6 +631,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   private static class FakeLogHandler extends Handler {
+
     List<LogRecord> records = new ArrayList<>();
 
     @Override
@@ -626,10 +640,12 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     }
 
     @Override
-    public void flush() {}
+    public void flush() {
+    }
 
     @Override
-    public void close() throws SecurityException {}
+    public void close() throws SecurityException {
+    }
 
     List<String> getAllMessages() {
       return records.stream().map(LogRecord::getMessage).collect(Collectors.toList());
