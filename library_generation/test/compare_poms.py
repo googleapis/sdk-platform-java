@@ -102,6 +102,16 @@ def compare_xml(expected, actual, print_trees):
     return False
 
 
+def compare_pom_in_subdir(base_dir: str, subdir: str) -> bool:
+    golden = os.path.join(base_dir, subdir, "pom-golden.xml")
+    pom = os.path.join(base_dir, subdir, "pom.xml")
+    return compare_xml(
+        golden,
+        pom,
+        False,
+    )
+
+
 if __name__ == "__main__":
     if len(sys.argv) != 4:
         eprint(
