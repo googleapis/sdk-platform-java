@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.grpc;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testTimeObjectGetterAndSetter;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -41,6 +42,7 @@ import com.google.api.gax.rpc.mtls.AbstractMtlsTransportChannelTest;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.oauth2.CloudShellCredentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
+import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import io.grpc.ManagedChannel;
@@ -93,32 +95,33 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
 
   @Test
   public void testKeepAlive() {
-    java.time.Duration javaTimeKeepAliveTime = java.time.Duration.ofSeconds(1);
-    java.time.Duration javaTimeKeepAliveTimeout = java.time.Duration.ofSeconds(2);
-    org.threeten.bp.Duration threetenKeepAliveTime = org.threeten.bp.Duration.ofSeconds(1);
-    org.threeten.bp.Duration threetenKeepAliveTimeout = org.threeten.bp.Duration.ofSeconds(2);
-
+    final long millis = 15;
+    java.time.Duration javaTimeKeepAliveTime = java.time.Duration.ofMillis(millis);
+    org.threeten.bp.Duration threetenKeepAliveTime = org.threeten.bp.Duration.ofMillis(millis);
+    java.time.Duration javaTimeKeepAliveTimeout = java.time.Duration.ofMillis(millis);
+    org.threeten.bp.Duration threetenKeepAliveTimeout = org.threeten.bp.Duration.ofMillis(millis);
     boolean keepaliveWithoutCalls = true;
-    List<InstantiatingGrpcChannelProvider> providers =
-        ImmutableList.of(
-            InstantiatingGrpcChannelProvider.newBuilder()
-                .setKeepAliveTime(javaTimeKeepAliveTime)
-                .setKeepAliveTimeout(javaTimeKeepAliveTimeout)
-                .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
-                .build(),
-            InstantiatingGrpcChannelProvider.newBuilder()
-                .setKeepAliveTime(threetenKeepAliveTime)
-                .setKeepAliveTimeout(threetenKeepAliveTimeout)
-                .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
-                .build());
-
-    for (InstantiatingGrpcChannelProvider provider : providers) {
-      assertEquals(provider.getKeepAliveWithoutCalls(), keepaliveWithoutCalls);
-      assertEquals(provider.getKeepAliveTimeDuration(), javaTimeKeepAliveTime);
-      assertEquals(provider.getKeepAliveTimeoutDuration(), javaTimeKeepAliveTimeout);
-      assertEquals(provider.getKeepAliveTime(), threetenKeepAliveTime);
-      assertEquals(provider.getKeepAliveTimeout(), threetenKeepAliveTimeout);
-    }
+    InstantiatingGrpcChannelProvider.Builder builder = InstantiatingGrpcChannelProvider.newBuilder();
+    Supplier<InstantiatingGrpcChannelProvider> javaTimeProviderSupplier = () -> builder
+        .setKeepAliveTime(javaTimeKeepAliveTime)
+        .setKeepAliveTimeout(javaTimeKeepAliveTimeout)
+        .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
+        .build();
+    Supplier<InstantiatingGrpcChannelProvider> threetenProviderSupplier = () -> builder
+        .setKeepAliveTime(threetenKeepAliveTime)
+        .setKeepAliveTimeout(threetenKeepAliveTimeout)
+        .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
+        .build();
+    testTimeObjectGetterAndSetter(millis, javaTimeProviderSupplier,
+        threetenProviderSupplier,
+        c -> c.getKeepAliveTimeDuration(),
+        c -> c.getKeepAliveTime());
+    testTimeObjectGetterAndSetter(millis, javaTimeProviderSupplier,
+        threetenProviderSupplier,
+        c -> c.getKeepAliveTimeoutDuration(),
+        c -> c.getKeepAliveTimeout());
+    assertEquals(true, javaTimeProviderSupplier.get().getKeepAliveWithoutCalls());
+    assertEquals(true, threetenProviderSupplier.get().getKeepAliveWithoutCalls());
   }
 
   @Test
@@ -639,10 +642,12 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     }
 
     @Override
-    public void flush() {}
+    public void flush() {
+    }
 
     @Override
-    public void close() throws SecurityException {}
+    public void close() throws SecurityException {
+    }
 
     List<String> getAllMessages() {
       return records.stream().map(LogRecord::getMessage).collect(Collectors.toList());
