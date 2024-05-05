@@ -29,68 +29,40 @@
  */
 package com.google.api.gax.util;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class TimeConversionTestUtils {
 
-  public static void testDurationGetterAndSetter(
-      org.threeten.bp.Duration inputValue,
-      Object target,
-      Method setter,
-      Method buildFunction,
-      Method getter) {
-    testBuilderDurationSetter(inputValue, target, setter, buildFunction, getter);
+  public static <Target> void testTimeObjectGetterAndSetter(
+      Long testValue,
+      Supplier<Target> javaTimeTargetSupplier,
+      Supplier<Target> threetenTargetSupplier,
+      Function<Target, java.time.Duration> javaTimeGetter,
+      Function<Target, org.threeten.bp.Duration> threetenGetter) {
+    testTimeObjectGetterAndSetter(
+        testValue, javaTimeTargetSupplier, javaTimeGetter, threetenGetter);
+    testTimeObjectGetterAndSetter(
+        testValue, threetenTargetSupplier, javaTimeGetter, threetenGetter);
   }
 
-  public static void testDurationGetterAndSetter(
-      org.threeten.bp.Duration inputValue, Object target, Method setter, Method getter) {
-    testBuilderDurationSetter(inputValue, target, setter, null, getter);
-  }
-
-  public static void testDurationGetterAndSetter(
-      java.time.Duration inputValue,
-      Object target,
-      Method setter,
-      Method buildFunction,
-      Method getter) {
-    testBuilderDurationSetter(inputValue, target, setter, buildFunction, getter);
-  }
-
-  public static void testDurationGetterAndSetter(
-      java.time.Duration inputValue, Object target, Method setter, Method getter) {
-    testBuilderDurationSetter(inputValue, target, setter, null, getter);
-  }
-
-  private static void testBuilderDurationSetter(
-      Object inputValue, Object target, Method setter, Method buildFunction, Method getter) {
-    try {
-      Object targetSet = setter.invoke(target, inputValue);
-      Object obtainedValue;
-      if (buildFunction != null) {
-        Object builtTarget = buildFunction.invoke(targetSet);
-        obtainedValue = getter.invoke(builtTarget);
-      } else {
-        obtainedValue = getter.invoke(targetSet);
-      }
-      long obtainedNanos = getNanosFromAnyDuration(obtainedValue);
-      long providedNanos = getNanosFromAnyDuration(inputValue);
-      Assert.assertEquals(providedNanos, obtainedNanos);
-    } catch (IllegalAccessException e) {
-      Assert.fail(e.getMessage());
-    } catch (InvocationTargetException e) {
-      Assert.fail(e.getMessage());
-    }
-  }
-
-  private static long getNanosFromAnyDuration(Object value) {
-    if (value instanceof java.time.Duration) {
-      return ((java.time.Duration) value).toMillis();
-    } else if (value instanceof org.threeten.bp.Duration) {
-      return ((org.threeten.bp.Duration) value).toMillis();
+  private static <Target> void testTimeObjectGetterAndSetter(
+      Long testValue,
+      Supplier<Target> targetSupplier,
+      Function<Target, java.time.Duration> javaTimeGetter,
+      Function<Target, org.threeten.bp.Duration> threetenGetter) {
+    Target target = targetSupplier.get();
+    java.time.Duration javaTimeValue = javaTimeGetter.apply(target);
+    org.threeten.bp.Duration threetenValue = threetenGetter.apply(target);
+    if (testValue == null) {
+      assertNull(javaTimeValue);
+      assertNull(threetenValue);
     } else {
-      throw new IllegalArgumentException("Unexpected value type: " + value.getClass().getName());
+      assertEquals(testValue.longValue(), javaTimeValue.toMillis());
+      assertEquals(testValue.longValue(), threetenValue.toMillis());
     }
   }
 }

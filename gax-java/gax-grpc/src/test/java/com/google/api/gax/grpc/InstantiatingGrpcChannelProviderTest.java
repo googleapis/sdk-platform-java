@@ -99,18 +99,18 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     org.threeten.bp.Duration threetenKeepAliveTimeout = org.threeten.bp.Duration.ofSeconds(2);
 
     boolean keepaliveWithoutCalls = true;
-    List<InstantiatingGrpcChannelProvider> providers = ImmutableList.of(
-        InstantiatingGrpcChannelProvider.newBuilder()
-            .setKeepAliveTime(javaTimeKeepAliveTime)
-            .setKeepAliveTimeout(javaTimeKeepAliveTimeout)
-            .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
-            .build(),
-        InstantiatingGrpcChannelProvider.newBuilder()
-            .setKeepAliveTime(threetenKeepAliveTime)
-            .setKeepAliveTimeout(threetenKeepAliveTimeout)
-            .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
-            .build()
-    );
+    List<InstantiatingGrpcChannelProvider> providers =
+        ImmutableList.of(
+            InstantiatingGrpcChannelProvider.newBuilder()
+                .setKeepAliveTime(javaTimeKeepAliveTime)
+                .setKeepAliveTimeout(javaTimeKeepAliveTimeout)
+                .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
+                .build(),
+            InstantiatingGrpcChannelProvider.newBuilder()
+                .setKeepAliveTime(threetenKeepAliveTime)
+                .setKeepAliveTimeout(threetenKeepAliveTimeout)
+                .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
+                .build());
 
     for (InstantiatingGrpcChannelProvider provider : providers) {
       assertEquals(provider.getKeepAliveWithoutCalls(), keepaliveWithoutCalls);
@@ -119,7 +119,6 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
       assertEquals(provider.getKeepAliveTime(), threetenKeepAliveTime);
       assertEquals(provider.getKeepAliveTimeout(), threetenKeepAliveTimeout);
     }
-
   }
 
   @Test
@@ -640,12 +639,10 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     }
 
     @Override
-    public void flush() {
-    }
+    public void flush() {}
 
     @Override
-    public void close() throws SecurityException {
-    }
+    public void close() throws SecurityException {}
 
     List<String> getAllMessages() {
       return records.stream().map(LogRecord::getMessage).collect(Collectors.toList());

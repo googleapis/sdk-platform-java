@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.httpjson;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testTimeObjectGetterAndSetter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -115,9 +116,58 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testWithTimeout() {
-    java.time.Duration timeout = null;
-    assertNull(HttpJsonCallContext.createDefault().withTimeout(timeout).getTimeoutDuration());
+  public void testStreamIdleTimeout() {
+    final long millis = 3;
+    final java.time.Duration javaTimeTimeout = java.time.Duration.ofMillis(millis);
+    final org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofMillis(millis);
+    final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
+    testTimeObjectGetterAndSetter(
+        millis,
+        () -> defaultContext.withStreamIdleTimeout(javaTimeTimeout),
+        () -> defaultContext.withStreamIdleTimeout(threetenTimeout),
+        c -> c.getStreamIdleTimeoutDuration(),
+        c -> c.getStreamIdleTimeout());
+  }
+
+  @Test
+  public void testStreamWaitTimeout() {
+    final long millis = 3;
+    final java.time.Duration javaTimeTimeout = java.time.Duration.ofMillis(millis);
+    final org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofMillis(millis);
+    final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
+    testTimeObjectGetterAndSetter(
+        millis,
+        () -> defaultContext.withStreamWaitTimeout(javaTimeTimeout),
+        () -> defaultContext.withStreamWaitTimeout(threetenTimeout),
+        c -> c.getStreamWaitTimeoutDuration(),
+        c -> c.getStreamWaitTimeout());
+  }
+
+  @Test
+  public void testTimeout() {
+    final long millis = 3;
+    final java.time.Duration javaTimeTimeout = java.time.Duration.ofMillis(millis);
+    final org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofMillis(millis);
+    final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
+    testTimeObjectGetterAndSetter(
+        millis,
+        () -> defaultContext.withTimeout(javaTimeTimeout),
+        () -> defaultContext.withTimeout(threetenTimeout),
+        c -> c.getTimeoutDuration(),
+        c -> c.getTimeout());
+  }
+
+  @Test
+  public void testNullTimeout() {
+    final java.time.Duration javaTimeTimeout = null;
+    final org.threeten.bp.Duration threetenTimeout = null;
+    final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
+    testTimeObjectGetterAndSetter(
+        null,
+        () -> defaultContext.withTimeout(javaTimeTimeout),
+        () -> defaultContext.withTimeout(javaTimeTimeout),
+        c -> c.getTimeoutDuration(),
+        c -> c.getTimeout());
   }
 
   @Test
