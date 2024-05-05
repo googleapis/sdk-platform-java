@@ -101,22 +101,31 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     java.time.Duration javaTimeKeepAliveTimeout = java.time.Duration.ofMillis(millis);
     org.threeten.bp.Duration threetenKeepAliveTimeout = org.threeten.bp.Duration.ofMillis(millis);
     boolean keepaliveWithoutCalls = true;
-    InstantiatingGrpcChannelProvider.Builder builder = InstantiatingGrpcChannelProvider.newBuilder();
-    Supplier<InstantiatingGrpcChannelProvider> javaTimeProviderSupplier = () -> builder
-        .setKeepAliveTime(javaTimeKeepAliveTime)
-        .setKeepAliveTimeout(javaTimeKeepAliveTimeout)
-        .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
-        .build();
-    Supplier<InstantiatingGrpcChannelProvider> threetenProviderSupplier = () -> builder
-        .setKeepAliveTime(threetenKeepAliveTime)
-        .setKeepAliveTimeout(threetenKeepAliveTimeout)
-        .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
-        .build();
-    testDurationMethod(millis, javaTimeProviderSupplier,
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder();
+    Supplier<InstantiatingGrpcChannelProvider> javaTimeProviderSupplier =
+        () ->
+            builder
+                .setKeepAliveTime(javaTimeKeepAliveTime)
+                .setKeepAliveTimeout(javaTimeKeepAliveTimeout)
+                .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
+                .build();
+    Supplier<InstantiatingGrpcChannelProvider> threetenProviderSupplier =
+        () ->
+            builder
+                .setKeepAliveTime(threetenKeepAliveTime)
+                .setKeepAliveTimeout(threetenKeepAliveTimeout)
+                .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
+                .build();
+    testDurationMethod(
+        millis,
+        javaTimeProviderSupplier,
         threetenProviderSupplier,
         c -> c.getKeepAliveTimeDuration(),
         c -> c.getKeepAliveTime());
-    testDurationMethod(millis, javaTimeProviderSupplier,
+    testDurationMethod(
+        millis,
+        javaTimeProviderSupplier,
         threetenProviderSupplier,
         c -> c.getKeepAliveTimeoutDuration(),
         c -> c.getKeepAliveTimeout());
@@ -642,12 +651,10 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     }
 
     @Override
-    public void flush() {
-    }
+    public void flush() {}
 
     @Override
-    public void close() throws SecurityException {
-    }
+    public void close() throws SecurityException {}
 
     List<String> getAllMessages() {
       return records.stream().map(LogRecord::getMessage).collect(Collectors.toList());

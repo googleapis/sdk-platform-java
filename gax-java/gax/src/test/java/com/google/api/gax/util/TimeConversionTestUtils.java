@@ -46,10 +46,18 @@ public class TimeConversionTestUtils {
     Function<java.time.Instant, Long> javaTimeTester = value -> value.toEpochMilli();
     Function<org.threeten.bp.Instant, Long> threetenTester = value -> value.toEpochMilli();
     testTimeObjectMethod(
-        testValue, javaTimeTargetSupplier, javaTimeGetter, threetenGetter, javaTimeTester,
+        testValue,
+        javaTimeTargetSupplier,
+        javaTimeGetter,
+        threetenGetter,
+        javaTimeTester,
         threetenTester);
     testTimeObjectMethod(
-        testValue, threetenTargetSupplier, javaTimeGetter, threetenGetter, javaTimeTester,
+        testValue,
+        threetenTargetSupplier,
+        javaTimeGetter,
+        threetenGetter,
+        javaTimeTester,
         threetenTester);
   }
 
@@ -62,10 +70,18 @@ public class TimeConversionTestUtils {
     Function<java.time.Duration, Long> javaTimeTester = value -> value.toMillis();
     Function<org.threeten.bp.Duration, Long> threetenTester = value -> value.toMillis();
     testTimeObjectMethod(
-        testValue, javaTimeTargetSupplier, javaTimeGetter, threetenGetter, javaTimeTester,
+        testValue,
+        javaTimeTargetSupplier,
+        javaTimeGetter,
+        threetenGetter,
+        javaTimeTester,
         threetenTester);
     testTimeObjectMethod(
-        testValue, threetenTargetSupplier, javaTimeGetter, threetenGetter, javaTimeTester,
+        testValue,
+        threetenTargetSupplier,
+        javaTimeGetter,
+        threetenGetter,
+        javaTimeTester,
         threetenTester);
   }
 
