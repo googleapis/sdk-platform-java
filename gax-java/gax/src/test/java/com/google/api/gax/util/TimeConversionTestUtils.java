@@ -37,32 +37,54 @@ import java.util.function.Supplier;
 
 public class TimeConversionTestUtils {
 
+  public static <Target> void testInstantMethod(
+      Long testValue,
+      Supplier<Target> javaTimeTargetSupplier,
+      Supplier<Target> threetenTargetSupplier,
+      Function<Target, java.time.Instant> javaTimeGetter,
+      Function<Target, org.threeten.bp.Instant> threetenGetter) {
+    Function<java.time.Instant, Long> javaTimeTester = value -> value.toEpochMilli();
+    Function<org.threeten.bp.Instant, Long> threetenTester = value -> value.toEpochMilli();
+    testTimeObjectGetterAndSetter(
+        testValue, javaTimeTargetSupplier, javaTimeGetter, threetenGetter, javaTimeTester,
+        threetenTester);
+    testTimeObjectGetterAndSetter(
+        testValue, threetenTargetSupplier, javaTimeGetter, threetenGetter, javaTimeTester,
+        threetenTester);
+  }
+
   public static <Target> void testTimeObjectGetterAndSetter(
       Long testValue,
       Supplier<Target> javaTimeTargetSupplier,
       Supplier<Target> threetenTargetSupplier,
       Function<Target, java.time.Duration> javaTimeGetter,
       Function<Target, org.threeten.bp.Duration> threetenGetter) {
+    Function<java.time.Duration, Long> javaTimeTester = value -> value.toMillis();
+    Function<org.threeten.bp.Duration, Long> threetenTester = value -> value.toMillis();
     testTimeObjectGetterAndSetter(
-        testValue, javaTimeTargetSupplier, javaTimeGetter, threetenGetter);
+        testValue, javaTimeTargetSupplier, javaTimeGetter, threetenGetter, javaTimeTester,
+        threetenTester);
     testTimeObjectGetterAndSetter(
-        testValue, threetenTargetSupplier, javaTimeGetter, threetenGetter);
+        testValue, threetenTargetSupplier, javaTimeGetter, threetenGetter, javaTimeTester,
+        threetenTester);
   }
 
-  private static <Target> void testTimeObjectGetterAndSetter(
+  private static <Target, Threeten, JavaTime> void testTimeObjectGetterAndSetter(
       Long testValue,
       Supplier<Target> targetSupplier,
-      Function<Target, java.time.Duration> javaTimeGetter,
-      Function<Target, org.threeten.bp.Duration> threetenGetter) {
+      Function<Target, JavaTime> javaTimeGetter,
+      Function<Target, Threeten> threetenGetter,
+      Function<JavaTime, Long> javaTimeTester,
+      Function<Threeten, Long> threetenTester) {
     Target target = targetSupplier.get();
-    java.time.Duration javaTimeValue = javaTimeGetter.apply(target);
-    org.threeten.bp.Duration threetenValue = threetenGetter.apply(target);
+    JavaTime javaTimeValue = javaTimeGetter.apply(target);
+    Threeten threetenValue = threetenGetter.apply(target);
     if (testValue == null) {
       assertNull(javaTimeValue);
       assertNull(threetenValue);
     } else {
-      assertEquals(testValue.longValue(), javaTimeValue.toMillis());
-      assertEquals(testValue.longValue(), threetenValue.toMillis());
+      assertEquals(testValue.longValue(), javaTimeTester.apply(javaTimeValue).longValue());
+      assertEquals(testValue.longValue(), threetenTester.apply(threetenValue).longValue());
     }
   }
 }
