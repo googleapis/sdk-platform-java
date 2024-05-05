@@ -32,7 +32,7 @@ package com.google.api.gax.grpc;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static com.google.api.gax.util.TimeConversionTestUtils.testTimeObjectGetterAndSetter;
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
@@ -134,7 +134,7 @@ public class GrpcCallContextTest {
     java.time.Duration javaTimeTimeout = java.time.Duration.ofMillis(millis);
     org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofMillis(millis);
     GrpcCallContext context = GrpcCallContext.createDefault();
-    testTimeObjectGetterAndSetter(millis, () -> context.withTimeout(javaTimeTimeout),
+    testDurationMethod(millis, () -> context.withTimeout(javaTimeTimeout),
         () -> context.withTimeout(threetenTimeout), c -> c.getTimeoutDuration(),
         c -> c.getTimeout());
   }
@@ -217,7 +217,7 @@ public class GrpcCallContextTest {
     java.time.Duration javaTimeTimeout = java.time.Duration.ofMillis(millis);
     org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofMillis(millis);
     GrpcCallContext context = GrpcCallContext.createDefault();
-    testTimeObjectGetterAndSetter(millis, () -> context.withStreamWaitTimeout(javaTimeTimeout),
+    testDurationMethod(millis, () -> context.withStreamWaitTimeout(javaTimeTimeout),
         () -> context.withStreamWaitTimeout(threetenTimeout), c -> c.getStreamWaitTimeoutDuration(),
         c -> c.getStreamWaitTimeout());
   }
@@ -263,7 +263,7 @@ public class GrpcCallContextTest {
     java.time.Duration javaTimeTimeout = java.time.Duration.ofMillis(millis);
     org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofMillis(millis);
     GrpcCallContext context = GrpcCallContext.createDefault();
-    testTimeObjectGetterAndSetter(millis, () -> context.withStreamIdleTimeout(javaTimeTimeout),
+    testDurationMethod(millis, () -> context.withStreamIdleTimeout(javaTimeTimeout),
         () -> context.withStreamIdleTimeout(threetenTimeout), c -> c.getStreamIdleTimeoutDuration(),
         c -> c.getStreamIdleTimeout());
   }

@@ -45,15 +45,15 @@ public class TimeConversionTestUtils {
       Function<Target, org.threeten.bp.Instant> threetenGetter) {
     Function<java.time.Instant, Long> javaTimeTester = value -> value.toEpochMilli();
     Function<org.threeten.bp.Instant, Long> threetenTester = value -> value.toEpochMilli();
-    testTimeObjectGetterAndSetter(
+    testTimeObjectMethod(
         testValue, javaTimeTargetSupplier, javaTimeGetter, threetenGetter, javaTimeTester,
         threetenTester);
-    testTimeObjectGetterAndSetter(
+    testTimeObjectMethod(
         testValue, threetenTargetSupplier, javaTimeGetter, threetenGetter, javaTimeTester,
         threetenTester);
   }
 
-  public static <Target> void testTimeObjectGetterAndSetter(
+  public static <Target> void testDurationMethod(
       Long testValue,
       Supplier<Target> javaTimeTargetSupplier,
       Supplier<Target> threetenTargetSupplier,
@@ -61,15 +61,15 @@ public class TimeConversionTestUtils {
       Function<Target, org.threeten.bp.Duration> threetenGetter) {
     Function<java.time.Duration, Long> javaTimeTester = value -> value.toMillis();
     Function<org.threeten.bp.Duration, Long> threetenTester = value -> value.toMillis();
-    testTimeObjectGetterAndSetter(
+    testTimeObjectMethod(
         testValue, javaTimeTargetSupplier, javaTimeGetter, threetenGetter, javaTimeTester,
         threetenTester);
-    testTimeObjectGetterAndSetter(
+    testTimeObjectMethod(
         testValue, threetenTargetSupplier, javaTimeGetter, threetenGetter, javaTimeTester,
         threetenTester);
   }
 
-  private static <Target, Threeten, JavaTime> void testTimeObjectGetterAndSetter(
+  private static <Target, Threeten, JavaTime> void testTimeObjectMethod(
       Long testValue,
       Supplier<Target> targetSupplier,
       Function<Target, JavaTime> javaTimeGetter,

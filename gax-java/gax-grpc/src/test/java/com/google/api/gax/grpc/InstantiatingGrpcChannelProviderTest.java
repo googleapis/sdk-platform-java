@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.grpc;
 
-import static com.google.api.gax.util.TimeConversionTestUtils.testTimeObjectGetterAndSetter;
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -112,11 +112,11 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
         .setKeepAliveTimeout(threetenKeepAliveTimeout)
         .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
         .build();
-    testTimeObjectGetterAndSetter(millis, javaTimeProviderSupplier,
+    testDurationMethod(millis, javaTimeProviderSupplier,
         threetenProviderSupplier,
         c -> c.getKeepAliveTimeDuration(),
         c -> c.getKeepAliveTime());
-    testTimeObjectGetterAndSetter(millis, javaTimeProviderSupplier,
+    testDurationMethod(millis, javaTimeProviderSupplier,
         threetenProviderSupplier,
         c -> c.getKeepAliveTimeoutDuration(),
         c -> c.getKeepAliveTimeout());
