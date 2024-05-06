@@ -178,7 +178,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
 
       // Use the timeout duration value instead of calculating the future Instant
       // Only schedule the deadline if the RPC timeout has been set in the RetrySettings
-      Duration timeout = callOptions.getTimeout();
+      java.time.Duration timeout = callOptions.getTimeoutDuration();
       if (timeout != null) {
         // The future timeout value is guaranteed to not be a negative value as the
         // RetryAlgorithm will not retry
