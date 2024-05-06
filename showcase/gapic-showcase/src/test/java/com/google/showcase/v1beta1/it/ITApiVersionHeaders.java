@@ -192,7 +192,7 @@ public class ITApiVersionHeaders {
   @Test
   public void testGrpc_noApiVersion() {
     RepeatRequest request =
-            RepeatRequest.newBuilder().setInfo(ComplianceData.newBuilder().setFString("test")).build();
+        RepeatRequest.newBuilder().setInfo(ComplianceData.newBuilder().setFString("test")).build();
     grpcComplianceClient.repeatDataSimplePath(request);
     assertThat(API_VERSION_HEADER_KEY).isNotIn(grpcComplianceInterceptor.metadata.keys());
   }
@@ -200,10 +200,9 @@ public class ITApiVersionHeaders {
   @Test
   public void testHttpJson_noApiVersion() {
     RepeatRequest request =
-            RepeatRequest.newBuilder().setInfo(ComplianceData.newBuilder().setFString("test")).build();
+        RepeatRequest.newBuilder().setInfo(ComplianceData.newBuilder().setFString("test")).build();
     httpJsonComplianceClient.repeatDataSimplePath(request);
     assertThat(API_VERSION_HEADER_KEY)
-            .isNotIn(httpJsonComplianceInterceptor.metadata.getHeaders().keySet());
+        .isNotIn(httpJsonComplianceInterceptor.metadata.getHeaders().keySet());
   }
-
 }
