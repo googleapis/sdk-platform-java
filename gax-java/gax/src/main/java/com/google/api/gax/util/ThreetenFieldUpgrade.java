@@ -19,7 +19,11 @@ public @interface ThreetenFieldUpgrade {
     THREETEN_SETTER
   }
 
+  final Long UNSET_DEFAULT_VALUE = Long.MIN_VALUE;
+
   FieldRole role();
 
   String key();
+
+  long defaultTestValue() default Long.MIN_VALUE;
 }

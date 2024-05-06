@@ -34,6 +34,8 @@ import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.ObsoleteApi;
+import com.google.api.gax.util.ThreetenFieldUpgrade;
+import com.google.api.gax.util.ThreetenFieldUpgrade.FieldRole;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import java.io.Serializable;
@@ -83,6 +85,7 @@ public abstract class RetrySettings implements Serializable {
 
   /** Backport of {@link #getTotalTimeoutDuration()} */
   @ObsoleteApi("Use getTotalTimeoutDuration() instead")
+  @ThreetenFieldUpgrade(key = "totalTimeout", role = FieldRole.THREETEN_GETTER)
   public abstract org.threeten.bp.Duration getTotalTimeout();
 
   /**
@@ -98,12 +101,14 @@ public abstract class RetrySettings implements Serializable {
    * Duration.ZERO} and LROs have a default total timeout value of {@code Duration.ofMillis(300000)}
    * (5 minutes).
    */
+  @ThreetenFieldUpgrade(key = "totalTimeout", role = FieldRole.JAVA_TIME_GETTER)
   public final java.time.Duration getTotalTimeoutDuration() {
     return toJavaTimeDuration(getTotalTimeout());
   }
 
   /** Backport of {@link #getInitialRetryDelayDuration()} */
   @ObsoleteApi("Use getInitialRetryDelayDuration() instead")
+  @ThreetenFieldUpgrade(key = "initialRetryDelay", role = FieldRole.THREETEN_GETTER)
   public abstract org.threeten.bp.Duration getInitialRetryDelay();
 
   /**
@@ -114,6 +119,7 @@ public abstract class RetrySettings implements Serializable {
    * Duration.ZERO} and LROs have a default initial poll delay value of {@code
    * Duration.ofMillis(5000)} (5 seconds).
    */
+  @ThreetenFieldUpgrade(key = "initialRetryDelay", role = FieldRole.JAVA_TIME_GETTER)
   public final java.time.Duration getInitialRetryDelayDuration() {
     return toJavaTimeDuration(getInitialRetryDelay());
   }
@@ -130,6 +136,7 @@ public abstract class RetrySettings implements Serializable {
 
   /** Backport of {@link #getMaxRetryDelayDuration()} */
   @ObsoleteApi("Use getMaxRetryDelayDuration()")
+  @ThreetenFieldUpgrade(key = "maxRetryDelay", role = FieldRole.THREETEN_GETTER)
   public abstract org.threeten.bp.Duration getMaxRetryDelay();
 
   /**
@@ -140,6 +147,7 @@ public abstract class RetrySettings implements Serializable {
    * Duration.ZERO} and LROs have a default max poll retry delay value of {@code
    * Duration.ofMillis(45000)} (45 seconds).
    */
+  @ThreetenFieldUpgrade(key = "maxRetryDelay", role = FieldRole.JAVA_TIME_GETTER)
   public final java.time.Duration getMaxRetryDelayDuration() {
     return toJavaTimeDuration(getMaxRetryDelay());
   }
@@ -175,6 +183,7 @@ public abstract class RetrySettings implements Serializable {
 
   /** Backport of {@link #getInitialRpcTimeoutDuration()} */
   @ObsoleteApi("Use getInitialRpcTimeoutDuration() instead")
+  @ThreetenFieldUpgrade(key = "initialRpcTimeout", role = FieldRole.THREETEN_GETTER)
   public abstract org.threeten.bp.Duration getInitialRpcTimeout();
 
   /**
@@ -190,6 +199,7 @@ public abstract class RetrySettings implements Serializable {
    * <p>If there are no configurations, Retries have the default initial RPC timeout value of {@code
    * Duration.ZERO}. LRO polling does not use the Initial RPC Timeout value.
    */
+  @ThreetenFieldUpgrade(key = "initialRpcTimeout", role = FieldRole.JAVA_TIME_GETTER)
   public final java.time.Duration getInitialRpcTimeoutDuration() {
     return toJavaTimeDuration(getInitialRpcTimeout());
   }
@@ -205,6 +215,7 @@ public abstract class RetrySettings implements Serializable {
 
   /** Backport of {@link #getMaxRpcTimeoutDuration()} */
   @ObsoleteApi("Use getMaxRpcTimeoutDuration() instead")
+  @ThreetenFieldUpgrade(key = "maxRpcTimeout", role = FieldRole.THREETEN_GETTER)
   public abstract org.threeten.bp.Duration getMaxRpcTimeout();
 
   /**
@@ -214,6 +225,7 @@ public abstract class RetrySettings implements Serializable {
    * <p>If there are no configurations, Retries have the default Max RPC Timeout value of {@code
    * Duration.ZERO}. LRO polling does not use the Max RPC Timeout value.
    */
+  @ThreetenFieldUpgrade(key = "maxRpcTimeout", role = FieldRole.JAVA_TIME_GETTER)
   public final java.time.Duration getMaxRpcTimeoutDuration() {
     return toJavaTimeDuration(getMaxRpcTimeout());
   }
@@ -242,6 +254,7 @@ public abstract class RetrySettings implements Serializable {
 
     /** Backport of {@link #setTotalTimeout(java.time.Duration)} */
     @ObsoleteApi("Use setTotalTimeout(java.time.Duration) instead")
+    @ThreetenFieldUpgrade(key = "totalTimeout", role = FieldRole.THREETEN_SETTER)
     public abstract Builder setTotalTimeout(org.threeten.bp.Duration totalTimeout);
 
     /**
@@ -257,12 +270,14 @@ public abstract class RetrySettings implements Serializable {
      * Duration.ZERO} and LROs have a default total timeout value of {@code
      * Duration.ofMillis(300000)} (5 minutes).
      */
+    @ThreetenFieldUpgrade(key = "totalTimeout", role = FieldRole.JAVA_TIME_SETTER)
     public final Builder setTotalTimeout(java.time.Duration totalTimeout) {
       return setTotalTimeout(toThreetenDuration(totalTimeout));
     }
 
     /** Backport of {@link #setInitialRetryDelay(java.time.Duration)} */
     @ObsoleteApi("Use setInitialRetryDelay(java.time.Duration) instead")
+    @ThreetenFieldUpgrade(key = "initialRetryDelay", role = FieldRole.THREETEN_SETTER)
     public abstract Builder setInitialRetryDelay(org.threeten.bp.Duration initialDelay);
 
     /**
@@ -273,6 +288,7 @@ public abstract class RetrySettings implements Serializable {
      * {@code Duration.ZERO} and LROs have a default initial poll delay value of {@code
      * Duration.ofMillis(5000)} (5 seconds).
      */
+    @ThreetenFieldUpgrade(key = "initialRetryDelay", role = FieldRole.JAVA_TIME_SETTER)
     public final Builder setInitialRetryDelay(java.time.Duration initialDelay) {
       return setInitialRetryDelay(toThreetenDuration(initialDelay));
     }
@@ -289,6 +305,7 @@ public abstract class RetrySettings implements Serializable {
 
     /** Backport of {@link #setMaxRetryDelay(java.time.Duration)} */
     @ObsoleteApi("Use setMaxRetryDelay(java.time.Duration) instead")
+    @ThreetenFieldUpgrade(key = "maxRetryDelay", role = FieldRole.THREETEN_SETTER)
     public abstract Builder setMaxRetryDelay(org.threeten.bp.Duration maxDelay);
 
     /**
@@ -299,6 +316,10 @@ public abstract class RetrySettings implements Serializable {
      * Duration.ZERO} and LROs have a default max poll retry delay value of {@code
      * Duration.ofMillis(45000)} (45 seconds).
      */
+    @ThreetenFieldUpgrade(
+        key = "maxRetryDelay",
+        role = FieldRole.JAVA_TIME_SETTER,
+        defaultTestValue = 5000l)
     public final Builder setMaxRetryDelay(java.time.Duration maxDelay) {
       return setMaxRetryDelay(toThreetenDuration(maxDelay));
     }
@@ -334,6 +355,7 @@ public abstract class RetrySettings implements Serializable {
 
     /** Backport of {@link #setInitialRpcTimeout(java.time.Duration)} */
     @ObsoleteApi("Use setInitialRpcTimeout(java.time.Duration) instead")
+    @ThreetenFieldUpgrade(key = "initialRpcTimeout", role = FieldRole.THREETEN_SETTER)
     public abstract Builder setInitialRpcTimeout(org.threeten.bp.Duration initialTimeout);
 
     /**
@@ -349,6 +371,7 @@ public abstract class RetrySettings implements Serializable {
      * <p>If there are no configurations, Retries have the default initial RPC timeout value of
      * {@code Duration.ZERO}. LRO polling does not use the Initial RPC Timeout value.
      */
+    @ThreetenFieldUpgrade(key = "initialRpcTimeout", role = FieldRole.JAVA_TIME_SETTER)
     public final Builder setInitialRpcTimeout(java.time.Duration initialTimeout) {
       return setInitialRpcTimeout(toThreetenDuration(initialTimeout));
     }
@@ -364,6 +387,7 @@ public abstract class RetrySettings implements Serializable {
 
     /** Backport of {@link #setMaxRpcTimeout(java.time.Duration)} */
     @ObsoleteApi("Use setMaxRpcTimeout(java.time.Duration) instead")
+    @ThreetenFieldUpgrade(key = "maxRpcTimeout", role = FieldRole.THREETEN_SETTER)
     public abstract Builder setMaxRpcTimeout(org.threeten.bp.Duration maxTimeout);
 
     /**
@@ -373,151 +397,12 @@ public abstract class RetrySettings implements Serializable {
      * <p>If there are no configurations, Retries have the default Max RPC Timeout value of {@code
      * Duration.ZERO}. LRO polling does not use the Max RPC Timeout value.
      */
+    @ThreetenFieldUpgrade(
+        key = "maxRpcTimeout",
+        role = FieldRole.JAVA_TIME_SETTER,
+        defaultTestValue = 5000l)
     public final Builder setMaxRpcTimeout(java.time.Duration maxTimeout) {
       return setMaxRpcTimeout(toThreetenDuration(maxTimeout));
-    }
-
-    /** Backport of {@link #getTotalTimeoutDuration()} */
-    @ObsoleteApi("Use getTotalTimeoutDuration() instead")
-    public abstract org.threeten.bp.Duration getTotalTimeout();
-
-    /**
-     * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
-     * until it gives up completely. The higher the total timeout, the more retries and polls can be
-     * attempted. If this value is {@code Duration.ZERO}, then the logic will instead use the number
-     * of attempts to determine retries. In the event that both maxAttempts and totalTimeout values
-     * are both 0, the logic will not retry. If this value is non-{@code Duration.ZERO}, and the
-     * retry duration has reaches the timeout value, the logic will give up retrying even the number
-     * of attempts is lower than the maxAttempts value.
-     *
-     * <p>If there are no configurations, Retries have the default timeout value of {@code
-     * Duration.ZERO} and LROs have a default total timeout value of {@code
-     * Duration.ofMillis(300000)} (5 minutes).
-     */
-    public final java.time.Duration getTotalTimeoutDuration() {
-      return toJavaTimeDuration(getTotalTimeout());
-    }
-
-    /** Backport of {@link #getInitialRetryDelayDuration()} */
-    @ObsoleteApi("Use getInitialRetryDelayDuration() instead")
-    public abstract org.threeten.bp.Duration getInitialRetryDelay();
-
-    /**
-     * InitialRetryDelay controls the delay before the first retry/ poll. Subsequent retries and
-     * polls will use this value adjusted according to the RetryDelayMultiplier.
-     *
-     * <p>If there are no configurations, Retries have the default initial retry delay value of
-     * {@code Duration.ZERO} and LROs have a default initial poll delay value of {@code
-     * Duration.ofMillis(5000)} (5 seconds).
-     */
-    public final java.time.Duration getInitialRetryDelayDuration() {
-      return toJavaTimeDuration(getInitialRetryDelay());
-    }
-
-    /**
-     * RetryDelayMultiplier controls the change in delay before the next retry or poll. The retry
-     * delay of the previous call is multiplied by the RetryDelayMultiplier to calculate the retry
-     * delay for the next call.
-     *
-     * <p>If there are no configurations, Retries have the default retry delay multiplier value of
-     * {@code 1.0} and LROs have a default retry delay multiplier of {@code 1.5}.
-     */
-    public abstract double getRetryDelayMultiplier();
-
-    /**
-     * MaxAttempts defines the maximum number of retry attempts to perform. If this value is set to
-     * 0, the logic will instead use the totalTimeout value to determine retries. In the event that
-     * both the maxAttempts and totalTimeout values are both 0, the logic will not retry. If this
-     * value is greater than 0, and the number of attempts exceeds this limit, the logic will give
-     * up retrying even if the total retry time is still lower than totalTimeout.
-     *
-     * <p>If there are no configurations, Retries and LROs have the default max attempt value of
-     * {@code 0}. LRO polling does not use this value by default.
-     *
-     * <p>The first RPC invocation will be considered attempt #0. Subsequent calls (retries) will
-     * increment the number of attempts and the number of attempts will not exceed this value.
-     */
-    public abstract int getMaxAttempts();
-
-    /**
-     * Jitter determines if the delay time should be randomized. In most cases, if jitter is set to
-     * {@code true} the actual delay time is calculated in the following way:
-     *
-     * <pre>{@code actualDelay = rand_between(0, min(maxRetryDelay, exponentialDelay))}</pre>
-     *
-     * The default value is {@code true}.
-     */
-    public abstract boolean isJittered();
-
-    /** Backport of {@link #getMaxRetryDelayDuration()} */
-    @ObsoleteApi("Use getMaxRetryDelayDuration() instead")
-    public abstract org.threeten.bp.Duration getMaxRetryDelay();
-
-    /**
-     * MaxRetryDelay puts a limit on the value of the retry delay, so that the RetryDelayMultiplier
-     * can't increase the retry delay higher than this amount.
-     *
-     * <p>If there are no configurations, Retries have the default max retry delay value of {@code
-     * Duration.ZERO} and LROs have a default max poll retry delay value of {@code
-     * Duration.ofMillis(45000)} (45 seconds).
-     */
-    public final java.time.Duration getMaxRetryDelayDuration() {
-      return toJavaTimeDuration(getMaxRetryDelay());
-    }
-
-    /** Backport of {@link #getInitialRpcTimeoutDuration()} */
-    @ObsoleteApi("Use getInitialRpcTimeoutDuration() instead")
-    public abstract org.threeten.bp.Duration getInitialRpcTimeout();
-
-    /**
-     * InitialRpcTimeout controls the timeout for the initial RPC. Subsequent calls will use this
-     * value adjusted according to the RpcTimeoutMultiplier. RPC Timeout value of {@code
-     * Duration.ZERO} allows the RPC to continue indefinitely (until it hits a Connect Timeout or
-     * the connection has been terminated).
-     *
-     * <p>{@link #getTotalTimeout()} caps how long the logic should keep trying the RPC until it
-     * gives up completely. If {@link #getTotalTimeout()} is set, initialRpcTimeout should be <=
-     * totalTimeout.
-     *
-     * <p>If there are no configurations, Retries have the default initial RPC timeout value of
-     * {@code Duration.ZERO}. LRO polling does not use the Initial RPC Timeout value.
-     */
-    public final java.time.Duration getInitialRpcTimeoutDuration() {
-      return toJavaTimeDuration(getInitialRpcTimeout());
-    }
-
-    /**
-     * RpcTimeoutMultiplier controls the change in RPC timeout. The timeout of the previous call is
-     * multiplied by the RpcTimeoutMultiplier to calculate the timeout for the next call.
-     *
-     * <p>If there are no configurations, Retries have the default RPC Timeout Multiplier value of
-     * {@code 1.0}. LRO polling does not use the RPC Timeout Multiplier value.
-     */
-    public abstract double getRpcTimeoutMultiplier();
-
-    /** Backport of {@link #getMaxRpcTimeoutDuration()} */
-    @ObsoleteApi("Use getMaxRpcTimeoutDuration() instead")
-    public abstract org.threeten.bp.Duration getMaxRpcTimeout();
-
-    /**
-     * MaxRpcTimeout puts a limit on the value of the RPC timeout, so that the RpcTimeoutMultiplier
-     * can't increase the RPC timeout higher than this amount.
-     *
-     * <p>If there are no configurations, Retries have the default Max RPC Timeout value of {@code
-     * Duration.ZERO}. LRO polling does not use the Max RPC Timeout value.
-     */
-    public final java.time.Duration getMaxRpcTimeoutDuration() {
-      return toJavaTimeDuration(getMaxRpcTimeout());
-    }
-
-    /**
-     * Overload of {@link #setLogicalTimeout(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
-     */
-    @BetaApi
-    @ObsoleteApi("Use setLogicalTimeout(java.time.Duration) instead")
-    public Builder setLogicalTimeout(org.threeten.bp.Duration timeout) {
-      return setLogicalTimeout(toJavaTimeDuration(timeout));
     }
 
     /**
@@ -531,6 +416,11 @@ public abstract class RetrySettings implements Serializable {
      */
     @BetaApi
     public Builder setLogicalTimeout(java.time.Duration timeout) {
+      return setLogicalTimeout(toThreetenDuration(timeout));
+    }
+
+    /** Backport of {@link #setLogicalTimeout(java.time.Duration)} */
+    public Builder setLogicalTimeout(org.threeten.bp.Duration timeout) {
       return setRpcTimeoutMultiplier(1)
           .setInitialRpcTimeout(timeout)
           .setMaxRpcTimeout(timeout)
@@ -568,7 +458,8 @@ public abstract class RetrySettings implements Serializable {
       return params;
     }
 
-    public RetrySettings.Builder merge(RetrySettings.Builder newSettings) {
+    public RetrySettings.Builder merge(RetrySettings.Builder newSettingsBuilder) {
+      RetrySettings newSettings = newSettingsBuilder.build();
       if (newSettings.getTotalTimeoutDuration() != null) {
         setTotalTimeout(newSettings.getTotalTimeoutDuration());
       }

@@ -8,6 +8,7 @@ import com.google.api.gax.util.ThreetenFieldUpgrade;
 import com.google.api.gax.util.ThreetenFieldUpgrade.FieldRole;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Sets;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -139,11 +140,47 @@ public class AutoValuesWithDeprecatedThreetenFieldsTest {
       Object testJavaTimeObjectValue,
       Object testThreetenObjectValue)
       throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+
     Object builder = autoValueClass.getDeclaredMethod("newBuilder").invoke(autoValueClass);
+
+    // Some AutoValue classes need default values to be tested with. This section uses a special
+    // annotation field "defaultTestValue" and ensures the builder is set with such values
+    for (Entry<Method, Long> defaultSetter :
+        getSettersWithDefaultValue(builderClass, setter).entrySet()) {
+      Object value =
+          javaTimeGetter.getReturnType().equals(java.time.Duration.class)
+              ? java.time.Duration.ofMillis(defaultSetter.getValue())
+              : java.time.Instant.ofEpochMilli(defaultSetter.getValue());
+      defaultSetter.getKey().invoke(builder, value);
+    }
+
+    // Now we call the actual setter under test
     setter.invoke(builder, testSetterValue);
     Object builtObject = builderClass.getMethod("build").invoke(builder);
+
+    // And we confirm on the created object that the getters behave the same
     assertEquals(testJavaTimeObjectValue, javaTimeGetter.invoke(builtObject));
     assertEquals(testThreetenObjectValue, threetenGetter.invoke(builtObject));
+  }
+
+  private Map<Method, Long> getSettersWithDefaultValue(Class builderClass, Method setterUnderTest) {
+    Map<Method, Long> result = new HashMap<>();
+    for (Method m : builderClass.getDeclaredMethods()) {
+      if (!m.isAnnotationPresent(ThreetenFieldUpgrade.class)
+          || m.getName() == setterUnderTest.getName()) {
+        continue;
+      }
+      ThreetenFieldUpgrade annotation = m.getAnnotation(ThreetenFieldUpgrade.class);
+      if (annotation.defaultTestValue() == ThreetenFieldUpgrade.UNSET_DEFAULT_VALUE) {
+        continue;
+      }
+      assertEquals(
+          "defaulTestValue can only be used with JAVA_TIME_SETTER",
+          FieldRole.JAVA_TIME_SETTER,
+          annotation.role());
+      result.put(m, annotation.defaultTestValue());
+    }
+    return result;
   }
 
   private void confirmGetterAndSetterStructure(Map<FieldRole, Method> organizedMethods) {
@@ -219,10 +256,16 @@ public class AutoValuesWithDeprecatedThreetenFieldsTest {
           result.containsKey(annotation.role()));
       result.put(annotation.role(), m);
     }
-    assertEquals(
-        String.format("Method group %s does not contain all FieldRoles", groupName),
-        4,
-        result.size());
+    boolean hasMissingRoles = false;
+    for (FieldRole expectedRole : Sets.newHashSet(FieldRole.values())) {
+      if (!result.containsKey(expectedRole)) {
+        logger.severe(
+            String.format(
+                "Method group %s has missing FieldRole '%s'", groupName, expectedRole.name()));
+        hasMissingRoles = true;
+      }
+    }
+    assertFalse(hasMissingRoles);
     return result;
   }
 
