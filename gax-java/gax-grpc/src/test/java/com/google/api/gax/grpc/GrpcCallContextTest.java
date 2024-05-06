@@ -130,14 +130,11 @@ public class GrpcCallContextTest {
 
   @Test
   public void testWithTimeout() {
-    final long millis = 15;
-    java.time.Duration javaTimeTimeout = java.time.Duration.ofMillis(millis);
-    org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofMillis(millis);
     GrpcCallContext context = GrpcCallContext.createDefault();
     testDurationMethod(
-        millis,
-        () -> context.withTimeout(javaTimeTimeout),
-        () -> context.withTimeout(threetenTimeout),
+        123l,
+        javaTimeTimeout -> context.withTimeout(javaTimeTimeout),
+        threetenTimeout -> context.withTimeout(threetenTimeout),
         c -> c.getTimeoutDuration(),
         c -> c.getTimeout());
   }
@@ -216,14 +213,11 @@ public class GrpcCallContextTest {
 
   @Test
   public void testWithStreamingWaitTimeout() {
-    final long millis = 15;
-    java.time.Duration javaTimeTimeout = java.time.Duration.ofMillis(millis);
-    org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofMillis(millis);
     GrpcCallContext context = GrpcCallContext.createDefault();
     testDurationMethod(
-        millis,
-        () -> context.withStreamWaitTimeout(javaTimeTimeout),
-        () -> context.withStreamWaitTimeout(threetenTimeout),
+        123l,
+        javaTimeTimeout -> context.withStreamWaitTimeout(javaTimeTimeout),
+        threetenTimeout -> context.withStreamWaitTimeout(threetenTimeout),
         c -> c.getStreamWaitTimeoutDuration(),
         c -> c.getStreamWaitTimeout());
   }
@@ -266,13 +260,11 @@ public class GrpcCallContextTest {
   @Test
   public void testWithStreamingIdleTimeout() {
     final long millis = 15;
-    java.time.Duration javaTimeTimeout = java.time.Duration.ofMillis(millis);
-    org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofMillis(millis);
     GrpcCallContext context = GrpcCallContext.createDefault();
     testDurationMethod(
         millis,
-        () -> context.withStreamIdleTimeout(javaTimeTimeout),
-        () -> context.withStreamIdleTimeout(threetenTimeout),
+        javaTimeTimeout -> context.withStreamIdleTimeout(javaTimeTimeout),
+        threetenTimeout -> context.withStreamIdleTimeout(threetenTimeout),
         c -> c.getStreamIdleTimeoutDuration(),
         c -> c.getStreamIdleTimeout());
   }
