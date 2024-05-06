@@ -94,12 +94,10 @@ They are shared by library level parameters.
 | Name                    | Required | Notes                                        |
 |:------------------------|:--------:|:---------------------------------------------|
 | gapic_generator_version |   Yes    |                                              |
-| protobuf_version        |    No    | inferred from the generator if not specified |
+| protoc_version          |    No    | inferred from the generator if not specified |
 | grpc_version            |    No    | inferred from the generator if not specified |
 | googleapis-commitish    |   Yes    |                                              |
 | libraries_bom_version   |   Yes    |                                              |
-| owlbot-cli-image        |   Yes    |                                              |
-| synthtool-commitish     |   Yes    |                                              |
 | template_excludes       |   Yes    |                                              |
 
 ### Library level parameters
@@ -146,11 +144,9 @@ The GAPIC level parameters define how to generate a GAPIC library.
 
 ```yaml
 gapic_generator_version: 2.34.0
-protobuf_version: 25.2
+protoc_version: 25.2
 googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
 libraries_bom_version: 26.37.0
-owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
-synthtool_commitish: 6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
 destination_path: google-cloud-java
 template_excludes:
   - ".github/*"
@@ -304,7 +300,7 @@ The transfer was not a verbatim copy, it rather had modifications:
  * `entrypoint.sh` was modified to have input arguments and slightly modified
    the way the helper scripts are called
  * Other helper scripts were modified to have input arguments.
- * `fix-poms.py` modified the way the monorepo is detected
+ * `fix_poms.py` modified the way the monorepo is detected
 
 All these modifications imply that whenever we want to reflect a change from the
 original owlbot in synthtool we may be better off modifying the affected source

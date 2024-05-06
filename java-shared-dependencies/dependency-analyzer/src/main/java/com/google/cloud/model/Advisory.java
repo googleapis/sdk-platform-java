@@ -22,5 +22,9 @@ public record Advisory(
     double cvss3Score,
     String cvss3Vector) {
 
+  @Override
+  public String toString() {
+    return String.format("Advisory (id: %s, more info: [%s](%s))", advisoryKey.id(), title, url);
+  }
 }
 

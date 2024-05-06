@@ -20,8 +20,8 @@ case $key in
     export gapic_generator_version
     shift
     ;;
-  --protobuf_version)
-    protobuf_version="$2"
+  --protoc_version)
+    protoc_version="$2"
     shift
     ;;
   --grpc_version)
@@ -82,8 +82,8 @@ if [ -z "${gapic_generator_version}" ]; then
   exit 1
 fi
 
-if [ -z "${protobuf_version}" ]; then
-  protobuf_version=$(get_protobuf_version "${gapic_generator_version}")
+if [ -z "${protoc_version}" ]; then
+  protoc_version=$(get_protoc_version "${gapic_generator_version}")
 fi
 
 if [ -z "${grpc_version}" ]; then
@@ -177,7 +177,7 @@ case "${proto_path}" in
     ;;
 esac
 # download gapic-generator-java, protobuf and grpc plugin.
-download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_version}" "${os_architecture}"
+download_tools "${gapic_generator_version}" "${protoc_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################

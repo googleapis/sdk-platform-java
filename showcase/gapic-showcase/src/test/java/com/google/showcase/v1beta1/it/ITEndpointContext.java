@@ -416,17 +416,33 @@ public class ITEndpointContext {
   @Test
   public void endpointResolution_defaultViaBuilder() {
     EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();
-    // The getter in the builder returns the user set value. No configuration
-    // means the getter will return null
+    // `StubSettings.newBuilder()` will return the clientSettingsEndpoint
     Truth.assertThat(echoSettingsBuilder.getEndpoint()).isEqualTo(null);
   }
 
   // User configuration in Builder
   @Test
   public void endpointResolution_userConfigurationViaBuilder() {
-    String customEndpoint = "test.com:123";
     EchoSettings.Builder echoSettingsBuilder =
-        EchoSettings.newBuilder().setEndpoint(customEndpoint);
-    Truth.assertThat(echoSettingsBuilder.getEndpoint()).isEqualTo(customEndpoint);
+        EchoSettings.newBuilder().setEndpoint("test.com:123");
+    // `StubSettings.newBuilder()` will return the clientSettingsEndpoint
+    Truth.assertThat(echoSettingsBuilder.getEndpoint()).isEqualTo("test.com:123");
+  }
+
+  @Test
+  public void endpointResolution_builderBuilderBackToBuilder() throws IOException {
+    String customEndpoint = "test.com:123";
+    EchoStubSettings.Builder echoStubSettingsBuilder =
+        EchoStubSettings.newBuilder().setEndpoint(customEndpoint);
+    // `StubSettings.newBuilder()` will return the clientSettingsEndpoint
+    Truth.assertThat(echoStubSettingsBuilder.getEndpoint()).isEqualTo(customEndpoint);
+
+    // EndpointContext is recomputed when the Builder is re-built
+    EchoStubSettings echoStubSettings = echoStubSettingsBuilder.build();
+    Truth.assertThat(echoStubSettings.getEndpoint()).isEqualTo(customEndpoint);
+
+    // Calling toBuilder on StubSettings keeps the configurations the same
+    echoStubSettingsBuilder = echoStubSettings.toBuilder();
+    Truth.assertThat(echoStubSettingsBuilder.getEndpoint()).isEqualTo(customEndpoint);
   }
 }
