@@ -14,4 +14,5 @@ public class HttpJsonAutoValuesWithDeprecatedThreetenValuesTest {
       throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
     new AutoValuesWithDeprecatedThreetenFieldsTest().testAutoValueClassesWithThreetenMethods();
   }
+
 }

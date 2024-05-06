@@ -42,6 +42,7 @@ import com.google.api.gax.rpc.mtls.AbstractMtlsTransportChannelTest;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.oauth2.CloudShellCredentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
+import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import io.grpc.ManagedChannel;
@@ -57,7 +58,6 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.function.Function;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.stream.Collectors;
@@ -96,21 +96,25 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   @Test
   public void testKeepAlive() {
     final long millis = 15;
+    java.time.Duration javaTimeKeepAliveTime = java.time.Duration.ofMillis(millis);
+    org.threeten.bp.Duration threetenKeepAliveTime = org.threeten.bp.Duration.ofMillis(millis);
+    java.time.Duration javaTimeKeepAliveTimeout = java.time.Duration.ofMillis(millis);
+    org.threeten.bp.Duration threetenKeepAliveTimeout = org.threeten.bp.Duration.ofMillis(millis);
     boolean keepaliveWithoutCalls = true;
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder();
-    Function<java.time.Duration, InstantiatingGrpcChannelProvider> javaTimeProviderSupplier =
-        javaTimeValue ->
+    Supplier<InstantiatingGrpcChannelProvider> javaTimeProviderSupplier =
+        () ->
             builder
-                .setKeepAliveTime(javaTimeValue)
-                .setKeepAliveTimeout(javaTimeValue)
+                .setKeepAliveTime(javaTimeKeepAliveTime)
+                .setKeepAliveTimeout(javaTimeKeepAliveTimeout)
                 .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
                 .build();
-    Function<org.threeten.bp.Duration, InstantiatingGrpcChannelProvider> threetenProviderSupplier =
-        threetenValue ->
+    Supplier<InstantiatingGrpcChannelProvider> threetenProviderSupplier =
+        () ->
             builder
-                .setKeepAliveTime(threetenValue)
-                .setKeepAliveTimeout(threetenValue)
+                .setKeepAliveTime(threetenKeepAliveTime)
+                .setKeepAliveTimeout(threetenKeepAliveTimeout)
                 .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
                 .build();
     testDurationMethod(
@@ -125,16 +129,8 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
         threetenProviderSupplier,
         c -> c.getKeepAliveTimeoutDuration(),
         c -> c.getKeepAliveTimeout());
-    assertEquals(
-        true,
-        javaTimeProviderSupplier
-            .apply(java.time.Duration.ofMillis(millis))
-            .getKeepAliveWithoutCalls());
-    assertEquals(
-        true,
-        threetenProviderSupplier
-            .apply(org.threeten.bp.Duration.ofMillis(millis))
-            .getKeepAliveWithoutCalls());
+    assertEquals(true, javaTimeProviderSupplier.get().getKeepAliveWithoutCalls());
+    assertEquals(true, threetenProviderSupplier.get().getKeepAliveWithoutCalls());
   }
 
   @Test

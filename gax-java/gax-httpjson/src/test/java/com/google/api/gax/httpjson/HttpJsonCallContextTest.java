@@ -118,11 +118,13 @@ public class HttpJsonCallContextTest {
   @Test
   public void testStreamIdleTimeout() {
     final long millis = 3;
+    final java.time.Duration javaTimeTimeout = java.time.Duration.ofMillis(millis);
+    final org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofMillis(millis);
     final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
     testDurationMethod(
         millis,
-        javaTimeTimeout -> defaultContext.withStreamIdleTimeout(javaTimeTimeout),
-        threetenTimeout -> defaultContext.withStreamIdleTimeout(threetenTimeout),
+        () -> defaultContext.withStreamIdleTimeout(javaTimeTimeout),
+        () -> defaultContext.withStreamIdleTimeout(threetenTimeout),
         c -> c.getStreamIdleTimeoutDuration(),
         c -> c.getStreamIdleTimeout());
   }
@@ -130,11 +132,13 @@ public class HttpJsonCallContextTest {
   @Test
   public void testStreamWaitTimeout() {
     final long millis = 3;
+    final java.time.Duration javaTimeTimeout = java.time.Duration.ofMillis(millis);
+    final org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofMillis(millis);
     final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
     testDurationMethod(
         millis,
-        javaTimeTimeout -> defaultContext.withStreamWaitTimeout(javaTimeTimeout),
-        threetenTimeout -> defaultContext.withStreamWaitTimeout(threetenTimeout),
+        () -> defaultContext.withStreamWaitTimeout(javaTimeTimeout),
+        () -> defaultContext.withStreamWaitTimeout(threetenTimeout),
         c -> c.getStreamWaitTimeoutDuration(),
         c -> c.getStreamWaitTimeout());
   }
@@ -142,22 +146,26 @@ public class HttpJsonCallContextTest {
   @Test
   public void testTimeout() {
     final long millis = 3;
+    final java.time.Duration javaTimeTimeout = java.time.Duration.ofMillis(millis);
+    final org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofMillis(millis);
     final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
     testDurationMethod(
         millis,
-        javaTimeTimeout -> defaultContext.withTimeout(javaTimeTimeout),
-        threetenTimeout -> defaultContext.withTimeout(threetenTimeout),
+        () -> defaultContext.withTimeout(javaTimeTimeout),
+        () -> defaultContext.withTimeout(threetenTimeout),
         c -> c.getTimeoutDuration(),
         c -> c.getTimeout());
   }
 
   @Test
   public void testNullTimeout() {
+    final java.time.Duration javaTimeTimeout = null;
+    final org.threeten.bp.Duration threetenTimeout = null;
     final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
     testDurationMethod(
         null,
-        javaTimeTimeout -> defaultContext.withTimeout(javaTimeTimeout),
-        threetenTimeout -> defaultContext.withTimeout(threetenTimeout),
+        () -> defaultContext.withTimeout(javaTimeTimeout),
+        () -> defaultContext.withTimeout(javaTimeTimeout),
         c -> c.getTimeoutDuration(),
         c -> c.getTimeout());
   }

@@ -33,22 +33,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class TimeConversionTestUtils {
 
   public static <Target> void testInstantMethod(
       Long testValue,
-      Function<java.time.Instant, Target> javaTimeTargetSupplier,
-      Function<org.threeten.bp.Instant, Target> threetenTargetSupplier,
+      Supplier<Target> javaTimeTargetSupplier,
+      Supplier<Target> threetenTargetSupplier,
       Function<Target, java.time.Instant> javaTimeGetter,
       Function<Target, org.threeten.bp.Instant> threetenGetter) {
-    java.time.Instant testJavaTimeValue = java.time.Instant.ofEpochMilli(testValue);
-    org.threeten.bp.Instant testThreetenValue = org.threeten.bp.Instant.ofEpochMilli(testValue);
     Function<java.time.Instant, Long> javaTimeTester = value -> value.toEpochMilli();
     Function<org.threeten.bp.Instant, Long> threetenTester = value -> value.toEpochMilli();
     testTimeObjectMethod(
         testValue,
-        testJavaTimeValue,
         javaTimeTargetSupplier,
         javaTimeGetter,
         threetenGetter,
@@ -56,7 +54,6 @@ public class TimeConversionTestUtils {
         threetenTester);
     testTimeObjectMethod(
         testValue,
-        testThreetenValue,
         threetenTargetSupplier,
         javaTimeGetter,
         threetenGetter,
@@ -66,19 +63,14 @@ public class TimeConversionTestUtils {
 
   public static <Target> void testDurationMethod(
       Long testValue,
-      Function<java.time.Duration, Target> javaTimeTargetSupplier,
-      Function<org.threeten.bp.Duration, Target> threetenTargetSupplier,
+      Supplier<Target> javaTimeTargetSupplier,
+      Supplier<Target> threetenTargetSupplier,
       Function<Target, java.time.Duration> javaTimeGetter,
       Function<Target, org.threeten.bp.Duration> threetenGetter) {
-    java.time.Duration testJavaTimeValue =
-        testValue == null ? null : java.time.Duration.ofMillis(testValue);
-    org.threeten.bp.Duration testThreetenValue =
-        testValue == null ? null : org.threeten.bp.Duration.ofMillis(testValue);
     Function<java.time.Duration, Long> javaTimeTester = value -> value.toMillis();
     Function<org.threeten.bp.Duration, Long> threetenTester = value -> value.toMillis();
     testTimeObjectMethod(
         testValue,
-        testJavaTimeValue,
         javaTimeTargetSupplier,
         javaTimeGetter,
         threetenGetter,
@@ -86,7 +78,6 @@ public class TimeConversionTestUtils {
         threetenTester);
     testTimeObjectMethod(
         testValue,
-        testThreetenValue,
         threetenTargetSupplier,
         javaTimeGetter,
         threetenGetter,
@@ -94,15 +85,14 @@ public class TimeConversionTestUtils {
         threetenTester);
   }
 
-  private static <Target, Threeten, JavaTime, ForSupplier> void testTimeObjectMethod(
+  private static <Target, Threeten, JavaTime> void testTimeObjectMethod(
       Long testValue,
-      ForSupplier supplierValue,
-      Function<ForSupplier, Target> targetSupplier,
+      Supplier<Target> targetSupplier,
       Function<Target, JavaTime> javaTimeGetter,
       Function<Target, Threeten> threetenGetter,
       Function<JavaTime, Long> javaTimeTester,
       Function<Threeten, Long> threetenTester) {
-    Target target = targetSupplier.apply(supplierValue);
+    Target target = targetSupplier.get();
     JavaTime javaTimeValue = javaTimeGetter.apply(target);
     Threeten threetenValue = threetenGetter.apply(target);
     if (testValue == null) {

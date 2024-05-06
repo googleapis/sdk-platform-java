@@ -30,7 +30,6 @@
 package com.google.api.gax.batching;
 
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
-import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 import static com.google.common.util.concurrent.MoreExecutors.directExecutor;
 
 import com.google.api.core.ApiFunction;
@@ -102,12 +101,9 @@ public final class ThresholdBatcher<E> {
     resetThresholds();
   }
 
-  public java.time.Duration getMaxDelayDuration() {
+  @VisibleForTesting
+  public java.time.Duration getMaxDelay() {
     return this.maxDelay;
-  }
-
-  public org.threeten.bp.Duration getMaxDelay() {
-    return toThreetenDuration(this.maxDelay);
   }
 
   /** Builder for a ThresholdBatcher. */

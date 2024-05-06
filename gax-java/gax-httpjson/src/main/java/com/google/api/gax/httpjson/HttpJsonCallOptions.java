@@ -94,8 +94,7 @@ public abstract class HttpJsonCallOptions {
     }
 
     if (inputOptions.getTimeout() != null) {
-      java.time.Duration newTimeout =
-          java.time.Duration.ofMillis(inputOptions.getTimeout().toMillis());
+      java.time.Duration newTimeout = java.time.Duration.ofMillis(inputOptions.getTimeout().toMillis());
       if (newTimeout != null) {
         builder.setTimeout(newTimeout);
       }
