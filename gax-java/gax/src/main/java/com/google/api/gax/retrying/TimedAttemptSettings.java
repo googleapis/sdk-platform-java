@@ -34,7 +34,10 @@ import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.ObsoleteApi;
+import com.google.api.gax.util.ThreetenFieldUpgrade;
+import com.google.api.gax.util.ThreetenFieldUpgrade.FieldRole;
 import com.google.auto.value.AutoValue;
+import com.google.common.annotations.VisibleForTesting;
 
 /** Timed attempt execution settings. Defines time-specific properties of a retry attempt. */
 @AutoValue
@@ -45,33 +48,39 @@ public abstract class TimedAttemptSettings {
 
   /** Backport of {@link #getRetryDelayDuration()} */
   @ObsoleteApi("Use getRetryDelayDuration() instead")
+  @ThreetenFieldUpgrade(key = "retryDelay", role = FieldRole.THREETEN_GETTER)
   public abstract org.threeten.bp.Duration getRetryDelay();
 
   /**
    * Returns the calculated retry delay. Note that the actual delay used for retry scheduling may be
    * different (randomized, based on this value).
    */
+  @ThreetenFieldUpgrade(key = "retryDelay", role = FieldRole.JAVA_TIME_GETTER)
   public final java.time.Duration getRetryDelayDuration() {
     return toJavaTimeDuration(getRetryDelay());
   }
 
   /** Backport of {@link #getRpcTimeoutDuration()} */
   @ObsoleteApi("Use getRpcTimeoutDuration() instead")
+  @ThreetenFieldUpgrade(key = "rpcTimeout", role = FieldRole.THREETEN_GETTER)
   public abstract org.threeten.bp.Duration getRpcTimeout();
 
   /** Returns rpc timeout used for this attempt. */
+  @ThreetenFieldUpgrade(key = "rpcTimeout", role = FieldRole.JAVA_TIME_GETTER)
   public final java.time.Duration getRpcTimeoutDuration() {
     return toJavaTimeDuration(getRpcTimeout());
   }
 
   /** Backport of {@link #getRandomizedRetryDelayDuration()} */
   @ObsoleteApi("Use getRandomizedRetryDelayDuration() instead")
+  @ThreetenFieldUpgrade(key = "randomizedRetryDelay", role = FieldRole.THREETEN_GETTER)
   public abstract org.threeten.bp.Duration getRandomizedRetryDelay();
 
   /**
    * Returns randomized attempt delay. By default this value is calculated based on the {@code
    * retryDelay} value, and is used as the actual attempt execution delay.
    */
+  @ThreetenFieldUpgrade(key = "randomizedRetryDelay", role = FieldRole.JAVA_TIME_GETTER)
   public final java.time.Duration getRandomizedRetryDelayDuration() {
     return toJavaTimeDuration(getRandomizedRetryDelay());
   }
@@ -110,12 +119,14 @@ public abstract class TimedAttemptSettings {
      * Backport of {@link #setRetryDelay(java.time.Duration)} using {@link org.threeten.bp.Duration}
      */
     @ObsoleteApi("Use setRetryDelay(java.time.Duration) instead")
+    @ThreetenFieldUpgrade(key = "retryDelay", role = FieldRole.THREETEN_SETTER)
     public abstract Builder setRetryDelay(org.threeten.bp.Duration value);
 
     /**
      * Sets the calculated retry delay. Note that the actual delay used for retry scheduling may be
      * different (randomized, based on this value).
      */
+    @ThreetenFieldUpgrade(key = "retryDelay", role = FieldRole.JAVA_TIME_SETTER)
     public final Builder setRetryDelay(java.time.Duration value) {
       return setRetryDelay(toThreetenDuration(value));
     }
@@ -124,9 +135,11 @@ public abstract class TimedAttemptSettings {
      * Backport of {@link #setRpcTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
      */
     @ObsoleteApi("Use setRpcTimeout(java.time.Duration) instead")
+    @ThreetenFieldUpgrade(key = "rpcTimeout", role = FieldRole.THREETEN_SETTER)
     public abstract Builder setRpcTimeout(org.threeten.bp.Duration value);
 
     /** Sets rpc timeout used for this attempt. */
+    @ThreetenFieldUpgrade(key = "rpcTimeout", role = FieldRole.JAVA_TIME_SETTER)
     public final Builder setRpcTimeout(java.time.Duration value) {
       return setRpcTimeout(toThreetenDuration(value));
     }
@@ -136,12 +149,14 @@ public abstract class TimedAttemptSettings {
      * org.threeten.bp.Duration}
      */
     @ObsoleteApi("Use setRandomizedRetryDelay(java.time.Duration) instead")
+    @ThreetenFieldUpgrade(key = "randomizedRetryDelay", role = FieldRole.THREETEN_SETTER)
     public abstract Builder setRandomizedRetryDelay(org.threeten.bp.Duration value);
 
     /**
      * Sets randomized attempt delay. By default this value is calculated based on the {@code
      * retryDelay} value, and is used as the actual attempt execution delay.
      */
+    @ThreetenFieldUpgrade(key = "randomizedRetryDelay", role = FieldRole.JAVA_TIME_SETTER)
     public final Builder setRandomizedRetryDelay(java.time.Duration value) {
       return setRandomizedRetryDelay(toThreetenDuration(value));
     }

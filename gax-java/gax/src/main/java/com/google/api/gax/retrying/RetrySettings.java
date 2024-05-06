@@ -318,8 +318,7 @@ public abstract class RetrySettings implements Serializable {
      */
     @ThreetenFieldUpgrade(
         key = "maxRetryDelay",
-        role = FieldRole.JAVA_TIME_SETTER,
-        defaultTestValue = 5000l)
+        role = FieldRole.JAVA_TIME_SETTER)
     public final Builder setMaxRetryDelay(java.time.Duration maxDelay) {
       return setMaxRetryDelay(toThreetenDuration(maxDelay));
     }
@@ -399,8 +398,7 @@ public abstract class RetrySettings implements Serializable {
      */
     @ThreetenFieldUpgrade(
         key = "maxRpcTimeout",
-        role = FieldRole.JAVA_TIME_SETTER,
-        defaultTestValue = 5000l)
+        role = FieldRole.JAVA_TIME_SETTER)
     public final Builder setMaxRpcTimeout(java.time.Duration maxTimeout) {
       return setMaxRpcTimeout(toThreetenDuration(maxTimeout));
     }
