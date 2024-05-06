@@ -38,13 +38,11 @@ public class HttpJsonCallOptionsTest {
   @Test
   public void testDeadline() {
     final long millis = 3;
-    final java.time.Instant javaTimeDeadline = java.time.Instant.ofEpochMilli(millis);
-    final org.threeten.bp.Instant threetenDeadline = org.threeten.bp.Instant.ofEpochMilli(millis);
     final HttpJsonCallOptions.Builder defaultOptionsBuilder = HttpJsonCallOptions.newBuilder();
     testInstantMethod(
         millis,
-        () -> defaultOptionsBuilder.setDeadline(javaTimeDeadline),
-        () -> defaultOptionsBuilder.setDeadline(threetenDeadline),
+        jt -> defaultOptionsBuilder.setDeadline(jt),
+        tt -> defaultOptionsBuilder.setDeadline(tt),
         c -> c.build().getDeadlineInstant(),
         c -> c.build().getDeadline());
   }
