@@ -125,9 +125,16 @@
         <version>${codec.version}</version>
       </dependency>
       <dependency>
-       <groupId>io.opentelemetry.instrumentation</groupId>
-       <artifactId>opentelemetry-grpc-1.6</artifactId>
-       <version>${opentelemetry-grpc-instrumentation.version}</version>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-bom</artifactId>
+        <version>${opentelemetry.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry.instrumentation</groupId>
+        <artifactId>opentelemetry-grpc-1.6</artifactId>
+        <version>${opentelemetry-grpc-instrumentation.version}</version>
       </dependency>
 
       <!-- TODO: replace with opencensus-bom when available -->
