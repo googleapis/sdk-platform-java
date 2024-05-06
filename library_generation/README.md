@@ -300,7 +300,7 @@ The transfer was not a verbatim copy, it rather had modifications:
  * `entrypoint.sh` was modified to have input arguments and slightly modified
    the way the helper scripts are called
  * Other helper scripts were modified to have input arguments.
- * `fix-poms.py` modified the way the monorepo is detected
+ * `fix_poms.py` modified the way the monorepo is detected
 
 All these modifications imply that whenever we want to reflect a change from the
 original owlbot in synthtool we may be better off modifying the affected source

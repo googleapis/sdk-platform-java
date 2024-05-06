@@ -14,15 +14,12 @@
 
 import sys
 import glob
-import inspect
-import itertools
 import json
 from lxml import etree
 import os
 import re
 from typing import List, Mapping
-from poms import module, templates
-from pathlib import Path
+from library_generation.owlbot.src.poms import module, templates
 
 
 def load_versions(filename: str, default_group_id: str) -> Mapping[str, module.Module]:
@@ -39,9 +36,17 @@ def load_versions(filename: str, default_group_id: str) -> Mapping[str, module.M
             if len(parts) == 3:
                 artifact_id = parts[0]
                 group_id = (
-                    default_group_id
-                    if artifact_id.startswith("google-")
-                    else __proto_group_id(default_group_id)
+                    # For artifact id starts with `proto-` or `grpc-`, we
+                    # need special treatments to append `.api.grpc` suffix
+                    # to its corresponding group id.
+                    # For other artifact id, keep the existing group id.
+                    # Other than the two aforementioned artifact id, do not
+                    # assume artifact id always starts with `google-`. Known
+                    # exception is ad-manager.
+                    __proto_group_id(default_group_id)
+                    if artifact_id.startswith("proto-")
+                    or artifact_id.startswith("grpc-")
+                    else default_group_id
                 )
                 modules[artifact_id] = module.Module(
                     group_id=group_id,

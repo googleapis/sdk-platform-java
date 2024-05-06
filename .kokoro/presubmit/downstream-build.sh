@@ -36,8 +36,13 @@ cp settings.xml "${HOME}/.m2"
 
 ### Round 1
 # Publish this repo's modules to local maven to make them available for downstream libraries
-mvn -B -ntp install --projects '!gapic-generator-java' \
-  -Dcheckstyle.skip -Dfmt.skip -DskipTests
+mvn install --projects '!gapic-generator-java' \
+  -Dcheckstyle.skip \
+  -Dfmt.skip \
+  -DskipTests \
+  -B -ntp \
+  -Dorg.slf4j.simpleLogger.showDateTime=true \
+  -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss:SSS
 
 SHARED_DEPS_VERSION=$(parse_pom_version java-shared-dependencies)
 
@@ -47,14 +52,22 @@ SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -Dfo
 popd
 # Start showcase server
 mkdir -p /usr/src/showcase
-curl --location https://github.com/googleapis/gapic-showcase/releases/download/v"${SHOWCASE_VERSION}"/gapic-showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz --output /usr/src/showcase/showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz
+curl \
+  --location https://github.com/googleapis/gapic-showcase/releases/download/v"${SHOWCASE_VERSION}"/gapic-showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz \
+  --output /usr/src/showcase/showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz
 pushd /usr/src/showcase/
 tar -xf showcase-*
 ./gapic-showcase run &
 popd
 # Run showcase tests with `native` profile
 pushd showcase
-mvn test -Pnative,-showcase -Denforcer.skip=true -ntp -B
+mvn test -Pnative,-showcase \
+  -Denforcer.skip=true \
+  -Dcheckstyle.skip \
+  -Dfmt.skip \
+  -ntp -B \
+  -Dorg.slf4j.simpleLogger.showDateTime=true \
+  -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss:SSS
 popd
 
 ### Round 3
