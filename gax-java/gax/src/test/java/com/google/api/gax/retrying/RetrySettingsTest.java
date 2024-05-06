@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.retrying;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.truth.Truth;
 import org.junit.Test;
 
@@ -37,23 +36,13 @@ public class RetrySettingsTest {
 
   @Test
   public void retrySettingsSetLogicalTimeout() {
-    java.time.Duration javaTimeTimeout = java.time.Duration.ofMillis(60000);
-    org.threeten.bp.Duration threetenTimeout = org.threeten.bp.Duration.ofMillis(60000);
-    RetrySettings javaTimeRetrySettings =
-        RetrySettings.newBuilder().setLogicalTimeout(javaTimeTimeout).build();
-    RetrySettings threetenRetrySettings =
-        RetrySettings.newBuilder().setLogicalTimeout(threetenTimeout).build();
+    java.time.Duration timeout = java.time.Duration.ofMillis(60000);
+    RetrySettings retrySettings = RetrySettings.newBuilder().setLogicalTimeout(timeout).build();
 
-    for (RetrySettings retrySettings :
-        ImmutableList.of(javaTimeRetrySettings, threetenRetrySettings)) {
-      Truth.assertThat(retrySettings.getRpcTimeoutMultiplier()).isEqualTo(1);
-      Truth.assertThat(retrySettings.getInitialRpcTimeoutDuration()).isEqualTo(javaTimeTimeout);
-      Truth.assertThat(retrySettings.getInitialRpcTimeout()).isEqualTo(threetenTimeout);
-      Truth.assertThat(retrySettings.getMaxRpcTimeoutDuration()).isEqualTo(javaTimeTimeout);
-      Truth.assertThat(retrySettings.getMaxRpcTimeout()).isEqualTo(threetenTimeout);
-      Truth.assertThat(retrySettings.getTotalTimeoutDuration()).isEqualTo(javaTimeTimeout);
-      Truth.assertThat(retrySettings.getTotalTimeout()).isEqualTo(threetenTimeout);
-    }
+    Truth.assertThat(retrySettings.getRpcTimeoutMultiplier()).isEqualTo(1);
+    Truth.assertThat(retrySettings.getInitialRpcTimeoutDuration()).isEqualTo(timeout);
+    Truth.assertThat(retrySettings.getMaxRpcTimeoutDuration()).isEqualTo(timeout);
+    Truth.assertThat(retrySettings.getTotalTimeoutDuration()).isEqualTo(timeout);
   }
 
   @Test
