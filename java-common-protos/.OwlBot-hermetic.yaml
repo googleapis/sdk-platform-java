@@ -22,50 +22,50 @@ deep-preserve-regex:
 - "/java-common-protos/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java"
 
 deep-copy-regex:
-- source: "/google/api/google-api-java/proto-google-api-java/src"
+- source: "/google/api/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
-- source: "/google/cloud/audit/google-cloud-audit-java/proto-google-cloud-audit-java/src"
+- source: "/google/cloud/audit/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 # For geo common protos
-- source: "/google/geo/type/google-geo-type-java/proto-google-geo-type-java/src"
+- source: "/google/geo/type/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 # For shopping common protos
-- source: "/google/shopping/type/google-shopping-type-java/proto-google-shopping-type-java/src"
+- source: "/google/shopping/type/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 # It is only used once in https://github.com/googleapis/googleapis/blob/master/google/chat/v1/BUILD.bazel#L47,
 # and technically not a common proto, maybe a violation of AIP-215 if it is not.
 # However, it's better to put it here so that we don't have to manually add it to BUILD.bazel file and hermetic build scripts.
-- source: "/google/apps/card/v1/google-apps-card-v1-java/proto-google-apps-card-v1-java/src"
+- source: "/google/apps/card/v1/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
-- source: "/google/logging/type/google-logging-type-java/proto-google-logging-type-java/src"
+- source: "/google/logging/type/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
-- source: "/google/longrunning/google-longrunning-java/proto-google-longrunning-java/src"
+- source: "/google/longrunning/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
-- source: "/google/rpc/google-rpc-java/proto-google-rpc-java/src"
+- source: "/google/rpc/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
-- source: "/google/rpc/context/google-context-java/proto-google-context-java/src"
+- source: "/google/rpc/context/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
-- source: "/google/type/google-type-java/proto-google-type-java/src"
+- source: "/google/type/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
-- source: "/google/cloud/google-apps-script-type-java/proto-google-apps-script-type-java/src"
+- source: "/google/cloud/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
-- source: "/google/cloud/location/google-cloud-location-java/proto-google-cloud-location-java/src"
+- source: "/google/cloud/location/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
-- source: "/google/cloud/location/google-cloud-location-java/grpc-google-cloud-location-java/src"
+- source: "/google/cloud/location/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/grpc-google-common-protos/src"
 
-- source: "/google/longrunning/google-longrunning-java/grpc-google-longrunning-java/src"
+- source: "/google/longrunning/.*-java/proto-google-.*/src"
   dest: "/owl-bot-staging/java-common-protos/v1/grpc-google-common-protos/src"
 api-name: common-protos
