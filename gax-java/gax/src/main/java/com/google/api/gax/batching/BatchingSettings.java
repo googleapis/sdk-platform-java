@@ -34,6 +34,8 @@ import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
+import com.google.api.gax.util.ThreetenFieldUpgrade;
+import com.google.api.gax.util.ThreetenFieldUpgrade.FieldRole;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import javax.annotation.Nullable;
@@ -104,10 +106,12 @@ public abstract class BatchingSettings {
   /** Get the delay threshold to use for batching. */
   @Nullable
   @ObsoleteApi("Use getDelayThresholdDuration() instead")
+  @ThreetenFieldUpgrade(key = "delayThreshold", role = FieldRole.THREETEN_GETTER)
   public abstract org.threeten.bp.Duration getDelayThreshold();
 
   /** Get the delay threshold to use for batching. */
   @Nullable
+  @ThreetenFieldUpgrade(key = "delayThreshold", role = FieldRole.JAVA_TIME_GETTER)
   public final java.time.Duration getDelayThresholdDuration() {
     return toJavaTimeDuration(getDelayThreshold());
   }
@@ -154,6 +158,7 @@ public abstract class BatchingSettings {
 
     /** Backport of {@link #setDelayThreshold(java.time.Duration)} */
     @ObsoleteApi("Use setDelayThreshold(java.time.Duration) instead")
+    @ThreetenFieldUpgrade(key = "delayThreshold", role = FieldRole.THREETEN_SETTER)
     public abstract Builder setDelayThreshold(org.threeten.bp.Duration delayThreshold);
 
     /**
@@ -162,6 +167,7 @@ public abstract class BatchingSettings {
      * value should not be set too high, usually on the order of milliseconds. Otherwise, calls
      * might appear to never complete.
      */
+    @ThreetenFieldUpgrade(key = "delayThreshold", role = FieldRole.JAVA_TIME_SETTER)
     public final Builder setDelayThreshold(java.time.Duration delayThreshold) {
       return setDelayThreshold(toThreetenDuration(delayThreshold));
     }
