@@ -31,8 +31,8 @@ is_monorepo=$4
 
 
 if [[ "${is_monorepo}" == "true" ]]; then
-  mv owl-bot-staging temp
-  rm -rf owl-bot-staging
+  mv owl-bot-staging/* temp
+  rm -rd owl-bot-staging/
   mv temp owl-bot-staging
 fi
 
