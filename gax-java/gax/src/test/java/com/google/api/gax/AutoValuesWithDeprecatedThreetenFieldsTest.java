@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.api.gax.util.ThreetenFieldUpgrade;
 import com.google.api.gax.util.ThreetenFieldUpgrade.FieldRole;
-import com.google.api.gax.util.ThreetenTestAutoValueOverrideClass;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
@@ -29,7 +28,8 @@ import org.reflections.Reflections;
 @RunWith(JUnit4.class)
 public class AutoValuesWithDeprecatedThreetenFieldsTest {
 
-  private static final Logger logger = Logger.getLogger("");
+  private static final Logger logger =
+      Logger.getLogger(AutoValuesWithDeprecatedThreetenFieldsTest.class.getSimpleName());
 
   @Test
   public void testAutoValueClassesWithThreetenMethods()
@@ -40,16 +40,8 @@ public class AutoValuesWithDeprecatedThreetenFieldsTest {
     }
   }
 
-  private void testAutoValueClassWithThreetenMethods(Class initialAutoValueClass)
+  private void testAutoValueClassWithThreetenMethods(Class autoValueClass)
       throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-    // Here we handle the case where we are processing a class annotated with
-    // @ThreetenTestAutoValueOverrideClass. In such case, we only extract the custom newBuilder()
-    // method and process the parent class as usual
-    Method newBuilderMethod = initialAutoValueClass.getDeclaredMethod("newBuilder");
-    final Class autoValueClass =
-        initialAutoValueClass.isAnnotationPresent(ThreetenTestAutoValueOverrideClass.class) ?
-            initialAutoValueClass.getSuperclass() : initialAutoValueClass;
-
     logger.info(String.format("Testing threeten methods for class %s", autoValueClass.getName()));
 
     // We first group the methods by key. Each key should contain four methods corresponding to a
@@ -93,14 +85,12 @@ public class AutoValuesWithDeprecatedThreetenFieldsTest {
       logger.info(String.format("Confirming structure of method group '%s", groupName));
       confirmGetterAndSetterStructure(organizedMethods);
       logger.info(String.format("Confirming behavior of method group '%s", groupName));
-      confirmGetterAndSetterBehavior(organizedMethods, autoValueClass, builderClass,
-          newBuilderMethod);
+      confirmGetterAndSetterBehavior(organizedMethods, autoValueClass, builderClass);
     }
   }
 
   private void confirmGetterAndSetterBehavior(
-      Map<FieldRole, Method> organizedMethods, Class autoValueClass, Class<?> builderClass,
-      Method newBuilderMethod)
+      Map<FieldRole, Method> organizedMethods, Class autoValueClass, Class<?> builderClass)
       throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
     Method javaTimeGetter = organizedMethods.get(FieldRole.JAVA_TIME_GETTER);
     Method threetenGetter = organizedMethods.get(FieldRole.THREETEN_GETTER);
@@ -126,7 +116,6 @@ public class AutoValuesWithDeprecatedThreetenFieldsTest {
         javaTimeSetter,
         autoValueClass,
         builderClass,
-        newBuilderMethod,
         testJavaTimeObjectValue,
         testJavaTimeObjectValue,
         testThreetenObjectValue);
@@ -136,7 +125,6 @@ public class AutoValuesWithDeprecatedThreetenFieldsTest {
         threetenSetter,
         autoValueClass,
         builderClass,
-        newBuilderMethod,
         testThreetenObjectValue,
         testJavaTimeObjectValue,
         testThreetenObjectValue);
@@ -148,13 +136,23 @@ public class AutoValuesWithDeprecatedThreetenFieldsTest {
       Method setter,
       Class autoValueClass,
       Class builderClass,
-      Method newBuilderMethod,
       Object testSetterValue,
       Object testJavaTimeObjectValue,
       Object testThreetenObjectValue)
       throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
-    Object builder = newBuilderMethod.invoke(autoValueClass);
+    Object builder = autoValueClass.getDeclaredMethod("newBuilder").invoke(autoValueClass);
+
+    // Some AutoValue classes need default values to be tested with. This section uses a special
+    // annotation field "defaultTestValue" and ensures the builder is set with such values
+    for (Entry<Method, Long> defaultSetter :
+        getSettersWithDefaultValue(builderClass, setter).entrySet()) {
+      Object value =
+          javaTimeGetter.getReturnType().equals(java.time.Duration.class)
+              ? java.time.Duration.ofMillis(defaultSetter.getValue())
+              : java.time.Instant.ofEpochMilli(defaultSetter.getValue());
+      defaultSetter.getKey().invoke(builder, value);
+    }
 
     // Now we call the actual setter under test
     setter.invoke(builder, testSetterValue);
@@ -163,6 +161,26 @@ public class AutoValuesWithDeprecatedThreetenFieldsTest {
     // And we confirm on the created object that the getters behave the same
     assertEquals(testJavaTimeObjectValue, javaTimeGetter.invoke(builtObject));
     assertEquals(testThreetenObjectValue, threetenGetter.invoke(builtObject));
+  }
+
+  private Map<Method, Long> getSettersWithDefaultValue(Class builderClass, Method setterUnderTest) {
+    Map<Method, Long> result = new HashMap<>();
+    for (Method m : builderClass.getDeclaredMethods()) {
+      if (!m.isAnnotationPresent(ThreetenFieldUpgrade.class)
+          || m.getName() == setterUnderTest.getName()) {
+        continue;
+      }
+      ThreetenFieldUpgrade annotation = m.getAnnotation(ThreetenFieldUpgrade.class);
+      if (annotation.defaultTestValue() == ThreetenFieldUpgrade.UNSET_DEFAULT_VALUE) {
+        continue;
+      }
+      assertEquals(
+          "defaulTestValue can only be used with JAVA_TIME_SETTER",
+          FieldRole.JAVA_TIME_SETTER,
+          annotation.role());
+      result.put(m, annotation.defaultTestValue());
+    }
+    return result;
   }
 
   private void confirmGetterAndSetterStructure(Map<FieldRole, Method> organizedMethods) {
@@ -265,21 +283,7 @@ public class AutoValuesWithDeprecatedThreetenFieldsTest {
       List<Method> methods = Arrays.asList(c.getDeclaredMethods());
       boolean hasThreetenAnnotatedMethods =
           methods.stream().anyMatch(m -> m.isAnnotationPresent(ThreetenFieldUpgrade.class));
-      if (!hasThreetenAnnotatedMethods) {
-        continue;
-      }
-      // Some AutoValue classes will have a child class declared in test-scope with, for example, a
-      // custom newBuilder() method. Such child classes will be annotated with
-      // @ThreetenTestAutoValueOverrideClass
-      Set<Class<?>> childrenClasses = reflections.getSubTypesOf(c);
-      boolean hasChildClassWithCustomBehavior = false;
-      for (Class child : childrenClasses) {
-        if (child.isAnnotationPresent(ThreetenTestAutoValueOverrideClass.class)) {
-          hasChildClassWithCustomBehavior = true;
-          result.add(child);
-        }
-      }
-      if (!hasChildClassWithCustomBehavior) {
+      if (hasThreetenAnnotatedMethods) {
         result.add(c);
       }
     }

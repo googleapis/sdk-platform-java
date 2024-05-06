@@ -24,4 +24,6 @@ public @interface ThreetenFieldUpgrade {
   FieldRole role();
 
   String key();
+
+  long defaultTestValue() default Long.MIN_VALUE;
 }
