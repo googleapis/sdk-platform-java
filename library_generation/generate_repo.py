@@ -85,6 +85,9 @@ def generate(
     )
 
 
+PROTO_ONLY_LIBRARIES = ["java-common-protos"]
+
+
 def generate_from_yaml(
     config_path: str,
     config: GenerationConfig,
@@ -112,8 +115,11 @@ def generate_from_yaml(
         gen_config=config, library_config=target_libraries, repo_path=repository_path
     )
 
+    has_proto_only_libraries = False
     for library_path, library in repo_config.libraries.items():
         print(f"generating library {library.get_library_name()}")
+        if library.get_library_name() in PROTO_ONLY_LIBRARIES:
+            has_proto_only_libraries = True
 
         generate_composed_library(
             config_path=config_path,
@@ -124,8 +130,9 @@ def generate_from_yaml(
             versions_file=repo_config.versions_file,
         )
 
-    # we skip monorepo_postprocessing if not in a monorepo
-    if not config.is_monorepo():
+    # we skip monorepo_postprocessing if it is not a monorepo
+    # or has proto-only libraries.
+    if not config.is_monorepo() or has_proto_only_libraries:
         return
 
     monorepo_postprocessing(
