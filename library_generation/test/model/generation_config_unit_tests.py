@@ -131,8 +131,6 @@ class GenerationConfigTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries_bom_version="",
-            owlbot_cli_image="",
-            synthtool_commitish="",
             template_excludes=[],
             libraries=[
                 LibraryConfig(
@@ -175,22 +173,6 @@ class GenerationConfigTest(unittest.TestCase):
             "Repo level parameter, libraries_bom_version",
             from_yaml,
             f"{test_config_dir}/config_without_libraries_bom_version.yaml",
-        )
-
-    def test_from_yaml_without_owlbot_cli_image_raise_exception(self):
-        self.assertRaisesRegex(
-            ValueError,
-            "Repo level parameter, owlbot_cli_image",
-            from_yaml,
-            f"{test_config_dir}/config_without_owlbot.yaml",
-        )
-
-    def test_from_yaml_without_synthtool_commitish_raise_exception(self):
-        self.assertRaisesRegex(
-            ValueError,
-            "Repo level parameter, synthtool_commitish",
-            from_yaml,
-            f"{test_config_dir}/config_without_synthtool.yaml",
         )
 
     def test_from_yaml_without_template_excludes_raise_exception(self):
