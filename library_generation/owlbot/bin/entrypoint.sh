@@ -77,5 +77,5 @@ echo "...done"
 # when `docker run`ning with the -u flag because we may incur in users
 # not registered in the container's /etc/passwd file
 echo "Reformatting source..."
-#mvn fmt:format -Duser.home="${HOME}" -V --batch-mode --no-transfer-progress
+mvn fmt:format -Duser.home="${HOME}" -V --batch-mode --no-transfer-progress
 echo "...done"
