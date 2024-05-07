@@ -281,6 +281,24 @@ class UtilitiesTest(unittest.TestCase):
         )
         self.__remove_prerequisite_files(path=library_path)
 
+    def test_generate_prerequisite_files_proto_only_repo_success(self):
+        library_path = self.__setup_prerequisite_files(
+            num_libraries=2, library_type="OTHER", proto_only_repo=True
+        )
+
+        file_comparator.compare_files(
+            f"{library_path}/.repo-metadata.json",
+            f"{library_path}/.repo-metadata-proto-only-golden.json",
+        )
+        file_comparator.compare_files(
+            f"{library_path}/.OwlBot-hermetic.yaml",
+            f"{library_path}/.OwlBot-hermetic-golden.yaml",
+        )
+        file_comparator.compare_files(
+            f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
+        )
+        self.__remove_prerequisite_files(path=library_path)
+
     def test_prepare_repo_monorepo_success(self):
         gen_config = self.__get_a_gen_config(2)
         repo_config = util.prepare_repo(
@@ -317,7 +335,10 @@ class UtilitiesTest(unittest.TestCase):
         shutil.rmtree(repo_config.output_folder)
 
     def __setup_prerequisite_files(
-        self, num_libraries: int, library_type: str = "GAPIC_AUTO"
+        self,
+        num_libraries: int,
+        library_type: str = "GAPIC_AUTO",
+        proto_only_repo: bool = False,
     ) -> str:
         library_path = f"{resources_dir}/goldens"
         files = [
@@ -335,6 +356,7 @@ class UtilitiesTest(unittest.TestCase):
             proto_path=proto_path,
             transport=transport,
             library_path=library_path,
+            proto_only_repo=proto_only_repo,
         )
         return library_path
 

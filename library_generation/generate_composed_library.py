@@ -47,10 +47,12 @@ def generate_composed_library(
     library: LibraryConfig,
     output_folder: str,
     versions_file: str,
+    proto_only_repo: bool = False,
 ) -> None:
     """
     Generate libraries composed of more than one service or service version
 
+    :param has_proto_only_libraries:
     :param config_path: Path to generation configuration.
     :param config: a GenerationConfig object representing a parsed configuration
     yaml
@@ -59,6 +61,8 @@ def generate_composed_library(
     for convenience and to prevent all libraries to be processed
     :param output_folder: the folder to where tools go
     :param versions_file: the file containing version of libraries
+    :param proto_only_repo: whether the library is generated into a proto-only
+    repository or not.
     :return None
     """
     util.pull_api_definition(
@@ -81,6 +85,7 @@ def generate_composed_library(
             proto_path=util.remove_version_from(gapic.proto_path),
             transport=gapic_inputs.transport,
             library_path=library_path,
+            proto_only_repo=proto_only_repo,
         )
         temp_destination_path = f"java-{gapic.proto_path.replace('/','-')}"
         effective_arguments = __construct_effective_arg(

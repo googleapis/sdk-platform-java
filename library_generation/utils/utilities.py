@@ -188,18 +188,22 @@ def generate_prerequisite_files(
     proto_path: str,
     transport: str,
     library_path: str,
+    proto_only_repo: bool = False,
     language: str = "java",
 ) -> None:
     """
     Generate prerequisite files for a library.
 
     Note that the version, if any, in the proto_path will be removed.
+
     :param config: a GenerationConfig object representing a parsed configuration
     yaml
     :param library: the library configuration
     :param proto_path: the proto path
     :param transport: transport supported by the library
     :param library_path: the path to which the generated file goes
+    :param proto_only_repo: whether the library is generated into a proto-only
+    repository or not.
     :param language: programming language of the library
     :return: None
     """
@@ -211,11 +215,12 @@ def generate_prerequisite_files(
         else f"{library.group_id}:google-{cloud_prefix}{library_name}"
     )
     distribution_name_short = re.split(r"[:/]", distribution_name)[-1]
-    repo = (
-        "googleapis/google-cloud-java"
-        if config.is_monorepo()
-        else f"googleapis/{language}-{library_name}"
-    )
+    if proto_only_repo:
+        repo = "googleapis/sdk-platform-java"
+    elif config.is_monorepo():
+        repo = "googleapis/google-cloud-java"
+    else:
+        repo = f"googleapis/{language}-{library_name}"
     api_id = (
         library.api_id if library.api_id else f"{library.api_shortname}.googleapis.com"
     )
