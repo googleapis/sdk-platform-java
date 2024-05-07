@@ -26,7 +26,9 @@ cp settings.xml "${HOME}/.m2"
 
 # Publish this repo's modules to local maven to make them available for downstream libraries
 mvn install --projects '!gapic-generator-java' \
+  -Danimal.sniffer.skip \
   -Dcheckstyle.skip \
+  -Dclirr.skip \
   -Dfmt.skip \
   -DskipTests \
   -B -ntp \
