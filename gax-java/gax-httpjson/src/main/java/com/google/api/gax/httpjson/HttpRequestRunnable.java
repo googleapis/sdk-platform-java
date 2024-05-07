@@ -234,7 +234,7 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
           httpRequest.getHeaders(), "X-HTTP-Method-Override", originalHttpMethod);
     }
 
-    Duration timeout = httpJsonCallOptions.getTimeout();
+    java.time.Duration timeout = httpJsonCallOptions.getTimeoutDuration();
     if (timeout != null) {
       long timeoutMs = timeout.toMillis();
 

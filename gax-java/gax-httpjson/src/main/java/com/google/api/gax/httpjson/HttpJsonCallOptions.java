@@ -29,14 +29,15 @@
  */
 package com.google.api.gax.httpjson;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeInstant;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 import static com.google.api.gax.util.TimeConversionUtils.toThreetenInstant;
 
 import com.google.api.core.ObsoleteApi;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;
-import java.time.Duration;
 import javax.annotation.Nullable;
 
 /** Options for an http-json call, including deadline and credentials. */
@@ -45,7 +46,13 @@ public abstract class HttpJsonCallOptions {
   public static final HttpJsonCallOptions DEFAULT = newBuilder().build();
 
   @Nullable
-  public abstract Duration getTimeout();
+  @ObsoleteApi("Use getTimeoutDuration() instead")
+  public abstract org.threeten.bp.Duration getTimeout();
+
+  @Nullable
+  public java.time.Duration getTimeoutDuration() {
+    return toJavaTimeDuration(getTimeout());
+  }
 
   @Nullable
   @ObsoleteApi("Use getDeadlineInstant() instead")
@@ -75,13 +82,13 @@ public abstract class HttpJsonCallOptions {
 
     Builder builder = this.toBuilder();
 
-    org.threeten.bp.Instant newDeadline = inputOptions.getDeadline();
+    java.time.Instant newDeadline = inputOptions.getDeadlineInstant();
     if (newDeadline != null) {
       builder.setDeadline(newDeadline);
     }
 
     if (inputOptions.getTimeout() != null) {
-      Duration newTimeout = java.time.Duration.ofMillis(inputOptions.getTimeout().toMillis());
+      java.time.Duration newTimeout = inputOptions.getTimeoutDuration();
       if (newTimeout != null) {
         builder.setTimeout(newTimeout);
       }
@@ -102,7 +109,12 @@ public abstract class HttpJsonCallOptions {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setTimeout(java.time.Duration value);
+    @ObsoleteApi("Use setTimeout(java.time.Duration) instead")
+    public abstract Builder setTimeout(org.threeten.bp.Duration value);
+
+    public Builder setTimeout(java.time.Duration value) {
+      return setTimeout(toThreetenDuration(value));
+    }
 
     /** Backport of {@link #setDeadline(java.time.Instant)} */
     @ObsoleteApi("Use setDeadline(java.time.Instant) instead")

@@ -29,21 +29,34 @@
  */
 package com.google.api.gax.httpjson;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.api.gax.util.TimeConversionTestUtils.testInstantMethod;
 
 import org.junit.Test;
 
 public class HttpJsonCallOptionsTest {
+  private final HttpJsonCallOptions.Builder OPTIONS_BUILDER = HttpJsonCallOptions.newBuilder();
 
   @Test
   public void testDeadline() {
     final long millis = 3;
-    final HttpJsonCallOptions.Builder defaultOptionsBuilder = HttpJsonCallOptions.newBuilder();
     testInstantMethod(
         millis,
-        jt -> defaultOptionsBuilder.setDeadline(jt),
-        tt -> defaultOptionsBuilder.setDeadline(tt),
+        jt -> OPTIONS_BUILDER.setDeadline(jt),
+        tt -> OPTIONS_BUILDER.setDeadline(tt),
         c -> c.build().getDeadlineInstant(),
         c -> c.build().getDeadline());
   }
+
+  @Test
+  public void testTimeout() {
+    final long millis = 3;
+    testDurationMethod(
+        millis,
+        jt -> OPTIONS_BUILDER.setTimeout(jt),
+        tt -> OPTIONS_BUILDER.setTimeout(tt),
+        c -> c.build().getTimeoutDuration(),
+        c -> c.build().getTimeout());
+  }
+
 }
