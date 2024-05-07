@@ -18,6 +18,7 @@ package com.google.showcase.v1beta1.it;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.httpjson.*;
+import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.*;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
@@ -30,11 +31,11 @@ import org.junit.Test;
 // TODO: add testing on error responses once feat is implemented in showcase.
 //  https://github.com/googleapis/gapic-showcase/pull/1456
 public class ITApiVersionHeaders {
-  private static final String API_VERSION_HEADER_STRING = "x-goog-api-version";
   private static final String HTTP_RESPONSE_HEADER_STRING =
-      "x-showcase-request-" + API_VERSION_HEADER_STRING;
+      "x-showcase-request-" + ApiClientHeaderProvider.API_VERSION_HEADER_KEY;
   private static final Metadata.Key<String> API_VERSION_HEADER_KEY =
-      Metadata.Key.of(API_VERSION_HEADER_STRING, Metadata.ASCII_STRING_MARSHALLER);
+      Metadata.Key.of(
+          ApiClientHeaderProvider.API_VERSION_HEADER_KEY, Metadata.ASCII_STRING_MARSHALLER);
 
   private static final String EXPECTED_ECHO_API_VERSION = "v1_20240408";
 
