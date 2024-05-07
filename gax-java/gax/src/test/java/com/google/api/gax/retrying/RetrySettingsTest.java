@@ -29,10 +29,16 @@
  */
 package com.google.api.gax.retrying;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
+
 import com.google.common.truth.Truth;
 import org.junit.Test;
 
 public class RetrySettingsTest {
+  private static final RetrySettings.Builder DEFAULT_BUILDER =
+      RetrySettings.newBuilder()
+          .setMaxRpcTimeout(java.time.Duration.ofMillis(5000l))
+          .setMaxRetryDelay(java.time.Duration.ofMillis(5000l));
 
   @Test
   public void retrySettingsSetLogicalTimeout() {
@@ -78,5 +84,55 @@ public class RetrySettingsTest {
         .of(settingsB.getRetryDelayMultiplier());
     Truth.assertThat(settingsA.getMaxRetryDelayDuration())
         .isEqualTo(settingsB.getMaxRetryDelayDuration());
+  }
+
+  @Test
+  public void testTotalTimeout() {
+    testDurationMethod(
+        123l,
+        jt -> DEFAULT_BUILDER.setTotalTimeout(jt).build(),
+        tt -> DEFAULT_BUILDER.setTotalTimeout(tt).build(),
+        rs -> rs.getTotalTimeoutDuration(),
+        rs -> rs.getTotalTimeout());
+  }
+
+  @Test
+  public void testInitialRetryDelay() {
+    testDurationMethod(
+        123l,
+        jt -> DEFAULT_BUILDER.setInitialRetryDelay(jt).build(),
+        tt -> DEFAULT_BUILDER.setInitialRetryDelay(tt).build(),
+        rs -> rs.getInitialRetryDelayDuration(),
+        rs -> rs.getInitialRetryDelay());
+  }
+
+  @Test
+  public void testMaxRetryDelay() {
+    testDurationMethod(
+        123l,
+        jt -> DEFAULT_BUILDER.setMaxRetryDelay(jt).build(),
+        tt -> DEFAULT_BUILDER.setMaxRetryDelay(tt).build(),
+        rs -> rs.getMaxRetryDelayDuration(),
+        rs -> rs.getMaxRetryDelay());
+  }
+
+  @Test
+  public void testInitialRpcTimeout() {
+    testDurationMethod(
+        123l,
+        jt -> DEFAULT_BUILDER.setInitialRpcTimeout(jt).build(),
+        tt -> DEFAULT_BUILDER.setInitialRpcTimeout(tt).build(),
+        rs -> rs.getInitialRpcTimeoutDuration(),
+        rs -> rs.getInitialRpcTimeout());
+  }
+
+  @Test
+  public void testMaxRpcTimeout() {
+    testDurationMethod(
+        123l,
+        jt -> DEFAULT_BUILDER.setMaxRpcTimeout(jt).build(),
+        tt -> DEFAULT_BUILDER.setMaxRpcTimeout(tt).build(),
+        rs -> rs.getMaxRpcTimeoutDuration(),
+        rs -> rs.getMaxRpcTimeout());
   }
 }
