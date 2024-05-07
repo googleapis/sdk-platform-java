@@ -35,7 +35,7 @@ If you are using Maven with [BOM][libraries-bom], add this to your pom.xml file:
 ```
 
 If you are using Maven without the BOM, add this to your dependencies:
-{% elif monorepo %}
+{% elif monorepo and artifact_id not in metadata['proto_only_libraries'] %}
 If you are using Maven with [BOM][libraries-bom], add this to your pom.xml file:
 
 ```xml
