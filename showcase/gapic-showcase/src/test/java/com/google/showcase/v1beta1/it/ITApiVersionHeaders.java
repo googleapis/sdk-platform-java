@@ -27,13 +27,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+// TODO: add testing on error responses once feat is implemented in showcase.
+//  https://github.com/googleapis/gapic-showcase/pull/1456
 public class ITApiVersionHeaders {
-  private static final String SPLIT_TOKEN = "&";
   private static final String API_VERSION_HEADER_STRING = "x-goog-api-version";
   private static final String HTTP_RESPONSE_HEADER_STRING =
       "x-showcase-request-" + API_VERSION_HEADER_STRING;
   private static final Metadata.Key<String> API_VERSION_HEADER_KEY =
       Metadata.Key.of(API_VERSION_HEADER_STRING, Metadata.ASCII_STRING_MARSHALLER);
+
+  private static final String EXPECTED_ECHO_API_VERSION = "v1_20240408";
 
   // Implement a client interceptor to retrieve the trailing metadata from response.
   private static class GrpcCapturingClientInterceptor implements ClientInterceptor {
@@ -177,7 +180,7 @@ public class ITApiVersionHeaders {
   public void testGrpc_matchesApiVersion() {
     grpcClient.echo(EchoRequest.newBuilder().build());
     String headerValue = grpcInterceptor.metadata.get(API_VERSION_HEADER_KEY);
-    assertThat(headerValue).isEqualTo("v1_20240408");
+    assertThat(headerValue).isEqualTo(EXPECTED_ECHO_API_VERSION);
   }
 
   @Test
@@ -186,7 +189,7 @@ public class ITApiVersionHeaders {
     ArrayList headerValues =
         (ArrayList) httpJsonInterceptor.metadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
     String headerValue = (String) headerValues.get(0);
-    assertThat(headerValue).isEqualTo("v1_20240408");
+    assertThat(headerValue).isEqualTo(EXPECTED_ECHO_API_VERSION);
   }
 
   @Test
