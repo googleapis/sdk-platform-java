@@ -255,6 +255,8 @@ def generate_prerequisite_files(
         "library_type": library.library_type,
         "requires_billing": library.requires_billing,
     }
+    if proto_only_repo:
+        repo_metadata.pop("api_id")
 
     if library.api_reference:
         repo_metadata["api_reference"] = library.api_reference
