@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.batching;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.core.ApiFutures;
@@ -37,6 +38,7 @@ import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
@@ -123,6 +125,7 @@ public class ThresholdBatcherTest {
   }
 
   private static class SimpleBatchMerger implements BatchMerger<SimpleBatch> {
+
     @Override
     public void merge(SimpleBatch batch, SimpleBatch newBatch) {
       batch.merge(newBatch);
@@ -359,24 +362,16 @@ public class ThresholdBatcherTest {
   }
 
   @Test
-  public void testTimeObjectsEquivalence() throws NoSuchMethodException {
+  public void testMaxDelay() {
     AccumulatingBatchReceiver<SimpleBatch> receiver =
         new AccumulatingBatchReceiver<>(ApiFutures.<Void>immediateFuture(null));
-    Method build = ThresholdBatcher.Builder.class.getMethod("build");
-    Method getMaxDelay = ThresholdBatcher.class.getMethod("getMaxDelay");
-
-    // TimeConversionTestUtils.testDurationGetterAndSetter(
-    //     java.time.Duration.ofNanos(123l),
-    //     createSimpleBatcherBuidler(receiver),
-    //     ThresholdBatcher.Builder.class.getMethod("setMaxDelay", java.time.Duration.class),
-    //     build,
-    //     getMaxDelay);
-    //
-    // TimeConversionTestUtils.testDurationGetterAndSetter(
-    //     org.threeten.bp.Duration.ofNanos(123l),
-    //     createSimpleBatcherBuidler(receiver),
-    //     ThresholdBatcher.Builder.class.getMethod("setMaxDelay", org.threeten.bp.Duration.class),
-    //     build,
-    //     getMaxDelay);
+    final ThresholdBatcher.Builder builder = createSimpleBatcherBuidler(receiver)
+        .setThresholds(Collections.emptyList());
+    testDurationMethod(123l,
+        jt -> builder.setMaxDelay(jt).build(),
+        tt -> builder.setMaxDelay(tt).build(),
+        o -> o.getMaxDelayDuration(),
+        o -> o.getMaxDelay()
+    );
   }
 }
