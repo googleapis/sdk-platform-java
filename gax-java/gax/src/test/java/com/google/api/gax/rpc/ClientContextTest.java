@@ -64,7 +64,9 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
@@ -679,6 +681,109 @@ public class ClientContextTest {
 
     assertThat(transportChannel.getHeaders())
         .containsEntry("user-agent", "user-supplied-agent internal-agent");
+  }
+
+  @Rule public ExpectedException apiVersionExceptionRule = ExpectedException.none();
+
+  @Test
+  public void testApiVersionHeaderConflictShouldThrowException() throws Exception {
+
+    apiVersionExceptionRule.expect(IllegalArgumentException.class);
+    apiVersionExceptionRule.expectMessage(
+        "Header provider can't override the header: "
+            + ApiClientHeaderProvider.API_VERSION_HEADER_KEY);
+
+    TransportChannelProvider transportChannelProvider =
+        new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()),
+            null,
+            true,
+            null,
+            null,
+            DEFAULT_ENDPOINT);
+
+    ClientSettings.Builder builder =
+        new FakeClientSettings.Builder()
+            .setExecutorProvider(
+                FixedExecutorProvider.create(Mockito.mock(ScheduledExecutorService.class)))
+            .setTransportChannelProvider(transportChannelProvider)
+            .setCredentialsProvider(
+                FixedCredentialsProvider.create(Mockito.mock(GoogleCredentials.class)));
+
+    builder.setHeaderProvider(
+        FixedHeaderProvider.create(
+            ApiClientHeaderProvider.API_VERSION_HEADER_KEY, "user-supplied-version"));
+    builder.setInternalHeaderProvider(
+        FixedHeaderProvider.create(
+            ApiClientHeaderProvider.API_VERSION_HEADER_KEY, "internal-version"));
+
+    ClientContext.create(builder.build());
+  }
+
+  @Test
+  public void testApiVersionHeaderEmptyConflictShouldThrowException() throws Exception {
+
+    apiVersionExceptionRule.expect(IllegalArgumentException.class);
+    apiVersionExceptionRule.expectMessage(
+        "Header provider can't override the header: "
+            + ApiClientHeaderProvider.API_VERSION_HEADER_KEY);
+
+    TransportChannelProvider transportChannelProvider =
+        new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()),
+            null,
+            true,
+            null,
+            null,
+            DEFAULT_ENDPOINT);
+
+    ClientSettings.Builder builder =
+        new FakeClientSettings.Builder()
+            .setExecutorProvider(
+                FixedExecutorProvider.create(Mockito.mock(ScheduledExecutorService.class)))
+            .setTransportChannelProvider(transportChannelProvider)
+            .setCredentialsProvider(
+                FixedCredentialsProvider.create(Mockito.mock(GoogleCredentials.class)));
+
+    builder.setHeaderProvider(
+        FixedHeaderProvider.create(
+            ApiClientHeaderProvider.API_VERSION_HEADER_KEY, "user-supplied-version"));
+    builder.setInternalHeaderProvider(
+        FixedHeaderProvider.create(ApiClientHeaderProvider.API_VERSION_HEADER_KEY, ""));
+
+    ClientContext.create(builder.build());
+  }
+
+  @Test
+  public void testUserApiVersionHeaderOnlyShouldThrowException() throws Exception {
+
+    apiVersionExceptionRule.expect(IllegalArgumentException.class);
+    apiVersionExceptionRule.expectMessage(
+        "Header provider can't override the header: "
+            + ApiClientHeaderProvider.API_VERSION_HEADER_KEY);
+
+    TransportChannelProvider transportChannelProvider =
+        new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()),
+            null,
+            true,
+            null,
+            null,
+            DEFAULT_ENDPOINT);
+
+    ClientSettings.Builder builder =
+        new FakeClientSettings.Builder()
+            .setExecutorProvider(
+                FixedExecutorProvider.create(Mockito.mock(ScheduledExecutorService.class)))
+            .setTransportChannelProvider(transportChannelProvider)
+            .setCredentialsProvider(
+                FixedCredentialsProvider.create(Mockito.mock(GoogleCredentials.class)));
+
+    builder.setHeaderProvider(
+        FixedHeaderProvider.create(
+            ApiClientHeaderProvider.API_VERSION_HEADER_KEY, "user-supplied-version"));
+
+    ClientContext.create(builder.build());
   }
 
   private static String endpoint = "https://foo.googleapis.com";

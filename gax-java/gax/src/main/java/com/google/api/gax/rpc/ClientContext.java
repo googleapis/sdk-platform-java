@@ -290,6 +290,13 @@ public abstract class ClientContext {
     Map<String, String> internalHeaders = settings.getInternalHeaderProvider().getHeaders();
     Map<String, String> conflictResolution = new HashMap<>();
 
+    // api version header user override is not allowed, even when not set by internal headers
+    if (userHeaders.keySet().contains(ApiClientHeaderProvider.API_VERSION_HEADER_KEY)) {
+      throw new IllegalArgumentException(
+          "Header provider can't override the header: "
+              + ApiClientHeaderProvider.API_VERSION_HEADER_KEY);
+    }
+
     Set<String> conflicts = Sets.intersection(userHeaders.keySet(), internalHeaders.keySet());
     for (String key : conflicts) {
       if ("user-agent".equals(key)) {
