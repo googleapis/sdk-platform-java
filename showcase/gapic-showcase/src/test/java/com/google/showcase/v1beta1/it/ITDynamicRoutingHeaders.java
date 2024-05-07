@@ -157,7 +157,7 @@ public class ITDynamicRoutingHeaders {
     grpcClient.close();
     httpJsonClient.close();
     grpcComplianceClient.close();
-    httpJsonComplianceClient.close();;
+    httpJsonComplianceClient.close();
   }
 
   @Test
