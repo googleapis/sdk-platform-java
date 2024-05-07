@@ -30,6 +30,8 @@ import org.junit.Test;
 
 // TODO: add testing on error responses once feat is implemented in showcase.
 //  https://github.com/googleapis/gapic-showcase/pull/1456
+// TODO: watch for showcase gRPC trailer changes suggested in
+// https://github.com/googleapis/gapic-showcase/pull/1509#issuecomment-2089147103
 public class ITApiVersionHeaders {
   private static final String HTTP_RESPONSE_HEADER_STRING =
       "x-showcase-request-" + ApiClientHeaderProvider.API_VERSION_HEADER_KEY;
