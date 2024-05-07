@@ -126,3 +126,7 @@ class UtilitiesTest(unittest.TestCase):
     def test_gapic_inputs_parse_no_service_yaml_returns_empty_string(self):
         parsed = parse(build_file, "test/versioned/path", "BUILD_no_service_yaml.bazel")
         self.assertEqual("", parsed.service_yaml)
+
+    def test_gapic_inputs_parse_proto_only_returns_grpc(self):
+        parsed = parse(build_file, "test/versioned/path", "BUILD_proto_only.bazel")
+        self.assertEqual("grpc", parsed.transport)
