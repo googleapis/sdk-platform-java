@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class DepsDevClient {
 
   private final HttpClient client;
-  public final Gson gson;
+  private final Gson gson;
   private final static String ADVISORY_URL_BASE = "https://api.deps.dev/v3/advisories/%s";
 
   private final static String DEPENDENCY_URLBASE = "https://api.deps.dev/v3/systems/%s/packages/%s/versions/%s:dependencies";
