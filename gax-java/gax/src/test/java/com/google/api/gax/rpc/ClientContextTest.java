@@ -685,14 +685,8 @@ public class ClientContextTest {
 
   @Rule public ExpectedException apiVersionExceptionRule = ExpectedException.none();
 
-  @Test
-  public void testApiVersionHeaderConflictShouldThrowException() throws Exception {
-
-    apiVersionExceptionRule.expect(IllegalArgumentException.class);
-    apiVersionExceptionRule.expectMessage(
-        "Header provider can't override the header: "
-            + ApiClientHeaderProvider.API_VERSION_HEADER_KEY);
-
+  private void createClientContextAndSetApiVersionHeaders(
+      String internalVersion, String userVersion) throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()),
@@ -713,11 +707,24 @@ public class ClientContextTest {
     builder.setHeaderProvider(
         FixedHeaderProvider.create(
             ApiClientHeaderProvider.API_VERSION_HEADER_KEY, "user-supplied-version"));
-    builder.setInternalHeaderProvider(
-        FixedHeaderProvider.create(
-            ApiClientHeaderProvider.API_VERSION_HEADER_KEY, "internal-version"));
+    if (internalVersion != null) {
+      builder.setInternalHeaderProvider(
+          FixedHeaderProvider.create(
+              ApiClientHeaderProvider.API_VERSION_HEADER_KEY, "internal-version"));
+    }
 
     ClientContext.create(builder.build());
+  }
+
+  @Test
+  public void testApiVersionHeaderConflictShouldThrowException() throws Exception {
+
+    apiVersionExceptionRule.expect(IllegalArgumentException.class);
+    apiVersionExceptionRule.expectMessage(
+        "Header provider can't override the header: "
+            + ApiClientHeaderProvider.API_VERSION_HEADER_KEY);
+
+    createClientContextAndSetApiVersionHeaders("internal-version", "user-supplied-version");
   }
 
   @Test
@@ -728,30 +735,7 @@ public class ClientContextTest {
         "Header provider can't override the header: "
             + ApiClientHeaderProvider.API_VERSION_HEADER_KEY);
 
-    TransportChannelProvider transportChannelProvider =
-        new FakeTransportProvider(
-            FakeTransportChannel.create(new FakeChannel()),
-            null,
-            true,
-            null,
-            null,
-            DEFAULT_ENDPOINT);
-
-    ClientSettings.Builder builder =
-        new FakeClientSettings.Builder()
-            .setExecutorProvider(
-                FixedExecutorProvider.create(Mockito.mock(ScheduledExecutorService.class)))
-            .setTransportChannelProvider(transportChannelProvider)
-            .setCredentialsProvider(
-                FixedCredentialsProvider.create(Mockito.mock(GoogleCredentials.class)));
-
-    builder.setHeaderProvider(
-        FixedHeaderProvider.create(
-            ApiClientHeaderProvider.API_VERSION_HEADER_KEY, "user-supplied-version"));
-    builder.setInternalHeaderProvider(
-        FixedHeaderProvider.create(ApiClientHeaderProvider.API_VERSION_HEADER_KEY, ""));
-
-    ClientContext.create(builder.build());
+    createClientContextAndSetApiVersionHeaders("", "user-supplied-version");
   }
 
   @Test
@@ -762,28 +746,7 @@ public class ClientContextTest {
         "Header provider can't override the header: "
             + ApiClientHeaderProvider.API_VERSION_HEADER_KEY);
 
-    TransportChannelProvider transportChannelProvider =
-        new FakeTransportProvider(
-            FakeTransportChannel.create(new FakeChannel()),
-            null,
-            true,
-            null,
-            null,
-            DEFAULT_ENDPOINT);
-
-    ClientSettings.Builder builder =
-        new FakeClientSettings.Builder()
-            .setExecutorProvider(
-                FixedExecutorProvider.create(Mockito.mock(ScheduledExecutorService.class)))
-            .setTransportChannelProvider(transportChannelProvider)
-            .setCredentialsProvider(
-                FixedCredentialsProvider.create(Mockito.mock(GoogleCredentials.class)));
-
-    builder.setHeaderProvider(
-        FixedHeaderProvider.create(
-            ApiClientHeaderProvider.API_VERSION_HEADER_KEY, "user-supplied-version"));
-
-    ClientContext.create(builder.build());
+    createClientContextAndSetApiVersionHeaders(null, "user-supplied-version");
   }
 
   private static String endpoint = "https://foo.googleapis.com";
