@@ -42,7 +42,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
   private static final long serialVersionUID = -8876627296793342119L;
   static final String QUOTA_PROJECT_ID_HEADER_KEY = "x-goog-user-project";
 
-  public static final String API_VERSION_HEADER_KEY = "x-goog-api-version";
+  static final String API_VERSION_HEADER_KEY = "x-goog-api-version";
 
   private final Map<String, String> headers;
 
