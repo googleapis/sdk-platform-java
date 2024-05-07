@@ -58,5 +58,4 @@ public class HttpJsonCallOptionsTest {
         c -> c.build().getTimeoutDuration(),
         c -> c.build().getTimeout());
   }
-
 }

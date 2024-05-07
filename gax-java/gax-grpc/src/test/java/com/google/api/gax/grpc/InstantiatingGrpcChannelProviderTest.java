@@ -42,7 +42,6 @@ import com.google.api.gax.rpc.mtls.AbstractMtlsTransportChannelTest;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.oauth2.CloudShellCredentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
-import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import io.grpc.ManagedChannel;
@@ -127,10 +126,16 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
         threetenProviderSupplier,
         c -> c.getKeepAliveTimeoutDuration(),
         c -> c.getKeepAliveTimeout());
-    assertEquals(true, javaTimeProviderSupplier.apply(java.time.Duration.ofMillis(millis))
-        .getKeepAliveWithoutCalls());
-    assertEquals(true, threetenProviderSupplier.apply(org.threeten.bp.Duration.ofMillis(millis))
-        .getKeepAliveWithoutCalls());
+    assertEquals(
+        true,
+        javaTimeProviderSupplier
+            .apply(java.time.Duration.ofMillis(millis))
+            .getKeepAliveWithoutCalls());
+    assertEquals(
+        true,
+        threetenProviderSupplier
+            .apply(org.threeten.bp.Duration.ofMillis(millis))
+            .getKeepAliveWithoutCalls());
   }
 
   @Test
@@ -651,12 +656,10 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     }
 
     @Override
-    public void flush() {
-    }
+    public void flush() {}
 
     @Override
-    public void close() throws SecurityException {
-    }
+    public void close() throws SecurityException {}
 
     List<String> getAllMessages() {
       return records.stream().map(LogRecord::getMessage).collect(Collectors.toList());

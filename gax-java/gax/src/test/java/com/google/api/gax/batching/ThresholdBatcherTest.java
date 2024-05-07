@@ -35,7 +35,6 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.api.core.ApiFutures;
 import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -365,13 +364,13 @@ public class ThresholdBatcherTest {
   public void testMaxDelay() {
     AccumulatingBatchReceiver<SimpleBatch> receiver =
         new AccumulatingBatchReceiver<>(ApiFutures.<Void>immediateFuture(null));
-    final ThresholdBatcher.Builder builder = createSimpleBatcherBuidler(receiver)
-        .setThresholds(Collections.emptyList());
-    testDurationMethod(123l,
+    final ThresholdBatcher.Builder builder =
+        createSimpleBatcherBuidler(receiver).setThresholds(Collections.emptyList());
+    testDurationMethod(
+        123l,
         jt -> builder.setMaxDelay(jt).build(),
         tt -> builder.setMaxDelay(tt).build(),
         o -> o.getMaxDelayDuration(),
-        o -> o.getMaxDelay()
-    );
+        o -> o.getMaxDelay());
   }
 }

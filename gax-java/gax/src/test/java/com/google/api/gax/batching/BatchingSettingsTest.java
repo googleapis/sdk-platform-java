@@ -10,11 +10,11 @@ public class BatchingSettingsTest {
 
   @Test
   public void testDelayThreshold() {
-    testDurationMethod(123l,
+    testDurationMethod(
+        123l,
         jt -> SETTINGS_BUILDER.setDelayThreshold(jt).build(),
         tt -> SETTINGS_BUILDER.setDelayThreshold(tt).build(),
         o -> o.getDelayThresholdDuration(),
-        o -> o.getDelayThreshold()
-    );
+        o -> o.getDelayThreshold());
   }
 }

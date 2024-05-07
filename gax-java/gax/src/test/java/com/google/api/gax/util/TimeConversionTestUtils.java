@@ -32,9 +32,7 @@ package com.google.api.gax.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class TimeConversionTestUtils {
 
