@@ -42,7 +42,7 @@ public class HttpJsonCallOptionsTest {
     final long millis = 3;
     testInstantMethod(
         millis,
-        jt -> OPTIONS_BUILDER.setDeadline(jt),
+        jt -> OPTIONS_BUILDER.setDeadlineInstant(jt),
         tt -> OPTIONS_BUILDER.setDeadline(tt),
         c -> c.build().getDeadlineInstant(),
         c -> c.build().getDeadline());
@@ -53,7 +53,7 @@ public class HttpJsonCallOptionsTest {
     final long millis = 3;
     testDurationMethod(
         millis,
-        jt -> OPTIONS_BUILDER.setTimeout(jt),
+        jt -> OPTIONS_BUILDER.setTimeoutDuration(jt),
         tt -> OPTIONS_BUILDER.setTimeout(tt),
         c -> c.build().getTimeoutDuration(),
         c -> c.build().getTimeout());

@@ -259,7 +259,9 @@ public class HttpRequestRunnableTest {
             requestMessage,
             methodDescriptor,
             "www.googleapis.com/animals/v1/projects",
-            HttpJsonCallOptions.newBuilder().setTimeout(java.time.Duration.ofMillis(5000L)).build(),
+            HttpJsonCallOptions.newBuilder()
+                .setTimeoutDuration(java.time.Duration.ofMillis(5000L))
+                .build(),
             new MockHttpTransport(),
             HttpJsonMetadata.newBuilder().build(),
             (result) -> {});
@@ -285,7 +287,7 @@ public class HttpRequestRunnableTest {
             methodDescriptor,
             "www.googleapis.com/animals/v1/projects",
             HttpJsonCallOptions.newBuilder()
-                .setTimeout(java.time.Duration.ofMillis(30000L))
+                .setTimeoutDuration(java.time.Duration.ofMillis(30000L))
                 .build(),
             new MockHttpTransport(),
             HttpJsonMetadata.newBuilder().build(),

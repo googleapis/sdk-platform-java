@@ -84,13 +84,13 @@ public abstract class HttpJsonCallOptions {
 
     java.time.Instant newDeadline = inputOptions.getDeadlineInstant();
     if (newDeadline != null) {
-      builder.setDeadline(newDeadline);
+      builder.setDeadlineInstant(newDeadline);
     }
 
     if (inputOptions.getTimeout() != null) {
       java.time.Duration newTimeout = inputOptions.getTimeoutDuration();
       if (newTimeout != null) {
-        builder.setTimeout(newTimeout);
+        builder.setTimeoutDuration(newTimeout);
       }
     }
 
@@ -109,18 +109,19 @@ public abstract class HttpJsonCallOptions {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    @ObsoleteApi("Use setTimeout(java.time.Duration) instead")
+    /** Backport of {@link #setTimeoutDuration(java.time.Duration)} */
+    @ObsoleteApi("Use setTimeoutDuration(java.time.Duration) instead")
     public abstract Builder setTimeout(org.threeten.bp.Duration value);
 
-    public Builder setTimeout(java.time.Duration value) {
+    public Builder setTimeoutDuration(java.time.Duration value) {
       return setTimeout(toThreetenDuration(value));
     }
 
-    /** Backport of {@link #setDeadline(java.time.Instant)} */
-    @ObsoleteApi("Use setDeadline(java.time.Instant) instead")
+    /** Backport of {@link #setDeadlineInstant(java.time.Instant)} */
+    @ObsoleteApi("Use setDeadlineInstant(java.time.Instant) instead")
     public abstract Builder setDeadline(org.threeten.bp.Instant value);
 
-    public final Builder setDeadline(java.time.Instant value) {
+    public final Builder setDeadlineInstant(java.time.Instant value) {
       return setDeadline(toThreetenInstant(value));
     }
 
