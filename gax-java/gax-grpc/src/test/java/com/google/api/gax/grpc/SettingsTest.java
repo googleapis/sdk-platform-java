@@ -61,7 +61,6 @@ import com.google.common.truth.Truth;
 import java.io.IOException;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
