@@ -16,13 +16,13 @@
 
 package com.google.cloud;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.api.gax.paging.Page;
 import com.google.common.collect.ImmutableList;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PageImplTest {
+class PageImplTest {
 
   private static final ImmutableList<String> VALUES = ImmutableList.of("1", "2");
   private static final ImmutableList<String> NEXT_VALUES = ImmutableList.of("3", "4");
@@ -45,7 +45,7 @@ public class PageImplTest {
   }
 
   @Test
-  public void testPage() {
+  void testPage() {
     final PageImpl<String> nextResult = new PageImpl<>(null, "c", NEXT_VALUES);
     PageImpl.NextPageFetcher<String> fetcher = new TestPageFetcher(nextResult);
     PageImpl<String> result = new PageImpl<>(fetcher, "c", VALUES);
@@ -55,7 +55,7 @@ public class PageImplTest {
   }
 
   @Test
-  public void testIterateAll() {
+  void testIterateAll() {
     final PageImpl<String> nextResult = new PageImpl<>(null, "c", NEXT_VALUES);
     PageImpl.NextPageFetcher<String> fetcher = new TestPageFetcher(nextResult);
     PageImpl<String> result = new PageImpl<>(fetcher, "c", VALUES);
