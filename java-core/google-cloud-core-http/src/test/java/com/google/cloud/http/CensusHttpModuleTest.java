@@ -21,6 +21,7 @@ import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.createMockBuilder;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpExecuteInterceptor;
@@ -41,25 +42,18 @@ import io.opencensus.trace.propagation.TextFormat;
 import java.io.IOException;
 import java.util.EnumSet;
 import java.util.Random;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /** Tests for {@link CensusHttpModule}. */
-@RunWith(JUnit4.class)
-public class CensusHttpModuleTest {
-
-  @Rule public final ExpectedException thrown = ExpectedException.none();
+class CensusHttpModuleTest {
 
   private final Tracer tracer = Tracing.getTracer();
   private final CensusHttpModule censusHttpModule = new CensusHttpModule(tracer, false);
   private HttpRequest httpRequest;
 
-  @Before
-  public void setUp() throws IOException {
+  @BeforeEach
+  void setUp() throws IOException {
     httpRequest =
         new NetHttpTransport()
             .createRequestFactory()
@@ -67,23 +61,23 @@ public class CensusHttpModuleTest {
   }
 
   @Test
-  public void tracerShouldNotBeNull() {
+  void tracerShouldNotBeNull() {
     assertThat(censusHttpModule.getTracer()).isNotNull();
   }
 
   @Test
-  public void isRecordEventsShouldBeSet() {
+  void isRecordEventsShouldBeSet() {
     assertThat(censusHttpModule.isRecordEvents()).isEqualTo(false);
   }
 
   @Test
-  public void getHttpRequestInitializerShouldReturnCorrectClass() {
+  void getHttpRequestInitializerShouldReturnCorrectClass() {
     HttpRequestInitializer initializer = censusHttpModule.getHttpRequestInitializer(null);
     assertThat(initializer).isInstanceOf(CensusHttpModule.CensusHttpRequestInitializer.class);
   }
 
   @Test
-  public void implementationOfDefaultTextFormatSetter() {
+  void implementationOfDefaultTextFormatSetter() {
     String testKey = "testKey";
     String testValue = "testValue";
     TextFormat.Setter<HttpHeaders> setter =
@@ -93,14 +87,15 @@ public class CensusHttpModuleTest {
   }
 
   @Test
-  public void censusHttpExecuteInterceptorDisallowNullRequest() throws IOException {
+  void censusHttpExecuteInterceptorDisallowNullRequest() {
     HttpExecuteInterceptor interceptor = censusHttpModule.new CensusHttpExecuteInterceptor(null);
-    thrown.expect(NullPointerException.class);
-    interceptor.intercept(null);
+    assertThrows(
+        NullPointerException.class,
+        () -> interceptor.intercept(null));
   }
 
   @Test
-  public void censusHttpExecuteInterceptorShouldExecuteOriginal() throws IOException {
+  void censusHttpExecuteInterceptorShouldExecuteOriginal() throws IOException {
     HttpExecuteInterceptor mockInterceptor = createMock(HttpExecuteInterceptor.class);
     HttpExecuteInterceptor censusInterceptor =
         censusHttpModule.new CensusHttpExecuteInterceptor(mockInterceptor);
@@ -111,7 +106,7 @@ public class CensusHttpModuleTest {
   }
 
   @Test
-  public void censusHttpExecuteInterceptorShouldInjectHeader() throws IOException {
+  void censusHttpExecuteInterceptorShouldInjectHeader() throws IOException {
     Random random = new Random();
     SpanContext spanContext =
         SpanContext.create(
@@ -135,14 +130,15 @@ public class CensusHttpModuleTest {
   }
 
   @Test
-  public void censusHttpRequestInitializerDisallowNullRequest() throws IOException {
+  void censusHttpRequestInitializerDisallowNullRequest() {
     HttpRequestInitializer initializer = censusHttpModule.getHttpRequestInitializer(null);
-    thrown.expect(NullPointerException.class);
-    initializer.initialize(null);
+    assertThrows(
+        NullPointerException.class,
+        () -> initializer.initialize(null));
   }
 
   @Test
-  public void censusHttpRequestInitializerShouldExecuteOriginal() throws IOException {
+  void censusHttpRequestInitializerShouldExecuteOriginal() throws IOException {
     HttpRequestInitializer mockOriginalInitializer = createMock(HttpRequestInitializer.class);
     HttpRequestInitializer censusInitializer =
         censusHttpModule.getHttpRequestInitializer(mockOriginalInitializer);
@@ -153,7 +149,7 @@ public class CensusHttpModuleTest {
   }
 
   @Test
-  public void censusHttpRequestInitializerShouldSetInterceptor() throws IOException {
+  void censusHttpRequestInitializerShouldSetInterceptor() throws IOException {
     censusHttpModule.getHttpRequestInitializer(null).initialize(httpRequest);
     assertThat(httpRequest.getInterceptor())
         .isInstanceOf(CensusHttpModule.CensusHttpExecuteInterceptor.class);
