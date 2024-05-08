@@ -226,7 +226,7 @@ public class SettingsTest {
                 BatchingSettings.newBuilder()
                     .setElementCountThreshold(800L)
                     .setRequestByteThreshold(8388608L)
-                    .setDelayThreshold(java.time.Duration.ofMillis(100))
+                    .setDelayThresholdDuration(java.time.Duration.ofMillis(100))
                     .build());
         builder
             .fakeMethodBatching()

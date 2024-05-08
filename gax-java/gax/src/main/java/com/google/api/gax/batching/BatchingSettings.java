@@ -124,7 +124,7 @@ public abstract class BatchingSettings {
         .setIsEnabled(true)
         .setElementCountThreshold(1L)
         .setRequestByteThreshold(1L)
-        .setDelayThreshold(java.time.Duration.ofMillis(1))
+        .setDelayThresholdDuration(java.time.Duration.ofMillis(1))
         .setFlowControlSettings(
             FlowControlSettings.newBuilder()
                 .setLimitExceededBehavior(LimitExceededBehavior.Ignore)
@@ -152,8 +152,8 @@ public abstract class BatchingSettings {
      */
     public abstract Builder setRequestByteThreshold(Long requestByteThreshold);
 
-    /** Backport of {@link #setDelayThreshold(java.time.Duration)} */
-    @ObsoleteApi("Use setDelayThreshold(java.time.Duration) instead")
+    /** Backport of {@link #setDelayThresholdDuration(java.time.Duration)} */
+    @ObsoleteApi("Use setDelayThresholdDuration(java.time.Duration) instead")
     public abstract Builder setDelayThreshold(org.threeten.bp.Duration delayThreshold);
 
     /**
@@ -162,7 +162,7 @@ public abstract class BatchingSettings {
      * value should not be set too high, usually on the order of milliseconds. Otherwise, calls
      * might appear to never complete.
      */
-    public final Builder setDelayThreshold(java.time.Duration delayThreshold) {
+    public final Builder setDelayThresholdDuration(java.time.Duration delayThreshold) {
       return setDelayThreshold(toThreetenDuration(delayThreshold));
     }
 

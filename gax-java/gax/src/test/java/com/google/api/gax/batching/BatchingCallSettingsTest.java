@@ -49,7 +49,7 @@ public class BatchingCallSettingsTest {
       BatchingSettings.newBuilder()
           .setElementCountThreshold(10L)
           .setRequestByteThreshold(20L)
-          .setDelayThreshold(java.time.Duration.ofMillis(5))
+          .setDelayThresholdDuration(java.time.Duration.ofMillis(5))
           .setFlowControlSettings(
               FlowControlSettings.newBuilder()
                   .setMaxOutstandingElementCount(100L)

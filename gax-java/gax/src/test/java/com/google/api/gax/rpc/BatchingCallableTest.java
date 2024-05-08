@@ -67,7 +67,7 @@ public class BatchingCallableTest {
 
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(java.time.Duration.ofSeconds(10))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(10))
             .setElementCountThreshold(2L)
             .setRequestByteThreshold(1000L)
             .build();

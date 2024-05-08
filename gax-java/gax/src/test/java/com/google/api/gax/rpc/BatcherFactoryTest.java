@@ -66,7 +66,7 @@ public class BatcherFactoryTest {
   public void testGetPushingBatcher() {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(java.time.Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(2L)
             .setRequestByteThreshold(1000L)
             .build();

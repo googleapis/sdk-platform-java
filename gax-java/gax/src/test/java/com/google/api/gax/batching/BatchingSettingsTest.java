@@ -41,7 +41,7 @@ public class BatchingSettingsTest {
   public void testDelayThreshold() {
     testDurationMethod(
         123l,
-        jt -> SETTINGS_BUILDER.setDelayThreshold(jt).build(),
+        jt -> SETTINGS_BUILDER.setDelayThresholdDuration(jt).build(),
         tt -> SETTINGS_BUILDER.setDelayThreshold(tt).build(),
         o -> o.getDelayThresholdDuration(),
         o -> o.getDelayThreshold());
