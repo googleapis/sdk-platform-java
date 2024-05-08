@@ -90,7 +90,7 @@ public class BatchingCallSettingsTest {
     BatchingCallSettings.Builder<Integer, Integer, LabeledIntList, List<Integer>> builder =
         BatchingCallSettings.newBuilder(SQUARER_BATCHING_DESC_V2);
     RetrySettings retrySettings =
-        RetrySettings.newBuilder().setTotalTimeout(java.time.Duration.ofMinutes(1)).build();
+        RetrySettings.newBuilder().setTotalTimeoutDuration(java.time.Duration.ofMinutes(1)).build();
     builder
         .setBatchingSettings(BATCHING_SETTINGS)
         .setRetryableCodes(StatusCode.Code.UNAVAILABLE, StatusCode.Code.UNAUTHENTICATED)

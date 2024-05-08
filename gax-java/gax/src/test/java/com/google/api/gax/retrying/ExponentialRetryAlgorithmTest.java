@@ -46,26 +46,26 @@ public class ExponentialRetryAlgorithmTest {
   private final RetrySettings retrySettings =
       RetrySettings.newBuilder()
           .setMaxAttempts(6)
-          .setInitialRetryDelay(java.time.Duration.ofMillis(1L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(1L))
           .setRetryDelayMultiplier(2.0)
-          .setMaxRetryDelay(java.time.Duration.ofMillis(8L))
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(1L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(8L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(1L))
           .setRpcTimeoutMultiplier(2.0)
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(8L))
-          .setTotalTimeout(java.time.Duration.ofMillis(200L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(8L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(200L))
           .build();
   private final ExponentialRetryAlgorithm algorithm =
       new ExponentialRetryAlgorithm(retrySettings, clock);
   private final RetrySettings retrySettingsOverride =
       RetrySettings.newBuilder()
           .setMaxAttempts(3)
-          .setInitialRetryDelay(java.time.Duration.ofMillis(2L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(2L))
           .setRetryDelayMultiplier(3.0)
-          .setMaxRetryDelay(java.time.Duration.ofMillis(18L))
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(2L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(18L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
           .setRpcTimeoutMultiplier(3.0)
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(18L))
-          .setTotalTimeout(java.time.Duration.ofMillis(300L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(18L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(300L))
           .build();
   private final RetryingContext retryingContext =
       FakeCallContext.createDefault().withRetrySettings(retrySettingsOverride);
@@ -104,13 +104,13 @@ public class ExponentialRetryAlgorithmTest {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
             .setMaxAttempts(6)
-            .setInitialRetryDelay(java.time.Duration.ofMillis(1L))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(1L))
             .setRetryDelayMultiplier(2.0)
-            .setMaxRetryDelay(java.time.Duration.ofMillis(8L))
-            .setInitialRpcTimeout(java.time.Duration.ofMillis(rpcTimeout))
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(8L))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(rpcTimeout))
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(java.time.Duration.ofMillis(rpcTimeout))
-            .setTotalTimeout(java.time.Duration.ofMillis(totalTimeout))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(rpcTimeout))
+            .setTotalTimeoutDuration(java.time.Duration.ofMillis(totalTimeout))
             .build();
 
     ExponentialRetryAlgorithm algorithm = new ExponentialRetryAlgorithm(retrySettings, clock);
@@ -123,9 +123,9 @@ public class ExponentialRetryAlgorithmTest {
     RetrySettings retrySettingsOverride =
         retrySettings
             .toBuilder()
-            .setInitialRpcTimeout(java.time.Duration.ofMillis(overrideRpcTimeout))
-            .setMaxRpcTimeout(java.time.Duration.ofMillis(overrideRpcTimeout))
-            .setTotalTimeout(java.time.Duration.ofMillis(overrideTotalTimeout))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(overrideRpcTimeout))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(overrideRpcTimeout))
+            .setTotalTimeoutDuration(java.time.Duration.ofMillis(overrideTotalTimeout))
             .build();
     RetryingContext retryingContext =
         FakeCallContext.createDefault().withRetrySettings(retrySettingsOverride);
@@ -134,7 +134,7 @@ public class ExponentialRetryAlgorithmTest {
         java.time.Duration.ofMillis(overrideTotalTimeout), attempt.getRpcTimeoutDuration());
 
     RetrySettings noTotalTimeout =
-        retrySettings.toBuilder().setTotalTimeout(java.time.Duration.ZERO).build();
+        retrySettings.toBuilder().setTotalTimeoutDuration(java.time.Duration.ZERO).build();
 
     algorithm = new ExponentialRetryAlgorithm(noTotalTimeout, clock);
     attempt = algorithm.createFirstAttempt();
@@ -180,9 +180,9 @@ public class ExponentialRetryAlgorithmTest {
     RetrySettings timeoutSettings =
         retrySettings
             .toBuilder()
-            .setInitialRpcTimeout(java.time.Duration.ofSeconds(4L))
-            .setMaxRpcTimeout(java.time.Duration.ofSeconds(4L))
-            .setTotalTimeout(java.time.Duration.ofSeconds(4L))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofSeconds(4L))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofSeconds(4L))
+            .setTotalTimeoutDuration(java.time.Duration.ofSeconds(4L))
             .build();
     ExponentialRetryAlgorithm timeoutAlg = new ExponentialRetryAlgorithm(timeoutSettings, clock);
 

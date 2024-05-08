@@ -37,8 +37,8 @@ import org.junit.Test;
 public class RetrySettingsTest {
   private static final RetrySettings.Builder DEFAULT_BUILDER =
       RetrySettings.newBuilder()
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(5000l))
-          .setMaxRetryDelay(java.time.Duration.ofMillis(5000l));
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(5000l))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(5000l));
 
   @Test
   public void retrySettingsSetLogicalTimeout() {
@@ -55,13 +55,13 @@ public class RetrySettingsTest {
   public void retrySettingsMerge() {
     RetrySettings.Builder builder =
         RetrySettings.newBuilder()
-            .setTotalTimeout(java.time.Duration.ofMillis(45000))
-            .setInitialRpcTimeout(java.time.Duration.ofMillis(2000))
+            .setTotalTimeoutDuration(java.time.Duration.ofMillis(45000))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(2000))
             .setRpcTimeoutMultiplier(1.5)
-            .setMaxRpcTimeout(java.time.Duration.ofMillis(30000))
-            .setInitialRetryDelay(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(30000))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(100))
             .setRetryDelayMultiplier(1.2)
-            .setMaxRetryDelay(java.time.Duration.ofMillis(1000));
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1000));
     RetrySettings.Builder mergedBuilder = RetrySettings.newBuilder();
     mergedBuilder.merge(builder);
 
@@ -90,7 +90,7 @@ public class RetrySettingsTest {
   public void testTotalTimeout() {
     testDurationMethod(
         123l,
-        jt -> DEFAULT_BUILDER.setTotalTimeout(jt).build(),
+        jt -> DEFAULT_BUILDER.setTotalTimeoutDuration(jt).build(),
         tt -> DEFAULT_BUILDER.setTotalTimeout(tt).build(),
         rs -> rs.getTotalTimeoutDuration(),
         rs -> rs.getTotalTimeout());
@@ -100,7 +100,7 @@ public class RetrySettingsTest {
   public void testInitialRetryDelay() {
     testDurationMethod(
         123l,
-        jt -> DEFAULT_BUILDER.setInitialRetryDelay(jt).build(),
+        jt -> DEFAULT_BUILDER.setInitialRetryDelayDuration(jt).build(),
         tt -> DEFAULT_BUILDER.setInitialRetryDelay(tt).build(),
         rs -> rs.getInitialRetryDelayDuration(),
         rs -> rs.getInitialRetryDelay());
@@ -110,7 +110,7 @@ public class RetrySettingsTest {
   public void testMaxRetryDelay() {
     testDurationMethod(
         123l,
-        jt -> DEFAULT_BUILDER.setMaxRetryDelay(jt).build(),
+        jt -> DEFAULT_BUILDER.setMaxRetryDelayDuration(jt).build(),
         tt -> DEFAULT_BUILDER.setMaxRetryDelay(tt).build(),
         rs -> rs.getMaxRetryDelayDuration(),
         rs -> rs.getMaxRetryDelay());
@@ -120,7 +120,7 @@ public class RetrySettingsTest {
   public void testInitialRpcTimeout() {
     testDurationMethod(
         123l,
-        jt -> DEFAULT_BUILDER.setInitialRpcTimeout(jt).build(),
+        jt -> DEFAULT_BUILDER.setInitialRpcTimeoutDuration(jt).build(),
         tt -> DEFAULT_BUILDER.setInitialRpcTimeout(tt).build(),
         rs -> rs.getInitialRpcTimeoutDuration(),
         rs -> rs.getInitialRpcTimeout());
@@ -130,7 +130,7 @@ public class RetrySettingsTest {
   public void testMaxRpcTimeout() {
     testDurationMethod(
         123l,
-        jt -> DEFAULT_BUILDER.setMaxRpcTimeout(jt).build(),
+        jt -> DEFAULT_BUILDER.setMaxRpcTimeoutDuration(jt).build(),
         tt -> DEFAULT_BUILDER.setMaxRpcTimeout(tt).build(),
         rs -> rs.getMaxRpcTimeoutDuration(),
         rs -> rs.getMaxRpcTimeout());

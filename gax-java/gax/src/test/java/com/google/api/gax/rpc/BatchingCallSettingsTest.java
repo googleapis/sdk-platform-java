@@ -84,11 +84,11 @@ public class BatchingCallSettingsTest {
     Set<StatusCode.Code> retryCodes = Sets.newHashSet(Code.UNAVAILABLE);
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(java.time.Duration.ofMillis(5))
-            .setMaxRetryDelay(java.time.Duration.ofSeconds(1))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelayDuration(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(java.time.Duration.ofMillis(100))
-            .setMaxRpcTimeout(java.time.Duration.ofMillis(200))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)
@@ -128,11 +128,11 @@ public class BatchingCallSettingsTest {
     Set<StatusCode.Code> retryCodes = Sets.newHashSet(Code.UNAVAILABLE);
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(java.time.Duration.ofMillis(5))
-            .setMaxRetryDelay(java.time.Duration.ofSeconds(1))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelayDuration(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(java.time.Duration.ofMillis(100))
-            .setMaxRpcTimeout(java.time.Duration.ofMillis(200))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)

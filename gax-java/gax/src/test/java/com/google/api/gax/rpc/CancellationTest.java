@@ -62,24 +62,24 @@ public class CancellationTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(java.time.Duration.ofMillis(2L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(2L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(java.time.Duration.ofMillis(2L))
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(2L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(2L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(2L))
-          .setTotalTimeout(java.time.Duration.ofMillis(20L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(20L))
           .build();
 
   private static final RetrySettings SLOW_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(java.time.Duration.ofMillis(3000L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(3000L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(java.time.Duration.ofMillis(3000L))
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(3000L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(3000L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(3000L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(3000L))
-          .setTotalTimeout(java.time.Duration.ofMillis(3000L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(3000L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(3000L))
           .build();
 
   private FakeApiClock fakeClock;

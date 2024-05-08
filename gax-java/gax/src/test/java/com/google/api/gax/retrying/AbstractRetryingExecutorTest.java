@@ -198,8 +198,8 @@ public abstract class AbstractRetryingExecutorTest {
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(java.time.Duration.ofMillis(Integer.MAX_VALUE))
-            .setMaxRetryDelay(java.time.Duration.ofMillis(Integer.MAX_VALUE))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .build();
     boolean useContextRetrySettings = retryingContext.getRetrySettings() != null;
     RetryingExecutorWithContext<String> executor =
@@ -232,9 +232,9 @@ public abstract class AbstractRetryingExecutorTest {
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(java.time.Duration.ofMillis(1_000L))
-            .setMaxRetryDelay(java.time.Duration.ofMillis(1_000L))
-            .setTotalTimeout(java.time.Duration.ofMillis(10_000L))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(1_000L))
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1_000L))
+            .setTotalTimeoutDuration(java.time.Duration.ofMillis(10_000L))
             .build();
     RetryingExecutorWithContext<String> executor =
         getExecutor(getAlgorithm(retrySettings, 0, null));
@@ -297,8 +297,8 @@ public abstract class AbstractRetryingExecutorTest {
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(java.time.Duration.ofMillis(Integer.MAX_VALUE))
-            .setMaxRetryDelay(java.time.Duration.ofMillis(Integer.MAX_VALUE))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .build();
     boolean useContextRetrySettings = retryingContext.getRetrySettings() != null;
 

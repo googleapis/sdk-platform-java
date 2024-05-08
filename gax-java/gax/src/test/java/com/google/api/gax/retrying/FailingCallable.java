@@ -39,24 +39,24 @@ class FailingCallable implements Callable<String> {
   static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
           .setMaxAttempts(6)
-          .setInitialRetryDelay(java.time.Duration.ofMillis(8L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(8L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(java.time.Duration.ofMillis(8L))
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(8L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(8L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(8L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(8L))
-          .setTotalTimeout(java.time.Duration.ofMillis(400L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(8L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(400L))
           .build();
   static final RetrySettings FAILING_RETRY_SETTINGS =
       RetrySettings.newBuilder()
           .setMaxAttempts(2)
-          .setInitialRetryDelay(java.time.Duration.ofNanos(1L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofNanos(1L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(java.time.Duration.ofNanos(1L))
-          .setInitialRpcTimeout(java.time.Duration.ofNanos(1L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofNanos(1L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofNanos(1L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(java.time.Duration.ofNanos(1L))
-          .setTotalTimeout(java.time.Duration.ofNanos(1L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofNanos(1L))
+          .setTotalTimeoutDuration(java.time.Duration.ofNanos(1L))
           .build();
 
   private AtomicInteger attemptsCount = new AtomicInteger(0);

@@ -209,13 +209,13 @@ public class UnaryCallSettings<RequestT, ResponseT> {
       setRetryableCodes();
       setRetrySettings(
           RetrySettings.newBuilder()
-              .setTotalTimeout(timeout)
-              .setInitialRetryDelay(java.time.Duration.ZERO)
+              .setTotalTimeoutDuration(timeout)
+              .setInitialRetryDelayDuration(java.time.Duration.ZERO)
               .setRetryDelayMultiplier(1)
-              .setMaxRetryDelay(java.time.Duration.ZERO)
-              .setInitialRpcTimeout(timeout)
+              .setMaxRetryDelayDuration(java.time.Duration.ZERO)
+              .setInitialRpcTimeoutDuration(timeout)
               .setRpcTimeoutMultiplier(1)
-              .setMaxRpcTimeout(timeout)
+              .setMaxRpcTimeoutDuration(timeout)
               .setMaxAttempts(1)
               .build());
       return this;

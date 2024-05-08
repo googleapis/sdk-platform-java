@@ -66,11 +66,11 @@ public class ServerStreamingCallSettingsTest {
   public void retryableSettingsAreNotLost() {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(java.time.Duration.ofMillis(5))
-            .setMaxRetryDelay(java.time.Duration.ofSeconds(1))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelayDuration(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(java.time.Duration.ofMillis(100))
-            .setMaxRpcTimeout(java.time.Duration.ofMillis(200))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)
@@ -116,11 +116,11 @@ public class ServerStreamingCallSettingsTest {
   public void testRetrySettingsBuilder() {
     RetrySettings initialSettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(java.time.Duration.ofMillis(5))
-            .setMaxRetryDelay(java.time.Duration.ofSeconds(1))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelayDuration(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(java.time.Duration.ofMillis(100))
-            .setMaxRpcTimeout(java.time.Duration.ofMillis(200))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)
@@ -129,7 +129,7 @@ public class ServerStreamingCallSettingsTest {
     ServerStreamingCallSettings.Builder<Object, Object> builder =
         ServerStreamingCallSettings.newBuilder().setRetrySettings(initialSettings);
 
-    builder.retrySettings().setMaxRetryDelay(java.time.Duration.ofMinutes(1));
+    builder.retrySettings().setMaxRetryDelayDuration(java.time.Duration.ofMinutes(1));
 
     assertThat(builder.getRetrySettings().getMaxRetryDelayDuration())
         .isEqualTo(java.time.Duration.ofMinutes(1));

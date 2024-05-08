@@ -61,9 +61,9 @@ public class CallableTest {
 
   private RetrySettings retrySettings =
       RetrySettings.newBuilder()
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(5L))
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(5L))
-          .setTotalTimeout(java.time.Duration.ofMillis(10L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(5L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(5L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(10L))
           .build();
 
   @Spy private ApiCallContext callContext = FakeCallContext.createDefault();

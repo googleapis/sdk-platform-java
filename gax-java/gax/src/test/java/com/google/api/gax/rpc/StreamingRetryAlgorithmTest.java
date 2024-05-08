@@ -51,26 +51,26 @@ import org.mockito.Mockito;
 public class StreamingRetryAlgorithmTest {
   private static final RetrySettings DEFAULT_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(java.time.Duration.ofMillis(10L))
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(100L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(10L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(100L))
           .setMaxAttempts(10)
-          .setMaxRetryDelay(java.time.Duration.ofSeconds(10L))
-          .setMaxRpcTimeout(java.time.Duration.ofSeconds(30L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofSeconds(10L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofSeconds(30L))
           .setRetryDelayMultiplier(1.4)
           .setRpcTimeoutMultiplier(1.5)
-          .setTotalTimeout(java.time.Duration.ofMinutes(10L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMinutes(10L))
           .build();
 
   private static final RetrySettings CONTEXT_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(java.time.Duration.ofMillis(20L))
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(200L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(20L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(200L))
           .setMaxAttempts(10)
-          .setMaxRetryDelay(java.time.Duration.ofSeconds(20L))
-          .setMaxRpcTimeout(java.time.Duration.ofSeconds(60L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofSeconds(20L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofSeconds(60L))
           .setRetryDelayMultiplier(2.4)
           .setRpcTimeoutMultiplier(2.5)
-          .setTotalTimeout(java.time.Duration.ofMinutes(20L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMinutes(20L))
           .build();
 
   @Test
