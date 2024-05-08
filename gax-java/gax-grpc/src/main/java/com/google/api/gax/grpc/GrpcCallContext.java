@@ -236,7 +236,7 @@ public final class GrpcCallContext implements ApiCallContext {
    * org.threeten.bp.Duration}
    */
   @Override
-  @ObsoleteApi("Use withTimeout(java.time.Duration) instead")
+  @ObsoleteApi("Use withTimeoutDuration(java.time.Duration) instead")
   public GrpcCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout) {
     return withTimeoutDuration(toJavaTimeDuration(timeout));
   }
@@ -286,7 +286,7 @@ public final class GrpcCallContext implements ApiCallContext {
    * org.threeten.bp.Duration}
    */
   @Override
-  @ObsoleteApi("Use withStreamWaitTimeout(java.time.Duration) instead")
+  @ObsoleteApi("Use withStreamWaitTimeoutDuration(java.time.Duration) instead")
   public GrpcCallContext withStreamWaitTimeout(
       @Nullable org.threeten.bp.Duration streamWaitTimeout) {
     return withStreamWaitTimeoutDuration(toJavaTimeDuration(streamWaitTimeout));
@@ -323,7 +323,7 @@ public final class GrpcCallContext implements ApiCallContext {
    * @return
    */
   @Override
-  @ObsoleteApi("Use withStreamIdleTimeout(java.time.Duration) instead")
+  @ObsoleteApi("Use withStreamIdleTimeoutDuration(java.time.Duration) instead")
   public GrpcCallContext withStreamIdleTimeout(
       @Nullable org.threeten.bp.Duration streamIdleTimeout) {
     return withStreamIdleTimeoutDuration(toJavaTimeDuration(streamIdleTimeout));

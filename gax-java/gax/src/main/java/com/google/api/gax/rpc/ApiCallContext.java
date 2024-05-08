@@ -70,7 +70,7 @@ public interface ApiCallContext extends RetryingContext {
    * Overload of {@link #withTimeoutDuration(java.time.Duration)} using {@link
    * org.threeten.bp.Duration}
    */
-  @ObsoleteApi("Use withTimeout(java.time.Duration) instead")
+  @ObsoleteApi("Use withTimeoutDuration(java.time.Duration) instead")
   ApiCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout);
 
   /**
@@ -100,7 +100,7 @@ public interface ApiCallContext extends RetryingContext {
    * Overload of {@link #withStreamWaitTimeoutDuration(java.time.Duration)} using {@link
    * org.threeten.bp.Duration }
    */
-  @ObsoleteApi("Use withStreamWaitTimeout(java.time.Duration) instead")
+  @ObsoleteApi("Use withStreamWaitTimeoutDuration(java.time.Duration) instead")
   ApiCallContext withStreamWaitTimeout(@Nullable org.threeten.bp.Duration streamWaitTimeout);
 
   /**
@@ -139,7 +139,7 @@ public interface ApiCallContext extends RetryingContext {
    * Overload of {@link #withStreamIdleTimeoutDuration(java.time.Duration)} using {@link
    * org.threeten.bp.Duration}
    */
-  @ObsoleteApi("Use withStreamIdleTimeout(java.time.Duration) instead")
+  @ObsoleteApi("Use withStreamIdleTimeoutDuration(java.time.Duration) instead")
   ApiCallContext withStreamIdleTimeout(@Nullable org.threeten.bp.Duration streamIdleTimeout);
 
   /**
