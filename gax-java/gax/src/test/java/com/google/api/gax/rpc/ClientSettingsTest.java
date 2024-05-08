@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static org.junit.Assert.fail;
 
 import com.google.api.core.ApiClock;
@@ -54,6 +55,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -548,5 +551,26 @@ public class ClientSettingsTest {
         .isEqualTo(QUOTA_PROJECT_ID_FROM_CONTEXT);
     Truth.assertThat(builderQuotaFromAllSources.getQuotaProjectId())
         .isEqualTo(QUOTA_PROJECT_ID_FROM_CONTEXT);
+  }
+
+  @Test
+  public void testWatchdogCheckInterval_backportMethodsBehaveCorrectly() {
+    final ClientSettings.Builder builder = new FakeClientSettings.Builder();
+    // this helper lambda goes around the possible IOException thrown by
+    // ClientSettings.Builder.build()
+    final Function<Supplier<ClientSettings.Builder>, ClientSettings> createClientSettings =
+        fn -> {
+          try {
+            return fn.get().build();
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        };
+    testDurationMethod(
+        123l,
+        jt -> createClientSettings.apply(() -> builder.setWatchdogCheckInterval(jt)),
+        tt -> createClientSettings.apply(() -> builder.setWatchdogCheckInterval(tt)),
+        cs -> cs.getWatchdogCheckIntervalDuration(),
+        cs -> cs.getWatchdogCheckInterval());
   }
 }
