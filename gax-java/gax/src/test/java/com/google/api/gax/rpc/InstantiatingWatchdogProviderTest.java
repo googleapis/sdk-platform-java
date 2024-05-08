@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.core.ApiClock;
@@ -57,7 +58,7 @@ public class InstantiatingWatchdogProviderTest {
     provider = provider.withClock(clock);
 
     assertThat(provider.needsCheckInterval()).isTrue();
-    provider = provider.withCheckInterval(checkInterval);
+    provider = provider.withCheckIntervalDuration(checkInterval);
 
     assertThat(provider.shouldAutoClose()).isTrue();
 
@@ -70,7 +71,7 @@ public class InstantiatingWatchdogProviderTest {
   @Test
   public void requiresExecutor() {
     WatchdogProvider provider =
-        InstantiatingWatchdogProvider.create().withCheckInterval(checkInterval).withClock(clock);
+        InstantiatingWatchdogProvider.create().withCheckIntervalDuration(checkInterval).withClock(clock);
 
     Throwable actualError = null;
     try {
@@ -100,7 +101,7 @@ public class InstantiatingWatchdogProviderTest {
     WatchdogProvider provider =
         InstantiatingWatchdogProvider.create()
             .withExecutor(executor)
-            .withCheckInterval(checkInterval);
+            .withCheckIntervalDuration(checkInterval);
 
     Throwable actualError = null;
     try {
@@ -109,5 +110,19 @@ public class InstantiatingWatchdogProviderTest {
       actualError = t;
     }
     assertThat(actualError).isInstanceOf(IllegalStateException.class);
+  }
+
+  @Test
+  public void testCheckInterval_backportMethodsBehaveCorrectly() {
+    final InstantiatingWatchdogProvider baseProvider = (InstantiatingWatchdogProvider) InstantiatingWatchdogProvider.create()
+                    .withClock(clock)
+                  .withExecutor(executor);
+    testDurationMethod(
+            123l,
+            jt -> baseProvider.withCheckIntervalDuration(jt),
+            tt -> baseProvider.withCheckInterval(tt),
+            wp -> wp.getWatchdog().getScheduleIntervalDuration(),
+            wp -> wp.getWatchdog().getScheduleInterval()
+    );
   }
 }

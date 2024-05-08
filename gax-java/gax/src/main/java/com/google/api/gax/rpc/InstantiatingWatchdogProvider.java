@@ -31,10 +31,13 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.InternalApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.common.base.Preconditions;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 
 /**
  * A watchdog provider which instantiates a new provider on every request.
@@ -77,10 +80,17 @@ public final class InstantiatingWatchdogProvider implements WatchdogProvider {
     return checkInterval == null;
   }
 
+  /** Backport of {@link #withCheckIntervalDuration(java.time.Duration)} */
   @Override
-  public WatchdogProvider withCheckInterval(@Nonnull java.time.Duration checkInterval) {
+  @ObsoleteApi("Use withCheckIntervalDuration(java.time.Duration) instead")
+  public WatchdogProvider withCheckInterval(@Nonnull org.threeten.bp.Duration checkInterval) {
+    return withCheckIntervalDuration(toJavaTimeDuration(checkInterval));
+  }
+
+  @Override
+  public WatchdogProvider withCheckIntervalDuration(@Nonnull java.time.Duration checkInterval) {
     return new InstantiatingWatchdogProvider(
-        clock, executor, Preconditions.checkNotNull(checkInterval));
+            clock, executor, Preconditions.checkNotNull(checkInterval));
   }
 
   @Override

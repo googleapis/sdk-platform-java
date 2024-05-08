@@ -368,7 +368,7 @@ public class ClientContextTest {
     builder.setWatchdogProvider(
         InstantiatingWatchdogProvider.create()
             .withClock(clock)
-            .withCheckInterval(watchdogCheckInterval)
+            .withCheckIntervalDuration(watchdogCheckInterval)
             .withExecutor(executor));
     builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
 

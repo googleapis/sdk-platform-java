@@ -30,10 +30,12 @@
 package com.google.api.gax.rpc;
 
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.BackgroundResource;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.errorprone.annotations.concurrent.GuardedBy;
 import java.util.Iterator;
@@ -183,6 +185,16 @@ public final class Watchdog implements Runnable, BackgroundResource {
   @Override
   public void close() {
     shutdown();
+  }
+
+  @VisibleForTesting
+  java.time.Duration getScheduleIntervalDuration() {
+    return this.scheduleInterval;
+  }
+
+  @VisibleForTesting
+  org.threeten.bp.Duration getScheduleInterval() {
+    return toThreetenDuration(this.scheduleInterval);
   }
 
   enum State {

@@ -252,7 +252,7 @@ public abstract class ClientContext {
     if (watchdogProvider != null) {
       if (watchdogProvider.needsCheckInterval()) {
         watchdogProvider =
-            watchdogProvider.withCheckInterval(settings.getStreamWatchdogCheckIntervalDuration());
+            watchdogProvider.withCheckIntervalDuration(settings.getStreamWatchdogCheckIntervalDuration());
       }
       if (watchdogProvider.needsClock()) {
         watchdogProvider = watchdogProvider.withClock(clock);
