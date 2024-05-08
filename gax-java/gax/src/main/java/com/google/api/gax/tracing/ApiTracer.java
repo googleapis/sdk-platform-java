@@ -29,7 +29,10 @@
  */
 package com.google.api.gax.tracing;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+
 import com.google.api.core.InternalApi;
+import com.google.api.core.ObsoleteApi;
 
 /**
  * Implementations of this class trace the logical flow of a google cloud client.
@@ -106,6 +109,12 @@ public interface ApiTracer {
 
   /** Add an annotation that the attempt was cancelled by the user. */
   default void attemptCancelled() {};
+
+  /** Backport of {@link #attemptFailed(Throwable, java.time.Duration)} */
+  @ObsoleteApi("Use attemptFailed(Throwable, java.time.Duration) instead")
+  default void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {
+    attemptFailed(error, toJavaTimeDuration(delay));
+  };
 
   /**
    * Adds an annotation that the attempt failed, but another attempt will be made after the delay.

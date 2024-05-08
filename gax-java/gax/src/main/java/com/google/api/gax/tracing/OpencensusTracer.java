@@ -29,8 +29,11 @@
  */
 package com.google.api.gax.tracing;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StatusCode.Code;
@@ -354,6 +357,13 @@ public class OpencensusTracer extends BaseApiTracer {
       span.addAnnotation("Attempt failed, scheduling next attempt", attributes);
     }
     lastConnectionId = null;
+  }
+
+  /** Backport of {@link #attemptFailed(Throwable, java.time.Duration)} */
+  @Override
+  @ObsoleteApi("Use attemptFailed(Throwable, java.time.Duration) instead")
+  public void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {
+    attemptFailed(error, toJavaTimeDuration(delay));
   }
 
   /** {@inheritDoc} */

@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.tracing;
 
+import static com.google.api.gax.tracing.MetricsTestUtils.reportFailedAttempt;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.anyDouble;
@@ -136,7 +137,17 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testAttemptFailed_recordsAttributes() {
+  public void testAttemptFailed_usingJavaTime_recordsAttributes() {
+    testAttemptFailed_recordsAttributes(java.time.Duration.ofMillis(2));
+  }
+
+  @Test
+  public void testAttemptFailed_usingThreeten_recordsAttributes() {
+    testAttemptFailed_recordsAttributes(org.threeten.bp.Duration.ofMillis(2));
+  }
+
+  public void testAttemptFailed_recordsAttributes(final Object attemptFailedValue) {
+
     // initialize mock-request
     Object mockFailedRequest = new Object();
 
@@ -145,7 +156,7 @@ public class MetricsTracerTest {
     ApiException error0 =
         new NotFoundException(
             "invalid argument", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
-    metricsTracer.attemptFailed(error0, java.time.Duration.ofMillis(2));
+    reportFailedAttempt(metricsTracer, error0, attemptFailedValue);
 
     Map<String, String> attributes = getAttributes(Code.INVALID_ARGUMENT);
 

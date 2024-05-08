@@ -30,8 +30,11 @@
 
 package com.google.api.gax.tracing;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.common.annotations.VisibleForTesting;
@@ -174,6 +177,13 @@ public class MetricsTracer implements ApiTracer {
     attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
     metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordAttemptCount(1, attributes);
+  }
+
+  /** Backport of {@link #attemptFailed(Throwable, java.time.Duration)} */
+  @Override
+  @ObsoleteApi("Use attemptFailed(Throwable, java.time.Duration) instead")
+  public void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {
+    attemptFailed(error, toJavaTimeDuration(delay));
   }
 
   /**
