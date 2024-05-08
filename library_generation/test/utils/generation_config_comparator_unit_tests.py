@@ -178,6 +178,21 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         config_change = result.change_to_libraries[ChangeType.LIBRARIES_ADDITION][0]
         self.assertEqual("new_library", config_change.library_name)
 
+    def test_compare_config_library_removal_does_not_have_repo_or_library_level_change(
+        self,
+    ):
+        self.current_config.libraries = []
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            current_config=self.current_config,
+        )
+        self.assertTrue(
+            len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 0
+        )
+        self.assertTrue(
+            len(result.change_to_libraries[ChangeType.LIBRARY_LEVEL_CHANGE]) == 0
+        )
+
     def test_compare_config_api_shortname_update_without_library_name(self):
         self.current_config.libraries[0].api_shortname = "new_api_shortname"
         result = compare_config(
