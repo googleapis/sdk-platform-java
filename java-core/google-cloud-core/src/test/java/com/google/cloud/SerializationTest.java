@@ -25,7 +25,7 @@ import com.google.common.collect.ImmutableMap;
 import java.io.Serializable;
 import org.threeten.bp.Duration;
 
-public class SerializationTest extends BaseSerializationTest {
+class SerializationTest extends BaseSerializationTest {
 
   private static final BaseServiceException BASE_SERVICE_EXCEPTION =
       new BaseServiceException(ExceptionData.from(42, "message", "reason", false));
