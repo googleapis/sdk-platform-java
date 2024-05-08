@@ -97,22 +97,21 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   @Test
   public void testKeepAlive() {
     final long millis = 15;
-    boolean keepaliveWithoutCalls = true;
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder();
     Function<Duration, InstantiatingGrpcChannelProvider> javaTimeProviderSupplier =
         jt ->
             builder
-                .setKeepAliveTime(jt)
-                .setKeepAliveTimeout(jt)
-                .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
+                .setKeepAliveTimeDuration(jt)
+                .setKeepAliveTimeoutDuration(jt)
+                .setKeepAliveWithoutCalls(Boolean.TRUE)
                 .build();
     Function<org.threeten.bp.Duration, InstantiatingGrpcChannelProvider> threetenProviderSupplier =
         tt ->
             builder
                 .setKeepAliveTime(tt)
                 .setKeepAliveTimeout(tt)
-                .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
+                .setKeepAliveWithoutCalls(Boolean.TRUE)
                 .build();
     testDurationMethod(
         millis,
@@ -127,12 +126,12 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
         c -> c.getKeepAliveTimeoutDuration(),
         c -> c.getKeepAliveTimeout());
     assertEquals(
-        true,
+        Boolean.TRUE,
         javaTimeProviderSupplier
             .apply(java.time.Duration.ofMillis(millis))
             .getKeepAliveWithoutCalls());
     assertEquals(
-        true,
+        Boolean.TRUE,
         threetenProviderSupplier
             .apply(org.threeten.bp.Duration.ofMillis(millis))
             .getKeepAliveWithoutCalls());
@@ -198,9 +197,9 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
             .setEndpoint("fake.endpoint:443")
             .setMaxInboundMessageSize(12345678)
             .setMaxInboundMetadataSize(4096)
-            .setKeepAliveTime(keepaliveTime)
-            .setKeepAliveTimeout(keepaliveTimeout)
-            .setKeepAliveWithoutCalls(true)
+            .setKeepAliveTimeDuration(keepaliveTime)
+            .setKeepAliveTimeoutDuration(keepaliveTimeout)
+            .setKeepAliveWithoutCalls(Boolean.TRUE)
             .setChannelConfigurator(channelConfigurator)
             .setChannelsPerCpu(2.5)
             .setDirectPathServiceConfig(directPathServiceConfig)

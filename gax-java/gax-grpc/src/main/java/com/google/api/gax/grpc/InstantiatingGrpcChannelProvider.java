@@ -658,12 +658,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
      * Overload of {@link #setKeepAliveTime(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
-    @ObsoleteApi("Use setKeepAliveTime(java.time.Duration) instead")
+    @ObsoleteApi("Use setKeepAliveTimeDuration(java.time.Duration) instead")
     public Builder setKeepAliveTime(org.threeten.bp.Duration duration) {
-      return setKeepAliveTime(toJavaTimeDuration(duration));
+      return setKeepAliveTimeDuration(toJavaTimeDuration(duration));
     }
     /** The time without read activity before sending a keepalive ping. */
-    public Builder setKeepAliveTime(java.time.Duration duration) {
+    public Builder setKeepAliveTimeDuration(java.time.Duration duration) {
       this.keepAliveTime = duration;
       return this;
     }
@@ -679,13 +679,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return keepAliveTime;
     }
 
-    @ObsoleteApi("Use setKeepAliveTimeout(java.time.Duration) instead")
+    @ObsoleteApi("Use setKeepAliveTimeoutDuration(java.time.Duration) instead")
     public Builder setKeepAliveTimeout(org.threeten.bp.Duration duration) {
-      return setKeepAliveTimeout(toJavaTimeDuration(duration));
+      return setKeepAliveTimeoutDuration(toJavaTimeDuration(duration));
     }
 
     /** The time without read activity after sending a keepalive ping. */
-    public Builder setKeepAliveTimeout(java.time.Duration duration) {
+    public Builder setKeepAliveTimeoutDuration(java.time.Duration duration) {
       this.keepAliveTimeout = duration;
       return this;
     }
