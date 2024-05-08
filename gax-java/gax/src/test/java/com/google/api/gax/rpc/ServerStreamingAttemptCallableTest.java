@@ -101,9 +101,9 @@ public class ServerStreamingAttemptCallableTest {
 
     // Ensure that the callable did not overwrite the user provided timeouts
     Mockito.verify(mockedCallContext, Mockito.times(1)).getTimeoutDuration();
-    Mockito.verify(mockedCallContext, Mockito.never()).withTimeout(totalTimeout);
+    Mockito.verify(mockedCallContext, Mockito.never()).withTimeoutDuration(totalTimeout);
     Mockito.verify(mockedCallContext, Mockito.never())
-        .withStreamWaitTimeout(Mockito.any(java.time.Duration.class));
+        .withStreamWaitTimeoutDuration(Mockito.any(java.time.Duration.class));
 
     // Should notify outer observer
     Truth.assertThat(observer.controller).isNotNull();
@@ -129,10 +129,10 @@ public class ServerStreamingAttemptCallableTest {
     Mockito.doReturn(BaseApiTracer.getInstance()).when(mockedCallContext).getTracer();
     Mockito.doReturn(null).when(mockedCallContext).getTimeoutDuration();
     Mockito.doReturn(null).when(mockedCallContext).getStreamWaitTimeoutDuration();
-    Mockito.doReturn(mockedCallContext).when(mockedCallContext).withTimeout(attemptTimeout);
+    Mockito.doReturn(mockedCallContext).when(mockedCallContext).withTimeoutDuration(attemptTimeout);
     Mockito.doReturn(mockedCallContext)
         .when(mockedCallContext)
-        .withStreamWaitTimeout(Mockito.any(java.time.Duration.class));
+        .withStreamWaitTimeoutDuration(Mockito.any(java.time.Duration.class));
 
     ServerStreamingAttemptCallable<String, String> callable = createCallable(mockedCallContext);
     callable.start();
@@ -140,7 +140,7 @@ public class ServerStreamingAttemptCallableTest {
     // Ensure that the callable configured the timeouts via the Settings in the
     // absence of user-defined timeouts.
     Mockito.verify(mockedCallContext, Mockito.times(1)).getTimeoutDuration();
-    Mockito.verify(mockedCallContext, Mockito.times(1)).withTimeout(attemptTimeout);
+    Mockito.verify(mockedCallContext, Mockito.times(1)).withTimeoutDuration(attemptTimeout);
 
     // Should notify outer observer
     Truth.assertThat(observer.controller).isNotNull();

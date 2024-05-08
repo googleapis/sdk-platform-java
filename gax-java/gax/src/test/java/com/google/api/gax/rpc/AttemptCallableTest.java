@@ -105,7 +105,8 @@ public class AttemptCallableTest {
   @Test
   public void testRpcTimeoutIsNotErased() {
     java.time.Duration callerTimeout = java.time.Duration.ofMillis(10);
-    ApiCallContext callerCallContext = FakeCallContext.createDefault().withTimeout(callerTimeout);
+    ApiCallContext callerCallContext =
+        FakeCallContext.createDefault().withTimeoutDuration(callerTimeout);
 
     java.time.Duration timeout = java.time.Duration.ofMillis(5);
     currentAttemptSettings = currentAttemptSettings.toBuilder().setRpcTimeout(timeout).build();

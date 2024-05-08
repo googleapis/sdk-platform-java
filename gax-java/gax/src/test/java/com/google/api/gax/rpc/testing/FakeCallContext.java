@@ -249,7 +249,7 @@ public class FakeCallContext implements ApiCallContext {
   @Override
   public ApiCallContext withStreamWaitTimeout(
       @Nullable org.threeten.bp.Duration streamWaitTimeout) {
-    return withStreamWaitTimeout(toJavaTimeDuration(streamWaitTimeout));
+    return withStreamWaitTimeoutDuration(toJavaTimeDuration(streamWaitTimeout));
   }
 
   @Nullable
@@ -261,7 +261,7 @@ public class FakeCallContext implements ApiCallContext {
   @Override
   public ApiCallContext withStreamIdleTimeout(
       @Nullable org.threeten.bp.Duration streamIdleTimeout) {
-    return withStreamIdleTimeout(toJavaTimeDuration(streamIdleTimeout));
+    return withStreamIdleTimeoutDuration(toJavaTimeDuration(streamIdleTimeout));
   }
 
   @Nullable
@@ -316,7 +316,7 @@ public class FakeCallContext implements ApiCallContext {
 
   @Override
   public FakeCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout) {
-    return withTimeout(toJavaTimeDuration(timeout));
+    return withTimeoutDuration(toJavaTimeDuration(timeout));
   }
 
   public FakeCallContext withChannel(FakeChannel channel) {
@@ -335,7 +335,7 @@ public class FakeCallContext implements ApiCallContext {
   }
 
   @Override
-  public FakeCallContext withTimeout(java.time.Duration timeout) {
+  public FakeCallContext withTimeoutDuration(java.time.Duration timeout) {
     // Default RetrySettings use 0 for RPC timeout. Treat that as disabled timeouts.
     if (timeout != null && (timeout.isZero() || timeout.isNegative())) {
       timeout = null;
@@ -367,7 +367,8 @@ public class FakeCallContext implements ApiCallContext {
   }
 
   @Override
-  public ApiCallContext withStreamWaitTimeout(@Nullable java.time.Duration streamWaitTimeout) {
+  public ApiCallContext withStreamWaitTimeoutDuration(
+      @Nullable java.time.Duration streamWaitTimeout) {
     return new FakeCallContext(
         this.credentials,
         this.channel,
@@ -389,7 +390,8 @@ public class FakeCallContext implements ApiCallContext {
   }
 
   @Override
-  public ApiCallContext withStreamIdleTimeout(@Nullable java.time.Duration streamIdleTimeout) {
+  public ApiCallContext withStreamIdleTimeoutDuration(
+      @Nullable java.time.Duration streamIdleTimeout) {
     Preconditions.checkNotNull(streamIdleTimeout);
     return new FakeCallContext(
         this.credentials,

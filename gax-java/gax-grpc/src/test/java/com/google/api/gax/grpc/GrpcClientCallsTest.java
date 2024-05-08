@@ -197,7 +197,8 @@ public class GrpcClientCallsTest {
     java.time.Duration timeout = java.time.Duration.ofSeconds(10);
     Deadline minExpectedDeadline = Deadline.after(timeout.getSeconds(), TimeUnit.SECONDS);
 
-    GrpcCallContext context = defaultCallContext.withChannel(mockChannel).withTimeout(timeout);
+    GrpcCallContext context =
+        defaultCallContext.withChannel(mockChannel).withTimeoutDuration(timeout);
 
     GrpcClientCalls.newCall(descriptor, context).start(mockListener, new Metadata());
 
@@ -232,7 +233,7 @@ public class GrpcClientCallsTest {
         defaultCallContext
             .withChannel(mockChannel)
             .withCallOptions(CallOptions.DEFAULT.withDeadline(priorDeadline))
-            .withTimeout(timeout);
+            .withTimeoutDuration(timeout);
 
     GrpcClientCalls.newCall(descriptor, context).start(mockListener, new Metadata());
 
@@ -266,7 +267,7 @@ public class GrpcClientCallsTest {
         defaultCallContext
             .withChannel(mockChannel)
             .withCallOptions(CallOptions.DEFAULT.withDeadline(subsequentDeadline))
-            .withTimeout(timeout);
+            .withTimeoutDuration(timeout);
 
     GrpcClientCalls.newCall(descriptor, context).start(mockListener, new Metadata());
 

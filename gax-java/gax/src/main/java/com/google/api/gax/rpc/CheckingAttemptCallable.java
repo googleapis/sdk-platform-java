@@ -67,7 +67,7 @@ class CheckingAttemptCallable<RequestT, ResponseT> implements Callable<ResponseT
     try {
       java.time.Duration rpcTimeout = externalFuture.getAttemptSettings().getRpcTimeoutDuration();
       if (!rpcTimeout.isZero()) {
-        callContext = callContext.withTimeout(rpcTimeout);
+        callContext = callContext.withTimeoutDuration(rpcTimeout);
       }
 
       externalFuture.setAttemptFuture(new NonCancellableFuture<ResponseT>());

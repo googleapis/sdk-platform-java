@@ -211,7 +211,7 @@ final class ServerStreamingAttemptCallable<RequestT, ResponseT> implements Calla
     if (!outerRetryingFuture.getAttemptSettings().getRpcTimeoutDuration().isZero()
         && attemptContext.getTimeoutDuration() == null) {
       attemptContext =
-          attemptContext.withTimeout(
+          attemptContext.withTimeoutDuration(
               outerRetryingFuture.getAttemptSettings().getRpcTimeoutDuration());
     }
 

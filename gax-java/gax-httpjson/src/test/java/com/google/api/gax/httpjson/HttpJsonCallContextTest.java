@@ -121,7 +121,7 @@ public class HttpJsonCallContextTest {
     final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
     testDurationMethod(
         millis,
-        jt -> defaultContext.withStreamIdleTimeout(jt),
+        jt -> defaultContext.withStreamIdleTimeoutDuration(jt),
         tt -> defaultContext.withStreamIdleTimeout(tt),
         c -> c.getStreamIdleTimeoutDuration(),
         c -> c.getStreamIdleTimeout());
@@ -133,7 +133,7 @@ public class HttpJsonCallContextTest {
     final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
     testDurationMethod(
         millis,
-        jt -> defaultContext.withStreamWaitTimeout(jt),
+        jt -> defaultContext.withStreamWaitTimeoutDuration(jt),
         tt -> defaultContext.withStreamWaitTimeout(tt),
         c -> c.getStreamWaitTimeoutDuration(),
         c -> c.getStreamWaitTimeout());
@@ -145,7 +145,7 @@ public class HttpJsonCallContextTest {
     final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
     testDurationMethod(
         millis,
-        jt -> defaultContext.withTimeout(jt),
+        jt -> defaultContext.withTimeoutDuration(jt),
         tt -> defaultContext.withTimeout(tt),
         c -> c.getTimeoutDuration(),
         c -> c.getTimeout());
@@ -156,7 +156,7 @@ public class HttpJsonCallContextTest {
     final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
     testDurationMethod(
         null,
-        jt -> defaultContext.withTimeout(jt),
+        jt -> defaultContext.withTimeoutDuration(jt),
         tt -> defaultContext.withTimeout(tt),
         c -> c.getTimeoutDuration(),
         c -> c.getTimeout());
@@ -166,7 +166,7 @@ public class HttpJsonCallContextTest {
   public void testWithNegativeTimeout() {
     assertNull(
         HttpJsonCallContext.createDefault()
-            .withTimeout(java.time.Duration.ofSeconds(-1L))
+            .withTimeoutDuration(java.time.Duration.ofSeconds(-1L))
             .getTimeoutDuration());
   }
 
@@ -174,14 +174,14 @@ public class HttpJsonCallContextTest {
   public void testWithZeroTimeout() {
     assertNull(
         HttpJsonCallContext.createDefault()
-            .withTimeout(java.time.Duration.ofSeconds(0L))
+            .withTimeoutDuration(java.time.Duration.ofSeconds(0L))
             .getTimeoutDuration());
   }
 
   @Test
   public void testWithShorterTimeout() {
     HttpJsonCallContext ctxWithLongTimeout =
-        HttpJsonCallContext.createDefault().withTimeout(java.time.Duration.ofSeconds(10));
+        HttpJsonCallContext.createDefault().withTimeoutDuration(java.time.Duration.ofSeconds(10));
 
     // Sanity check
     Truth.assertThat(ctxWithLongTimeout.getTimeoutDuration())
@@ -189,7 +189,7 @@ public class HttpJsonCallContextTest {
 
     // Shorten the timeout and make sure it changed
     HttpJsonCallContext ctxWithShorterTimeout =
-        ctxWithLongTimeout.withTimeout(java.time.Duration.ofSeconds(5));
+        ctxWithLongTimeout.withTimeoutDuration(java.time.Duration.ofSeconds(5));
     Truth.assertThat(ctxWithShorterTimeout.getTimeoutDuration())
         .isEqualTo(java.time.Duration.ofSeconds(5));
   }
@@ -197,7 +197,7 @@ public class HttpJsonCallContextTest {
   @Test
   public void testWithLongerTimeout() {
     HttpJsonCallContext ctxWithShortTimeout =
-        HttpJsonCallContext.createDefault().withTimeout(java.time.Duration.ofSeconds(5));
+        HttpJsonCallContext.createDefault().withTimeoutDuration(java.time.Duration.ofSeconds(5));
 
     // Sanity check
     Truth.assertThat(ctxWithShortTimeout.getTimeoutDuration())
@@ -205,7 +205,7 @@ public class HttpJsonCallContextTest {
 
     // Try to extend the timeout and verify that it was ignored
     HttpJsonCallContext ctxWithUnchangedTimeout =
-        ctxWithShortTimeout.withTimeout(java.time.Duration.ofSeconds(10));
+        ctxWithShortTimeout.withTimeoutDuration(java.time.Duration.ofSeconds(10));
     Truth.assertThat(ctxWithUnchangedTimeout.getTimeoutDuration())
         .isEqualTo(java.time.Duration.ofSeconds(5));
   }
@@ -213,14 +213,15 @@ public class HttpJsonCallContextTest {
   @Test
   public void testMergeWithNullTimeout() {
     java.time.Duration timeout = java.time.Duration.ofSeconds(10);
-    HttpJsonCallContext baseContext = HttpJsonCallContext.createDefault().withTimeout(timeout);
+    HttpJsonCallContext baseContext =
+        HttpJsonCallContext.createDefault().withTimeoutDuration(timeout);
 
     HttpJsonCallContext defaultOverlay = HttpJsonCallContext.createDefault();
     Truth.assertThat(baseContext.merge(defaultOverlay).getTimeoutDuration()).isEqualTo(timeout);
 
     java.time.Duration callContextTimeout = null;
     HttpJsonCallContext explicitNullOverlay =
-        HttpJsonCallContext.createDefault().withTimeout(callContextTimeout);
+        HttpJsonCallContext.createDefault().withTimeoutDuration(callContextTimeout);
     Truth.assertThat(baseContext.merge(explicitNullOverlay).getTimeoutDuration())
         .isEqualTo(timeout);
   }
@@ -229,7 +230,7 @@ public class HttpJsonCallContextTest {
   public void testMergeWithTimeout() {
     java.time.Duration timeout = java.time.Duration.ofSeconds(19);
     HttpJsonCallContext ctx1 = HttpJsonCallContext.createDefault();
-    HttpJsonCallContext ctx2 = HttpJsonCallContext.createDefault().withTimeout(timeout);
+    HttpJsonCallContext ctx2 = HttpJsonCallContext.createDefault().withTimeoutDuration(timeout);
 
     Truth.assertThat(ctx1.merge(ctx2).getTimeoutDuration()).isEqualTo(timeout);
   }

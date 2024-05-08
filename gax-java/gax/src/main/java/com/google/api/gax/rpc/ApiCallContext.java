@@ -63,12 +63,15 @@ public interface ApiCallContext extends RetryingContext {
   /** Returns a new ApiCallContext with the given channel set. */
   ApiCallContext withTransportChannel(TransportChannel channel);
 
-  /** Overload of {@link #withTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration} */
-  @ObsoleteApi("Use withTimeout(java.time.Duration) instead")
-  ApiCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout);
-
   /** Returns a new ApiCallContext with the given Endpoint Context. */
   ApiCallContext withEndpointContext(EndpointContext endpointContext);
+
+  /**
+   * Overload of {@link #withTimeoutDuration(java.time.Duration)} using {@link
+   * org.threeten.bp.Duration}
+   */
+  @ObsoleteApi("Use withTimeout(java.time.Duration) instead")
+  ApiCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout);
 
   /**
    * Returns a new ApiCallContext with the given timeout set.
@@ -82,7 +85,7 @@ public interface ApiCallContext extends RetryingContext {
    * <p>If a method has default {@link com.google.api.gax.retrying.RetrySettings}, the max attempts
    * and/or total timeout is still respected when scheduling each RPC attempt.
    */
-  ApiCallContext withTimeout(@Nullable java.time.Duration timeout);
+  ApiCallContext withTimeoutDuration(@Nullable java.time.Duration timeout);
 
   /** Backport of {@link #getTimeoutDuration()} */
   @Nullable
@@ -94,7 +97,7 @@ public interface ApiCallContext extends RetryingContext {
   java.time.Duration getTimeoutDuration();
 
   /**
-   * Overload of {@link #withStreamWaitTimeout(java.time.Duration)} using {@link
+   * Overload of {@link #withStreamWaitTimeoutDuration(java.time.Duration)} using {@link
    * org.threeten.bp.Duration }
    */
   @ObsoleteApi("Use withStreamWaitTimeout(java.time.Duration) instead")
@@ -117,7 +120,7 @@ public interface ApiCallContext extends RetryingContext {
    * <p>Please note that this timeout is best effort and the maximum resolution is configured in
    * {@link StubSettings#getStreamWatchdogCheckIntervalDuration()}.
    */
-  ApiCallContext withStreamWaitTimeout(@Nullable java.time.Duration streamWaitTimeout);
+  ApiCallContext withStreamWaitTimeoutDuration(@Nullable java.time.Duration streamWaitTimeout);
 
   /** Backport of {@link #getStreamWaitTimeoutDuration()} */
   @Nullable
@@ -127,13 +130,13 @@ public interface ApiCallContext extends RetryingContext {
   /**
    * Return the stream wait timeout set for this context.
    *
-   * @see #withStreamWaitTimeout(java.time.Duration)
+   * @see #withStreamWaitTimeoutDuration(java.time.Duration)
    */
   @Nullable
   java.time.Duration getStreamWaitTimeoutDuration();
 
   /**
-   * Overload of {@link #withStreamIdleTimeout(java.time.Duration)} using {@link
+   * Overload of {@link #withStreamIdleTimeoutDuration(java.time.Duration)} using {@link
    * org.threeten.bp.Duration}
    */
   @ObsoleteApi("Use withStreamIdleTimeout(java.time.Duration) instead")
@@ -157,7 +160,7 @@ public interface ApiCallContext extends RetryingContext {
    * <p>Please note that this timeout is best effort and the maximum resolution is configured in
    * {@link StubSettings#getStreamWatchdogCheckIntervalDuration()}.
    */
-  ApiCallContext withStreamIdleTimeout(@Nullable java.time.Duration streamIdleTimeout);
+  ApiCallContext withStreamIdleTimeoutDuration(@Nullable java.time.Duration streamIdleTimeout);
 
   /** Backport of {@link #getStreamIdleTimeoutDuration()} */
   @Nullable
@@ -167,7 +170,7 @@ public interface ApiCallContext extends RetryingContext {
   /**
    * The stream idle timeout set for this context.
    *
-   * @see #withStreamIdleTimeout(java.time.Duration)
+   * @see #withStreamIdleTimeoutDuration(java.time.Duration)
    */
   @Nullable
   java.time.Duration getStreamIdleTimeoutDuration();

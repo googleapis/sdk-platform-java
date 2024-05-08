@@ -68,7 +68,7 @@ import java.io.Serializable;
  *
  * <p>Server streaming RPCs interpret RPC timeouts a bit differently. For server streaming RPCs, the
  * RPC timeout gets converted into a wait timeout {@link
- * com.google.api.gax.rpc.ApiCallContext#withStreamWaitTimeout(java.time.Duration)}.
+ * com.google.api.gax.rpc.ApiCallContext#withStreamWaitTimeoutDuration(java.time.Duration)}.
  *
  * <p>In Cloud Client Libraries, Retry and LRO Retry Settings may be configured for each RPC in a
  * service. These values are chosen by the service teams and may be found by looking at the

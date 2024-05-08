@@ -100,7 +100,7 @@ public class CallableTest {
     assertEquals(expectedRequest, argumentCaptor.getValue());
     verify(callContext, atLeastOnce()).getRetrySettings();
     verify(callContext).getTimeoutDuration();
-    verify(callContext).withTimeout(timeout);
+    verify(callContext).withTimeoutDuration(timeout);
     assertEquals(expectedResponse, futureResponse.get());
   }
 
@@ -134,7 +134,7 @@ public class CallableTest {
 
     verify(callContextWithRetrySettings, atLeastOnce()).getRetrySettings();
     verify(callContextWithRetrySettings).getTimeoutDuration();
-    verify(callContextWithRetrySettings).withTimeout(timeout);
+    verify(callContextWithRetrySettings).withTimeoutDuration(timeout);
     assertEquals(expectedResponse, futureResponse.get());
   }
 
@@ -150,7 +150,7 @@ public class CallableTest {
 
     verify(callContext, atLeastOnce()).getRetrySettings();
     verify(callContext).getTimeoutDuration();
-    verify(callContext).withTimeout(timeout);
+    verify(callContext).withTimeoutDuration(timeout);
   }
 
   @Test
@@ -168,6 +168,6 @@ public class CallableTest {
 
     verify(callContextWithRetrySettings, atLeastOnce()).getRetrySettings();
     verify(callContextWithRetrySettings).getTimeoutDuration();
-    verify(callContextWithRetrySettings).withTimeout(timeout);
+    verify(callContextWithRetrySettings).withTimeoutDuration(timeout);
   }
 }

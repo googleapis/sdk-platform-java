@@ -149,7 +149,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
             .setTransportChannel(HttpJsonTransportChannel.create(channel))
             .setDefaultCallContext(
                 HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
-                    .withTimeout(timeout)
+                    .withTimeoutDuration(timeout)
                     .withEndpointContext(endpointContext))
             .build();
 

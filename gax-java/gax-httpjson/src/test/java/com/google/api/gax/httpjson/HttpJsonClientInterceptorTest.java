@@ -193,7 +193,7 @@ public class HttpJsonClientInterceptorTest {
     HttpJsonCallContext callContext =
         HttpJsonCallContext.createDefault()
             .withChannel(channel)
-            .withTimeout(java.time.Duration.ofSeconds(30))
+            .withTimeoutDuration(java.time.Duration.ofSeconds(30))
             .withEndpointContext(endpointContext);
 
     Field request;

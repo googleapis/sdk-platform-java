@@ -71,7 +71,7 @@ class AttemptCallable<RequestT, ResponseT> implements Callable<ResponseT> {
       // Set the RPC timeout if the caller did not provide their own.
       java.time.Duration rpcTimeout = externalFuture.getAttemptSettings().getRpcTimeoutDuration();
       if (!rpcTimeout.isZero() && callContext.getTimeoutDuration() == null) {
-        callContext = callContext.withTimeout(rpcTimeout);
+        callContext = callContext.withTimeoutDuration(rpcTimeout);
       }
 
       externalFuture.setAttemptFuture(new NonCancellableFuture<ResponseT>());

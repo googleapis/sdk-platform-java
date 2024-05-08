@@ -231,15 +231,18 @@ public final class GrpcCallContext implements ApiCallContext {
         endpointContext);
   }
 
-  /** Overload of {@link #withTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration} */
+  /**
+   * Overload of {@link #withTimeoutDuration(java.time.Duration)} using {@link
+   * org.threeten.bp.Duration}
+   */
   @Override
   @ObsoleteApi("Use withTimeout(java.time.Duration) instead")
   public GrpcCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout) {
-    return withTimeout(toJavaTimeDuration(timeout));
+    return withTimeoutDuration(toJavaTimeDuration(timeout));
   }
 
   @Override
-  public GrpcCallContext withTimeout(@Nullable java.time.Duration timeout) {
+  public GrpcCallContext withTimeoutDuration(@Nullable java.time.Duration timeout) {
     // Default RetrySettings use 0 for RPC timeout. Treat that as disabled timeouts.
     if (timeout != null && (timeout.isZero() || timeout.isNegative())) {
       timeout = null;
@@ -279,18 +282,19 @@ public final class GrpcCallContext implements ApiCallContext {
   }
 
   /**
-   * Overload of {@link #withStreamWaitTimeout(java.time.Duration)} using {@link
+   * Overload of {@link #withStreamWaitTimeoutDuration(java.time.Duration)} using {@link
    * org.threeten.bp.Duration}
    */
   @Override
   @ObsoleteApi("Use withStreamWaitTimeout(java.time.Duration) instead")
   public GrpcCallContext withStreamWaitTimeout(
       @Nullable org.threeten.bp.Duration streamWaitTimeout) {
-    return withStreamWaitTimeout(toJavaTimeDuration(streamWaitTimeout));
+    return withStreamWaitTimeoutDuration(toJavaTimeDuration(streamWaitTimeout));
   }
 
   @Override
-  public GrpcCallContext withStreamWaitTimeout(@Nullable java.time.Duration streamWaitTimeout) {
+  public GrpcCallContext withStreamWaitTimeoutDuration(
+      @Nullable java.time.Duration streamWaitTimeout) {
     if (streamWaitTimeout != null) {
       Preconditions.checkArgument(
           streamWaitTimeout.compareTo(java.time.Duration.ZERO) >= 0, "Invalid timeout: < 0 s");
@@ -312,7 +316,7 @@ public final class GrpcCallContext implements ApiCallContext {
   }
 
   /**
-   * Overload of {@link #withStreamIdleTimeout(java.time.Duration)} using {@link
+   * Overload of {@link #withStreamIdleTimeoutDuration(java.time.Duration)} using {@link
    * org.threeten.bp.Duration}
    *
    * @param streamIdleTimeout
@@ -322,11 +326,12 @@ public final class GrpcCallContext implements ApiCallContext {
   @ObsoleteApi("Use withStreamIdleTimeout(java.time.Duration) instead")
   public GrpcCallContext withStreamIdleTimeout(
       @Nullable org.threeten.bp.Duration streamIdleTimeout) {
-    return withStreamIdleTimeout(toJavaTimeDuration(streamIdleTimeout));
+    return withStreamIdleTimeoutDuration(toJavaTimeDuration(streamIdleTimeout));
   }
 
   @Override
-  public GrpcCallContext withStreamIdleTimeout(@Nullable java.time.Duration streamIdleTimeout) {
+  public GrpcCallContext withStreamIdleTimeoutDuration(
+      @Nullable java.time.Duration streamIdleTimeout) {
     if (streamIdleTimeout != null) {
       Preconditions.checkArgument(
           streamIdleTimeout.compareTo(java.time.Duration.ZERO) >= 0, "Invalid timeout: < 0 s");
@@ -549,7 +554,7 @@ public final class GrpcCallContext implements ApiCallContext {
   /**
    * The stream wait timeout set for this context.
    *
-   * @see ApiCallContext#withStreamWaitTimeout(java.time.Duration)
+   * @see ApiCallContext#withStreamWaitTimeoutDuration(java.time.Duration)
    */
   @Override
   @Nullable
@@ -566,7 +571,7 @@ public final class GrpcCallContext implements ApiCallContext {
   /**
    * The stream idle timeout set for this context.
    *
-   * @see ApiCallContext#withStreamIdleTimeout(java.time.Duration)
+   * @see ApiCallContext#withStreamIdleTimeoutDuration(java.time.Duration)
    */
   @Override
   @Nullable
