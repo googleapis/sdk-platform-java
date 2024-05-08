@@ -589,8 +589,7 @@ class ServiceOptionsTest {
   // No User Configuration = GDU, non Default Credentials = random.com
   // non-GDU Credentials could be any domain, the tests use random.com
   @Test
-  void testIsValidUniverseDomain_noUserUniverseDomainConfig_nonGDUCredentials()
-      throws IOException {
+  void testIsValidUniverseDomain_noUserUniverseDomainConfig_nonGDUCredentials() throws IOException {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setProjectId("project-id")
@@ -603,8 +602,7 @@ class ServiceOptionsTest {
   // User Configuration = random.com, Default Credentials = GDU
   // User Credentials could be set to any domain, the tests use random.com
   @Test
-  void testIsValidUniverseDomain_userUniverseDomainConfig_defaultCredentials()
-      throws IOException {
+  void testIsValidUniverseDomain_userUniverseDomainConfig_defaultCredentials() throws IOException {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setProjectId("project-id")
@@ -619,8 +617,7 @@ class ServiceOptionsTest {
   // User Credentials and non GDU Credentials could be set to any domain,
   // the tests use random.com
   @Test
-  void testIsValidUniverseDomain_userUniverseDomainConfig_nonGDUCredentials()
-      throws IOException {
+  void testIsValidUniverseDomain_userUniverseDomainConfig_nonGDUCredentials() throws IOException {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setProjectId("project-id")

@@ -89,9 +89,7 @@ class CensusHttpModuleTest {
   @Test
   void censusHttpExecuteInterceptorDisallowNullRequest() {
     HttpExecuteInterceptor interceptor = censusHttpModule.new CensusHttpExecuteInterceptor(null);
-    assertThrows(
-        NullPointerException.class,
-        () -> interceptor.intercept(null));
+    assertThrows(NullPointerException.class, () -> interceptor.intercept(null));
   }
 
   @Test
@@ -132,9 +130,7 @@ class CensusHttpModuleTest {
   @Test
   void censusHttpRequestInitializerDisallowNullRequest() {
     HttpRequestInitializer initializer = censusHttpModule.getHttpRequestInitializer(null);
-    assertThrows(
-        NullPointerException.class,
-        () -> initializer.initialize(null));
+    assertThrows(NullPointerException.class, () -> initializer.initialize(null));
   }
 
   @Test

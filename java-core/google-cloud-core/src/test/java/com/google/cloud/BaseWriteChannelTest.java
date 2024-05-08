@@ -17,12 +17,12 @@
 package com.google.cloud;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.cloud.spi.ServiceRpcFactory;
 import java.io.IOException;
@@ -100,9 +100,7 @@ class BaseWriteChannelTest {
   @Test
   public void testValidateOpen() throws IOException {
     channel.close();
-    assertThrows(
-        ClosedChannelException.class,
-        () -> channel.write(ByteBuffer.allocate(42)));
+    assertThrows(ClosedChannelException.class, () -> channel.write(ByteBuffer.allocate(42)));
   }
 
   @Test

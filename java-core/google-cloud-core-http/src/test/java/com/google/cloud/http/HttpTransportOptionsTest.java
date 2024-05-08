@@ -197,8 +197,7 @@ class HttpTransportOptionsTest {
   }
 
   @Test
-  void testHttpRequestInitializer_defaultUniverseDomainSettings_noCredentials()
-      throws IOException {
+  void testHttpRequestInitializer_defaultUniverseDomainSettings_noCredentials() throws IOException {
     NoCredentials noCredentials = NoCredentials.getInstance();
     TestServiceOptions testServiceOptions =
         generateTestServiceOptions(Credentials.GOOGLE_DEFAULT_UNIVERSE, noCredentials);

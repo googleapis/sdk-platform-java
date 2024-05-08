@@ -68,8 +68,7 @@ class StringEnumTest {
   @Test
   void testNullClass() {
     assertThrows(
-        NullPointerException.class,
-        () -> new StringEnumType<Letter>(null, Letter.CONSTRUCTOR));
+        NullPointerException.class, () -> new StringEnumType<Letter>(null, Letter.CONSTRUCTOR));
   }
 
   @Test

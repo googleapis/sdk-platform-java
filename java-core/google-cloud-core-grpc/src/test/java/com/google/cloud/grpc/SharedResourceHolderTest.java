@@ -42,8 +42,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * This class was copied from grpc-core to prevent dependence on an unstable API that may be subject
- * to changes
- * (<a href="https://github.com/grpc/grpc-java/blob/d07ecbe037d2705a1c9f4b6345581f860e505b56/core/src/test/java/io/grpc/internal/SharedResourceHolderTest.java">SharedResourceHolderTest</a>)
+ * to changes (<a
+ * href="https://github.com/grpc/grpc-java/blob/d07ecbe037d2705a1c9f4b6345581f860e505b56/core/src/test/java/io/grpc/internal/SharedResourceHolderTest.java">SharedResourceHolderTest</a>)
  *
  * <p>Unit tests for {@link SharedResourceHolder}.
  */

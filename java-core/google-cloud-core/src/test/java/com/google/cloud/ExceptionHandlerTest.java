@@ -185,9 +185,7 @@ class ExceptionHandlerTest {
         };
 
     ExceptionHandler handler = ExceptionHandler.newBuilder().addInterceptors(interceptor).build();
-    assertThrows(
-        NullPointerException.class,
-        () -> handler.shouldRetry(new Exception(), null));
+    assertThrows(NullPointerException.class, () -> handler.shouldRetry(new Exception(), null));
   }
 
   @Test
@@ -208,8 +206,6 @@ class ExceptionHandlerTest {
         };
 
     ExceptionHandler handler = ExceptionHandler.newBuilder().addInterceptors(interceptor).build();
-    assertThrows(
-        NullPointerException.class,
-        () -> handler.shouldRetry(new Exception(), null));
+    assertThrows(NullPointerException.class, () -> handler.shouldRetry(new Exception(), null));
   }
 }
