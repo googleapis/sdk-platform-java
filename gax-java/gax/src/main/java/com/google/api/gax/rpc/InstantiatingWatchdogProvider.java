@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.rpc;
 
-
 import com.google.api.core.ApiClock;
 import com.google.api.core.InternalApi;
 import com.google.common.base.Preconditions;

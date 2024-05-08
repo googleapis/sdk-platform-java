@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.retrying.RetrySettings;
@@ -150,5 +151,27 @@ public class ServerStreamingCallSettingsTest {
     assertThat(serverCallSettings.toString()).contains("idleTimeout=" + idleTime);
     assertThat(serverCallSettings.toString()).contains("retryableCodes=" + retryableCodes);
     assertThat(serverCallSettings.toString()).contains("retrySettings=" + retrySettings);
+  }
+
+  @Test
+  public void testIdleTimeout_backportMethodsBehaveCorrectly() {
+    final ServerStreamingCallSettings.Builder builder = ServerStreamingCallSettings.newBuilder();
+    testDurationMethod(
+        123l,
+        jt -> builder.setIdleTimeout(jt).build(),
+        tt -> builder.setIdleTimeout(tt).build(),
+        cs -> cs.getIdleTimeoutDuration(),
+        cs -> cs.getIdleTimeout());
+  }
+
+  @Test
+  public void testWaitTimeout_backportMethodsBehaveCorrectly() {
+    final ServerStreamingCallSettings.Builder builder = ServerStreamingCallSettings.newBuilder();
+    testDurationMethod(
+        123l,
+        jt -> builder.setWaitTimeout(jt).build(),
+        tt -> builder.setWaitTimeout(tt).build(),
+        cs -> cs.getWaitTimeoutDuration(),
+        cs -> cs.getWaitTimeout());
   }
 }
