@@ -29,7 +29,9 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
 import com.google.api.core.ApiClock;
 import java.util.concurrent.ScheduledExecutorService;
@@ -95,5 +97,18 @@ public class FixedWatchdogProviderTest {
       actualError = t;
     }
     assertThat(actualError).isInstanceOf(UnsupportedOperationException.class);
+  }
+
+  @Test
+  public void testWithCheckInterval_backportMethodsBehaveCorrectly() {
+    final FixedWatchdogProvider provider =
+        (FixedWatchdogProvider) FixedWatchdogProvider.create(null);
+    long millis = 123l;
+    assertThrows(
+        UnsupportedOperationException.class,
+        () -> provider.withCheckInterval(java.time.Duration.ofMillis(millis)));
+    assertThrows(
+        UnsupportedOperationException.class,
+        () -> provider.withCheckInterval(org.threeten.bp.Duration.ofMillis(millis)));
   }
 }
