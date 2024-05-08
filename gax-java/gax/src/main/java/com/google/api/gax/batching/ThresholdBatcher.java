@@ -130,15 +130,15 @@ public final class ThresholdBatcher<E> {
     }
 
     /** Set the max delay for a batch. This is counted from the first item added to a batch. */
-    public Builder<E> setMaxDelay(java.time.Duration maxDelay) {
+    public Builder<E> setMaxDelayDuration(java.time.Duration maxDelay) {
       this.maxDelay = maxDelay;
       return this;
     }
 
-    /** Set the max delay for a batch. This is counted from the first item added to a batch. */
-    @ObsoleteApi("Use setMaxDelay(java.time.Duration) instead")
+    /** Overload of {@link #setMaxDelayDuration(java.time.Duration} */
+    @ObsoleteApi("Use setMaxDelayDuration(java.time.Duration) instead")
     public Builder<E> setMaxDelay(org.threeten.bp.Duration maxDelay) {
-      return setMaxDelay(toJavaTimeDuration(maxDelay));
+      return setMaxDelayDuration(toJavaTimeDuration(maxDelay));
     }
 
     /** Set the thresholds for the ThresholdBatcher. */

@@ -136,7 +136,7 @@ public class ThresholdBatcherTest {
     return ThresholdBatcher.<SimpleBatch>newBuilder()
         .setThresholds(BatchingThresholds.<SimpleBatch>create(100))
         .setExecutor(EXECUTOR)
-        .setMaxDelay(java.time.Duration.ofMillis(10000))
+        .setMaxDelayDuration(java.time.Duration.ofMillis(10000))
         .setReceiver(receiver)
         .setFlowController(ThresholdBatcherTest.<SimpleBatch>getDisabledBatchingFlowController())
         .setBatchMerger(new SimpleBatchMerger());
@@ -196,7 +196,7 @@ public class ThresholdBatcherTest {
     AccumulatingBatchReceiver<SimpleBatch> receiver =
         new AccumulatingBatchReceiver<>(ApiFutures.<Void>immediateFuture(null));
     ThresholdBatcher<SimpleBatch> batcher =
-        createSimpleBatcherBuidler(receiver).setMaxDelay(java.time.Duration.ofMillis(100)).build();
+        createSimpleBatcherBuidler(receiver).setMaxDelayDuration(java.time.Duration.ofMillis(100)).build();
 
     batcher.add(SimpleBatch.fromInteger(3));
     batcher.add(SimpleBatch.fromInteger(5));
@@ -222,7 +222,7 @@ public class ThresholdBatcherTest {
       ThresholdBatcher.<SimpleBatch>newBuilder()
           .setThresholds(BatchingThresholds.<SimpleBatch>create(100))
           .setExecutor(EXECUTOR)
-          .setMaxDelay(java.time.Duration.ofMillis(10000))
+          .setMaxDelayDuration(java.time.Duration.ofMillis(10000))
           .setReceiver(
               new AccumulatingBatchReceiver<SimpleBatch>(ApiFutures.<Void>immediateFuture(null)))
           .setBatchMerger(new SimpleBatchMerger())
@@ -368,7 +368,7 @@ public class ThresholdBatcherTest {
         createSimpleBatcherBuidler(receiver).setThresholds(Collections.emptyList());
     testDurationMethod(
         123l,
-        jt -> builder.setMaxDelay(jt).build(),
+        jt -> builder.setMaxDelayDuration(jt).build(),
         tt -> builder.setMaxDelay(tt).build(),
         o -> o.getMaxDelayDuration(),
         o -> o.getMaxDelay());
