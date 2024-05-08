@@ -19,10 +19,15 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.gax.httpjson.*;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
+import com.google.api.gax.rpc.FixedHeaderProvider;
+import com.google.api.gax.rpc.StubSettings;
 import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.*;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import com.google.showcase.v1beta1.stub.ComplianceStubSettings;
+import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import io.grpc.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
@@ -40,6 +45,7 @@ public class ITApiVersionHeaders {
           ApiClientHeaderProvider.API_VERSION_HEADER_KEY, Metadata.ASCII_STRING_MARSHALLER);
 
   private static final String EXPECTED_ECHO_API_VERSION = "v1_20240408";
+  private static final String CUSTOM_API_VERSION = "user-supplied-version";
 
   // Implement a client interceptor to retrieve the trailing metadata from response.
   private static class GrpcCapturingClientInterceptor implements ClientInterceptor {
@@ -210,5 +216,96 @@ public class ITApiVersionHeaders {
     httpJsonComplianceClient.repeatDataSimplePath(request);
     assertThat(API_VERSION_HEADER_KEY)
         .isNotIn(httpJsonComplianceInterceptor.metadata.getHeaders().keySet());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testGrpcEcho_userApiVersionThrowsException() throws IOException {
+    StubSettings stubSettings =
+        grpcClient
+            .getSettings()
+            .getStubSettings()
+            .toBuilder()
+            .setHeaderProvider(
+                FixedHeaderProvider.create(
+                    ApiClientHeaderProvider.API_VERSION_HEADER_KEY, CUSTOM_API_VERSION))
+            .build();
+
+    try (EchoClient echo =
+        EchoClient.create(EchoSettings.create((EchoStubSettings) stubSettings))) {
+      assertThat(true).isFalse();
+    }
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testHttpJsonEcho_userApiVersionThrowsException() throws IOException {
+    StubSettings stubSettings =
+        httpJsonClient
+            .getSettings()
+            .getStubSettings()
+            .toBuilder()
+            .setHeaderProvider(
+                FixedHeaderProvider.create(
+                    ApiClientHeaderProvider.API_VERSION_HEADER_KEY, CUSTOM_API_VERSION))
+            .build();
+
+    try (EchoClient echo =
+        EchoClient.create(EchoSettings.create((EchoStubSettings) stubSettings))) {
+      assertThat(true).isFalse();
+    }
+  }
+
+  @Test
+  public void testGrpcCompliance_userApiVersionSetSuccess() throws IOException {
+    StubSettings stubSettingsWithApiVersionHeader =
+        grpcComplianceClient
+            .getSettings()
+            .getStubSettings()
+            .toBuilder()
+            .setHeaderProvider(
+                FixedHeaderProvider.create(
+                    ApiClientHeaderProvider.API_VERSION_HEADER_KEY, CUSTOM_API_VERSION))
+            .build();
+    try (ComplianceClient customComplianceClient =
+        ComplianceClient.create(
+            ComplianceSettings.create((ComplianceStubSettings) stubSettingsWithApiVersionHeader))) {
+
+      RepeatRequest request =
+          RepeatRequest.newBuilder()
+              .setInfo(ComplianceData.newBuilder().setFString("test"))
+              .build();
+      customComplianceClient.repeatDataSimplePath(request);
+      String headerValue = grpcComplianceInterceptor.metadata.get(API_VERSION_HEADER_KEY);
+      assertThat(headerValue).isEqualTo(CUSTOM_API_VERSION);
+    }
+  }
+
+  @Test
+  public void testHttpJsonCompliance_userApiVersionSetSuccess() throws IOException {
+    StubSettings httpJsonStubSettingsWithApiVersionHeader =
+        httpJsonComplianceClient
+            .getSettings()
+            .getStubSettings()
+            .toBuilder()
+            .setHeaderProvider(
+                FixedHeaderProvider.create(
+                    ApiClientHeaderProvider.API_VERSION_HEADER_KEY, CUSTOM_API_VERSION))
+            .build();
+    try (ComplianceClient customComplianceClient =
+        ComplianceClient.create(
+            ComplianceSettings.create(
+                (ComplianceStubSettings) httpJsonStubSettingsWithApiVersionHeader))) {
+
+      RepeatRequest request =
+          RepeatRequest.newBuilder()
+              .setInfo(ComplianceData.newBuilder().setFString("test"))
+              .build();
+      customComplianceClient.repeatDataSimplePath(request);
+
+      ArrayList headerValues =
+          (ArrayList)
+              httpJsonComplianceInterceptor.metadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
+      String headerValue = (String) headerValues.get(0);
+      assertThat(headerValue).isEqualTo(CUSTOM_API_VERSION);
+    }
   }
 }
