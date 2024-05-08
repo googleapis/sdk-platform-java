@@ -26,9 +26,9 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class CommandWrapperTest {
+class CommandWrapperTest {
 
   private static final List<String> COMMAND = ImmutableList.of("my", "command");
   private static final List<String> WIN_COMMAND = ImmutableList.of("cmd", "/C", "my", "command");
@@ -38,7 +38,7 @@ public class CommandWrapperTest {
   private static final File UNIX_NULL_FILE = new File("/dev/null");
 
   @Test
-  public void testCommandWrapperCommand() {
+  void testCommandWrapperCommand() {
     CommandWrapper commandWrapper = CommandWrapper.create();
     commandWrapper.setCommand(COMMAND);
     ProcessBuilder processBuilder = commandWrapper.getBuilder();
@@ -53,7 +53,7 @@ public class CommandWrapperTest {
   }
 
   @Test
-  public void testCommandWrapperRedirectErrorStream() {
+  void testCommandWrapperRedirectErrorStream() {
     CommandWrapper commandWrapper = CommandWrapper.create();
     commandWrapper.setCommand(COMMAND);
     commandWrapper.setRedirectErrorStream();
@@ -69,7 +69,7 @@ public class CommandWrapperTest {
   }
 
   @Test
-  public void testCommandWrapperRedirectErrorInherit() {
+  void testCommandWrapperRedirectErrorInherit() {
     CommandWrapper commandWrapper = CommandWrapper.create();
     commandWrapper.setCommand(COMMAND);
     commandWrapper.setRedirectErrorInherit();
@@ -85,7 +85,7 @@ public class CommandWrapperTest {
   }
 
   @Test
-  public void testCommandWrapperDirectory() {
+  void testCommandWrapperDirectory() {
     CommandWrapper commandWrapper = CommandWrapper.create();
     commandWrapper.setCommand(COMMAND);
     commandWrapper.setDirectory(DIRECTORY);
@@ -101,7 +101,7 @@ public class CommandWrapperTest {
   }
 
   @Test
-  public void testCommandWrapperRedirectOutputToNull() {
+  void testCommandWrapperRedirectOutputToNull() {
     CommandWrapper commandWrapper = CommandWrapper.create();
     commandWrapper.setCommand(COMMAND);
     commandWrapper.setRedirectOutputToNull();
