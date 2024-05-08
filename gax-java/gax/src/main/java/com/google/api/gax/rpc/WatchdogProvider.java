@@ -30,23 +30,17 @@
 package com.google.api.gax.rpc;
 
 import com.google.api.core.ApiClock;
-import com.google.api.core.ObsoleteApi;
+import com.google.api.core.InternalApi;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
 
+@InternalApi
 public interface WatchdogProvider {
   boolean needsClock();
 
   WatchdogProvider withClock(@Nonnull ApiClock clock);
 
   boolean needsCheckInterval();
-
-  /**
-   * Overload of {@link #withCheckInterval(java.time.Duration)} using {@link
-   * org.threeten.bp.Duration}
-   */
-  @ObsoleteApi("Use withCheckInterval(java.time.Duration) instead")
-  WatchdogProvider withCheckInterval(org.threeten.bp.Duration checkInterval);
 
   WatchdogProvider withCheckInterval(java.time.Duration checkInterval);
 

@@ -31,7 +31,6 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.InternalApi;
-import com.google.api.core.ObsoleteApi;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -68,12 +67,6 @@ public final class FixedWatchdogProvider implements WatchdogProvider {
   @Override
   public boolean needsCheckInterval() {
     return false;
-  }
-
-  @Override
-  @ObsoleteApi("Use withCheckInterval(java.time.Duration) instead")
-  public WatchdogProvider withCheckInterval(org.threeten.bp.Duration checkInterval) {
-    throw new UnsupportedOperationException("FixedWatchdogProvider doesn't need a checkInterval");
   }
 
   @Override
