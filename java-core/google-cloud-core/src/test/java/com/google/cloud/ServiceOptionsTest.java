@@ -17,14 +17,13 @@
 package com.google.cloud;
 
 import static com.google.common.truth.Truth.assertThat;
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
@@ -50,9 +49,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ServiceOptionsTest {
+class ServiceOptionsTest {
   private static GoogleCredentials credentials;
   private static GoogleCredentials credentialsWithProjectId;
   private static GoogleCredentials credentialsWithQuotaProject;
@@ -378,15 +377,15 @@ public class ServiceOptionsTest {
     assertEquals("quota-project-id", quotaProjectCredsWithQuotaProject.getQuotaProjectId());
     assertEquals("quota-project-id", quotaProjectCredsWithQuotaProject2.getQuotaProjectId());
     assertEquals("some-quota-project-id", quotaProjectCreds.getQuotaProjectId());
-    assertEquals(null, none.getQuotaProjectId());
+    assertNull(none.getQuotaProjectId());
   }
 
   @Test
-  public void testBuilderNoCredentials() {
+  void testBuilderNoCredentials() {
     assertEquals(NoCredentials.getInstance(), OPTIONS_NO_CREDENTIALS.getCredentials());
-    assertTrue(NoCredentials.getInstance().equals(OPTIONS_NO_CREDENTIALS.getCredentials()));
-    assertFalse(NoCredentials.getInstance().equals(OPTIONS.getCredentials()));
-    assertFalse(NoCredentials.getInstance().equals(null));
+    assertEquals(NoCredentials.getInstance(), OPTIONS_NO_CREDENTIALS.getCredentials());
+    assertNotEquals(NoCredentials.getInstance(), OPTIONS.getCredentials());
+    assertNotEquals(null, NoCredentials.getInstance());
     assertSame(TEST_CLOCK, OPTIONS_NO_CREDENTIALS.getClock());
     assertEquals("host", OPTIONS_NO_CREDENTIALS.getHost());
     assertEquals("project-id", OPTIONS_NO_CREDENTIALS.getProjectId());
@@ -394,20 +393,22 @@ public class ServiceOptionsTest {
     assertEquals("quota-project-id", OPTIONS.getQuotaProjectId());
   }
 
-  @Test(expected = NullPointerException.class)
-  public void testBuilderNullCredentials() {
-    TestServiceOptions.newBuilder().setCredentials(null).build();
+  @Test
+  void testBuilderNullCredentials() {
+    assertThrows(
+        NullPointerException.class,
+        () -> TestServiceOptions.newBuilder().setCredentials(null).build());
   }
 
   @Test
-  public void testBuilderServiceAccount_setsProjectId() {
+  void testBuilderServiceAccount_setsProjectId() {
     TestServiceOptions options =
         TestServiceOptions.newBuilder().setCredentials(credentialsWithProjectId).build();
     assertEquals("someprojectid", options.getProjectId());
   }
 
   @Test
-  public void testBuilderServiceAccount_explicitSetProjectIdBefore() {
+  void testBuilderServiceAccount_explicitSetProjectIdBefore() {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setProjectId("override-project-id")
@@ -417,7 +418,7 @@ public class ServiceOptionsTest {
   }
 
   @Test
-  public void testBuilderServiceAccount_explicitSetProjectIdAfter() {
+  void testBuilderServiceAccount_explicitSetProjectIdAfter() {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setCredentials(credentialsWithProjectId)
@@ -427,44 +428,44 @@ public class ServiceOptionsTest {
   }
 
   @Test
-  public void testGetProjectIdRequired() {
+  void testGetProjectIdRequired() {
     assertTrue(OPTIONS.projectIdRequired());
   }
 
   @Test
-  public void testService() {
+  void testService() {
     assertTrue(OPTIONS.getService() instanceof TestServiceImpl);
   }
 
   @Test
-  public void testRpc() {
+  void testRpc() {
     assertTrue(OPTIONS.getRpc() instanceof DefaultTestServiceRpc);
   }
 
   @Test
-  public void testBaseEquals() {
+  void testBaseEquals() {
     assertEquals(OPTIONS, OPTIONS_COPY);
     assertNotEquals(DEFAULT_OPTIONS, OPTIONS);
   }
 
   @Test
-  public void testLibraryName() {
+  void testLibraryName() {
     assertEquals(LIBRARY_NAME, ServiceOptions.getLibraryName());
   }
 
   @Test
-  public void testApplicationName() {
+  void testApplicationName() {
     assertTrue(APPLICATION_NAME_PATTERN.matcher(OPTIONS.getApplicationName()).matches());
   }
 
   @Test
-  public void testBaseHashCode() {
+  void testBaseHashCode() {
     assertEquals(OPTIONS.hashCode(), OPTIONS_COPY.hashCode());
     assertNotEquals(DEFAULT_OPTIONS.hashCode(), OPTIONS.hashCode());
   }
 
   @Test
-  public void testGetServiceAccountProjectId() throws Exception {
+  void testGetServiceAccountProjectId() throws Exception {
     File credentialsFile = File.createTempFile("credentials", ".json");
     credentialsFile.deleteOnExit();
     Files.write("{\"project_id\":\"my-project-id\"}".getBytes(), credentialsFile);
@@ -475,7 +476,7 @@ public class ServiceOptionsTest {
   }
 
   @Test
-  public void testGetServiceAccountProjectId_badJson() throws Exception {
+  void testGetServiceAccountProjectId_badJson() throws Exception {
     File credentialsFile = File.createTempFile("credentials", ".json");
     credentialsFile.deleteOnExit();
     Files.write("asdfghj".getBytes(StandardCharsets.UTF_8), credentialsFile);
@@ -486,14 +487,14 @@ public class ServiceOptionsTest {
   }
 
   @Test
-  public void testGetServiceAccountProjectId_nonExistentFile() throws Exception {
+  void testGetServiceAccountProjectId_nonExistentFile() throws Exception {
     File credentialsFile = new File("/doesnotexist");
 
     assertNull(ServiceOptions.getValueFromCredentialsFile(credentialsFile.getPath(), "project_id"));
   }
 
   @Test
-  public void testResponseHeaderContainsMetaDataFlavor() throws Exception {
+  void testResponseHeaderContainsMetaDataFlavor() throws Exception {
     Multimap<String, String> headers = ArrayListMultimap.create();
     headers.put("Metadata-Flavor", "Google");
     HttpResponse httpResponse = createHttpResponseWithHeader(headers);
@@ -501,20 +502,20 @@ public class ServiceOptionsTest {
   }
 
   @Test
-  public void testResponseHeaderDoesNotContainMetaDataFlavor() throws Exception {
+  void testResponseHeaderDoesNotContainMetaDataFlavor() throws Exception {
     Multimap<String, String> headers = ArrayListMultimap.create();
     HttpResponse httpResponse = createHttpResponseWithHeader(headers);
     assertThat(ServiceOptions.headerContainsMetadataFlavor(httpResponse)).isFalse();
   }
 
   @Test
-  public void testGetResolvedEndpoint_noUniverseDomain() {
+  void testGetResolvedEndpoint_noUniverseDomain() {
     TestServiceOptions options = TestServiceOptions.newBuilder().setProjectId("project-id").build();
     assertThat(options.getResolvedHost("service")).isEqualTo("https://service.googleapis.com");
   }
 
   @Test
-  public void testGetResolvedEndpoint_emptyUniverseDomain() {
+  void testGetResolvedEndpoint_emptyUniverseDomain() {
     TestServiceOptions options =
         TestServiceOptions.newBuilder().setUniverseDomain("").setProjectId("project-id").build();
     IllegalArgumentException exception =
@@ -523,7 +524,7 @@ public class ServiceOptionsTest {
   }
 
   @Test
-  public void testGetResolvedEndpoint_customUniverseDomain() {
+  void testGetResolvedEndpoint_customUniverseDomain() {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setUniverseDomain("test.com")
@@ -533,7 +534,7 @@ public class ServiceOptionsTest {
   }
 
   @Test
-  public void testGetResolvedEndpoint_customUniverseDomain_customHost() {
+  void testGetResolvedEndpoint_customUniverseDomain_customHost() {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setUniverseDomain("test.com")
@@ -544,14 +545,14 @@ public class ServiceOptionsTest {
   }
 
   @Test
-  public void testGetResolvedApiaryHost_noUniverseDomain() {
+  void testGetResolvedApiaryHost_noUniverseDomain() {
     TestServiceOptions options = TestServiceOptions.newBuilder().setProjectId("project-id").build();
     assertThat(options.getResolvedApiaryHost("service"))
         .isEqualTo("https://service.googleapis.com/");
   }
 
   @Test
-  public void testGetResolvedApiaryHost_customUniverseDomain_noHost() {
+  void testGetResolvedApiaryHost_customUniverseDomain_noHost() {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setUniverseDomain("test.com")
@@ -562,7 +563,7 @@ public class ServiceOptionsTest {
   }
 
   @Test
-  public void testGetResolvedApiaryHost_customUniverseDomain_customHost() {
+  void testGetResolvedApiaryHost_customUniverseDomain_customHost() {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setUniverseDomain("test.com")
@@ -574,7 +575,7 @@ public class ServiceOptionsTest {
 
   // No User Configuration = GDU, Default Credentials = GDU
   @Test
-  public void testIsValidUniverseDomain_noUserUniverseDomainConfig_defaultCredentials()
+  void testIsValidUniverseDomain_noUserUniverseDomainConfig_defaultCredentials()
       throws IOException {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
@@ -588,7 +589,7 @@ public class ServiceOptionsTest {
   // No User Configuration = GDU, non Default Credentials = random.com
   // non-GDU Credentials could be any domain, the tests use random.com
   @Test
-  public void testIsValidUniverseDomain_noUserUniverseDomainConfig_nonGDUCredentials()
+  void testIsValidUniverseDomain_noUserUniverseDomainConfig_nonGDUCredentials()
       throws IOException {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
@@ -602,7 +603,7 @@ public class ServiceOptionsTest {
   // User Configuration = random.com, Default Credentials = GDU
   // User Credentials could be set to any domain, the tests use random.com
   @Test
-  public void testIsValidUniverseDomain_userUniverseDomainConfig_defaultCredentials()
+  void testIsValidUniverseDomain_userUniverseDomainConfig_defaultCredentials()
       throws IOException {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
@@ -618,7 +619,7 @@ public class ServiceOptionsTest {
   // User Credentials and non GDU Credentials could be set to any domain,
   // the tests use random.com
   @Test
-  public void testIsValidUniverseDomain_userUniverseDomainConfig_nonGDUCredentials()
+  void testIsValidUniverseDomain_userUniverseDomainConfig_nonGDUCredentials()
       throws IOException {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
