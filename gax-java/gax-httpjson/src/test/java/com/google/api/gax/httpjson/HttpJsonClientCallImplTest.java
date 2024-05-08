@@ -58,7 +58,6 @@ public class HttpJsonClientCallImplTest {
   public void responseReceived_noCancellationTask() {
     ScheduledThreadPoolExecutor deadlineSchedulerExecutor = new ScheduledThreadPoolExecutor(1);
     // Null timeout means no timeout task created
-    Mockito.when(httpJsonCallOptions.getTimeout()).thenReturn(null);
     Mockito.when(httpJsonCallOptions.getTimeoutDuration()).thenReturn(null);
 
     HttpJsonClientCallImpl httpJsonClientCall =
@@ -94,8 +93,6 @@ public class HttpJsonClientCallImplTest {
     deadlineSchedulerExecutor.setRemoveOnCancelPolicy(true);
 
     // Setting a timeout for this call will enqueue a timeout task
-    Mockito.when(httpJsonCallOptions.getTimeout())
-        .thenReturn(org.threeten.bp.Duration.ofMinutes(10));
     Mockito.when(httpJsonCallOptions.getTimeoutDuration())
         .thenReturn(java.time.Duration.ofMinutes(10));
 
