@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.grpc;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static org.junit.Assert.assertEquals;
 
 import com.google.api.gax.batching.BatchingSettings;
@@ -58,6 +59,9 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.truth.Truth;
 import java.io.IOException;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -361,5 +365,23 @@ public class SettingsTest {
     UnaryCallSettings<Integer, Integer> settingsB = builderB.build();
 
     assertEquals("UnaryCallSettings", settingsA, settingsB);
+  }
+
+  @Test
+  public void testWatchDogCheckInterval_backportMethodsBehaveCorrectly() {
+    final Function<Supplier<StubSettings.Builder>, StubSettings> build =
+        createBuilder -> {
+          try {
+            return createBuilder.get().build();
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        };
+    testDurationMethod(
+        123l,
+        jt -> build.apply(() -> FakeStubSettings.newBuilder().setStreamWatchdogCheckInterval(jt)),
+        tt -> build.apply(() -> FakeStubSettings.newBuilder().setStreamWatchdogCheckInterval(tt)),
+        ss -> ss.getStreamWatchdogCheckIntervalDuration(),
+        ss -> ss.getStreamWatchdogCheckInterval());
   }
 }
