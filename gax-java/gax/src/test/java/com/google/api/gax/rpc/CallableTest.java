@@ -142,7 +142,7 @@ public class CallableTest {
   public void testNonRetriedServerStreamingCallable() throws Exception {
     java.time.Duration timeout = java.time.Duration.ofMillis(5L);
     ServerStreamingCallSettings<Object, Object> callSettings =
-        ServerStreamingCallSettings.newBuilder().setSimpleTimeoutNoRetries(timeout).build();
+        ServerStreamingCallSettings.newBuilder().setSimpleTimeoutNoRetriesDuration(timeout).build();
     ServerStreamingCallable<Object, Object> callable =
         Callables.retrying(innerServerStreamingCallable, callSettings, clientContext);
 
@@ -157,7 +157,7 @@ public class CallableTest {
   public void testNonRetriedServerStreamingCallableWithRetrySettings() throws Exception {
     ServerStreamingCallSettings<Object, Object> callSettings =
         ServerStreamingCallSettings.newBuilder()
-            .setSimpleTimeoutNoRetries(java.time.Duration.ofMillis(10L))
+            .setSimpleTimeoutNoRetriesDuration(java.time.Duration.ofMillis(10L))
             .build();
     ServerStreamingCallable<Object, Object> callable =
         Callables.retrying(innerServerStreamingCallable, callSettings, clientContext);

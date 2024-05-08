@@ -91,7 +91,7 @@ public class ServerStreamingCallSettingsTest {
 
     ServerStreamingCallSettings.Builder<Object, Object> builder =
         ServerStreamingCallSettings.newBuilder();
-    builder.setIdleTimeout(idleTimeout);
+    builder.setIdleTimeoutDuration(idleTimeout);
 
     assertThat(builder.getIdleTimeoutDuration()).isEqualTo(idleTimeout);
     assertThat(builder.build().getIdleTimeoutDuration()).isEqualTo(idleTimeout);
@@ -105,7 +105,7 @@ public class ServerStreamingCallSettingsTest {
     ServerStreamingCallSettings.Builder<Object, Object> builder =
         ServerStreamingCallSettings.newBuilder();
 
-    builder.setWaitTimeout(waitTimeout);
+    builder.setWaitTimeoutDuration(waitTimeout);
 
     assertThat(builder.getWaitTimeoutDuration()).isEqualTo(waitTimeout);
     assertThat(builder.build().getWaitTimeoutDuration()).isEqualTo(waitTimeout);
@@ -146,7 +146,7 @@ public class ServerStreamingCallSettingsTest {
         ServerStreamingCallSettings.newBuilder()
             .setRetrySettings(retrySettings)
             .setRetryableCodes(retryableCodes)
-            .setIdleTimeout(idleTime)
+            .setIdleTimeoutDuration(idleTime)
             .build();
     assertThat(serverCallSettings.toString()).contains("idleTimeout=" + idleTime);
     assertThat(serverCallSettings.toString()).contains("retryableCodes=" + retryableCodes);
@@ -158,7 +158,7 @@ public class ServerStreamingCallSettingsTest {
     final ServerStreamingCallSettings.Builder builder = ServerStreamingCallSettings.newBuilder();
     testDurationMethod(
         123l,
-        jt -> builder.setIdleTimeout(jt).build(),
+        jt -> builder.setIdleTimeoutDuration(jt).build(),
         tt -> builder.setIdleTimeout(tt).build(),
         cs -> cs.getIdleTimeoutDuration(),
         cs -> cs.getIdleTimeout());
@@ -169,7 +169,7 @@ public class ServerStreamingCallSettingsTest {
     final ServerStreamingCallSettings.Builder builder = ServerStreamingCallSettings.newBuilder();
     testDurationMethod(
         123l,
-        jt -> builder.setWaitTimeout(jt).build(),
+        jt -> builder.setWaitTimeoutDuration(jt).build(),
         tt -> builder.setWaitTimeout(tt).build(),
         cs -> cs.getWaitTimeoutDuration(),
         cs -> cs.getWaitTimeout());
