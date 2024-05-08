@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -46,6 +47,7 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.core.FixedExecutorProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.rpc.testing.FakeChannel;
 import com.google.api.gax.rpc.testing.FakeClientSettings;
 import com.google.api.gax.rpc.testing.FakeStubSettings;
@@ -1064,5 +1066,17 @@ public class ClientContextTest {
     ClientSettings clientSettings = clientSettingsBuilder.build();
     ClientContext clientContext = ClientContext.create(clientSettings);
     assertThat(clientContext.getUniverseDomain()).isEqualTo(universeDomain);
+  }
+
+  @Test
+  public void testStreamWatchdogInterval_backportMethodsBehaveCorrectly() {
+    final ClientContext.Builder builder =
+        ClientContext.newBuilder().setDefaultCallContext(FakeCallContext.createDefault());
+    testDurationMethod(
+        123L,
+        jt -> builder.setStreamWatchdogCheckInterval(jt).build(),
+        tt -> builder.setStreamWatchdogCheckInterval(tt).build(),
+        ct -> ct.getStreamWatchdogCheckIntervalDuration(),
+        ct -> ct.getStreamWatchdogCheckInterval());
   }
 }
