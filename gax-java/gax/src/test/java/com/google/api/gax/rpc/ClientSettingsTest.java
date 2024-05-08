@@ -177,7 +177,7 @@ public class ClientSettingsTest {
     builder.setInternalHeaderProvider(internalHeaderProvider);
     builder.setClock(clock);
     builder.setWatchdogProvider(watchdogProvider);
-    builder.setWatchdogCheckInterval(watchdogCheckInterval);
+    builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
     builder.setQuotaProjectId(quotaProjectId);
 
     // For backward compatibility, backgroundExecutorProvider is set to executorProvider
@@ -274,7 +274,7 @@ public class ClientSettingsTest {
     builder.setHeaderProvider(headerProvider);
     builder.setInternalHeaderProvider(internalHeaderProvider);
     builder.setWatchdogProvider(watchdogProvider);
-    builder.setWatchdogCheckInterval(watchdogCheckInterval);
+    builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
     builder.setQuotaProjectId(quotaProjectId);
 
     FakeClientSettings settings = builder.build();
@@ -568,7 +568,7 @@ public class ClientSettingsTest {
         };
     testDurationMethod(
         123l,
-        jt -> createClientSettings.apply(() -> builder.setWatchdogCheckInterval(jt)),
+        jt -> createClientSettings.apply(() -> builder.setWatchdogCheckIntervalDuration(jt)),
         tt -> createClientSettings.apply(() -> builder.setWatchdogCheckInterval(tt)),
         cs -> cs.getWatchdogCheckIntervalDuration(),
         cs -> cs.getWatchdogCheckInterval());

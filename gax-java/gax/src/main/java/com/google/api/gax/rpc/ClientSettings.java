@@ -278,13 +278,14 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
-    @ObsoleteApi("Use setWatchdogCheckInterval(java.time.Duration) instead")
+    /** Backport of {@link #setWatchdogCheckIntervalDuration(java.time.Duration)} */
+    @ObsoleteApi("Use setWatchdogCheckIntervalDuration(java.time.Duration) instead")
     public B setWatchdogCheckInterval(@Nullable org.threeten.bp.Duration checkInterval) {
       stubSettings.setStreamWatchdogCheckInterval(checkInterval);
       return self();
     }
 
-    public B setWatchdogCheckInterval(@Nullable java.time.Duration checkInterval) {
+    public B setWatchdogCheckIntervalDuration(@Nullable java.time.Duration checkInterval) {
       stubSettings.setStreamWatchdogCheckInterval(checkInterval);
       return self();
     }

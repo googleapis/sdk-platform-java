@@ -295,7 +295,7 @@ public class ClientContextTest {
     builder.setTransportChannelProvider(transportProvider);
     builder.setCredentialsProvider(FixedCredentialsProvider.create(credentials));
     builder.setWatchdogProvider(FixedWatchdogProvider.create(watchdog));
-    builder.setWatchdogCheckInterval(watchdogCheckInterval);
+    builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
     builder.setClock(clock);
 
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
@@ -370,7 +370,7 @@ public class ClientContextTest {
             .withClock(clock)
             .withCheckInterval(watchdogCheckInterval)
             .withExecutor(executor));
-    builder.setWatchdogCheckInterval(watchdogCheckInterval);
+    builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
 
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of("k1", "v1"));
