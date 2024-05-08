@@ -17,11 +17,12 @@
 package com.google.cloud;
 
 import static com.google.common.truth.Truth.assertThat;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.google.cloud.spi.ServiceRpcFactory;
 import java.io.IOException;
@@ -30,10 +31,10 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.util.Arrays;
 import java.util.Random;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class BaseWriteChannelTest {
+class BaseWriteChannelTest {
 
   private abstract static class CustomService implements Service<CustomServiceOptions> {}
 
@@ -58,8 +59,8 @@ public class BaseWriteChannelTest {
   private static final Random RANDOM = new Random();
   private static BaseWriteChannel channel;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     channel =
         new BaseWriteChannel<CustomServiceOptions, Serializable>(null, ENTITY, UPLOAD_ID) {
           @Override
@@ -78,8 +79,8 @@ public class BaseWriteChannelTest {
   }
 
   @Test
-  public void testConstructor() {
-    assertEquals(null, channel.getOptions());
+  void testConstructor() {
+    assertNull(channel.getOptions());
     assertEquals(ENTITY, channel.getEntity());
     assertEquals(0, channel.getPosition());
     assertEquals(UPLOAD_ID, channel.getUploadId());
@@ -90,20 +91,22 @@ public class BaseWriteChannelTest {
   }
 
   @Test
-  public void testClose() throws IOException {
+  void testClose() throws IOException {
     channel.close();
     assertFalse(channel.isOpen());
     assertNull(channel.getBuffer());
   }
 
-  @Test(expected = ClosedChannelException.class)
+  @Test
   public void testValidateOpen() throws IOException {
     channel.close();
-    channel.write(ByteBuffer.allocate(42));
+    assertThrows(
+        ClosedChannelException.class,
+        () -> channel.write(ByteBuffer.allocate(42)));
   }
 
   @Test
-  public void testChunkSize() {
+  void testChunkSize() {
     channel.setChunkSize(42);
     assertThat(channel.getChunkSize() >= MIN_CHUNK_SIZE).isTrue();
     assertThat(channel.getChunkSize() % MIN_CHUNK_SIZE).isEqualTo(0);
@@ -118,7 +121,7 @@ public class BaseWriteChannelTest {
   }
 
   @Test
-  public void testWrite() throws IOException {
+  void testWrite() throws IOException {
     channel.write(ByteBuffer.wrap(CONTENT));
     assertEquals(CONTENT.length, channel.getLimit());
     assertEquals(DEFAULT_CHUNK_SIZE, channel.getBuffer().length);
@@ -126,7 +129,7 @@ public class BaseWriteChannelTest {
   }
 
   @Test
-  public void testWriteAndFlush() throws IOException {
+  void testWriteAndFlush() throws IOException {
     ByteBuffer content = randomBuffer(DEFAULT_CHUNK_SIZE + 1);
     channel.write(content);
     assertEquals(DEFAULT_CHUNK_SIZE, channel.getPosition());
