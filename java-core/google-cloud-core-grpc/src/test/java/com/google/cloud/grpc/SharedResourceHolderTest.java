@@ -16,8 +16,19 @@
 
 package com.google.cloud.grpc;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.anyLong;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createNiceMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.LinkedList;
 import java.util.concurrent.Delayed;
@@ -26,20 +37,17 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import org.easymock.EasyMock;
 import org.easymock.IAnswer;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * This class was copied from grpc-core to prevent dependence on an unstable API that may be subject
  * to changes
- * (https://github.com/grpc/grpc-java/blob/d07ecbe037d2705a1c9f4b6345581f860e505b56/core/src/test/java/io/grpc/internal/SharedResourceHolderTest.java)
+ * (<a href="https://github.com/grpc/grpc-java/blob/d07ecbe037d2705a1c9f4b6345581f860e505b56/core/src/test/java/io/grpc/internal/SharedResourceHolderTest.java">SharedResourceHolderTest</a>)
  *
  * <p>Unit tests for {@link SharedResourceHolder}.
  */
-@RunWith(JUnit4.class)
-public class SharedResourceHolderTest {
+class SharedResourceHolderTest {
 
   private final LinkedList<MockScheduledFuture<?>> scheduledDestroyTasks = new LinkedList<>();
 
@@ -67,13 +75,13 @@ public class SharedResourceHolderTest {
   private static final SharedResourceHolder.Resource<ResourceInstance> SHARED_BAR =
       new ResourceFactory();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     holder = new SharedResourceHolder(new MockExecutorFactory());
   }
 
   @Test
-  public void destroyResourceWhenRefCountReachesZero() {
+  void destroyResourceWhenRefCountReachesZero() {
     ResourceInstance foo1 = holder.getInternal(SHARED_FOO);
     ResourceInstance sharedFoo = foo1;
     ResourceInstance foo2 = holder.getInternal(SHARED_FOO);
@@ -121,7 +129,7 @@ public class SharedResourceHolderTest {
   }
 
   @Test
-  public void cancelDestroyTask() {
+  void cancelDestroyTask() {
     ResourceInstance foo1 = holder.getInternal(SHARED_FOO);
     ResourceInstance sharedFoo = foo1;
     holder.releaseInternal(SHARED_FOO, foo1);
@@ -148,7 +156,7 @@ public class SharedResourceHolderTest {
   }
 
   @Test
-  public void releaseWrongInstance() {
+  void releaseWrongInstance() {
     ResourceInstance uncached = new ResourceInstance();
     try {
       holder.releaseInternal(SHARED_FOO, uncached);
@@ -167,7 +175,7 @@ public class SharedResourceHolderTest {
   }
 
   @Test
-  public void overreleaseInstance() {
+  void overreleaseInstance() {
     ResourceInstance foo1 = holder.getInternal(SHARED_FOO);
     holder.releaseInternal(SHARED_FOO, foo1);
     try {
@@ -179,7 +187,7 @@ public class SharedResourceHolderTest {
   }
 
   @Test
-  public void handleInstanceCloseError() {
+  void handleInstanceCloseError() {
     class ExceptionOnCloseResource implements SharedResourceHolder.Resource<ResourceInstance> {
       @Override
       public ResourceInstance create() {
