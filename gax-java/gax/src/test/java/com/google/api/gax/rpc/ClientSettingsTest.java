@@ -230,7 +230,7 @@ public class ClientSettingsTest {
             .setDefaultCallContext(callContext)
             .setHeaders(headers)
             .setStreamWatchdog(watchdog)
-            .setStreamWatchdogCheckInterval(watchdogCheckInterval)
+            .setStreamWatchdogCheckIntervalDuration(watchdogCheckInterval)
             .setQuotaProjectId(QUOTA_PROJECT_ID_FROM_CONTEXT)
             .build();
 

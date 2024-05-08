@@ -1074,7 +1074,7 @@ public class ClientContextTest {
         ClientContext.newBuilder().setDefaultCallContext(FakeCallContext.createDefault());
     testDurationMethod(
         123L,
-        jt -> builder.setStreamWatchdogCheckInterval(jt).build(),
+        jt -> builder.setStreamWatchdogCheckIntervalDuration(jt).build(),
         tt -> builder.setStreamWatchdogCheckInterval(tt).build(),
         ct -> ct.getStreamWatchdogCheckIntervalDuration(),
         ct -> ct.getStreamWatchdogCheckInterval());

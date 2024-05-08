@@ -147,7 +147,7 @@ public abstract class ClientContext {
         .setInternalHeaders(Collections.<String, String>emptyMap())
         .setClock(NanoClock.getDefaultClock())
         .setStreamWatchdog(null)
-        .setStreamWatchdogCheckInterval(java.time.Duration.ZERO)
+        .setStreamWatchdogCheckIntervalDuration(java.time.Duration.ZERO)
         .setTracerFactory(BaseApiTracerFactory.getInstance())
         .setQuotaProjectId(null)
         .setGdchApiAudience(null)
@@ -288,7 +288,7 @@ public abstract class ClientContext {
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
-        .setStreamWatchdogCheckInterval(settings.getStreamWatchdogCheckIntervalDuration())
+        .setStreamWatchdogCheckIntervalDuration(settings.getStreamWatchdogCheckIntervalDuration())
         .setTracerFactory(settings.getTracerFactory())
         .setEndpointContext(endpointContext)
         .build();
@@ -359,10 +359,11 @@ public abstract class ClientContext {
 
     public abstract Builder setStreamWatchdog(Watchdog watchdog);
 
-    @ObsoleteApi("Use setStreamWatchdogCheckInterval(java.time.Duration) instead")
+    /** Backport of {@link #setStreamWatchdogCheckIntervalDuration(java.time.Duration)} */
+    @ObsoleteApi("Use setStreamWatchdogCheckIntervalDuration(java.time.Duration) instead")
     public abstract Builder setStreamWatchdogCheckInterval(org.threeten.bp.Duration duration);
 
-    public final Builder setStreamWatchdogCheckInterval(java.time.Duration duration) {
+    public final Builder setStreamWatchdogCheckIntervalDuration(java.time.Duration duration) {
       return setStreamWatchdogCheckInterval(toThreetenDuration(duration));
     }
 
