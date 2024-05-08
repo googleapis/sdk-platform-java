@@ -38,8 +38,8 @@ public class TimedAttemptSettingsTest {
   private static final TimedAttemptSettings.Builder SETTINGS_BUILDER =
       TimedAttemptSettings.newBuilder()
           .setGlobalSettings(RetrySettings.newBuilder().build())
-          .setRpcTimeout(java.time.Duration.ofMillis(5000l))
-          .setRandomizedRetryDelay(java.time.Duration.ofMillis(5000l))
+          .setRpcTimeoutDuration(java.time.Duration.ofMillis(5000l))
+          .setRandomizedRetryDelayDuration(java.time.Duration.ofMillis(5000l))
           .setAttemptCount(123)
           .setFirstAttemptStartTimeNanos(123l);
 
@@ -47,7 +47,7 @@ public class TimedAttemptSettingsTest {
   public void testRetryDelay() {
     testDurationMethod(
         123l,
-        jt -> SETTINGS_BUILDER.setRetryDelay(jt).build(),
+        jt -> SETTINGS_BUILDER.setRetryDelayDuration(jt).build(),
         tt -> SETTINGS_BUILDER.setRetryDelay(tt).build(),
         o -> o.getRetryDelayDuration(),
         o -> o.getRetryDelay());
@@ -57,7 +57,7 @@ public class TimedAttemptSettingsTest {
   public void testRandomizedRetryDelay() {
     testDurationMethod(
         123l,
-        jt -> SETTINGS_BUILDER.setRandomizedRetryDelay(jt).build(),
+        jt -> SETTINGS_BUILDER.setRandomizedRetryDelayDuration(jt).build(),
         tt -> SETTINGS_BUILDER.setRandomizedRetryDelay(tt).build(),
         o -> o.getRandomizedRetryDelayDuration(),
         o -> o.getRandomizedRetryDelay());
@@ -67,7 +67,7 @@ public class TimedAttemptSettingsTest {
   public void testRpcTimeout() {
     testDurationMethod(
         123l,
-        jt -> SETTINGS_BUILDER.setRpcTimeout(jt).build(),
+        jt -> SETTINGS_BUILDER.setRpcTimeoutDuration(jt).build(),
         tt -> SETTINGS_BUILDER.setRpcTimeout(tt).build(),
         o -> o.getRpcTimeoutDuration(),
         o -> o.getRpcTimeout());

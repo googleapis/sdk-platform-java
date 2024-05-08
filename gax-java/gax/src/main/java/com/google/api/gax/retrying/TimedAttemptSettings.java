@@ -107,42 +107,42 @@ public abstract class TimedAttemptSettings {
     public abstract Builder setGlobalSettings(RetrySettings value);
 
     /**
-     * Backport of {@link #setRetryDelay(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     * Backport of {@link #setRetryDelayDuration(java.time.Duration)} using {@link org.threeten.bp.Duration}
      */
-    @ObsoleteApi("Use setRetryDelay(java.time.Duration) instead")
+    @ObsoleteApi("Use setRetryDelayDuration(java.time.Duration) instead")
     public abstract Builder setRetryDelay(org.threeten.bp.Duration value);
 
     /**
      * Sets the calculated retry delay. Note that the actual delay used for retry scheduling may be
      * different (randomized, based on this value).
      */
-    public final Builder setRetryDelay(java.time.Duration value) {
+    public final Builder setRetryDelayDuration(java.time.Duration value) {
       return setRetryDelay(toThreetenDuration(value));
     }
 
     /**
-     * Backport of {@link #setRpcTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     * Backport of {@link #setRpcTimeoutDuration(java.time.Duration)} using {@link org.threeten.bp.Duration}
      */
-    @ObsoleteApi("Use setRpcTimeout(java.time.Duration) instead")
+    @ObsoleteApi("Use setRpcTimeoutDuration(java.time.Duration) instead")
     public abstract Builder setRpcTimeout(org.threeten.bp.Duration value);
 
     /** Sets rpc timeout used for this attempt. */
-    public final Builder setRpcTimeout(java.time.Duration value) {
+    public final Builder setRpcTimeoutDuration(java.time.Duration value) {
       return setRpcTimeout(toThreetenDuration(value));
     }
 
     /**
-     * Backport of {@link #setRandomizedRetryDelay(java.time.Duration)} using {@link
+     * Backport of {@link #setRandomizedRetryDelayDuration(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
-    @ObsoleteApi("Use setRandomizedRetryDelay(java.time.Duration) instead")
+    @ObsoleteApi("Use setRandomizedRetryDelayDuration(java.time.Duration) instead")
     public abstract Builder setRandomizedRetryDelay(org.threeten.bp.Duration value);
 
     /**
      * Sets randomized attempt delay. By default this value is calculated based on the {@code
      * retryDelay} value, and is used as the actual attempt execution delay.
      */
-    public final Builder setRandomizedRetryDelay(java.time.Duration value) {
+    public final Builder setRandomizedRetryDelayDuration(java.time.Duration value) {
       return setRandomizedRetryDelay(toThreetenDuration(value));
     }
 

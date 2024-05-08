@@ -65,9 +65,9 @@ public class CheckingAttemptCallableTest {
             .setAttemptCount(0)
             .setOverallAttemptCount(0)
             .setFirstAttemptStartTimeNanos(0)
-            .setRetryDelay(java.time.Duration.ofSeconds(1))
-            .setRandomizedRetryDelay(java.time.Duration.ofSeconds(1))
-            .setRpcTimeout(java.time.Duration.ZERO)
+            .setRetryDelayDuration(java.time.Duration.ofSeconds(1))
+            .setRandomizedRetryDelayDuration(java.time.Duration.ofSeconds(1))
+            .setRpcTimeoutDuration(java.time.Duration.ZERO)
             .build();
 
     Mockito.when(mockExternalFuture.getAttemptSettings())
@@ -88,16 +88,16 @@ public class CheckingAttemptCallableTest {
 
     // Make sure that the rpc timeout is set
     java.time.Duration timeout = java.time.Duration.ofSeconds(10);
-    currentAttemptSettings = currentAttemptSettings.toBuilder().setRpcTimeout(timeout).build();
+    currentAttemptSettings = currentAttemptSettings.toBuilder().setRpcTimeoutDuration(timeout).build();
 
     callable.call();
 
     assertThat(capturedCallContext.getValue().getTimeoutDuration()).isEqualTo(timeout);
 
-    // Make sure that subsequent attempts can extend the time out
+    // Make sure that subsequent attempts can extend the timeout
     java.time.Duration longerTimeout = java.time.Duration.ofSeconds(20);
     currentAttemptSettings =
-        currentAttemptSettings.toBuilder().setRpcTimeout(longerTimeout).build();
+        currentAttemptSettings.toBuilder().setRpcTimeoutDuration(longerTimeout).build();
     callable.call();
     assertThat(capturedCallContext.getValue().getTimeoutDuration()).isEqualTo(longerTimeout);
   }

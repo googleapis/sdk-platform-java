@@ -68,9 +68,9 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
   public TimedAttemptSettings createFirstAttempt() {
     return TimedAttemptSettings.newBuilder()
         .setGlobalSettings(globalSettings)
-        .setRetryDelay(java.time.Duration.ZERO)
-        .setRpcTimeout(getInitialTimeout(globalSettings))
-        .setRandomizedRetryDelay(java.time.Duration.ZERO)
+        .setRetryDelayDuration(java.time.Duration.ZERO)
+        .setRpcTimeoutDuration(getInitialTimeout(globalSettings))
+        .setRandomizedRetryDelayDuration(java.time.Duration.ZERO)
         .setAttemptCount(0)
         .setOverallAttemptCount(0)
         .setFirstAttemptStartTimeNanos(clock.nanoTime())
@@ -98,9 +98,9 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
         // Attempts created using the TimedAttemptSettings built here will use these
         // retrySettings, but a new call will not (unless overridden again).
         .setGlobalSettings(retrySettings)
-        .setRpcTimeout(getInitialTimeout(retrySettings))
-        .setRetryDelay(java.time.Duration.ZERO)
-        .setRandomizedRetryDelay(java.time.Duration.ZERO)
+        .setRpcTimeoutDuration(getInitialTimeout(retrySettings))
+        .setRetryDelayDuration(java.time.Duration.ZERO)
+        .setRandomizedRetryDelayDuration(java.time.Duration.ZERO)
         .setAttemptCount(0)
         .setOverallAttemptCount(0)
         .setFirstAttemptStartTimeNanos(clock.nanoTime())
@@ -163,9 +163,9 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
 
     return TimedAttemptSettings.newBuilder()
         .setGlobalSettings(previousSettings.getGlobalSettings())
-        .setRetryDelay(java.time.Duration.ofMillis(newRetryDelay))
-        .setRpcTimeout(java.time.Duration.ofMillis(newRpcTimeout))
-        .setRandomizedRetryDelay(randomDelay)
+        .setRetryDelayDuration(java.time.Duration.ofMillis(newRetryDelay))
+        .setRpcTimeoutDuration(java.time.Duration.ofMillis(newRpcTimeout))
+        .setRandomizedRetryDelayDuration(randomDelay)
         .setAttemptCount(previousSettings.getAttemptCount() + 1)
         .setOverallAttemptCount(previousSettings.getOverallAttemptCount() + 1)
         .setFirstAttemptStartTimeNanos(previousSettings.getFirstAttemptStartTimeNanos())
