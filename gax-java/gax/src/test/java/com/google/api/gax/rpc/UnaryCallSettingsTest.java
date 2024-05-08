@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -146,5 +147,15 @@ public class UnaryCallSettingsTest {
             .build();
     assertThat(unaryCallSettings.toString()).contains("retryableCodes=" + retryableCodes);
     assertThat(unaryCallSettings.toString()).contains("retrySettings=" + retrySettings);
+  }
+
+  @Test
+  public void testWatchDogCheckInterval_backportMethodsBehaveCorrectly() {
+    testDurationMethod(
+        123l,
+        jt -> UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetries(jt).build(),
+        tt -> UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetries(tt).build(),
+        ucs -> ucs.getRetrySettings().getTotalTimeoutDuration(),
+        ucs -> ucs.getRetrySettings().getTotalTimeout());
   }
 }
