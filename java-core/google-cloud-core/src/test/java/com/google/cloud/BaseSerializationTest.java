@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
  * for proper serialization. Both methods can return {@code null} if no such object needs to be
  * tested.
  */
-abstract class BaseSerializationTest {
+public abstract class BaseSerializationTest {
 
   /** Returns all objects for which correct serialization must be tested. */
   protected abstract Serializable[] serializableObjects();
