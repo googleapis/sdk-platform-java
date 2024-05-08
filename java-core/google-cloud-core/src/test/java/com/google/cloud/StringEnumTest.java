@@ -16,18 +16,19 @@
 package com.google.cloud;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiFunction;
 import com.google.common.testing.EqualsTester;
 import java.util.Arrays;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class StringEnumTest {
+class StringEnumTest {
 
-  public static class Letter extends StringEnumValue {
+  static class Letter extends StringEnumValue {
     private static final long serialVersionUID = -1717976087182628526L;
 
     private Letter(String constant) {
@@ -64,28 +65,30 @@ public class StringEnumTest {
     }
   }
 
-  @Test(expected = NullPointerException.class)
-  public void testNullClass() {
-    new StringEnumType<Letter>(null, Letter.CONSTRUCTOR);
+  @Test
+  void testNullClass() {
+    assertThrows(
+        NullPointerException.class,
+        () -> new StringEnumType<Letter>(null, Letter.CONSTRUCTOR));
   }
 
   @Test
-  public void testNullConstructor() {
+  void testNullConstructor() {
     try {
       new StringEnumType<Letter>(Letter.class, null);
-      Assert.fail();
+      Assertions.fail();
     } catch (NullPointerException ex) {
       assertNull(ex.getMessage());
     }
   }
 
   @Test
-  public void testEnumInstances() {
+  void testEnumInstances() {
     assertThat(Letter.A.toString()).isEqualTo("A");
   }
 
   @Test
-  public void testValueOf() {
+  void testValueOf() {
     assertThat(Letter.valueOf("A")).isSameInstanceAs(Letter.A);
     assertThat(Letter.valueOf("B")).isSameInstanceAs(Letter.B);
     assertThat(Letter.valueOf("C")).isSameInstanceAs(Letter.C);
@@ -93,14 +96,14 @@ public class StringEnumTest {
   }
 
   @Test
-  public void testValueOfStrict() {
+  void testValueOfStrict() {
     assertThat(Letter.valueOfStrict("A")).isSameInstanceAs(Letter.A);
     assertThat(Letter.valueOfStrict("B")).isSameInstanceAs(Letter.B);
     assertThat(Letter.valueOfStrict("C")).isSameInstanceAs(Letter.C);
   }
 
   @Test
-  public void testEquals() {
+  void testEquals() {
     new EqualsTester()
         .addEqualityGroup(Letter.A, Letter.valueOf("A"), Letter.valueOfStrict("A"))
         .addEqualityGroup(Letter.B, Letter.valueOf("B"), Letter.valueOfStrict("B"))
@@ -110,17 +113,17 @@ public class StringEnumTest {
   }
 
   @Test
-  public void testValueOfStrict_invalid() {
+  void testValueOfStrict_invalid() {
     try {
       Letter.valueOfStrict("NonExistentLetter");
-      Assert.fail();
+      Assertions.fail();
     } catch (IllegalArgumentException ex) {
       assertNotNull(ex.getMessage());
     }
   }
 
   @Test
-  public void testValues() {
+  void testValues() {
     assertThat(
             Arrays.asList(Letter.values()).containsAll(Arrays.asList(Letter.A, Letter.B, Letter.C)))
         .isTrue();
