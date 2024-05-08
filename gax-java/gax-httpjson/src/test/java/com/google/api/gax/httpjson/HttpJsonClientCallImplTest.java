@@ -35,7 +35,6 @@ import com.google.protobuf.TypeRegistry;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Reader;
-import java.time.Duration;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -60,6 +59,7 @@ public class HttpJsonClientCallImplTest {
     ScheduledThreadPoolExecutor deadlineSchedulerExecutor = new ScheduledThreadPoolExecutor(1);
     // Null timeout means no timeout task created
     Mockito.when(httpJsonCallOptions.getTimeout()).thenReturn(null);
+    Mockito.when(httpJsonCallOptions.getTimeoutDuration()).thenReturn(null);
 
     HttpJsonClientCallImpl httpJsonClientCall =
         new HttpJsonClientCallImpl<>(
@@ -94,7 +94,10 @@ public class HttpJsonClientCallImplTest {
     deadlineSchedulerExecutor.setRemoveOnCancelPolicy(true);
 
     // Setting a timeout for this call will enqueue a timeout task
-    Mockito.when(httpJsonCallOptions.getTimeout()).thenReturn(Duration.ofMinutes(10));
+    Mockito.when(httpJsonCallOptions.getTimeout())
+        .thenReturn(org.threeten.bp.Duration.ofMinutes(10));
+    Mockito.when(httpJsonCallOptions.getTimeoutDuration())
+        .thenReturn(java.time.Duration.ofMinutes(10));
 
     String response = "Content";
     InputStream inputStream = new ByteArrayInputStream(response.getBytes());
