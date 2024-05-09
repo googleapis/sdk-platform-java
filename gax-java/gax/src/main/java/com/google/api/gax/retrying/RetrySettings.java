@@ -511,7 +511,7 @@ public abstract class RetrySettings implements Serializable {
     }
 
     /**
-     * Overload of {@link #setLogicalTimeout(java.time.Duration)} using {@link
+     * Backport of {@link #setLogicalTimeout(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
     @BetaApi

@@ -532,7 +532,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
 
     /**
-     * Overload of {@link #setStreamWatchdogCheckIntervalDuration(java.time.Duration)} using {@link
+     * Backport of {@link #setStreamWatchdogCheckIntervalDuration(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
     @ObsoleteApi("Use setStreamWatchdogCheckIntervalDuration(java.time.Duration) instead")

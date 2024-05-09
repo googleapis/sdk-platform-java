@@ -101,7 +101,7 @@ public final class Watchdog implements Runnable, BackgroundResource {
   }
 
   /**
-   * Overload of {@link #watch(ResponseObserver, java.time.Duration, java.time.Duration)} using
+   * Backport of {@link #watch(ResponseObserver, java.time.Duration, java.time.Duration)} using
    * {@link org.threeten.bp.Duration}
    */
   @ObsoleteApi("Use watch(ResponseObserver, java.time.Duration, java.time.Duration) instead")

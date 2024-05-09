@@ -255,7 +255,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   }
 
   /**
-   * Overload of {@link #withTimeoutDuration(java.time.Duration)} using {@link
+   * Backport of {@link #withTimeoutDuration(java.time.Duration)} using {@link
    * org.threeten.bp.Duration}
    */
   @Override
@@ -322,7 +322,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   }
 
   /**
-   * Overload of {@link #withStreamWaitTimeoutDuration(java.time.Duration)} using {@link
+   * Backport of {@link #withStreamWaitTimeoutDuration(java.time.Duration)} using {@link
    * org.threeten.bp.Duration}
    */
   @Override
@@ -374,7 +374,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   }
 
   /**
-   * Overload of {@link #withStreamIdleTimeoutDuration(java.time.Duration)} using {@link
+   * Backport of {@link #withStreamIdleTimeoutDuration(java.time.Duration)} using {@link
    * org.threeten.bp.Duration}
    */
   @Override
@@ -600,7 +600,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.endpointContext);
   }
 
-  /** Overload of {@link #withDeadline(java.time.Instant)} using {@link org.threeten.bp.Instant} */
+  /** Backport of {@link #withDeadline(java.time.Instant)} using {@link org.threeten.bp.Instant} */
   @Deprecated
   @ObsoleteApi("Use withDeadline(java.time.Instant) instead")
   public HttpJsonCallContext withDeadline(org.threeten.bp.Instant newDeadline) {

@@ -655,7 +655,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     /**
-     * Overload of {@link #setKeepAliveTime(java.time.Duration)} using {@link
+     * Backport of {@link #setKeepAliveTime(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
     @ObsoleteApi("Use setKeepAliveTimeDuration(java.time.Duration) instead")

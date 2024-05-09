@@ -260,7 +260,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     }
 
     /**
-     * Overload of {@link #setSimpleTimeoutNoRetriesDuration(java.time.Duration)} using {@link
+     * Backport of {@link #setSimpleTimeoutNoRetriesDuration(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
     @ObsoleteApi("Use setSimpleTimeoutNoRetriesDuration(java.time.Duration) instead")
@@ -349,7 +349,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     }
 
     /**
-     * Overload of {@link #setWaitTimeoutDuration(java.time.Duration)} using {@link
+     * Backport of {@link #setWaitTimeoutDuration(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
     @ObsoleteApi("Use setWaitTimeoutDuration(java.time.Duration) instead")

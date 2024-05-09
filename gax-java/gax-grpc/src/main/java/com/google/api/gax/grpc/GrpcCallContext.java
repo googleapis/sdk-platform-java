@@ -232,7 +232,7 @@ public final class GrpcCallContext implements ApiCallContext {
   }
 
   /**
-   * Overload of {@link #withTimeoutDuration(java.time.Duration)} using {@link
+   * Backport of {@link #withTimeoutDuration(java.time.Duration)} using {@link
    * org.threeten.bp.Duration}
    */
   @Override
@@ -282,7 +282,7 @@ public final class GrpcCallContext implements ApiCallContext {
   }
 
   /**
-   * Overload of {@link #withStreamWaitTimeoutDuration(java.time.Duration)} using {@link
+   * Backport of {@link #withStreamWaitTimeoutDuration(java.time.Duration)} using {@link
    * org.threeten.bp.Duration}
    */
   @Override
@@ -316,7 +316,7 @@ public final class GrpcCallContext implements ApiCallContext {
   }
 
   /**
-   * Overload of {@link #withStreamIdleTimeoutDuration(java.time.Duration)} using {@link
+   * Backport of {@link #withStreamIdleTimeoutDuration(java.time.Duration)} using {@link
    * org.threeten.bp.Duration}
    *
    * @param streamIdleTimeout
