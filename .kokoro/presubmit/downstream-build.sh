@@ -52,6 +52,7 @@ source ./.kokoro/common.sh
 RETURN_CODE=0
 setup_application_credentials
 setup_cloud "$MODULES_UNDER_TEST"
+install_modules "$MODULES_UNDER_TEST"
 run_graalvm_tests "$MODULES_UNDER_TEST"
 # Exit must occur in google-cloud-java directory to correctly destroy IT resources
 exit "$RETURN_CODE"
