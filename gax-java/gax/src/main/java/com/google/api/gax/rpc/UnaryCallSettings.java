@@ -196,15 +196,15 @@ public class UnaryCallSettings<RequestT, ResponseT> {
       return this;
     }
 
-    /** Backport of {@link #setSimpleTimeoutNoRetries(java.time.Duration)} */
-    @ObsoleteApi("Use setSimpleTimeoutNoRetries(java.time.Duration) instead")
+    /** Backport of {@link #setSimpleTimeoutNoRetriesDuration(java.time.Duration)} */
+    @ObsoleteApi("Use setSimpleTimeoutNoRetriesDuration(java.time.Duration) instead")
     public UnaryCallSettings.Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
         org.threeten.bp.Duration timeout) {
-      return setSimpleTimeoutNoRetries(toJavaTimeDuration(timeout));
+      return setSimpleTimeoutNoRetriesDuration(toJavaTimeDuration(timeout));
     }
 
     /** Disables retries and sets the RPC timeout. */
-    public UnaryCallSettings.Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
+    public UnaryCallSettings.Builder<RequestT, ResponseT> setSimpleTimeoutNoRetriesDuration(
         java.time.Duration timeout) {
       setRetryableCodes();
       setRetrySettings(

@@ -47,7 +47,7 @@ public class UnaryCallSettingsTest {
   @Test
   public void testSetSimpleTimeoutNoRetries() {
     UnaryCallSettings.Builder<?, ?> builder = new UnaryCallSettings.Builder<Object, Object>();
-    builder.setSimpleTimeoutNoRetries(java.time.Duration.ofSeconds(13));
+    builder.setSimpleTimeoutNoRetriesDuration(java.time.Duration.ofSeconds(13));
 
     assertThat(builder.getRetryableCodes().size()).isEqualTo(0);
     assertThat(builder.getRetrySettings().getMaxAttempts()).isEqualTo(1);
@@ -58,7 +58,7 @@ public class UnaryCallSettingsTest {
   @Test
   public void testEquals() {
     UnaryCallSettings.Builder<?, ?> builder = new UnaryCallSettings.Builder<Object, Object>();
-    builder.setSimpleTimeoutNoRetries(java.time.Duration.ofSeconds(13));
+    builder.setSimpleTimeoutNoRetriesDuration(java.time.Duration.ofSeconds(13));
 
     UnaryCallSettings<?, ?> settings13 = builder.build();
     assertEquals(settings13, settings13);
@@ -67,7 +67,7 @@ public class UnaryCallSettingsTest {
     assertEquals(settings13.hashCode(), settings13.hashCode());
 
     UnaryCallSettings.Builder<?, ?> builder5 = new UnaryCallSettings.Builder<Object, Object>();
-    builder5.setSimpleTimeoutNoRetries(java.time.Duration.ofSeconds(5));
+    builder5.setSimpleTimeoutNoRetriesDuration(java.time.Duration.ofSeconds(5));
 
     UnaryCallSettings<?, ?> settings5 = builder5.build();
     assertNotEquals(settings13, settings5);
@@ -153,7 +153,7 @@ public class UnaryCallSettingsTest {
   public void testWatchDogCheckInterval_backportMethodsBehaveCorrectly() {
     testDurationMethod(
         123l,
-        jt -> UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetries(jt).build(),
+        jt -> UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetriesDuration(jt).build(),
         tt -> UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetries(tt).build(),
         ucs -> ucs.getRetrySettings().getTotalTimeoutDuration(),
         ucs -> ucs.getRetrySettings().getTotalTimeout());

@@ -86,7 +86,7 @@ public class CallableTest {
     RequestMutator requestMutator = (request -> modifiedRequest);
 
     UnaryCallSettings<Object, Object> callSettings =
-        UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetries(timeout).build();
+        UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetriesDuration(timeout).build();
     UnaryCallable<String, String> callable =
         Callables.retrying(innerCallable, callSettings, clientContext, requestMutator);
     String expectedResponse = "No, my refrigerator is not running!";
@@ -115,7 +115,7 @@ public class CallableTest {
 
     UnaryCallSettings<Object, Object> callSettings =
         UnaryCallSettings.newUnaryCallSettingsBuilder()
-            .setSimpleTimeoutNoRetries(java.time.Duration.ofMillis(10L))
+            .setSimpleTimeoutNoRetriesDuration(java.time.Duration.ofMillis(10L))
             .build();
     UnaryCallable<String, String> callable =
         Callables.retrying(innerCallable, callSettings, clientContext, requestMutator);
