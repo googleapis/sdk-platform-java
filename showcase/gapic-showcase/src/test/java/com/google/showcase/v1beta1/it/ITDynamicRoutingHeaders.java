@@ -43,6 +43,7 @@ import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.junit.After;
 import org.junit.Before;
@@ -153,10 +154,21 @@ public class ITDynamicRoutingHeaders {
   }
 
   @After
-  public void destroyClient() {
+  public void destroyClient() throws InterruptedException {
     grpcClient.close();
-    httpJsonClient.close();
     grpcComplianceClient.close();
+
+    httpJsonClient.close();
+    httpJsonComplianceClient.close();
+
+    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    grpcComplianceClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+
+    httpJsonClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    httpJsonComplianceClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
