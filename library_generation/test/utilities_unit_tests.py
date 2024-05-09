@@ -113,6 +113,30 @@ class UtilitiesTest(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             result = util.sh_util("nonexistent_function")
 
+    def test_mv_src_files_sample_suffix_io_succeeds(self):
+        previous_dir = os.getcwd()
+        os.chdir(f"{resources_dir}/test_mv_src")
+        util.sh_util("mv_src_files samples main destination io")
+        self.assertTrue(
+            os.path.isfile(
+                "destination/samples/snippets/generated/io/example_io_sample.txt"
+            )
+        )
+        shutil.rmtree("destination/samples")
+        os.chdir(previous_dir)
+
+    def test_mv_src_files_sample_suffix_com_succeeds(self):
+        previous_dir = os.getcwd()
+        os.chdir(f"{resources_dir}/test_mv_src")
+        util.sh_util("mv_src_files samples main destination")
+        self.assertTrue(
+            os.path.isfile(
+                "destination/samples/snippets/generated/com/example_com_sample.txt"
+            )
+        )
+        shutil.rmtree("destination/samples")
+        os.chdir(previous_dir)
+
     def test_eprint_valid_input_succeeds(self):
         test_input = "This is some test input"
         # create a stdio capture object
