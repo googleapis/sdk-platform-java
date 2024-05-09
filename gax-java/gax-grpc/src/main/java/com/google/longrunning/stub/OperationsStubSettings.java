@@ -242,13 +242,13 @@ public class OperationsStubSettings extends StubSettings<OperationsStubSettings>
       RetrySettings settings = null;
       settings =
           RetrySettings.newBuilder()
-              .setInitialRetryDelay(java.time.Duration.ofMillis(100L))
+              .setInitialRetryDelayDuration(java.time.Duration.ofMillis(100L))
               .setRetryDelayMultiplier(1.3)
-              .setMaxRetryDelay(java.time.Duration.ofMillis(60000L))
-              .setInitialRpcTimeout(java.time.Duration.ofMillis(90000L))
+              .setMaxRetryDelayDuration(java.time.Duration.ofMillis(60000L))
+              .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(90000L))
               .setRpcTimeoutMultiplier(1.0)
-              .setMaxRpcTimeout(java.time.Duration.ofMillis(90000L))
-              .setTotalTimeout(java.time.Duration.ofMillis(600000L))
+              .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(90000L))
+              .setTotalTimeoutDuration(java.time.Duration.ofMillis(600000L))
               .build();
       definitions.put("default", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();

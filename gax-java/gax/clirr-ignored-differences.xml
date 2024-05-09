@@ -58,7 +58,7 @@
   <difference>
     <differenceType>7012</differenceType>
     <className>com/google/api/gax/tracing/*</className>
-    <method>* attemptFailed(java.lang.Throwable, java.time.Duration)</method>
+    <method>* attemptFailedDuration(java.lang.Throwable, java.time.Duration)</method>
   </difference>
   <difference>
     <differenceType>7002</differenceType>
