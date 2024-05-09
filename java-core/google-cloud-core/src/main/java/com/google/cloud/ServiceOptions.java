@@ -70,6 +70,7 @@ import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.threeten.bp.Duration;
 
 /**
  * Abstract class representing service options.
@@ -786,13 +787,13 @@ public abstract class ServiceOptions<
   private static RetrySettings.Builder getDefaultRetrySettingsBuilder() {
     return RetrySettings.newBuilder()
         .setMaxAttempts(6)
-        .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(1000L))
-        .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(32_000L))
+        .setInitialRetryDelay(Duration.ofMillis(1000L))
+        .setMaxRetryDelay(Duration.ofMillis(32_000L))
         .setRetryDelayMultiplier(2.0)
-        .setTotalTimeout(org.threeten.bp.Duration.ofMillis(50_000L))
-        .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(50_000L))
+        .setTotalTimeout(Duration.ofMillis(50_000L))
+        .setInitialRpcTimeout(Duration.ofMillis(50_000L))
         .setRpcTimeoutMultiplier(1.0)
-        .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(50_000L));
+        .setMaxRpcTimeout(Duration.ofMillis(50_000L));
   }
 
   protected abstract Set<String> getScopes();

@@ -56,6 +56,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import org.threeten.bp.Duration;
 
 /** Utility class to start and stop a local service which is used by unit testing. */
 @InternalApi
@@ -115,7 +116,7 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
    * Waits for the local service's subprocess to terminate, and stop any possible thread listening
    * for its output.
    */
-  protected final int waitForProcess(java.time.Duration timeout)
+  protected final int waitForProcess(Duration timeout)
       throws IOException, InterruptedException, TimeoutException {
     if (activeRunner != null) {
       int exitCode = activeRunner.waitFor(timeout);
@@ -129,7 +130,7 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
     return 0;
   }
 
-  private static int waitForProcess(final Process process, java.time.Duration timeout)
+  private static int waitForProcess(final Process process, Duration timeout)
       throws InterruptedException, TimeoutException {
     if (process == null) {
       return 0;
@@ -180,7 +181,7 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
   public abstract void start() throws IOException, InterruptedException;
 
   /** Stops the local emulator. */
-  public abstract void stop(java.time.Duration timeout)
+  public abstract void stop(Duration timeout)
       throws IOException, InterruptedException, TimeoutException;
 
   /** Resets the internal state of the emulator. */
@@ -226,7 +227,7 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
     void start() throws IOException;
 
     /** Wait for the emulator associated to this runner to terminate, returning the exit status. */
-    int waitFor(java.time.Duration timeout) throws InterruptedException, TimeoutException;
+    int waitFor(Duration timeout) throws InterruptedException, TimeoutException;
 
     /** Returns the process associated to the emulator, if any. */
     Process getProcess();
@@ -264,7 +265,7 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
     }
 
     @Override
-    public int waitFor(java.time.Duration timeout) throws InterruptedException, TimeoutException {
+    public int waitFor(Duration timeout) throws InterruptedException, TimeoutException {
       return waitForProcess(process, timeout);
     }
 
@@ -374,7 +375,7 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
     }
 
     @Override
-    public int waitFor(java.time.Duration timeout) throws InterruptedException, TimeoutException {
+    public int waitFor(Duration timeout) throws InterruptedException, TimeoutException {
       return waitForProcess(process, timeout);
     }
 

@@ -23,6 +23,7 @@ import com.google.cloud.MonitoredResourceDescriptor.LabelDescriptor.ValueType;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import java.io.Serializable;
+import org.threeten.bp.Duration;
 
 public class SerializationTest extends BaseSerializationTest {
 
@@ -36,7 +37,7 @@ public class SerializationTest extends BaseSerializationTest {
   private static final Role SOME_ROLE = Role.viewer();
   private static final Policy SOME_IAM_POLICY = Policy.newBuilder().build();
   private static final RetryOption CHECKING_PERIOD =
-      RetryOption.initialRetryDelay(java.time.Duration.ofSeconds(42));
+      RetryOption.initialRetryDelay(Duration.ofSeconds(42));
   private static final LabelDescriptor LABEL_DESCRIPTOR =
       new LabelDescriptor("project_id", ValueType.STRING, "The project id");
   private static final MonitoredResourceDescriptor MONITORED_RESOURCE_DESCRIPTOR =
