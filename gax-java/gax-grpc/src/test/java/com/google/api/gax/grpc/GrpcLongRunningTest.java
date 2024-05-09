@@ -77,15 +77,15 @@ public class GrpcLongRunningTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(java.time.Duration.ofMillis(1L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(1L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(java.time.Duration.ofMillis(1L))
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(1L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(1L))
           .setMaxAttempts(0)
           .setJittered(false)
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(1L))
-          .setTotalTimeout(java.time.Duration.ofMillis(5L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(1L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(5L))
           .build();
 
   private ManagedChannel channel;

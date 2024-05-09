@@ -116,11 +116,11 @@ public class SettingsTest {
           RetrySettings.newBuilder()
               .setInitialRetryDelayDuration(java.time.Duration.ofMillis(100L))
               .setRetryDelayMultiplier(1.2)
-              .setMaxRetryDelay(java.time.Duration.ofMillis(1000L))
-              .setInitialRpcTimeout(java.time.Duration.ofMillis(2000L))
+              .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1000L))
+              .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(2000L))
               .setRpcTimeoutMultiplier(1.5)
-              .setMaxRpcTimeout(java.time.Duration.ofMillis(30000L))
-              .setTotalTimeout(java.time.Duration.ofMillis(45000L))
+              .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(30000L))
+              .setTotalTimeoutDuration(java.time.Duration.ofMillis(45000L))
               .build();
       definitions.put("default", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();
@@ -343,7 +343,7 @@ public class SettingsTest {
 
     UnaryCallSettings.Builder<Integer, Integer> builderA =
         UnaryCallSettings.newUnaryCallSettingsBuilder();
-    builderA.setSimpleTimeoutNoRetries(timeout);
+    builderA.setSimpleTimeoutNoRetriesDuration(timeout);
     UnaryCallSettings<Integer, Integer> settingsA = builderA.build();
 
     UnaryCallSettings.Builder<Integer, Integer> builderB =
