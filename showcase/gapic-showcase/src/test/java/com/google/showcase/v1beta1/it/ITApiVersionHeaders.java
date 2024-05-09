@@ -16,6 +16,7 @@
 package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
 import com.google.api.gax.httpjson.*;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
@@ -46,6 +47,9 @@ public class ITApiVersionHeaders {
 
   private static final String EXPECTED_ECHO_API_VERSION = "v1_20240408";
   private static final String CUSTOM_API_VERSION = "user-supplied-version";
+  private static final String EXPECTED_EXCEPTION_MESSAGE =
+      "Header provider can't override the header: "
+          + ApiClientHeaderProvider.API_VERSION_HEADER_KEY;
 
   // Implement a client interceptor to retrieve the trailing metadata from response.
   private static class GrpcCapturingClientInterceptor implements ClientInterceptor {
@@ -218,7 +222,7 @@ public class ITApiVersionHeaders {
         .isNotIn(httpJsonComplianceInterceptor.metadata.getHeaders().keySet());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testGrpcEcho_userApiVersionThrowsException() throws IOException {
     StubSettings stubSettings =
         grpcClient
@@ -230,13 +234,14 @@ public class ITApiVersionHeaders {
                     ApiClientHeaderProvider.API_VERSION_HEADER_KEY, CUSTOM_API_VERSION))
             .build();
 
-    try (EchoClient echo =
-        EchoClient.create(EchoSettings.create((EchoStubSettings) stubSettings))) {
-      assertThat(true).isFalse();
-    }
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> EchoClient.create(EchoSettings.create((EchoStubSettings) stubSettings)));
+    assertThat(exception.getMessage()).isEqualTo(EXPECTED_EXCEPTION_MESSAGE);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testHttpJsonEcho_userApiVersionThrowsException() throws IOException {
     StubSettings stubSettings =
         httpJsonClient
@@ -248,10 +253,11 @@ public class ITApiVersionHeaders {
                     ApiClientHeaderProvider.API_VERSION_HEADER_KEY, CUSTOM_API_VERSION))
             .build();
 
-    try (EchoClient echo =
-        EchoClient.create(EchoSettings.create((EchoStubSettings) stubSettings))) {
-      assertThat(true).isFalse();
-    }
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> EchoClient.create(EchoSettings.create((EchoStubSettings) stubSettings)));
+    assertThat(exception.getMessage()).isEqualTo(EXPECTED_EXCEPTION_MESSAGE);
   }
 
   @Test
