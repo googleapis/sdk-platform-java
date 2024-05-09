@@ -50,15 +50,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.Generated;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @Generated("by gapic-generator-java")
-public class ComplianceClientTest {
+class ComplianceClientTest {
   private static MockCompliance mockCompliance;
   private static MockIAMPolicy mockIAMPolicy;
   private static MockLocations mockLocations;
@@ -66,8 +66,8 @@ public class ComplianceClientTest {
   private LocalChannelProvider channelProvider;
   private ComplianceClient client;
 
-  @BeforeClass
-  public static void startStaticServer() {
+  @BeforeAll
+  static void startStaticServer() {
     mockCompliance = new MockCompliance();
     mockLocations = new MockLocations();
     mockIAMPolicy = new MockIAMPolicy();
@@ -78,13 +78,13 @@ public class ComplianceClientTest {
     mockServiceHelper.start();
   }
 
-  @AfterClass
-  public static void stopServer() {
+  @AfterAll
+  static void stopServer() {
     mockServiceHelper.stop();
   }
 
-  @Before
-  public void setUp() throws IOException {
+  @BeforeEach
+  void setUp() throws IOException {
     mockServiceHelper.reset();
     channelProvider = mockServiceHelper.createChannelProvider();
     ComplianceSettings settings =
@@ -95,13 +95,13 @@ public class ComplianceClientTest {
     client = ComplianceClient.create(settings);
   }
 
-  @After
-  public void tearDown() throws Exception {
+  @AfterEach
+  void tearDown() throws Exception {
     client.close();
   }
 
   @Test
-  public void repeatDataBodyTest() throws Exception {
+  void repeatDataBodyTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -124,30 +124,30 @@ public class ComplianceClientTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataBody(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockCompliance.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertEquals(request.getInfo(), actualRequest.getInfo());
-    Assert.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
-    Assert.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
-    Assert.assertEquals(request.getFInt32(), actualRequest.getFInt32());
-    Assert.assertEquals(request.getFInt64(), actualRequest.getFInt64());
-    Assert.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
-    Assert.assertEquals(request.getPInt32(), actualRequest.getPInt32());
-    Assert.assertEquals(request.getPInt64(), actualRequest.getPInt64());
-    Assert.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertEquals(request.getInfo(), actualRequest.getInfo());
+    Assertions.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
+    Assertions.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
+    Assertions.assertEquals(request.getFInt32(), actualRequest.getFInt32());
+    Assertions.assertEquals(request.getFInt64(), actualRequest.getFInt64());
+    Assertions.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
+    Assertions.assertEquals(request.getPInt32(), actualRequest.getPInt32());
+    Assertions.assertEquals(request.getPInt64(), actualRequest.getPInt64());
+    Assertions.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void repeatDataBodyExceptionTest() throws Exception {
+  void repeatDataBodyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockCompliance.addException(exception);
 
@@ -166,14 +166,14 @@ public class ComplianceClientTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataBody(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataBodyInfoTest() throws Exception {
+  void repeatDataBodyInfoTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -196,30 +196,30 @@ public class ComplianceClientTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataBodyInfo(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockCompliance.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertEquals(request.getInfo(), actualRequest.getInfo());
-    Assert.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
-    Assert.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
-    Assert.assertEquals(request.getFInt32(), actualRequest.getFInt32());
-    Assert.assertEquals(request.getFInt64(), actualRequest.getFInt64());
-    Assert.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
-    Assert.assertEquals(request.getPInt32(), actualRequest.getPInt32());
-    Assert.assertEquals(request.getPInt64(), actualRequest.getPInt64());
-    Assert.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertEquals(request.getInfo(), actualRequest.getInfo());
+    Assertions.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
+    Assertions.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
+    Assertions.assertEquals(request.getFInt32(), actualRequest.getFInt32());
+    Assertions.assertEquals(request.getFInt64(), actualRequest.getFInt64());
+    Assertions.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
+    Assertions.assertEquals(request.getPInt32(), actualRequest.getPInt32());
+    Assertions.assertEquals(request.getPInt64(), actualRequest.getPInt64());
+    Assertions.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void repeatDataBodyInfoExceptionTest() throws Exception {
+  void repeatDataBodyInfoExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockCompliance.addException(exception);
 
@@ -238,14 +238,14 @@ public class ComplianceClientTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataBodyInfo(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataQueryTest() throws Exception {
+  void repeatDataQueryTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -268,30 +268,30 @@ public class ComplianceClientTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataQuery(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockCompliance.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertEquals(request.getInfo(), actualRequest.getInfo());
-    Assert.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
-    Assert.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
-    Assert.assertEquals(request.getFInt32(), actualRequest.getFInt32());
-    Assert.assertEquals(request.getFInt64(), actualRequest.getFInt64());
-    Assert.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
-    Assert.assertEquals(request.getPInt32(), actualRequest.getPInt32());
-    Assert.assertEquals(request.getPInt64(), actualRequest.getPInt64());
-    Assert.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertEquals(request.getInfo(), actualRequest.getInfo());
+    Assertions.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
+    Assertions.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
+    Assertions.assertEquals(request.getFInt32(), actualRequest.getFInt32());
+    Assertions.assertEquals(request.getFInt64(), actualRequest.getFInt64());
+    Assertions.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
+    Assertions.assertEquals(request.getPInt32(), actualRequest.getPInt32());
+    Assertions.assertEquals(request.getPInt64(), actualRequest.getPInt64());
+    Assertions.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void repeatDataQueryExceptionTest() throws Exception {
+  void repeatDataQueryExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockCompliance.addException(exception);
 
@@ -310,14 +310,14 @@ public class ComplianceClientTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataQuery(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataSimplePathTest() throws Exception {
+  void repeatDataSimplePathTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -340,30 +340,30 @@ public class ComplianceClientTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataSimplePath(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockCompliance.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertEquals(request.getInfo(), actualRequest.getInfo());
-    Assert.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
-    Assert.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
-    Assert.assertEquals(request.getFInt32(), actualRequest.getFInt32());
-    Assert.assertEquals(request.getFInt64(), actualRequest.getFInt64());
-    Assert.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
-    Assert.assertEquals(request.getPInt32(), actualRequest.getPInt32());
-    Assert.assertEquals(request.getPInt64(), actualRequest.getPInt64());
-    Assert.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertEquals(request.getInfo(), actualRequest.getInfo());
+    Assertions.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
+    Assertions.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
+    Assertions.assertEquals(request.getFInt32(), actualRequest.getFInt32());
+    Assertions.assertEquals(request.getFInt64(), actualRequest.getFInt64());
+    Assertions.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
+    Assertions.assertEquals(request.getPInt32(), actualRequest.getPInt32());
+    Assertions.assertEquals(request.getPInt64(), actualRequest.getPInt64());
+    Assertions.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void repeatDataSimplePathExceptionTest() throws Exception {
+  void repeatDataSimplePathExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockCompliance.addException(exception);
 
@@ -382,14 +382,14 @@ public class ComplianceClientTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataSimplePath(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataPathResourceTest() throws Exception {
+  void repeatDataPathResourceTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -412,30 +412,30 @@ public class ComplianceClientTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataPathResource(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockCompliance.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertEquals(request.getInfo(), actualRequest.getInfo());
-    Assert.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
-    Assert.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
-    Assert.assertEquals(request.getFInt32(), actualRequest.getFInt32());
-    Assert.assertEquals(request.getFInt64(), actualRequest.getFInt64());
-    Assert.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
-    Assert.assertEquals(request.getPInt32(), actualRequest.getPInt32());
-    Assert.assertEquals(request.getPInt64(), actualRequest.getPInt64());
-    Assert.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertEquals(request.getInfo(), actualRequest.getInfo());
+    Assertions.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
+    Assertions.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
+    Assertions.assertEquals(request.getFInt32(), actualRequest.getFInt32());
+    Assertions.assertEquals(request.getFInt64(), actualRequest.getFInt64());
+    Assertions.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
+    Assertions.assertEquals(request.getPInt32(), actualRequest.getPInt32());
+    Assertions.assertEquals(request.getPInt64(), actualRequest.getPInt64());
+    Assertions.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void repeatDataPathResourceExceptionTest() throws Exception {
+  void repeatDataPathResourceExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockCompliance.addException(exception);
 
@@ -454,14 +454,14 @@ public class ComplianceClientTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataPathResource(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataPathTrailingResourceTest() throws Exception {
+  void repeatDataPathTrailingResourceTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -484,30 +484,30 @@ public class ComplianceClientTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataPathTrailingResource(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockCompliance.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertEquals(request.getInfo(), actualRequest.getInfo());
-    Assert.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
-    Assert.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
-    Assert.assertEquals(request.getFInt32(), actualRequest.getFInt32());
-    Assert.assertEquals(request.getFInt64(), actualRequest.getFInt64());
-    Assert.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
-    Assert.assertEquals(request.getPInt32(), actualRequest.getPInt32());
-    Assert.assertEquals(request.getPInt64(), actualRequest.getPInt64());
-    Assert.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertEquals(request.getInfo(), actualRequest.getInfo());
+    Assertions.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
+    Assertions.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
+    Assertions.assertEquals(request.getFInt32(), actualRequest.getFInt32());
+    Assertions.assertEquals(request.getFInt64(), actualRequest.getFInt64());
+    Assertions.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
+    Assertions.assertEquals(request.getPInt32(), actualRequest.getPInt32());
+    Assertions.assertEquals(request.getPInt64(), actualRequest.getPInt64());
+    Assertions.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void repeatDataPathTrailingResourceExceptionTest() throws Exception {
+  void repeatDataPathTrailingResourceExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockCompliance.addException(exception);
 
@@ -526,14 +526,14 @@ public class ComplianceClientTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataPathTrailingResource(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataBodyPutTest() throws Exception {
+  void repeatDataBodyPutTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -556,30 +556,30 @@ public class ComplianceClientTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataBodyPut(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockCompliance.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertEquals(request.getInfo(), actualRequest.getInfo());
-    Assert.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
-    Assert.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
-    Assert.assertEquals(request.getFInt32(), actualRequest.getFInt32());
-    Assert.assertEquals(request.getFInt64(), actualRequest.getFInt64());
-    Assert.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
-    Assert.assertEquals(request.getPInt32(), actualRequest.getPInt32());
-    Assert.assertEquals(request.getPInt64(), actualRequest.getPInt64());
-    Assert.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertEquals(request.getInfo(), actualRequest.getInfo());
+    Assertions.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
+    Assertions.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
+    Assertions.assertEquals(request.getFInt32(), actualRequest.getFInt32());
+    Assertions.assertEquals(request.getFInt64(), actualRequest.getFInt64());
+    Assertions.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
+    Assertions.assertEquals(request.getPInt32(), actualRequest.getPInt32());
+    Assertions.assertEquals(request.getPInt64(), actualRequest.getPInt64());
+    Assertions.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void repeatDataBodyPutExceptionTest() throws Exception {
+  void repeatDataBodyPutExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockCompliance.addException(exception);
 
@@ -598,14 +598,14 @@ public class ComplianceClientTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataBodyPut(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataBodyPatchTest() throws Exception {
+  void repeatDataBodyPatchTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -628,30 +628,30 @@ public class ComplianceClientTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataBodyPatch(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockCompliance.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertEquals(request.getInfo(), actualRequest.getInfo());
-    Assert.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
-    Assert.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
-    Assert.assertEquals(request.getFInt32(), actualRequest.getFInt32());
-    Assert.assertEquals(request.getFInt64(), actualRequest.getFInt64());
-    Assert.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
-    Assert.assertEquals(request.getPInt32(), actualRequest.getPInt32());
-    Assert.assertEquals(request.getPInt64(), actualRequest.getPInt64());
-    Assert.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertEquals(request.getInfo(), actualRequest.getInfo());
+    Assertions.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
+    Assertions.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
+    Assertions.assertEquals(request.getFInt32(), actualRequest.getFInt32());
+    Assertions.assertEquals(request.getFInt64(), actualRequest.getFInt64());
+    Assertions.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
+    Assertions.assertEquals(request.getPInt32(), actualRequest.getPInt32());
+    Assertions.assertEquals(request.getPInt64(), actualRequest.getPInt64());
+    Assertions.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void repeatDataBodyPatchExceptionTest() throws Exception {
+  void repeatDataBodyPatchExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockCompliance.addException(exception);
 
@@ -670,14 +670,14 @@ public class ComplianceClientTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataBodyPatch(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getEnumTest() throws Exception {
+  void getEnumTest() throws Exception {
     EnumResponse expectedResponse =
         EnumResponse.newBuilder()
             .setRequest(EnumRequest.newBuilder().build())
@@ -688,35 +688,35 @@ public class ComplianceClientTest {
     EnumRequest request = EnumRequest.newBuilder().setUnknownEnum(true).build();
 
     EnumResponse actualResponse = client.getEnum(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockCompliance.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     EnumRequest actualRequest = ((EnumRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getUnknownEnum(), actualRequest.getUnknownEnum());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getUnknownEnum(), actualRequest.getUnknownEnum());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void getEnumExceptionTest() throws Exception {
+  void getEnumExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockCompliance.addException(exception);
 
     try {
       EnumRequest request = EnumRequest.newBuilder().setUnknownEnum(true).build();
       client.getEnum(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void verifyEnumTest() throws Exception {
+  void verifyEnumTest() throws Exception {
     EnumResponse expectedResponse =
         EnumResponse.newBuilder()
             .setRequest(EnumRequest.newBuilder().build())
@@ -731,22 +731,22 @@ public class ComplianceClientTest {
             .build();
 
     EnumResponse actualResponse = client.verifyEnum(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockCompliance.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     EnumResponse actualRequest = ((EnumResponse) actualRequests.get(0));
 
-    Assert.assertEquals(request.getRequest(), actualRequest.getRequest());
-    Assert.assertEquals(request.getContinent(), actualRequest.getContinent());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getRequest(), actualRequest.getRequest());
+    Assertions.assertEquals(request.getContinent(), actualRequest.getContinent());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void verifyEnumExceptionTest() throws Exception {
+  void verifyEnumExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockCompliance.addException(exception);
 
@@ -757,14 +757,14 @@ public class ComplianceClientTest {
               .setContinent(Continent.forNumber(0))
               .build();
       client.verifyEnum(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void listLocationsTest() throws Exception {
+  void listLocationsTest() throws Exception {
     Location responsesElement = Location.newBuilder().build();
     ListLocationsResponse expectedResponse =
         ListLocationsResponse.newBuilder()
@@ -785,25 +785,25 @@ public class ComplianceClientTest {
 
     List<Location> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
+    Assertions.assertEquals(1, resources.size());
+    Assertions.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockLocations.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     ListLocationsRequest actualRequest = ((ListLocationsRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertEquals(request.getFilter(), actualRequest.getFilter());
-    Assert.assertEquals(request.getPageSize(), actualRequest.getPageSize());
-    Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertEquals(request.getFilter(), actualRequest.getFilter());
+    Assertions.assertEquals(request.getPageSize(), actualRequest.getPageSize());
+    Assertions.assertEquals(request.getPageToken(), actualRequest.getPageToken());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void listLocationsExceptionTest() throws Exception {
+  void listLocationsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockLocations.addException(exception);
 
@@ -816,14 +816,14 @@ public class ComplianceClientTest {
               .setPageToken("pageToken873572522")
               .build();
       client.listLocations(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getLocationTest() throws Exception {
+  void getLocationTest() throws Exception {
     Location expectedResponse =
         Location.newBuilder()
             .setName("name3373707")
@@ -837,35 +837,35 @@ public class ComplianceClientTest {
     GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
 
     Location actualResponse = client.getLocation(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockLocations.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     GetLocationRequest actualRequest = ((GetLocationRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void getLocationExceptionTest() throws Exception {
+  void getLocationExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockLocations.addException(exception);
 
     try {
       GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
       client.getLocation(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void setIamPolicyTest() throws Exception {
+  void setIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -883,23 +883,23 @@ public class ComplianceClientTest {
             .build();
 
     Policy actualResponse = client.setIamPolicy(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getResource(), actualRequest.getResource());
-    Assert.assertEquals(request.getPolicy(), actualRequest.getPolicy());
-    Assert.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
+    Assertions.assertEquals(request.getPolicy(), actualRequest.getPolicy());
+    Assertions.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void setIamPolicyExceptionTest() throws Exception {
+  void setIamPolicyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -911,14 +911,14 @@ public class ComplianceClientTest {
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       client.setIamPolicy(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getIamPolicyTest() throws Exception {
+  void getIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -935,22 +935,22 @@ public class ComplianceClientTest {
             .build();
 
     Policy actualResponse = client.getIamPolicy(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getResource(), actualRequest.getResource());
-    Assert.assertEquals(request.getOptions(), actualRequest.getOptions());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
+    Assertions.assertEquals(request.getOptions(), actualRequest.getOptions());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void getIamPolicyExceptionTest() throws Exception {
+  void getIamPolicyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -961,14 +961,14 @@ public class ComplianceClientTest {
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void testIamPermissionsTest() throws Exception {
+  void testIamPermissionsTest() throws Exception {
     TestIamPermissionsResponse expectedResponse =
         TestIamPermissionsResponse.newBuilder().addAllPermissions(new ArrayList<String>()).build();
     mockIAMPolicy.addResponse(expectedResponse);
@@ -980,22 +980,22 @@ public class ComplianceClientTest {
             .build();
 
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getResource(), actualRequest.getResource());
-    Assert.assertEquals(request.getPermissionsList(), actualRequest.getPermissionsList());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
+    Assertions.assertEquals(request.getPermissionsList(), actualRequest.getPermissionsList());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void testIamPermissionsExceptionTest() throws Exception {
+  void testIamPermissionsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -1006,7 +1006,7 @@ public class ComplianceClientTest {
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }

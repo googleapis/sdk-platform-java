@@ -50,20 +50,20 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Generated;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @Generated("by gapic-generator-java")
-public class ComplianceClientHttpJsonTest {
+class ComplianceClientHttpJsonTest {
   private static MockHttpService mockService;
   private static ComplianceClient client;
 
-  @BeforeClass
-  public static void startStaticServer() throws IOException {
+  @BeforeAll
+  static void startStaticServer() throws IOException {
     mockService =
         new MockHttpService(
             HttpJsonComplianceStub.getMethodDescriptors(), ComplianceSettings.getDefaultEndpoint());
@@ -78,21 +78,21 @@ public class ComplianceClientHttpJsonTest {
     client = ComplianceClient.create(settings);
   }
 
-  @AfterClass
-  public static void stopServer() {
+  @AfterAll
+  static void stopServer() {
     client.close();
   }
 
-  @Before
-  public void setUp() {}
+  @BeforeEach
+  void setUp() {}
 
-  @After
-  public void tearDown() throws Exception {
+  @AfterEach
+  void tearDown() throws Exception {
     mockService.reset();
   }
 
   @Test
-  public void repeatDataBodyTest() throws Exception {
+  void repeatDataBodyTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -115,10 +115,10 @@ public class ComplianceClientHttpJsonTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataBody(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -126,14 +126,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void repeatDataBodyExceptionTest() throws Exception {
+  void repeatDataBodyExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -154,14 +154,14 @@ public class ComplianceClientHttpJsonTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataBody(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataBodyInfoTest() throws Exception {
+  void repeatDataBodyInfoTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -184,10 +184,10 @@ public class ComplianceClientHttpJsonTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataBodyInfo(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -195,14 +195,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void repeatDataBodyInfoExceptionTest() throws Exception {
+  void repeatDataBodyInfoExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -223,14 +223,14 @@ public class ComplianceClientHttpJsonTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataBodyInfo(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataQueryTest() throws Exception {
+  void repeatDataQueryTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -253,10 +253,10 @@ public class ComplianceClientHttpJsonTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataQuery(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -264,14 +264,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void repeatDataQueryExceptionTest() throws Exception {
+  void repeatDataQueryExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -292,14 +292,14 @@ public class ComplianceClientHttpJsonTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataQuery(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataSimplePathTest() throws Exception {
+  void repeatDataSimplePathTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -345,10 +345,10 @@ public class ComplianceClientHttpJsonTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataSimplePath(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -356,14 +356,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void repeatDataSimplePathExceptionTest() throws Exception {
+  void repeatDataSimplePathExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -407,14 +407,14 @@ public class ComplianceClientHttpJsonTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataSimplePath(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataPathResourceTest() throws Exception {
+  void repeatDataPathResourceTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -474,10 +474,10 @@ public class ComplianceClientHttpJsonTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataPathResource(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -485,14 +485,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void repeatDataPathResourceExceptionTest() throws Exception {
+  void repeatDataPathResourceExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -550,14 +550,14 @@ public class ComplianceClientHttpJsonTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataPathResource(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataPathTrailingResourceTest() throws Exception {
+  void repeatDataPathTrailingResourceTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -617,10 +617,10 @@ public class ComplianceClientHttpJsonTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataPathTrailingResource(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -628,14 +628,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void repeatDataPathTrailingResourceExceptionTest() throws Exception {
+  void repeatDataPathTrailingResourceExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -693,14 +693,14 @@ public class ComplianceClientHttpJsonTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataPathTrailingResource(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataBodyPutTest() throws Exception {
+  void repeatDataBodyPutTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -723,10 +723,10 @@ public class ComplianceClientHttpJsonTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataBodyPut(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -734,14 +734,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void repeatDataBodyPutExceptionTest() throws Exception {
+  void repeatDataBodyPutExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -762,14 +762,14 @@ public class ComplianceClientHttpJsonTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataBodyPut(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void repeatDataBodyPatchTest() throws Exception {
+  void repeatDataBodyPatchTest() throws Exception {
     RepeatResponse expectedResponse =
         RepeatResponse.newBuilder()
             .setRequest(RepeatRequest.newBuilder().build())
@@ -792,10 +792,10 @@ public class ComplianceClientHttpJsonTest {
             .build();
 
     RepeatResponse actualResponse = client.repeatDataBodyPatch(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -803,14 +803,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void repeatDataBodyPatchExceptionTest() throws Exception {
+  void repeatDataBodyPatchExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -831,14 +831,14 @@ public class ComplianceClientHttpJsonTest {
               .setPDouble(-991225216)
               .build();
       client.repeatDataBodyPatch(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getEnumTest() throws Exception {
+  void getEnumTest() throws Exception {
     EnumResponse expectedResponse =
         EnumResponse.newBuilder()
             .setRequest(EnumRequest.newBuilder().build())
@@ -849,10 +849,10 @@ public class ComplianceClientHttpJsonTest {
     EnumRequest request = EnumRequest.newBuilder().setUnknownEnum(true).build();
 
     EnumResponse actualResponse = client.getEnum(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -860,14 +860,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void getEnumExceptionTest() throws Exception {
+  void getEnumExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -876,14 +876,14 @@ public class ComplianceClientHttpJsonTest {
     try {
       EnumRequest request = EnumRequest.newBuilder().setUnknownEnum(true).build();
       client.getEnum(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void verifyEnumTest() throws Exception {
+  void verifyEnumTest() throws Exception {
     EnumResponse expectedResponse =
         EnumResponse.newBuilder()
             .setRequest(EnumRequest.newBuilder().build())
@@ -898,10 +898,10 @@ public class ComplianceClientHttpJsonTest {
             .build();
 
     EnumResponse actualResponse = client.verifyEnum(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -909,14 +909,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void verifyEnumExceptionTest() throws Exception {
+  void verifyEnumExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -929,14 +929,14 @@ public class ComplianceClientHttpJsonTest {
               .setContinent(Continent.forNumber(0))
               .build();
       client.verifyEnum(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void listLocationsTest() throws Exception {
+  void listLocationsTest() throws Exception {
     Location responsesElement = Location.newBuilder().build();
     ListLocationsResponse expectedResponse =
         ListLocationsResponse.newBuilder()
@@ -957,11 +957,11 @@ public class ComplianceClientHttpJsonTest {
 
     List<Location> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
+    Assertions.assertEquals(1, resources.size());
+    Assertions.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -969,14 +969,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void listLocationsExceptionTest() throws Exception {
+  void listLocationsExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -991,14 +991,14 @@ public class ComplianceClientHttpJsonTest {
               .setPageToken("pageToken873572522")
               .build();
       client.listLocations(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getLocationTest() throws Exception {
+  void getLocationTest() throws Exception {
     Location expectedResponse =
         Location.newBuilder()
             .setName("name3373707")
@@ -1015,10 +1015,10 @@ public class ComplianceClientHttpJsonTest {
             .build();
 
     Location actualResponse = client.getLocation(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -1026,14 +1026,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void getLocationExceptionTest() throws Exception {
+  void getLocationExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -1045,14 +1045,14 @@ public class ComplianceClientHttpJsonTest {
               .setName("projects/project-9062/locations/location-9062")
               .build();
       client.getLocation(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void setIamPolicyTest() throws Exception {
+  void setIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -1070,10 +1070,10 @@ public class ComplianceClientHttpJsonTest {
             .build();
 
     Policy actualResponse = client.setIamPolicy(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -1081,14 +1081,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void setIamPolicyExceptionTest() throws Exception {
+  void setIamPolicyExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -1102,14 +1102,14 @@ public class ComplianceClientHttpJsonTest {
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       client.setIamPolicy(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getIamPolicyTest() throws Exception {
+  void getIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -1126,10 +1126,10 @@ public class ComplianceClientHttpJsonTest {
             .build();
 
     Policy actualResponse = client.getIamPolicy(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -1137,14 +1137,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void getIamPolicyExceptionTest() throws Exception {
+  void getIamPolicyExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -1157,14 +1157,14 @@ public class ComplianceClientHttpJsonTest {
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void testIamPermissionsTest() throws Exception {
+  void testIamPermissionsTest() throws Exception {
     TestIamPermissionsResponse expectedResponse =
         TestIamPermissionsResponse.newBuilder().addAllPermissions(new ArrayList<String>()).build();
     mockService.addResponse(expectedResponse);
@@ -1176,10 +1176,10 @@ public class ComplianceClientHttpJsonTest {
             .build();
 
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -1187,14 +1187,14 @@ public class ComplianceClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assert.assertTrue(
+    Assertions.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  public void testIamPermissionsExceptionTest() throws Exception {
+  void testIamPermissionsExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -1207,7 +1207,7 @@ public class ComplianceClientHttpJsonTest {
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }

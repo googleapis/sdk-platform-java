@@ -64,15 +64,15 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import javax.annotation.Generated;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @Generated("by gapic-generator-java")
-public class EchoClientTest {
+class EchoClientTest {
   private static MockEcho mockEcho;
   private static MockIAMPolicy mockIAMPolicy;
   private static MockLocations mockLocations;
@@ -80,7 +80,7 @@ public class EchoClientTest {
   private LocalChannelProvider channelProvider;
   private EchoClient client;
 
-  @BeforeClass
+  @BeforeAll
   public static void startStaticServer() {
     mockEcho = new MockEcho();
     mockLocations = new MockLocations();
@@ -92,13 +92,13 @@ public class EchoClientTest {
     mockServiceHelper.start();
   }
 
-  @AfterClass
+  @AfterAll
   public static void stopServer() {
     mockServiceHelper.stop();
   }
 
-  @Before
-  public void setUp() throws IOException {
+  @BeforeEach
+  void setUp() throws IOException {
     mockServiceHelper.reset();
     channelProvider = mockServiceHelper.createChannelProvider();
     EchoSettings settings =
@@ -109,13 +109,13 @@ public class EchoClientTest {
     client = EchoClient.create(settings);
   }
 
-  @After
-  public void tearDown() throws Exception {
+  @AfterEach
+  void tearDown() throws Exception {
     client.close();
   }
 
   @Test
-  public void echoTest() throws Exception {
+  void echoTest() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder()
             .setContent("content951530617")
@@ -131,25 +131,25 @@ public class EchoClientTest {
             .build();
 
     EchoResponse actualResponse = client.echo(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     EchoRequest actualRequest = ((EchoRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getContent(), actualRequest.getContent());
-    Assert.assertEquals(request.getError(), actualRequest.getError());
-    Assert.assertEquals(request.getSeverity(), actualRequest.getSeverity());
-    Assert.assertEquals(request.getHeader(), actualRequest.getHeader());
-    Assert.assertEquals(request.getOtherHeader(), actualRequest.getOtherHeader());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getContent(), actualRequest.getContent());
+    Assertions.assertEquals(request.getError(), actualRequest.getError());
+    Assertions.assertEquals(request.getSeverity(), actualRequest.getSeverity());
+    Assertions.assertEquals(request.getHeader(), actualRequest.getHeader());
+    Assertions.assertEquals(request.getOtherHeader(), actualRequest.getOtherHeader());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void echoExceptionTest() throws Exception {
+  void echoExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
 
@@ -161,14 +161,14 @@ public class EchoClientTest {
               .setOtherHeader("otherHeader-2026585667")
               .build();
       client.echo(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void expandTest() throws Exception {
+  void expandTest() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder()
             .setContent("content951530617")
@@ -188,12 +188,12 @@ public class EchoClientTest {
     callable.serverStreamingCall(request, responseObserver);
 
     List<EchoResponse> actualResponses = responseObserver.future().get();
-    Assert.assertEquals(1, actualResponses.size());
-    Assert.assertEquals(expectedResponse, actualResponses.get(0));
+    Assertions.assertEquals(1, actualResponses.size());
+    Assertions.assertEquals(expectedResponse, actualResponses.get(0));
   }
 
   @Test
-  public void expandExceptionTest() throws Exception {
+  void expandExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
     ExpandRequest request =
@@ -210,16 +210,17 @@ public class EchoClientTest {
 
     try {
       List<EchoResponse> actualResponses = responseObserver.future().get();
-      Assert.fail("No exception thrown");
+      Assertions.fail("No exception thrown");
     } catch (ExecutionException e) {
-      Assert.assertTrue(e.getCause() instanceof InvalidArgumentException);
+      Assertions.assertTrue(e.getCause() instanceof InvalidArgumentException);
       InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
-      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
+      Assertions.assertEquals(
+          StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 
   @Test
-  public void collectTest() throws Exception {
+  void collectTest() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder()
             .setContent("content951530617")
@@ -242,12 +243,12 @@ public class EchoClientTest {
     requestObserver.onCompleted();
 
     List<EchoResponse> actualResponses = responseObserver.future().get();
-    Assert.assertEquals(1, actualResponses.size());
-    Assert.assertEquals(expectedResponse, actualResponses.get(0));
+    Assertions.assertEquals(1, actualResponses.size());
+    Assertions.assertEquals(expectedResponse, actualResponses.get(0));
   }
 
   @Test
-  public void collectExceptionTest() throws Exception {
+  void collectExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
     EchoRequest request =
@@ -266,16 +267,17 @@ public class EchoClientTest {
 
     try {
       List<EchoResponse> actualResponses = responseObserver.future().get();
-      Assert.fail("No exception thrown");
+      Assertions.fail("No exception thrown");
     } catch (ExecutionException e) {
-      Assert.assertTrue(e.getCause() instanceof InvalidArgumentException);
+      Assertions.assertTrue(e.getCause() instanceof InvalidArgumentException);
       InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
-      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
+      Assertions.assertEquals(
+          StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 
   @Test
-  public void chatTest() throws Exception {
+  void chatTest() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder()
             .setContent("content951530617")
@@ -298,12 +300,12 @@ public class EchoClientTest {
     requestObserver.onCompleted();
 
     List<EchoResponse> actualResponses = responseObserver.future().get();
-    Assert.assertEquals(1, actualResponses.size());
-    Assert.assertEquals(expectedResponse, actualResponses.get(0));
+    Assertions.assertEquals(1, actualResponses.size());
+    Assertions.assertEquals(expectedResponse, actualResponses.get(0));
   }
 
   @Test
-  public void chatExceptionTest() throws Exception {
+  void chatExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
     EchoRequest request =
@@ -322,16 +324,17 @@ public class EchoClientTest {
 
     try {
       List<EchoResponse> actualResponses = responseObserver.future().get();
-      Assert.fail("No exception thrown");
+      Assertions.fail("No exception thrown");
     } catch (ExecutionException e) {
-      Assert.assertTrue(e.getCause() instanceof InvalidArgumentException);
+      Assertions.assertTrue(e.getCause() instanceof InvalidArgumentException);
       InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
-      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
+      Assertions.assertEquals(
+          StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 
   @Test
-  public void pagedExpandTest() throws Exception {
+  void pagedExpandTest() throws Exception {
     EchoResponse responsesElement = EchoResponse.newBuilder().build();
     PagedExpandResponse expectedResponse =
         PagedExpandResponse.newBuilder()
@@ -351,24 +354,24 @@ public class EchoClientTest {
 
     List<EchoResponse> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getResponsesList().get(0), resources.get(0));
+    Assertions.assertEquals(1, resources.size());
+    Assertions.assertEquals(expectedResponse.getResponsesList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     PagedExpandRequest actualRequest = ((PagedExpandRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getContent(), actualRequest.getContent());
-    Assert.assertEquals(request.getPageSize(), actualRequest.getPageSize());
-    Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getContent(), actualRequest.getContent());
+    Assertions.assertEquals(request.getPageSize(), actualRequest.getPageSize());
+    Assertions.assertEquals(request.getPageToken(), actualRequest.getPageToken());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void pagedExpandExceptionTest() throws Exception {
+  void pagedExpandExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
 
@@ -380,14 +383,14 @@ public class EchoClientTest {
               .setPageToken("pageToken873572522")
               .build();
       client.pagedExpand(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void pagedExpandLegacyTest() throws Exception {
+  void pagedExpandLegacyTest() throws Exception {
     PagedExpandResponse expectedResponse =
         PagedExpandResponse.newBuilder()
             .addAllResponses(new ArrayList<EchoResponse>())
@@ -403,23 +406,23 @@ public class EchoClientTest {
             .build();
 
     PagedExpandResponse actualResponse = client.pagedExpandLegacy(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     PagedExpandLegacyRequest actualRequest = ((PagedExpandLegacyRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getContent(), actualRequest.getContent());
-    Assert.assertEquals(request.getMaxResults(), actualRequest.getMaxResults());
-    Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getContent(), actualRequest.getContent());
+    Assertions.assertEquals(request.getMaxResults(), actualRequest.getMaxResults());
+    Assertions.assertEquals(request.getPageToken(), actualRequest.getPageToken());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void pagedExpandLegacyExceptionTest() throws Exception {
+  void pagedExpandLegacyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
 
@@ -431,14 +434,14 @@ public class EchoClientTest {
               .setPageToken("pageToken873572522")
               .build();
       client.pagedExpandLegacy(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void pagedExpandLegacyMappedTest() throws Exception {
+  void pagedExpandLegacyMappedTest() throws Exception {
     PagedExpandResponseList responsesElement = PagedExpandResponseList.newBuilder().build();
     PagedExpandLegacyMappedResponse expectedResponse =
         PagedExpandLegacyMappedResponse.newBuilder()
@@ -460,25 +463,25 @@ public class EchoClientTest {
     List<Map.Entry<String, PagedExpandResponseList>> resources =
         Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(
+    Assertions.assertEquals(1, resources.size());
+    Assertions.assertEquals(
         expectedResponse.getAlphabetizedMap().entrySet().iterator().next(), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     PagedExpandRequest actualRequest = ((PagedExpandRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getContent(), actualRequest.getContent());
-    Assert.assertEquals(request.getPageSize(), actualRequest.getPageSize());
-    Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getContent(), actualRequest.getContent());
+    Assertions.assertEquals(request.getPageSize(), actualRequest.getPageSize());
+    Assertions.assertEquals(request.getPageToken(), actualRequest.getPageToken());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void pagedExpandLegacyMappedExceptionTest() throws Exception {
+  void pagedExpandLegacyMappedExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
 
@@ -490,14 +493,14 @@ public class EchoClientTest {
               .setPageToken("pageToken873572522")
               .build();
       client.pagedExpandLegacyMapped(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void waitTest() throws Exception {
+  void waitTest() throws Exception {
     WaitResponse expectedResponse =
         WaitResponse.newBuilder().setContent("content951530617").build();
     Operation resultOperation =
@@ -511,40 +514,41 @@ public class EchoClientTest {
     WaitRequest request = WaitRequest.newBuilder().build();
 
     WaitResponse actualResponse = client.waitAsync(request).get();
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     WaitRequest actualRequest = ((WaitRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getEndTime(), actualRequest.getEndTime());
-    Assert.assertEquals(request.getTtl(), actualRequest.getTtl());
-    Assert.assertEquals(request.getError(), actualRequest.getError());
-    Assert.assertEquals(request.getSuccess(), actualRequest.getSuccess());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getEndTime(), actualRequest.getEndTime());
+    Assertions.assertEquals(request.getTtl(), actualRequest.getTtl());
+    Assertions.assertEquals(request.getError(), actualRequest.getError());
+    Assertions.assertEquals(request.getSuccess(), actualRequest.getSuccess());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void waitExceptionTest() throws Exception {
+  void waitExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
 
     try {
       WaitRequest request = WaitRequest.newBuilder().build();
       client.waitAsync(request).get();
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (ExecutionException e) {
-      Assert.assertEquals(InvalidArgumentException.class, e.getCause().getClass());
+      Assertions.assertEquals(InvalidArgumentException.class, e.getCause().getClass());
       InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
-      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
+      Assertions.assertEquals(
+          StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 
   @Test
-  public void blockTest() throws Exception {
+  void blockTest() throws Exception {
     BlockResponse expectedResponse =
         BlockResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -553,23 +557,23 @@ public class EchoClientTest {
         BlockRequest.newBuilder().setResponseDelay(Duration.newBuilder().build()).build();
 
     BlockResponse actualResponse = client.block(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     BlockRequest actualRequest = ((BlockRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getResponseDelay(), actualRequest.getResponseDelay());
-    Assert.assertEquals(request.getError(), actualRequest.getError());
-    Assert.assertEquals(request.getSuccess(), actualRequest.getSuccess());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getResponseDelay(), actualRequest.getResponseDelay());
+    Assertions.assertEquals(request.getError(), actualRequest.getError());
+    Assertions.assertEquals(request.getSuccess(), actualRequest.getSuccess());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void blockExceptionTest() throws Exception {
+  void blockExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
 
@@ -577,14 +581,14 @@ public class EchoClientTest {
       BlockRequest request =
           BlockRequest.newBuilder().setResponseDelay(Duration.newBuilder().build()).build();
       client.block(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void listLocationsTest() throws Exception {
+  void listLocationsTest() throws Exception {
     Location responsesElement = Location.newBuilder().build();
     ListLocationsResponse expectedResponse =
         ListLocationsResponse.newBuilder()
@@ -605,25 +609,25 @@ public class EchoClientTest {
 
     List<Location> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
+    Assertions.assertEquals(1, resources.size());
+    Assertions.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockLocations.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     ListLocationsRequest actualRequest = ((ListLocationsRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertEquals(request.getFilter(), actualRequest.getFilter());
-    Assert.assertEquals(request.getPageSize(), actualRequest.getPageSize());
-    Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertEquals(request.getFilter(), actualRequest.getFilter());
+    Assertions.assertEquals(request.getPageSize(), actualRequest.getPageSize());
+    Assertions.assertEquals(request.getPageToken(), actualRequest.getPageToken());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void listLocationsExceptionTest() throws Exception {
+  void listLocationsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockLocations.addException(exception);
 
@@ -636,14 +640,14 @@ public class EchoClientTest {
               .setPageToken("pageToken873572522")
               .build();
       client.listLocations(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getLocationTest() throws Exception {
+  void getLocationTest() throws Exception {
     Location expectedResponse =
         Location.newBuilder()
             .setName("name3373707")
@@ -657,35 +661,35 @@ public class EchoClientTest {
     GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
 
     Location actualResponse = client.getLocation(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockLocations.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     GetLocationRequest actualRequest = ((GetLocationRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void getLocationExceptionTest() throws Exception {
+  void getLocationExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockLocations.addException(exception);
 
     try {
       GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
       client.getLocation(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void setIamPolicyTest() throws Exception {
+  void setIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -703,23 +707,23 @@ public class EchoClientTest {
             .build();
 
     Policy actualResponse = client.setIamPolicy(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getResource(), actualRequest.getResource());
-    Assert.assertEquals(request.getPolicy(), actualRequest.getPolicy());
-    Assert.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
+    Assertions.assertEquals(request.getPolicy(), actualRequest.getPolicy());
+    Assertions.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void setIamPolicyExceptionTest() throws Exception {
+  void setIamPolicyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -731,14 +735,14 @@ public class EchoClientTest {
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       client.setIamPolicy(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getIamPolicyTest() throws Exception {
+  void getIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -755,22 +759,22 @@ public class EchoClientTest {
             .build();
 
     Policy actualResponse = client.getIamPolicy(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getResource(), actualRequest.getResource());
-    Assert.assertEquals(request.getOptions(), actualRequest.getOptions());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
+    Assertions.assertEquals(request.getOptions(), actualRequest.getOptions());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void getIamPolicyExceptionTest() throws Exception {
+  void getIamPolicyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -781,14 +785,14 @@ public class EchoClientTest {
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void testIamPermissionsTest() throws Exception {
+  void testIamPermissionsTest() throws Exception {
     TestIamPermissionsResponse expectedResponse =
         TestIamPermissionsResponse.newBuilder().addAllPermissions(new ArrayList<String>()).build();
     mockIAMPolicy.addResponse(expectedResponse);
@@ -800,22 +804,22 @@ public class EchoClientTest {
             .build();
 
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getResource(), actualRequest.getResource());
-    Assert.assertEquals(request.getPermissionsList(), actualRequest.getPermissionsList());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
+    Assertions.assertEquals(request.getPermissionsList(), actualRequest.getPermissionsList());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void testIamPermissionsExceptionTest() throws Exception {
+  void testIamPermissionsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -826,7 +830,7 @@ public class EchoClientTest {
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }

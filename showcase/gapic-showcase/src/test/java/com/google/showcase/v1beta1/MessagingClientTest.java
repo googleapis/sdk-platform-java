@@ -62,15 +62,15 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import javax.annotation.Generated;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @Generated("by gapic-generator-java")
-public class MessagingClientTest {
+class MessagingClientTest {
   private static MockIAMPolicy mockIAMPolicy;
   private static MockLocations mockLocations;
   private static MockMessaging mockMessaging;
@@ -78,7 +78,7 @@ public class MessagingClientTest {
   private LocalChannelProvider channelProvider;
   private MessagingClient client;
 
-  @BeforeClass
+  @BeforeAll
   public static void startStaticServer() {
     mockMessaging = new MockMessaging();
     mockLocations = new MockLocations();
@@ -90,13 +90,13 @@ public class MessagingClientTest {
     mockServiceHelper.start();
   }
 
-  @AfterClass
+  @AfterAll
   public static void stopServer() {
     mockServiceHelper.stop();
   }
 
-  @Before
-  public void setUp() throws IOException {
+  @BeforeEach
+  void setUp() throws IOException {
     mockServiceHelper.reset();
     channelProvider = mockServiceHelper.createChannelProvider();
     MessagingSettings settings =
@@ -107,13 +107,13 @@ public class MessagingClientTest {
     client = MessagingClient.create(settings);
   }
 
-  @After
-  public void tearDown() throws Exception {
+  @AfterEach
+  void tearDown() throws Exception {
     client.close();
   }
 
   @Test
-  public void createRoomTest() throws Exception {
+  void createRoomTest() throws Exception {
     Room expectedResponse =
         Room.newBuilder()
             .setName(RoomName.of("[ROOM]").toString())
@@ -128,22 +128,22 @@ public class MessagingClientTest {
     String description = "description-1724546052";
 
     Room actualResponse = client.createRoom(displayName, description);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     CreateRoomRequest actualRequest = ((CreateRoomRequest) actualRequests.get(0));
 
-    Assert.assertEquals(displayName, actualRequest.getRoom().getDisplayName());
-    Assert.assertEquals(description, actualRequest.getRoom().getDescription());
-    Assert.assertTrue(
+    Assertions.assertEquals(displayName, actualRequest.getRoom().getDisplayName());
+    Assertions.assertEquals(description, actualRequest.getRoom().getDescription());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void createRoomExceptionTest() throws Exception {
+  void createRoomExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -151,14 +151,14 @@ public class MessagingClientTest {
       String displayName = "displayName1714148973";
       String description = "description-1724546052";
       client.createRoom(displayName, description);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getRoomTest() throws Exception {
+  void getRoomTest() throws Exception {
     Room expectedResponse =
         Room.newBuilder()
             .setName(RoomName.of("[ROOM]").toString())
@@ -172,35 +172,35 @@ public class MessagingClientTest {
     RoomName name = RoomName.of("[ROOM]");
 
     Room actualResponse = client.getRoom(name);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     GetRoomRequest actualRequest = ((GetRoomRequest) actualRequests.get(0));
 
-    Assert.assertEquals(name.toString(), actualRequest.getName());
-    Assert.assertTrue(
+    Assertions.assertEquals(name.toString(), actualRequest.getName());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void getRoomExceptionTest() throws Exception {
+  void getRoomExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
     try {
       RoomName name = RoomName.of("[ROOM]");
       client.getRoom(name);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getRoomTest2() throws Exception {
+  void getRoomTest2() throws Exception {
     Room expectedResponse =
         Room.newBuilder()
             .setName(RoomName.of("[ROOM]").toString())
@@ -214,35 +214,35 @@ public class MessagingClientTest {
     String name = "name3373707";
 
     Room actualResponse = client.getRoom(name);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     GetRoomRequest actualRequest = ((GetRoomRequest) actualRequests.get(0));
 
-    Assert.assertEquals(name, actualRequest.getName());
-    Assert.assertTrue(
+    Assertions.assertEquals(name, actualRequest.getName());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void getRoomExceptionTest2() throws Exception {
+  void getRoomExceptionTest2() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
     try {
       String name = "name3373707";
       client.getRoom(name);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void updateRoomTest() throws Exception {
+  void updateRoomTest() throws Exception {
     Room expectedResponse =
         Room.newBuilder()
             .setName(RoomName.of("[ROOM]").toString())
@@ -260,22 +260,22 @@ public class MessagingClientTest {
             .build();
 
     Room actualResponse = client.updateRoom(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     UpdateRoomRequest actualRequest = ((UpdateRoomRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getRoom(), actualRequest.getRoom());
-    Assert.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getRoom(), actualRequest.getRoom());
+    Assertions.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void updateRoomExceptionTest() throws Exception {
+  void updateRoomExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -286,14 +286,14 @@ public class MessagingClientTest {
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       client.updateRoom(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void deleteRoomTest() throws Exception {
+  void deleteRoomTest() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockMessaging.addResponse(expectedResponse);
 
@@ -302,32 +302,32 @@ public class MessagingClientTest {
     client.deleteRoom(name);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     DeleteRoomRequest actualRequest = ((DeleteRoomRequest) actualRequests.get(0));
 
-    Assert.assertEquals(name.toString(), actualRequest.getName());
-    Assert.assertTrue(
+    Assertions.assertEquals(name.toString(), actualRequest.getName());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void deleteRoomExceptionTest() throws Exception {
+  void deleteRoomExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
     try {
       RoomName name = RoomName.of("[ROOM]");
       client.deleteRoom(name);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void deleteRoomTest2() throws Exception {
+  void deleteRoomTest2() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockMessaging.addResponse(expectedResponse);
 
@@ -336,32 +336,32 @@ public class MessagingClientTest {
     client.deleteRoom(name);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     DeleteRoomRequest actualRequest = ((DeleteRoomRequest) actualRequests.get(0));
 
-    Assert.assertEquals(name, actualRequest.getName());
-    Assert.assertTrue(
+    Assertions.assertEquals(name, actualRequest.getName());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void deleteRoomExceptionTest2() throws Exception {
+  void deleteRoomExceptionTest2() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
     try {
       String name = "name3373707";
       client.deleteRoom(name);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void listRoomsTest() throws Exception {
+  void listRoomsTest() throws Exception {
     Room responsesElement = Room.newBuilder().build();
     ListRoomsResponse expectedResponse =
         ListRoomsResponse.newBuilder()
@@ -380,23 +380,23 @@ public class MessagingClientTest {
 
     List<Room> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getRoomsList().get(0), resources.get(0));
+    Assertions.assertEquals(1, resources.size());
+    Assertions.assertEquals(expectedResponse.getRoomsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     ListRoomsRequest actualRequest = ((ListRoomsRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getPageSize(), actualRequest.getPageSize());
-    Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getPageSize(), actualRequest.getPageSize());
+    Assertions.assertEquals(request.getPageToken(), actualRequest.getPageToken());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void listRoomsExceptionTest() throws Exception {
+  void listRoomsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -407,14 +407,14 @@ public class MessagingClientTest {
               .setPageToken("pageToken873572522")
               .build();
       client.listRooms(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void createBlurbTest() throws Exception {
+  void createBlurbTest() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(
@@ -431,23 +431,23 @@ public class MessagingClientTest {
     ByteString image = ByteString.EMPTY;
 
     Blurb actualResponse = client.createBlurb(parent, user, image);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent.toString(), actualRequest.getParent());
-    Assert.assertEquals(user.toString(), actualRequest.getBlurb().getUser());
-    Assert.assertEquals(image, actualRequest.getBlurb().getImage());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent.toString(), actualRequest.getParent());
+    Assertions.assertEquals(user.toString(), actualRequest.getBlurb().getUser());
+    Assertions.assertEquals(image, actualRequest.getBlurb().getImage());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void createBlurbExceptionTest() throws Exception {
+  void createBlurbExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -456,14 +456,14 @@ public class MessagingClientTest {
       UserName user = UserName.of("[USER]");
       ByteString image = ByteString.EMPTY;
       client.createBlurb(parent, user, image);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void createBlurbTest2() throws Exception {
+  void createBlurbTest2() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(
@@ -480,23 +480,23 @@ public class MessagingClientTest {
     String text = "text3556653";
 
     Blurb actualResponse = client.createBlurb(parent, user, text);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent.toString(), actualRequest.getParent());
-    Assert.assertEquals(user.toString(), actualRequest.getBlurb().getUser());
-    Assert.assertEquals(text, actualRequest.getBlurb().getText());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent.toString(), actualRequest.getParent());
+    Assertions.assertEquals(user.toString(), actualRequest.getBlurb().getUser());
+    Assertions.assertEquals(text, actualRequest.getBlurb().getText());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void createBlurbExceptionTest2() throws Exception {
+  void createBlurbExceptionTest2() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -505,14 +505,14 @@ public class MessagingClientTest {
       UserName user = UserName.of("[USER]");
       String text = "text3556653";
       client.createBlurb(parent, user, text);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void createBlurbTest3() throws Exception {
+  void createBlurbTest3() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(
@@ -529,23 +529,23 @@ public class MessagingClientTest {
     ByteString image = ByteString.EMPTY;
 
     Blurb actualResponse = client.createBlurb(parent, user, image);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent.toString(), actualRequest.getParent());
-    Assert.assertEquals(user, actualRequest.getBlurb().getUser());
-    Assert.assertEquals(image, actualRequest.getBlurb().getImage());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent.toString(), actualRequest.getParent());
+    Assertions.assertEquals(user, actualRequest.getBlurb().getUser());
+    Assertions.assertEquals(image, actualRequest.getBlurb().getImage());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void createBlurbExceptionTest3() throws Exception {
+  void createBlurbExceptionTest3() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -554,14 +554,14 @@ public class MessagingClientTest {
       String user = "user3599307";
       ByteString image = ByteString.EMPTY;
       client.createBlurb(parent, user, image);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void createBlurbTest4() throws Exception {
+  void createBlurbTest4() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(
@@ -578,23 +578,23 @@ public class MessagingClientTest {
     String text = "text3556653";
 
     Blurb actualResponse = client.createBlurb(parent, user, text);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent.toString(), actualRequest.getParent());
-    Assert.assertEquals(user, actualRequest.getBlurb().getUser());
-    Assert.assertEquals(text, actualRequest.getBlurb().getText());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent.toString(), actualRequest.getParent());
+    Assertions.assertEquals(user, actualRequest.getBlurb().getUser());
+    Assertions.assertEquals(text, actualRequest.getBlurb().getText());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void createBlurbExceptionTest4() throws Exception {
+  void createBlurbExceptionTest4() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -603,14 +603,14 @@ public class MessagingClientTest {
       String user = "user3599307";
       String text = "text3556653";
       client.createBlurb(parent, user, text);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void createBlurbTest5() throws Exception {
+  void createBlurbTest5() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(
@@ -627,23 +627,23 @@ public class MessagingClientTest {
     ByteString image = ByteString.EMPTY;
 
     Blurb actualResponse = client.createBlurb(parent, user, image);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent.toString(), actualRequest.getParent());
-    Assert.assertEquals(user.toString(), actualRequest.getBlurb().getUser());
-    Assert.assertEquals(image, actualRequest.getBlurb().getImage());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent.toString(), actualRequest.getParent());
+    Assertions.assertEquals(user.toString(), actualRequest.getBlurb().getUser());
+    Assertions.assertEquals(image, actualRequest.getBlurb().getImage());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void createBlurbExceptionTest5() throws Exception {
+  void createBlurbExceptionTest5() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -652,14 +652,14 @@ public class MessagingClientTest {
       UserName user = UserName.of("[USER]");
       ByteString image = ByteString.EMPTY;
       client.createBlurb(parent, user, image);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void createBlurbTest6() throws Exception {
+  void createBlurbTest6() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(
@@ -676,23 +676,23 @@ public class MessagingClientTest {
     String text = "text3556653";
 
     Blurb actualResponse = client.createBlurb(parent, user, text);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent.toString(), actualRequest.getParent());
-    Assert.assertEquals(user.toString(), actualRequest.getBlurb().getUser());
-    Assert.assertEquals(text, actualRequest.getBlurb().getText());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent.toString(), actualRequest.getParent());
+    Assertions.assertEquals(user.toString(), actualRequest.getBlurb().getUser());
+    Assertions.assertEquals(text, actualRequest.getBlurb().getText());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void createBlurbExceptionTest6() throws Exception {
+  void createBlurbExceptionTest6() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -701,14 +701,14 @@ public class MessagingClientTest {
       UserName user = UserName.of("[USER]");
       String text = "text3556653";
       client.createBlurb(parent, user, text);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void createBlurbTest7() throws Exception {
+  void createBlurbTest7() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(
@@ -725,23 +725,23 @@ public class MessagingClientTest {
     ByteString image = ByteString.EMPTY;
 
     Blurb actualResponse = client.createBlurb(parent, user, image);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent.toString(), actualRequest.getParent());
-    Assert.assertEquals(user, actualRequest.getBlurb().getUser());
-    Assert.assertEquals(image, actualRequest.getBlurb().getImage());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent.toString(), actualRequest.getParent());
+    Assertions.assertEquals(user, actualRequest.getBlurb().getUser());
+    Assertions.assertEquals(image, actualRequest.getBlurb().getImage());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void createBlurbExceptionTest7() throws Exception {
+  void createBlurbExceptionTest7() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -750,14 +750,14 @@ public class MessagingClientTest {
       String user = "user3599307";
       ByteString image = ByteString.EMPTY;
       client.createBlurb(parent, user, image);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void createBlurbTest8() throws Exception {
+  void createBlurbTest8() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(
@@ -774,23 +774,23 @@ public class MessagingClientTest {
     String text = "text3556653";
 
     Blurb actualResponse = client.createBlurb(parent, user, text);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent.toString(), actualRequest.getParent());
-    Assert.assertEquals(user, actualRequest.getBlurb().getUser());
-    Assert.assertEquals(text, actualRequest.getBlurb().getText());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent.toString(), actualRequest.getParent());
+    Assertions.assertEquals(user, actualRequest.getBlurb().getUser());
+    Assertions.assertEquals(text, actualRequest.getBlurb().getText());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void createBlurbExceptionTest8() throws Exception {
+  void createBlurbExceptionTest8() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -799,14 +799,14 @@ public class MessagingClientTest {
       String user = "user3599307";
       String text = "text3556653";
       client.createBlurb(parent, user, text);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void createBlurbTest9() throws Exception {
+  void createBlurbTest9() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(
@@ -823,23 +823,23 @@ public class MessagingClientTest {
     ByteString image = ByteString.EMPTY;
 
     Blurb actualResponse = client.createBlurb(parent, user, image);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent, actualRequest.getParent());
-    Assert.assertEquals(user.toString(), actualRequest.getBlurb().getUser());
-    Assert.assertEquals(image, actualRequest.getBlurb().getImage());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent, actualRequest.getParent());
+    Assertions.assertEquals(user.toString(), actualRequest.getBlurb().getUser());
+    Assertions.assertEquals(image, actualRequest.getBlurb().getImage());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void createBlurbExceptionTest9() throws Exception {
+  void createBlurbExceptionTest9() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -848,14 +848,14 @@ public class MessagingClientTest {
       UserName user = UserName.of("[USER]");
       ByteString image = ByteString.EMPTY;
       client.createBlurb(parent, user, image);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void createBlurbTest10() throws Exception {
+  void createBlurbTest10() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(
@@ -872,23 +872,23 @@ public class MessagingClientTest {
     String text = "text3556653";
 
     Blurb actualResponse = client.createBlurb(parent, user, text);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent, actualRequest.getParent());
-    Assert.assertEquals(user.toString(), actualRequest.getBlurb().getUser());
-    Assert.assertEquals(text, actualRequest.getBlurb().getText());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent, actualRequest.getParent());
+    Assertions.assertEquals(user.toString(), actualRequest.getBlurb().getUser());
+    Assertions.assertEquals(text, actualRequest.getBlurb().getText());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void createBlurbExceptionTest10() throws Exception {
+  void createBlurbExceptionTest10() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -897,14 +897,14 @@ public class MessagingClientTest {
       UserName user = UserName.of("[USER]");
       String text = "text3556653";
       client.createBlurb(parent, user, text);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void createBlurbTest11() throws Exception {
+  void createBlurbTest11() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(
@@ -921,23 +921,23 @@ public class MessagingClientTest {
     ByteString image = ByteString.EMPTY;
 
     Blurb actualResponse = client.createBlurb(parent, user, image);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent, actualRequest.getParent());
-    Assert.assertEquals(user, actualRequest.getBlurb().getUser());
-    Assert.assertEquals(image, actualRequest.getBlurb().getImage());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent, actualRequest.getParent());
+    Assertions.assertEquals(user, actualRequest.getBlurb().getUser());
+    Assertions.assertEquals(image, actualRequest.getBlurb().getImage());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void createBlurbExceptionTest11() throws Exception {
+  void createBlurbExceptionTest11() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -946,14 +946,14 @@ public class MessagingClientTest {
       String user = "user3599307";
       ByteString image = ByteString.EMPTY;
       client.createBlurb(parent, user, image);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void createBlurbTest12() throws Exception {
+  void createBlurbTest12() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(
@@ -970,23 +970,23 @@ public class MessagingClientTest {
     String text = "text3556653";
 
     Blurb actualResponse = client.createBlurb(parent, user, text);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     CreateBlurbRequest actualRequest = ((CreateBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent, actualRequest.getParent());
-    Assert.assertEquals(user, actualRequest.getBlurb().getUser());
-    Assert.assertEquals(text, actualRequest.getBlurb().getText());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent, actualRequest.getParent());
+    Assertions.assertEquals(user, actualRequest.getBlurb().getUser());
+    Assertions.assertEquals(text, actualRequest.getBlurb().getText());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void createBlurbExceptionTest12() throws Exception {
+  void createBlurbExceptionTest12() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -995,14 +995,14 @@ public class MessagingClientTest {
       String user = "user3599307";
       String text = "text3556653";
       client.createBlurb(parent, user, text);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getBlurbTest() throws Exception {
+  void getBlurbTest() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
@@ -1015,35 +1015,35 @@ public class MessagingClientTest {
     BlurbName name = BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]");
 
     Blurb actualResponse = client.getBlurb(name);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     GetBlurbRequest actualRequest = ((GetBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(name.toString(), actualRequest.getName());
-    Assert.assertTrue(
+    Assertions.assertEquals(name.toString(), actualRequest.getName());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void getBlurbExceptionTest() throws Exception {
+  void getBlurbExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
     try {
       BlurbName name = BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]");
       client.getBlurb(name);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getBlurbTest2() throws Exception {
+  void getBlurbTest2() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
@@ -1056,35 +1056,35 @@ public class MessagingClientTest {
     String name = "name3373707";
 
     Blurb actualResponse = client.getBlurb(name);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     GetBlurbRequest actualRequest = ((GetBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(name, actualRequest.getName());
-    Assert.assertTrue(
+    Assertions.assertEquals(name, actualRequest.getName());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void getBlurbExceptionTest2() throws Exception {
+  void getBlurbExceptionTest2() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
     try {
       String name = "name3373707";
       client.getBlurb(name);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void updateBlurbTest() throws Exception {
+  void updateBlurbTest() throws Exception {
     Blurb expectedResponse =
         Blurb.newBuilder()
             .setName(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
@@ -1101,22 +1101,22 @@ public class MessagingClientTest {
             .build();
 
     Blurb actualResponse = client.updateBlurb(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     UpdateBlurbRequest actualRequest = ((UpdateBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getBlurb(), actualRequest.getBlurb());
-    Assert.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getBlurb(), actualRequest.getBlurb());
+    Assertions.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void updateBlurbExceptionTest() throws Exception {
+  void updateBlurbExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -1127,14 +1127,14 @@ public class MessagingClientTest {
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       client.updateBlurb(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void deleteBlurbTest() throws Exception {
+  void deleteBlurbTest() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockMessaging.addResponse(expectedResponse);
 
@@ -1143,32 +1143,32 @@ public class MessagingClientTest {
     client.deleteBlurb(name);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     DeleteBlurbRequest actualRequest = ((DeleteBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(name.toString(), actualRequest.getName());
-    Assert.assertTrue(
+    Assertions.assertEquals(name.toString(), actualRequest.getName());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void deleteBlurbExceptionTest() throws Exception {
+  void deleteBlurbExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
     try {
       BlurbName name = BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]");
       client.deleteBlurb(name);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void deleteBlurbTest2() throws Exception {
+  void deleteBlurbTest2() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockMessaging.addResponse(expectedResponse);
 
@@ -1177,32 +1177,32 @@ public class MessagingClientTest {
     client.deleteBlurb(name);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     DeleteBlurbRequest actualRequest = ((DeleteBlurbRequest) actualRequests.get(0));
 
-    Assert.assertEquals(name, actualRequest.getName());
-    Assert.assertTrue(
+    Assertions.assertEquals(name, actualRequest.getName());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void deleteBlurbExceptionTest2() throws Exception {
+  void deleteBlurbExceptionTest2() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
     try {
       String name = "name3373707";
       client.deleteBlurb(name);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void listBlurbsTest() throws Exception {
+  void listBlurbsTest() throws Exception {
     Blurb responsesElement = Blurb.newBuilder().build();
     ListBlurbsResponse expectedResponse =
         ListBlurbsResponse.newBuilder()
@@ -1217,36 +1217,36 @@ public class MessagingClientTest {
 
     List<Blurb> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getBlurbsList().get(0), resources.get(0));
+    Assertions.assertEquals(1, resources.size());
+    Assertions.assertEquals(expectedResponse.getBlurbsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     ListBlurbsRequest actualRequest = ((ListBlurbsRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent.toString(), actualRequest.getParent());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent.toString(), actualRequest.getParent());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void listBlurbsExceptionTest() throws Exception {
+  void listBlurbsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
     try {
       ProfileName parent = ProfileName.of("[USER]");
       client.listBlurbs(parent);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void listBlurbsTest2() throws Exception {
+  void listBlurbsTest2() throws Exception {
     Blurb responsesElement = Blurb.newBuilder().build();
     ListBlurbsResponse expectedResponse =
         ListBlurbsResponse.newBuilder()
@@ -1261,36 +1261,36 @@ public class MessagingClientTest {
 
     List<Blurb> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getBlurbsList().get(0), resources.get(0));
+    Assertions.assertEquals(1, resources.size());
+    Assertions.assertEquals(expectedResponse.getBlurbsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     ListBlurbsRequest actualRequest = ((ListBlurbsRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent.toString(), actualRequest.getParent());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent.toString(), actualRequest.getParent());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void listBlurbsExceptionTest2() throws Exception {
+  void listBlurbsExceptionTest2() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
     try {
       RoomName parent = RoomName.of("[ROOM]");
       client.listBlurbs(parent);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void listBlurbsTest3() throws Exception {
+  void listBlurbsTest3() throws Exception {
     Blurb responsesElement = Blurb.newBuilder().build();
     ListBlurbsResponse expectedResponse =
         ListBlurbsResponse.newBuilder()
@@ -1305,36 +1305,36 @@ public class MessagingClientTest {
 
     List<Blurb> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getBlurbsList().get(0), resources.get(0));
+    Assertions.assertEquals(1, resources.size());
+    Assertions.assertEquals(expectedResponse.getBlurbsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     ListBlurbsRequest actualRequest = ((ListBlurbsRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent, actualRequest.getParent());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent, actualRequest.getParent());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void listBlurbsExceptionTest3() throws Exception {
+  void listBlurbsExceptionTest3() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
     try {
       String parent = "parent-995424086";
       client.listBlurbs(parent);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void searchBlurbsTest() throws Exception {
+  void searchBlurbsTest() throws Exception {
     SearchBlurbsResponse expectedResponse =
         SearchBlurbsResponse.newBuilder()
             .addAllBlurbs(new ArrayList<Blurb>())
@@ -1352,22 +1352,22 @@ public class MessagingClientTest {
     String query = "query107944136";
 
     SearchBlurbsResponse actualResponse = client.searchBlurbsAsync(parent, query).get();
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     SearchBlurbsRequest actualRequest = ((SearchBlurbsRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent.toString(), actualRequest.getParent());
-    Assert.assertEquals(query, actualRequest.getQuery());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent.toString(), actualRequest.getParent());
+    Assertions.assertEquals(query, actualRequest.getQuery());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void searchBlurbsExceptionTest() throws Exception {
+  void searchBlurbsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -1375,16 +1375,17 @@ public class MessagingClientTest {
       ProfileName parent = ProfileName.of("[USER]");
       String query = "query107944136";
       client.searchBlurbsAsync(parent, query).get();
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (ExecutionException e) {
-      Assert.assertEquals(InvalidArgumentException.class, e.getCause().getClass());
+      Assertions.assertEquals(InvalidArgumentException.class, e.getCause().getClass());
       InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
-      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
+      Assertions.assertEquals(
+          StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 
   @Test
-  public void searchBlurbsTest2() throws Exception {
+  void searchBlurbsTest2() throws Exception {
     SearchBlurbsResponse expectedResponse =
         SearchBlurbsResponse.newBuilder()
             .addAllBlurbs(new ArrayList<Blurb>())
@@ -1402,22 +1403,22 @@ public class MessagingClientTest {
     String query = "query107944136";
 
     SearchBlurbsResponse actualResponse = client.searchBlurbsAsync(parent, query).get();
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     SearchBlurbsRequest actualRequest = ((SearchBlurbsRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent.toString(), actualRequest.getParent());
-    Assert.assertEquals(query, actualRequest.getQuery());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent.toString(), actualRequest.getParent());
+    Assertions.assertEquals(query, actualRequest.getQuery());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void searchBlurbsExceptionTest2() throws Exception {
+  void searchBlurbsExceptionTest2() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -1425,16 +1426,17 @@ public class MessagingClientTest {
       RoomName parent = RoomName.of("[ROOM]");
       String query = "query107944136";
       client.searchBlurbsAsync(parent, query).get();
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (ExecutionException e) {
-      Assert.assertEquals(InvalidArgumentException.class, e.getCause().getClass());
+      Assertions.assertEquals(InvalidArgumentException.class, e.getCause().getClass());
       InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
-      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
+      Assertions.assertEquals(
+          StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 
   @Test
-  public void searchBlurbsTest3() throws Exception {
+  void searchBlurbsTest3() throws Exception {
     SearchBlurbsResponse expectedResponse =
         SearchBlurbsResponse.newBuilder()
             .addAllBlurbs(new ArrayList<Blurb>())
@@ -1452,22 +1454,22 @@ public class MessagingClientTest {
     String query = "query107944136";
 
     SearchBlurbsResponse actualResponse = client.searchBlurbsAsync(parent, query).get();
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockMessaging.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     SearchBlurbsRequest actualRequest = ((SearchBlurbsRequest) actualRequests.get(0));
 
-    Assert.assertEquals(parent, actualRequest.getParent());
-    Assert.assertEquals(query, actualRequest.getQuery());
-    Assert.assertTrue(
+    Assertions.assertEquals(parent, actualRequest.getParent());
+    Assertions.assertEquals(query, actualRequest.getQuery());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void searchBlurbsExceptionTest3() throws Exception {
+  void searchBlurbsExceptionTest3() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
 
@@ -1475,16 +1477,17 @@ public class MessagingClientTest {
       String parent = "parent-995424086";
       String query = "query107944136";
       client.searchBlurbsAsync(parent, query).get();
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (ExecutionException e) {
-      Assert.assertEquals(InvalidArgumentException.class, e.getCause().getClass());
+      Assertions.assertEquals(InvalidArgumentException.class, e.getCause().getClass());
       InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
-      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
+      Assertions.assertEquals(
+          StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 
   @Test
-  public void streamBlurbsTest() throws Exception {
+  void streamBlurbsTest() throws Exception {
     StreamBlurbsResponse expectedResponse =
         StreamBlurbsResponse.newBuilder().setBlurb(Blurb.newBuilder().build()).build();
     mockMessaging.addResponse(expectedResponse);
@@ -1501,12 +1504,12 @@ public class MessagingClientTest {
     callable.serverStreamingCall(request, responseObserver);
 
     List<StreamBlurbsResponse> actualResponses = responseObserver.future().get();
-    Assert.assertEquals(1, actualResponses.size());
-    Assert.assertEquals(expectedResponse, actualResponses.get(0));
+    Assertions.assertEquals(1, actualResponses.size());
+    Assertions.assertEquals(expectedResponse, actualResponses.get(0));
   }
 
   @Test
-  public void streamBlurbsExceptionTest() throws Exception {
+  void streamBlurbsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
     StreamBlurbsRequest request =
@@ -1523,16 +1526,17 @@ public class MessagingClientTest {
 
     try {
       List<StreamBlurbsResponse> actualResponses = responseObserver.future().get();
-      Assert.fail("No exception thrown");
+      Assertions.fail("No exception thrown");
     } catch (ExecutionException e) {
-      Assert.assertTrue(e.getCause() instanceof InvalidArgumentException);
+      Assertions.assertTrue(e.getCause() instanceof InvalidArgumentException);
       InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
-      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
+      Assertions.assertEquals(
+          StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 
   @Test
-  public void sendBlurbsTest() throws Exception {
+  void sendBlurbsTest() throws Exception {
     SendBlurbsResponse expectedResponse =
         SendBlurbsResponse.newBuilder().addAllNames(new ArrayList<String>()).build();
     mockMessaging.addResponse(expectedResponse);
@@ -1553,12 +1557,12 @@ public class MessagingClientTest {
     requestObserver.onCompleted();
 
     List<SendBlurbsResponse> actualResponses = responseObserver.future().get();
-    Assert.assertEquals(1, actualResponses.size());
-    Assert.assertEquals(expectedResponse, actualResponses.get(0));
+    Assertions.assertEquals(1, actualResponses.size());
+    Assertions.assertEquals(expectedResponse, actualResponses.get(0));
   }
 
   @Test
-  public void sendBlurbsExceptionTest() throws Exception {
+  void sendBlurbsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
     CreateBlurbRequest request =
@@ -1578,16 +1582,17 @@ public class MessagingClientTest {
 
     try {
       List<SendBlurbsResponse> actualResponses = responseObserver.future().get();
-      Assert.fail("No exception thrown");
+      Assertions.fail("No exception thrown");
     } catch (ExecutionException e) {
-      Assert.assertTrue(e.getCause() instanceof InvalidArgumentException);
+      Assertions.assertTrue(e.getCause() instanceof InvalidArgumentException);
       InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
-      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
+      Assertions.assertEquals(
+          StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 
   @Test
-  public void connectTest() throws Exception {
+  void connectTest() throws Exception {
     StreamBlurbsResponse expectedResponse =
         StreamBlurbsResponse.newBuilder().setBlurb(Blurb.newBuilder().build()).build();
     mockMessaging.addResponse(expectedResponse);
@@ -1603,12 +1608,12 @@ public class MessagingClientTest {
     requestObserver.onCompleted();
 
     List<StreamBlurbsResponse> actualResponses = responseObserver.future().get();
-    Assert.assertEquals(1, actualResponses.size());
-    Assert.assertEquals(expectedResponse, actualResponses.get(0));
+    Assertions.assertEquals(1, actualResponses.size());
+    Assertions.assertEquals(expectedResponse, actualResponses.get(0));
   }
 
   @Test
-  public void connectExceptionTest() throws Exception {
+  void connectExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockMessaging.addException(exception);
     ConnectRequest request = ConnectRequest.newBuilder().build();
@@ -1623,16 +1628,17 @@ public class MessagingClientTest {
 
     try {
       List<StreamBlurbsResponse> actualResponses = responseObserver.future().get();
-      Assert.fail("No exception thrown");
+      Assertions.fail("No exception thrown");
     } catch (ExecutionException e) {
-      Assert.assertTrue(e.getCause() instanceof InvalidArgumentException);
+      Assertions.assertTrue(e.getCause() instanceof InvalidArgumentException);
       InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
-      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
+      Assertions.assertEquals(
+          StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 
   @Test
-  public void listLocationsTest() throws Exception {
+  void listLocationsTest() throws Exception {
     Location responsesElement = Location.newBuilder().build();
     ListLocationsResponse expectedResponse =
         ListLocationsResponse.newBuilder()
@@ -1653,25 +1659,25 @@ public class MessagingClientTest {
 
     List<Location> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
+    Assertions.assertEquals(1, resources.size());
+    Assertions.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockLocations.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     ListLocationsRequest actualRequest = ((ListLocationsRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertEquals(request.getFilter(), actualRequest.getFilter());
-    Assert.assertEquals(request.getPageSize(), actualRequest.getPageSize());
-    Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertEquals(request.getFilter(), actualRequest.getFilter());
+    Assertions.assertEquals(request.getPageSize(), actualRequest.getPageSize());
+    Assertions.assertEquals(request.getPageToken(), actualRequest.getPageToken());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void listLocationsExceptionTest() throws Exception {
+  void listLocationsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockLocations.addException(exception);
 
@@ -1684,14 +1690,14 @@ public class MessagingClientTest {
               .setPageToken("pageToken873572522")
               .build();
       client.listLocations(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getLocationTest() throws Exception {
+  void getLocationTest() throws Exception {
     Location expectedResponse =
         Location.newBuilder()
             .setName("name3373707")
@@ -1705,35 +1711,35 @@ public class MessagingClientTest {
     GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
 
     Location actualResponse = client.getLocation(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockLocations.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     GetLocationRequest actualRequest = ((GetLocationRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getName(), actualRequest.getName());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getName(), actualRequest.getName());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void getLocationExceptionTest() throws Exception {
+  void getLocationExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockLocations.addException(exception);
 
     try {
       GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
       client.getLocation(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void setIamPolicyTest() throws Exception {
+  void setIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -1751,23 +1757,23 @@ public class MessagingClientTest {
             .build();
 
     Policy actualResponse = client.setIamPolicy(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getResource(), actualRequest.getResource());
-    Assert.assertEquals(request.getPolicy(), actualRequest.getPolicy());
-    Assert.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
+    Assertions.assertEquals(request.getPolicy(), actualRequest.getPolicy());
+    Assertions.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void setIamPolicyExceptionTest() throws Exception {
+  void setIamPolicyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -1779,14 +1785,14 @@ public class MessagingClientTest {
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       client.setIamPolicy(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void getIamPolicyTest() throws Exception {
+  void getIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -1803,22 +1809,22 @@ public class MessagingClientTest {
             .build();
 
     Policy actualResponse = client.getIamPolicy(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getResource(), actualRequest.getResource());
-    Assert.assertEquals(request.getOptions(), actualRequest.getOptions());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
+    Assertions.assertEquals(request.getOptions(), actualRequest.getOptions());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void getIamPolicyExceptionTest() throws Exception {
+  void getIamPolicyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -1829,14 +1835,14 @@ public class MessagingClientTest {
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  public void testIamPermissionsTest() throws Exception {
+  void testIamPermissionsTest() throws Exception {
     TestIamPermissionsResponse expectedResponse =
         TestIamPermissionsResponse.newBuilder().addAllPermissions(new ArrayList<String>()).build();
     mockIAMPolicy.addResponse(expectedResponse);
@@ -1848,22 +1854,22 @@ public class MessagingClientTest {
             .build();
 
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    Assertions.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
+    Assertions.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 
-    Assert.assertEquals(request.getResource(), actualRequest.getResource());
-    Assert.assertEquals(request.getPermissionsList(), actualRequest.getPermissionsList());
-    Assert.assertTrue(
+    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
+    Assertions.assertEquals(request.getPermissionsList(), actualRequest.getPermissionsList());
+    Assertions.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  public void testIamPermissionsExceptionTest() throws Exception {
+  void testIamPermissionsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -1874,7 +1880,7 @@ public class MessagingClientTest {
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
