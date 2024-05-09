@@ -16,7 +16,7 @@
 
 package com.google.showcase.v1beta1.it;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
@@ -28,15 +28,15 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.concurrent.TimeUnit;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-public class ITNumericEnums {
+class ITNumericEnums {
 
   private static ComplianceClient httpjsonClient;
 
-  @BeforeClass
+  @BeforeAll
   public static void createClients() throws GeneralSecurityException, IOException {
     ComplianceSettings complianceSettings =
         ComplianceSettings.newHttpJsonBuilder()
@@ -51,7 +51,7 @@ public class ITNumericEnums {
     httpjsonClient = ComplianceClient.create(complianceSettings);
   }
 
-  @AfterClass
+  @AfterAll
   public static void destroyClients() throws InterruptedException {
     httpjsonClient.close();
     httpjsonClient.awaitTermination(

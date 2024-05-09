@@ -31,12 +31,12 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ITIam {
+class ITIam {
   private static final Policy DEFAULT_POLICY =
       Policy.newBuilder()
           .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
@@ -45,18 +45,18 @@ public class ITIam {
   private static IdentityClient httpjsonClient;
   private String resourceName;
 
-  @BeforeClass
+  @BeforeAll
   public static void createClients() throws Exception {
     grpcClient = TestClientInitializer.createGrpcIdentityClient();
     httpjsonClient = TestClientInitializer.createHttpJsonIdentityClient();
   }
 
-  @Before
+  @BeforeEach
   public void setupTests() {
     resourceName = "users/" + UUID.randomUUID().toString().substring(0, 8);
   }
 
-  @AfterClass
+  @AfterAll
   public static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();

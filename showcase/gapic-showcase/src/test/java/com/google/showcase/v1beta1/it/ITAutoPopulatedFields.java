@@ -47,12 +47,12 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.threeten.bp.Duration;
 
-public class ITAutoPopulatedFields {
+class ITAutoPopulatedFields {
 
   private static class HttpJsonInterceptor implements HttpJsonClientInterceptor {
     private Consumer<Object> onRequestIntercepted;
@@ -120,7 +120,7 @@ public class ITAutoPopulatedFields {
   private EchoClient httpJsonClient;
   private EchoClient httpJsonClientWithRetries;
 
-  @Before
+  @BeforeEach
   public void createClients() throws Exception {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
@@ -156,7 +156,7 @@ public class ITAutoPopulatedFields {
             defaultRetrySettings, retryableCodes, ImmutableList.of(httpJsonInterceptor));
   }
 
-  @After
+  @AfterEach
   public void destroyClient() {
     grpcClientWithoutRetries.close();
     grpcClientWithRetries.close();

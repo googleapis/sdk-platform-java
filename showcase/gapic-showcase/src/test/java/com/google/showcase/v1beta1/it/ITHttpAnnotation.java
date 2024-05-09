@@ -39,37 +39,32 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 // This test runs from the parameters in the compliance_suite.json file
 // The file is downloaded from the gapic-showcase repo. Each compliance
 // group is a set of HttpJson behaviors we want to test for. Each group
 // tests the product of the rpc list and requests list.
-@RunWith(Parameterized.class)
-public class ITHttpAnnotation {
+class ITHttpAnnotation {
 
-  @Parameterized.Parameters(name = "Compliance Group Name: {0}")
-  public static String[] data() {
-    return new String[] {
-      "Fully working conversions, resources",
-      "Binding selection testing",
-      "Cases that apply to non-path requests",
-      "Fully working conversions, no resources"
-    };
+  public static Stream<Arguments> data() {
+    return Stream.of(
+        Arguments.of("Fully working conversions, resources"),
+        Arguments.of("Binding selection testing"),
+        Arguments.of("Cases that apply to non-path requests"),
+        Arguments.of("Fully working conversions, no resources"));
   }
-
-  @Parameterized.Parameter(0)
-  public String groupName;
 
   private static ComplianceClient httpjsonClient;
   private static ComplianceSuite complianceSuite;
   private static Map<String, Function<RepeatRequest, RepeatResponse>> validComplianceRpcMap;
 
-  @BeforeClass
+  @BeforeAll
   public static void createClients() throws IOException, GeneralSecurityException {
     ComplianceSuite.Builder builder = ComplianceSuite.newBuilder();
     JsonFormat.parser()
@@ -113,7 +108,7 @@ public class ITHttpAnnotation {
             httpjsonClient::repeatDataPathResource);
   }
 
-  @AfterClass
+  @AfterAll
   public static void destroyClients() throws InterruptedException {
     httpjsonClient.close();
     httpjsonClient.awaitTermination(
@@ -123,8 +118,9 @@ public class ITHttpAnnotation {
   // Verify that the input's info is the same as the response's info
   // This ensures that the entire group's behavior over HttpJson
   // works as intended
-  @Test
-  public void testComplianceGroup() {
+  @ParameterizedTest
+  @MethodSource("data")
+  public void testComplianceGroup(String groupName) {
     Optional<ComplianceGroup> complianceGroupOptional =
         complianceSuite.getGroupList().stream()
             .filter(x -> x.getName().equals(groupName))

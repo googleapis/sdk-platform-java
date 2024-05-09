@@ -18,10 +18,10 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.client.json.GenericJson;
 import com.google.api.client.json.JsonFactory;
@@ -45,17 +45,17 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.TemporaryFolder;
 
 /**
  * Test suite to confirm a client can be instantiated with GDCH credentials. No calls are made since
  * it is not feasible to test against real GDCH servers (or replicate an environment)
  */
-public class ITGdch {
+class ITGdch {
 
   private static final String CA_CERT_FILENAME = "fake_cert.pem";
   private static final String CA_CERT_RESOURCE_PATH = "/" + CA_CERT_FILENAME;
@@ -76,7 +76,7 @@ public class ITGdch {
   private String projectId;
   private URI tokenUri;
 
-  @Before
+  @BeforeEach
   public void setup() throws IOException, URISyntaxException {
     transportFactory = new InterceptingMockTokenServerTransportFactory();
     prepareCredentials();
@@ -86,7 +86,7 @@ public class ITGdch {
             .build();
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws InterruptedException {
     if (client != null) {
       client.close();

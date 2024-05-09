@@ -36,19 +36,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.threeten.bp.Duration;
 
-public class ITServerSideStreaming {
+class ITServerSideStreaming {
 
   private static EchoClient grpcClient;
   private static EchoClient httpjsonClient;
 
-  @BeforeClass
+  @BeforeAll
   public static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
@@ -56,7 +56,7 @@ public class ITServerSideStreaming {
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
-  @AfterClass
+  @AfterAll
   public static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();
@@ -151,7 +151,7 @@ public class ITServerSideStreaming {
       for (EchoResponse response : responseStream) {
         responses.add(response.getContent());
       }
-      Assert.fail("No exception was thrown");
+      Assertions.fail("No exception was thrown");
     } catch (WatchdogTimeoutException e) {
       assertThat(e).hasMessageThat().contains("Canceled due to timeout waiting for next response");
     } finally {
@@ -178,7 +178,7 @@ public class ITServerSideStreaming {
         .inOrder();
   }
 
-  @Ignore(
+  @Disabled(
       value = "Ignore until https://github.com/googleapis/gapic-showcase/issues/1286 is resolved")
   @Test
   public void testHttpJson_serverError_receiveErrorAfterLastWordInStream() {

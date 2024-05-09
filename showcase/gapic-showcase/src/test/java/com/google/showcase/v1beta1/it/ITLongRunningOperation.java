@@ -28,7 +28,7 @@ import com.google.showcase.v1beta1.WaitResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.threeten.bp.Duration;
 import org.threeten.bp.Instant;
 import org.threeten.bp.temporal.ChronoUnit;
@@ -37,7 +37,7 @@ import org.threeten.bp.temporal.ChronoUnit;
  * For this test, we test a combination of various LRO RetrySettings and try to ensure that the
  * calls are polling correctly. Each test attempts to test the number of attempts done in each call.
  */
-public class ITLongRunningOperation {
+class ITLongRunningOperation {
 
   @Test
   public void testGRPC_LROSuccessfulResponse_doesNotExceedTotalTimeout() throws Exception {

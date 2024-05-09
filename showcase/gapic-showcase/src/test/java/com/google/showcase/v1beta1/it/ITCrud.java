@@ -30,12 +30,12 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ITCrud {
+class ITCrud {
 
   private static final User DEFAULT_USER =
       User.newBuilder()
@@ -49,7 +49,7 @@ public class ITCrud {
   private static IdentityClient grpcClient;
   private static IdentityClient httpjsonClient;
 
-  @BeforeClass
+  @BeforeAll
   public static void createClients() throws Exception {
     // Create gRPC IdentityClient
     grpcClient = TestClientInitializer.createGrpcIdentityClient();
@@ -57,7 +57,7 @@ public class ITCrud {
     httpjsonClient = TestClientInitializer.createHttpJsonIdentityClient();
   }
 
-  @AfterClass
+  @AfterAll
   public static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();
@@ -67,7 +67,7 @@ public class ITCrud {
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
-  @Before
+  @BeforeEach
   public void cleanupData() {
     IdentityClient.ListUsersPagedResponse pagedResponse =
         grpcClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());

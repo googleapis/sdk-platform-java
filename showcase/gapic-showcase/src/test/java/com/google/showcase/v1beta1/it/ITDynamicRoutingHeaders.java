@@ -45,11 +45,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ITDynamicRoutingHeaders {
+class ITDynamicRoutingHeaders {
   private static final String SPLIT_TOKEN = "&";
   private static final Metadata.Key<String> REQUEST_PARAMS_HEADER_KEY =
       Metadata.Key.of(DYNAMIC_ROUTING_HEADER_KEY, Metadata.ASCII_STRING_MARSHALLER);
@@ -127,7 +127,7 @@ public class ITDynamicRoutingHeaders {
   private ComplianceClient grpcComplianceClient;
   private ComplianceClient httpJsonComplianceClient;
 
-  @Before
+  @BeforeEach
   public void createClients() throws Exception {
     // Create gRPC Interceptor and Client
     grpcInterceptor = new GrpcCapturingClientInterceptor();
@@ -153,7 +153,7 @@ public class ITDynamicRoutingHeaders {
         TestClientInitializer.createHttpJsonEchoClient(ImmutableList.of(httpJsonInterceptor));
   }
 
-  @After
+  @AfterEach
   public void destroyClient() throws InterruptedException {
     grpcClient.close();
     grpcComplianceClient.close();

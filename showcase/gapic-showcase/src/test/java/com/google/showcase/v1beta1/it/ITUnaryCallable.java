@@ -28,17 +28,17 @@ import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.concurrent.TimeUnit;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-public class ITUnaryCallable {
+class ITUnaryCallable {
 
   private static EchoClient grpcClient;
 
   private static EchoClient httpjsonClient;
 
-  @BeforeClass
+  @BeforeAll
   public static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
@@ -46,7 +46,7 @@ public class ITUnaryCallable {
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
-  @AfterClass
+  @AfterAll
   public static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();

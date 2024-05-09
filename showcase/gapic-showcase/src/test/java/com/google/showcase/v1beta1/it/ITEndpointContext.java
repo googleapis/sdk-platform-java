@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * This IT tests the different user configurations allowed and their effects on endpoint and
@@ -38,7 +38,7 @@ import org.junit.Test;
  * only use the gRPC transport for testing. HttpJson functionality exists inside the wrapper
  * classes, but is not being used.
  */
-public class ITEndpointContext {
+class ITEndpointContext {
   /**
    * Inside the test cases below, we must explicitly configure serviceName. Normally this should not
    * be configured at all, but showcase clients do not have a serviceName. The ExtendStubSettings
@@ -221,7 +221,7 @@ public class ITEndpointContext {
 
   private EchoClient echoClient;
 
-  @After
+  @AfterEach
   public void cleanup() throws InterruptedException {
     if (echoClient != null) {
       echoClient.close();

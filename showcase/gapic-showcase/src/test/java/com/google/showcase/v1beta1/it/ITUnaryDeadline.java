@@ -29,7 +29,7 @@ import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.threeten.bp.Duration;
 
 /**
@@ -39,7 +39,7 @@ import org.threeten.bp.Duration;
  * <p>Each test attempts to get the number of attempts done in each call. The attemptCount is
  * incremented by 1 as the first attempt is zero indexed.
  */
-public class ITUnaryDeadline {
+class ITUnaryDeadline {
 
   @Test
   public void testGRPC_unarySuccessfulResponse_doesNotExceedTotalTimeout() throws Exception {

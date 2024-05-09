@@ -76,11 +76,11 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Showcase Test to confirm that metrics are being collected and that the correct metrics are being
@@ -93,7 +93,7 @@ import org.junit.Test;
  * via {@link #verifyStatusAttribute(List, List)}. Finally, check that the status for each attempt
  * is correct.
  */
-public class ITOtelMetrics {
+class ITOtelMetrics {
   private static final int DEFAULT_OPERATION_COUNT = 1;
   private static final String SERVICE_NAME = "ShowcaseTest";
   private static final String ATTEMPT_COUNT = SERVICE_NAME + "/attempt_count";
@@ -141,7 +141,7 @@ public class ITOtelMetrics {
     return new OpenTelemetryMetricsRecorder(openTelemetry, SERVICE_NAME);
   }
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     inMemoryMetricReader = InMemoryMetricReader.create();
     OpenTelemetryMetricsRecorder otelMetricsRecorder =
@@ -154,7 +154,7 @@ public class ITOtelMetrics {
             new MetricsTracerFactory(otelMetricsRecorder));
   }
 
-  @After
+  @AfterEach
   public void cleanup() throws InterruptedException {
     inMemoryMetricReader.shutdown();
 
@@ -285,7 +285,7 @@ public class ITOtelMetrics {
         return metricData;
       }
     }
-    Assert.fail("Unable to collect all the metrics required for the test");
+    Assertions.fail("Unable to collect all the metrics required for the test");
     return new ArrayList<>();
   }
 
@@ -311,7 +311,7 @@ public class ITOtelMetrics {
     verifyStatusAttribute(metricDataList, statusCountList);
   }
 
-  @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
+  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   public void testHttpJson_operationSucceeded_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
@@ -364,7 +364,7 @@ public class ITOtelMetrics {
     verifyStatusAttribute(metricDataList, statusCountList);
   }
 
-  @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
+  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   public void testHttpJson_operationCancelled_recordsMetrics() throws Exception {
     int attemptCount = 1;
@@ -421,7 +421,7 @@ public class ITOtelMetrics {
     verifyStatusAttribute(metricDataList, statusCountList);
   }
 
-  @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
+  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   public void testHttpJson_operationFailed_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
@@ -517,7 +517,7 @@ public class ITOtelMetrics {
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
-  @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
+  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   public void testHttpJson_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
     int attemptCount = 3;
@@ -612,7 +612,7 @@ public class ITOtelMetrics {
     verifyStatusAttribute(metricDataList, statusCountList);
   }
 
-  @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
+  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   public void testHttpJson_attemptPermanentFailure_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
@@ -713,7 +713,7 @@ public class ITOtelMetrics {
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
-  @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
+  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   public void testHttpJson_multipleFailedAttempts_successfulOperation() throws Exception {
     int attemptCount = 3;
