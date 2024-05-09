@@ -114,7 +114,7 @@ public class SettingsTest {
       RetrySettings settings = null;
       settings =
           RetrySettings.newBuilder()
-              .setInitialRetryDelay(java.time.Duration.ofMillis(100L))
+              .setInitialRetryDelayDuration(java.time.Duration.ofMillis(100L))
               .setRetryDelayMultiplier(1.2)
               .setMaxRetryDelay(java.time.Duration.ofMillis(1000L))
               .setInitialRpcTimeout(java.time.Duration.ofMillis(2000L))
@@ -352,13 +352,13 @@ public class SettingsTest {
         .setRetryableCodes()
         .setRetrySettings(
             RetrySettings.newBuilder()
-                .setTotalTimeout(timeout)
-                .setInitialRetryDelay(java.time.Duration.ZERO)
+                .setTotalTimeoutDuration(timeout)
+                .setInitialRetryDelayDuration(java.time.Duration.ZERO)
                 .setRetryDelayMultiplier(1)
-                .setMaxRetryDelay(java.time.Duration.ZERO)
-                .setInitialRpcTimeout(timeout)
+                .setMaxRetryDelayDuration(java.time.Duration.ZERO)
+                .setInitialRpcTimeoutDuration(timeout)
                 .setRpcTimeoutMultiplier(1)
-                .setMaxRpcTimeout(timeout)
+                .setMaxRpcTimeoutDuration(timeout)
                 .setMaxAttempts(1)
                 .build());
     UnaryCallSettings<Integer, Integer> settingsB = builderB.build();
@@ -378,7 +378,7 @@ public class SettingsTest {
         };
     testDurationMethod(
         123l,
-        jt -> build.apply(() -> FakeStubSettings.newBuilder().setStreamWatchdogCheckInterval(jt)),
+        jt -> build.apply(() -> FakeStubSettings.newBuilder().setStreamWatchdogCheckIntervalDuration(jt)),
         tt -> build.apply(() -> FakeStubSettings.newBuilder().setStreamWatchdogCheckInterval(tt)),
         ss -> ss.getStreamWatchdogCheckIntervalDuration(),
         ss -> ss.getStreamWatchdogCheckInterval());

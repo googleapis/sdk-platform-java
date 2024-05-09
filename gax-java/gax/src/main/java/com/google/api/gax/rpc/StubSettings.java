@@ -532,19 +532,19 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
 
     /**
-     * Overload of {@link #setStreamWatchdogCheckInterval(java.time.Duration)} using {@link
+     * Overload of {@link #setStreamWatchdogCheckIntervalDuration(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
-    @ObsoleteApi("Use setStreamWatchdogCheckInterval(java.time.Duration) instead")
+    @ObsoleteApi("Use setStreamWatchdogCheckIntervalDuration(java.time.Duration) instead")
     public B setStreamWatchdogCheckInterval(@Nonnull org.threeten.bp.Duration checkInterval) {
-      return setStreamWatchdogCheckInterval(toJavaTimeDuration(checkInterval));
+      return setStreamWatchdogCheckIntervalDuration(toJavaTimeDuration(checkInterval));
     }
 
     /**
      * Sets how often the {@link Watchdog} will check ongoing streaming RPCs. Defaults to 10 secs.
      * Use {@link java.time.Duration#ZERO} to disable.
      */
-    public B setStreamWatchdogCheckInterval(@Nonnull java.time.Duration checkInterval) {
+    public B setStreamWatchdogCheckIntervalDuration(@Nonnull java.time.Duration checkInterval) {
       Preconditions.checkNotNull(checkInterval);
       this.streamWatchdogCheckInterval = checkInterval;
       return self();

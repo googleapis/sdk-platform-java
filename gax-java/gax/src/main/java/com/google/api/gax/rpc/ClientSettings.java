@@ -40,6 +40,8 @@ import java.util.concurrent.Executor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+
 /**
  * A base settings class to configure a client class.
  *
@@ -281,12 +283,11 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     /** Backport of {@link #setWatchdogCheckIntervalDuration(java.time.Duration)} */
     @ObsoleteApi("Use setWatchdogCheckIntervalDuration(java.time.Duration) instead")
     public B setWatchdogCheckInterval(@Nullable org.threeten.bp.Duration checkInterval) {
-      stubSettings.setStreamWatchdogCheckInterval(checkInterval);
-      return self();
+      return setWatchdogCheckIntervalDuration(toJavaTimeDuration(checkInterval));
     }
 
     public B setWatchdogCheckIntervalDuration(@Nullable java.time.Duration checkInterval) {
-      stubSettings.setStreamWatchdogCheckInterval(checkInterval);
+      stubSettings.setStreamWatchdogCheckIntervalDuration(checkInterval);
       return self();
     }
 
