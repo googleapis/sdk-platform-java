@@ -60,6 +60,17 @@ library_3 = LibraryConfig(
     library_name="secretmanager",
     gapic_configs=list(),
 )
+library_with_empty_api_id = LibraryConfig(
+    api_shortname="baremetalsolution",
+    name_pretty="Bare Metal Solution",
+    product_documentation="https://cloud.google.com/bare-metal/docs",
+    api_description="Bring your Oracle workloads to Google Cloud with Bare Metal Solution and jumpstart your cloud journey with minimal risk.",
+    gapic_configs=list(),
+    library_name="bare-metal-solution",
+    rest_documentation="https://cloud.google.com/bare-metal/docs/reference/rest",
+    rpc_documentation="https://cloud.google.com/bare-metal/docs/reference/rpc",
+    api_id="",
+)
 
 
 class UtilitiesTest(unittest.TestCase):
@@ -247,7 +258,7 @@ class UtilitiesTest(unittest.TestCase):
 
     def test_generate_prerequisite_files_non_monorepo_success(self):
         library_path = self.__setup_prerequisite_files(
-            num_libraries=1, library_type="GAPIC_COMBO"
+            combination=1, library_type="GAPIC_COMBO"
         )
 
         file_comparator.compare_files(
@@ -266,11 +277,29 @@ class UtilitiesTest(unittest.TestCase):
         self.__remove_prerequisite_files(path=library_path, is_monorepo=False)
 
     def test_generate_prerequisite_files_monorepo_success(self):
-        library_path = self.__setup_prerequisite_files(num_libraries=2)
+        library_path = self.__setup_prerequisite_files(combination=2)
 
         file_comparator.compare_files(
             f"{library_path}/.repo-metadata.json",
             f"{library_path}/.repo-metadata-monorepo-golden.json",
+        )
+        file_comparator.compare_files(
+            f"{library_path}/.OwlBot-hermetic.yaml",
+            f"{library_path}/.OwlBot-hermetic-golden.yaml",
+        )
+        file_comparator.compare_files(
+            f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
+        )
+        self.__remove_prerequisite_files(path=library_path)
+
+    def test_generate_prerequisite_files_with_empty_api_id_success(self):
+        library_path = self.__setup_prerequisite_files(
+            combination=3, library=library_with_empty_api_id
+        )
+
+        file_comparator.compare_files(
+            f"{library_path}/.repo-metadata.json",
+            f"{library_path}/.repo-metadata-empty-api-id-golden.json",
         )
         file_comparator.compare_files(
             f"{library_path}/.OwlBot-hermetic.yaml",
@@ -317,7 +346,10 @@ class UtilitiesTest(unittest.TestCase):
         shutil.rmtree(repo_config.output_folder)
 
     def __setup_prerequisite_files(
-        self, num_libraries: int, library_type: str = "GAPIC_AUTO"
+        self,
+        combination: int,
+        library_type: str = "GAPIC_AUTO",
+        library: LibraryConfig = library_1,
     ) -> str:
         library_path = f"{resources_dir}/goldens"
         files = [
@@ -326,12 +358,12 @@ class UtilitiesTest(unittest.TestCase):
             f"{library_path}/owlbot.py",
         ]
         cleanup(files)
-        config = self.__get_a_gen_config(num_libraries, library_type=library_type)
+        config = self.__get_a_gen_config(combination, library_type=library_type)
         proto_path = "google/cloud/baremetalsolution/v2"
         transport = "grpc"
         util.generate_prerequisite_files(
             config=config,
-            library=library_1,
+            library=library,
             proto_path=proto_path,
             transport=transport,
             library_path=library_path,
@@ -340,20 +372,20 @@ class UtilitiesTest(unittest.TestCase):
 
     @staticmethod
     def __get_a_gen_config(
-        num_libraries: int, library_type: str = "GAPIC_AUTO"
+        combination: int, library_type: str = "GAPIC_AUTO"
     ) -> GenerationConfig:
         """
         Returns an object of GenerationConfig with one to three of
         LibraryConfig objects. Other attributes are set to empty str.
 
-        :param num_libraries: the number of LibraryConfig objects associated with
+        :param combination: combination of LibraryConfig objects associated with
         the GenerationConfig. Only support 1, 2 or 3.
         :return: an object of GenerationConfig
         """
-        if num_libraries == 2:
+        if combination == 2:
             libraries = [library_1, library_2]
-        elif num_libraries == 3:
-            libraries = [library_1, library_2, library_3]
+        elif combination == 3:
+            libraries = [library_with_empty_api_id, library_2]
         else:
             libraries = [library_1]
 
@@ -361,7 +393,7 @@ class UtilitiesTest(unittest.TestCase):
         # library_type)
         for library in libraries:
             library.library_type = library_type
-            if num_libraries == 1:
+            if combination == 1:
                 # treat this as a HW library case to generate a real-life
                 # repo-metadata
                 library.extra_versioned_modules = "test-module"

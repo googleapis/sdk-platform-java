@@ -26,6 +26,7 @@ from library_generation.utils.file_render import render
 from library_generation.utils.proto_path_utils import remove_version_from
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
+EMPTY_API_ID = ""
 
 
 def create_argument(arg_key: str, arg_container: object) -> List[str]:
@@ -216,9 +217,12 @@ def generate_prerequisite_files(
         if config.is_monorepo()
         else f"googleapis/{language}-{library_name}"
     )
-    api_id = (
-        library.api_id if library.api_id else f"{library.api_shortname}.googleapis.com"
-    )
+    if library.api_id == EMPTY_API_ID:
+        api_id = None
+    elif not library.api_id:
+        api_id = f"{library.api_shortname}.googleapis.com"
+    else:
+        api_id = library.api_id
     client_documentation = (
         library.client_documentation
         if library.client_documentation
@@ -250,6 +254,9 @@ def generate_prerequisite_files(
         "library_type": library.library_type,
         "requires_billing": library.requires_billing,
     }
+
+    if not repo_metadata["api_id"]:
+        repo_metadata.pop("api_id")
 
     if library.api_reference:
         repo_metadata["api_reference"] = library.api_reference

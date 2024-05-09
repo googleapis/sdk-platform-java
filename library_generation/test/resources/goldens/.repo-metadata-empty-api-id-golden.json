@@ -10,7 +10,6 @@
   "repo": "googleapis/google-cloud-java",
   "repo_short": "java-bare-metal-solution",
   "distribution_name": "com.google.cloud:google-cloud-bare-metal-solution",
-  "api_id": "baremetalsolution.googleapis.com",
   "library_type": "GAPIC_AUTO",
   "requires_billing": true,
   "rest_documentation": "https://cloud.google.com/bare-metal/docs/reference/rest",
