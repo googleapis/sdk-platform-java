@@ -317,7 +317,8 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     }
 
     /**
-     * Overlad of {@link #setIdleTimeoutDuration(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     * Overlad of {@link #setIdleTimeoutDuration(java.time.Duration)} using {@link
+     * org.threeten.bp.Duration}
      */
     @ObsoleteApi("Use setIdleTimeoutDuration(java.time.Duration) instead")
     public Builder<RequestT, ResponseT> setIdleTimeout(
@@ -329,7 +330,8 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
      * Set how long to wait before considering the stream orphaned by the user and closing it.
      * {@link java.time.Duration#ZERO} disables the check for abandoned streams.
      */
-    public Builder<RequestT, ResponseT> setIdleTimeoutDuration(@Nonnull java.time.Duration idleTimeout) {
+    public Builder<RequestT, ResponseT> setIdleTimeoutDuration(
+        @Nonnull java.time.Duration idleTimeout) {
       this.idleTimeout = Preconditions.checkNotNull(idleTimeout);
       return this;
     }
@@ -360,7 +362,8 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
      * Set the maximum amount of time to wait for the next message from the server. {@link
      * java.time.Duration#ZERO} disables the check for abandoned streams.
      */
-    public Builder<RequestT, ResponseT> setWaitTimeoutDuration(@Nonnull java.time.Duration waitTimeout) {
+    public Builder<RequestT, ResponseT> setWaitTimeoutDuration(
+        @Nonnull java.time.Duration waitTimeout) {
       this.waitTimeout = waitTimeout;
       return this;
     }

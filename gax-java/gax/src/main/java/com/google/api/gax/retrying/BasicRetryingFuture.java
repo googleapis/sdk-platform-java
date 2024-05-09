@@ -187,7 +187,8 @@ class BasicRetryingFuture<ResponseT> extends AbstractFuture<ResponseT>
                   "retriableException: " + throwable
                 });
           }
-          tracer.attemptFailedDuration(throwable, nextAttemptSettings.getRandomizedRetryDelayDuration());
+          tracer.attemptFailedDuration(
+              throwable, nextAttemptSettings.getRandomizedRetryDelayDuration());
           attemptSettings = nextAttemptSettings;
           setAttemptResult(throwable, response, true);
           // a new attempt will be (must be) scheduled by an external executor

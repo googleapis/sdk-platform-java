@@ -88,7 +88,8 @@ public class AttemptCallableTest {
 
     // Make sure that the rpc timeout is set
     java.time.Duration timeout = java.time.Duration.ofSeconds(10);
-    currentAttemptSettings = currentAttemptSettings.toBuilder().setRpcTimeoutDuration(timeout).build();
+    currentAttemptSettings =
+        currentAttemptSettings.toBuilder().setRpcTimeoutDuration(timeout).build();
 
     callable.call();
 
@@ -109,7 +110,8 @@ public class AttemptCallableTest {
         FakeCallContext.createDefault().withTimeoutDuration(callerTimeout);
 
     java.time.Duration timeout = java.time.Duration.ofMillis(5);
-    currentAttemptSettings = currentAttemptSettings.toBuilder().setRpcTimeoutDuration(timeout).build();
+    currentAttemptSettings =
+        currentAttemptSettings.toBuilder().setRpcTimeoutDuration(timeout).build();
 
     AttemptCallable<String, String> callable =
         new AttemptCallable<>(mockInnerCallable, "fake-request", callerCallContext);

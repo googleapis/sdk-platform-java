@@ -88,7 +88,8 @@ public class CheckingAttemptCallableTest {
 
     // Make sure that the rpc timeout is set
     java.time.Duration timeout = java.time.Duration.ofSeconds(10);
-    currentAttemptSettings = currentAttemptSettings.toBuilder().setRpcTimeoutDuration(timeout).build();
+    currentAttemptSettings =
+        currentAttemptSettings.toBuilder().setRpcTimeoutDuration(timeout).build();
 
     callable.call();
 

@@ -474,7 +474,8 @@ public class ServerStreamingAttemptCallableTest {
       this.attemptCallable = attemptCallable;
       attemptSettings =
           TimedAttemptSettings.newBuilder()
-              .setGlobalSettings(RetrySettings.newBuilder().setTotalTimeoutDuration(totalTimeout).build())
+              .setGlobalSettings(
+                  RetrySettings.newBuilder().setTotalTimeoutDuration(totalTimeout).build())
               .setFirstAttemptStartTimeNanos(0)
               .setAttemptCount(0)
               .setOverallAttemptCount(0)

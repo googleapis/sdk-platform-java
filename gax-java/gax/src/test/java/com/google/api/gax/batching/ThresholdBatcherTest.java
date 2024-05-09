@@ -196,7 +196,9 @@ public class ThresholdBatcherTest {
     AccumulatingBatchReceiver<SimpleBatch> receiver =
         new AccumulatingBatchReceiver<>(ApiFutures.<Void>immediateFuture(null));
     ThresholdBatcher<SimpleBatch> batcher =
-        createSimpleBatcherBuidler(receiver).setMaxDelayDuration(java.time.Duration.ofMillis(100)).build();
+        createSimpleBatcherBuidler(receiver)
+            .setMaxDelayDuration(java.time.Duration.ofMillis(100))
+            .build();
 
     batcher.add(SimpleBatch.fromInteger(3));
     batcher.add(SimpleBatch.fromInteger(5));

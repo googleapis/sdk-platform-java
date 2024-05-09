@@ -386,7 +386,10 @@ public class BatcherImplTest {
   @Test
   public void testWhenDelayThresholdExceeds() throws Exception {
     BatchingSettings settings =
-        batchingSettings.toBuilder().setDelayThresholdDuration(java.time.Duration.ofMillis(100)).build();
+        batchingSettings
+            .toBuilder()
+            .setDelayThresholdDuration(java.time.Duration.ofMillis(100))
+            .build();
     underTest = createDefaultBatcherImpl(settings, null);
     Future<Integer> result = underTest.add(6);
     assertThat(result.isDone()).isFalse();
@@ -417,7 +420,10 @@ public class BatcherImplTest {
           }
         };
     BatchingSettings settings =
-        batchingSettings.toBuilder().setDelayThresholdDuration(java.time.Duration.ofMillis(50)).build();
+        batchingSettings
+            .toBuilder()
+            .setDelayThresholdDuration(java.time.Duration.ofMillis(50))
+            .build();
 
     try (final BatcherImpl<Integer, Integer, LabeledIntList, List<Integer>> batcherTest =
         new BatcherImpl<>(SQUARER_BATCHING_DESC_V2, callable, labeledIntList, settings, EXECUTOR)) {

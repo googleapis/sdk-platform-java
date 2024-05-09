@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.rpc;
 
-import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
@@ -101,9 +100,15 @@ public class FixedWatchdogProviderTest {
 
   @Test
   public void testWithCheckInterval_backportMethodsBehaveTheSame() {
-    assertThrows(UnsupportedOperationException.class, () -> FixedWatchdogProvider.create(null)
-            .withCheckIntervalDuration(java.time.Duration.ofMillis(123l)));
-    assertThrows(UnsupportedOperationException.class, () -> FixedWatchdogProvider.create(null)
-            .withCheckInterval(org.threeten.bp.Duration.ofMillis(123l)));
+    assertThrows(
+        UnsupportedOperationException.class,
+        () ->
+            FixedWatchdogProvider.create(null)
+                .withCheckIntervalDuration(java.time.Duration.ofMillis(123l)));
+    assertThrows(
+        UnsupportedOperationException.class,
+        () ->
+            FixedWatchdogProvider.create(null)
+                .withCheckInterval(org.threeten.bp.Duration.ofMillis(123l)));
   }
 }

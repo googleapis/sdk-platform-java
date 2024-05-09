@@ -36,11 +36,12 @@ import java.lang.reflect.Method;
 public class MetricsTestUtils {
   public static void reportFailedAttempt(ApiTracer tracer, Exception ex, Object delayValue) {
     try {
-      final String methodName = delayValue.getClass().getName().startsWith("java.time") ? "attemptFailedDuration" : "attemptFailed";
+      final String methodName =
+          delayValue.getClass().getName().startsWith("java.time")
+              ? "attemptFailedDuration"
+              : "attemptFailed";
       Method attemptFailed =
-          tracer
-              .getClass()
-              .getDeclaredMethod(methodName, Throwable.class, delayValue.getClass());
+          tracer.getClass().getDeclaredMethod(methodName, Throwable.class, delayValue.getClass());
       attemptFailed.invoke(tracer, ex, delayValue);
     } catch (Exception e) {
       fail();

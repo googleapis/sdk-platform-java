@@ -71,7 +71,9 @@ public class InstantiatingWatchdogProviderTest {
   @Test
   public void requiresExecutor() {
     WatchdogProvider provider =
-        InstantiatingWatchdogProvider.create().withCheckIntervalDuration(checkInterval).withClock(clock);
+        InstantiatingWatchdogProvider.create()
+            .withCheckIntervalDuration(checkInterval)
+            .withClock(clock);
 
     Throwable actualError = null;
     try {
@@ -114,15 +116,14 @@ public class InstantiatingWatchdogProviderTest {
 
   @Test
   public void testCheckInterval_backportMethodsBehaveCorrectly() {
-    final InstantiatingWatchdogProvider baseProvider = (InstantiatingWatchdogProvider) InstantiatingWatchdogProvider.create()
-                    .withClock(clock)
-                  .withExecutor(executor);
+    final InstantiatingWatchdogProvider baseProvider =
+        (InstantiatingWatchdogProvider)
+            InstantiatingWatchdogProvider.create().withClock(clock).withExecutor(executor);
     testDurationMethod(
-            123l,
-            jt -> baseProvider.withCheckIntervalDuration(jt),
-            tt -> baseProvider.withCheckInterval(tt),
-            wp -> wp.getWatchdog().getScheduleIntervalDuration(),
-            wp -> wp.getWatchdog().getScheduleInterval()
-    );
+        123l,
+        jt -> baseProvider.withCheckIntervalDuration(jt),
+        tt -> baseProvider.withCheckInterval(tt),
+        wp -> wp.getWatchdog().getScheduleIntervalDuration(),
+        wp -> wp.getWatchdog().getScheduleInterval());
   }
 }

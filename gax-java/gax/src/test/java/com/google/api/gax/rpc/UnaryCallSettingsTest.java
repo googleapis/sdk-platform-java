@@ -153,7 +153,10 @@ public class UnaryCallSettingsTest {
   public void testWatchDogCheckInterval_backportMethodsBehaveCorrectly() {
     testDurationMethod(
         123l,
-        jt -> UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetriesDuration(jt).build(),
+        jt ->
+            UnaryCallSettings.newUnaryCallSettingsBuilder()
+                .setSimpleTimeoutNoRetriesDuration(jt)
+                .build(),
         tt -> UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetries(tt).build(),
         ucs -> ucs.getRetrySettings().getTotalTimeoutDuration(),
         ucs -> ucs.getRetrySettings().getTotalTimeout());

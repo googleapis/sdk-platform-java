@@ -378,7 +378,9 @@ public class SettingsTest {
         };
     testDurationMethod(
         123l,
-        jt -> build.apply(() -> FakeStubSettings.newBuilder().setStreamWatchdogCheckIntervalDuration(jt)),
+        jt ->
+            build.apply(
+                () -> FakeStubSettings.newBuilder().setStreamWatchdogCheckIntervalDuration(jt)),
         tt -> build.apply(() -> FakeStubSettings.newBuilder().setStreamWatchdogCheckInterval(tt)),
         ss -> ss.getStreamWatchdogCheckIntervalDuration(),
         ss -> ss.getStreamWatchdogCheckInterval());
