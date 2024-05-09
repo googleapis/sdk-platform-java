@@ -31,8 +31,12 @@ mv_src_files() {
   local category=$1 # one of gapic, proto, samples
   local type=$2 # one of main, test
   local destination_path=$3
+  local samples_suffix=$4 # one of com, io (grafeas)
+  if [ -z "${samples_suffix}" ]; then
+    samples_suffix="com"
+  fi
   if [ "${category}" == "samples" ]; then
-    src_suffix="samples/snippets/generated/src/main/java/com"
+    src_suffix="samples/snippets/generated/src/main/java/${samples_suffix}"
     folder_suffix="samples/snippets/generated"
   elif [ "${category}" == "proto" ]; then
     src_suffix="${category}/src/${type}/java"
