@@ -344,7 +344,7 @@ public class OpencensusTracer extends BaseApiTracer {
 
   /** {@inheritDoc} */
   @Override
-  public void attemptFailed(Throwable error, java.time.Duration delay) {
+  public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
     Map<String, AttributeValue> attributes = baseAttemptAttributes();
     attributes.put("delay ms", AttributeValue.longAttributeValue(delay.toMillis()));
     populateError(attributes, error);
@@ -359,11 +359,11 @@ public class OpencensusTracer extends BaseApiTracer {
     lastConnectionId = null;
   }
 
-  /** Backport of {@link #attemptFailed(Throwable, java.time.Duration)} */
+  /** Backport of {@link #attemptFailedDuration(Throwable, java.time.Duration)} */
   @Override
-  @ObsoleteApi("Use attemptFailed(Throwable, java.time.Duration) instead")
+  @ObsoleteApi("Use attemptFailedDuration(Throwable, java.time.Duration) instead")
   public void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {
-    attemptFailed(error, toJavaTimeDuration(delay));
+    attemptFailedDuration(error, toJavaTimeDuration(delay));
   }
 
   /** {@inheritDoc} */

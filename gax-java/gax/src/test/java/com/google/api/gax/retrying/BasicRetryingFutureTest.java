@@ -95,7 +95,7 @@ public class BasicRetryingFutureTest {
     future.handleAttempt(null, null);
 
     Mockito.verify(tracer)
-        .attemptFailed(
+        .attemptFailedDuration(
             ArgumentMatchers.<Throwable>any(), ArgumentMatchers.<java.time.Duration>any());
     Mockito.verifyNoMoreInteractions(tracer);
   }

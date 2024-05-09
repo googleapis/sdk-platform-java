@@ -110,10 +110,10 @@ public interface ApiTracer {
   /** Add an annotation that the attempt was cancelled by the user. */
   default void attemptCancelled() {};
 
-  /** Backport of {@link #attemptFailed(Throwable, java.time.Duration)} */
-  @ObsoleteApi("Use attemptFailed(Throwable, java.time.Duration) instead")
+  /** Backport of {@link #attemptFailedDuration(Throwable, java.time.Duration)} */
+  @ObsoleteApi("Use attemptFailedDuration(Throwable, java.time.Duration) instead")
   default void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {
-    attemptFailed(error, toJavaTimeDuration(delay));
+    attemptFailedDuration(error, toJavaTimeDuration(delay));
   };
 
   /**
@@ -122,7 +122,7 @@ public interface ApiTracer {
    * @param error the transient error that caused the attempt to fail.
    * @param delay the amount of time to wait before the next attempt will start.
    */
-  default void attemptFailed(Throwable error, java.time.Duration delay) {};
+  default void attemptFailedDuration(Throwable error, java.time.Duration delay) {};
 
   /**
    * Adds an annotation that the attempt failed and that no further attempts will be made because

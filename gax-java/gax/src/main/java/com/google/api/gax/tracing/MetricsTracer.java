@@ -173,17 +173,17 @@ public class MetricsTracer implements ApiTracer {
    *     key.
    */
   @Override
-  public void attemptFailed(Throwable error, java.time.Duration delay) {
+  public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
     attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
     metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
-  /** Backport of {@link #attemptFailed(Throwable, java.time.Duration)} */
+  /** Backport of {@link #attemptFailedDuration(Throwable, java.time.Duration)} */
   @Override
-  @ObsoleteApi("Use attemptFailed(Throwable, java.time.Duration) instead")
+  @ObsoleteApi("Use attemptFailedDuration(Throwable, java.time.Duration) instead")
   public void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {
-    attemptFailed(error, toJavaTimeDuration(delay));
+    attemptFailedDuration(error, toJavaTimeDuration(delay));
   }
 
   /**
