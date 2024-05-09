@@ -225,9 +225,9 @@ if [[ "${proto_only}" == "false" ]]; then
   if [ "${include_samples}" == "true" ]; then
     # move java_gapic_srcjar/samples/snippets to samples/snippets
     if [[ "${proto_path}" == "grafeas/v1" ]]; then
-      mv_src_files "samples" "main" "${temp_destination_path}"
-    else
       mv_src_files "samples" "main" "${temp_destination_path}" "io"
+    else
+      mv_src_files "samples" "main" "${temp_destination_path}"
     fi
   fi
 fi
