@@ -30,6 +30,7 @@ import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import io.grpc.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,6 +51,7 @@ public class ITApiVersionHeaders {
   private static final String EXPECTED_EXCEPTION_MESSAGE =
       "Header provider can't override the header: "
           + ApiClientHeaderProvider.API_VERSION_HEADER_KEY;
+  private static final int DEFAULT_AWAIT_TERMINATION_SEC = 10;
 
   // Implement a client interceptor to retrieve the trailing metadata from response.
   private static class GrpcCapturingClientInterceptor implements ClientInterceptor {
@@ -182,11 +184,16 @@ public class ITApiVersionHeaders {
   }
 
   @After
-  public void destroyClient() {
+  public void destroyClient() throws InterruptedException {
     grpcClient.close();
     httpJsonClient.close();
     grpcComplianceClient.close();
     httpJsonComplianceClient.close();
+
+    grpcClient.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
+    httpJsonClient.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
+    grpcComplianceClient.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
+    httpJsonComplianceClient.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
