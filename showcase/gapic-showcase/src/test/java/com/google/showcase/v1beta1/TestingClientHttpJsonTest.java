@@ -53,19 +53,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Generated;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 @Generated("by gapic-generator-java")
-class TestingClientHttpJsonTest {
+public class TestingClientHttpJsonTest {
   private static MockHttpService mockService;
   private static TestingClient client;
 
-  @BeforeAll
+  @BeforeClass
   public static void startStaticServer() throws IOException {
     mockService =
         new MockHttpService(
@@ -81,21 +81,21 @@ class TestingClientHttpJsonTest {
     client = TestingClient.create(settings);
   }
 
-  @AfterAll
+  @AfterClass
   public static void stopServer() {
     client.close();
   }
 
-  @BeforeEach
-  void setUp() {}
+  @Before
+  public void setUp() {}
 
-  @AfterEach
-  void tearDown() throws Exception {
+  @After
+  public void tearDown() throws Exception {
     mockService.reset();
   }
 
   @Test
-  void createSessionTest() throws Exception {
+  public void createSessionTest() throws Exception {
     Session expectedResponse =
         Session.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
     mockService.addResponse(expectedResponse);
@@ -104,10 +104,10 @@ class TestingClientHttpJsonTest {
         CreateSessionRequest.newBuilder().setSession(Session.newBuilder().build()).build();
 
     Session actualResponse = client.createSession(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -115,14 +115,14 @@ class TestingClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assertions.assertTrue(
+    Assert.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  void createSessionExceptionTest() throws Exception {
+  public void createSessionExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -132,14 +132,14 @@ class TestingClientHttpJsonTest {
       CreateSessionRequest request =
           CreateSessionRequest.newBuilder().setSession(Session.newBuilder().build()).build();
       client.createSession(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void getSessionTest() throws Exception {
+  public void getSessionTest() throws Exception {
     Session expectedResponse =
         Session.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
     mockService.addResponse(expectedResponse);
@@ -148,10 +148,10 @@ class TestingClientHttpJsonTest {
         GetSessionRequest.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
 
     Session actualResponse = client.getSession(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -159,14 +159,14 @@ class TestingClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assertions.assertTrue(
+    Assert.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  void getSessionExceptionTest() throws Exception {
+  public void getSessionExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -176,14 +176,14 @@ class TestingClientHttpJsonTest {
       GetSessionRequest request =
           GetSessionRequest.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
       client.getSession(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void listSessionsTest() throws Exception {
+  public void listSessionsTest() throws Exception {
     Session responsesElement = Session.newBuilder().build();
     ListSessionsResponse expectedResponse =
         ListSessionsResponse.newBuilder()
@@ -202,11 +202,11 @@ class TestingClientHttpJsonTest {
 
     List<Session> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assertions.assertEquals(1, resources.size());
-    Assertions.assertEquals(expectedResponse.getSessionsList().get(0), resources.get(0));
+    Assert.assertEquals(1, resources.size());
+    Assert.assertEquals(expectedResponse.getSessionsList().get(0), resources.get(0));
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -214,14 +214,14 @@ class TestingClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assertions.assertTrue(
+    Assert.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  void listSessionsExceptionTest() throws Exception {
+  public void listSessionsExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -234,14 +234,14 @@ class TestingClientHttpJsonTest {
               .setPageToken("pageToken873572522")
               .build();
       client.listSessions(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void deleteSessionTest() throws Exception {
+  public void deleteSessionTest() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockService.addResponse(expectedResponse);
 
@@ -251,7 +251,7 @@ class TestingClientHttpJsonTest {
     client.deleteSession(request);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -259,14 +259,14 @@ class TestingClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assertions.assertTrue(
+    Assert.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  void deleteSessionExceptionTest() throws Exception {
+  public void deleteSessionExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -276,14 +276,14 @@ class TestingClientHttpJsonTest {
       DeleteSessionRequest request =
           DeleteSessionRequest.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
       client.deleteSession(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void reportSessionTest() throws Exception {
+  public void reportSessionTest() throws Exception {
     ReportSessionResponse expectedResponse =
         ReportSessionResponse.newBuilder().addAllTestRuns(new ArrayList<TestRun>()).build();
     mockService.addResponse(expectedResponse);
@@ -292,10 +292,10 @@ class TestingClientHttpJsonTest {
         ReportSessionRequest.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
 
     ReportSessionResponse actualResponse = client.reportSession(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -303,14 +303,14 @@ class TestingClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assertions.assertTrue(
+    Assert.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  void reportSessionExceptionTest() throws Exception {
+  public void reportSessionExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -320,14 +320,14 @@ class TestingClientHttpJsonTest {
       ReportSessionRequest request =
           ReportSessionRequest.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
       client.reportSession(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void listTestsTest() throws Exception {
+  public void listTestsTest() throws Exception {
     com.google.showcase.v1beta1.Test responsesElement =
         com.google.showcase.v1beta1.Test.newBuilder().build();
     ListTestsResponse expectedResponse =
@@ -349,11 +349,11 @@ class TestingClientHttpJsonTest {
     List<com.google.showcase.v1beta1.Test> resources =
         Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assertions.assertEquals(1, resources.size());
-    Assertions.assertEquals(expectedResponse.getTestsList().get(0), resources.get(0));
+    Assert.assertEquals(1, resources.size());
+    Assert.assertEquals(expectedResponse.getTestsList().get(0), resources.get(0));
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -361,14 +361,14 @@ class TestingClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assertions.assertTrue(
+    Assert.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  void listTestsExceptionTest() throws Exception {
+  public void listTestsExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -382,14 +382,14 @@ class TestingClientHttpJsonTest {
               .setPageToken("pageToken873572522")
               .build();
       client.listTests(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void deleteTestTest() throws Exception {
+  public void deleteTestTest() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockService.addResponse(expectedResponse);
 
@@ -401,7 +401,7 @@ class TestingClientHttpJsonTest {
     client.deleteTest(request);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -409,14 +409,14 @@ class TestingClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assertions.assertTrue(
+    Assert.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  void deleteTestExceptionTest() throws Exception {
+  public void deleteTestExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -428,14 +428,14 @@ class TestingClientHttpJsonTest {
               .setName(TestName.of("[SESSION]", "[TEST]").toString())
               .build();
       client.deleteTest(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void verifyTestTest() throws Exception {
+  public void verifyTestTest() throws Exception {
     VerifyTestResponse expectedResponse =
         VerifyTestResponse.newBuilder().setIssue(Issue.newBuilder().build()).build();
     mockService.addResponse(expectedResponse);
@@ -448,10 +448,10 @@ class TestingClientHttpJsonTest {
             .build();
 
     VerifyTestResponse actualResponse = client.verifyTest(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -459,14 +459,14 @@ class TestingClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assertions.assertTrue(
+    Assert.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  void verifyTestExceptionTest() throws Exception {
+  public void verifyTestExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -480,14 +480,14 @@ class TestingClientHttpJsonTest {
               .addAllAnswers(new ArrayList<ByteString>())
               .build();
       client.verifyTest(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void listLocationsTest() throws Exception {
+  public void listLocationsTest() throws Exception {
     Location responsesElement = Location.newBuilder().build();
     ListLocationsResponse expectedResponse =
         ListLocationsResponse.newBuilder()
@@ -508,11 +508,11 @@ class TestingClientHttpJsonTest {
 
     List<Location> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assertions.assertEquals(1, resources.size());
-    Assertions.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
+    Assert.assertEquals(1, resources.size());
+    Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -520,14 +520,14 @@ class TestingClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assertions.assertTrue(
+    Assert.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  void listLocationsExceptionTest() throws Exception {
+  public void listLocationsExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -542,14 +542,14 @@ class TestingClientHttpJsonTest {
               .setPageToken("pageToken873572522")
               .build();
       client.listLocations(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void getLocationTest() throws Exception {
+  public void getLocationTest() throws Exception {
     Location expectedResponse =
         Location.newBuilder()
             .setName("name3373707")
@@ -566,10 +566,10 @@ class TestingClientHttpJsonTest {
             .build();
 
     Location actualResponse = client.getLocation(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -577,14 +577,14 @@ class TestingClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assertions.assertTrue(
+    Assert.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  void getLocationExceptionTest() throws Exception {
+  public void getLocationExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -596,14 +596,14 @@ class TestingClientHttpJsonTest {
               .setName("projects/project-9062/locations/location-9062")
               .build();
       client.getLocation(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void setIamPolicyTest() throws Exception {
+  public void setIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -621,10 +621,10 @@ class TestingClientHttpJsonTest {
             .build();
 
     Policy actualResponse = client.setIamPolicy(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -632,14 +632,14 @@ class TestingClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assertions.assertTrue(
+    Assert.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  void setIamPolicyExceptionTest() throws Exception {
+  public void setIamPolicyExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -653,14 +653,14 @@ class TestingClientHttpJsonTest {
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       client.setIamPolicy(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void getIamPolicyTest() throws Exception {
+  public void getIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -677,10 +677,10 @@ class TestingClientHttpJsonTest {
             .build();
 
     Policy actualResponse = client.getIamPolicy(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -688,14 +688,14 @@ class TestingClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assertions.assertTrue(
+    Assert.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  void getIamPolicyExceptionTest() throws Exception {
+  public void getIamPolicyExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -708,14 +708,14 @@ class TestingClientHttpJsonTest {
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void testIamPermissionsTest() throws Exception {
+  public void testIamPermissionsTest() throws Exception {
     TestIamPermissionsResponse expectedResponse =
         TestIamPermissionsResponse.newBuilder().addAllPermissions(new ArrayList<String>()).build();
     mockService.addResponse(expectedResponse);
@@ -727,10 +727,10 @@ class TestingClientHttpJsonTest {
             .build();
 
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<String> actualRequests = mockService.getRequestPaths();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
 
     String apiClientHeaderKey =
         mockService
@@ -738,14 +738,14 @@ class TestingClientHttpJsonTest {
             .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
             .iterator()
             .next();
-    Assertions.assertTrue(
+    Assert.assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
             .matcher(apiClientHeaderKey)
             .matches());
   }
 
   @Test
-  void testIamPermissionsExceptionTest() throws Exception {
+  public void testIamPermissionsExceptionTest() throws Exception {
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
@@ -758,7 +758,7 @@ class TestingClientHttpJsonTest {
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }

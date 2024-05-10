@@ -53,15 +53,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.Generated;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 @Generated("by gapic-generator-java")
-class TestingClientTest {
+public class TestingClientTest {
   private static MockIAMPolicy mockIAMPolicy;
   private static MockLocations mockLocations;
   private static MockServiceHelper mockServiceHelper;
@@ -69,7 +69,7 @@ class TestingClientTest {
   private LocalChannelProvider channelProvider;
   private TestingClient client;
 
-  @BeforeAll
+  @BeforeClass
   public static void startStaticServer() {
     mockTesting = new MockTesting();
     mockLocations = new MockLocations();
@@ -81,13 +81,13 @@ class TestingClientTest {
     mockServiceHelper.start();
   }
 
-  @AfterAll
+  @AfterClass
   public static void stopServer() {
     mockServiceHelper.stop();
   }
 
-  @BeforeEach
-  void setUp() throws IOException {
+  @Before
+  public void setUp() throws IOException {
     mockServiceHelper.reset();
     channelProvider = mockServiceHelper.createChannelProvider();
     TestingSettings settings =
@@ -98,13 +98,13 @@ class TestingClientTest {
     client = TestingClient.create(settings);
   }
 
-  @AfterEach
-  void tearDown() throws Exception {
+  @After
+  public void tearDown() throws Exception {
     client.close();
   }
 
   @Test
-  void createSessionTest() throws Exception {
+  public void createSessionTest() throws Exception {
     Session expectedResponse =
         Session.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
     mockTesting.addResponse(expectedResponse);
@@ -113,21 +113,21 @@ class TestingClientTest {
         CreateSessionRequest.newBuilder().setSession(Session.newBuilder().build()).build();
 
     Session actualResponse = client.createSession(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     CreateSessionRequest actualRequest = ((CreateSessionRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getSession(), actualRequest.getSession());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getSession(), actualRequest.getSession());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void createSessionExceptionTest() throws Exception {
+  public void createSessionExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockTesting.addException(exception);
 
@@ -135,14 +135,14 @@ class TestingClientTest {
       CreateSessionRequest request =
           CreateSessionRequest.newBuilder().setSession(Session.newBuilder().build()).build();
       client.createSession(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void getSessionTest() throws Exception {
+  public void getSessionTest() throws Exception {
     Session expectedResponse =
         Session.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
     mockTesting.addResponse(expectedResponse);
@@ -151,21 +151,21 @@ class TestingClientTest {
         GetSessionRequest.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
 
     Session actualResponse = client.getSession(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     GetSessionRequest actualRequest = ((GetSessionRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getName(), actualRequest.getName());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getName(), actualRequest.getName());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void getSessionExceptionTest() throws Exception {
+  public void getSessionExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockTesting.addException(exception);
 
@@ -173,14 +173,14 @@ class TestingClientTest {
       GetSessionRequest request =
           GetSessionRequest.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
       client.getSession(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void listSessionsTest() throws Exception {
+  public void listSessionsTest() throws Exception {
     Session responsesElement = Session.newBuilder().build();
     ListSessionsResponse expectedResponse =
         ListSessionsResponse.newBuilder()
@@ -199,23 +199,23 @@ class TestingClientTest {
 
     List<Session> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assertions.assertEquals(1, resources.size());
-    Assertions.assertEquals(expectedResponse.getSessionsList().get(0), resources.get(0));
+    Assert.assertEquals(1, resources.size());
+    Assert.assertEquals(expectedResponse.getSessionsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     ListSessionsRequest actualRequest = ((ListSessionsRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getPageSize(), actualRequest.getPageSize());
-    Assertions.assertEquals(request.getPageToken(), actualRequest.getPageToken());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getPageSize(), actualRequest.getPageSize());
+    Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void listSessionsExceptionTest() throws Exception {
+  public void listSessionsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockTesting.addException(exception);
 
@@ -226,14 +226,14 @@ class TestingClientTest {
               .setPageToken("pageToken873572522")
               .build();
       client.listSessions(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void deleteSessionTest() throws Exception {
+  public void deleteSessionTest() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockTesting.addResponse(expectedResponse);
 
@@ -243,18 +243,18 @@ class TestingClientTest {
     client.deleteSession(request);
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     DeleteSessionRequest actualRequest = ((DeleteSessionRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getName(), actualRequest.getName());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getName(), actualRequest.getName());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void deleteSessionExceptionTest() throws Exception {
+  public void deleteSessionExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockTesting.addException(exception);
 
@@ -262,14 +262,14 @@ class TestingClientTest {
       DeleteSessionRequest request =
           DeleteSessionRequest.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
       client.deleteSession(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void reportSessionTest() throws Exception {
+  public void reportSessionTest() throws Exception {
     ReportSessionResponse expectedResponse =
         ReportSessionResponse.newBuilder().addAllTestRuns(new ArrayList<TestRun>()).build();
     mockTesting.addResponse(expectedResponse);
@@ -278,21 +278,21 @@ class TestingClientTest {
         ReportSessionRequest.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
 
     ReportSessionResponse actualResponse = client.reportSession(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     ReportSessionRequest actualRequest = ((ReportSessionRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getName(), actualRequest.getName());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getName(), actualRequest.getName());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void reportSessionExceptionTest() throws Exception {
+  public void reportSessionExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockTesting.addException(exception);
 
@@ -300,14 +300,14 @@ class TestingClientTest {
       ReportSessionRequest request =
           ReportSessionRequest.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
       client.reportSession(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void listTestsTest() throws Exception {
+  public void listTestsTest() throws Exception {
     com.google.showcase.v1beta1.Test responsesElement =
         com.google.showcase.v1beta1.Test.newBuilder().build();
     ListTestsResponse expectedResponse =
@@ -329,24 +329,24 @@ class TestingClientTest {
     List<com.google.showcase.v1beta1.Test> resources =
         Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assertions.assertEquals(1, resources.size());
-    Assertions.assertEquals(expectedResponse.getTestsList().get(0), resources.get(0));
+    Assert.assertEquals(1, resources.size());
+    Assert.assertEquals(expectedResponse.getTestsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     ListTestsRequest actualRequest = ((ListTestsRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getParent(), actualRequest.getParent());
-    Assertions.assertEquals(request.getPageSize(), actualRequest.getPageSize());
-    Assertions.assertEquals(request.getPageToken(), actualRequest.getPageToken());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getParent(), actualRequest.getParent());
+    Assert.assertEquals(request.getPageSize(), actualRequest.getPageSize());
+    Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void listTestsExceptionTest() throws Exception {
+  public void listTestsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockTesting.addException(exception);
 
@@ -358,14 +358,14 @@ class TestingClientTest {
               .setPageToken("pageToken873572522")
               .build();
       client.listTests(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void deleteTestTest() throws Exception {
+  public void deleteTestTest() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockTesting.addResponse(expectedResponse);
 
@@ -377,18 +377,18 @@ class TestingClientTest {
     client.deleteTest(request);
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     DeleteTestRequest actualRequest = ((DeleteTestRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getName(), actualRequest.getName());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getName(), actualRequest.getName());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void deleteTestExceptionTest() throws Exception {
+  public void deleteTestExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockTesting.addException(exception);
 
@@ -398,14 +398,14 @@ class TestingClientTest {
               .setName(TestName.of("[SESSION]", "[TEST]").toString())
               .build();
       client.deleteTest(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void verifyTestTest() throws Exception {
+  public void verifyTestTest() throws Exception {
     VerifyTestResponse expectedResponse =
         VerifyTestResponse.newBuilder().setIssue(Issue.newBuilder().build()).build();
     mockTesting.addResponse(expectedResponse);
@@ -418,23 +418,23 @@ class TestingClientTest {
             .build();
 
     VerifyTestResponse actualResponse = client.verifyTest(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     VerifyTestRequest actualRequest = ((VerifyTestRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getName(), actualRequest.getName());
-    Assertions.assertEquals(request.getAnswer(), actualRequest.getAnswer());
-    Assertions.assertEquals(request.getAnswersList(), actualRequest.getAnswersList());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getName(), actualRequest.getName());
+    Assert.assertEquals(request.getAnswer(), actualRequest.getAnswer());
+    Assert.assertEquals(request.getAnswersList(), actualRequest.getAnswersList());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void verifyTestExceptionTest() throws Exception {
+  public void verifyTestExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockTesting.addException(exception);
 
@@ -446,14 +446,14 @@ class TestingClientTest {
               .addAllAnswers(new ArrayList<ByteString>())
               .build();
       client.verifyTest(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void listLocationsTest() throws Exception {
+  public void listLocationsTest() throws Exception {
     Location responsesElement = Location.newBuilder().build();
     ListLocationsResponse expectedResponse =
         ListLocationsResponse.newBuilder()
@@ -474,25 +474,25 @@ class TestingClientTest {
 
     List<Location> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assertions.assertEquals(1, resources.size());
-    Assertions.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
+    Assert.assertEquals(1, resources.size());
+    Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockLocations.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     ListLocationsRequest actualRequest = ((ListLocationsRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getName(), actualRequest.getName());
-    Assertions.assertEquals(request.getFilter(), actualRequest.getFilter());
-    Assertions.assertEquals(request.getPageSize(), actualRequest.getPageSize());
-    Assertions.assertEquals(request.getPageToken(), actualRequest.getPageToken());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getName(), actualRequest.getName());
+    Assert.assertEquals(request.getFilter(), actualRequest.getFilter());
+    Assert.assertEquals(request.getPageSize(), actualRequest.getPageSize());
+    Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void listLocationsExceptionTest() throws Exception {
+  public void listLocationsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockLocations.addException(exception);
 
@@ -505,14 +505,14 @@ class TestingClientTest {
               .setPageToken("pageToken873572522")
               .build();
       client.listLocations(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void getLocationTest() throws Exception {
+  public void getLocationTest() throws Exception {
     Location expectedResponse =
         Location.newBuilder()
             .setName("name3373707")
@@ -526,35 +526,35 @@ class TestingClientTest {
     GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
 
     Location actualResponse = client.getLocation(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockLocations.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     GetLocationRequest actualRequest = ((GetLocationRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getName(), actualRequest.getName());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getName(), actualRequest.getName());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void getLocationExceptionTest() throws Exception {
+  public void getLocationExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockLocations.addException(exception);
 
     try {
       GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
       client.getLocation(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void setIamPolicyTest() throws Exception {
+  public void setIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -572,23 +572,23 @@ class TestingClientTest {
             .build();
 
     Policy actualResponse = client.setIamPolicy(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
-    Assertions.assertEquals(request.getPolicy(), actualRequest.getPolicy());
-    Assertions.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getResource(), actualRequest.getResource());
+    Assert.assertEquals(request.getPolicy(), actualRequest.getPolicy());
+    Assert.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void setIamPolicyExceptionTest() throws Exception {
+  public void setIamPolicyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -600,14 +600,14 @@ class TestingClientTest {
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       client.setIamPolicy(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void getIamPolicyTest() throws Exception {
+  public void getIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -624,22 +624,22 @@ class TestingClientTest {
             .build();
 
     Policy actualResponse = client.getIamPolicy(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
-    Assertions.assertEquals(request.getOptions(), actualRequest.getOptions());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getResource(), actualRequest.getResource());
+    Assert.assertEquals(request.getOptions(), actualRequest.getOptions());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void getIamPolicyExceptionTest() throws Exception {
+  public void getIamPolicyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -650,14 +650,14 @@ class TestingClientTest {
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void testIamPermissionsTest() throws Exception {
+  public void testIamPermissionsTest() throws Exception {
     TestIamPermissionsResponse expectedResponse =
         TestIamPermissionsResponse.newBuilder().addAllPermissions(new ArrayList<String>()).build();
     mockIAMPolicy.addResponse(expectedResponse);
@@ -669,22 +669,22 @@ class TestingClientTest {
             .build();
 
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
-    Assertions.assertEquals(request.getPermissionsList(), actualRequest.getPermissionsList());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getResource(), actualRequest.getResource());
+    Assert.assertEquals(request.getPermissionsList(), actualRequest.getPermissionsList());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void testIamPermissionsExceptionTest() throws Exception {
+  public void testIamPermissionsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -695,7 +695,7 @@ class TestingClientTest {
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }

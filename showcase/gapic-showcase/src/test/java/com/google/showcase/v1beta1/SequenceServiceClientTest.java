@@ -55,15 +55,15 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import javax.annotation.Generated;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 @Generated("by gapic-generator-java")
-class SequenceServiceClientTest {
+public class SequenceServiceClientTest {
   private static MockIAMPolicy mockIAMPolicy;
   private static MockLocations mockLocations;
   private static MockSequenceService mockSequenceService;
@@ -71,7 +71,7 @@ class SequenceServiceClientTest {
   private LocalChannelProvider channelProvider;
   private SequenceServiceClient client;
 
-  @BeforeAll
+  @BeforeClass
   public static void startStaticServer() {
     mockSequenceService = new MockSequenceService();
     mockLocations = new MockLocations();
@@ -83,13 +83,13 @@ class SequenceServiceClientTest {
     mockServiceHelper.start();
   }
 
-  @AfterAll
+  @AfterClass
   public static void stopServer() {
     mockServiceHelper.stop();
   }
 
-  @BeforeEach
-  void setUp() throws IOException {
+  @Before
+  public void setUp() throws IOException {
     mockServiceHelper.reset();
     channelProvider = mockServiceHelper.createChannelProvider();
     SequenceServiceSettings settings =
@@ -100,13 +100,13 @@ class SequenceServiceClientTest {
     client = SequenceServiceClient.create(settings);
   }
 
-  @AfterEach
-  void tearDown() throws Exception {
+  @After
+  public void tearDown() throws Exception {
     client.close();
   }
 
   @Test
-  void createSequenceTest() throws Exception {
+  public void createSequenceTest() throws Exception {
     Sequence expectedResponse =
         Sequence.newBuilder()
             .setName(SequenceName.of("[SEQUENCE]").toString())
@@ -117,35 +117,35 @@ class SequenceServiceClientTest {
     Sequence sequence = Sequence.newBuilder().build();
 
     Sequence actualResponse = client.createSequence(sequence);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     CreateSequenceRequest actualRequest = ((CreateSequenceRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(sequence, actualRequest.getSequence());
-    Assertions.assertTrue(
+    Assert.assertEquals(sequence, actualRequest.getSequence());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void createSequenceExceptionTest() throws Exception {
+  public void createSequenceExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockSequenceService.addException(exception);
 
     try {
       Sequence sequence = Sequence.newBuilder().build();
       client.createSequence(sequence);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void createStreamingSequenceTest() throws Exception {
+  public void createStreamingSequenceTest() throws Exception {
     StreamingSequence expectedResponse =
         StreamingSequence.newBuilder()
             .setName(StreamingSequenceName.of("[STREAMING_SEQUENCE]").toString())
@@ -157,36 +157,36 @@ class SequenceServiceClientTest {
     StreamingSequence streamingSequence = StreamingSequence.newBuilder().build();
 
     StreamingSequence actualResponse = client.createStreamingSequence(streamingSequence);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     CreateStreamingSequenceRequest actualRequest =
         ((CreateStreamingSequenceRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(streamingSequence, actualRequest.getStreamingSequence());
-    Assertions.assertTrue(
+    Assert.assertEquals(streamingSequence, actualRequest.getStreamingSequence());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void createStreamingSequenceExceptionTest() throws Exception {
+  public void createStreamingSequenceExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockSequenceService.addException(exception);
 
     try {
       StreamingSequence streamingSequence = StreamingSequence.newBuilder().build();
       client.createStreamingSequence(streamingSequence);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void getSequenceReportTest() throws Exception {
+  public void getSequenceReportTest() throws Exception {
     SequenceReport expectedResponse =
         SequenceReport.newBuilder()
             .setName(SequenceReportName.of("[SEQUENCE]").toString())
@@ -197,35 +197,35 @@ class SequenceServiceClientTest {
     SequenceReportName name = SequenceReportName.of("[SEQUENCE]");
 
     SequenceReport actualResponse = client.getSequenceReport(name);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     GetSequenceReportRequest actualRequest = ((GetSequenceReportRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(name.toString(), actualRequest.getName());
-    Assertions.assertTrue(
+    Assert.assertEquals(name.toString(), actualRequest.getName());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void getSequenceReportExceptionTest() throws Exception {
+  public void getSequenceReportExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockSequenceService.addException(exception);
 
     try {
       SequenceReportName name = SequenceReportName.of("[SEQUENCE]");
       client.getSequenceReport(name);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void getSequenceReportTest2() throws Exception {
+  public void getSequenceReportTest2() throws Exception {
     SequenceReport expectedResponse =
         SequenceReport.newBuilder()
             .setName(SequenceReportName.of("[SEQUENCE]").toString())
@@ -236,35 +236,35 @@ class SequenceServiceClientTest {
     String name = "name3373707";
 
     SequenceReport actualResponse = client.getSequenceReport(name);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     GetSequenceReportRequest actualRequest = ((GetSequenceReportRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(name, actualRequest.getName());
-    Assertions.assertTrue(
+    Assert.assertEquals(name, actualRequest.getName());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void getSequenceReportExceptionTest2() throws Exception {
+  public void getSequenceReportExceptionTest2() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockSequenceService.addException(exception);
 
     try {
       String name = "name3373707";
       client.getSequenceReport(name);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void getStreamingSequenceReportTest() throws Exception {
+  public void getStreamingSequenceReportTest() throws Exception {
     StreamingSequenceReport expectedResponse =
         StreamingSequenceReport.newBuilder()
             .setName(StreamingSequenceReportName.of("[STREAMING_SEQUENCE]").toString())
@@ -275,36 +275,36 @@ class SequenceServiceClientTest {
     StreamingSequenceReportName name = StreamingSequenceReportName.of("[STREAMING_SEQUENCE]");
 
     StreamingSequenceReport actualResponse = client.getStreamingSequenceReport(name);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     GetStreamingSequenceReportRequest actualRequest =
         ((GetStreamingSequenceReportRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(name.toString(), actualRequest.getName());
-    Assertions.assertTrue(
+    Assert.assertEquals(name.toString(), actualRequest.getName());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void getStreamingSequenceReportExceptionTest() throws Exception {
+  public void getStreamingSequenceReportExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockSequenceService.addException(exception);
 
     try {
       StreamingSequenceReportName name = StreamingSequenceReportName.of("[STREAMING_SEQUENCE]");
       client.getStreamingSequenceReport(name);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void getStreamingSequenceReportTest2() throws Exception {
+  public void getStreamingSequenceReportTest2() throws Exception {
     StreamingSequenceReport expectedResponse =
         StreamingSequenceReport.newBuilder()
             .setName(StreamingSequenceReportName.of("[STREAMING_SEQUENCE]").toString())
@@ -315,36 +315,36 @@ class SequenceServiceClientTest {
     String name = "name3373707";
 
     StreamingSequenceReport actualResponse = client.getStreamingSequenceReport(name);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     GetStreamingSequenceReportRequest actualRequest =
         ((GetStreamingSequenceReportRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(name, actualRequest.getName());
-    Assertions.assertTrue(
+    Assert.assertEquals(name, actualRequest.getName());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void getStreamingSequenceReportExceptionTest2() throws Exception {
+  public void getStreamingSequenceReportExceptionTest2() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockSequenceService.addException(exception);
 
     try {
       String name = "name3373707";
       client.getStreamingSequenceReport(name);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void attemptSequenceTest() throws Exception {
+  public void attemptSequenceTest() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockSequenceService.addResponse(expectedResponse);
 
@@ -353,32 +353,32 @@ class SequenceServiceClientTest {
     client.attemptSequence(name);
 
     List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     AttemptSequenceRequest actualRequest = ((AttemptSequenceRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(name.toString(), actualRequest.getName());
-    Assertions.assertTrue(
+    Assert.assertEquals(name.toString(), actualRequest.getName());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void attemptSequenceExceptionTest() throws Exception {
+  public void attemptSequenceExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockSequenceService.addException(exception);
 
     try {
       SequenceName name = SequenceName.of("[SEQUENCE]");
       client.attemptSequence(name);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void attemptSequenceTest2() throws Exception {
+  public void attemptSequenceTest2() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockSequenceService.addResponse(expectedResponse);
 
@@ -387,32 +387,32 @@ class SequenceServiceClientTest {
     client.attemptSequence(name);
 
     List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     AttemptSequenceRequest actualRequest = ((AttemptSequenceRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(name, actualRequest.getName());
-    Assertions.assertTrue(
+    Assert.assertEquals(name, actualRequest.getName());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void attemptSequenceExceptionTest2() throws Exception {
+  public void attemptSequenceExceptionTest2() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockSequenceService.addException(exception);
 
     try {
       String name = "name3373707";
       client.attemptSequence(name);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void attemptStreamingSequenceTest() throws Exception {
+  public void attemptStreamingSequenceTest() throws Exception {
     AttemptStreamingSequenceResponse expectedResponse =
         AttemptStreamingSequenceResponse.newBuilder().setContent("content951530617").build();
     mockSequenceService.addResponse(expectedResponse);
@@ -429,12 +429,12 @@ class SequenceServiceClientTest {
     callable.serverStreamingCall(request, responseObserver);
 
     List<AttemptStreamingSequenceResponse> actualResponses = responseObserver.future().get();
-    Assertions.assertEquals(1, actualResponses.size());
-    Assertions.assertEquals(expectedResponse, actualResponses.get(0));
+    Assert.assertEquals(1, actualResponses.size());
+    Assert.assertEquals(expectedResponse, actualResponses.get(0));
   }
 
   @Test
-  void attemptStreamingSequenceExceptionTest() throws Exception {
+  public void attemptStreamingSequenceExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockSequenceService.addException(exception);
     AttemptStreamingSequenceRequest request =
@@ -451,17 +451,16 @@ class SequenceServiceClientTest {
 
     try {
       List<AttemptStreamingSequenceResponse> actualResponses = responseObserver.future().get();
-      Assertions.fail("No exception thrown");
+      Assert.fail("No exception thrown");
     } catch (ExecutionException e) {
-      Assertions.assertTrue(e.getCause() instanceof InvalidArgumentException);
+      Assert.assertTrue(e.getCause() instanceof InvalidArgumentException);
       InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
-      Assertions.assertEquals(
-          StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
+      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 
   @Test
-  void listLocationsTest() throws Exception {
+  public void listLocationsTest() throws Exception {
     Location responsesElement = Location.newBuilder().build();
     ListLocationsResponse expectedResponse =
         ListLocationsResponse.newBuilder()
@@ -482,25 +481,25 @@ class SequenceServiceClientTest {
 
     List<Location> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
-    Assertions.assertEquals(1, resources.size());
-    Assertions.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
+    Assert.assertEquals(1, resources.size());
+    Assert.assertEquals(expectedResponse.getLocationsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockLocations.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     ListLocationsRequest actualRequest = ((ListLocationsRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getName(), actualRequest.getName());
-    Assertions.assertEquals(request.getFilter(), actualRequest.getFilter());
-    Assertions.assertEquals(request.getPageSize(), actualRequest.getPageSize());
-    Assertions.assertEquals(request.getPageToken(), actualRequest.getPageToken());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getName(), actualRequest.getName());
+    Assert.assertEquals(request.getFilter(), actualRequest.getFilter());
+    Assert.assertEquals(request.getPageSize(), actualRequest.getPageSize());
+    Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void listLocationsExceptionTest() throws Exception {
+  public void listLocationsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockLocations.addException(exception);
 
@@ -513,14 +512,14 @@ class SequenceServiceClientTest {
               .setPageToken("pageToken873572522")
               .build();
       client.listLocations(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void getLocationTest() throws Exception {
+  public void getLocationTest() throws Exception {
     Location expectedResponse =
         Location.newBuilder()
             .setName("name3373707")
@@ -534,35 +533,35 @@ class SequenceServiceClientTest {
     GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
 
     Location actualResponse = client.getLocation(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockLocations.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     GetLocationRequest actualRequest = ((GetLocationRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getName(), actualRequest.getName());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getName(), actualRequest.getName());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void getLocationExceptionTest() throws Exception {
+  public void getLocationExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockLocations.addException(exception);
 
     try {
       GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
       client.getLocation(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void setIamPolicyTest() throws Exception {
+  public void setIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -580,23 +579,23 @@ class SequenceServiceClientTest {
             .build();
 
     Policy actualResponse = client.setIamPolicy(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     SetIamPolicyRequest actualRequest = ((SetIamPolicyRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
-    Assertions.assertEquals(request.getPolicy(), actualRequest.getPolicy());
-    Assertions.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getResource(), actualRequest.getResource());
+    Assert.assertEquals(request.getPolicy(), actualRequest.getPolicy());
+    Assert.assertEquals(request.getUpdateMask(), actualRequest.getUpdateMask());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void setIamPolicyExceptionTest() throws Exception {
+  public void setIamPolicyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -608,14 +607,14 @@ class SequenceServiceClientTest {
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       client.setIamPolicy(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void getIamPolicyTest() throws Exception {
+  public void getIamPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
             .setVersion(351608024)
@@ -632,22 +631,22 @@ class SequenceServiceClientTest {
             .build();
 
     Policy actualResponse = client.getIamPolicy(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     GetIamPolicyRequest actualRequest = ((GetIamPolicyRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
-    Assertions.assertEquals(request.getOptions(), actualRequest.getOptions());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getResource(), actualRequest.getResource());
+    Assert.assertEquals(request.getOptions(), actualRequest.getOptions());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void getIamPolicyExceptionTest() throws Exception {
+  public void getIamPolicyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -658,14 +657,14 @@ class SequenceServiceClientTest {
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
   }
 
   @Test
-  void testIamPermissionsTest() throws Exception {
+  public void testIamPermissionsTest() throws Exception {
     TestIamPermissionsResponse expectedResponse =
         TestIamPermissionsResponse.newBuilder().addAllPermissions(new ArrayList<String>()).build();
     mockIAMPolicy.addResponse(expectedResponse);
@@ -677,22 +676,22 @@ class SequenceServiceClientTest {
             .build();
 
     TestIamPermissionsResponse actualResponse = client.testIamPermissions(request);
-    Assertions.assertEquals(expectedResponse, actualResponse);
+    Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockIAMPolicy.getRequests();
-    Assertions.assertEquals(1, actualRequests.size());
+    Assert.assertEquals(1, actualRequests.size());
     TestIamPermissionsRequest actualRequest = ((TestIamPermissionsRequest) actualRequests.get(0));
 
-    Assertions.assertEquals(request.getResource(), actualRequest.getResource());
-    Assertions.assertEquals(request.getPermissionsList(), actualRequest.getPermissionsList());
-    Assertions.assertTrue(
+    Assert.assertEquals(request.getResource(), actualRequest.getResource());
+    Assert.assertEquals(request.getPermissionsList(), actualRequest.getPermissionsList());
+    Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
             GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
   }
 
   @Test
-  void testIamPermissionsExceptionTest() throws Exception {
+  public void testIamPermissionsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockIAMPolicy.addException(exception);
 
@@ -703,7 +702,7 @@ class SequenceServiceClientTest {
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);
-      Assertions.fail("No exception raised");
+      Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
