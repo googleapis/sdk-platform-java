@@ -18,9 +18,9 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.client.json.GenericJson;
@@ -95,8 +95,6 @@ class ITGdch {
   private void prepareCredentials(Path tempDir) throws IOException {
     // Copy file so it can be referenced by Path even in native-image builds
     File caCertFile = new File(tempDir.toFile(), CA_CERT_FILENAME);
-    //    Path caCertPath = tempDir.resolve(CA_CERT_FILENAME);
-    //    File caCertFile = Files.createFile(caCertPath);
     try (InputStream inputStream = getClass().getResourceAsStream(CA_CERT_RESOURCE_PATH)) {
       assertThat(inputStream).isNotNull();
       Files.copy(inputStream, caCertFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
