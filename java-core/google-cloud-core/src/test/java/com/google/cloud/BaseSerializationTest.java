@@ -17,8 +17,8 @@
 package com.google.cloud;
 
 import static com.google.common.base.MoreObjects.firstNonNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  * Base class for serialization tests. To use this class in your tests override the {@code
@@ -44,7 +44,7 @@ public abstract class BaseSerializationTest {
   protected abstract Restorable<?>[] restorableObjects();
 
   @Test
-  void testSerializableObjects() throws Exception {
+  public void testSerializableObjects() throws Exception {
     for (Serializable obj : firstNonNull(serializableObjects(), new Serializable[0])) {
       Object copy = serializeAndDeserialize(obj);
       assertEquals(obj, obj);
@@ -57,7 +57,7 @@ public abstract class BaseSerializationTest {
   }
 
   @Test
-  void testRestorableObjects() throws Exception {
+  public void testRestorableObjects() throws Exception {
     for (Restorable restorable : firstNonNull(restorableObjects(), new Restorable[0])) {
       RestorableState<?> state = restorable.capture();
       RestorableState<?> deserializedState = serializeAndDeserialize(state);
