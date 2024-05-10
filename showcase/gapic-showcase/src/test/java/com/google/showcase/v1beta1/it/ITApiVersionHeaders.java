@@ -16,7 +16,7 @@
 package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.httpjson.*;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
@@ -31,15 +31,15 @@ import io.grpc.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 // TODO: add testing on error responses once feat is implemented in showcase.
 //  https://github.com/googleapis/gapic-showcase/pull/1456
 // TODO: watch for showcase gRPC trailer changes suggested in
 // https://github.com/googleapis/gapic-showcase/pull/1509#issuecomment-2089147103
-public class ITApiVersionHeaders {
+class ITApiVersionHeaders {
   private static final String HTTP_RESPONSE_HEADER_STRING =
       "x-showcase-request-" + ApiClientHeaderProvider.API_VERSION_HEADER_KEY;
   private static final Metadata.Key<String> API_VERSION_HEADER_KEY =
@@ -158,8 +158,8 @@ public class ITApiVersionHeaders {
   private ComplianceClient grpcComplianceClient;
   private ComplianceClient httpJsonComplianceClient;
 
-  @Before
-  public void createClients() throws Exception {
+  @BeforeEach
+  void createClients() throws Exception {
     // Create gRPC Interceptor and Client
     grpcInterceptor = new GrpcCapturingClientInterceptor();
     grpcClient = TestClientInitializer.createGrpcEchoClient(ImmutableList.of(grpcInterceptor));
@@ -183,8 +183,8 @@ public class ITApiVersionHeaders {
             ImmutableList.of(httpJsonComplianceInterceptor));
   }
 
-  @After
-  public void destroyClient() throws InterruptedException {
+  @AfterEach
+  void destroyClient() throws InterruptedException {
     grpcClient.close();
     httpJsonClient.close();
     grpcComplianceClient.close();
@@ -197,14 +197,14 @@ public class ITApiVersionHeaders {
   }
 
   @Test
-  public void testGrpc_matchesApiVersion() {
+  void testGrpc_matchesApiVersion() {
     grpcClient.echo(EchoRequest.newBuilder().build());
     String headerValue = grpcInterceptor.metadata.get(API_VERSION_HEADER_KEY);
     assertThat(headerValue).isEqualTo(EXPECTED_ECHO_API_VERSION);
   }
 
   @Test
-  public void testHttpJson_matchesHeaderName() {
+  void testHttpJson_matchesHeaderName() {
     httpJsonClient.echo(EchoRequest.newBuilder().build());
     ArrayList headerValues =
         (ArrayList) httpJsonInterceptor.metadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
@@ -213,7 +213,7 @@ public class ITApiVersionHeaders {
   }
 
   @Test
-  public void testGrpc_noApiVersion() {
+  void testGrpc_noApiVersion() {
     RepeatRequest request =
         RepeatRequest.newBuilder().setInfo(ComplianceData.newBuilder().setFString("test")).build();
     grpcComplianceClient.repeatDataSimplePath(request);
@@ -221,7 +221,7 @@ public class ITApiVersionHeaders {
   }
 
   @Test
-  public void testHttpJson_noApiVersion() {
+  void testHttpJson_noApiVersion() {
     RepeatRequest request =
         RepeatRequest.newBuilder().setInfo(ComplianceData.newBuilder().setFString("test")).build();
     httpJsonComplianceClient.repeatDataSimplePath(request);
@@ -230,7 +230,7 @@ public class ITApiVersionHeaders {
   }
 
   @Test
-  public void testGrpcEcho_userApiVersionThrowsException() throws IOException {
+  void testGrpcEcho_userApiVersionThrowsException() throws IOException {
     StubSettings stubSettings =
         grpcClient
             .getSettings()
@@ -249,7 +249,7 @@ public class ITApiVersionHeaders {
   }
 
   @Test
-  public void testHttpJsonEcho_userApiVersionThrowsException() throws IOException {
+  void testHttpJsonEcho_userApiVersionThrowsException() throws IOException {
     StubSettings stubSettings =
         httpJsonClient
             .getSettings()
@@ -268,7 +268,7 @@ public class ITApiVersionHeaders {
   }
 
   @Test
-  public void testGrpcCompliance_userApiVersionSetSuccess() throws IOException {
+  void testGrpcCompliance_userApiVersionSetSuccess() throws IOException {
     StubSettings stubSettingsWithApiVersionHeader =
         grpcComplianceClient
             .getSettings()
@@ -293,7 +293,7 @@ public class ITApiVersionHeaders {
   }
 
   @Test
-  public void testHttpJsonCompliance_userApiVersionSetSuccess() throws IOException {
+  void testHttpJsonCompliance_userApiVersionSetSuccess() throws IOException {
     StubSettings httpJsonStubSettingsWithApiVersionHeader =
         httpJsonComplianceClient
             .getSettings()
