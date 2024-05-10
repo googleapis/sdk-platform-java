@@ -37,6 +37,7 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!-- Test dependencies -->
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
@@ -44,7 +45,6 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- Test dependencies -->
       <dependency>
         <groupId>com.google.truth</groupId>
         <artifactId>truth</artifactId>
