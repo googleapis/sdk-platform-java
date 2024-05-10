@@ -37,7 +37,7 @@ class ITNumericEnums {
   private static ComplianceClient httpjsonClient;
 
   @BeforeAll
-  public static void createClients() throws GeneralSecurityException, IOException {
+  static void createClients() throws GeneralSecurityException, IOException {
     ComplianceSettings complianceSettings =
         ComplianceSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
@@ -52,14 +52,14 @@ class ITNumericEnums {
   }
 
   @AfterAll
-  public static void destroyClients() throws InterruptedException {
+  static void destroyClients() throws InterruptedException {
     httpjsonClient.close();
     httpjsonClient.awaitTermination(
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
-  public void verifyEnums() {
+  void verifyEnums() {
     EnumRequest request = EnumRequest.newBuilder().setUnknownEnum(true).build();
     EnumResponse initialResponse = httpjsonClient.getEnum(request);
     assertEquals(initialResponse, httpjsonClient.verifyEnum(initialResponse));

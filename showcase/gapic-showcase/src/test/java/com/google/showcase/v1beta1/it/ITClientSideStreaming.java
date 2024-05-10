@@ -41,19 +41,19 @@ class ITClientSideStreaming {
   private static EchoClient grpcClient;
 
   @BeforeAll
-  public static void createClients() throws Exception {
+  static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
   }
 
   @AfterAll
-  public static void destroyClients() throws InterruptedException {
+  static void destroyClients() throws InterruptedException {
     grpcClient.close();
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testGrpc_sendStreamedContent_receiveConcatenatedResponse()
+  void testGrpc_sendStreamedContent_receiveConcatenatedResponse()
       throws ExecutionException, InterruptedException {
     CollectStreamObserver<EchoResponse> responseObserver = new CollectStreamObserver<>();
     ApiStreamObserver<EchoRequest> requestObserver =
@@ -71,7 +71,7 @@ class ITClientSideStreaming {
   }
 
   @Test
-  public void testGrpc_sendStreamedContent_handleServerError() {
+  void testGrpc_sendStreamedContent_handleServerError() {
     CollectStreamObserver<EchoResponse> responseObserver = new CollectStreamObserver<>();
     ApiStreamObserver<EchoRequest> requestObserver =
         grpcClient.collectCallable().clientStreamingCall(responseObserver);

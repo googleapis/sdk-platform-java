@@ -49,7 +49,7 @@ class ITServerSideStreaming {
   private static EchoClient httpjsonClient;
 
   @BeforeAll
-  public static void createClients() throws Exception {
+  static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
@@ -57,7 +57,7 @@ class ITServerSideStreaming {
   }
 
   @AfterAll
-  public static void destroyClients() throws InterruptedException {
+  static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();
 
@@ -67,7 +67,7 @@ class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_receiveStreamedContent() {
+  void testGrpc_receiveStreamedContent() {
     String content = "The rain in Spain stays mainly on the plain!";
     ServerStream<EchoResponse> responseStream =
         grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
@@ -84,7 +84,7 @@ class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_receiveStreamedContentStreamAPI() {
+  void testGrpc_receiveStreamedContentStreamAPI() {
     String content = "The rain in Spain stays mainly on the plain!";
     ServerStream<EchoResponse> responseStream =
         grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
@@ -96,7 +96,7 @@ class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_serverError_receiveErrorAfterLastWordInStream() {
+  void testGrpc_serverError_receiveErrorAfterLastWordInStream() {
     String content = "The rain in Spain";
     Status cancelledStatus =
         Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build();
@@ -116,7 +116,7 @@ class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_serverWaitTimeout_watchdogCancelsStream() throws Exception {
+  void testGrpc_serverWaitTimeout_watchdogCancelsStream() throws Exception {
     EchoSettings.Builder settings =
         EchoSettings.newBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
@@ -160,7 +160,7 @@ class ITServerSideStreaming {
   }
 
   @Test
-  public void testHttpJson_receiveStreamedContent() {
+  void testHttpJson_receiveStreamedContent() {
     String content = "The rain in Spain stays mainly on the plain!";
     ServerStream<EchoResponse> responseStream =
         httpjsonClient
@@ -181,7 +181,7 @@ class ITServerSideStreaming {
   @Disabled(
       value = "Ignore until https://github.com/googleapis/gapic-showcase/issues/1286 is resolved")
   @Test
-  public void testHttpJson_serverError_receiveErrorAfterLastWordInStream() {
+  void testHttpJson_serverError_receiveErrorAfterLastWordInStream() {
     String content = "The rain in Spain";
     Status cancelledStatus =
         Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build();

@@ -65,7 +65,7 @@ class ITHttpAnnotation {
   private static Map<String, Function<RepeatRequest, RepeatResponse>> validComplianceRpcMap;
 
   @BeforeAll
-  public static void createClients() throws IOException, GeneralSecurityException {
+  static void createClients() throws IOException, GeneralSecurityException {
     ComplianceSuite.Builder builder = ComplianceSuite.newBuilder();
     JsonFormat.parser()
         .merge(
@@ -109,7 +109,7 @@ class ITHttpAnnotation {
   }
 
   @AfterAll
-  public static void destroyClients() throws InterruptedException {
+  static void destroyClients() throws InterruptedException {
     httpjsonClient.close();
     httpjsonClient.awaitTermination(
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
@@ -120,7 +120,7 @@ class ITHttpAnnotation {
   // works as intended
   @ParameterizedTest
   @MethodSource("data")
-  public void testComplianceGroup(String groupName) {
+  void testComplianceGroup(String groupName) {
     Optional<ComplianceGroup> complianceGroupOptional =
         complianceSuite.getGroupList().stream()
             .filter(x -> x.getName().equals(groupName))

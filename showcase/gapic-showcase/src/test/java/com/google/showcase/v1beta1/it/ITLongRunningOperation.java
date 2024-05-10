@@ -40,7 +40,7 @@ import org.threeten.bp.temporal.ChronoUnit;
 class ITLongRunningOperation {
 
   @Test
-  public void testGRPC_LROSuccessfulResponse_doesNotExceedTotalTimeout() throws Exception {
+  void testGRPC_LROSuccessfulResponse_doesNotExceedTotalTimeout() throws Exception {
     RetrySettings initialUnaryRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(3000L))
@@ -79,7 +79,7 @@ class ITLongRunningOperation {
   }
 
   @Test
-  public void testHttpJson_LROSuccessfulResponse_doesNotExceedTotalTimeout() throws Exception {
+  void testHttpJson_LROSuccessfulResponse_doesNotExceedTotalTimeout() throws Exception {
     RetrySettings initialUnaryRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(3000L))
@@ -119,7 +119,7 @@ class ITLongRunningOperation {
   }
 
   @Test
-  public void testGRPC_LROUnsuccessfulResponse_exceedsTotalTimeout_throwsDeadlineExceededException()
+  void testGRPC_LROUnsuccessfulResponse_exceedsTotalTimeout_throwsDeadlineExceededException()
       throws Exception {
     RetrySettings initialUnaryRetrySettings =
         RetrySettings.newBuilder()
@@ -157,9 +157,8 @@ class ITLongRunningOperation {
   }
 
   @Test
-  public void
-      testHttpJson_LROUnsuccessfulResponse_exceedsTotalTimeout_throwsDeadlineExceededException()
-          throws Exception {
+  void testHttpJson_LROUnsuccessfulResponse_exceedsTotalTimeout_throwsDeadlineExceededException()
+      throws Exception {
     RetrySettings initialUnaryRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(5000L))

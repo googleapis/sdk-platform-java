@@ -42,7 +42,7 @@ import org.threeten.bp.Duration;
 class ITUnaryDeadline {
 
   @Test
-  public void testGRPC_unarySuccessfulResponse_doesNotExceedTotalTimeout() throws Exception {
+  void testGRPC_unarySuccessfulResponse_doesNotExceedTotalTimeout() throws Exception {
     RetrySettings defaultNoRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(5000L))
@@ -76,7 +76,7 @@ class ITUnaryDeadline {
   }
 
   @Test
-  public void testHttpJson_unarySuccessfulResponse_doesNotExceedTotalTimeout() throws Exception {
+  void testHttpJson_unarySuccessfulResponse_doesNotExceedTotalTimeout() throws Exception {
     RetrySettings defaultNoRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(5000L))
@@ -113,8 +113,7 @@ class ITUnaryDeadline {
   // Retry is configured by setting the initial RPC timeout (1.5s) to be less than
   // the RPC delay (2s). The next RPC timeout (3s) will wait long enough for the delay.
   @Test
-  public void testGRPC_unarySuccessfulResponse_exceedsRPCDeadlineButWithinTotalTimeout()
-      throws Exception {
+  void testGRPC_unarySuccessfulResponse_exceedsRPCDeadlineButWithinTotalTimeout() throws Exception {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(1500L))
@@ -148,7 +147,7 @@ class ITUnaryDeadline {
   // Retry is configured by setting the initial RPC timeout (1.5s) to be less than
   // the RPC delay (2s). The next RPC timeout (3s) will wait long enough for the delay.
   @Test
-  public void testHttpJson_unarySuccessfulResponse_exceedsRPCDeadlineButWithinTotalTimeout()
+  void testHttpJson_unarySuccessfulResponse_exceedsRPCDeadlineButWithinTotalTimeout()
       throws Exception {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
@@ -184,7 +183,7 @@ class ITUnaryDeadline {
   // Request is set to block for 6 seconds to allow the RPC to timeout. If retries are
   // disabled, the RPC timeout is set to be the totalTimeout (5s).
   @Test
-  public void
+  void
       testGRPC_unaryUnsuccessfulResponse_exceedsRPCTimeoutAndTotalTimeout_throwsDeadlineExceededException()
           throws Exception {
     RetrySettings defaultNoRetrySettings =
@@ -227,7 +226,7 @@ class ITUnaryDeadline {
   // Request is set to block for 6 seconds to allow the RPC to timeout. If retries are
   // disabled, the RPC timeout is set to be the totalTimeout (5s).
   @Test
-  public void
+  void
       testHttpJson_unaryUnsuccessfulResponse_exceedsRPCTimeoutAndTotalTimeout_throwsDeadlineExceededException()
           throws Exception {
     RetrySettings defaultNoRetrySettings =
@@ -274,9 +273,8 @@ class ITUnaryDeadline {
   // receive a response from the server (200ms) regardless of it was cancelled, then
   // we would expect at most 50 responses.
   @Test
-  public void
-      testGRPC_unaryCallableRetry_deadlineExecutorTimesOutRequest_throwsDeadlineExceededException()
-          throws Exception {
+  void testGRPC_unaryCallableRetry_deadlineExecutorTimesOutRequest_throwsDeadlineExceededException()
+      throws Exception {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(100L))
@@ -324,7 +322,7 @@ class ITUnaryDeadline {
   // receive a response from the server (200ms) regardless of it was cancelled, then
   // we would expect at most 50 responses.
   @Test
-  public void
+  void
       testHttpJson_unaryCallableRetry_deadlineExecutorTimesOutRequest_throwsDeadlineExceededException()
           throws Exception {
     RetrySettings defaultRetrySettings =

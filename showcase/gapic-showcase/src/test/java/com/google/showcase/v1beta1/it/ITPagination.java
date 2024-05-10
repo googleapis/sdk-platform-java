@@ -33,7 +33,7 @@ class ITPagination {
   private static EchoClient httpjsonClient;
 
   @BeforeAll
-  public static void createClients() throws Exception {
+  static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
@@ -41,7 +41,7 @@ class ITPagination {
   }
 
   @AfterAll
-  public static void destroyClients() throws InterruptedException {
+  static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();
 
@@ -60,7 +60,7 @@ class ITPagination {
   // Page #  | - | -       | -   | 1     | 1     | 2     | 2   | 3     | 3     | 4   | 4   | 5
   // Token # | 0 | 1       | 2   | 3     | 4     | 5     | 6   | 7     | 8     | 9   | 10  | 11
   @Test
-  public void testPagedExpandWithTokenGrpc() {
+  void testPagedExpandWithTokenGrpc() {
     int pageSize = 2;
     int pageToken = 3;
     String content = "A series of words that will be sent back one by one";
@@ -97,7 +97,7 @@ class ITPagination {
   // Page #  | - | -       | -   | 1     | 1     | 2     | 2   | 3     | 3     | 4   | 4   | 5
   // Token # | 0 | 1       | 2   | 3     | 4     | 5     | 6   | 7     | 8     | 9   | 10  | 11
   @Test
-  public void testPagedExpandWithTokenHttpJson() {
+  void testPagedExpandWithTokenHttpJson() {
     int pageSize = 2;
     int pageToken = 3;
     String content = "A series of words that will be sent back one by one";

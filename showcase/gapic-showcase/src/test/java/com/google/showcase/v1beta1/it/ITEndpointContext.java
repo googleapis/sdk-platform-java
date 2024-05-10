@@ -222,7 +222,7 @@ class ITEndpointContext {
   private EchoClient echoClient;
 
   @AfterEach
-  public void cleanup() throws InterruptedException {
+  void cleanup() throws InterruptedException {
     if (echoClient != null) {
       echoClient.close();
       echoClient.awaitTermination(
@@ -232,7 +232,7 @@ class ITEndpointContext {
 
   // Default (no configuration)
   @Test
-  public void endpointResolution_default() throws IOException {
+  void endpointResolution_default() throws IOException {
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
             .setCredentialsProvider(UniverseDomainCredentialsProvider.create())
@@ -245,7 +245,7 @@ class ITEndpointContext {
 
   // User configuration
   @Test
-  public void endpointResolution_userSetEndpoint() throws IOException {
+  void endpointResolution_userSetEndpoint() throws IOException {
     String customEndpoint = "test.com:123";
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
@@ -259,7 +259,7 @@ class ITEndpointContext {
   }
 
   @Test
-  public void endpointResolution_userSetUniverseDomainAndNoUserSetEndpoint() throws IOException {
+  void endpointResolution_userSetUniverseDomainAndNoUserSetEndpoint() throws IOException {
     String customUniverseDomain = "random.com";
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
@@ -273,7 +273,7 @@ class ITEndpointContext {
   }
 
   @Test
-  public void endpointResolution_userSetEndpointAndUniverseDomain() throws IOException {
+  void endpointResolution_userSetEndpointAndUniverseDomain() throws IOException {
     String customEndpoint = "custom.endpoint.com:443";
     String customUniverseDomain = "random.com";
     EchoSettings echoSettings =
@@ -291,7 +291,7 @@ class ITEndpointContext {
   }
 
   @Test
-  public void universeDomainValidation_credentialsGDU_noUserConfiguration() throws IOException {
+  void universeDomainValidation_credentialsGDU_noUserConfiguration() throws IOException {
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
             .setCredentialsProvider(UniverseDomainCredentialsProvider.create())
@@ -308,7 +308,7 @@ class ITEndpointContext {
   }
 
   @Test
-  public void universeDomainValidation_credentialsNonGDU_noUserConfiguration() throws IOException {
+  void universeDomainValidation_credentialsNonGDU_noUserConfiguration() throws IOException {
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
             .setCredentialsProvider(UniverseDomainCredentialsProvider.create("random.com"))
@@ -328,8 +328,7 @@ class ITEndpointContext {
   }
 
   @Test
-  public void universeDomainValidation_credentialsNonGDUMatchesUserConfiguration()
-      throws IOException {
+  void universeDomainValidation_credentialsNonGDUMatchesUserConfiguration() throws IOException {
     String universeDomain = "random.com";
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
@@ -348,7 +347,7 @@ class ITEndpointContext {
   }
 
   @Test
-  public void universeDomainValidation_credentialsNonGDUDoesNotMatchUserConfiguration()
+  void universeDomainValidation_credentialsNonGDUDoesNotMatchUserConfiguration()
       throws IOException {
     String universeDomain = "random.com";
     String userConfigurationUniverseDomain = "test.com";
@@ -373,7 +372,7 @@ class ITEndpointContext {
 
   // This test uses NoCredentialsProvider (will default to GDU)
   @Test
-  public void universeDomainValidation_noCredentials_noUserSetUniverseDomain() throws IOException {
+  void universeDomainValidation_noCredentials_noUserSetUniverseDomain() throws IOException {
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
@@ -391,7 +390,7 @@ class ITEndpointContext {
 
   // This test uses NoCredentialsProvider (will default to GDU)
   @Test
-  public void universeDomainValidation_noCredentials_userSetUniverseDomain() throws IOException {
+  void universeDomainValidation_noCredentials_userSetUniverseDomain() throws IOException {
     String universeDomain = "random.com";
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
@@ -414,7 +413,7 @@ class ITEndpointContext {
 
   // Default in Builder (no configuration)
   @Test
-  public void endpointResolution_defaultViaBuilder() {
+  void endpointResolution_defaultViaBuilder() {
     EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();
     // `StubSettings.newBuilder()` will return the clientSettingsEndpoint
     Truth.assertThat(echoSettingsBuilder.getEndpoint()).isEqualTo(null);
@@ -422,7 +421,7 @@ class ITEndpointContext {
 
   // User configuration in Builder
   @Test
-  public void endpointResolution_userConfigurationViaBuilder() {
+  void endpointResolution_userConfigurationViaBuilder() {
     EchoSettings.Builder echoSettingsBuilder =
         EchoSettings.newBuilder().setEndpoint("test.com:123");
     // `StubSettings.newBuilder()` will return the clientSettingsEndpoint
@@ -430,7 +429,7 @@ class ITEndpointContext {
   }
 
   @Test
-  public void endpointResolution_builderBuilderBackToBuilder() throws IOException {
+  void endpointResolution_builderBuilderBackToBuilder() throws IOException {
     String customEndpoint = "test.com:123";
     EchoStubSettings.Builder echoStubSettingsBuilder =
         EchoStubSettings.newBuilder().setEndpoint(customEndpoint);

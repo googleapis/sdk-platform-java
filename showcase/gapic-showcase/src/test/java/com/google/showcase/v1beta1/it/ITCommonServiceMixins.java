@@ -57,7 +57,7 @@ class ITCommonServiceMixins {
   private static EchoClient httpjsonClient;
 
   @BeforeAll
-  public static void createClients() throws Exception {
+  static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
 
@@ -66,7 +66,7 @@ class ITCommonServiceMixins {
   }
 
   @AfterAll
-  public static void destroyClients() throws InterruptedException {
+  static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();
 
@@ -76,7 +76,7 @@ class ITCommonServiceMixins {
   }
 
   @Test
-  public void testGrpc_getLocation() {
+  void testGrpc_getLocation() {
     GetLocationRequest request =
         GetLocationRequest.newBuilder().setName("projects/showcase/location/us-central1").build();
     Location location = grpcClient.getLocation(request);
@@ -89,7 +89,7 @@ class ITCommonServiceMixins {
   }
 
   @Test
-  public void testGrpc_listLocations() {
+  void testGrpc_listLocations() {
     ListLocationsRequest request =
         ListLocationsRequest.newBuilder().setName("projects/showcase").build();
     EchoClient.ListLocationsPagedResponse locationsPagedResponse =
@@ -104,7 +104,7 @@ class ITCommonServiceMixins {
   }
 
   @Test
-  public void testHttpJson_getLocation() {
+  void testHttpJson_getLocation() {
     GetLocationRequest request =
         GetLocationRequest.newBuilder().setName("projects/showcase/locations/us-central1").build();
     Location location = httpjsonClient.getLocation(request);
@@ -117,7 +117,7 @@ class ITCommonServiceMixins {
   }
 
   @Test
-  public void testHttpJson_listLocations() {
+  void testHttpJson_listLocations() {
     ListLocationsRequest request =
         ListLocationsRequest.newBuilder().setName("projects/showcase").build();
     EchoClient.ListLocationsPagedResponse locationsPagedResponse =

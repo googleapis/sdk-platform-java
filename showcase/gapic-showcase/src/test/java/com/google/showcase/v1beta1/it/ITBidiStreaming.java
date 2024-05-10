@@ -39,13 +39,13 @@ class ITBidiStreaming {
   private static EchoClient grpcClient;
 
   @BeforeAll
-  public static void createClients() throws Exception {
+  static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
   }
 
   @AfterAll
-  public static void destroyClients() throws Exception {
+  static void destroyClients() throws Exception {
     grpcClient.close();
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
@@ -57,7 +57,7 @@ class ITBidiStreaming {
   // three requests, respond twice for every request etc. If that happens, the response content may
   // not be exactly the same as request content.
   @Test
-  public void testGrpc_splitCall_shouldListensToResponse() throws Exception {
+  void testGrpc_splitCall_shouldListensToResponse() throws Exception {
     // given
     List<String> expected = Arrays.asList("The rain in Spain stays mainly on the plain".split(" "));
     TestResponseObserver responseObserver = new TestResponseObserver();

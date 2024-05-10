@@ -46,13 +46,13 @@ class ITIam {
   private String resourceName;
 
   @BeforeAll
-  public static void createClients() throws Exception {
+  static void createClients() throws Exception {
     grpcClient = TestClientInitializer.createGrpcIdentityClient();
     httpjsonClient = TestClientInitializer.createHttpJsonIdentityClient();
   }
 
   @BeforeEach
-  public void setupTests() {
+  void setupTests() {
     resourceName = "users/" + UUID.randomUUID().toString().substring(0, 8);
   }
 
@@ -67,7 +67,7 @@ class ITIam {
   }
 
   @Test
-  public void testGrpc_setIamPolicy() {
+  void testGrpc_setIamPolicy() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
@@ -78,7 +78,7 @@ class ITIam {
   }
 
   @Test
-  public void testHttpJson_setIamPolicy() {
+  void testHttpJson_setIamPolicy() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
@@ -89,7 +89,7 @@ class ITIam {
   }
 
   @Test
-  public void testGrpc_getIamPolicy() {
+  void testGrpc_getIamPolicy() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
@@ -104,7 +104,7 @@ class ITIam {
   }
 
   @Test
-  public void testHttpJson_getIamPolicy() {
+  void testHttpJson_getIamPolicy() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
@@ -119,7 +119,7 @@ class ITIam {
   }
 
   @Test
-  public void testGrpc_testIamPermissions() {
+  void testGrpc_testIamPermissions() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
@@ -140,7 +140,7 @@ class ITIam {
   }
 
   @Test
-  public void testHttpJson_testIamPermissions() {
+  void testHttpJson_testIamPermissions() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
@@ -165,14 +165,14 @@ class ITIam {
   // cases, and we simply assert that an exception has been thrown for a single case with a single
   // RPC (No resource in the request for SetIamPolicy's RPC).
   @Test
-  public void testGrpc_iamThrowsException() {
+  void testGrpc_iamThrowsException() {
     SetIamPolicyRequest setIamPolicyRequest = SetIamPolicyRequest.newBuilder().build();
     assertThrows(
         InvalidArgumentException.class, () -> grpcClient.setIamPolicy(setIamPolicyRequest));
   }
 
   @Test
-  public void testHttpJson_iamThrowsException() {
+  void testHttpJson_iamThrowsException() {
     SetIamPolicyRequest setIamPolicyRequest = SetIamPolicyRequest.newBuilder().build();
     assertThrows(
         InvalidArgumentException.class, () -> httpjsonClient.setIamPolicy(setIamPolicyRequest));

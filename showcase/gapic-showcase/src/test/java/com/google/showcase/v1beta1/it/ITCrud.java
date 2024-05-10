@@ -68,7 +68,7 @@ class ITCrud {
   }
 
   @BeforeEach
-  public void cleanupData() {
+  void cleanupData() {
     IdentityClient.ListUsersPagedResponse pagedResponse =
         grpcClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
     for (IdentityClient.ListUsersPage listUsersPage : pagedResponse.iteratePages()) {
@@ -81,7 +81,7 @@ class ITCrud {
   }
 
   @Test
-  public void testHttpJson_Create() {
+  void testHttpJson_Create() {
     User userResponse = createDefaultUser();
 
     // These properties should be the same
@@ -99,7 +99,7 @@ class ITCrud {
   }
 
   @Test
-  public void testHttpJson_Read() {
+  void testHttpJson_Read() {
     List<User> expectedUsersList =
         ImmutableList.of(
             createDefaultUser(),
@@ -126,7 +126,7 @@ class ITCrud {
   }
 
   @Test
-  public void testHttpJson_Update() {
+  void testHttpJson_Update() {
     User userResponse = createDefaultUser();
     // Update multiple fields in the User. Age + Nickname are not included in the FieldMask
     // userResponse's enableNotifications field is populated from the server
@@ -161,7 +161,7 @@ class ITCrud {
   }
 
   @Test
-  public void testHttpJson_Delete() {
+  void testHttpJson_Delete() {
     User userResponse = createDefaultUser();
 
     httpjsonClient.deleteUser(

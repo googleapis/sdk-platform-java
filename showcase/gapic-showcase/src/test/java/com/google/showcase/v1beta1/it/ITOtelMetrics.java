@@ -142,7 +142,7 @@ class ITOtelMetrics {
   }
 
   @BeforeEach
-  public void setup() throws Exception {
+  void setup() throws Exception {
     inMemoryMetricReader = InMemoryMetricReader.create();
     OpenTelemetryMetricsRecorder otelMetricsRecorder =
         createOtelMetricsRecorder(inMemoryMetricReader);
@@ -155,7 +155,7 @@ class ITOtelMetrics {
   }
 
   @AfterEach
-  public void cleanup() throws InterruptedException {
+  void cleanup() throws InterruptedException {
     inMemoryMetricReader.shutdown();
 
     grpcClient.close();
@@ -290,7 +290,7 @@ class ITOtelMetrics {
   }
 
   @Test
-  public void testGrpc_operationSucceeded_recordsMetrics() throws InterruptedException {
+  void testGrpc_operationSucceeded_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
     EchoRequest echoRequest =
         EchoRequest.newBuilder().setContent("test_grpc_operation_succeeded").build();
@@ -313,7 +313,7 @@ class ITOtelMetrics {
 
   @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
-  public void testHttpJson_operationSucceeded_recordsMetrics() throws InterruptedException {
+  void testHttpJson_operationSucceeded_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
     EchoRequest echoRequest =
         EchoRequest.newBuilder().setContent("test_http_operation_succeeded").build();
@@ -335,7 +335,7 @@ class ITOtelMetrics {
   }
 
   @Test
-  public void testGrpc_operationCancelled_recordsMetrics() throws Exception {
+  void testGrpc_operationCancelled_recordsMetrics() throws Exception {
     int attemptCount = 1;
     BlockRequest blockRequest =
         BlockRequest.newBuilder()
@@ -366,7 +366,7 @@ class ITOtelMetrics {
 
   @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
-  public void testHttpJson_operationCancelled_recordsMetrics() throws Exception {
+  void testHttpJson_operationCancelled_recordsMetrics() throws Exception {
     int attemptCount = 1;
     BlockRequest blockRequest =
         BlockRequest.newBuilder().setResponseDelay(Duration.newBuilder().setSeconds(5)).build();
@@ -393,7 +393,7 @@ class ITOtelMetrics {
   }
 
   @Test
-  public void testGrpc_operationFailed_recordsMetrics() throws InterruptedException {
+  void testGrpc_operationFailed_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
     Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
@@ -423,7 +423,7 @@ class ITOtelMetrics {
 
   @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
-  public void testHttpJson_operationFailed_recordsMetrics() throws InterruptedException {
+  void testHttpJson_operationFailed_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
     Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
@@ -452,7 +452,7 @@ class ITOtelMetrics {
   }
 
   @Test
-  public void testGrpc_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
+  void testGrpc_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
     int attemptCount = 3;
     Code statusCode = Code.UNAVAILABLE;
     // A custom EchoClient is used in this test because retries have jitter, and we cannot
@@ -519,7 +519,7 @@ class ITOtelMetrics {
 
   @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
-  public void testHttpJson_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
+  void testHttpJson_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
     int attemptCount = 3;
     Code statusCode = Code.UNAVAILABLE;
     // A custom EchoClient is used in this test because retries have jitter, and we cannot
@@ -586,7 +586,7 @@ class ITOtelMetrics {
   }
 
   @Test
-  public void testGrpc_attemptPermanentFailure_recordsMetrics() throws InterruptedException {
+  void testGrpc_attemptPermanentFailure_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
     Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
@@ -614,7 +614,7 @@ class ITOtelMetrics {
 
   @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
-  public void testHttpJson_attemptPermanentFailure_recordsMetrics() throws InterruptedException {
+  void testHttpJson_attemptPermanentFailure_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
     Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
@@ -641,7 +641,7 @@ class ITOtelMetrics {
   }
 
   @Test
-  public void testGrpc_multipleFailedAttempts_successfulOperation() throws Exception {
+  void testGrpc_multipleFailedAttempts_successfulOperation() throws Exception {
     int attemptCount = 3;
     // Disable Jitter on this test to try and ensure that the there are 3 attempts made
     // for test. The first two calls should result in a DEADLINE_EXCEEDED exception as
@@ -715,7 +715,7 @@ class ITOtelMetrics {
 
   @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
-  public void testHttpJson_multipleFailedAttempts_successfulOperation() throws Exception {
+  void testHttpJson_multipleFailedAttempts_successfulOperation() throws Exception {
     int attemptCount = 3;
     RetrySettings retrySettings =
         RetrySettings.newBuilder()

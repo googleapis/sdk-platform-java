@@ -36,7 +36,7 @@ class ITClientShutdown {
   // Test to ensure the client can close + terminate properly
   @Test
   @Timeout(15)
-  public void testGrpc_closeClient() throws Exception {
+  void testGrpc_closeClient() throws Exception {
     EchoClient grpcClient = TestClientInitializer.createGrpcEchoClient();
     assertClientTerminated(grpcClient);
   }
@@ -44,7 +44,7 @@ class ITClientShutdown {
   // Test to ensure the client can close + terminate properly
   @Test
   @Timeout(15)
-  public void testHttpJson_closeClient() throws Exception {
+  void testHttpJson_closeClient() throws Exception {
     EchoClient httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
     assertClientTerminated(httpjsonClient);
   }
@@ -52,7 +52,7 @@ class ITClientShutdown {
   // Test to ensure the client can close + terminate after a quick RPC invocation
   @Test
   @Timeout(15)
-  public void testGrpc_rpcInvoked_closeClient() throws Exception {
+  void testGrpc_rpcInvoked_closeClient() throws Exception {
     EchoClient grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Response is ignored for this test
     grpcClient.echo(EchoRequest.newBuilder().setContent("Test").build());
@@ -62,7 +62,7 @@ class ITClientShutdown {
   // Test to ensure the client can close + terminate after a quick RPC invocation
   @Test
   @Timeout(15)
-  public void testHttpJson_rpcInvoked_closeClient() throws Exception {
+  void testHttpJson_rpcInvoked_closeClient() throws Exception {
     EchoClient httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
     // Response is ignored for this test
     httpjsonClient.echo(EchoRequest.newBuilder().setContent("Test").build());
@@ -74,8 +74,7 @@ class ITClientShutdown {
   // the test does not continue on forever.
   @Test
   @Timeout(15)
-  public void testGrpc_rpcInvokedWithLargeTimeout_closeClientOnceResponseReceived()
-      throws Exception {
+  void testGrpc_rpcInvokedWithLargeTimeout_closeClientOnceResponseReceived() throws Exception {
     // Set the maxAttempts to 1 to ensure there are no retries scheduled. The single RPC
     // invocation should time out in 15s, but the client will receive a response in 2s.
     // Any outstanding tasks (timeout tasks) should be cancelled once a response has been
@@ -108,8 +107,7 @@ class ITClientShutdown {
   // the test does not continue on forever.
   @Test
   @Timeout(15)
-  public void testHttpJson_rpcInvokedWithLargeTimeout_closeClientOnceResponseReceived()
-      throws Exception {
+  void testHttpJson_rpcInvokedWithLargeTimeout_closeClientOnceResponseReceived() throws Exception {
     // Set the maxAttempts to 1 to ensure there are no retries scheduled. The single RPC
     // invocation should time out in 15s, but the client will receive a response in 2s.
     // Any outstanding tasks (timeout tasks) should be cancelled once a response has been

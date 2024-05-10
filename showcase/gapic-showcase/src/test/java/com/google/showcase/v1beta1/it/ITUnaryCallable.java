@@ -39,7 +39,7 @@ class ITUnaryCallable {
   private static EchoClient httpjsonClient;
 
   @BeforeAll
-  public static void createClients() throws Exception {
+  static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
@@ -47,7 +47,7 @@ class ITUnaryCallable {
   }
 
   @AfterAll
-  public static void destroyClients() throws InterruptedException {
+  static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();
 
@@ -57,13 +57,13 @@ class ITUnaryCallable {
   }
 
   @Test
-  public void testGrpc_receiveContent() {
+  void testGrpc_receiveContent() {
     assertThat(echoGrpc("grpc-echo?")).isEqualTo("grpc-echo?");
     assertThat(echoGrpc("grpc-echo!")).isEqualTo("grpc-echo!");
   }
 
   @Test
-  public void testGrpc_serverResponseError_throwsException() {
+  void testGrpc_serverResponseError_throwsException() {
     Status cancelledStatus =
         Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build();
     EchoRequest requestWithServerError = EchoRequest.newBuilder().setError(cancelledStatus).build();
@@ -73,13 +73,13 @@ class ITUnaryCallable {
   }
 
   @Test
-  public void testHttpJson_receiveContent() {
+  void testHttpJson_receiveContent() {
     assertThat(echoHttpJson("http-echo?")).isEqualTo("http-echo?");
     assertThat(echoHttpJson("http-echo!")).isEqualTo("http-echo!");
   }
 
   @Test
-  public void testHttpJson_serverResponseError_throwsException() {
+  void testHttpJson_serverResponseError_throwsException() {
     EchoRequest requestWithServerError =
         EchoRequest.newBuilder()
             .setError(Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build())

@@ -75,7 +75,7 @@ class ITGdch {
   private URI tokenUri;
 
   @BeforeEach
-  public void setup(@TempDir Path tempDir) throws IOException, URISyntaxException {
+  void setup(@TempDir Path tempDir) throws IOException, URISyntaxException {
     transportFactory = new InterceptingMockTokenServerTransportFactory();
     prepareCredentials(tempDir);
     settings =
@@ -85,7 +85,7 @@ class ITGdch {
   }
 
   @AfterEach
-  public void tearDown() throws InterruptedException {
+  void tearDown() throws InterruptedException {
     if (client != null) {
       client.close();
       client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
@@ -131,7 +131,7 @@ class ITGdch {
    * @throws IOException
    */
   @Test
-  public void testCreateClient_withGdchCredentialAndNoAudience_defaultsToEndpointBasedAudience()
+  void testCreateClient_withGdchCredentialAndNoAudience_defaultsToEndpointBasedAudience()
       throws IOException {
 
     // we create the client as usual - no audience passed
@@ -176,9 +176,8 @@ class ITGdch {
    * @throws IOException
    */
   @Test
-  public void
-      testCreateClient_withGdchCredentialWithValidAudience_usesCredentialWithPassedAudience()
-          throws IOException {
+  void testCreateClient_withGdchCredentialWithValidAudience_usesCredentialWithPassedAudience()
+      throws IOException {
 
     // Similar to the previous test, create a client as usual but this time we pass a explicit
     // audience. It should
