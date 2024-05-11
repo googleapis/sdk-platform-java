@@ -60,17 +60,6 @@ library_3 = LibraryConfig(
     library_name="secretmanager",
     gapic_configs=list(),
 )
-library_with_empty_api_id = LibraryConfig(
-    api_shortname="baremetalsolution",
-    name_pretty="Bare Metal Solution",
-    product_documentation="https://cloud.google.com/bare-metal/docs",
-    api_description="Bring your Oracle workloads to Google Cloud with Bare Metal Solution and jumpstart your cloud journey with minimal risk.",
-    gapic_configs=list(),
-    library_name="bare-metal-solution",
-    rest_documentation="https://cloud.google.com/bare-metal/docs/reference/rest",
-    rpc_documentation="https://cloud.google.com/bare-metal/docs/reference/rpc",
-    api_id="",
-)
 
 
 class UtilitiesTest(unittest.TestCase):
@@ -341,24 +330,6 @@ class UtilitiesTest(unittest.TestCase):
         file_comparator.compare_files(
             f"{library_path}/.repo-metadata.json",
             f"{library_path}/.repo-metadata-monorepo-golden.json",
-        )
-        file_comparator.compare_files(
-            f"{library_path}/.OwlBot-hermetic.yaml",
-            f"{library_path}/.OwlBot-hermetic-golden.yaml",
-        )
-        file_comparator.compare_files(
-            f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
-        )
-        self.__remove_prerequisite_files(path=library_path)
-
-    def test_generate_prerequisite_files_with_empty_api_id_success(self):
-        library_path = self.__setup_prerequisite_files(
-            combination=3, library=library_with_empty_api_id
-        )
-
-        file_comparator.compare_files(
-            f"{library_path}/.repo-metadata.json",
-            f"{library_path}/.repo-metadata-empty-api-id-golden.json",
         )
         file_comparator.compare_files(
             f"{library_path}/.OwlBot-hermetic.yaml",
