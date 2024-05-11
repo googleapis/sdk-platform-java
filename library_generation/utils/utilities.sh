@@ -31,13 +31,11 @@ mv_src_files() {
   local category=$1 # one of gapic, proto, samples
   local type=$2 # one of main, test
   local destination_path=$3
-  local samples_suffix=$4 # one of com, io (grafeas)
-  if [ -z "${samples_suffix}" ]; then
-    samples_suffix="com"
-  fi
   if [ "${category}" == "samples" ]; then
-    src_suffix="samples/snippets/generated/src/main/java/${samples_suffix}"
+    src_suffix="samples/snippets/generated/src/main/java"
     folder_suffix="samples/snippets/generated"
+    mkdir -p "${destination_path}/${folder_suffix}"
+    cp -r "${destination_path}/java_gapic_srcjar/${src_suffix}"/* "${destination_path}/${folder_suffix}"
   elif [ "${category}" == "proto" ]; then
     src_suffix="${category}/src/${type}/java"
     folder_suffix="${category}-${folder_name}/src/${type}"
@@ -45,11 +43,14 @@ mv_src_files() {
     src_suffix="src/${type}"
     folder_suffix="${category}-${folder_name}/src"
   fi
+
+  if [ "${category}" == "samples" ]; then
+    exit
+  fi
+
   mkdir -p "${destination_path}/${folder_suffix}"
   cp -r "${destination_path}/java_gapic_srcjar/${src_suffix}" "${destination_path}/${folder_suffix}"
-  if [ "${category}" != "samples" ]; then
-    rm -r -f "${destination_path}/${folder_suffix}/java/META-INF"
-  fi
+  rm -r -f "${destination_path}/${folder_suffix}/java/META-INF"
 }
 
 # unzip jar file

@@ -113,28 +113,67 @@ class UtilitiesTest(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             result = util.sh_util("nonexistent_function")
 
-    def test_mv_src_files_sample_suffix_io_succeeds(self):
+    def test_mv_src_files_gapic_main_succeeds(self):
         previous_dir = os.getcwd()
-        os.chdir(f"{resources_dir}/test_mv_src")
-        util.sh_util("mv_src_files samples main destination io")
+        os.chdir(f"{resources_dir}/test_mv_src/gapic")
+        os.environ["folder_name"] = "example"
+        util.sh_util("mv_src_files gapic main destination")
         self.assertTrue(
             os.path.isfile(
-                "destination/samples/snippets/generated/io/example_io_sample.txt"
+                "destination/gapic-example/src/main/java/example_main.txt"
             )
         )
-        shutil.rmtree("destination/samples")
+        shutil.rmtree("destination/gapic-example")
+        os.chdir(previous_dir)
+
+    def test_mv_src_files_gapic_test_succeeds(self):
+        previous_dir = os.getcwd()
+        os.chdir(f"{resources_dir}/test_mv_src/gapic")
+        os.environ["folder_name"] = "example"
+        util.sh_util("mv_src_files gapic test destination")
+        self.assertTrue(
+            os.path.isfile(
+                "destination/gapic-example/src/test/java/example_test.txt"
+            )
+        )
+        shutil.rmtree("destination/gapic-example")
+        os.chdir(previous_dir)
+
+    def test_mv_src_files_proto_main_succeeds(self):
+        previous_dir = os.getcwd()
+        os.chdir(f"{resources_dir}/test_mv_src/proto")
+        os.environ["folder_name"] = "example"
+        util.sh_util("mv_src_files proto main destination")
+        self.assertTrue(
+            os.path.isfile(
+                "destination/proto-example/src/main/java/example_proto_main.txt"
+            )
+        )
+        shutil.rmtree("destination/proto-example")
+        os.chdir(previous_dir)
+
+    def test_mv_src_files_sample_suffix_io_succeeds(self):
+        previous_dir = os.getcwd()
+        os.chdir(f"{resources_dir}/test_mv_src/samples")
+        util.sh_util("mv_src_files samples main destination_io")
+        self.assertTrue(
+            os.path.isfile(
+                "destination_io/samples/snippets/generated/io/example_io_sample.txt"
+            )
+        )
+        shutil.rmtree("destination_io/samples")
         os.chdir(previous_dir)
 
     def test_mv_src_files_sample_suffix_com_succeeds(self):
         previous_dir = os.getcwd()
-        os.chdir(f"{resources_dir}/test_mv_src")
-        util.sh_util("mv_src_files samples main destination")
+        os.chdir(f"{resources_dir}/test_mv_src/samples")
+        util.sh_util("mv_src_files samples main destination_com")
         self.assertTrue(
             os.path.isfile(
-                "destination/samples/snippets/generated/com/example_com_sample.txt"
+                "destination_com/samples/snippets/generated/com/example_com_sample.txt"
             )
         )
-        shutil.rmtree("destination/samples")
+        shutil.rmtree("destination_com/samples")
         os.chdir(previous_dir)
 
     def test_eprint_valid_input_succeeds(self):
