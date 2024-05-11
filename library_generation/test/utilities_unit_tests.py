@@ -119,9 +119,7 @@ class UtilitiesTest(unittest.TestCase):
         os.environ["folder_name"] = "example"
         util.sh_util("mv_src_files gapic main destination")
         self.assertTrue(
-            os.path.isfile(
-                "destination/gapic-example/src/main/java/example_main.txt"
-            )
+            os.path.isfile("destination/gapic-example/src/main/java/example_main.txt")
         )
         shutil.rmtree("destination/gapic-example")
         os.chdir(previous_dir)
@@ -132,9 +130,7 @@ class UtilitiesTest(unittest.TestCase):
         os.environ["folder_name"] = "example"
         util.sh_util("mv_src_files gapic test destination")
         self.assertTrue(
-            os.path.isfile(
-                "destination/gapic-example/src/test/java/example_test.txt"
-            )
+            os.path.isfile("destination/gapic-example/src/test/java/example_test.txt")
         )
         shutil.rmtree("destination/gapic-example")
         os.chdir(previous_dir)

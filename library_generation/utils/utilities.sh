@@ -45,7 +45,7 @@ mv_src_files() {
   fi
 
   if [ "${category}" == "samples" ]; then
-    exit
+    return
   fi
 
   mkdir -p "${destination_path}/${folder_suffix}"
