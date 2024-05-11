@@ -53,6 +53,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -513,13 +514,13 @@ public final class HttpJsonCallContext implements ApiCallContext {
   @Nullable
   @ObsoleteApi("Use getDeadlineInstant() instead")
   public org.threeten.bp.Instant getDeadline() {
-    return getCallOptions() != null ? getCallOptions().getDeadline() : null;
+    return toThreetenInstant(getDeadlineInstant());
   }
 
   @Deprecated
   @Nullable
   public java.time.Instant getDeadlineInstant() {
-    return toJavaTimeInstant(getDeadline());
+    return getCallOptions() != null ? getCallOptions().getDeadlineInstant() : null;
   }
 
   @Deprecated
@@ -600,18 +601,18 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.endpointContext);
   }
 
-  /** Backport of {@link #withDeadline(java.time.Instant)} using {@link org.threeten.bp.Instant} */
+  /** Backport of {@link #withDeadlineInstant(java.time.Instant)} using {@link org.threeten.bp.Instant} */
   @Deprecated
   @ObsoleteApi("Use withDeadline(java.time.Instant) instead")
   public HttpJsonCallContext withDeadline(org.threeten.bp.Instant newDeadline) {
-    HttpJsonCallOptions.Builder builder =
-        callOptions != null ? callOptions.toBuilder() : HttpJsonCallOptions.newBuilder();
-    return withCallOptions(builder.setDeadline(newDeadline).build());
+    return withDeadlineInstant(toJavaTimeInstant(newDeadline));
   }
 
   @Deprecated
-  public HttpJsonCallContext withDeadline(java.time.Instant newDeadline) {
-    return withDeadline(toThreetenInstant(newDeadline));
+  public HttpJsonCallContext withDeadlineInstant(java.time.Instant newDeadline) {
+    HttpJsonCallOptions.Builder builder =
+            callOptions != null ? callOptions.toBuilder() : HttpJsonCallOptions.newBuilder();
+    return withCallOptions(builder.setDeadlineInstant(newDeadline).build());
   }
 
   @Nonnull

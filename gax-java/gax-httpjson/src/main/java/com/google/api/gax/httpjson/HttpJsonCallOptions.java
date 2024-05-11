@@ -47,21 +47,21 @@ public abstract class HttpJsonCallOptions {
 
   @Nullable
   @ObsoleteApi("Use getTimeoutDuration() instead")
-  public abstract org.threeten.bp.Duration getTimeout();
+  public final org.threeten.bp.Duration getTimeout() {
+    return toThreetenDuration(getTimeoutDuration());
+  }
 
   @Nullable
-  public java.time.Duration getTimeoutDuration() {
-    return toJavaTimeDuration(getTimeout());
-  }
+  public abstract java.time.Duration getTimeoutDuration();
 
   @Nullable
   @ObsoleteApi("Use getDeadlineInstant() instead")
-  public abstract org.threeten.bp.Instant getDeadline();
+  public final org.threeten.bp.Instant getDeadline() {
+    return toThreetenInstant(getDeadlineInstant());
+  }
 
   @Nullable
-  public final java.time.Instant getDeadlineInstant() {
-    return toJavaTimeInstant(getDeadline());
-  }
+  public abstract java.time.Instant getDeadlineInstant();
 
   @Nullable
   public abstract Credentials getCredentials();
@@ -111,19 +111,19 @@ public abstract class HttpJsonCallOptions {
   public abstract static class Builder {
     /** Backport of {@link #setTimeoutDuration(java.time.Duration)} */
     @ObsoleteApi("Use setTimeoutDuration(java.time.Duration) instead")
-    public abstract Builder setTimeout(org.threeten.bp.Duration value);
-
-    public Builder setTimeoutDuration(java.time.Duration value) {
-      return setTimeout(toThreetenDuration(value));
+    public final Builder setTimeout(org.threeten.bp.Duration value) {
+      return setTimeoutDuration(toJavaTimeDuration(value));
     }
+
+    public abstract Builder setTimeoutDuration(java.time.Duration value);
 
     /** Backport of {@link #setDeadlineInstant(java.time.Instant)} */
     @ObsoleteApi("Use setDeadlineInstant(java.time.Instant) instead")
-    public abstract Builder setDeadline(org.threeten.bp.Instant value);
-
-    public final Builder setDeadlineInstant(java.time.Instant value) {
-      return setDeadline(toThreetenInstant(value));
+    public final Builder setDeadline(org.threeten.bp.Instant value) {
+      return setDeadlineInstant(toJavaTimeInstant(value));
     }
+
+    public abstract Builder setDeadlineInstant(java.time.Instant value);
 
     public abstract Builder setCredentials(Credentials value);
 

@@ -107,12 +107,12 @@ public abstract class ClientContext {
    */
   @Nonnull
   @ObsoleteApi("Use getStreamWatchdogCheckIntervalDuration() instead")
-  public abstract org.threeten.bp.Duration getStreamWatchdogCheckInterval();
+  public final org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
+    return toThreetenDuration(getStreamWatchdogCheckIntervalDuration());
+  }
 
   @Nonnull
-  public final java.time.Duration getStreamWatchdogCheckIntervalDuration() {
-    return toJavaTimeDuration(getStreamWatchdogCheckInterval());
-  }
+  public abstract java.time.Duration getStreamWatchdogCheckIntervalDuration();
 
   @Nullable
   public abstract String getUniverseDomain();
@@ -362,11 +362,11 @@ public abstract class ClientContext {
 
     /** Backport of {@link #setStreamWatchdogCheckIntervalDuration(java.time.Duration)} */
     @ObsoleteApi("Use setStreamWatchdogCheckIntervalDuration(java.time.Duration) instead")
-    public abstract Builder setStreamWatchdogCheckInterval(org.threeten.bp.Duration duration);
-
-    public final Builder setStreamWatchdogCheckIntervalDuration(java.time.Duration duration) {
-      return setStreamWatchdogCheckInterval(toThreetenDuration(duration));
+    public final Builder setStreamWatchdogCheckInterval(org.threeten.bp.Duration duration) {
+      return setStreamWatchdogCheckIntervalDuration(toJavaTimeDuration(duration));
     }
+
+    public abstract Builder setStreamWatchdogCheckIntervalDuration(java.time.Duration duration);
 
     /**
      * Set the {@link ApiTracerFactory} that will be used to generate traces for operations.

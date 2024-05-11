@@ -104,13 +104,13 @@ public abstract class BatchingSettings {
   /** Get the delay threshold to use for batching. */
   @Nullable
   @ObsoleteApi("Use getDelayThresholdDuration() instead")
-  public abstract org.threeten.bp.Duration getDelayThreshold();
+  public org.threeten.bp.Duration getDelayThreshold() {
+    return toThreetenDuration(getDelayThresholdDuration());
+  }
 
   /** Get the delay threshold to use for batching. */
   @Nullable
-  public final java.time.Duration getDelayThresholdDuration() {
-    return toJavaTimeDuration(getDelayThreshold());
-  }
+  public abstract java.time.Duration getDelayThresholdDuration();
 
   /** Returns the Boolean object to indicate if the batching is enabled. Default to true */
   public abstract Boolean getIsEnabled();
@@ -154,7 +154,9 @@ public abstract class BatchingSettings {
 
     /** Backport of {@link #setDelayThresholdDuration(java.time.Duration)} */
     @ObsoleteApi("Use setDelayThresholdDuration(java.time.Duration) instead")
-    public abstract Builder setDelayThreshold(org.threeten.bp.Duration delayThreshold);
+    public final Builder setDelayThreshold(org.threeten.bp.Duration delayThreshold) {
+      return setDelayThresholdDuration(toJavaTimeDuration(delayThreshold));
+    }
 
     /**
      * Set the delay threshold to use for batching. After this amount of time has elapsed (counting
@@ -162,9 +164,7 @@ public abstract class BatchingSettings {
      * value should not be set too high, usually on the order of milliseconds. Otherwise, calls
      * might appear to never complete.
      */
-    public final Builder setDelayThresholdDuration(java.time.Duration delayThreshold) {
-      return setDelayThreshold(toThreetenDuration(delayThreshold));
-    }
+    public abstract Builder setDelayThresholdDuration(java.time.Duration delayThreshold);
 
     /**
      * Set if the batch should be enabled. If set to false, the batch logic will be disabled and the

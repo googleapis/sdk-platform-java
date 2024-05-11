@@ -30,6 +30,7 @@
 package com.google.api.gax.httpjson;
 
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
+import static com.google.api.gax.util.TimeConversionTestUtils.testInstantMethod;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -137,6 +138,17 @@ public class HttpJsonCallContextTest {
         tt -> defaultContext.withStreamWaitTimeout(tt),
         c -> c.getStreamWaitTimeoutDuration(),
         c -> c.getStreamWaitTimeout());
+  }
+
+  @Test
+  public void testDeadline() {
+    final long millis = 3;
+    final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
+    testInstantMethod( millis,
+            jt -> defaultContext.withDeadlineInstant(jt),
+            tt -> defaultContext.withDeadline(tt),
+            c -> c.getDeadlineInstant(),
+            c -> c.getDeadline());
   }
 
   @Test
