@@ -34,10 +34,11 @@
 		"^\\.cloudbuild/library_generation/library_generation\\.Dockerfile$"
       ],
       "matchStrings": [
-        "ARG PROTOC_VERSION==(?<currentValue>.+?)\\n"
+        "ARG PROTOC_VERSION=[\"']?(?<currentValue>.+?)[\"']?\\s+"
       ],
-      "depNameTemplate": "com.google.protobuf:protobuf-java",
-      "datasourceTemplate": "maven"
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "protocolbuffers/protobuf",
+      "extractVersionTemplate": "^v(?<version>.*)$"
     },
     {
       "customType": "regex",
