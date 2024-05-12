@@ -38,8 +38,17 @@ def compare_config(
     :return: a ConfigChange objects.
     """
     diff = defaultdict(list[LibraryChange])
-    baseline_params = __convert_params_to_sorted_list(baseline_config)
-    current_params = __convert_params_to_sorted_list(current_config)
+    # Exclude `libraries` because an empty library list (e.g., by library
+    # removal) will cause this parameter appears in the sorted param list,
+    # which leads to unequal list of parameters.
+    excluded_params = {"libraries"}
+    baseline_params = __convert_params_to_sorted_list(
+        obj=baseline_config, excluded_params=excluded_params
+    )
+    current_params = __convert_params_to_sorted_list(
+        obj=current_config, excluded_params=excluded_params
+    )
+
     for baseline_param, current_param in zip(baseline_params, current_params):
         if baseline_param == current_param:
             continue
@@ -216,7 +225,7 @@ def __compare_gapic_configs(
         diff[ChangeType.GAPIC_ADDITION].append(config_change)
 
 
-def __convert_params_to_sorted_list(obj: Any) -> List[tuple]:
+def __convert_params_to_sorted_list(obj: Any, excluded_params=None) -> List[tuple]:
     """
     Convert the parameter and its value of a given object to a sorted list of
     tuples.
@@ -230,13 +239,17 @@ def __convert_params_to_sorted_list(obj: Any) -> List[tuple]:
 
     Note that built-in params, e.g., __str__, and methods will be skipped.
 
-    :param obj: an object
+    :param obj: an object.
+    :param excluded_params: excluded params.
     :return: a sorted list of tuples.
     """
+    if excluded_params is None:
+        excluded_params = set()
     param_and_values = []
     for param, value in vars(obj).items():
         if (
-            param.startswith("__")  # skip built-in params
+            param in excluded_params
+            or param.startswith("__")  # skip built-in params
             or callable(getattr(obj, param))  # skip methods
             # skip if the type of param is not one of the following types
             # 1. str
