@@ -150,6 +150,9 @@ download_protoc_succeed_with_baked_protoc() {
   download_protoc "99.99" "linux-x86_64"
   assertFileOrDirectoryExists "${output_folder}/protoc-99.99"
   rm -rf "${output_folder}/protoc-99.99"
+  unset DOCKER_PROTOC_LOCATION
+  unset DOCKER_PROTOC_VERSION
+  rm -rdf $(get_output_folder)
 }
 
 download_grpc_plugin_succeed_with_valid_version_linux_test() {

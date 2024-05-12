@@ -158,16 +158,18 @@ download_protoc() {
   local protoc_version=$1
   local os_architecture=$2
 
-  protoc_path="${output_folder}/protoc-${protoc_version}/bin"
+  protoc_dirname="protoc-${protoc_version}"
+  protoc_path="${output_folder}/${protoc_dirname}/bin"
   if [[ -f "${protoc_path}/protoc" ]]; then
     return
   fi
 
-  if [[ -n "${DOCKER_PROTOC_VERSION}" ]] \
-    && [[ "${DOCKER_PROTOC_VERSION}" == "${protoc_version}" ]]; then
+  if [[ "${DOCKER_PROTOC_VERSION}" == "${protoc_version}" ]]; then
     # if the specified protoc_version matches the one baked in the docker
     # container, we just copy it into the output folder
-    cp -r "${DOCKER_PROTOC_LOCATION}/protoc-${protoc_version}" "${output_folder}"
+    mkdir -p "${output_folder}/${protoc_dirname}"
+    cp -r "${DOCKER_PROTOC_LOCATION}/${protoc_dirname}" \
+      "${output_folder}"
   fi
 
   if [ ! -d "${protoc_path}" ]; then
