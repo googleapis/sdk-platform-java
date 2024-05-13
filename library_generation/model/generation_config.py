@@ -20,6 +20,7 @@ from library_generation.model.gapic_config import GapicConfig
 REPO_LEVEL_PARAMETER = "Repo level parameter"
 LIBRARY_LEVEL_PARAMETER = "Library level parameter"
 GAPIC_LEVEL_PARAMETER = "GAPIC level parameter"
+COMMON_PROTOS = "common-protos"
 
 
 class GenerationConfig:
@@ -44,6 +45,7 @@ class GenerationConfig:
         self.libraries = libraries
         self.grpc_version = grpc_version
         self.protoc_version = protoc_version
+        self.__contains_common_protos = self.__set_contains_common_protos()
         self.__validate()
 
     def get_proto_path_to_library_name(self) -> dict[str, str]:
@@ -59,7 +61,13 @@ class GenerationConfig:
         return paths
 
     def is_gapic_monorepo(self) -> bool:
-        return len(self.libraries) > 1
+        return len(self.libraries) > 1 and (not self.__contains_common_protos)
+
+    def __set_contains_common_protos(self) -> bool:
+        for library in self.libraries:
+            if library.get_library_name() == COMMON_PROTOS:
+                return True
+        return False
 
     def __validate(self) -> None:
         seen_library_names = dict()

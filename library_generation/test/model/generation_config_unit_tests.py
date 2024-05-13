@@ -35,6 +35,13 @@ library_2 = LibraryConfig(
     product_documentation="",
     gapic_configs=[],
 )
+common_protos_library = LibraryConfig(
+    api_shortname="common-protos",
+    api_description="",
+    name_pretty="",
+    product_documentation="",
+    gapic_configs=[],
+)
 
 
 class GenerationConfigTest(unittest.TestCase):
@@ -122,6 +129,16 @@ class GenerationConfigTest(unittest.TestCase):
             libraries=[library_1, library_2],
         )
         self.assertTrue(config.is_gapic_monorepo())
+
+    def test_is_monorepo_with_common_protos_returns_false(self):
+        config = GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish="",
+            libraries_bom_version="",
+            template_excludes=[],
+            libraries=[library_1, library_2, common_protos_library],
+        )
+        self.assertFalse(config.is_gapic_monorepo())
 
     def test_validate_with_duplicate_library_name_raise_exception(self):
         self.assertRaisesRegex(
