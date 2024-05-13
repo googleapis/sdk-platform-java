@@ -41,10 +41,6 @@ def generate_from_yaml(
     If specified with an empty list, then no library will be generated.
     If not specified, all libraries in the configuration yaml will be generated.
     """
-    # Determine whether the generated repo is a proto-only repository.
-    # Using libraries in generation config without filtering out target library
-    # names because the remaining library may not qualify as proto-only
-    # library, e.g., iam.
     target_libraries = get_target_libraries(
         config=config, target_library_names=target_library_names
     )
