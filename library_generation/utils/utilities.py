@@ -124,7 +124,7 @@ def prepare_repo(
         library_name = f"{language}-{library.get_library_name()}"
         library_path = (
             f"{repo_path}/{library_name}"
-            if gen_config.is_monorepo()
+            if gen_config.is_gapic_monorepo()
             else f"{repo_path}"
         )
         # use absolute path because docker requires absolute path
@@ -217,7 +217,7 @@ def generate_prerequisite_files(
     distribution_name_short = re.split(r"[:/]", distribution_name)[-1]
     if proto_only_repo:
         repo = "googleapis/sdk-platform-java"
-    elif config.is_monorepo():
+    elif config.is_gapic_monorepo():
         repo = "googleapis/google-cloud-java"
     else:
         repo = f"googleapis/{language}-{library_name}"
@@ -287,7 +287,7 @@ def generate_prerequisite_files(
     owlbot_yaml_file = ".OwlBot-hermetic.yaml"
     path_to_owlbot_yaml_file = (
         f"{library_path}/{owlbot_yaml_file}"
-        if config.is_monorepo()
+        if config.is_gapic_monorepo()
         else f"{library_path}/.github/{owlbot_yaml_file}"
     )
     if not os.path.exists(path_to_owlbot_yaml_file):

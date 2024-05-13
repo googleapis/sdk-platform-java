@@ -111,7 +111,7 @@ class GenerationConfigTest(unittest.TestCase):
             template_excludes=[],
             libraries=[library_1],
         )
-        self.assertFalse(config.is_monorepo())
+        self.assertFalse(config.is_gapic_monorepo())
 
     def test_is_monorepo_with_two_libraries_returns_true(self):
         config = GenerationConfig(
@@ -121,7 +121,7 @@ class GenerationConfigTest(unittest.TestCase):
             template_excludes=[],
             libraries=[library_1, library_2],
         )
-        self.assertTrue(config.is_monorepo())
+        self.assertTrue(config.is_gapic_monorepo())
 
     def test_validate_with_duplicate_library_name_raise_exception(self):
         self.assertRaisesRegex(

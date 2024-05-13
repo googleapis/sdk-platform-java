@@ -72,7 +72,7 @@ def generate_from_yaml(
 
     # we skip monorepo_postprocessing if it is not a monorepo
     # or has proto-only libraries.
-    if not config.is_monorepo() or proto_only_repo:
+    if not config.is_gapic_monorepo() or proto_only_repo:
         return
 
     monorepo_postprocessing(
