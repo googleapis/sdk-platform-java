@@ -206,7 +206,7 @@ class UtilitiesTest(unittest.TestCase):
 
     def test_generate_prerequisite_files_proto_only_repo_success(self):
         library_path = self.__setup_prerequisite_files(
-            combination=2, library_type="OTHER", proto_only_repo=True
+            combination=2, library_type="OTHER", gapic_repo=False
         )
 
         file_comparator.compare_files(
@@ -262,7 +262,7 @@ class UtilitiesTest(unittest.TestCase):
         combination: int,
         library_type: str = "GAPIC_AUTO",
         library: LibraryConfig = library_1,
-        proto_only_repo: bool = False,
+        gapic_repo: bool = True,
     ) -> str:
         library_path = f"{resources_dir}/goldens"
         files = [
@@ -280,7 +280,7 @@ class UtilitiesTest(unittest.TestCase):
             proto_path=proto_path,
             transport=transport,
             library_path=library_path,
-            gapic_repo=proto_only_repo,
+            gapic_repo=gapic_repo,
         )
         return library_path
 
