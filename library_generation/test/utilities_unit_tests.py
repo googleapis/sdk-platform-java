@@ -280,7 +280,7 @@ class UtilitiesTest(unittest.TestCase):
             proto_path=proto_path,
             transport=transport,
             library_path=library_path,
-            proto_only_repo=proto_only_repo,
+            gapic_repo=proto_only_repo,
         )
         return library_path
 

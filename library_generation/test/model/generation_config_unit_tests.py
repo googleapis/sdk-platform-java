@@ -140,6 +140,26 @@ class GenerationConfigTest(unittest.TestCase):
         )
         self.assertFalse(config.is_gapic_monorepo())
 
+    def test_contains_common_protos_with_common_protos_returns_true(self):
+        config = GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish="",
+            libraries_bom_version="",
+            template_excludes=[],
+            libraries=[library_1, library_2, common_protos_library],
+        )
+        self.assertTrue(config.contains_common_protos)
+
+    def test_contains_common_protos_without_common_protos_returns_false(self):
+        config = GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish="",
+            libraries_bom_version="",
+            template_excludes=[],
+            libraries=[library_1, library_2],
+        )
+        self.assertFalse(config.contains_common_protos)
+
     def test_validate_with_duplicate_library_name_raise_exception(self):
         self.assertRaisesRegex(
             ValueError,
