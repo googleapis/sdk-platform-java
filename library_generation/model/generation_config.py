@@ -32,9 +32,9 @@ class GenerationConfig:
         self,
         gapic_generator_version: str,
         googleapis_commitish: str,
-        libraries_bom_version: str,
         template_excludes: list[str],
         libraries: list[LibraryConfig],
+        libraries_bom_version: Optional[str] = None,
         grpc_version: Optional[str] = None,
         protoc_version: Optional[str] = None,
     ):
@@ -141,15 +141,13 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         gapic_generator_version=__required(
             config, "gapic_generator_version", REPO_LEVEL_PARAMETER
         ),
-        grpc_version=__optional(config, "grpc_version", None),
-        protoc_version=__optional(config, "protoc_version", None),
         googleapis_commitish=__required(
             config, "googleapis_commitish", REPO_LEVEL_PARAMETER
         ),
-        libraries_bom_version=__required(
-            config, "libraries_bom_version", REPO_LEVEL_PARAMETER
-        ),
         template_excludes=__required(config, "template_excludes", REPO_LEVEL_PARAMETER),
+        grpc_version=__optional(config, "grpc_version", None),
+        protoc_version=__optional(config, "protoc_version", None),
+        libraries_bom_version=__optional(config, "libraries_bom_version", None),
         libraries=parsed_libraries,
     )
 

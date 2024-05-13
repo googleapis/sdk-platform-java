@@ -204,14 +204,6 @@ class GenerationConfigTest(unittest.TestCase):
             f"{test_config_dir}/config_without_googleapis.yaml",
         )
 
-    def test_from_yaml_without_libraries_bom_version_raise_exception(self):
-        self.assertRaisesRegex(
-            ValueError,
-            "Repo level parameter, libraries_bom_version",
-            from_yaml,
-            f"{test_config_dir}/config_without_libraries_bom_version.yaml",
-        )
-
     def test_from_yaml_without_template_excludes_raise_exception(self):
         self.assertRaisesRegex(
             ValueError,
