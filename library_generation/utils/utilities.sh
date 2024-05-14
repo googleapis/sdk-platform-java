@@ -112,6 +112,7 @@ get_protoc_version() {
   local gapic_generator_version=$1
   local protoc_version
   if [[ -n "${DOCKER_PROTOC_VERSION}" ]]; then
+    >&2 echo "Using protoc version baked into the container: ${DOCKER_PROTOC_VERSION}"
     echo "${DOCKER_PROTOC_VERSION}"
   fi
   pushd "${output_folder}" > /dev/null
