@@ -91,9 +91,7 @@ class IntegrationTest(unittest.TestCase):
             )
             for library_name in library_names:
                 actual_library = (
-                    f"{repo_dest}/{library_name}"
-                    if config.is_monorepo()
-                    else repo_dest
+                    f"{repo_dest}/{library_name}" if config.is_monorepo() else repo_dest
                 )
                 print("*" * 50)
                 print(f"Checking for differences in '{library_name}'.")
