@@ -45,7 +45,7 @@ class GenerationConfig:
         self.libraries = libraries
         self.grpc_version = grpc_version
         self.protoc_version = protoc_version
-        self.contains_common_protos = self.__set_contains_common_protos()
+        self.__contains_common_protos = self.__set_contains_common_protos()
         self.__validate()
 
     def get_proto_path_to_library_name(self) -> dict[str, str]:
@@ -61,7 +61,10 @@ class GenerationConfig:
         return paths
 
     def is_gapic_monorepo(self) -> bool:
-        return len(self.libraries) > 1 and (not self.contains_common_protos)
+        return len(self.libraries) > 1 and (not self.contains_common_protos())
+
+    def contains_common_protos(self) -> bool:
+        return self.__contains_common_protos
 
     def __set_contains_common_protos(self) -> bool:
         for library in self.libraries:

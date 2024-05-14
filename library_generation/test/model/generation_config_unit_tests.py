@@ -148,7 +148,7 @@ class GenerationConfigTest(unittest.TestCase):
             template_excludes=[],
             libraries=[library_1, library_2, common_protos_library],
         )
-        self.assertTrue(config.contains_common_protos)
+        self.assertTrue(config.contains_common_protos())
 
     def test_contains_common_protos_without_common_protos_returns_false(self):
         config = GenerationConfig(
@@ -158,7 +158,7 @@ class GenerationConfigTest(unittest.TestCase):
             template_excludes=[],
             libraries=[library_1, library_2],
         )
-        self.assertFalse(config.contains_common_protos)
+        self.assertFalse(config.contains_common_protos())
 
     def test_validate_with_duplicate_library_name_raise_exception(self):
         self.assertRaisesRegex(
