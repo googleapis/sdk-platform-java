@@ -1064,7 +1064,8 @@ public class Parser {
         .setIsMessage(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.MESSAGE)
         .setIsEnum(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.ENUM)
         .setIsContainedInOneof(fieldDescriptor.getRealContainingOneof() != null)
-        .setIsProto3Optional(fieldDescriptor.isOptional())
+        .setIsProto3Optional(fieldDescriptor.getContainingOneof() != null
+            && fieldDescriptor.getRealContainingOneof() == null)
         .setIsRepeated(fieldDescriptor.isRepeated())
         .setIsRequired(isRequired)
         .setFieldInfoFormat(fieldInfoFormat)
