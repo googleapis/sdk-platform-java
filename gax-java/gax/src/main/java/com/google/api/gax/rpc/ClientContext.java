@@ -126,24 +126,20 @@ public abstract class ClientContext {
 
   /** Create a new ClientContext with default values */
   public static Builder newBuilder() {
-    try {
-      return new AutoValue_ClientContext.Builder()
-          .setBackgroundResources(Collections.<BackgroundResource>emptyList())
-          .setExecutor(Executors.newScheduledThreadPool(0))
-          .setHeaders(Collections.<String, String>emptyMap())
-          .setInternalHeaders(Collections.<String, String>emptyMap())
-          .setClock(NanoClock.getDefaultClock())
-          .setStreamWatchdog(null)
-          .setStreamWatchdogCheckInterval(Duration.ZERO)
-          .setTracerFactory(BaseApiTracerFactory.getInstance())
-          .setQuotaProjectId(null)
-          .setGdchApiAudience(null)
-          // Attempt to create an empty, non-functioning EndpointContext by default. This is
-          // not exposed to the user via getters/setters.
-          .setEndpointContext(EndpointContext.newBuilder().build());
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    return new AutoValue_ClientContext.Builder()
+        .setBackgroundResources(Collections.<BackgroundResource>emptyList())
+        .setExecutor(Executors.newScheduledThreadPool(0))
+        .setHeaders(Collections.<String, String>emptyMap())
+        .setInternalHeaders(Collections.<String, String>emptyMap())
+        .setClock(NanoClock.getDefaultClock())
+        .setStreamWatchdog(null)
+        .setStreamWatchdogCheckInterval(Duration.ZERO)
+        .setTracerFactory(BaseApiTracerFactory.getInstance())
+        .setQuotaProjectId(null)
+        .setGdchApiAudience(null)
+        // Attempt to create an empty, non-functioning EndpointContext by default. This is
+        // not exposed to the user via getters/setters.
+        .setEndpointContext(EndpointContext.getDefaultInstance());
   }
 
   public abstract Builder toBuilder();

@@ -370,6 +370,16 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnType(returnType)
             .build();
 
+    if (service.hasApiVersion()) {
+
+      returnExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(returnExpr)
+              .setMethodName("setApiVersionToken")
+              .setArguments(ValueExpr.withValue(StringObjectValue.withValue(service.apiVersion())))
+              .setReturnType(returnType)
+              .build();
+    }
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)

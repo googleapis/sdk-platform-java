@@ -623,7 +623,7 @@ public class ParserTest {
             new HashSet<>());
     com.google.api.generator.gapic.model.Service parsedEchoService = services.get(0);
 
-    assertEquals("Echo", parsedEchoService.overriddenName());
+    assertEquals("EchoWithVersion", parsedEchoService.overriddenName());
     assertTrue(parsedEchoService.hasApiVersion());
     assertEquals("fake_version", parsedEchoService.apiVersion());
   }
