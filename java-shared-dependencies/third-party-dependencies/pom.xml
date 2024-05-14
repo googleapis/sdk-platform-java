@@ -27,9 +27,9 @@
     <animal-sniffer.version>1.23</animal-sniffer.version>
     <opencensus.version>0.31.1</opencensus.version>
     <findbugs.version>3.0.2</findbugs.version>
-    <jackson.version>2.17.0</jackson.version>
+    <jackson.version>2.17.1</jackson.version>
     <errorprone.version>2.27.1</errorprone.version>
-    <codec.version>1.16.1</codec.version>
+    <codec.version>1.17.0</codec.version>
     <httpcomponents.httpcore.version>4.4.16</httpcomponents.httpcore.version>
     <httpcomponents.httpclient.version>4.5.14</httpcomponents.httpclient.version>
     <!-- ensure checker-qual version matches what Guava uses -->
