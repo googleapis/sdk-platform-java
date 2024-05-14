@@ -111,6 +111,9 @@ get_grpc_version() {
 get_protoc_version() {
   local gapic_generator_version=$1
   local protoc_version
+  if [[ -n "${DOCKER_PROTOC_VERSION}" ]]; then
+    echo "${DOCKER_PROTOC_VERSION}"
+  fi
   pushd "${output_folder}" > /dev/null
   # get protobuf version from gapic-generator-java-pom-parent/pom.xml
   download_gapic_generator_pom_parent "${gapic_generator_version}"

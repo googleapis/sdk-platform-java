@@ -28,6 +28,18 @@ get_grpc_version_failed_with_invalid_generator_version_test() {
   assertEquals 1 $((res))
 }
 
+get_protoc_version_succeed_docker_env_var_test() {
+  local version_with_docker
+  local version_without_docker
+  export DOCKER_PROTOC_VERSION="9.9.9"
+  version_with_docker=$(get_protoc_version "2.24.0")
+  assertEquals "${DOCKER_PROTOC_VERSION}" "${version_with_docker}"
+  unset DOCKER_PROTOC_VERSION
+  version_without_docker=$(get_protoc_version "2.24.0")
+  assertEquals "23.2" "${version_without_docker}"
+  rm "gapic-generator-java-pom-parent-2.24.0.pom"
+}
+
 get_protoc_version_succeed_with_valid_generator_version_test() {
   local actual_version
   actual_version=$(get_protoc_version "2.24.0")
@@ -277,6 +289,7 @@ test_list=(
   extract_folder_name_test
   get_grpc_version_succeed_with_valid_generator_version_test
   get_grpc_version_failed_with_invalid_generator_version_test
+  get_protoc_version_succeed_docker_env_var_test
   get_protoc_version_succeed_with_valid_generator_version_test
   get_protoc_version_failed_with_invalid_generator_version_test
   get_gapic_opts_with_rest_test
