@@ -29,6 +29,8 @@ _COMPILE_DEPS = [
 
 _TEST_COMPILE_DEPS = [
     "@junit_junit//jar",
+    "@org_junit_jupiter_junit_jupiter_engine//jar",
+    "@org_junit_vintage_junit_vintage_engine//jar",
     "@org_mockito_mockito_core//jar",
     "@com_google_truth_truth//jar",
     "//gax:gax_testlib",
