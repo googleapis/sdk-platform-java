@@ -60,8 +60,8 @@ class GenerationConfig:
                 paths[gapic_config.proto_path] = library.get_library_name()
         return paths
 
-    def is_gapic_monorepo(self) -> bool:
-        return len(self.libraries) > 1 and (not self.contains_common_protos())
+    def is_monorepo(self) -> bool:
+        return len(self.libraries) > 1
 
     def contains_common_protos(self) -> bool:
         return self.__contains_common_protos

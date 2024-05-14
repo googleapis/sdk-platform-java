@@ -118,7 +118,7 @@ class GenerationConfigTest(unittest.TestCase):
             template_excludes=[],
             libraries=[library_1],
         )
-        self.assertFalse(config.is_gapic_monorepo())
+        self.assertFalse(config.is_monorepo())
 
     def test_is_monorepo_with_two_libraries_returns_true(self):
         config = GenerationConfig(
@@ -128,17 +128,7 @@ class GenerationConfigTest(unittest.TestCase):
             template_excludes=[],
             libraries=[library_1, library_2],
         )
-        self.assertTrue(config.is_gapic_monorepo())
-
-    def test_is_monorepo_with_common_protos_returns_false(self):
-        config = GenerationConfig(
-            gapic_generator_version="",
-            googleapis_commitish="",
-            libraries_bom_version="",
-            template_excludes=[],
-            libraries=[library_1, library_2, common_protos_library],
-        )
-        self.assertFalse(config.is_gapic_monorepo())
+        self.assertTrue(config.is_monorepo())
 
     def test_contains_common_protos_with_common_protos_returns_true(self):
         config = GenerationConfig(

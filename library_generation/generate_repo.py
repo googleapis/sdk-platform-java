@@ -60,7 +60,7 @@ def generate_from_yaml(
             gapic_repo=not config.contains_common_protos(),
         )
 
-    if not config.is_gapic_monorepo():
+    if not config.is_monorepo() or config.contains_common_protos():
         return
 
     monorepo_postprocessing(

@@ -117,7 +117,7 @@ def generate_composed_library(
             "",
             versions_file,
             owlbot_cli_source_folder,
-            str(config.is_gapic_monorepo()).lower(),
+            str(config.is_monorepo()).lower(),
             config_path,
         ],
         "Library postprocessing",
