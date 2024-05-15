@@ -24,7 +24,7 @@ def apply_repo_templates(configuration_yaml_path: str, monorepo: bool) -> None:
         excludes=config.template_excludes,
         template_path=Path(repo_templates_path),
         monorepo=monorepo,
-        libraries_bom_version=config.libraris_bom_version,
+        libraries_bom_version=config.libraries_bom_version,
     )
 
 

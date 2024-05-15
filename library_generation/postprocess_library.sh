@@ -17,8 +17,6 @@
 # googleapis-gen. It will be used instead of preprocessed_sources_path if
 # 5 - is_monorepo: whether this library is a monorepo, which implies slightly
 # different logic
-# 6 - configuration_yaml_path: path to the configuration yaml containing library
-# generation information for this library
 set -exo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
 
@@ -27,7 +25,7 @@ preprocessed_sources_path=$2
 versions_file=$3
 owlbot_cli_source_folder=$4
 is_monorepo=$5
-configuration_yaml_path=$6
+libraries_bom_version=$6
 owlbot_yaml_file_name=".OwlBot-hermetic.yaml"
 
 source "${scripts_root}"/utils/utilities.sh
@@ -98,5 +96,10 @@ fi
 # run the postprocessor
 echo 'running owl-bot post-processor'
 pushd "${postprocessing_target}"
-bash "${scripts_root}/owlbot/bin/entrypoint.sh" "${scripts_root}" "${versions_file}" "${configuration_yaml_path}" "${is_monorepo}"
+bash "${scripts_root}/owlbot/bin/entrypoint.sh" \
+  "${scripts_root}" \
+  "${versions_file}" \
+  "${is_monorepo}" \
+  "${libraries_bom_version}"
+
 popd # postprocessing_target

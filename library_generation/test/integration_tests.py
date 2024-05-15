@@ -183,8 +183,10 @@ class IntegrationTest(unittest.TestCase):
 
     @classmethod
     def __build_image(cls, docker_file: str, cwd: str):
+        # we build the docker image without removing intermediate containers so
+        # we can re-test more quickly
         subprocess.check_call(
-            ["docker", "build", "--rm", "-f", docker_file, "-t", image_tag, "."],
+            ["docker", "build", "-f", docker_file, "-t", image_tag, "."],
             cwd=cwd,
         )
 

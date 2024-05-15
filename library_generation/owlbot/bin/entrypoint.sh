@@ -16,7 +16,8 @@
 # This is the entrypoint script for java owlbot. This is not intended to be
 # called directly but rather be called from postproces_library.sh
 # For reference, the positional arguments are
-# 1: scripts_root: location of postprocess_library.sh
+# 1: scripts_root: location of the root of the library_generation scripts. When
+# in a Docker container, this value should be /src/
 # 2: versions_file: points to a versions.txt containing versions to be applied
 # both to README and pom.xml files
 
@@ -26,8 +27,8 @@
 set -ex
 scripts_root=$1
 versions_file=$2
-configuration_yaml=$3
-is_monorepo=$4
+is_monorepo=$3
+libraries_bom_version=$4
 
 
 if [[ "${is_monorepo}" == "true" ]]; then
@@ -36,22 +37,19 @@ if [[ "${is_monorepo}" == "true" ]]; then
   mv temp owl-bot-staging
 fi
 
-
-# Runs template and etc in current working directory
-
-# apply repo templates
-echo "Rendering templates"
-python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" "${configuration_yaml}" "${is_monorepo}"
-
 # templates as well as retrieving files from owl-bot-staging
 echo "Retrieving files from owl-bot-staging directory..."
 if [ -f "owlbot.py" ]
 then
-  # we use an empty synthtool folder to prevent cached templates from being used
+  # we copy the templates to a temp folder because we need to do a special
+  # modification regarding libraries_bom_version that can't be handled by the
+  # synthtool library considering the way owlbot.py files are written
   export SYNTHTOOL_TEMPLATES=$(mktemp -d)
+  cp -r ${scripts_root}/owlbot/templates/* "${SYNTHTOOL_TEMPLATES}"
+  sed -i 's/\$\$__libraries_bom_version__\$\$/'"${libraries_bom_version}"'/g' "${SYNTHTOOL_TEMPLATES}/java_library/README.md" 
   # defaults to run owlbot.py
   python3 owlbot.py
-  export SYNTHTOOL_TEMPLATES=""
+  unset SYNTHTOOL_TEMPLATES
 fi
 echo "...done"
 
