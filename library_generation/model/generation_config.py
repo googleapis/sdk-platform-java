@@ -71,6 +71,7 @@ class GenerationConfig:
             for library in self.libraries:
                 if library.get_library_name() == COMMON_PROTOS:
                     self.__contains_common_protos = True
+                    break
         return self.__contains_common_protos
 
     def __validate(self) -> None:
