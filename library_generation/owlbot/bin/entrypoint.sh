@@ -20,6 +20,8 @@
 # in a Docker container, this value should be /src/
 # 2: versions_file: points to a versions.txt containing versions to be applied
 # both to README and pom.xml files
+# 3: is_monorepo: whether we are postprocessing a monorepo
+# 4: libraries_bom_version: used to render the readme
 
 # The scripts assumes the CWD is the folder where postprocessing is going to be
 # applied

@@ -17,6 +17,8 @@
 # googleapis-gen. It will be used instead of preprocessed_sources_path if
 # 5 - is_monorepo: whether this library is a monorepo, which implies slightly
 # different logic
+# 6 - libraries_bom_version: used by our implementation of owlbot to render the
+# readme
 set -exo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
 
