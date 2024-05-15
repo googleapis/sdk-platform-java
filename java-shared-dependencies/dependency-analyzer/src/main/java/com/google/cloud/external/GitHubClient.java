@@ -97,11 +97,4 @@ public class GitHubClient {
         .build();
     return client.send(request, BodyHandlers.ofString());
   }
-
-  public static void main(String[] args)
-      throws URISyntaxException, IOException, InterruptedException {
-    PullRequestStatus status = new GitHubClient(HttpClient.newHttpClient())
-        .listMonthlyPullRequestStatusOf("googleapis", "sdk-platform-java");
-    System.out.println(status);
-  }
 }
