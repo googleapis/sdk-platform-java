@@ -18,8 +18,6 @@ from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from library_generation.utils.monorepo_postprocessor import monorepo_postprocessing
 
-PROTO_ONLY_LIBRARIES = ["common-protos"]
-
 
 def generate_from_yaml(
     config_path: str,
