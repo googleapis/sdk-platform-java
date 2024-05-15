@@ -45,7 +45,9 @@ class GenerationConfig:
         self.libraries = libraries
         self.grpc_version = grpc_version
         self.protoc_version = protoc_version
-        self.__contains_common_protos = self.__set_contains_common_protos()
+        # explicit set to None so that we can compute the
+        # value in getter.
+        self.__contains_common_protos = None
         self.__validate()
 
     def get_proto_path_to_library_name(self) -> dict[str, str]:
@@ -64,13 +66,12 @@ class GenerationConfig:
         return len(self.libraries) > 1
 
     def contains_common_protos(self) -> bool:
+        if self.__contains_common_protos is None:
+            self.__contains_common_protos = False
+            for library in self.libraries:
+                if library.get_library_name() == COMMON_PROTOS:
+                    self.__contains_common_protos = True
         return self.__contains_common_protos
-
-    def __set_contains_common_protos(self) -> bool:
-        for library in self.libraries:
-            if library.get_library_name() == COMMON_PROTOS:
-                return True
-        return False
 
     def __validate(self) -> None:
         seen_library_names = dict()
