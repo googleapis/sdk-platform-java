@@ -43,6 +43,7 @@ public class GitHubClient {
     ZonedDateTime now = ZonedDateTime.now();
     long created = pullRequests
         .stream()
+        .distinct()
         .filter(pullRequest -> pullRequest.state().equals(OPEN_STATE))
         .filter(pullRequest -> {
           ZonedDateTime createdAt = utcTimeFrom(pullRequest.createdAt());
@@ -52,6 +53,7 @@ public class GitHubClient {
 
     long merged = pullRequests
         .stream()
+        .distinct()
         .filter(pullRequest -> Objects.nonNull(pullRequest.mergedAt()))
         .filter(pullRequest -> {
           ZonedDateTime createdAt = utcTimeFrom(pullRequest.mergedAt());
