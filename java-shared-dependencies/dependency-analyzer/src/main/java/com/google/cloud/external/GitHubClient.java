@@ -2,7 +2,7 @@ package com.google.cloud.external;
 
 import com.google.cloud.model.Interval;
 import com.google.cloud.model.PullRequest;
-import com.google.cloud.model.PullRequestStatus;
+import com.google.cloud.model.PullRequestStatistics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -20,6 +20,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * GitHubClient is a class that sends HTTP requests to the GitHub RESTful API.
+ * It provides methods for interacting with various GitHub resources such as repositories,
+ * issues, users, etc.
+ * <p>
+ * This class simplifies the process of making API calls by handling authentication, request
+ * construction, and response parsing.
+ * It uses the {@link java.net.http.HttpClient} for sending requests and
+ * {@link com.google.gson.Gson} for handling JSON serialization/deserialization.
+ */
 public class GitHubClient {
   private final HttpClient client;
   private final Gson gson;
@@ -32,12 +42,12 @@ public class GitHubClient {
     this.gson = new GsonBuilder().create();
   }
 
-  public PullRequestStatus listMonthlyPullRequestStatusOf(String organization, String repo)
+  public PullRequestStatistics listMonthlyPullRequestStatusOf(String organization, String repo)
       throws URISyntaxException, IOException, InterruptedException {
     return listPullRequestStatus(organization, repo, Interval.MONTHLY);
   }
 
-  private PullRequestStatus listPullRequestStatus(String organization, String repo, Interval interval)
+  private PullRequestStatistics listPullRequestStatus(String organization, String repo, Interval interval)
       throws URISyntaxException, IOException, InterruptedException {
     List<PullRequest> pullRequests = listPullRequests(organization, repo);
     ZonedDateTime now = ZonedDateTime.now();
@@ -61,7 +71,7 @@ public class GitHubClient {
         })
         .count();
 
-    return new PullRequestStatus(created, merged, interval);
+    return new PullRequestStatistics(created, merged, interval);
   }
 
   private List<PullRequest> listPullRequests(String organization, String repo)

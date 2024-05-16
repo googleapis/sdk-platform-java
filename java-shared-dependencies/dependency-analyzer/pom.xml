@@ -44,6 +44,8 @@
         <version>3.2.5</version>
         <configuration>
           <environmentVariables>
+            <!--this environment variable is used to set token when construct
+              a mock http request in unit test-->
             <GITHUB_TOKEN>fake_value</GITHUB_TOKEN>
           </environmentVariables>
         </configuration>

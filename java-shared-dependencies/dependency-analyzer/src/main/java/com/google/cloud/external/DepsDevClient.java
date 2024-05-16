@@ -26,6 +26,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * DepsDevClient is a class that sends HTTP requests to the Deps.dev RESTful API.
+ * <p>
+ * This class simplifies the process of making API calls by handling authentication, request
+ * construction, and response parsing.
+ * It uses the {@link java.net.http.HttpClient} for sending requests and
+ * {@link com.google.gson.Gson} for handling JSON serialization/deserialization.
+ */
 public class DepsDevClient {
 
   private final HttpClient client;

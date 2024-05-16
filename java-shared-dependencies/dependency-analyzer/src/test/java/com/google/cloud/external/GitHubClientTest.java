@@ -6,7 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.google.cloud.model.Interval;
-import com.google.cloud.model.PullRequestStatus;
+import com.google.cloud.model.PullRequestStatistics;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -56,7 +56,7 @@ public class GitHubClientTest {
       when(response.body()).thenReturn(responseBody);
       String org = "";
       String repo = "";
-      PullRequestStatus status = client.listMonthlyPullRequestStatusOf(org, repo);
+      PullRequestStatistics status = client.listMonthlyPullRequestStatusOf(org, repo);
 
       assertEquals(Interval.MONTHLY, status.interval());
       assertEquals(3, status.created());
