@@ -30,17 +30,15 @@
 package com.google.api.resourcenames;
 
 import static junit.framework.TestCase.fail;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
 /** Tests for {@link UntypedResourceNameTest}. */
-@RunWith(JUnit4.class)
+
 public class UntypedResourceNameTest {
   private static final String NAME_STRING = "sunshine";
   private static final String EMPTY_STRING = "";
@@ -85,7 +83,7 @@ public class UntypedResourceNameTest {
   public void testNullName() {
     assertFalse(UntypedResourceName.isParsableFrom(null));
     try {
-      UntypedResourceName fooName = UntypedResourceName.parse(null);
+      UntypedResourceName.parse(null);
     } catch (NullPointerException e) {
     }
   }

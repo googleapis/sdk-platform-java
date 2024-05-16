@@ -38,12 +38,12 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ApiFuturesTest {
 
   @Test
-  public void testAddCallback() throws Exception {
+  public void testAddCallback() {
     final AtomicInteger flag = new AtomicInteger();
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
     ApiFutures.addCallback(

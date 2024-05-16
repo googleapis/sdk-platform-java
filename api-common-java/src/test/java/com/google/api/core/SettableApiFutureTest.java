@@ -30,11 +30,11 @@
 package com.google.api.core;
 
 import com.google.common.truth.Truth;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class SettableApiFutureTest {
   @Test
@@ -48,7 +48,7 @@ public class SettableApiFutureTest {
   }
 
   @Test
-  public void testCancel() throws Exception {
+  public void testCancel() {
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
     Truth.assertThat(future.isDone()).isFalse();
     Truth.assertThat(future.isCancelled()).isFalse();
@@ -57,15 +57,17 @@ public class SettableApiFutureTest {
     Truth.assertThat(future.isCancelled()).isTrue();
   }
 
-  @Test(expected = ExecutionException.class)
-  public void testException() throws Exception {
-    SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
-    future.setException(new Exception());
-    future.get();
+  @Test
+  public void testException() {
+    Assertions.assertThrows(Exception.class, () -> {
+      SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
+      future.setException(new Exception());
+      future.get();
+    });
   }
 
   @Test
-  public void testListener() throws Exception {
+  public void testListener() {
     final AtomicInteger flag = new AtomicInteger();
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
     future.addListener(

@@ -31,8 +31,8 @@ package com.google.api.core;
 
 import com.google.common.util.concurrent.MoreExecutors;
 import java.util.concurrent.atomic.AtomicReference;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ApiServiceTest {
   @Test
@@ -50,7 +50,7 @@ public class ApiServiceTest {
           }
         };
     service.startAsync().awaitRunning();
-    Assert.assertTrue(service.isRunning());
+    Assertions.assertTrue(service.isRunning());
     service.stopAsync().awaitTerminated();
   }
 
@@ -86,8 +86,8 @@ public class ApiServiceTest {
       // Expected
     }
 
-    Assert.assertEquals(service.state(), ApiService.State.FAILED);
-    Assert.assertEquals(savedFailure.get().getMessage(), "this service always fails");
-    Assert.assertEquals(service.failureCause().getMessage(), "this service always fails");
+    Assertions.assertEquals(service.state(), ApiService.State.FAILED);
+    Assertions.assertEquals(savedFailure.get().getMessage(), "this service always fails");
+    Assertions.assertEquals(service.failureCause().getMessage(), "this service always fails");
   }
 }
