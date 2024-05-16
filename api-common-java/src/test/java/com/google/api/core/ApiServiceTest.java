@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
 
 public class ApiServiceTest {
   @Test
-  public void testNoopService() {
+  void testNoopService() {
     ApiService service =
         new AbstractApiService() {
           @Override
@@ -55,7 +55,7 @@ public class ApiServiceTest {
   }
 
   @Test
-  public void testFailingService() {
+  void testFailingService() {
     final AtomicReference<Throwable> savedFailure = new AtomicReference<>();
     ApiService service =
         new AbstractApiService() {

@@ -43,7 +43,7 @@ import org.junit.jupiter.api.Test;
 public class ApiFuturesTest {
 
   @Test
-  public void testAddCallback() {
+  void testAddCallback() {
     final AtomicInteger flag = new AtomicInteger();
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
     ApiFutures.addCallback(
@@ -65,7 +65,7 @@ public class ApiFuturesTest {
   }
 
   @Test
-  public void testCatch() throws Exception {
+  void testCatch() throws Exception {
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
     ApiFuture<Integer> fallback =
         ApiFutures.catching(
@@ -83,7 +83,7 @@ public class ApiFuturesTest {
   }
 
   @Test
-  public void testCatchAsync() throws Exception {
+  void testCatchAsync() throws Exception {
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
     ApiFuture<Integer> fallback =
         ApiFutures.catchingAsync(
@@ -101,7 +101,7 @@ public class ApiFuturesTest {
   }
 
   @Test
-  public void testTransform() throws Exception {
+  void testTransform() throws Exception {
     SettableApiFuture<Integer> inputFuture = SettableApiFuture.<Integer>create();
     ApiFuture<String> transformedFuture =
         ApiFutures.transform(
@@ -118,7 +118,7 @@ public class ApiFuturesTest {
   }
 
   @Test
-  public void testTransformWithExecutor() throws Exception {
+  void testTransformWithExecutor() throws Exception {
     SettableApiFuture<Integer> inputFuture = SettableApiFuture.<Integer>create();
     final AtomicInteger counter = new AtomicInteger(0);
     ApiFuture<String> transformedFuture =
@@ -143,7 +143,7 @@ public class ApiFuturesTest {
   }
 
   @Test
-  public void testAllAsList() throws Exception {
+  void testAllAsList() throws Exception {
     SettableApiFuture<Integer> inputFuture1 = SettableApiFuture.<Integer>create();
     SettableApiFuture<Integer> inputFuture2 = SettableApiFuture.<Integer>create();
     ApiFuture<List<Integer>> listFuture =
@@ -154,7 +154,7 @@ public class ApiFuturesTest {
   }
 
   @Test
-  public void successfulAllAsList() throws Exception {
+  void successfulAllAsList() throws Exception {
     SettableApiFuture<Integer> inputFuture1 = SettableApiFuture.<Integer>create();
     SettableApiFuture<Integer> inputFuture2 = SettableApiFuture.<Integer>create();
     ApiFuture<List<Integer>> listFuture =
@@ -165,7 +165,7 @@ public class ApiFuturesTest {
   }
 
   @Test
-  public void testTransformAsync() throws Exception {
+  void testTransformAsync() throws Exception {
     ApiFuture<Integer> inputFuture = ApiFutures.immediateFuture(0);
     ApiFuture<Integer> outputFuture =
         ApiFutures.transformAsync(
@@ -181,31 +181,23 @@ public class ApiFuturesTest {
   }
 
   @Test
-  public void testTransformAsyncWithExecutor() throws Exception {
+  void testTransformAsyncWithExecutor() throws Exception {
     ApiFuture<Integer> inputFuture = ApiFutures.immediateFuture(0);
     final AtomicInteger counter = new AtomicInteger(0);
     ApiFuture<Integer> outputFuture =
         ApiFutures.transformAsync(
             inputFuture,
-            new ApiAsyncFunction<Integer, Integer>() {
-              @Override
-              public ApiFuture<Integer> apply(Integer input) {
-                return ApiFutures.immediateFuture(input + 1);
-              }
-            },
-            new Executor() {
-              @Override
-              public void execute(Runnable command) {
-                counter.incrementAndGet();
-                command.run();
-              }
+            (ApiAsyncFunction<Integer, Integer>) input -> ApiFutures.immediateFuture(input + 1),
+            (Executor) command -> {
+              counter.incrementAndGet();
+              command.run();
             });
     assertThat(outputFuture.get()).isEqualTo(1);
     assertThat(counter.get()).isEqualTo(1);
   }
 
   @Test
-  public void testImmediateFailedFuture() throws InterruptedException {
+  void testImmediateFailedFuture() throws InterruptedException {
     ApiFuture<String> future =
         ApiFutures.immediateFailedFuture(new IllegalArgumentException("The message"));
     IllegalArgumentException exception = null;
@@ -219,7 +211,7 @@ public class ApiFuturesTest {
   }
 
   @Test
-  public void testImmediateCancelledFuture() throws InterruptedException, ExecutionException {
+  void testImmediateCancelledFuture() throws InterruptedException, ExecutionException {
     ApiFuture<String> future = ApiFutures.immediateCancelledFuture();
     CancellationException exception = null;
     try {

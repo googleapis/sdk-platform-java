@@ -48,19 +48,19 @@ public class PathTemplateTest {
   // =====
 
   @Test
-  public void matchAtomicResourceName() {
+  void matchAtomicResourceName() {
     PathTemplate template = PathTemplate.create("buckets/*/*/objects/*");
     assertPositionalMatch(template.match("buckets/f/o/objects/bar"), "f", "o", "bar");
   }
 
   @Test
-  public void matchTemplateWithUnboundedWildcard() {
+  void matchTemplateWithUnboundedWildcard() {
     PathTemplate template = PathTemplate.create("buckets/*/objects/**");
     assertPositionalMatch(template.match("buckets/foo/objects/bar/baz"), "foo", "bar/baz");
   }
 
   @Test
-  public void matchWithForcedHostName() {
+  void matchWithForcedHostName() {
     PathTemplate template = PathTemplate.create("buckets/*/objects/*");
     Map<String, String> match = template.matchFromFullName("somewhere.io/buckets/b/objects/o");
     Truth.assertThat(match).isNotNull();
@@ -70,7 +70,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void matchWithHostName() {
+  void matchWithHostName() {
     PathTemplate template = PathTemplate.create("buckets/*/objects/*");
     Map<String, String> match = template.match("//somewhere.io/buckets/b/objects/o");
     Truth.assertThat(match).isNotNull();
@@ -80,7 +80,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void matchWithHostNameAndProtocol() {
+  void matchWithHostNameAndProtocol() {
     PathTemplate template = PathTemplate.create("projects/{project}/zones/{zone}");
     Map<String, String> match =
         template.match(
@@ -92,7 +92,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void matchWithHostNameAndProtocolWithTemplateStartWithBinding() {
+  void matchWithHostNameAndProtocolWithTemplateStartWithBinding() {
     PathTemplate template = PathTemplate.create("{project}/zones/{zone}");
     Map<String, String> match =
         template.match(
@@ -104,7 +104,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void pathWildcards_matchZeroOrMoreSegments() {
+  void pathWildcards_matchZeroOrMoreSegments() {
     PathTemplate start = PathTemplate.create("{glob=**}/b");
     PathTemplate middle = PathTemplate.create("a/{glob=**}/b");
     PathTemplate end = PathTemplate.create("a/{glob=**}");
@@ -131,7 +131,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void pathWildcard_canMatchTheEmptyString() {
+  void pathWildcard_canMatchTheEmptyString() {
     PathTemplate template = PathTemplate.create("{glob=**}");
 
     Truth.assertThat(template.match("").get("glob")).isEmpty();
@@ -140,7 +140,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void matchWithCustomMethod() {
+  void matchWithCustomMethod() {
     PathTemplate template = PathTemplate.create("buckets/*/objects/*:custom");
     Map<String, String> match = template.match("buckets/b/objects/o:custom");
     Truth.assertThat(match).isNotNull();
@@ -149,31 +149,31 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void matchFailWhenPathMismatch() {
+  void matchFailWhenPathMismatch() {
     PathTemplate template = PathTemplate.create("buckets/*/*/objects/*");
     Truth.assertThat(template.match("buckets/f/o/o/objects/bar")).isNull();
   }
 
   @Test
-  public void matchFailWhenPathTooShort() {
+  void matchFailWhenPathTooShort() {
     PathTemplate template = PathTemplate.create("buckets/*/*/objects/*");
     Truth.assertThat(template.match("buckets/f/o/objects")).isNull();
   }
 
   @Test
-  public void matchFailWhenPathTooLong() {
+  void matchFailWhenPathTooLong() {
     PathTemplate template = PathTemplate.create("buckets/*/*/objects/*");
     Truth.assertThat(template.match("buckets/f/o/objects/too/long")).isNull();
   }
 
   @Test
-  public void matchWithUnboundInMiddle() {
+  void matchWithUnboundInMiddle() {
     PathTemplate template = PathTemplate.create("bar/**/foo/*");
     assertPositionalMatch(template.match("bar/foo/foo/foo/bar"), "foo/foo", "bar");
   }
 
   @Test
-  public void matchWithNamedBindings() {
+  void matchWithNamedBindings() {
     PathTemplate template = PathTemplate.create("projects/*/{instance_id=instances/*}/**");
     Map<String, String> actual =
         template.match("projects/proj_foo/instances/instance_bar/table/table_baz");
@@ -181,7 +181,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void matchFailWithNamedBindingsWhenPathMismatches() {
+  void matchFailWithNamedBindingsWhenPathMismatches() {
     PathTemplate template = PathTemplate.create("projects/*/{instance_id=instances/*}/**");
     Map<String, String> actual =
         template.match("projects/proj_foo/instances_fail/instance_bar/table/table_baz");
@@ -189,21 +189,21 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void matchWithNamedBindingsThatHasOnlyWildcard() {
+  void matchWithNamedBindingsThatHasOnlyWildcard() {
     PathTemplate template = PathTemplate.create("profiles/{routing_id=*}");
     Map<String, String> actual = template.match("profiles/prof_qux");
     Truth.assertThat(actual).containsEntry("routing_id", "prof_qux");
   }
 
   @Test
-  public void matchFailWithNamedBindingsThatHasOnlyWildcardWhenPathMismatches() {
+  void matchFailWithNamedBindingsThatHasOnlyWildcardWhenPathMismatches() {
     PathTemplate template = PathTemplate.create("profiles/{routing_id=*}");
     Map<String, String> actual = template.match("profiles/prof_qux/fail");
     Truth.assertThat(actual).isNull();
   }
 
   @Test
-  public void matchWithCustomVerbs() {
+  void matchWithCustomVerbs() {
     PathTemplate template = PathTemplate.create("**:foo");
     assertPositionalMatch(template.match("a/b/c:foo"), "a/b/c");
   }
@@ -212,7 +212,7 @@ public class PathTemplateTest {
   // ========
 
   @Test
-  public void complexResourceIdBasicCases() {
+  void complexResourceIdBasicCases() {
     // Separate by "~".
     PathTemplate template = PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}");
     Map<String, String> match =
@@ -251,7 +251,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void complexResourceIdCustomVerb() {
+  void complexResourceIdCustomVerb() {
     // Separate by "~".
     PathTemplate template = PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}:hello");
     Map<String, String> match =
@@ -290,7 +290,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void complexResourceIdEqualsWildcard() {
+  void complexResourceIdEqualsWildcard() {
     PathTemplate template = PathTemplate.create("projects/{project=*}/zones/{zone_a=*}~{zone_b=*}");
     Map<String, String> match =
         template.match("projects/project-123/zones/europe-west3-c~us-east3-a");
@@ -304,7 +304,7 @@ public class PathTemplateTest {
   @Test
   @Disabled
   //TODO: This test was passing erroneously, see https://github.com/googleapis/sdk-platform-java/issues/2778
-  public void complexResourceIdEqualsPathWildcard() {
+  void complexResourceIdEqualsPathWildcard() {
     Exception exception = Assertions.assertThrows(ValidationException.class, () -> PathTemplate.create("projects/{project=*}/zones/{zone_a=**}~{zone_b}"));
     Assertions.assertEquals(String.format(
         "parse error: wildcard path not allowed in complex ID resource '%s'", "zone_a"), exception.getMessage());
@@ -315,7 +315,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void complexResourceIdMissingMatches() {
+  void complexResourceIdMissingMatches() {
     PathTemplate template = PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}");
     Truth.assertThat(template.match("projects/project-123/zones/europe-west3-c")).isNull();
 
@@ -331,7 +331,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void complexResourceIdNoSeparator() {
+  void complexResourceIdNoSeparator() {
     Exception exception = Assertions.assertThrows(ValidationException.class, () -> PathTemplate.create("projects/{project}/zones/{zone_a}{zone_b}"));
     Assertions.assertEquals(String.format(
         "parse error: missing or 2+ consecutive delimiter characters in '%s'",
@@ -347,7 +347,7 @@ public class PathTemplateTest {
   // TODO: This test was passing erroneously, see https://github.com/googleapis/sdk-platform-java/issues/2776
   @ParameterizedTest
   @MethodSource("invalidDelimiters")
-  public void complexResourceIdInvalidDelimiter(String invalidDelimiter) {
+  void complexResourceIdInvalidDelimiter(String invalidDelimiter) {
       ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
           PathTemplate.create(String.format("projects/{project=*}/zones/{zone_a}%s{zone_b}", invalidDelimiter))
       );
@@ -363,7 +363,7 @@ public class PathTemplateTest {
     }
 
   @Test
-  public void complexResourceIdMixedSeparators() {
+  void complexResourceIdMixedSeparators() {
     // Separate by a mix of delimiters.
     PathTemplate template =
         PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}.{zone_c}-{zone_d}");
@@ -392,7 +392,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void collectionWildcardMatchingInParent() {
+  void collectionWildcardMatchingInParent() {
     PathTemplate template = PathTemplate.create("v1/publishers/-/books/{book}");
     Map<String, String> match =
         template.match(
@@ -405,20 +405,20 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void collectionWildcardMatchingInvalid() {
+  void collectionWildcardMatchingInvalid() {
     ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
         PathTemplate.create("v1/publishers/{publisher}/books/-")
     );
   };
 
   @Test
-  public void complexResourceIdPubSubDeletedTopic() {
+  void complexResourceIdPubSubDeletedTopic() {
     PathTemplate template = PathTemplate.create("_deleted-topic_");
     Truth.assertThat(template).isNotNull();
   }
 
   @Test
-  public void complexResourceIdInParent() {
+  void complexResourceIdInParent() {
     // One parent has a complex resource ID.
     PathTemplate template =
         PathTemplate.create(
@@ -453,7 +453,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void complexResourcePathTemplateVariables() {
+  void complexResourcePathTemplateVariables() {
     String pattern =
         "projects/{foo}_{bar}/zones/{zone_a}-{zone_b}_{zone_c}/machines/{cell1}.{cell2}";
     PathTemplate template = PathTemplate.create(pattern);
@@ -473,7 +473,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void complexResourceBasicInvalidIds() {
+  void complexResourceBasicInvalidIds() {
     ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
         PathTemplate.create("projects/*/zones/~{zone_a}")
     );
@@ -534,7 +534,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void complexResourceMultipleDelimiters() {
+  void complexResourceMultipleDelimiters() {
     ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
         PathTemplate.create("projects/*/zones/{zone_a}~.{zone_b}")
     );
@@ -565,7 +565,7 @@ public class PathTemplateTest {
   // ========
 
   @Test
-  public void validateSuccess() {
+  void validateSuccess() {
     String templateString = "buckets/*/objects/*";
     String pathString = "buckets/bucket/objects/object";
     PathTemplate template = PathTemplate.create(templateString);
@@ -574,7 +574,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void validateFailure() {
+  void validateFailure() {
     String templateString = "buckets/*/objects/*";
     String pathString = "buckets/bucket/invalid/object";
     PathTemplate template = PathTemplate.create(templateString);
@@ -588,7 +588,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void validateMatchSuccess() {
+  void validateMatchSuccess() {
     String templateString = "buckets/*/objects/{object_id}";
     String pathString = "buckets/bucket/objects/object";
     PathTemplate template = PathTemplate.create(templateString);
@@ -598,7 +598,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void validateMatchFailure() {
+  void validateMatchFailure() {
     String templateString = "buckets/*/objects/*";
     String pathString = "buckets/bucket/invalid/object";
     PathTemplate template = PathTemplate.create(templateString);
@@ -615,28 +615,28 @@ public class PathTemplateTest {
   // ===========
 
   @Test
-  public void instantiateAtomicResource() {
+  void instantiateAtomicResource() {
     PathTemplate template = PathTemplate.create("buckets/*/*/*/objects/*");
     String url = template.instantiate("$0", "f", "$1", "o", "$2", "o", "$3", "bar");
     Truth.assertThat(url).isEqualTo("buckets/f/o/o/objects/bar");
   }
 
   @Test
-  public void instantiateEscapeUnsafeChar() {
+  void instantiateEscapeUnsafeChar() {
     PathTemplate template = PathTemplate.create("buckets/*/objects/*");
     Truth.assertThat(template.instantiate("$0", "f/o/o", "$1", "b/a/r"))
         .isEqualTo("buckets/f%2Fo%2Fo/objects/b%2Fa%2Fr");
   }
 
   @Test
-  public void instantiateNotEscapeForUnboundedWildcard() {
+  void instantiateNotEscapeForUnboundedWildcard() {
     PathTemplate template = PathTemplate.create("buckets/*/objects/**");
     Truth.assertThat(template.instantiate("$0", "f/o/o", "$1", "b/a/r"))
         .isEqualTo("buckets/f%2Fo%2Fo/objects/b/a/r");
   }
 
   @Test
-  public void instantiateFailWhenTooFewVariables() {
+  void instantiateFailWhenTooFewVariables() {
     PathTemplate template = PathTemplate.create("buckets/*/*/*/objects/*");
     ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
         template.instantiate("$0", "f", "1", "o")
@@ -644,20 +644,20 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void instantiateWithUnboundInMiddle() {
+  void instantiateWithUnboundInMiddle() {
     PathTemplate template = PathTemplate.create("bar/**/foo/*");
     Truth.assertThat(template.instantiate("$0", "1/2", "$1", "3")).isEqualTo("bar/1/2/foo/3");
   }
 
   @Test
-  public void instantiatePartial() {
+  void instantiatePartial() {
     PathTemplate template = PathTemplate.create("bar/*/foo/*");
     String instance = template.instantiatePartial(ImmutableMap.of("$0", "_1"));
     Truth.assertThat(instance).isEqualTo("bar/_1/foo/*");
   }
 
   @Test
-  public void instantiateWithHostName() {
+  void instantiateWithHostName() {
     PathTemplate template = PathTemplate.create("bar/*");
     String instance =
         template.instantiate(
@@ -666,7 +666,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void instantiateEscapeUnsafeCharNoEncoding() {
+  void instantiateEscapeUnsafeCharNoEncoding() {
     PathTemplate template = PathTemplate.createWithoutUrlEncoding("buckets/*/objects/*");
     ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
         template.instantiate("$0", "f/o/o", "$1", "b/a/r")
@@ -678,35 +678,35 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void instantiateNotEscapeForUnboundedWildcardNoEncoding() {
+  void instantiateNotEscapeForUnboundedWildcardNoEncoding() {
     PathTemplate template = PathTemplate.createWithoutUrlEncoding("buckets/*/objects/**");
     Truth.assertThat(template.instantiate("$0", "foo", "$1", "b/a/r"))
         .isEqualTo("buckets/foo/objects/b/a/r");
   }
 
   @Test
-  public void instantiateWithGoogProject() {
+  void instantiateWithGoogProject() {
     PathTemplate template = PathTemplate.create("projects/{project}");
     String instance = template.instantiate(ImmutableMap.of("project", "google.com:test-proj"));
     Truth.assertThat(instance).isEqualTo("projects/google.com%3Atest-proj");
   }
 
   @Test
-  public void instantiateWithGoogProjectNoEncoding() {
+  void instantiateWithGoogProjectNoEncoding() {
     PathTemplate template = PathTemplate.createWithoutUrlEncoding("projects/{project}");
     String instance = template.instantiate(ImmutableMap.of("project", "google.com:test-proj"));
     Truth.assertThat(instance).isEqualTo("projects/google.com:test-proj");
   }
 
   @Test
-  public void instantiateWithUnusualCharactersNoEncoding() {
+  void instantiateWithUnusualCharactersNoEncoding() {
     PathTemplate template = PathTemplate.createWithoutUrlEncoding("bar/*");
     String instance = template.instantiate(ImmutableMap.of("$0", "asdf:;`~,.<>[]!@#$%^&*()"));
     Truth.assertThat(instance).isEqualTo("bar/asdf:;`~,.<>[]!@#$%^&*()");
   }
 
   @Test
-  public void instantiateWithComplexResourceId_basic() {
+  void instantiateWithComplexResourceId_basic() {
     PathTemplate template = PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}");
     String instance =
         template.instantiate("project", "a/b/c", "zone_a", "apple", "zone_b", "baseball");
@@ -714,7 +714,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void instantiateWithComplexResourceId_customVerb() {
+  void instantiateWithComplexResourceId_customVerb() {
     PathTemplate template = PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}:hello");
     String instance =
         template.instantiate("project", "a/b/c", "zone_a", "apple", "zone_b", "baseball");
@@ -726,7 +726,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void instantiateWithComplexResourceId_mixedSeparators() {
+  void instantiateWithComplexResourceId_mixedSeparators() {
     PathTemplate template =
         PathTemplate.create(
             "projects/{project}/zones/{zone_a}~{zone_b}.{zone_c}-{zone_d}~{zone_e}");
@@ -750,7 +750,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void instantiateWithComplexResourceId_mixedSeparatorsInParent() {
+  void instantiateWithComplexResourceId_mixedSeparatorsInParent() {
     PathTemplate template =
         PathTemplate.create("projects/{project_a}~{project_b}.{project_c}/zones/{zone_a}~{zone_b}");
     String instance =
@@ -769,7 +769,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void instantiateWithCustomVerbs() {
+  void instantiateWithCustomVerbs() {
     PathTemplate template = PathTemplate.create("/v1/{name=operations/**}:cancel");
     String templateInstance = template.instantiate("name", "operations/3373707");
     Truth.assertThat(templateInstance).isEqualTo("v1/operations/3373707:cancel");
@@ -777,7 +777,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void instantiateWithASegmentStartsWithADelimiter() {
+  void instantiateWithASegmentStartsWithADelimiter() {
     PathTemplate pathTemplate =
         PathTemplate.create(
             "v1beta1/{parent=projects/*/locations/*/clusters/*}/.well-known/openid-configuration");
@@ -787,7 +787,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void instantiateWithASegmentContainingComplexResourceNamesAndStartsWithADelimiter() {
+  void instantiateWithASegmentContainingComplexResourceNamesAndStartsWithADelimiter() {
     ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
         PathTemplate.create(
             "v1beta1/{parent=projects/*/locations/*/clusters/*}/.{well}-{known}/openid-configuration")
@@ -799,7 +799,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void
+  void
       instantiateWithASegmentContainingNoComplexResourceNamesAndStartsWithMultipleDelimiters() {
     PathTemplate pathTemplate =
         PathTemplate.create(
@@ -810,7 +810,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void instantiateWithASegmentOnlyContainingOneDelimiter() {
+  void instantiateWithASegmentOnlyContainingOneDelimiter() {
     ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
         PathTemplate.create("v1/publishers/{publisher}/books/.")
     );
@@ -821,14 +821,14 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void instantiateWithASegmentOnlyContainingOneCharacter() {
+  void instantiateWithASegmentOnlyContainingOneCharacter() {
     PathTemplate pathTemplate = PathTemplate.create("v1/publishers/{publisher}/books/a");
     String pattern = "v1/publishers/o'reilly/books/a";
     Truth.assertThat(pathTemplate.matches(pattern)).isTrue();
   }
 
   @Test
-  public void instantiateWithASegmentEndsWithADelimiter() {
+  void instantiateWithASegmentEndsWithADelimiter() {
     PathTemplate pathTemplate =
         PathTemplate.create(
             "v1beta1/{parent=projects/*/locations/*/clusters/*}/well-known./openid-configuration");
@@ -838,7 +838,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void instantiateWithASegmentContainingComplexResourceNamesAndEndsWithADelimiter() {
+  void instantiateWithASegmentContainingComplexResourceNamesAndEndsWithADelimiter() {
     ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
         PathTemplate.create(
             "v1beta1/{parent=projects/*/locations/*/clusters/*}/{well}-{known}./openid-configuration")
@@ -850,7 +850,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  public void
+  void
       instantiateWithASegmentContainingNoComplexResourceNamesAndEndsWithMultipleDelimiters() {
     PathTemplate pathTemplate =
         PathTemplate.create(
@@ -864,21 +864,21 @@ public class PathTemplateTest {
   // =====
 
   @Test
-  public void testMultiplePathWildcardFailure() {
+  void testMultiplePathWildcardFailure() {
     Assertions.assertThrows(IllegalArgumentException.class, () ->
         PathTemplate.create("bar/**/{name=foo/**}:verb")
     );
   }
 
   @Test
-  public void testTemplateWithSimpleBinding() {
+  void testTemplateWithSimpleBinding() {
     PathTemplate template = PathTemplate.create("/v1/messages/{message_id}");
     String url = template.instantiate("message_id", "mymessage");
     Truth.assertThat(url).isEqualTo("v1/messages/mymessage");
   }
 
   @Test
-  public void testTemplateWithMultipleSimpleBindings() {
+  void testTemplateWithMultipleSimpleBindings() {
     PathTemplate template = PathTemplate.create("v1/shelves/{shelf}/books/{book}");
     String url = template.instantiate("shelf", "s1", "book", "b1");
     Truth.assertThat(url).isEqualTo("v1/shelves/s1/books/b1");

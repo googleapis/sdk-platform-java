@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
 public class ListenableFutureToApiFutureTest {
 
   @Test
-  public void testGet() throws Exception {
+  void testGet() throws Exception {
     SettableFuture<Integer> future = SettableFuture.create();
     ListenableFutureToApiFuture<Integer> apiFuture = new ListenableFutureToApiFuture<>(future);
     future.set(3);

@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
 
 public class SettableApiFutureTest {
   @Test
-  public void testSet() throws Exception {
+  void testSet() throws Exception {
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
     Truth.assertThat(future.isDone()).isFalse();
     future.set(42);
@@ -48,7 +48,7 @@ public class SettableApiFutureTest {
   }
 
   @Test
-  public void testCancel() {
+  void testCancel() {
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
     Truth.assertThat(future.isDone()).isFalse();
     Truth.assertThat(future.isCancelled()).isFalse();
@@ -58,7 +58,7 @@ public class SettableApiFutureTest {
   }
 
   @Test
-  public void testException() {
+  void testException() {
     Assertions.assertThrows(Exception.class, () -> {
       SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
       future.setException(new Exception());
@@ -67,7 +67,7 @@ public class SettableApiFutureTest {
   }
 
   @Test
-  public void testListener() {
+  void testListener() {
     final AtomicInteger flag = new AtomicInteger();
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
     future.addListener(

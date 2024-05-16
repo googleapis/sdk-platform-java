@@ -44,7 +44,7 @@ public class UntypedResourceNameTest {
   private static final String EMPTY_STRING = "";
 
   @Test
-  public void testGetFieldValues() {
+  void testGetFieldValues() {
     assertTrue(UntypedResourceName.isParsableFrom(NAME_STRING));
     UntypedResourceName fooName = UntypedResourceName.parse(NAME_STRING);
 
@@ -56,7 +56,7 @@ public class UntypedResourceNameTest {
   }
 
   @Test
-  public void testInsertIntoFieldValuesMap() {
+  void testInsertIntoFieldValuesMap() {
     UntypedResourceName fooName = UntypedResourceName.parse(NAME_STRING);
     Map<String, String> fieldValuesMap = fooName.getFieldValuesMap();
 
@@ -80,7 +80,7 @@ public class UntypedResourceNameTest {
   }
 
   @Test
-  public void testNullName() {
+  void testNullName() {
     assertFalse(UntypedResourceName.isParsableFrom(null));
     try {
       UntypedResourceName.parse(null);

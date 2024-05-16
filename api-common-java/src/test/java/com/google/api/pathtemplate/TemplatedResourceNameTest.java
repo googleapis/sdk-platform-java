@@ -39,7 +39,7 @@ import org.junit.jupiter.api.Test;
 public class TemplatedResourceNameTest {
 
   @Test
-  public void resourceNameMethods() {
+  void resourceNameMethods() {
     PathTemplate template = PathTemplate.create("buckets/*/objects/**");
     TemplatedResourceName name = TemplatedResourceName.create(template, "buckets/b/objects/1/2");
     Truth.assertThat(name.toString()).isEqualTo("buckets/b/objects/1/2");
