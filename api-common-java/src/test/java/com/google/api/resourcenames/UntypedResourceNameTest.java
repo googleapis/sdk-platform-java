@@ -33,6 +33,7 @@ import static junit.framework.TestCase.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -81,8 +82,6 @@ class UntypedResourceNameTest {
   @Test
   void testNullName() {
     assertFalse(UntypedResourceName.isParsableFrom(null));
-    Assertions.assertThrows(
-        NullPointerException.class,
-        () -> UntypedResourceName.parse(null));
+    Assertions.assertThrows(NullPointerException.class, () -> UntypedResourceName.parse(null));
   }
 }

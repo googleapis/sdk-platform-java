@@ -302,7 +302,7 @@ class PathTemplateTest {
   }
 
   @Test
-  @Disabled ("https://github.com/googleapis/sdk-platform-java/issues/2778")
+  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2778")
   void complexResourceIdEqualsPathWildcard() {
     Exception exception =
         Assertions.assertThrows(
@@ -362,7 +362,7 @@ class PathTemplateTest {
         exception.getMessage());
   }
 
-  @Disabled ("https://github.com/googleapis/sdk-platform-java/issues/2776")
+  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2776")
   @ParameterizedTest
   @MethodSource("invalidDelimiters")
   void complexResourceIdInvalidDelimiter(String invalidDelimiter) {
