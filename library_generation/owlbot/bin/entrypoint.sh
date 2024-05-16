@@ -46,12 +46,12 @@ then
   # we copy the templates to a temp folder because we need to do a special
   # modification regarding libraries_bom_version that can't be handled by the
   # synthtool library considering the way owlbot.py files are written
-  export SYNTHTOOL_TEMPLATES=$(mktemp -d)
-  cp -r ${scripts_root}/owlbot/templates/* "${SYNTHTOOL_TEMPLATES}"
-  sed -i 's/\$\$__libraries_bom_version__\$\$/'"${libraries_bom_version}"'/g' "${SYNTHTOOL_TEMPLATES}/java_library/README.md" 
+  export SYNTHTOOL_TEMPLATES="${scripts_root}/owlbot/templates"
+  export SYNTHTOOL_LIBRARIES_BOM_VERSION="${libraries_bom_version}"
   # defaults to run owlbot.py
   python3 owlbot.py
   unset SYNTHTOOL_TEMPLATES
+  unset SYNTHTOOL_LIBRARIES_BOM_VERSION
 fi
 echo "...done"
 

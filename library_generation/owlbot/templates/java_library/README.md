@@ -44,7 +44,7 @@ If you are using Maven with [BOM][libraries-bom], add this to your pom.xml file:
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>libraries-bom</artifactId>
-      <version>$$__libraries_bom_version__$$</version>
+      <version>{{ metadata['libraries_bom_version'] }}</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
