@@ -18,12 +18,12 @@ package com.google.cloud;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public final class ConditionTest {
+final class ConditionTest {
 
   @Test
-  public void title_nullable() {
+  void title_nullable() {
     Condition condition =
         Condition.newBuilder().setTitle(null).setDescription("desc").setExpression("expr").build();
 
@@ -31,7 +31,7 @@ public final class ConditionTest {
   }
 
   @Test
-  public void description_nullable() {
+  void description_nullable() {
     Condition condition =
         Condition.newBuilder().setTitle("title").setDescription(null).setExpression("expr").build();
 
