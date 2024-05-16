@@ -33,8 +33,7 @@ public class GitHubClientTest {
     HttpClient httpClient = mock(HttpClient.class);
     client = new GitHubClient(httpClient);
     response = mock(HttpResponse.class);
-    when(httpClient.send(any(HttpRequest.class), any(BodyHandler.class)))
-        .thenReturn(response);
+    when(httpClient.send(any(HttpRequest.class), any(BodyHandler.class))).thenReturn(response);
   }
 
   @Test
@@ -44,8 +43,8 @@ public class GitHubClientTest {
     ZonedDateTime lastMonth = ZonedDateTime.parse("2024-04-22T09:33:52Z");
     Instant prInstant = Instant.parse("2024-05-10T09:33:52Z");
     ZonedDateTime prTime = ZonedDateTime.parse("2024-05-10T09:33:52Z");
-    String responseBody = Files.readString(
-        Path.of("src/test/resources/pull_request_sample_response.txt"));
+    String responseBody =
+        Files.readString(Path.of("src/test/resources/pull_request_sample_response.txt"));
 
     try (MockedStatic<ZonedDateTime> mockedLocalDateTime = Mockito.mockStatic(ZonedDateTime.class);
         MockedStatic<Instant> mockedInstant = Mockito.mockStatic(Instant.class)) {

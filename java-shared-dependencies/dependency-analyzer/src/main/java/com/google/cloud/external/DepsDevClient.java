@@ -28,11 +28,10 @@ import java.util.stream.Collectors;
 
 /**
  * DepsDevClient is a class that sends HTTP requests to the Deps.dev RESTful API.
- * <p>
- * This class simplifies the process of making API calls by handling authentication, request
- * construction, and response parsing.
- * It uses the {@link java.net.http.HttpClient} for sending requests and
- * {@link com.google.gson.Gson} for handling JSON serialization/deserialization.
+ *
+ * <p>This class simplifies the process of making API calls by handling authentication, request
+ * construction, and response parsing. It uses the {@link java.net.http.HttpClient} for sending
+ * requests and {@link com.google.gson.Gson} for handling JSON serialization/deserialization.
  */
 public class DepsDevClient {
 
@@ -40,9 +39,11 @@ public class DepsDevClient {
   private final Gson gson;
   private final static String ADVISORY_URL_BASE = "https://api.deps.dev/v3/advisories/%s";
 
-  private final static String DEPENDENCY_URLBASE = "https://api.deps.dev/v3/systems/%s/packages/%s/versions/%s:dependencies";
+  private final static String DEPENDENCY_URLBASE =
+      "https://api.deps.dev/v3/systems/%s/packages/%s/versions/%s:dependencies";
 
-  public final static String QUERY_URL_BASE = "https://api.deps.dev/v3/query?versionKey.system=%s&versionKey.name=%s&versionKey.version=%s";
+  public final static String QUERY_URL_BASE =
+      "https://api.deps.dev/v3/query?versionKey.system=%s&versionKey.name=%s&versionKey.version=%s";
 
   public DepsDevClient(HttpClient client) {
     this.client = client;
