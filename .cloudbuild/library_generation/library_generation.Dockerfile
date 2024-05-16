@@ -15,7 +15,7 @@
 # build from the root of this repo:
 FROM gcr.io/cloud-devrel-public-resources/python
 
-ARG SYNTHTOOL_COMMITTISH=63cc541da2c45fcfca2136c43e638da1fbae174d
+ARG SYNTHTOOL_COMMITTISH=e9ef1d28970692cb142c776b4cfefe470a72964a
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
 ENV HOME=/home
 
