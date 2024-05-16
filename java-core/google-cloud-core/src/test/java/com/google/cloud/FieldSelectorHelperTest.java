@@ -16,15 +16,15 @@
 
 package com.google.cloud;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.cloud.FieldSelector.Helper;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class FieldSelectorHelperTest {
+class FieldSelectorHelperTest {
 
   private static final FieldSelector FIELD1 =
       new FieldSelector() {
@@ -52,7 +52,7 @@ public class FieldSelectorHelperTest {
   private static final String CONTAINER = "container";
 
   @Test
-  public void testSelector() {
+  void testSelector() {
     String selector = Helper.selector(REQUIRED_FIELDS, FIELD3);
     assertTrue(selector.contains("field1"));
     assertTrue(selector.contains("field2"));
@@ -61,7 +61,7 @@ public class FieldSelectorHelperTest {
   }
 
   @Test
-  public void testListSelector() {
+  void testListSelector() {
     String selector = Helper.listSelector(CONTAINER, REQUIRED_FIELDS, FIELD3);
     assertTrue(selector.startsWith("nextPageToken,container("));
     assertTrue(selector.contains("field1"));
@@ -72,7 +72,7 @@ public class FieldSelectorHelperTest {
   }
 
   @Test
-  public void testListSelectorWithExtraFields() {
+  void testListSelectorWithExtraFields() {
     String selector =
         Helper.listSelector(CONTAINER, REQUIRED_FIELDS, new FieldSelector[] {FIELD3}, "field4");
     assertTrue(selector.startsWith("nextPageToken,container("));
@@ -85,7 +85,7 @@ public class FieldSelectorHelperTest {
   }
 
   @Test
-  public void testListSelectorWithFirstLevelFields() {
+  void testListSelectorWithFirstLevelFields() {
     String selector =
         Helper.listSelector(
             FIRST_LEVEL_FIELDS, CONTAINER, REQUIRED_FIELDS, new FieldSelector[] {FIELD3}, "field4");

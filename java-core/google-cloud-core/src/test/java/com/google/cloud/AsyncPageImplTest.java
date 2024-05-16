@@ -16,16 +16,16 @@
 
 package com.google.cloud;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.gax.paging.AsyncPage;
 import com.google.common.collect.ImmutableList;
 import java.util.concurrent.ExecutionException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class AsyncPageImplTest {
+class AsyncPageImplTest {
 
   private static final ImmutableList<String> VALUES1 = ImmutableList.of("1", "2");
   private static final ImmutableList<String> VALUES2 = ImmutableList.of("3", "4");
@@ -51,7 +51,7 @@ public class AsyncPageImplTest {
   }
 
   @Test
-  public void testPage() {
+  void testPage() {
     final AsyncPageImpl<String> nextResult = new AsyncPageImpl<>(null, "c", VALUES2);
     AsyncPageImpl.NextPageFetcher<String> fetcher = new TestPageFetcher(nextResult);
     AsyncPageImpl<String> result = new AsyncPageImpl<>(fetcher, "c", VALUES1);
@@ -61,7 +61,7 @@ public class AsyncPageImplTest {
   }
 
   @Test
-  public void testPageAsync() throws ExecutionException, InterruptedException {
+  void testPageAsync() throws ExecutionException, InterruptedException {
     final AsyncPageImpl<String> nextResult = new AsyncPageImpl<>(null, "c", VALUES2);
     AsyncPageImpl.NextPageFetcher<String> fetcher = new TestPageFetcher(nextResult);
     AsyncPageImpl<String> result = new AsyncPageImpl<>(fetcher, "c", VALUES1);
@@ -71,7 +71,7 @@ public class AsyncPageImplTest {
   }
 
   @Test
-  public void testIterateAll() {
+  void testIterateAll() {
     final AsyncPageImpl<String> nextResult2 = new AsyncPageImpl<>(null, "c3", VALUES3);
     AsyncPageImpl.NextPageFetcher<String> fetcher2 = new TestPageFetcher(nextResult2);
     final AsyncPageImpl<String> nextResult1 = new AsyncPageImpl<>(fetcher2, "c2", VALUES2);
@@ -81,7 +81,7 @@ public class AsyncPageImplTest {
   }
 
   @Test
-  public void testAsyncPageAndIterateAll() throws ExecutionException, InterruptedException {
+  void testAsyncPageAndIterateAll() throws ExecutionException, InterruptedException {
     final AsyncPageImpl<String> nextResult2 = new AsyncPageImpl<>(null, "c3", VALUES3);
     AsyncPageImpl.NextPageFetcher<String> fetcher2 = new TestPageFetcher(nextResult2);
     final AsyncPageImpl<String> nextResult1 = new AsyncPageImpl<>(fetcher2, "c2", VALUES2);

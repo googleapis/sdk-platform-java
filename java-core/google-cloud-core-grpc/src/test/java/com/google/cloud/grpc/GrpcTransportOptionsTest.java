@@ -16,18 +16,18 @@
 
 package com.google.cloud.grpc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.cloud.grpc.GrpcTransportOptions.DefaultExecutorFactory;
 import com.google.cloud.grpc.GrpcTransportOptions.ExecutorFactory;
 import java.util.concurrent.ScheduledExecutorService;
 import org.easymock.EasyMock;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class GrpcTransportOptionsTest {
+class GrpcTransportOptionsTest {
 
   private static final ExecutorFactory MOCK_EXECUTOR_FACTORY =
       EasyMock.createMock(ExecutorFactory.class);
@@ -38,13 +38,13 @@ public class GrpcTransportOptionsTest {
   private static final GrpcTransportOptions OPTIONS_COPY = OPTIONS.toBuilder().build();
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     assertSame(MOCK_EXECUTOR_FACTORY, OPTIONS.getExecutorFactory());
     assertTrue(DEFAULT_OPTIONS.getExecutorFactory() instanceof DefaultExecutorFactory);
   }
 
   @Test
-  public void testBaseEquals() {
+  void testBaseEquals() {
     assertEquals(OPTIONS, OPTIONS_COPY);
     assertNotEquals(DEFAULT_OPTIONS, OPTIONS);
     GrpcTransportOptions options =
@@ -53,7 +53,7 @@ public class GrpcTransportOptionsTest {
   }
 
   @Test
-  public void testBaseHashCode() {
+  void testBaseHashCode() {
     assertEquals(OPTIONS.hashCode(), OPTIONS_COPY.hashCode());
     assertNotEquals(DEFAULT_OPTIONS.hashCode(), OPTIONS.hashCode());
     GrpcTransportOptions options =
@@ -62,7 +62,7 @@ public class GrpcTransportOptionsTest {
   }
 
   @Test
-  public void testDefaultExecutorFactory() {
+  void testDefaultExecutorFactory() {
     ExecutorFactory<ScheduledExecutorService> executorFactory = new DefaultExecutorFactory();
     ScheduledExecutorService executorService = executorFactory.get();
     assertSame(executorService, executorFactory.get());
