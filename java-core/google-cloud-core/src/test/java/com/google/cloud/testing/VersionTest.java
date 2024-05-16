@@ -17,11 +17,9 @@
 package com.google.cloud.testing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class VersionTest {
@@ -40,52 +38,27 @@ class VersionTest {
 
   @Test
   void testFromStringWithAlphas() {
-    try {
-      Version.fromString("2016.01.hello");
-      Assertions.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+    assertThrows(IllegalArgumentException.class, () -> Version.fromString("2016.01.hello"));
   }
 
   @Test
   void testFromStringMissingPatch() {
-    try {
-      Version.fromString("2016.01");
-      Assertions.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+    assertThrows(IllegalArgumentException.class, () -> Version.fromString("2016.01"));
   }
 
   @Test
   void testFromStringMissingMinor() {
-    try {
-      Version.fromString("2016");
-      Assertions.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+    assertThrows(IllegalArgumentException.class, () -> Version.fromString("2016"));
   }
 
   @Test
   void testFromStringEmpty() {
-    try {
-      Version.fromString("");
-      Assertions.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+    assertThrows(IllegalArgumentException.class, () -> Version.fromString(""));
   }
 
   @Test
   void testFromStringNull() {
-    try {
-      Version.fromString(null);
-      Assertions.fail();
-    } catch (NullPointerException ex) {
-      assertNull(ex.getMessage());
-    }
+    assertThrows(NullPointerException.class, () -> Version.fromString(null));
   }
 
   @Test

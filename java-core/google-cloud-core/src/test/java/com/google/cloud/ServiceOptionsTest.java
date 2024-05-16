@@ -19,6 +19,7 @@ package com.google.cloud;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -385,7 +386,7 @@ class ServiceOptionsTest {
     assertEquals(NoCredentials.getInstance(), OPTIONS_NO_CREDENTIALS.getCredentials());
     assertEquals(NoCredentials.getInstance(), OPTIONS_NO_CREDENTIALS.getCredentials());
     assertNotEquals(NoCredentials.getInstance(), OPTIONS.getCredentials());
-    assertNotEquals(null, NoCredentials.getInstance());
+    assertNotNull(NoCredentials.getInstance());
     assertSame(TEST_CLOCK, OPTIONS_NO_CREDENTIALS.getClock());
     assertEquals("host", OPTIONS_NO_CREDENTIALS.getHost());
     assertEquals("project-id", OPTIONS_NO_CREDENTIALS.getProjectId());

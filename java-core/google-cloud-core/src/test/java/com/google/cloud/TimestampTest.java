@@ -19,7 +19,7 @@ package com.google.cloud;
 import static com.google.common.testing.SerializableTester.reserializeAndAssert;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.common.testing.EqualsTester;
 import java.util.Calendar;
@@ -27,7 +27,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /** Unit tests for {@link com.google.cloud.Timestamp}. */
@@ -155,62 +154,44 @@ class TimestampTest {
 
   @Test
   void boundsSecondsMin() {
-    try {
-      Timestamp.ofTimeSecondsAndNanos(Timestamp.MIN_VALUE.getSeconds() - 1, 999999999);
-      Assertions.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Timestamp.ofTimeSecondsAndNanos(Timestamp.MIN_VALUE.getSeconds() - 1, 999999999));
   }
 
   @Test
   void boundsSecondsMax() {
-    try {
-      Timestamp.ofTimeSecondsAndNanos(Timestamp.MAX_VALUE.getSeconds() + 1, 0);
-      Assertions.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Timestamp.ofTimeSecondsAndNanos(Timestamp.MAX_VALUE.getSeconds() + 1, 0));
   }
 
   @Test
   void boundsNanosMin() {
-    try {
-      Timestamp.ofTimeSecondsAndNanos(TEST_TIME_SECONDS, -1);
-      Assertions.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Timestamp.ofTimeSecondsAndNanos(TEST_TIME_SECONDS, -1));
   }
 
   @Test
   void boundsNanosMax() {
-    try {
-      Timestamp.ofTimeSecondsAndNanos(TEST_TIME_SECONDS, 1000000000);
-      Assertions.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Timestamp.ofTimeSecondsAndNanos(TEST_TIME_SECONDS, 1000000000));
   }
 
   @Test
   void boundsSqlTimestampMin() {
-    try {
-      Timestamp.of(new java.sql.Timestamp((Timestamp.MIN_VALUE.getSeconds() - 1) * 1000));
-      Assertions.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Timestamp.of(new java.sql.Timestamp((Timestamp.MIN_VALUE.getSeconds() - 1) * 1000)));
   }
 
   @Test
   void boundsSqlTimestampMax() {
-    try {
-      Timestamp.of(new java.sql.Timestamp((Timestamp.MAX_VALUE.getSeconds() + 1) * 1000));
-      Assertions.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Timestamp.of(new java.sql.Timestamp((Timestamp.MAX_VALUE.getSeconds() + 1) * 1000)));
   }
 
   @Test
@@ -297,7 +278,7 @@ class TimestampTest {
   }
 
   @Test
-  void serialization() throws Exception {
+  void serialization() {
     reserializeAndAssert(Timestamp.parseTimestamp("9999-12-31T23:59:59.999999999Z"));
   }
 }
