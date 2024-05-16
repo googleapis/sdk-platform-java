@@ -18,12 +18,12 @@ import static org.junit.Assert.assertEquals;
 
 import com.google.api.FieldInfo.Format;
 import com.google.api.generator.engine.ast.TypeNode;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class FieldTest {
+class FieldTest {
 
   @Test
-  public void shouldAutoPopulate() {
+  void shouldAutoPopulate() {
     Field FIELD =
         Field.builder()
             .setName("SampleField")
@@ -36,7 +36,7 @@ public class FieldTest {
   }
 
   @Test
-  public void isRequired_shouldNotAutoPopulate() {
+  void isRequired_shouldNotAutoPopulate() {
     Field FIELD =
         Field.builder()
             .setName("SampleField")
@@ -49,7 +49,7 @@ public class FieldTest {
   }
 
   @Test
-  public void fieldInfoFormatNotUUID4_shouldNotAutoPopulate() {
+  void fieldInfoFormatNotUUID4_shouldNotAutoPopulate() {
     Field FIELD =
         Field.builder()
             .setName("SampleField")
@@ -62,7 +62,7 @@ public class FieldTest {
   }
 
   @Test
-  public void typeNotString_shouldNotAutoPopulate() {
+  void typeNotString_shouldNotAutoPopulate() {
     Field FIELD =
         Field.builder()
             .setName("SampleField")

@@ -24,11 +24,11 @@ import com.google.api.generator.test.framework.GoldenFileWriter;
 import com.google.api.generator.test.protoloader.RestTestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ServiceClientTestClassComposerTest {
+class ServiceClientTestClassComposerTest {
   @Test
-  public void generateServiceClasses() {
+  void generateServiceClasses() {
     GapicContext context = RestTestProtoLoader.instance().parseCompliance();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz =
