@@ -30,7 +30,7 @@ RUN apt-get update && apt-get install -y \
 # copy source code
 COPY library_generation /src
 
-# install protobuf
+# install protoc
 WORKDIR /protoc
 RUN ls /src
 RUN source /src/utils/utilities.sh \
