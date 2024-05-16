@@ -60,6 +60,12 @@ public class ServiceClientClassComposerTest {
             "localhost:7469",
             "v1beta1"
           },
+          {
+            "ApiVersionClient",
+            GrpcTestProtoLoader.instance().parseApiVersionTesting(),
+            "localhost:7469",
+            "v1"
+          },
         });
   }
 

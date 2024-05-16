@@ -1,0 +1,458 @@
+package com.google.api.version.test;
+
+import com.google.api.gax.core.BackgroundResource;
+import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.resourcenames.ResourceName;
+import com.google.api.version.test.stub.EchoWithVersionStub;
+import com.google.api.version.test.stub.EchoWithVersionStubSettings;
+import com.google.rpc.Status;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+import javax.annotation.Generated;
+
+// AUTO-GENERATED DOCUMENTATION AND CLASS.
+/**
+ * This service client implements API version: fake_version.
+ *
+ * <p>This class provides the ability to make remote calls to the backing service through method
+ * calls that map to API methods. Sample code to get started:
+ *
+ * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+ * try (EchoWithVersionClient echoWithVersionClient = EchoWithVersionClient.create()) {
+ *   EchoResponse response = echoWithVersionClient.echoWithVersionMethod();
+ * }
+ * }</pre>
+ *
+ * <p>Note: close() needs to be called on the EchoWithVersionClient object to clean up resources
+ * such as threads. In the example above, try-with-resources is used, which automatically calls
+ * close().
+ *
+ * <table>
+ *    <caption>Methods</caption>
+ *    <tr>
+ *      <th>Method</th>
+ *      <th>Description</th>
+ *      <th>Method Variants</th>
+ *    </tr>
+ *    <tr>
+ *      <td><p> EchoWithVersionMethod</td>
+ *      <td><p> </td>
+ *      <td>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *           <li><p> echoWithVersionMethod(EchoRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *           <li><p> echoWithVersionMethod()
+ *           <li><p> echoWithVersionMethod(ResourceName parent)
+ *           <li><p> echoWithVersionMethod(FoobarName name)
+ *           <li><p> echoWithVersionMethod(Status error)
+ *           <li><p> echoWithVersionMethod(String content)
+ *           <li><p> echoWithVersionMethod(String name)
+ *           <li><p> echoWithVersionMethod(String parent)
+ *           <li><p> echoWithVersionMethod(String content, Severity severity)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *           <li><p> echoWithVersionMethodCallable()
+ *      </ul>
+ *       </td>
+ *    </tr>
+ *  </table>
+ *
+ * <p>See the individual methods for example code.
+ *
+ * <p>Many parameters require resource names to be formatted in a particular way. To assist with
+ * these names, this class includes a format method for each type of name, and additionally a parse
+ * method to extract the individual identifiers contained within names that are returned.
+ *
+ * <p>This class can be customized by passing in a custom instance of EchoWithVersionSettings to
+ * create(). For example:
+ *
+ * <p>To customize credentials:
+ *
+ * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+ * EchoWithVersionSettings echoWithVersionSettings =
+ *     EchoWithVersionSettings.newBuilder()
+ *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *         .build();
+ * EchoWithVersionClient echoWithVersionClient =
+ *     EchoWithVersionClient.create(echoWithVersionSettings);
+ * }</pre>
+ *
+ * <p>To customize the endpoint:
+ *
+ * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+ * EchoWithVersionSettings echoWithVersionSettings =
+ *     EchoWithVersionSettings.newBuilder().setEndpoint(myEndpoint).build();
+ * EchoWithVersionClient echoWithVersionClient =
+ *     EchoWithVersionClient.create(echoWithVersionSettings);
+ * }</pre>
+ *
+ * <p>To use REST (HTTP1.1/JSON) transport (instead of gRPC) for sending and receiving requests over
+ * the wire:
+ *
+ * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+ * EchoWithVersionSettings echoWithVersionSettings =
+ *     EchoWithVersionSettings.newHttpJsonBuilder().build();
+ * EchoWithVersionClient echoWithVersionClient =
+ *     EchoWithVersionClient.create(echoWithVersionSettings);
+ * }</pre>
+ *
+ * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
+ */
+@Generated("by gapic-generator-java")
+public class EchoWithVersionClient implements BackgroundResource {
+  private final EchoWithVersionSettings settings;
+  private final EchoWithVersionStub stub;
+
+  /** Constructs an instance of EchoWithVersionClient with default settings. */
+  public static final EchoWithVersionClient create() throws IOException {
+    return create(EchoWithVersionSettings.newBuilder().build());
+  }
+
+  /**
+   * Constructs an instance of EchoWithVersionClient, using the given settings. The channels are
+   * created based on the settings passed in, or defaults for any settings that are not set.
+   */
+  public static final EchoWithVersionClient create(EchoWithVersionSettings settings)
+      throws IOException {
+    return new EchoWithVersionClient(settings);
+  }
+
+  /**
+   * Constructs an instance of EchoWithVersionClient, using the given stub for making calls. This is
+   * for advanced usage - prefer using create(EchoWithVersionSettings).
+   */
+  public static final EchoWithVersionClient create(EchoWithVersionStub stub) {
+    return new EchoWithVersionClient(stub);
+  }
+
+  /**
+   * Constructs an instance of EchoWithVersionClient, using the given settings. This is protected so
+   * that it is easy to make a subclass, but otherwise, the static factory methods should be
+   * preferred.
+   */
+  protected EchoWithVersionClient(EchoWithVersionSettings settings) throws IOException {
+    this.settings = settings;
+    this.stub = ((EchoWithVersionStubSettings) settings.getStubSettings()).createStub();
+  }
+
+  protected EchoWithVersionClient(EchoWithVersionStub stub) {
+    this.settings = null;
+    this.stub = stub;
+  }
+
+  public final EchoWithVersionSettings getSettings() {
+    return settings;
+  }
+
+  public EchoWithVersionStub getStub() {
+    return stub;
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoWithVersionClient echoWithVersionClient = EchoWithVersionClient.create()) {
+   *   EchoResponse response = echoWithVersionClient.echoWithVersionMethod();
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final EchoResponse echoWithVersionMethod() {
+    EchoRequest request = EchoRequest.newBuilder().build();
+    return echoWithVersionMethod(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoWithVersionClient echoWithVersionClient = EchoWithVersionClient.create()) {
+   *   ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
+   *   EchoResponse response = echoWithVersionClient.echoWithVersionMethod(parent);
+   * }
+   * }</pre>
+   *
+   * @param parent
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final EchoResponse echoWithVersionMethod(ResourceName parent) {
+    EchoRequest request =
+        EchoRequest.newBuilder().setParent(parent == null ? null : parent.toString()).build();
+    return echoWithVersionMethod(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoWithVersionClient echoWithVersionClient = EchoWithVersionClient.create()) {
+   *   FoobarName name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
+   *   EchoResponse response = echoWithVersionClient.echoWithVersionMethod(name);
+   * }
+   * }</pre>
+   *
+   * @param name
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final EchoResponse echoWithVersionMethod(FoobarName name) {
+    EchoRequest request =
+        EchoRequest.newBuilder().setName(name == null ? null : name.toString()).build();
+    return echoWithVersionMethod(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoWithVersionClient echoWithVersionClient = EchoWithVersionClient.create()) {
+   *   Status error = Status.newBuilder().build();
+   *   EchoResponse response = echoWithVersionClient.echoWithVersionMethod(error);
+   * }
+   * }</pre>
+   *
+   * @param error
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final EchoResponse echoWithVersionMethod(Status error) {
+    EchoRequest request = EchoRequest.newBuilder().setError(error).build();
+    return echoWithVersionMethod(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoWithVersionClient echoWithVersionClient = EchoWithVersionClient.create()) {
+   *   String content = "content951530617";
+   *   EchoResponse response = echoWithVersionClient.echoWithVersionMethod(content);
+   * }
+   * }</pre>
+   *
+   * @param content
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final EchoResponse echoWithVersionMethod(String content) {
+    EchoRequest request = EchoRequest.newBuilder().setContent(content).build();
+    return echoWithVersionMethod(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoWithVersionClient echoWithVersionClient = EchoWithVersionClient.create()) {
+   *   String name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString();
+   *   EchoResponse response = echoWithVersionClient.echoWithVersionMethod(name);
+   * }
+   * }</pre>
+   *
+   * @param name
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final EchoResponse echoWithVersionMethod(String name) {
+    EchoRequest request = EchoRequest.newBuilder().setName(name).build();
+    return echoWithVersionMethod(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoWithVersionClient echoWithVersionClient = EchoWithVersionClient.create()) {
+   *   String parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString();
+   *   EchoResponse response = echoWithVersionClient.echoWithVersionMethod(parent);
+   * }
+   * }</pre>
+   *
+   * @param parent
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final EchoResponse echoWithVersionMethod(String parent) {
+    EchoRequest request = EchoRequest.newBuilder().setParent(parent).build();
+    return echoWithVersionMethod(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoWithVersionClient echoWithVersionClient = EchoWithVersionClient.create()) {
+   *   String content = "content951530617";
+   *   Severity severity = Severity.forNumber(0);
+   *   EchoResponse response = echoWithVersionClient.echoWithVersionMethod(content, severity);
+   * }
+   * }</pre>
+   *
+   * @param content
+   * @param severity
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final EchoResponse echoWithVersionMethod(String content, Severity severity) {
+    EchoRequest request =
+        EchoRequest.newBuilder().setContent(content).setSeverity(severity).build();
+    return echoWithVersionMethod(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoWithVersionClient echoWithVersionClient = EchoWithVersionClient.create()) {
+   *   EchoRequest request =
+   *       EchoRequest.newBuilder()
+   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setSeverity(Severity.forNumber(0))
+   *           .setFoobar(Foobar.newBuilder().build())
+   *           .build();
+   *   EchoResponse response = echoWithVersionClient.echoWithVersionMethod(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final EchoResponse echoWithVersionMethod(EchoRequest request) {
+    return echoWithVersionMethodCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoWithVersionClient echoWithVersionClient = EchoWithVersionClient.create()) {
+   *   EchoRequest request =
+   *       EchoRequest.newBuilder()
+   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setSeverity(Severity.forNumber(0))
+   *           .setFoobar(Foobar.newBuilder().build())
+   *           .build();
+   *   ApiFuture<EchoResponse> future =
+   *       echoWithVersionClient.echoWithVersionMethodCallable().futureCall(request);
+   *   // Do something.
+   *   EchoResponse response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<EchoRequest, EchoResponse> echoWithVersionMethodCallable() {
+    return stub.echoWithVersionMethodCallable();
+  }
+
+  @Override
+  public final void close() {
+    stub.close();
+  }
+
+  @Override
+  public void shutdown() {
+    stub.shutdown();
+  }
+
+  @Override
+  public boolean isShutdown() {
+    return stub.isShutdown();
+  }
+
+  @Override
+  public boolean isTerminated() {
+    return stub.isTerminated();
+  }
+
+  @Override
+  public void shutdownNow() {
+    stub.shutdownNow();
+  }
+
+  @Override
+  public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
+    return stub.awaitTermination(duration, unit);
+  }
+}

@@ -47,7 +47,6 @@ service Echo {
   option (google.api.default_host) = "localhost:7469";
   option (google.api.oauth_scopes) =
       "https://www.googleapis.com/auth/cloud-platform";
-  option (google.api.api_version) = "foo_version_for_tests";
 
   // This method simply echos the request. This method is showcases unary rpcs.
   rpc Echo(EchoRequest) returns (EchoResponse) {
