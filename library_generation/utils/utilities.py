@@ -188,7 +188,6 @@ def generate_prerequisite_files(
     proto_path: str,
     transport: str,
     library_path: str,
-    gapic_repo: bool,
     language: str = "java",
 ) -> None:
     """
@@ -202,8 +201,6 @@ def generate_prerequisite_files(
     :param proto_path: the proto path
     :param transport: transport supported by the library
     :param library_path: the path to which the generated file goes
-    :param gapic_repo: whether the library is generated into a gapic
-    repository or not.
     :param language: programming language of the library
     :return: None
     """
@@ -215,7 +212,7 @@ def generate_prerequisite_files(
         else f"{library.group_id}:google-{cloud_prefix}{library_name}"
     )
     distribution_name_short = re.split(r"[:/]", distribution_name)[-1]
-    if not gapic_repo:
+    if config.contains_common_protos():
         repo = "googleapis/sdk-platform-java"
     elif config.is_monorepo():
         repo = "googleapis/google-cloud-java"
@@ -255,7 +252,7 @@ def generate_prerequisite_files(
         "library_type": library.library_type,
         "requires_billing": library.requires_billing,
     }
-    if not gapic_repo:
+    if config.contains_common_protos():
         repo_metadata.pop("api_id")
 
     if library.api_reference:

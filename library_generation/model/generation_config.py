@@ -20,7 +20,7 @@ from library_generation.model.gapic_config import GapicConfig
 REPO_LEVEL_PARAMETER = "Repo level parameter"
 LIBRARY_LEVEL_PARAMETER = "Library level parameter"
 GAPIC_LEVEL_PARAMETER = "GAPIC level parameter"
-COMMON_PROTOS = "common-protos"
+COMMON_PROTOS_LIBRARY_NAME = "common-protos"
 
 
 class GenerationConfig:
@@ -69,7 +69,7 @@ class GenerationConfig:
         if self.__contains_common_protos is None:
             self.__contains_common_protos = False
             for library in self.libraries:
-                if library.get_library_name() == COMMON_PROTOS:
+                if library.get_library_name() == COMMON_PROTOS_LIBRARY_NAME:
                     self.__contains_common_protos = True
                     break
         return self.__contains_common_protos

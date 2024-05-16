@@ -48,12 +48,11 @@ library_2 = LibraryConfig(
     api_description="allows you to encrypt, store, manage, and audit infrastructure and application-level secrets.",
     gapic_configs=list(),
 )
-library_3 = LibraryConfig(
-    api_shortname="secret",
-    name_pretty="Secret Management Example",
-    product_documentation="https://cloud.google.com/solutions/",
-    api_description="allows you to encrypt, store, and audit infrastructure and application-level secrets.",
-    library_name="secretmanager",
+common_protos = LibraryConfig(
+    api_shortname="common-protos",
+    name_pretty="Common Protos",
+    product_documentation="",
+    api_description="example description",
     gapic_configs=list(),
 )
 
@@ -206,7 +205,7 @@ class UtilitiesTest(unittest.TestCase):
 
     def test_generate_prerequisite_files_proto_only_repo_success(self):
         library_path = self.__setup_prerequisite_files(
-            combination=2, library_type="OTHER", gapic_repo=False
+            combination=3, library_type="OTHER"
         )
 
         file_comparator.compare_files(
@@ -262,7 +261,6 @@ class UtilitiesTest(unittest.TestCase):
         combination: int,
         library_type: str = "GAPIC_AUTO",
         library: LibraryConfig = library_1,
-        gapic_repo: bool = True,
     ) -> str:
         library_path = f"{resources_dir}/goldens"
         files = [
@@ -271,6 +269,7 @@ class UtilitiesTest(unittest.TestCase):
             f"{library_path}/owlbot.py",
         ]
         cleanup(files)
+        library.library_type = library_type
         config = self.__get_a_gen_config(combination, library_type=library_type)
         proto_path = "google/cloud/baremetalsolution/v2"
         transport = "grpc"
@@ -280,7 +279,6 @@ class UtilitiesTest(unittest.TestCase):
             proto_path=proto_path,
             transport=transport,
             library_path=library_path,
-            gapic_repo=gapic_repo,
         )
         return library_path
 
@@ -296,12 +294,12 @@ class UtilitiesTest(unittest.TestCase):
         the GenerationConfig. Only support 1, 2 or 3.
         :return: an object of GenerationConfig
         """
-        if combination == 2:
-            libraries = [library_1, library_2]
-        elif combination == 3:
-            libraries = [library_2, library_3]
-        else:
+        if combination == 1:
             libraries = [library_1]
+        elif combination == 2:
+            libraries = [library_1, library_2]
+        else:
+            libraries = [library_1, common_protos]
 
         # update libraries with custom configuration (for now, only
         # library_type)

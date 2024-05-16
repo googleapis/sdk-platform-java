@@ -55,7 +55,6 @@ def generate_from_yaml(
             library=library,
             output_folder=repo_config.output_folder,
             versions_file=repo_config.versions_file,
-            gapic_repo=not config.contains_common_protos(),
         )
 
     if not config.is_monorepo() or config.contains_common_protos():
