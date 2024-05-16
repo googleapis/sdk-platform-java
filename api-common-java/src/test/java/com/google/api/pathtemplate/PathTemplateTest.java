@@ -303,15 +303,26 @@ public class PathTemplateTest {
 
   @Test
   @Disabled
-  //TODO: This test was passing erroneously, see https://github.com/googleapis/sdk-platform-java/issues/2778
+  // TODO: This test was passing erroneously, see
+  // https://github.com/googleapis/sdk-platform-java/issues/2778
   void complexResourceIdEqualsPathWildcard() {
-    Exception exception = Assertions.assertThrows(ValidationException.class, () -> PathTemplate.create("projects/{project=*}/zones/{zone_a=**}~{zone_b}"));
-    Assertions.assertEquals(String.format(
-        "parse error: wildcard path not allowed in complex ID resource '%s'", "zone_a"), exception.getMessage());
+    Exception exception =
+        Assertions.assertThrows(
+            ValidationException.class,
+            () -> PathTemplate.create("projects/{project=*}/zones/{zone_a=**}~{zone_b}"));
+    Assertions.assertEquals(
+        String.format(
+            "parse error: wildcard path not allowed in complex ID resource '%s'", "zone_a"),
+        exception.getMessage());
 
-    exception = Assertions.assertThrows(ValidationException.class, () -> PathTemplate.create("projects/{project=*}/zones/{zone_a}.{zone_b=**}"));
-    Assertions.assertEquals(String.format(
-        "parse error: wildcard path not allowed in complex ID resource '%s'", "zone_b"), exception.getMessage());
+    exception =
+        Assertions.assertThrows(
+            ValidationException.class,
+            () -> PathTemplate.create("projects/{project=*}/zones/{zone_a}.{zone_b=**}"));
+    Assertions.assertEquals(
+        String.format(
+            "parse error: wildcard path not allowed in complex ID resource '%s'", "zone_b"),
+        exception.getMessage());
   }
 
   @Test
@@ -332,35 +343,50 @@ public class PathTemplateTest {
 
   @Test
   void complexResourceIdNoSeparator() {
-    Exception exception = Assertions.assertThrows(ValidationException.class, () -> PathTemplate.create("projects/{project}/zones/{zone_a}{zone_b}"));
-    Assertions.assertEquals(String.format(
-        "parse error: missing or 2+ consecutive delimiter characters in '%s'",
-        "{zone_a}{zone_b}"), exception.getMessage());
+    Exception exception =
+        Assertions.assertThrows(
+            ValidationException.class,
+            () -> PathTemplate.create("projects/{project}/zones/{zone_a}{zone_b}"));
+    Assertions.assertEquals(
+        String.format(
+            "parse error: missing or 2+ consecutive delimiter characters in '%s'",
+            "{zone_a}{zone_b}"),
+        exception.getMessage());
 
-    exception = Assertions.assertThrows(ValidationException.class, () -> PathTemplate.create("projects/{project}/zones/{zone_a}_{zone_b}{zone_c}"));
-    Assertions.assertEquals(String.format(
-        "parse error: missing or 2+ consecutive delimiter characters in '%s'",
-        "{zone_a}_{zone_b}{zone_c}"), exception.getMessage());
+    exception =
+        Assertions.assertThrows(
+            ValidationException.class,
+            () -> PathTemplate.create("projects/{project}/zones/{zone_a}_{zone_b}{zone_c}"));
+    Assertions.assertEquals(
+        String.format(
+            "parse error: missing or 2+ consecutive delimiter characters in '%s'",
+            "{zone_a}_{zone_b}{zone_c}"),
+        exception.getMessage());
   }
 
   @Disabled
-  // TODO: This test was passing erroneously, see https://github.com/googleapis/sdk-platform-java/issues/2776
+  // TODO: This test was passing erroneously, see
+  // https://github.com/googleapis/sdk-platform-java/issues/2776
   @ParameterizedTest
   @MethodSource("invalidDelimiters")
   void complexResourceIdInvalidDelimiter(String invalidDelimiter) {
-      ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
-          PathTemplate.create(String.format("projects/{project=*}/zones/{zone_a}%s{zone_b}", invalidDelimiter))
-      );
-      Assertions.assertEquals(
-          String.format(
-              "parse error: invalid complex resource ID delimiter character in '%s'",
-              String.format("zone_a}%s{zone_b}", invalidDelimiter)),
-          exception.getMessage()
-      );
-    }
-    static Stream<String> invalidDelimiters() {
-      return Stream.of("|", "!", "@", "a", "1", ",", "{", ")");
-    }
+    ValidationException exception =
+        Assertions.assertThrows(
+            ValidationException.class,
+            () ->
+                PathTemplate.create(
+                    String.format(
+                        "projects/{project=*}/zones/{zone_a}%s{zone_b}", invalidDelimiter)));
+    Assertions.assertEquals(
+        String.format(
+            "parse error: invalid complex resource ID delimiter character in '%s'",
+            String.format("zone_a}%s{zone_b}", invalidDelimiter)),
+        exception.getMessage());
+  }
+
+  static Stream<String> invalidDelimiters() {
+    return Stream.of("|", "!", "@", "a", "1", ",", "{", ")");
+  }
 
   @Test
   void complexResourceIdMixedSeparators() {
@@ -406,9 +432,10 @@ public class PathTemplateTest {
 
   @Test
   void collectionWildcardMatchingInvalid() {
-    ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create("v1/publishers/{publisher}/books/-")
-    );
+    ValidationException exception =
+        Assertions.assertThrows(
+            ValidationException.class,
+            () -> PathTemplate.create("v1/publishers/{publisher}/books/-"));
   };
 
   @Test
@@ -474,83 +501,76 @@ public class PathTemplateTest {
 
   @Test
   void complexResourceBasicInvalidIds() {
-    ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create("projects/*/zones/~{zone_a}")
-    );
+    ValidationException exception =
+        Assertions.assertThrows(
+            ValidationException.class, () -> PathTemplate.create("projects/*/zones/~{zone_a}"));
     Assertions.assertEquals(
         String.format("parse error: invalid begin or end character in '%s'", "~{zone_a}"),
-        exception.getMessage()
-    );
-    exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create("projects/*/zones/{zone_a}~")
-    );
+        exception.getMessage());
+    exception =
+        Assertions.assertThrows(
+            ValidationException.class, () -> PathTemplate.create("projects/*/zones/{zone_a}~"));
     Assertions.assertEquals(
         String.format("parse error: invalid begin or end character in '%s'", "{zone_a}~"),
-        exception.getMessage()
-    );
-    exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create("projects/*/zones/.{zone_a}")
-    );
+        exception.getMessage());
+    exception =
+        Assertions.assertThrows(
+            ValidationException.class, () -> PathTemplate.create("projects/*/zones/.{zone_a}"));
     Assertions.assertEquals(
         String.format("parse error: invalid begin or end character in '%s'", ".{zone_a}"),
-        exception.getMessage()
-    );
-    exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create("projects/*/zones/{zone_a}.")
-    );
+        exception.getMessage());
+    exception =
+        Assertions.assertThrows(
+            ValidationException.class, () -> PathTemplate.create("projects/*/zones/{zone_a}."));
     Assertions.assertEquals(
         String.format("parse error: invalid begin or end character in '%s'", "{zone_a}."),
-        exception.getMessage()
-    );
-    exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create("projects/*/zones/-{zone_a}")
-    );
+        exception.getMessage());
+    exception =
+        Assertions.assertThrows(
+            ValidationException.class, () -> PathTemplate.create("projects/*/zones/-{zone_a}"));
     Assertions.assertEquals(
         String.format("parse error: invalid begin or end character in '%s'", "-{zone_a}"),
-        exception.getMessage()
-    );
-    exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create("projects/*/zones/{zone_a}-")
-    );
+        exception.getMessage());
+    exception =
+        Assertions.assertThrows(
+            ValidationException.class, () -> PathTemplate.create("projects/*/zones/{zone_a}-"));
     Assertions.assertEquals(
         String.format("parse error: invalid begin or end character in '%s'", "{zone_a}-"),
-        exception.getMessage()
-    );
-    exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create("projects/*/zones/_{zone_a}")
-    );
+        exception.getMessage());
+    exception =
+        Assertions.assertThrows(
+            ValidationException.class, () -> PathTemplate.create("projects/*/zones/_{zone_a}"));
     Assertions.assertEquals(
         String.format("parse error: invalid begin or end character in '%s'", "_{zone_a}"),
-        exception.getMessage()
-    );
-    exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create("projects/*/zones/{zone_a}_")
-    );
+        exception.getMessage());
+    exception =
+        Assertions.assertThrows(
+            ValidationException.class, () -> PathTemplate.create("projects/*/zones/{zone_a}_"));
     Assertions.assertEquals(
         String.format("parse error: invalid begin or end character in '%s'", "{zone_a}_"),
-        exception.getMessage()
-    );
-
+        exception.getMessage());
   }
 
   @Test
   void complexResourceMultipleDelimiters() {
-    ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create("projects/*/zones/{zone_a}~.{zone_b}")
-    );
+    ValidationException exception =
+        Assertions.assertThrows(
+            ValidationException.class,
+            () -> PathTemplate.create("projects/*/zones/{zone_a}~.{zone_b}"));
     Assertions.assertEquals(
-        String.format( "parse error: missing or 2+ consecutive delimiter characters in '%s'",
+        String.format(
+            "parse error: missing or 2+ consecutive delimiter characters in '%s'",
             "{zone_a}~.{zone_b}"),
-        exception.getMessage()
-    );
-    exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create("projects/*/zones/{zone_a}~{zone_b}..{zone_c}")
-    );
+        exception.getMessage());
+    exception =
+        Assertions.assertThrows(
+            ValidationException.class,
+            () -> PathTemplate.create("projects/*/zones/{zone_a}~{zone_b}..{zone_c}"));
     Assertions.assertEquals(
-        String.format("parse error: missing or 2+ consecutive delimiter characters in '%s'",
+        String.format(
+            "parse error: missing or 2+ consecutive delimiter characters in '%s'",
             "{zone_a}~{zone_b}..{zone_c}"),
-        exception.getMessage()
-    );
+        exception.getMessage());
     String pathString = "projects/project_123/zones/lorum~ipsum";
     PathTemplate template = PathTemplate.create("projects/*/zones/{zone_.~-a}~{zone_b}");
     template.validate(pathString, "");
@@ -578,13 +598,11 @@ public class PathTemplateTest {
     String templateString = "buckets/*/objects/*";
     String pathString = "buckets/bucket/invalid/object";
     PathTemplate template = PathTemplate.create(templateString);
-    ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
-        template.validate(pathString, "")
-    );
+    ValidationException exception =
+        Assertions.assertThrows(ValidationException.class, () -> template.validate(pathString, ""));
     Assertions.assertEquals(
         String.format(": Parameter \"%s\" must be in the form \"%s\"", pathString, templateString),
-        exception.getMessage()
-    );
+        exception.getMessage());
   }
 
   @Test
@@ -602,13 +620,12 @@ public class PathTemplateTest {
     String templateString = "buckets/*/objects/*";
     String pathString = "buckets/bucket/invalid/object";
     PathTemplate template = PathTemplate.create(templateString);
-    ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
-        template.validatedMatch(pathString, "")
-    );
+    ValidationException exception =
+        Assertions.assertThrows(
+            ValidationException.class, () -> template.validatedMatch(pathString, ""));
     Assertions.assertEquals(
         String.format(": Parameter \"%s\" must be in the form \"%s\"", pathString, templateString),
-        exception.getMessage()
-    );
+        exception.getMessage());
   }
 
   // Instantiate
@@ -638,9 +655,9 @@ public class PathTemplateTest {
   @Test
   void instantiateFailWhenTooFewVariables() {
     PathTemplate template = PathTemplate.create("buckets/*/*/*/objects/*");
-    ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
-        template.instantiate("$0", "f", "1", "o")
-    );
+    ValidationException exception =
+        Assertions.assertThrows(
+            ValidationException.class, () -> template.instantiate("$0", "f", "1", "o"));
   }
 
   @Test
@@ -668,13 +685,12 @@ public class PathTemplateTest {
   @Test
   void instantiateEscapeUnsafeCharNoEncoding() {
     PathTemplate template = PathTemplate.createWithoutUrlEncoding("buckets/*/objects/*");
-    ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
-        template.instantiate("$0", "f/o/o", "$1", "b/a/r")
-    );
+    ValidationException exception =
+        Assertions.assertThrows(
+            ValidationException.class, () -> template.instantiate("$0", "f/o/o", "$1", "b/a/r"));
     Assertions.assertEquals(
         String.format("Invalid character \"/\" in path section \"f/o/o\"."),
-        exception.getMessage()
-    );
+        exception.getMessage());
   }
 
   @Test
@@ -788,19 +804,19 @@ public class PathTemplateTest {
 
   @Test
   void instantiateWithASegmentContainingComplexResourceNamesAndStartsWithADelimiter() {
-    ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create(
-            "v1beta1/{parent=projects/*/locations/*/clusters/*}/.{well}-{known}/openid-configuration")
-    );
+    ValidationException exception =
+        Assertions.assertThrows(
+            ValidationException.class,
+            () ->
+                PathTemplate.create(
+                    "v1beta1/{parent=projects/*/locations/*/clusters/*}/.{well}-{known}/openid-configuration"));
     Assertions.assertEquals(
         String.format("parse error: invalid begin or end character in '%s'", ".{well}-{known}"),
-        exception.getMessage()
-    );
+        exception.getMessage());
   }
 
   @Test
-  void
-      instantiateWithASegmentContainingNoComplexResourceNamesAndStartsWithMultipleDelimiters() {
+  void instantiateWithASegmentContainingNoComplexResourceNamesAndStartsWithMultipleDelimiters() {
     PathTemplate pathTemplate =
         PathTemplate.create(
             "v1beta1/{parent=projects/*/locations/*/clusters/*}/.-~well-known/openid-configuration");
@@ -811,13 +827,13 @@ public class PathTemplateTest {
 
   @Test
   void instantiateWithASegmentOnlyContainingOneDelimiter() {
-    ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create("v1/publishers/{publisher}/books/.")
-    );
+    ValidationException exception =
+        Assertions.assertThrows(
+            ValidationException.class,
+            () -> PathTemplate.create("v1/publishers/{publisher}/books/."));
     Assertions.assertEquals(
         String.format("parse error: invalid begin or end character in '%s'", "."),
-        exception.getMessage()
-    );
+        exception.getMessage());
   }
 
   @Test
@@ -839,19 +855,19 @@ public class PathTemplateTest {
 
   @Test
   void instantiateWithASegmentContainingComplexResourceNamesAndEndsWithADelimiter() {
-    ValidationException exception = Assertions.assertThrows(ValidationException.class, () ->
-        PathTemplate.create(
-            "v1beta1/{parent=projects/*/locations/*/clusters/*}/{well}-{known}./openid-configuration")
-    );
+    ValidationException exception =
+        Assertions.assertThrows(
+            ValidationException.class,
+            () ->
+                PathTemplate.create(
+                    "v1beta1/{parent=projects/*/locations/*/clusters/*}/{well}-{known}./openid-configuration"));
     Assertions.assertEquals(
         String.format("parse error: invalid begin or end character in '%s'", "{well}-{known}."),
-        exception.getMessage()
-    );
+        exception.getMessage());
   }
 
   @Test
-  void
-      instantiateWithASegmentContainingNoComplexResourceNamesAndEndsWithMultipleDelimiters() {
+  void instantiateWithASegmentContainingNoComplexResourceNamesAndEndsWithMultipleDelimiters() {
     PathTemplate pathTemplate =
         PathTemplate.create(
             "v1beta1/{parent=projects/*/locations/*/clusters/*}/well-known.-~/openid-configuration");
@@ -865,9 +881,8 @@ public class PathTemplateTest {
 
   @Test
   void testMultiplePathWildcardFailure() {
-    Assertions.assertThrows(IllegalArgumentException.class, () ->
-        PathTemplate.create("bar/**/{name=foo/**}:verb")
-    );
+    Assertions.assertThrows(
+        IllegalArgumentException.class, () -> PathTemplate.create("bar/**/{name=foo/**}:verb"));
   }
 
   @Test

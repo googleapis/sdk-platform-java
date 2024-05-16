@@ -59,11 +59,13 @@ public class SettableApiFutureTest {
 
   @Test
   void testException() {
-    Assertions.assertThrows(Exception.class, () -> {
-      SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
-      future.setException(new Exception());
-      future.get();
-    });
+    Assertions.assertThrows(
+        Exception.class,
+        () -> {
+          SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
+          future.setException(new Exception());
+          future.get();
+        });
   }
 
   @Test

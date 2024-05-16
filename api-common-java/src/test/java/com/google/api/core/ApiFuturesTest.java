@@ -188,10 +188,11 @@ public class ApiFuturesTest {
         ApiFutures.transformAsync(
             inputFuture,
             (ApiAsyncFunction<Integer, Integer>) input -> ApiFutures.immediateFuture(input + 1),
-            (Executor) command -> {
-              counter.incrementAndGet();
-              command.run();
-            });
+            (Executor)
+                command -> {
+                  counter.incrementAndGet();
+                  command.run();
+                });
     assertThat(outputFuture.get()).isEqualTo(1);
     assertThat(counter.get()).isEqualTo(1);
   }
