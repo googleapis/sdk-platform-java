@@ -16,12 +16,12 @@
 
 package com.google.cloud;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.cloud.Policy.DefaultMarshaller;
 import com.google.common.collect.ImmutableList;
@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PolicyV3Test {
+class PolicyV3Test {
 
   private static final String ALL_USERS = "allUsers";
   private static final String ALL_AUTH_USERS = "allAuthenticatedUsers";
@@ -79,7 +79,7 @@ public class PolicyV3Test {
           .build();
 
   @Test
-  public void testBuilderV1() {
+  void testBuilderV1() {
     assertEquals(BINDINGS_NO_CONDITIONS, FULL_POLICY_V1.getBindingsList());
     assertEquals(1, FULL_POLICY_V1.getVersion());
     assertEquals("etag", FULL_POLICY_V1.getEtag());
@@ -90,7 +90,7 @@ public class PolicyV3Test {
   }
 
   @Test
-  public void testBuilderV3WithConditions() {
+  void testBuilderV3WithConditions() {
     assertEquals(BINDINGS_WITH_CONDITIONS, FULL_POLICY_V3.getBindingsList());
     assertEquals(3, FULL_POLICY_V3.getVersion());
     assertEquals("etag", FULL_POLICY_V3.getEtag());
@@ -101,7 +101,7 @@ public class PolicyV3Test {
   }
 
   @Test
-  public void testBuilderV1ToV3Compatability() {
+  void testBuilderV1ToV3Compatability() {
     assertEquals(BINDINGS_WITH_CONDITIONS, FULL_POLICY_V3_WITH_VERSION_1.getBindingsList());
     assertEquals(1, FULL_POLICY_V3_WITH_VERSION_1.getVersion());
     assertEquals("etag", FULL_POLICY_V3_WITH_VERSION_1.getEtag());
@@ -117,7 +117,7 @@ public class PolicyV3Test {
   }
 
   @Test
-  public void removeMemberFromPolicy() {
+  void removeMemberFromPolicy() {
     assertEquals(3, FULL_POLICY_V3.getBindingsList().get(0).getMembers().size());
     List<Binding> bindings = new ArrayList<>(FULL_POLICY_V3.getBindingsList());
 
@@ -134,7 +134,7 @@ public class PolicyV3Test {
   }
 
   @Test
-  public void addMemberFromPolicy() {
+  void addMemberFromPolicy() {
     assertEquals(3, FULL_POLICY_V3.getBindingsList().get(0).getMembers().size());
     List<Binding> bindings = new ArrayList<>(FULL_POLICY_V3.getBindingsList());
 
@@ -150,7 +150,7 @@ public class PolicyV3Test {
   }
 
   @Test
-  public void removeBindingFromPolicy() {
+  void removeBindingFromPolicy() {
     assertEquals(2, FULL_POLICY_V3.getBindingsList().size());
     List<Binding> bindings = new ArrayList<>(FULL_POLICY_V3.getBindingsList());
 
@@ -168,7 +168,7 @@ public class PolicyV3Test {
   }
 
   @Test
-  public void addBindingToPolicy() {
+  void addBindingToPolicy() {
     assertEquals(2, FULL_POLICY_V3.getBindingsList().size());
     List<Binding> bindings = new ArrayList<>(FULL_POLICY_V3.getBindingsList());
     bindings.add(Binding.newBuilder().setRole(OWNER).setMembers(ImmutableList.of(USER)).build());
@@ -177,7 +177,7 @@ public class PolicyV3Test {
   }
 
   @Test
-  public void testIllegalPolicies() {
+  void testIllegalPolicies() {
     try {
       Binding.newBuilder().setRole(null).build();
       fail("Null role should cause exception.");
@@ -233,7 +233,7 @@ public class PolicyV3Test {
   }
 
   @Test
-  public void testEqualsHashCode() {
+  void testEqualsHashCode() {
     assertNotNull(FULL_POLICY_V3);
     Policy emptyPolicy = Policy.newBuilder().build();
     Policy anotherPolicy = Policy.newBuilder().build();
@@ -247,26 +247,26 @@ public class PolicyV3Test {
   }
 
   @Test
-  public void testBindings() {
+  void testBindings() {
     assertTrue(Policy.newBuilder().build().getBindingsList().isEmpty());
     assertEquals(BINDINGS_WITH_CONDITIONS, FULL_POLICY_V3.getBindingsList());
   }
 
   @Test
-  public void testEtag() {
+  void testEtag() {
     assertNotNull(FULL_POLICY_V3.getEtag());
     assertEquals("etag", FULL_POLICY_V3.getEtag());
   }
 
   @Test
-  public void testVersion() {
+  void testVersion() {
     assertEquals(1, FULL_POLICY_V1.getVersion());
     assertEquals(3, FULL_POLICY_V3.getVersion());
     assertEquals(1, FULL_POLICY_V3_WITH_VERSION_1.getVersion());
   }
 
   @Test
-  public void testDefaultMarshaller() {
+  void testDefaultMarshaller() {
     DefaultMarshaller marshaller = new DefaultMarshaller();
     Policy emptyPolicy = Policy.newBuilder().build();
     assertEquals(emptyPolicy, marshaller.fromPb(marshaller.toPb(emptyPolicy)));

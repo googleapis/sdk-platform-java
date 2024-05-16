@@ -16,13 +16,13 @@
 
 package com.google.cloud;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class MonitoredResourceTest {
+class MonitoredResourceTest {
 
   private static final String TYPE = "cloudsql_database";
   private static final Map<String, String> LABELS =
@@ -31,7 +31,7 @@ public class MonitoredResourceTest {
       MonitoredResource.newBuilder(TYPE).setLabels(LABELS).build();
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     assertEquals(TYPE, MONITORED_RESOURCE.getType());
     assertEquals(LABELS, MONITORED_RESOURCE.getLabels());
     MonitoredResource monitoredResource =
@@ -54,7 +54,7 @@ public class MonitoredResourceTest {
   }
 
   @Test
-  public void testToBuilder() {
+  void testToBuilder() {
     compareMonitoredResource(MONITORED_RESOURCE, MONITORED_RESOURCE.toBuilder().build());
     MonitoredResource monitoredResource =
         MONITORED_RESOURCE.toBuilder().setType("global").clearLabels().build();
@@ -71,7 +71,7 @@ public class MonitoredResourceTest {
   }
 
   @Test
-  public void testOf() {
+  void testOf() {
     MonitoredResource monitoredResource = MonitoredResource.of(TYPE, LABELS);
     assertEquals(TYPE, monitoredResource.getType());
     assertEquals(LABELS, monitoredResource.getLabels());
@@ -79,7 +79,7 @@ public class MonitoredResourceTest {
   }
 
   @Test
-  public void testToAndFromPb() {
+  void testToAndFromPb() {
     compareMonitoredResource(
         MONITORED_RESOURCE, MonitoredResource.fromPb(MONITORED_RESOURCE.toPb()));
     MonitoredResource monitoredResource =
