@@ -42,7 +42,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 /** Tests for {@link PathTemplate}. */
-public class PathTemplateTest {
+class PathTemplateTest {
 
   // Match
   // =====
@@ -302,9 +302,7 @@ public class PathTemplateTest {
   }
 
   @Test
-  @Disabled
-  // TODO: This test was passing erroneously, see
-  // https://github.com/googleapis/sdk-platform-java/issues/2778
+  @Disabled ("https://github.com/googleapis/sdk-platform-java/issues/2778")
   void complexResourceIdEqualsPathWildcard() {
     Exception exception =
         Assertions.assertThrows(
@@ -364,9 +362,7 @@ public class PathTemplateTest {
         exception.getMessage());
   }
 
-  @Disabled
-  // TODO: This test was passing erroneously, see
-  // https://github.com/googleapis/sdk-platform-java/issues/2776
+  @Disabled ("https://github.com/googleapis/sdk-platform-java/issues/2776")
   @ParameterizedTest
   @MethodSource("invalidDelimiters")
   void complexResourceIdInvalidDelimiter(String invalidDelimiter) {

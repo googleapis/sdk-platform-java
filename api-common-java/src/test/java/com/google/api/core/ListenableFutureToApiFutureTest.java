@@ -33,7 +33,7 @@ import com.google.common.truth.Truth;
 import com.google.common.util.concurrent.SettableFuture;
 import org.junit.jupiter.api.Test;
 
-public class ListenableFutureToApiFutureTest {
+class ListenableFutureToApiFutureTest {
 
   @Test
   void testGet() throws Exception {

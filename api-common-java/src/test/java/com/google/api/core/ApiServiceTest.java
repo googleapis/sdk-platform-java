@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ApiServiceTest {
+class ApiServiceTest {
   @Test
   void testNoopService() {
     ApiService service =

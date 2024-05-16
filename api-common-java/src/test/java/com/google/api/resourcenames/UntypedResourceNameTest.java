@@ -38,7 +38,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 /** Tests for {@link UntypedResourceNameTest}. */
-public class UntypedResourceNameTest {
+class UntypedResourceNameTest {
   private static final String NAME_STRING = "sunshine";
   private static final String EMPTY_STRING = "";
 

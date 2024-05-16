@@ -40,7 +40,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Test;
 
-public class ApiFuturesTest {
+class ApiFuturesTest {
 
   @Test
   void testAddCallback() {

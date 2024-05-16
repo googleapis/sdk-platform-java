@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
  * Tests for {@link TemplatedResourceName}. As resource names are mostly a wrapper around path
  * templates, not much needs to be done here.
  */
-public class TemplatedResourceNameTest {
+class TemplatedResourceNameTest {
 
   @Test
   void resourceNameMethods() {

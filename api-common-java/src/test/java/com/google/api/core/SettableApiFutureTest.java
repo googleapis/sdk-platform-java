@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class SettableApiFutureTest {
+class SettableApiFutureTest {
   @Test
   void testSet() throws Exception {
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
