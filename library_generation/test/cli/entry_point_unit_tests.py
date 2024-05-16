@@ -22,6 +22,7 @@ test_resource_dir = os.path.join(script_dir, "..", "resources", "test-config")
 
 class EntryPointTest(unittest.TestCase):
     def test_entry_point_without_config_raise_file_exception(self):
+        os.chdir(script_dir)
         runner = CliRunner()
         # noinspection PyTypeChecker
         result = runner.invoke(generate, ["--repository-path=."])
