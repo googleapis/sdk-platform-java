@@ -7,6 +7,7 @@ import static org.junit.Assert.assertThrows;
 import com.google.api.generator.gapic.model.ReflectConfig;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -28,15 +29,14 @@ class WriterTest {
       new TypeToken<List<ReflectConfig>>() {};
 
   @TempDir Path tempDir;
-
   private JarOutputStream jarOutputStream;
-
-  private Path path;
+  private File file;
 
   @BeforeEach
   void createJarOutputStream() throws IOException {
-    path = tempDir.resolve("test.jar");
+    Path path = tempDir.resolve("test.jar");
     jarOutputStream = new JarOutputStream(Files.newOutputStream(path));
+    file = path.toFile();
   }
 
   @AfterEach
@@ -53,7 +53,7 @@ class WriterTest {
     jarOutputStream.flush();
     jarOutputStream.close();
 
-    try (JarFile jarFile = new JarFile(path.toFile())) {
+    try (JarFile jarFile = new JarFile(file)) {
       assertThat(jarFile.entries().hasMoreElements()).isFalse();
     }
   }
@@ -69,7 +69,7 @@ class WriterTest {
     jarOutputStream.flush();
     jarOutputStream.close();
 
-    try (JarFile jarFile = new JarFile(path.toFile())) {
+    try (JarFile jarFile = new JarFile(file)) {
       Enumeration<JarEntry> entries = jarFile.entries();
       assertThat(entries.hasMoreElements()).isTrue();
       JarEntry entry = entries.nextElement();
