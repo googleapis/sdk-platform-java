@@ -30,6 +30,7 @@
 package com.google.api.core;
 
 import com.google.common.truth.Truth;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -60,7 +61,7 @@ class SettableApiFutureTest {
   @Test
   void testException() {
     Assertions.assertThrows(
-        Exception.class,
+        ExecutionException.class,
         () -> {
           SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
           future.setException(new Exception());
