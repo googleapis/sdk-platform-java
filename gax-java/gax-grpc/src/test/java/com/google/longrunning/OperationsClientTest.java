@@ -114,10 +114,11 @@ class OperationsClientTest {
   void getOperationExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(Status.INVALID_ARGUMENT);
     mockOperations.addException(exception);
+
+    String name = "name3373707";
     assertThrows(
         InvalidArgumentException.class,
         () -> {
-          String name = "name3373707";
           client.getOperation(name);
         });
   }
@@ -157,11 +158,12 @@ class OperationsClientTest {
   void listOperationsExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(Status.INVALID_ARGUMENT);
     mockOperations.addException(exception);
+
+    String name = "name3373707";
+    String filter = "filter-1274492040";
     assertThrows(
         InvalidArgumentException.class,
         () -> {
-          String name = "name3373707";
-          String filter = "filter-1274492040";
           client.listOperations(name, filter);
         });
   }
@@ -188,10 +190,11 @@ class OperationsClientTest {
   void cancelOperationExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(Status.INVALID_ARGUMENT);
     mockOperations.addException(exception);
+
+    String name = "name3373707";
     assertThrows(
         InvalidArgumentException.class,
         () -> {
-          String name = "name3373707";
           client.cancelOperation(name);
         });
   }
@@ -218,10 +221,11 @@ class OperationsClientTest {
   void deleteOperationExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(Status.INVALID_ARGUMENT);
     mockOperations.addException(exception);
+
+    String name = "name3373707";
     assertThrows(
         InvalidArgumentException.class,
         () -> {
-          String name = "name3373707";
           client.deleteOperation(name);
         });
   }
@@ -254,13 +258,14 @@ class OperationsClientTest {
   void waitOperationExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(Status.INVALID_ARGUMENT);
     mockOperations.addException(exception);
+
+    String name = "name3373707";
+    Duration timeout = Duration.newBuilder().setSeconds(5).build();
+    WaitOperationRequest request =
+        WaitOperationRequest.newBuilder().setName(name).setTimeout(timeout).build();
     assertThrows(
         InvalidArgumentException.class,
         () -> {
-          String name = "name3373707";
-          Duration timeout = Duration.newBuilder().setSeconds(5).build();
-          WaitOperationRequest request =
-              WaitOperationRequest.newBuilder().setName(name).setTimeout(timeout).build();
 
           client.waitOperation(request);
         });
