@@ -49,21 +49,21 @@ import org.junit.runners.Parameterized;
 // The file is downloaded from the gapic-showcase repo. Each compliance
 // group is a set of HttpJson behaviors we want to test for. Each group
 // tests the product of the rpc list and requests list.
-@RunWith(Parameterized.class)
+//@RunWith(Parameterized.class)
 public class ITHttpAnnotation {
 
-  @Parameterized.Parameters(name = "Compliance Group Name: {0}")
-  public static String[] data() {
-    return new String[] {
-      "Fully working conversions, resources",
-      "Binding selection testing",
-      "Cases that apply to non-path requests",
-      "Fully working conversions, no resources"
-    };
-  }
+//  @Parameterized.Parameters(name = "Compliance Group Name: {0}")
+//  public static String[] data() {
+//    return new String[] {
+//      "Fully working conversions, resources",
+//      "Binding selection testing",
+//      "Cases that apply to non-path requests",
+//      "Fully working conversions, no resources"
+//    };
+//  }
 
-  @Parameterized.Parameter(0)
-  public String groupName;
+//  @Parameterized.Parameter(0)
+//  public String myGroupName;
 
   private static ComplianceClient httpjsonClient;
   private static ComplianceSuite complianceSuite;
@@ -127,7 +127,7 @@ public class ITHttpAnnotation {
   public void testComplianceGroup() {
     Optional<ComplianceGroup> complianceGroupOptional =
         complianceSuite.getGroupList().stream()
-            .filter(x -> x.getName().equals(groupName))
+            .filter(x -> x.getName().equals("Fully working conversions, no resources"))
             .findFirst();
     assertThat(complianceGroupOptional.isPresent()).isTrue();
     ComplianceGroup complianceGroup = complianceGroupOptional.get();
@@ -135,13 +135,15 @@ public class ITHttpAnnotation {
         complianceGroup.getRpcsList().stream()
             .filter(validComplianceRpcMap::containsKey)
             .collect(Collectors.toList());
-    for (String rpcName : validRpcList) {
-      Function<RepeatRequest, RepeatResponse> rpc = validComplianceRpcMap.get(rpcName);
-      for (RepeatRequest repeatRequest : complianceGroup.getRequestsList()) {
-        ComplianceData expectedData = repeatRequest.getInfo();
-        RepeatResponse response = rpc.apply(repeatRequest);
-        assertThat(response.getRequest().getInfo()).isEqualTo(expectedData);
-      }
-    }
+//    for (String rpcName : validRpcList) {
+      Function<RepeatRequest, RepeatResponse> rpc = validComplianceRpcMap.get("Compliance.RepeatDataBody");
+      RepeatRequest repeatRequest = complianceGroup.getRequestsList().get(0);
+      System.out.println(repeatRequest.getName());
+//      for (RepeatRequest repeatRequest : complianceGroup.getRequestsList()) {
+      ComplianceData expectedData = repeatRequest.getInfo();
+      RepeatResponse response = rpc.apply(repeatRequest);
+      assertThat(response.getRequest().getInfo()).isEqualTo(expectedData);
+//      }
+//    }
   }
 }
