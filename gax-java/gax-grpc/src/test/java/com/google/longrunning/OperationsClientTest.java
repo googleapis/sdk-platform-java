@@ -266,7 +266,6 @@ class OperationsClientTest {
     assertThrows(
         InvalidArgumentException.class,
         () -> {
-
           client.waitOperation(request);
         });
   }
