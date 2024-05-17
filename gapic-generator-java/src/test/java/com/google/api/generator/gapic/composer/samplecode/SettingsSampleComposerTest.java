@@ -21,11 +21,11 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.test.utils.LineFormatter;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class SettingsSampleComposerTest {
+class SettingsSampleComposerTest {
   @Test
-  public void composeSettingsSample_noMethods() {
+  void composeSettingsSample_noMethods() {
     TypeNode classType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -40,7 +40,7 @@ public class SettingsSampleComposerTest {
   }
 
   @Test
-  public void composeSettingsSample_serviceSettingsClass() {
+  void composeSettingsSample_serviceSettingsClass() {
     TypeNode classType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -68,7 +68,7 @@ public class SettingsSampleComposerTest {
   }
 
   @Test
-  public void composeSettingsSample_serviceStubClass() {
+  void composeSettingsSample_serviceStubClass() {
     TypeNode classType =
         TypeNode.withReference(
             VaporReference.builder()

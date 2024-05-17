@@ -36,15 +36,15 @@ import com.google.api.generator.test.utils.LineFormatter;
 import com.google.common.collect.ImmutableList;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class SampleComposerTest {
+class SampleComposerTest {
   private final String packageName = "com.google.example";
   private final RegionTag.Builder regionTag =
       RegionTag.builder().setApiShortName("apiName").setServiceName("echo");
 
   @Test
-  public void createInlineSample() {
+  void createInlineSample() {
     List<Statement> sampleBody = Arrays.asList(ExprStatement.withExpr(systemOutPrint("testing")));
     String sampleResult = writeSample(SampleComposer.composeInlineSample(sampleBody));
     String expected =
@@ -60,7 +60,7 @@ public class SampleComposerTest {
   }
 
   @Test
-  public void createExecutableSampleEmptyStatementSample() {
+  void createExecutableSampleEmptyStatementSample() {
     Sample sample =
         Sample.builder()
             .setRegionTag(
@@ -96,7 +96,7 @@ public class SampleComposerTest {
   }
 
   @Test
-  public void createExecutableSampleMethodArgsNoVar() {
+  void createExecutableSampleMethodArgsNoVar() {
     Statement sampleBody =
         ExprStatement.withExpr(systemOutPrint("Testing CreateExecutableSampleMethodArgsNoVar"));
     Sample sample =
@@ -136,7 +136,7 @@ public class SampleComposerTest {
   }
 
   @Test
-  public void createExecutableSampleMethod() {
+  void createExecutableSampleMethod() {
     VariableExpr variableExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setType(TypeNode.STRING).setName("content").build())
@@ -185,7 +185,7 @@ public class SampleComposerTest {
   }
 
   @Test
-  public void createExecutableSampleMethodMultipleStatements() {
+  void createExecutableSampleMethodMultipleStatements() {
     VariableExpr strVariableExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setType(TypeNode.STRING).setName("content").build())
