@@ -46,8 +46,7 @@ class Semaphore64Test {
   void testNegative() {
     Semaphore64 semaphore = new BlockingSemaphore(1);
 
-    assertThrows(
-        IllegalArgumentException.class, () -> semaphore.acquire(-1));
+    assertThrows(IllegalArgumentException.class, () -> semaphore.acquire(-1));
   }
 
   @Test

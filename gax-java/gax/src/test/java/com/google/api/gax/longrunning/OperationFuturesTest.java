@@ -56,12 +56,13 @@ class OperationFuturesTest {
   void testNotDone() {
     assertThrows(
         IllegalArgumentException.class,
-        () -> OperationFutures.immediateOperationFuture(
-            FakeOperationSnapshot.newBuilder()
-                .setName("required")
-                .setDone(false)
-                .setErrorCode(FakeStatusCode.of(Code.OK))
-                .build()));
+        () ->
+            OperationFutures.immediateOperationFuture(
+                FakeOperationSnapshot.newBuilder()
+                    .setName("required")
+                    .setDone(false)
+                    .setErrorCode(FakeStatusCode.of(Code.OK))
+                    .build()));
   }
 
   @Test
