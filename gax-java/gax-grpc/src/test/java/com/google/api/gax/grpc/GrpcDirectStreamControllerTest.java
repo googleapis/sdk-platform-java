@@ -54,17 +54,16 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class GrpcDirectStreamControllerTest {
+class GrpcDirectStreamControllerTest {
   private static final int DEFAULT_AWAIT_TERMINATION_SEC = 10;
 
-  @Test(timeout = 180_000) // ms
-  public void testRetryNoRaceCondition() throws Exception {
+  @Test
+  @Timeout(180_000) // ms
+  void testRetryNoRaceCondition() throws Exception {
     Server server = ServerBuilder.forPort(1234).addService(new FakeService()).build().start();
     ManagedChannel channel =
         ManagedChannelBuilder.forAddress("localhost", 1234).usePlaintext().build();

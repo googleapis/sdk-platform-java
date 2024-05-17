@@ -40,16 +40,13 @@ import com.google.api.gax.rpc.testing.FakeBatchableApi.LabeledIntList;
 import com.google.common.truth.Truth;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class BatchTest {
+class BatchTest {
 
   @Test
-  public void testConstructor() {
+  void testConstructor() {
     LabeledIntList request = new LabeledIntList("lable", 2);
     Batch<LabeledIntList, List<Integer>> batch = createBatch(request);
 
@@ -60,7 +57,7 @@ public class BatchTest {
   }
 
   @Test
-  public void testMerge() {
+  void testMerge() {
     LabeledIntList request1 = new LabeledIntList("lable", 1);
     Batch<LabeledIntList, List<Integer>> batch1 = createBatch(request1);
 
@@ -73,7 +70,7 @@ public class BatchTest {
   }
 
   @Test
-  public void testMergeStartEmpty() {
+  void testMergeStartEmpty() {
     LabeledIntList request1 = new LabeledIntList("lable", new ArrayList<Integer>());
     Batch<LabeledIntList, List<Integer>> batch1 = createBatch(request1, null);
     Truth.assertThat(batch1.getCallable()).isNull();
@@ -89,7 +86,7 @@ public class BatchTest {
   }
 
   @Test
-  public void testBatchElementCounter() {
+  void testBatchElementCounter() {
     ElementCounter<Batch<LabeledIntList, List<Integer>>> counter =
         new BatchElementCounter<>(SQUARER_BATCHING_DESC);
     LabeledIntList request = new LabeledIntList("lable", 3);
@@ -99,7 +96,7 @@ public class BatchTest {
   }
 
   @Test
-  public void testBatchByteCounter() {
+  void testBatchByteCounter() {
     ElementCounter<Batch<LabeledIntList, List<Integer>>> counter = new BatchByteCounter<>();
     LabeledIntList request = new LabeledIntList("lable", 3);
     Batch<LabeledIntList, List<Integer>> batch = createBatch(request);
@@ -108,7 +105,7 @@ public class BatchTest {
   }
 
   @Test
-  public void testBatchMergerImpl() {
+  void testBatchMergerImpl() {
     LabeledIntList request1 = new LabeledIntList("lable", 1);
     Batch<LabeledIntList, List<Integer>> batch1 = createBatch(request1);
 

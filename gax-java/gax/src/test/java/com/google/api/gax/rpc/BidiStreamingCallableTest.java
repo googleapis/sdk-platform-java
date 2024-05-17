@@ -44,9 +44,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class BidiStreamingCallableTest {
+class BidiStreamingCallableTest {
   private ClientContext clientContext =
       ClientContext.newBuilder()
           .setDefaultCallContext(FakeCallContext.createDefault())
@@ -54,7 +54,7 @@ public class BidiStreamingCallableTest {
           .build();
 
   @Test
-  public void bidiStreaming_ResponseObserver() {
+  void bidiStreaming_ResponseObserver() {
     BidiStreamingStashCallable<Integer, Integer> callIntList =
         new BidiStreamingStashCallable<>(Arrays.asList(0, 1, 2));
 
@@ -77,7 +77,7 @@ public class BidiStreamingCallableTest {
   }
 
   @Test
-  public void bidiStreaming_BidiStreamObserver() throws InterruptedException {
+  void bidiStreaming_BidiStreamObserver() throws InterruptedException {
     BidiStreamingStashCallable<Integer, Integer> callIntList =
         new BidiStreamingStashCallable<>(Arrays.asList(0, 1, 2));
 

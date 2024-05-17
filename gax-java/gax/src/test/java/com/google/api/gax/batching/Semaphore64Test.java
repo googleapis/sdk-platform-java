@@ -29,27 +29,29 @@
  */
 package com.google.api.gax.batching;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
-@RunWith(JUnit4.class)
-public class Semaphore64Test {
-  @Test(expected = IllegalArgumentException.class)
-  public void testNegative() {
+class Semaphore64Test {
+
+  @Test
+  void testNegative() {
     Semaphore64 semaphore = new BlockingSemaphore(1);
-    semaphore.acquire(-1);
+
+    assertThrows(
+        IllegalArgumentException.class, () -> semaphore.acquire(-1));
   }
 
   @Test
-  public void testReturning() {
+  void testReturning() {
     Semaphore64 semaphore = new NonBlockingSemaphore(1);
     assertTrue(semaphore.acquire(1));
     assertFalse(semaphore.acquire(1));
@@ -57,19 +59,13 @@ public class Semaphore64Test {
     assertTrue(semaphore.acquire(1));
   }
 
-  @Test(timeout = 500)
-  public void testBlocking() throws InterruptedException {
+  @Test
+  @Timeout(500)
+  void testBlocking() throws InterruptedException {
     final Semaphore64 semaphore = new BlockingSemaphore(1);
     semaphore.acquire(1);
 
-    Thread t =
-        new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-                semaphore.acquire(1);
-              }
-            });
+    Thread t = new Thread(() -> semaphore.acquire(1));
     t.start();
 
     Thread.sleep(50);
@@ -80,7 +76,7 @@ public class Semaphore64Test {
   }
 
   @Test
-  public void testReducePermitLimitNonBlocking() {
+  void testReducePermitLimitNonBlocking() {
     final Semaphore64 semaphore = new NonBlockingSemaphore(5);
     semaphore.reducePermitLimit(3);
     assertFalse(semaphore.acquire(3));
@@ -88,21 +84,15 @@ public class Semaphore64Test {
     assertEquals(2, semaphore.getPermitLimit());
   }
 
-  @Test(timeout = 500)
-  public void testReducePermitLimitBlocking() throws InterruptedException {
+  @Test
+  @Timeout(500)
+  void testReducePermitLimitBlocking() throws InterruptedException {
     final Semaphore64 semaphore = new BlockingSemaphore(2);
 
     semaphore.reducePermitLimit(1);
     semaphore.acquire(1);
 
-    Thread t =
-        new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-                semaphore.acquire(1);
-              }
-            });
+    Thread t = new Thread(() -> semaphore.acquire(1));
     t.start();
 
     Thread.sleep(50);
@@ -115,7 +105,7 @@ public class Semaphore64Test {
   }
 
   @Test
-  public void testAcquirePartialNonBlocking() {
+  void testAcquirePartialNonBlocking() {
     Semaphore64 semaphore = new NonBlockingSemaphore(5);
     assertTrue(semaphore.acquirePartial(6));
     assertFalse(semaphore.acquire(1));
@@ -126,18 +116,12 @@ public class Semaphore64Test {
     assertEquals(5, semaphore.getPermitLimit());
   }
 
-  @Test(timeout = 500)
-  public void testAcquirePartialBlocking() throws Exception {
+  @Test
+  @Timeout(500)
+  void testAcquirePartialBlocking() throws Exception {
     final Semaphore64 semaphore = new BlockingSemaphore(5);
     semaphore.acquirePartial(6);
-    Thread t1 =
-        new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-                semaphore.acquire(1);
-              }
-            });
+    Thread t1 = new Thread(() -> semaphore.acquire(1));
     t1.start();
     // wait for thread to start
     Thread.sleep(100);
@@ -146,14 +130,7 @@ public class Semaphore64Test {
     t1.join();
 
     // now there should be 4 permits available, acquiring 6 should block
-    Thread t2 =
-        new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-                semaphore.acquirePartial(6);
-              }
-            });
+    Thread t2 = new Thread(() -> semaphore.acquirePartial(6));
     t2.start();
     // wait fo thread to start
     Thread.sleep(100);
@@ -163,7 +140,7 @@ public class Semaphore64Test {
   }
 
   @Test
-  public void testIncreasePermitLimitNonBlocking() {
+  void testIncreasePermitLimitNonBlocking() {
     Semaphore64 semaphore = new NonBlockingSemaphore(1);
     assertFalse(semaphore.acquire(2));
     semaphore.increasePermitLimit(1);
@@ -173,18 +150,12 @@ public class Semaphore64Test {
     assertEquals(2, semaphore.getPermitLimit());
   }
 
-  @Test(timeout = 500)
-  public void testIncreasePermitLimitBlocking() throws Exception {
+  @Test
+  @Timeout(500)
+  void testIncreasePermitLimitBlocking() throws Exception {
     final Semaphore64 semaphore = new BlockingSemaphore(1);
     semaphore.acquire(1);
-    Thread t =
-        new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-                semaphore.acquire(1);
-              }
-            });
+    Thread t = new Thread(() -> semaphore.acquire(1));
     t.start();
 
     Thread.sleep(50);
@@ -198,20 +169,18 @@ public class Semaphore64Test {
     assertEquals(2, semaphore.getPermitLimit());
   }
 
-  @Test(timeout = 500)
-  public void testReleaseWontOverflowNonBlocking() throws Exception {
+  @Test
+  @Timeout(500)
+  void testReleaseWontOverflowNonBlocking() throws Exception {
     final Semaphore64 semaphore = new NonBlockingSemaphore(10);
     List<Thread> threads = new LinkedList<>();
     for (int i = 0; i < 20; i++) {
       final int id = i;
       Thread t =
           new Thread(
-              new Runnable() {
-                @Override
-                public void run() {
-                  semaphore.acquire(5);
-                  semaphore.release(6);
-                }
+              () -> {
+                semaphore.acquire(5);
+                semaphore.release(6);
               });
       threads.add(t);
     }
@@ -227,8 +196,9 @@ public class Semaphore64Test {
     assertTrue(semaphore.acquire(10));
   }
 
-  @Test(timeout = 500)
-  public void testReleaseWontOverflowBlocking() throws Exception {
+  @Test
+  @Timeout(500)
+  void testReleaseWontOverflowBlocking() throws Exception {
     final Semaphore64 semaphore = new BlockingSemaphore(10);
     semaphore.acquire(5);
     semaphore.release(6);
@@ -236,21 +206,14 @@ public class Semaphore64Test {
     assertEquals(10, semaphore.getPermitLimit());
     semaphore.acquire(10);
     semaphore.release(10);
-    Thread t =
-        new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-                semaphore.acquire(11);
-              }
-            });
+    Thread t = new Thread(() -> semaphore.acquire(11));
     t.start();
     Thread.sleep(100);
     assertTrue(t.isAlive());
   }
 
   @Test
-  public void testPermitLimitUnderflowNonBlocking() {
+  void testPermitLimitUnderflowNonBlocking() {
     Semaphore64 semaphore = new NonBlockingSemaphore(10);
     try {
       semaphore.reducePermitLimit(10);
@@ -262,8 +225,9 @@ public class Semaphore64Test {
     assertTrue(semaphore.acquire(10));
   }
 
-  @Test(timeout = 500)
-  public void testPermitLimitUnderflowBlocking() throws Exception {
+  @Test
+  @Timeout(500)
+  void testPermitLimitUnderflowBlocking() throws Exception {
     final Semaphore64 semaphore = new BlockingSemaphore(10);
     try {
       semaphore.reducePermitLimit(10);
@@ -273,14 +237,7 @@ public class Semaphore64Test {
     assertEquals(10, semaphore.getPermitLimit());
     semaphore.acquire(10);
     semaphore.release(10);
-    Thread t =
-        new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-                semaphore.acquire(11);
-              }
-            });
+    Thread t = new Thread(() -> semaphore.acquire(11));
     t.start();
     Thread.sleep(100);
     assertTrue(t.isAlive());

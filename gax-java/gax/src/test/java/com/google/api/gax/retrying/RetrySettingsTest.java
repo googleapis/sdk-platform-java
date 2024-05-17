@@ -30,13 +30,13 @@
 package com.google.api.gax.retrying;
 
 import com.google.common.truth.Truth;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.threeten.bp.Duration;
 
-public class RetrySettingsTest {
+class RetrySettingsTest {
 
   @Test
-  public void retrySettingsSetLogicalTimeout() {
+  void retrySettingsSetLogicalTimeout() {
     Duration timeout = Duration.ofMillis(60000);
     RetrySettings retrySettings = RetrySettings.newBuilder().setLogicalTimeout(timeout).build();
 
@@ -47,7 +47,7 @@ public class RetrySettingsTest {
   }
 
   @Test
-  public void retrySettingsMerge() {
+  void retrySettingsMerge() {
     RetrySettings.Builder builder =
         RetrySettings.newBuilder()
             .setTotalTimeout(Duration.ofMillis(45000))

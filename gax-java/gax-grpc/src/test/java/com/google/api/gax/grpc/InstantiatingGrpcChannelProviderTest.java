@@ -31,7 +31,8 @@ package com.google.api.gax.grpc;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider.Builder;
@@ -60,18 +61,15 @@ import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelTest {
+class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelTest {
 
   @Test
-  public void testEndpoint() {
+  void testEndpoint() {
     String endpoint = "localhost:8080";
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder();
@@ -82,18 +80,22 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     assertEquals(provider.getEndpoint(), endpoint);
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testEndpointNoPort() {
-    InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("localhost");
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testEndpointBadPort() {
-    InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("localhost:abcd");
+  @Test
+  void testEndpointNoPort() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("localhost"));
   }
 
   @Test
-  public void testKeepAlive() {
+  void testEndpointBadPort() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("localhost:abcd"));
+  }
+
+  @Test
+  void testKeepAlive() {
     Duration keepaliveTime = Duration.ofSeconds(1);
     Duration keepaliveTimeout = Duration.ofSeconds(2);
     boolean keepaliveWithoutCalls = true;
@@ -111,14 +113,14 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testMaxInboundMetadataSize() {
+  void testMaxInboundMetadataSize() {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().setMaxInboundMetadataSize(4096).build();
     assertThat(provider.getMaxInboundMetadataSize()).isEqualTo(4096);
   }
 
   @Test
-  public void testCpuPoolSize() {
+  void testCpuPoolSize() {
     // happy path
     Builder builder = InstantiatingGrpcChannelProvider.newBuilder().setProcessorCount(2);
     builder.setChannelsPerCpu(2.5);
@@ -135,7 +137,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithPoolSize() throws IOException {
+  void testWithPoolSize() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
@@ -155,7 +157,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testToBuilder() {
+  void testToBuilder() {
     Duration keepaliveTime = Duration.ofSeconds(1);
     Duration keepaliveTimeout = Duration.ofSeconds(2);
     ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator =
@@ -191,12 +193,12 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithInterceptors() throws Exception {
+  void testWithInterceptors() throws Exception {
     testWithInterceptors(1);
   }
 
   @Test
-  public void testWithInterceptorsAndMultipleChannels() throws Exception {
+  void testWithInterceptorsAndMultipleChannels() throws Exception {
     testWithInterceptors(5);
   }
 
@@ -218,7 +220,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testChannelConfigurator() throws IOException {
+  void testChannelConfigurator() throws IOException {
     final int numChannels = 5;
 
     // Create a mock configurator that will insert mock channels
@@ -253,7 +255,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithGCECredentials() throws IOException {
+  void testWithGCECredentials() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
@@ -277,7 +279,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testDirectPathXdsDisableByDefault() throws IOException {
+  void testDirectPathXdsDisableByDefault() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().setAttemptDirectPath(true).build();
 
@@ -285,7 +287,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testDirectPathDisallowNullCredentials() throws IOException {
+  void testDirectPathDisallowNullCredentials() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().build();
 
@@ -293,7 +295,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testDirectPathWithGDUEndpoint() {
+  void testDirectPathWithGDUEndpoint() {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
@@ -304,7 +306,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testDirectPathWithNonGDUEndpoint() {
+  void testDirectPathWithNonGDUEndpoint() {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
@@ -315,7 +317,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testDirectPathXdsEnabled() throws IOException {
+  void testDirectPathXdsEnabled() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
@@ -327,7 +329,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithNonGCECredentials() throws IOException {
+  void testWithNonGCECredentials() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
@@ -355,7 +357,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithDirectPathDisabled() throws IOException {
+  void testWithDirectPathDisabled() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
@@ -383,7 +385,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithNoDirectPathFlagSet() throws IOException {
+  void testWithNoDirectPathFlagSet() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
@@ -410,7 +412,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithIPv6Address() throws IOException {
+  void testWithIPv6Address() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
@@ -428,7 +430,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
 
   // Test that if ChannelPrimer is provided, it is called during creation
   @Test
-  public void testWithPrimeChannel() throws IOException {
+  void testWithPrimeChannel() throws IOException {
     // create channelProvider with different pool sizes to verify ChannelPrimer is called the
     // correct number of times
     for (int poolSize = 1; poolSize < 5; poolSize++) {
@@ -452,7 +454,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithDefaultDirectPathServiceConfig() {
+  void testWithDefaultDirectPathServiceConfig() {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().build();
 
@@ -505,7 +507,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithCustomDirectPathServiceConfig() {
+  void testWithCustomDirectPathServiceConfig() {
     ImmutableMap<String, Object> pickFirstStrategy =
         ImmutableMap.<String, Object>of("round_robin", ImmutableMap.of());
     ImmutableMap<String, Object> childPolicy =
@@ -539,7 +541,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testLogDirectPathMisconfigAttrempDirectPathNotSet() throws Exception {
+  void testLogDirectPathMisconfigAttrempDirectPathNotSet() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
@@ -560,7 +562,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testLogDirectPathMisconfig_shouldNotLogInTheBuilder() {
+  void testLogDirectPathMisconfig_shouldNotLogInTheBuilder() {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider.newBuilder()
@@ -573,7 +575,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testLogDirectPathMisconfigWrongCredential() throws Exception {
+  void testLogDirectPathMisconfigWrongCredential() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
@@ -595,7 +597,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testLogDirectPathMisconfigNotOnGCE() throws Exception {
+  void testLogDirectPathMisconfigNotOnGCE() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =

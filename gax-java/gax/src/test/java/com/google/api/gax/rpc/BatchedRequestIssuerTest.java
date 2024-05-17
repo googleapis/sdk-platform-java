@@ -31,13 +31,13 @@ package com.google.api.gax.rpc;
 
 import com.google.common.truth.Truth;
 import java.util.concurrent.ExecutionException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class BatchedRequestIssuerTest {
+class BatchedRequestIssuerTest {
 
   @Test
-  public void test() throws Exception {
+  void test() throws Exception {
     BatchedFuture<Integer> batchedFuture = BatchedFuture.<Integer>create();
     BatchedRequestIssuer<Integer> issuer = new BatchedRequestIssuer<>(batchedFuture, 2);
     issuer.setResponse(1);
@@ -50,7 +50,7 @@ public class BatchedRequestIssuerTest {
   }
 
   @Test
-  public void testNullResult() throws Exception {
+  void testNullResult() throws Exception {
     BatchedFuture<Integer> batchedFuture = BatchedFuture.<Integer>create();
     BatchedRequestIssuer<Integer> issuer = new BatchedRequestIssuer<>(batchedFuture, 2);
     issuer.setResponse(null);
@@ -63,7 +63,7 @@ public class BatchedRequestIssuerTest {
   }
 
   @Test
-  public void testException() throws Exception {
+  void testException() throws Exception {
     Exception thrownException = new IllegalArgumentException("bad!");
 
     BatchedFuture<Integer> batchedFuture = BatchedFuture.<Integer>create();
@@ -76,19 +76,19 @@ public class BatchedRequestIssuerTest {
     Truth.assertThat(batchedFuture.isDone()).isTrue();
     try {
       batchedFuture.get();
-      Assert.fail("BatchedFuture should have thrown an exception");
+      Assertions.fail("BatchedFuture should have thrown an exception");
     } catch (ExecutionException e) {
       Truth.assertThat(e.getCause()).isInstanceOf(IllegalArgumentException.class);
     }
   }
 
   @Test
-  public void testNoResult() {
+  void testNoResult() {
     try {
       BatchedFuture<Integer> batchedFuture = BatchedFuture.<Integer>create();
       BatchedRequestIssuer<Integer> issuer = new BatchedRequestIssuer<>(batchedFuture, 2);
       issuer.sendResult();
-      Assert.fail("BatchedFuture should have thrown an exception");
+      Assertions.fail("BatchedFuture should have thrown an exception");
     } catch (IllegalStateException expected) {
       Truth.assertThat(expected)
           .hasMessageThat()
@@ -97,14 +97,14 @@ public class BatchedRequestIssuerTest {
   }
 
   @Test
-  public void testResponseAndException() {
+  void testResponseAndException() {
     try {
       Exception thrownException = new IllegalArgumentException("bad!");
       BatchedFuture<Integer> batchedFuture = BatchedFuture.<Integer>create();
       BatchedRequestIssuer<Integer> issuer = new BatchedRequestIssuer<>(batchedFuture, 2);
       issuer.setResponse(1);
       issuer.setException(thrownException);
-      Assert.fail("BatchedFuture should have thrown an exception");
+      Assertions.fail("BatchedFuture should have thrown an exception");
     } catch (IllegalStateException expected) {
       Truth.assertThat(expected)
           .hasMessageThat()
@@ -113,14 +113,14 @@ public class BatchedRequestIssuerTest {
   }
 
   @Test
-  public void testExceptionAndResponse() {
+  void testExceptionAndResponse() {
     try {
       Exception thrownException = new IllegalArgumentException("bad!");
       BatchedFuture<Integer> batchedFuture = BatchedFuture.<Integer>create();
       BatchedRequestIssuer<Integer> issuer = new BatchedRequestIssuer<>(batchedFuture, 2);
       issuer.setException(thrownException);
       issuer.setResponse(1);
-      Assert.fail("BatchedFuture should have thrown an exception");
+      Assertions.fail("BatchedFuture should have thrown an exception");
     } catch (IllegalStateException expected) {
       Truth.assertThat(expected)
           .hasMessageThat()

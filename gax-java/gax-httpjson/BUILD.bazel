@@ -28,10 +28,10 @@ _COMPILE_DEPS = [
 ]
 
 _TEST_COMPILE_DEPS = [
-    "@junit_junit//jar",
     "@org_junit_jupiter_junit_jupiter_engine//jar",
-    "@org_junit_vintage_junit_vintage_engine//jar",
+    "@org_junit_jupiter_junit_jupiter_api//jar",
     "@org_mockito_mockito_core//jar",
+    "@org_mockito_mockito_junit_jupiter//jar",
     "@com_google_truth_truth//jar",
     "//gax:gax_testlib",
     "@com_googlecode_java_diff_utils_diffutils//jar",

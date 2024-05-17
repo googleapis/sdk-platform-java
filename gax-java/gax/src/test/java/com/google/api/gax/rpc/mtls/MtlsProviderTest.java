@@ -30,23 +30,20 @@
 
 package com.google.api.gax.rpc.mtls;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.GeneralSecurityException;
 import java.util.List;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class MtlsProviderTest {
+class MtlsProviderTest {
   private static class TestCertProviderCommandProcess extends Process {
     private boolean runForever;
     private int exitValue;
@@ -102,7 +99,7 @@ public class MtlsProviderTest {
   }
 
   @Test
-  public void testUseMtlsEndpointAlways() {
+  void testUseMtlsEndpointAlways() {
     MtlsProvider mtlsProvider =
         new MtlsProvider(
             name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "always" : "false",
@@ -113,7 +110,7 @@ public class MtlsProviderTest {
   }
 
   @Test
-  public void testUseMtlsEndpointAuto() {
+  void testUseMtlsEndpointAuto() {
     MtlsProvider mtlsProvider =
         new MtlsProvider(
             name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "auto" : "false",
@@ -124,7 +121,7 @@ public class MtlsProviderTest {
   }
 
   @Test
-  public void testUseMtlsEndpointNever() {
+  void testUseMtlsEndpointNever() {
     MtlsProvider mtlsProvider =
         new MtlsProvider(
             name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "never" : "false",
@@ -135,7 +132,7 @@ public class MtlsProviderTest {
   }
 
   @Test
-  public void testUseMtlsClientCertificateTrue() {
+  void testUseMtlsClientCertificateTrue() {
     MtlsProvider mtlsProvider =
         new MtlsProvider(
             name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "auto" : "true",
@@ -145,7 +142,7 @@ public class MtlsProviderTest {
   }
 
   @Test
-  public void testUseMtlsClientCertificateFalse() {
+  void testUseMtlsClientCertificateFalse() {
     MtlsProvider mtlsProvider =
         new MtlsProvider(
             name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "auto" : "false",
@@ -155,7 +152,7 @@ public class MtlsProviderTest {
   }
 
   @Test
-  public void testGetKeyStore() throws IOException {
+  void testGetKeyStore() throws IOException {
     MtlsProvider mtlsProvider =
         new MtlsProvider(
             name -> name.equals("GOOGLE_API_USE_MTLS_ENDPOINT") ? "always" : "false",
@@ -165,7 +162,7 @@ public class MtlsProviderTest {
   }
 
   @Test
-  public void testGetKeyStoreNonZeroExitCode()
+  void testGetKeyStoreNonZeroExitCode()
       throws IOException, InterruptedException, GeneralSecurityException {
     try {
       InputStream metadata =
@@ -176,13 +173,13 @@ public class MtlsProviderTest {
       fail("should throw an exception");
     } catch (IOException e) {
       assertTrue(
-          "expected to fail with nonzero exit code",
-          e.getMessage().contains("Cert provider command failed with exit code: 1"));
+          e.getMessage().contains("Cert provider command failed with exit code: 1"),
+          "expected to fail with nonzero exit code");
     }
   }
 
   @Test
-  public void testExtractCertificateProviderCommand() throws IOException {
+  void testExtractCertificateProviderCommand() throws IOException {
     InputStream inputStream =
         this.getClass()
             .getClassLoader()
@@ -194,22 +191,22 @@ public class MtlsProviderTest {
   }
 
   @Test
-  public void testRunCertificateProviderCommandSuccess() throws IOException, InterruptedException {
+  void testRunCertificateProviderCommandSuccess() throws IOException, InterruptedException {
     Process certCommandProcess = new TestCertProviderCommandProcess(0, false);
     int exitValue = MtlsProvider.runCertificateProviderCommand(certCommandProcess, 100);
     assertEquals(0, exitValue);
   }
 
   @Test
-  public void testRunCertificateProviderCommandTimeout() throws InterruptedException {
+  void testRunCertificateProviderCommandTimeout() throws InterruptedException {
     Process certCommandProcess = new TestCertProviderCommandProcess(0, true);
     try {
       MtlsProvider.runCertificateProviderCommand(certCommandProcess, 100);
       fail("should throw an exception");
     } catch (IOException e) {
       assertTrue(
-          "expected to fail with timeout",
-          e.getMessage().contains("cert provider command timed out"));
+          e.getMessage().contains("cert provider command timed out"),
+          "expected to fail with timeout");
     }
   }
 }

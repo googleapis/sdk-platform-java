@@ -37,23 +37,20 @@ import java.util.concurrent.locks.LockSupport;
  * CancellationHelpers provides helpers for cancellation tests which perform cancellation in a
  * deterministic way.
  */
-public class CancellationHelpers {
+class CancellationHelpers {
 
   public static void cancelInThreadAfterLatchCountDown(
       final ApiFuture<?> resultFuture, final CountDownLatch latch) {
     Thread t =
         new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-                try {
-                  latch.await();
-                  while (!resultFuture.cancel(true) && !resultFuture.isDone()) {
-                    LockSupport.parkNanos(1000L);
-                  }
-                } catch (InterruptedException e) {
-                  Thread.currentThread().interrupt();
+            () -> {
+              try {
+                latch.await();
+                while (!resultFuture.cancel(true) && !resultFuture.isDone()) {
+                  LockSupport.parkNanos(1000L);
                 }
+              } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
               }
             });
     t.start();

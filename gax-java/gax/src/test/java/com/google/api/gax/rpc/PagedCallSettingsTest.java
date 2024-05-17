@@ -34,17 +34,14 @@ import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.common.collect.Sets;
 import com.google.common.truth.Truth;
 import java.util.Set;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class PagedCallSettingsTest {
+class PagedCallSettingsTest {
 
   @Test
-  public void testEmptyBuilder() {
+  void testEmptyBuilder() {
     @SuppressWarnings("unchecked")
     PagedListResponseFactory<Integer, String, Long> pagedListResponseFactory =
         Mockito.mock(PagedListResponseFactory.class);
@@ -65,7 +62,7 @@ public class PagedCallSettingsTest {
   }
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     @SuppressWarnings("unchecked")
     PagedListResponseFactory<Integer, String, Long> pagedListResponseFactory =
         Mockito.mock(PagedListResponseFactory.class);
@@ -98,7 +95,7 @@ public class PagedCallSettingsTest {
   }
 
   @Test
-  public void testBuilderFromSettings() throws Exception {
+  void testBuilderFromSettings() throws Exception {
     @SuppressWarnings("unchecked")
     PagedListResponseFactory<Integer, String, Long> pagedListResponseFactory =
         Mockito.mock(PagedListResponseFactory.class);

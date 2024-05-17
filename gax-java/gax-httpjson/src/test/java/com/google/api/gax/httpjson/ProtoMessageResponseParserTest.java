@@ -37,17 +37,17 @@ import com.google.protobuf.TypeRegistry;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ProtoMessageResponseParserTest {
+class ProtoMessageResponseParserTest {
   private ProtoMessageResponseParser<Field> parser;
   private Field field;
   private String fieldJson;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     parser =
         ProtoMessageResponseParser.<Field>newBuilder()
             .setDefaultInstance(Field.getDefaultInstance())
@@ -76,14 +76,14 @@ public class ProtoMessageResponseParserTest {
   }
 
   @Test
-  public void parse() {
+  void parse() {
     Field actualField =
         parser.parse(new ByteArrayInputStream(fieldJson.getBytes(StandardCharsets.UTF_8)));
     Truth.assertThat(actualField).isEqualTo(field);
   }
 
   @Test
-  public void parseWithTypeRegistry() {
+  void parseWithTypeRegistry() {
     Field actualField =
         parser.parse(
             new ByteArrayInputStream(fieldJson.getBytes(StandardCharsets.UTF_8)),
@@ -92,17 +92,17 @@ public class ProtoMessageResponseParserTest {
   }
 
   @Test
-  public void parseInvalidJson() {
+  void parseInvalidJson() {
     try {
       parser.parse(new ByteArrayInputStream("invalid".getBytes(StandardCharsets.UTF_8)));
-      Assert.fail();
+      Assertions.fail();
     } catch (RestSerializationException e) {
       Truth.assertThat(e.getCause()).isInstanceOf(IOException.class);
     }
   }
 
   @Test
-  public void serialize() {
+  void serialize() {
     String actualFieldJson = parser.serialize(field);
     Truth.assertThat(actualFieldJson).isEqualTo(fieldJson);
   }
