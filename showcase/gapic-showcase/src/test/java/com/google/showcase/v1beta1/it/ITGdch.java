@@ -41,7 +41,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -75,7 +74,7 @@ class ITGdch {
   private URI tokenUri;
 
   @BeforeEach
-  void setup(@TempDir Path tempDir) throws IOException, URISyntaxException {
+  void setup(@TempDir Path tempDir) throws IOException {
     transportFactory = new InterceptingMockTokenServerTransportFactory();
     prepareCredentials(tempDir);
     settings =

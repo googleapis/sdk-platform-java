@@ -117,6 +117,8 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
+            <!-- Shared-Configs defines JUnit Provider 4.7 as default: https://github.com/googleapis/java-shared-config/blob/465bb399aef9aa8383f11c23f10a97df49c1d057/java-shared-config/pom.xml#L86-L92 -->
+            <!-- Override it here for showcase only as other libraries may still be reliant on JUnit4 -->
             <dependencies>
               <dependency>
                 <groupId>org.apache.maven.surefire</groupId>
