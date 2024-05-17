@@ -150,9 +150,7 @@ class ITServerSideStreaming {
     WatchdogTimeoutException exception =
         assertThrows(
             WatchdogTimeoutException.class,
-            () -> {
-              responseStream.forEach(x -> responses.add(x.getContent()));
-            });
+            () -> responseStream.forEach(x -> responses.add(x.getContent())));
     assertThat(exception)
         .hasMessageThat()
         .contains("Canceled due to timeout waiting for next response");
