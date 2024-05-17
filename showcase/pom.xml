@@ -117,6 +117,13 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
+            <dependencies>
+              <dependency>
+                <groupId>org.apache.maven.surefire</groupId>
+                <artifactId>surefire-junit-platform</artifactId>
+                <version>${surefire.version}</version>
+              </dependency>
+            </dependencies>
           </plugin>
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
