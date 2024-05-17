@@ -52,7 +52,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 // tests the product of the rpc list and requests list.
 class ITHttpAnnotation {
 
-  public static Stream<Arguments> data() {
+  static Stream<Arguments> data() {
     return Stream.of(
         Arguments.of("Fully working conversions, resources"),
         Arguments.of("Binding selection testing"),
