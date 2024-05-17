@@ -30,7 +30,7 @@
 package com.google.api.gax.httpjson;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -42,17 +42,17 @@ import com.google.api.gax.rpc.UnaryCallable;
 import com.google.common.truth.Truth;
 import com.google.protobuf.Field;
 import com.google.protobuf.Option;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class HttpJsonLongRunningClientTest {
+class HttpJsonLongRunningClientTest {
 
   private OperationSnapshotFactory<Option, Field> operationSnapFact;
   private PollingRequestFactory<Option> pollReqFact;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     operationSnapFact =
         new OperationSnapshotFactory<Option, Field>() {
           @Override
@@ -72,7 +72,7 @@ public class HttpJsonLongRunningClientTest {
   }
 
   @Test
-  public void getOperationCallableTest() {
+  void getOperationCallableTest() {
     UnaryCallable<Option, Field> operationCallable =
         new UnaryCallable<Option, Field>() {
           @Override
@@ -89,7 +89,7 @@ public class HttpJsonLongRunningClientTest {
   }
 
   @Test
-  public void getOperationCallableFailTest() {
+  void getOperationCallableFailTest() {
     UnaryCallable<Option, Field> operationCallable =
         new UnaryCallable<Option, Field>() {
           @Override
@@ -104,14 +104,14 @@ public class HttpJsonLongRunningClientTest {
     UnaryCallable<String, OperationSnapshot> operationCall = lroClient.getOperationCallable();
     try {
       operationCall.call("Chicago");
-      Assert.fail("Exception should have been thrown");
+      Assertions.fail("Exception should have been thrown");
     } catch (RuntimeException e) {
       Truth.assertThat(e).hasMessageThat().contains("Prague");
     }
   }
 
   @Test
-  public void cancelOperationCallableTest() {
+  void cancelOperationCallableTest() {
     UnaryCallable<Option, Field> operationCallable =
         new UnaryCallable<Option, Field>() {
           @Override
@@ -128,7 +128,7 @@ public class HttpJsonLongRunningClientTest {
   }
 
   @Test
-  public void deleteOperationCallableTest() {
+  void deleteOperationCallableTest() {
     UnaryCallable<Option, Field> operationCallable =
         new UnaryCallable<Option, Field>() {
           @Override

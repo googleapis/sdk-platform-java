@@ -55,22 +55,19 @@ import io.grpc.inprocess.InProcessChannelBuilder;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class GrpcDirectStreamingCallableTest {
+class GrpcDirectStreamingCallableTest {
   private InProcessServer<FakeServiceImpl> inprocessServer;
   private ManagedChannel channel;
   private FakeServiceImpl serviceImpl;
   private ClientContext clientContext;
 
-  @Before
-  public void setUp() throws InstantiationException, IllegalAccessException, IOException {
+  @BeforeEach
+  void setUp() throws InstantiationException, IllegalAccessException, IOException {
     String serverName = "fakeservice";
     serviceImpl = new FakeServiceImpl();
     inprocessServer = new InProcessServer<>(serviceImpl, serverName);
@@ -89,14 +86,14 @@ public class GrpcDirectStreamingCallableTest {
             .build();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     channel.shutdown();
     inprocessServer.stop();
   }
 
   @Test
-  public void testBidiStreaming() throws Exception {
+  void testBidiStreaming() throws Exception {
     BidiStreamingCallable<Color, Money> streamingCallable =
         GrpcCallableFactory.createBidiStreamingCallable(
             GrpcCallSettings.create(METHOD_STREAMING_RECOGNIZE), null, clientContext);
@@ -118,7 +115,7 @@ public class GrpcDirectStreamingCallableTest {
   }
 
   @Test
-  public void testBidiStreamingServerError() throws Exception {
+  void testBidiStreamingServerError() throws Exception {
     BidiStreamingCallable<Color, Money> streamingCallable =
         GrpcCallableFactory.createBidiStreamingCallable(
             GrpcCallSettings.create(METHOD_STREAMING_RECOGNIZE_ERROR), null, clientContext);
@@ -141,7 +138,7 @@ public class GrpcDirectStreamingCallableTest {
   }
 
   @Test
-  public void testBidiStreamingClientError() throws Exception {
+  void testBidiStreamingClientError() throws Exception {
     BidiStreamingCallable<Color, Money> streamingCallable =
         GrpcCallableFactory.createBidiStreamingCallable(
             GrpcCallSettings.create(METHOD_STREAMING_RECOGNIZE_ERROR), null, clientContext);
@@ -168,7 +165,7 @@ public class GrpcDirectStreamingCallableTest {
   }
 
   @Test
-  public void testClientStreaming() throws Exception {
+  void testClientStreaming() throws Exception {
     ClientStreamingCallable<Color, Money> streamingCallable =
         GrpcCallableFactory.createClientStreamingCallable(
             GrpcCallSettings.create(METHOD_CLIENT_STREAMING_RECOGNIZE), null, clientContext);

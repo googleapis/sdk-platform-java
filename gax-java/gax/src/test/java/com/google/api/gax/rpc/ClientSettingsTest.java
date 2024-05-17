@@ -29,10 +29,9 @@
  */
 package com.google.api.gax.rpc;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.api.core.ApiClock;
-import com.google.api.core.ApiFunction;
 import com.google.api.core.NanoClock;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
@@ -54,14 +53,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class ClientSettingsTest {
+class ClientSettingsTest {
   private static final String QUOTA_PROJECT_ID_KEY = "x-goog-user-project";
   private static final String QUOTA_PROJECT_ID_FROM_HEADER_VALUE = "quota_project_id_from_headers";
   private static final String QUOTA_PROJECT_ID_FROM_BUILDERS = "quota_project_id_from_builders";
@@ -107,7 +103,7 @@ public class ClientSettingsTest {
       loadCredentials(JSON_KEY_QUOTA_PROJECT_ID);
 
   @Test
-  public void testEmptyBuilder() throws Exception {
+  void testEmptyBuilder() throws Exception {
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
     Truth.assertThat(builder.getExecutorProvider()).isNull();
     Truth.assertThat(builder.getBackgroundExecutorProvider())
@@ -153,7 +149,7 @@ public class ClientSettingsTest {
   }
 
   @Test
-  public void testBuilder() throws Exception {
+  void testBuilder() throws Exception {
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
 
     ExecutorProvider executorProvider = Mockito.mock(ExecutorProvider.class);
@@ -202,7 +198,7 @@ public class ClientSettingsTest {
   }
 
   @Test
-  public void testBuilderFromClientContext() throws Exception {
+  void testBuilderFromClientContext() throws Exception {
     final String QUOTA_PROJECT_ID_FROM_CONTEXT = "some_quota_project_id_from_context";
     ApiClock clock = Mockito.mock(ApiClock.class);
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
@@ -249,7 +245,7 @@ public class ClientSettingsTest {
   }
 
   @Test
-  public void testBuilderFromSettings() throws Exception {
+  void testBuilderFromSettings() throws Exception {
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
 
     ExecutorProvider executorProvider = Mockito.mock(ExecutorProvider.class);
@@ -289,7 +285,7 @@ public class ClientSettingsTest {
   }
 
   @Test
-  public void testApplyToAllUnaryMethods() throws Exception {
+  void testApplyToAllUnaryMethods() throws Exception {
     List<UnaryCallSettings.Builder<?, ?>> builders = new ArrayList<>();
     builders.add(UnaryCallSettings.newUnaryCallSettingsBuilder());
     builders.add(UnaryCallSettings.newUnaryCallSettingsBuilder());
@@ -297,17 +293,14 @@ public class ClientSettingsTest {
     final int[] count = {0};
     ClientSettings.Builder.applyToAllUnaryMethods(
         builders,
-        new ApiFunction<UnaryCallSettings.Builder<?, ?>, Void>() {
-          @Override
-          public Void apply(UnaryCallSettings.Builder<?, ?> input) {
-            if (count[0] == 0) {
-              input.setRetryableCodes(StatusCode.Code.UNAVAILABLE);
-            } else {
-              input.setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED);
-            }
-            count[0] += 1;
-            return null;
+        input -> {
+          if (count[0] == 0) {
+            input.setRetryableCodes(StatusCode.Code.UNAVAILABLE);
+          } else {
+            input.setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED);
           }
+          count[0] += 1;
+          return null;
         });
 
     Truth.assertThat(builders.get(0).getRetryableCodes())
@@ -327,7 +320,7 @@ public class ClientSettingsTest {
   }
 
   @Test
-  public void testBuilderFromSettings_QuotaProjectId() {
+  void testBuilderFromSettings_QuotaProjectId() {
 
     CredentialsProvider credentialsProvider_no_quota = Mockito.mock(CredentialsProvider.class);
     HeaderProvider headerProvider_no_quota = Mockito.mock(HeaderProvider.class);
@@ -443,7 +436,7 @@ public class ClientSettingsTest {
   }
 
   @Test
-  public void testBuilderFromClientContext_QuotaProjectId() {
+  void testBuilderFromClientContext_QuotaProjectId() {
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
     ApiCallContext callContext =
         FakeCallContext.createDefault().withEndpointContext(endpointContext);

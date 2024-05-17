@@ -45,18 +45,18 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-public class HttpRequestRunnableTest {
+class HttpRequestRunnableTest {
   private static Field requestMessage;
   private static final String ENDPOINT = "https://www.googleapis.com/animals/v1/projects";
   private static HttpRequestFormatter<Field> requestFormatter;
   private static HttpResponseParser<Empty> responseParser;
 
   @SuppressWarnings("unchecked")
-  @BeforeClass
+  @BeforeAll
   public static void setUp() {
     requestMessage =
         Field.newBuilder()
@@ -98,7 +98,7 @@ public class HttpRequestRunnableTest {
   }
 
   @Test
-  public void testRequestUrl() throws IOException {
+  void testRequestUrl() throws IOException {
     ApiMethodDescriptor<Field, Empty> methodDescriptor =
         ApiMethodDescriptor.<Field, Empty>newBuilder()
             .setFullMethodName("house.cat.get")
@@ -124,7 +124,7 @@ public class HttpRequestRunnableTest {
   }
 
   @Test
-  public void testRequestUrlUnnormalized() throws IOException {
+  void testRequestUrlUnnormalized() throws IOException {
     ApiMethodDescriptor<Field, Empty> methodDescriptor =
         ApiMethodDescriptor.<Field, Empty>newBuilder()
             .setFullMethodName("house.cat.get")
@@ -153,7 +153,7 @@ public class HttpRequestRunnableTest {
   }
 
   @Test
-  public void testRequestUrlUnnormalizedPatch() throws IOException {
+  void testRequestUrlUnnormalizedPatch() throws IOException {
     ApiMethodDescriptor<Field, Empty> methodDescriptor =
         ApiMethodDescriptor.<Field, Empty>newBuilder()
             .setFullMethodName("house.cat.get")
@@ -186,7 +186,7 @@ public class HttpRequestRunnableTest {
   The other tests above do not have a set a body request and instead send an EmptyContent (null Type/ CharSet)
   */
   @Test
-  public void testUnicodeValuesInBody() throws IOException {
+  void testUnicodeValuesInBody() throws IOException {
     HttpRequestFormatter<Field> bodyRequestFormatter =
         ProtoMessageRequestFormatter.<Field>newBuilder()
             .setPath(
@@ -245,7 +245,7 @@ public class HttpRequestRunnableTest {
   }
 
   @Test
-  public void testUpdateRunnableTimeout_shouldNotUpdate() throws IOException {
+  void testUpdateRunnableTimeout_shouldNotUpdate() throws IOException {
     ApiMethodDescriptor<Field, Empty> methodDescriptor =
         ApiMethodDescriptor.<Field, Empty>newBuilder()
             .setFullMethodName("house.cat.get")
@@ -270,7 +270,7 @@ public class HttpRequestRunnableTest {
   }
 
   @Test
-  public void testUpdateRunnableTimeout_shouldUpdate() throws IOException {
+  void testUpdateRunnableTimeout_shouldUpdate() throws IOException {
     ApiMethodDescriptor<Field, Empty> methodDescriptor =
         ApiMethodDescriptor.<Field, Empty>newBuilder()
             .setFullMethodName("house.cat.get")

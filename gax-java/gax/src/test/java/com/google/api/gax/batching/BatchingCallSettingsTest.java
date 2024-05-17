@@ -38,13 +38,10 @@ import com.google.api.gax.rpc.testing.FakeBatchableApi.LabeledIntList;
 import com.google.common.collect.ImmutableSet;
 import java.util.List;
 import java.util.Set;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class BatchingCallSettingsTest {
+class BatchingCallSettingsTest {
 
   private static final BatchingSettings BATCHING_SETTINGS =
       BatchingSettings.newBuilder()
@@ -60,7 +57,7 @@ public class BatchingCallSettingsTest {
           .build();
 
   @Test
-  public void testEmptyBuilder() {
+  void testEmptyBuilder() {
     BatchingCallSettings.Builder<Integer, Integer, LabeledIntList, List<Integer>> builder =
         BatchingCallSettings.newBuilder(SQUARER_BATCHING_DESC_V2);
     assertThat(builder.getBatchingSettings()).isNull();
@@ -69,7 +66,7 @@ public class BatchingCallSettingsTest {
   }
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     BatchingCallSettings.Builder<Integer, Integer, LabeledIntList, List<Integer>> builder =
         BatchingCallSettings.newBuilder(SQUARER_BATCHING_DESC_V2);
 
@@ -87,7 +84,7 @@ public class BatchingCallSettingsTest {
   }
 
   @Test
-  public void testBuilderFromSettings() {
+  void testBuilderFromSettings() {
     BatchingCallSettings.Builder<Integer, Integer, LabeledIntList, List<Integer>> builder =
         BatchingCallSettings.newBuilder(SQUARER_BATCHING_DESC_V2);
     RetrySettings retrySettings =
@@ -107,7 +104,7 @@ public class BatchingCallSettingsTest {
   }
 
   @Test
-  public void testMandatorySettings() {
+  void testMandatorySettings() {
     Exception actualEx = null;
     try {
       BatchingCallSettings.newBuilder(null);
@@ -125,7 +122,7 @@ public class BatchingCallSettingsTest {
   }
 
   @Test
-  public void testToString() {
+  void testToString() {
     RetrySettings retrySettings = RetrySettings.newBuilder().build();
     Set<StatusCode.Code> retryCodes = ImmutableSet.of(StatusCode.Code.UNAUTHENTICATED);
     BatchingCallSettings<Integer, Integer, LabeledIntList, List<Integer>> batchingCallSettings =
