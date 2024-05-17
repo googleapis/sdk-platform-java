@@ -45,7 +45,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -117,18 +118,18 @@ class ITDynamicRoutingHeaders {
     }
   }
 
-  private HttpJsonCapturingClientInterceptor httpJsonInterceptor;
-  private HttpJsonCapturingClientInterceptor httpJsonComplianceInterceptor;
-  private GrpcCapturingClientInterceptor grpcInterceptor;
-  private GrpcCapturingClientInterceptor grpcComplianceInterceptor;
+  private static HttpJsonCapturingClientInterceptor httpJsonInterceptor;
+  private static HttpJsonCapturingClientInterceptor httpJsonComplianceInterceptor;
+  private static GrpcCapturingClientInterceptor grpcInterceptor;
+  private static GrpcCapturingClientInterceptor grpcComplianceInterceptor;
 
-  private EchoClient grpcClient;
-  private EchoClient httpJsonClient;
-  private ComplianceClient grpcComplianceClient;
-  private ComplianceClient httpJsonComplianceClient;
+  private static EchoClient grpcClient;
+  private static EchoClient httpJsonClient;
+  private static ComplianceClient grpcComplianceClient;
+  private static ComplianceClient httpJsonComplianceClient;
 
-  @BeforeEach
-  void createClients() throws Exception {
+  @BeforeAll
+  static void createClients() throws Exception {
     // Create gRPC Interceptor and Client
     grpcInterceptor = new GrpcCapturingClientInterceptor();
     grpcClient = TestClientInitializer.createGrpcEchoClient(ImmutableList.of(grpcInterceptor));
@@ -153,8 +154,16 @@ class ITDynamicRoutingHeaders {
         TestClientInitializer.createHttpJsonEchoClient(ImmutableList.of(httpJsonInterceptor));
   }
 
-  @AfterEach
-  void destroyClient() throws InterruptedException {
+  @BeforeEach
+  void cleanUpParams() {
+    grpcInterceptor.metadata = null;
+    grpcComplianceInterceptor.metadata = null;
+    httpJsonInterceptor.requestParam = null;
+    httpJsonComplianceInterceptor.requestParam = null;
+  }
+
+  @AfterAll
+  static void destroyClient() throws InterruptedException {
     grpcClient.close();
     grpcComplianceClient.close();
 

@@ -157,10 +157,17 @@ class ITAutoPopulatedFields {
   }
 
   @AfterEach
-  void destroyClient() {
+  void destroyClient() throws InterruptedException {
     grpcClientWithoutRetries.close();
     grpcClientWithRetries.close();
     httpJsonClient.close();
+
+    grpcClientWithoutRetries.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    grpcClientWithRetries.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    httpJsonClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test

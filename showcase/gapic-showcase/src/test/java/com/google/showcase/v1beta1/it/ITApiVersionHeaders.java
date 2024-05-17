@@ -31,8 +31,8 @@ import io.grpc.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 // TODO: add testing on error responses once feat is implemented in showcase.
@@ -51,7 +51,6 @@ class ITApiVersionHeaders {
   private static final String EXPECTED_EXCEPTION_MESSAGE =
       "Header provider can't override the header: "
           + ApiClientHeaderProvider.API_VERSION_HEADER_KEY;
-  private static final int DEFAULT_AWAIT_TERMINATION_SEC = 10;
 
   // Implement a client interceptor to retrieve the trailing metadata from response.
   private static class GrpcCapturingClientInterceptor implements ClientInterceptor {
@@ -149,17 +148,17 @@ class ITApiVersionHeaders {
     }
   }
 
-  private HttpJsonCapturingClientInterceptor httpJsonInterceptor;
-  private GrpcCapturingClientInterceptor grpcInterceptor;
-  private HttpJsonCapturingClientInterceptor httpJsonComplianceInterceptor;
-  private GrpcCapturingClientInterceptor grpcComplianceInterceptor;
-  private EchoClient grpcClient;
-  private EchoClient httpJsonClient;
-  private ComplianceClient grpcComplianceClient;
-  private ComplianceClient httpJsonComplianceClient;
+  private static HttpJsonCapturingClientInterceptor httpJsonInterceptor;
+  private static GrpcCapturingClientInterceptor grpcInterceptor;
+  private static HttpJsonCapturingClientInterceptor httpJsonComplianceInterceptor;
+  private static GrpcCapturingClientInterceptor grpcComplianceInterceptor;
+  private static EchoClient grpcClient;
+  private static EchoClient httpJsonClient;
+  private static ComplianceClient grpcComplianceClient;
+  private static ComplianceClient httpJsonComplianceClient;
 
-  @BeforeEach
-  void createClients() throws Exception {
+  @BeforeAll
+  static void createClients() throws Exception {
     // Create gRPC Interceptor and Client
     grpcInterceptor = new GrpcCapturingClientInterceptor();
     grpcClient = TestClientInitializer.createGrpcEchoClient(ImmutableList.of(grpcInterceptor));
@@ -183,17 +182,20 @@ class ITApiVersionHeaders {
             ImmutableList.of(httpJsonComplianceInterceptor));
   }
 
-  @AfterEach
-  void destroyClient() throws InterruptedException {
+  @AfterAll
+  static void destroyClient() throws InterruptedException {
     grpcClient.close();
     httpJsonClient.close();
     grpcComplianceClient.close();
     httpJsonComplianceClient.close();
 
-    grpcClient.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
-    httpJsonClient.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
-    grpcComplianceClient.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
-    httpJsonComplianceClient.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
+    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    httpJsonClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    grpcComplianceClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    httpJsonComplianceClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
