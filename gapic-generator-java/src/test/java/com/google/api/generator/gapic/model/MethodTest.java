@@ -27,9 +27,9 @@ import com.google.common.collect.ImmutableSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class MethodTest {
+class MethodTest {
 
   private static final Method METHOD =
       Method.builder()
@@ -47,7 +47,7 @@ public class MethodTest {
           .build();
 
   @Test
-  public void toStream() {
+  void toStream() {
     // Argument order: isClientStreaming, isServerStreaming.
     assertThat(Method.toStream(false, false)).isEqualTo(Method.Stream.NONE);
     assertThat(Method.toStream(true, false)).isEqualTo(Method.Stream.CLIENT);
@@ -56,19 +56,19 @@ public class MethodTest {
   }
 
   @Test
-  public void hasRoutingHeaders_shouldReturnFalseIfRoutingHeadersIsNull() {
+  void hasRoutingHeaders_shouldReturnFalseIfRoutingHeadersIsNull() {
     assertThat(METHOD.hasRoutingHeaderParams()).isFalse();
   }
 
   @Test
-  public void hasRoutingHeaders_shouldReturnFalseIfRoutingHeadersIsEmpty() {
+  void hasRoutingHeaders_shouldReturnFalseIfRoutingHeadersIsEmpty() {
     Method method =
         METHOD.toBuilder().setRoutingHeaderRule(RoutingHeaderRule.builder().build()).build();
     assertThat(method.hasRoutingHeaderParams()).isFalse();
   }
 
   @Test
-  public void hasRoutingHeaders_shouldReturnTrueIfRoutingHeadersIsNotEmpty() {
+  void hasRoutingHeaders_shouldReturnTrueIfRoutingHeadersIsNotEmpty() {
     Method method =
         METHOD
             .toBuilder()
@@ -81,7 +81,7 @@ public class MethodTest {
   }
 
   @Test
-  public void shouldSetParamsExtractor_shouldReturnTrueIfHasRoutingHeaders() {
+  void shouldSetParamsExtractor_shouldReturnTrueIfHasRoutingHeaders() {
     Method method =
         METHOD
             .toBuilder()
@@ -94,15 +94,14 @@ public class MethodTest {
   }
 
   @Test
-  public void shouldSetParamsExtractor_shouldReturnTrueIfHasHttpBindingsAndRoutingHeadersIsNull() {
+  void shouldSetParamsExtractor_shouldReturnTrueIfHasHttpBindingsAndRoutingHeadersIsNull() {
     Method method =
         METHOD.toBuilder().setHttpBindings(HTTP_BINDINGS).setRoutingHeaderRule(null).build();
     assertThat(method.shouldSetParamsExtractor()).isTrue();
   }
 
   @Test
-  public void
-      shouldSetParamsExtractor_shouldReturnFalseIfHasHttpBindingsAndRoutingHeadersIsEmpty() {
+  void shouldSetParamsExtractor_shouldReturnFalseIfHasHttpBindingsAndRoutingHeadersIsEmpty() {
     Method method =
         METHOD
             .toBuilder()
@@ -113,13 +112,13 @@ public class MethodTest {
   }
 
   @Test
-  public void shouldSetParamsExtractor_shouldReturnFalseIfHasNoHttpBindingsAndNoRoutingHeaders() {
+  void shouldSetParamsExtractor_shouldReturnFalseIfHasNoHttpBindingsAndNoRoutingHeaders() {
     Method method = METHOD.toBuilder().setHttpBindings(null).setRoutingHeaderRule(null).build();
     assertThat(method.shouldSetParamsExtractor()).isFalse();
   }
 
   @Test
-  public void hasAutoPopulatedFields_shouldReturnTrueIfMethodIsUnary() {
+  void hasAutoPopulatedFields_shouldReturnTrueIfMethodIsUnary() {
     List<String> autoPopulatedFields = Arrays.asList("field1", "field2");
     Method method = METHOD.toBuilder().setAutoPopulatedFields(autoPopulatedFields).build();
     method.toStream(false, false);
@@ -127,7 +126,7 @@ public class MethodTest {
   }
 
   @Test
-  public void hasAutoPopulatedFields_shouldReturnFalseIfMethodIsStreaming() {
+  void hasAutoPopulatedFields_shouldReturnFalseIfMethodIsStreaming() {
     List<String> autoPopulatedFields = Arrays.asList("field1", "field2");
     Method method =
         METHOD
@@ -155,7 +154,7 @@ public class MethodTest {
   }
 
   @Test
-  public void hasAutoPopulatedFields_shouldReturnFalseIfAutoPopulatedFieldsIsEmpty() {
+  void hasAutoPopulatedFields_shouldReturnFalseIfAutoPopulatedFieldsIsEmpty() {
     List<String> autoPopulatedFields = new ArrayList<>();
     Method method =
         METHOD
@@ -168,8 +167,7 @@ public class MethodTest {
   }
 
   @Test
-  public void
-      isSupportedByTransport_shouldReturnTrueIfHasHttpBindingsAndIsRESTEligibleForRESTTransport() {
+  void isSupportedByTransport_shouldReturnTrueIfHasHttpBindingsAndIsRESTEligibleForRESTTransport() {
     Method methodNoStreaming =
         METHOD.toBuilder().setHttpBindings(HTTP_BINDINGS).setStream(Method.Stream.NONE).build();
     assertThat(methodNoStreaming.isSupportedByTransport(Transport.REST)).isTrue();
@@ -179,7 +177,7 @@ public class MethodTest {
   }
 
   @Test
-  public void isSupportedByTransport_shouldReturnFalseIfNoHttpBindingsForRESTTransport() {
+  void isSupportedByTransport_shouldReturnFalseIfNoHttpBindingsForRESTTransport() {
     Method methodNoStreaming =
         METHOD.toBuilder().setHttpBindings(null).setStream(Method.Stream.NONE).build();
     assertThat(methodNoStreaming.isSupportedByTransport(Transport.REST)).isFalse();
@@ -189,7 +187,7 @@ public class MethodTest {
   }
 
   @Test
-  public void
+  void
       isSupportedByTransport_shouldReturnFalseIfHasHttpBindingsAndIsNotRESTEligibleForRESTTransport() {
     Method methodClientSideStreaming =
         METHOD.toBuilder().setHttpBindings(HTTP_BINDINGS).setStream(Method.Stream.CLIENT).build();
@@ -200,7 +198,7 @@ public class MethodTest {
   }
 
   @Test
-  public void isSupportedByTransport_shouldReturnTrueForGRPCTransport() {
+  void isSupportedByTransport_shouldReturnTrueForGRPCTransport() {
     Method methodNoStreaming =
         METHOD.toBuilder().setHttpBindings(HTTP_BINDINGS).setStream(Method.Stream.NONE).build();
     assertThat(methodNoStreaming.isSupportedByTransport(Transport.GRPC)).isTrue();
@@ -216,7 +214,7 @@ public class MethodTest {
   }
 
   @Test
-  public void isSupportedByTransport_shouldThrowExceptionIfPassedGRPCRESTTransport() {
+  void isSupportedByTransport_shouldThrowExceptionIfPassedGRPCRESTTransport() {
     Method methodClientStreaming =
         METHOD.toBuilder().setHttpBindings(HTTP_BINDINGS).setStream(Method.Stream.CLIENT).build();
     assertThrows(

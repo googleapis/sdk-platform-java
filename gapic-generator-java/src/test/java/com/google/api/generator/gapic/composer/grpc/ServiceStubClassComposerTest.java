@@ -19,36 +19,26 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.protoloader.TestProtoLoader;
-import java.util.Arrays;
-import java.util.Collection;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
-public class ServiceStubClassComposerTest {
-  @Parameterized.Parameters
-  public static Collection<Object[]> data() {
-    return Arrays.asList(
-        new Object[][] {
-          {"EchoStub", TestProtoLoader.instance().parseShowcaseEcho(), "", ""},
-          {"DeprecatedServiceStub", TestProtoLoader.instance().parseDeprecatedService(), "", ""}
-        });
+class ServiceStubClassComposerTest {
+  static Stream<Arguments> data() {
+    return Stream.of(
+        Arguments.of("EchoStub", TestProtoLoader.instance().parseShowcaseEcho(), "", ""),
+        Arguments.of(
+            "DeprecatedServiceStub", TestProtoLoader.instance().parseDeprecatedService(), "", ""));
   }
 
-  @Parameterized.Parameter public String name;
-
-  @Parameterized.Parameter(1)
-  public GapicContext context;
-
-  @Parameterized.Parameter(2)
-  public String apiShortNameExpected;
-
-  @Parameterized.Parameter(3)
-  public String packageVersionExpected;
-
-  @Test
-  public void generateServiceStubClasses() {
+  @ParameterizedTest
+  @MethodSource("data")
+  void generateServiceStubClasses(
+      String name,
+      GapicContext context,
+      String apiShortNameExpected,
+      String packageVersionExpected) {
     Service service = context.services().get(0);
     GapicClass clazz = ServiceStubClassComposer.instance().generate(context, service);
 

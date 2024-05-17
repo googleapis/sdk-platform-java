@@ -19,11 +19,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class VariableTest {
+class VariableTest {
   @Test
-  public void createVariable_basic() {
+  void createVariable_basic() {
     assertValidVariable(TypeKind.INT, "intVar");
     assertValidVariable(TypeKind.BOOLEAN, "boolVar");
     assertValidVariable(TypeKind.DOUBLE, "doubleVar");
@@ -33,7 +33,7 @@ public class VariableTest {
   }
 
   @Test
-  public void createVariable_setIdentifier() {
+  void createVariable_setIdentifier() {
     IdentifierNode identifierNode = IdentifierNode.builder().setName("x").build();
     Variable variable =
         Variable.builder()
@@ -46,7 +46,7 @@ public class VariableTest {
   }
 
   @Test
-  public void createVariable_invalidType() {
+  void createVariable_invalidType() {
     assertInvalidVariable(TypeNode.VOID);
     assertInvalidVariable(TypeNode.NULL);
   }

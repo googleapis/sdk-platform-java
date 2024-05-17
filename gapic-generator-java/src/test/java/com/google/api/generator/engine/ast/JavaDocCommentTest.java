@@ -19,11 +19,11 @@ import static org.junit.Assert.assertEquals;
 import com.google.api.generator.test.utils.LineFormatter;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class JavaDocCommentTest {
+class JavaDocCommentTest {
   @Test
-  public void emptyJavaDocComment() {
+  void emptyJavaDocComment() {
     JavaDocComment.Builder javaDocCommentBuilder = JavaDocComment.builder();
     assertEquals(true, javaDocCommentBuilder.emptyComments());
 
@@ -33,14 +33,14 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_basic() {
+  void createJavaDocComment_basic() {
     String content = "this is a test comment";
     JavaDocComment javaDocComment = JavaDocComment.builder().addComment(content).build();
     assertEquals(content, javaDocComment.comment());
   }
 
   @Test
-  public void createJavaDocComment_specialCharacter() {
+  void createJavaDocComment_specialCharacter() {
     // Check that we handle special characters correctly which includes escape characters,
     // html escape characters and unexpected block end `*/`.
     JavaDocComment javaDocComment =
@@ -67,7 +67,7 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_sampleCode() {
+  void createJavaDocComment_sampleCode() {
     String comment = "sample codes:";
     String sampleCode = "resource = project/{project}/shelfId/{shelfId}";
     JavaDocComment javaDocComment =
@@ -82,7 +82,7 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_sampleCodePreserveIndentAndLineBreaks() {
+  void createJavaDocComment_sampleCodePreserveIndentAndLineBreaks() {
     String comment = "sample codes:";
     String formattedSampleCode =
         LineFormatter.lines(
@@ -107,7 +107,7 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_multipleComments() {
+  void createJavaDocComment_multipleComments() {
     // Add methods, like `addComment()`, should add components at any place,
     // and they will get printed in order.
     String comment1 = "This is a test comment.";
@@ -142,7 +142,7 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_multipleParams() {
+  void createJavaDocComment_multipleParams() {
     // Parameters should be grouped together and get printed after block comments.
     String comment = "This is a block comment.";
     String paramName1 = "shelfName";
@@ -163,7 +163,7 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_multipleParamsAndReturn() {
+  void createJavaDocComment_multipleParamsAndReturn() {
     // Parameters should be grouped together and get printed after block comments.
     // Return text should get printed at the very end.
     String comment = "This is a block comment.";
@@ -188,7 +188,7 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_throwsAndDeprecatedAndReturn() {
+  void createJavaDocComment_throwsAndDeprecatedAndReturn() {
     // No matter how many times or order `setThrows`, `setDeprecated`, `setReturn` are called,
     // only one @throws, @deprecated, and @return will be printed.
     String throwsType = "com.google.api.gax.rpc.ApiException";
@@ -220,7 +220,7 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_allComponents() {
+  void createJavaDocComment_allComponents() {
     // No matter what order `setThrows`, `setDeprecated`, and `setReturn` are called,
     // They will be printed at the end. And `@param` should be grouped,
     // they should always be printed right before `@throws`, `@deprecated`, and `@return`.

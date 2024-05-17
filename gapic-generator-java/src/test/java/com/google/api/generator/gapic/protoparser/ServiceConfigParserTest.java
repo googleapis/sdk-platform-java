@@ -25,15 +25,15 @@ import io.grpc.serviceconfig.ServiceConfig;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ServiceConfigParserTest {
+class ServiceConfigParserTest {
 
   private static final String JSON_DIRECTORY = "src/test/resources/";
   private static final double EPSILON = 1e-4;
 
   @Test
-  public void parseServiceConfig_basic() {
+  void parseServiceConfig_basic() {
     String jsonFilename = "retrying_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
     Optional<ServiceConfig> configOpt = ServiceConfigParser.parseFile(jsonPath.toString());
@@ -60,7 +60,7 @@ public class ServiceConfigParserTest {
   }
 
   @Test
-  public void parseServiceConfig_showcase() {
+  void parseServiceConfig_showcase() {
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
     Optional<ServiceConfig> configOpt = ServiceConfigParser.parseFile(jsonPath.toString());
@@ -79,7 +79,7 @@ public class ServiceConfigParserTest {
   }
 
   @Test
-  public void parseBadServiceConfig_missingFile() {
+  void parseBadServiceConfig_missingFile() {
     String jsonFilename = "does_not_exist_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
     Optional<ServiceConfig> configOpt = ServiceConfigParser.parseFile(jsonPath.toString());
@@ -87,7 +87,7 @@ public class ServiceConfigParserTest {
   }
 
   @Test
-  public void parseBadServiceConfig_malformedJson() {
+  void parseBadServiceConfig_malformedJson() {
     String jsonFilename = "malformed_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
     Optional<ServiceConfig> configOpt = ServiceConfigParser.parseFile(jsonPath.toString());
@@ -95,7 +95,7 @@ public class ServiceConfigParserTest {
   }
 
   @Test
-  public void parseBadServiceConfig_badProtoFields() {
+  void parseBadServiceConfig_badProtoFields() {
     String jsonFilename = "bad_proto_fields_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
     Optional<ServiceConfig> configOpt = ServiceConfigParser.parseFile(jsonPath.toString());
@@ -103,7 +103,7 @@ public class ServiceConfigParserTest {
   }
 
   @Test
-  public void parseBadServiceConfig_nullOrEmptyPath() {
+  void parseBadServiceConfig_nullOrEmptyPath() {
     Optional<ServiceConfig> configOpt = ServiceConfigParser.parseFile(null);
     assertFalse(configOpt.isPresent());
 

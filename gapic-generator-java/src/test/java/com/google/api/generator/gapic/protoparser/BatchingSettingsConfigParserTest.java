@@ -24,14 +24,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class BatchingSettingsConfigParserTest {
+class BatchingSettingsConfigParserTest {
 
   private static final String YAML_DIRECTORY = "src/test/resources/";
 
   @Test
-  public void parseGapicSettings_plain() {
+  void parseGapicSettings_plain() {
     String filename = "datastore_gapic.yaml";
     Path path = Paths.get(YAML_DIRECTORY, filename);
     Optional<List<GapicBatchingSettings>> settingsOpt =
@@ -40,7 +40,7 @@ public class BatchingSettingsConfigParserTest {
   }
 
   @Test
-  public void parseGapicSettings_noMethodSettings() {
+  void parseGapicSettings_noMethodSettings() {
     String filename = "showcase_gapic.yaml";
     Path path = Paths.get(YAML_DIRECTORY, filename);
     Optional<List<GapicBatchingSettings>> settingsOpt =
@@ -49,7 +49,7 @@ public class BatchingSettingsConfigParserTest {
   }
 
   @Test
-  public void parseBatchingSettings_logging() {
+  void parseBatchingSettings_logging() {
     String filename = "logging_gapic.yaml";
     Path path = Paths.get(YAML_DIRECTORY, filename);
     Optional<List<GapicBatchingSettings>> settingsOpt =
@@ -82,7 +82,7 @@ public class BatchingSettingsConfigParserTest {
   }
 
   @Test
-  public void parseBatchingSettings_pubsub() {
+  void parseBatchingSettings_pubsub() {
     String filename = "pubsub_gapic.yaml";
     Path path = Paths.get(YAML_DIRECTORY, filename);
     Optional<List<GapicBatchingSettings>> settingsOpt =
