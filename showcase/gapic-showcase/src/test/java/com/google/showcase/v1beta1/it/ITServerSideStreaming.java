@@ -34,10 +34,10 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import io.grpc.ManagedChannelBuilder;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -146,17 +146,18 @@ class ITServerSideStreaming {
                     .setStreamWaitTime(
                         com.google.protobuf.Duration.newBuilder().setSeconds(1).build())
                     .build());
-    ArrayList<String> responses = new ArrayList<>();
-    try {
-      for (EchoResponse response : responseStream) {
-        responses.add(response.getContent());
-      }
-      Assertions.fail("No exception was thrown");
-    } catch (WatchdogTimeoutException e) {
-      assertThat(e).hasMessageThat().contains("Canceled due to timeout waiting for next response");
-    } finally {
-      echoClient.close();
-    }
+    List<String> responses = new ArrayList<>();
+    WatchdogTimeoutException exception =
+        assertThrows(
+            WatchdogTimeoutException.class,
+            () -> {
+              responseStream.forEach(x -> responses.add(x.getContent()));
+            });
+    assertThat(exception)
+        .hasMessageThat()
+        .contains("Canceled due to timeout waiting for next response");
+    echoClient.close();
+    echoClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
