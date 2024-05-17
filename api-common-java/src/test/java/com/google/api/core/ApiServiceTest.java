@@ -31,12 +31,12 @@ package com.google.api.core;
 
 import com.google.common.util.concurrent.MoreExecutors;
 import java.util.concurrent.atomic.AtomicReference;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class ApiServiceTest {
+class ApiServiceTest {
   @Test
-  public void testNoopService() {
+  void testNoopService() {
     ApiService service =
         new AbstractApiService() {
           @Override
@@ -50,12 +50,12 @@ public class ApiServiceTest {
           }
         };
     service.startAsync().awaitRunning();
-    Assert.assertTrue(service.isRunning());
+    Assertions.assertTrue(service.isRunning());
     service.stopAsync().awaitTerminated();
   }
 
   @Test
-  public void testFailingService() {
+  void testFailingService() {
     final AtomicReference<Throwable> savedFailure = new AtomicReference<>();
     ApiService service =
         new AbstractApiService() {
@@ -86,8 +86,8 @@ public class ApiServiceTest {
       // Expected
     }
 
-    Assert.assertEquals(service.state(), ApiService.State.FAILED);
-    Assert.assertEquals(savedFailure.get().getMessage(), "this service always fails");
-    Assert.assertEquals(service.failureCause().getMessage(), "this service always fails");
+    Assertions.assertEquals(service.state(), ApiService.State.FAILED);
+    Assertions.assertEquals(savedFailure.get().getMessage(), "this service always fails");
+    Assertions.assertEquals(service.failureCause().getMessage(), "this service always fails");
   }
 }
