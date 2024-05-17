@@ -26,6 +26,7 @@ from library_generation.utils.file_render import render
 from library_generation.utils.proto_path_utils import remove_version_from
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
+SDK_PLATFORM_JAVA = "googleapis/sdk-platform-java"
 
 
 def create_argument(arg_key: str, arg_container: object) -> List[str]:
@@ -194,6 +195,7 @@ def generate_prerequisite_files(
     Generate prerequisite files for a library.
 
     Note that the version, if any, in the proto_path will be removed.
+
     :param config: a GenerationConfig object representing a parsed configuration
     yaml
     :param library: the library configuration
@@ -211,11 +213,12 @@ def generate_prerequisite_files(
         else f"{library.group_id}:google-{cloud_prefix}{library_name}"
     )
     distribution_name_short = re.split(r"[:/]", distribution_name)[-1]
-    repo = (
-        "googleapis/google-cloud-java"
-        if config.is_monorepo()
-        else f"googleapis/{language}-{library_name}"
-    )
+    if config.contains_common_protos():
+        repo = SDK_PLATFORM_JAVA
+    elif config.is_monorepo():
+        repo = "googleapis/google-cloud-java"
+    else:
+        repo = f"googleapis/{language}-{library_name}"
     api_id = (
         library.api_id if library.api_id else f"{library.api_shortname}.googleapis.com"
     )
@@ -250,6 +253,11 @@ def generate_prerequisite_files(
         "library_type": library.library_type,
         "requires_billing": library.requires_billing,
     }
+
+    # this removal is for java-common-protos and java-iam in
+    # sdk-platform-java
+    if repo == SDK_PLATFORM_JAVA:
+        repo_metadata.pop("api_id")
 
     if library.api_reference:
         repo_metadata["api_reference"] = library.api_reference

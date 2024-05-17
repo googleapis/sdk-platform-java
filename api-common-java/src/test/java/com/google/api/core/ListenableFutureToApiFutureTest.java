@@ -31,12 +31,12 @@ package com.google.api.core;
 
 import com.google.common.truth.Truth;
 import com.google.common.util.concurrent.SettableFuture;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ListenableFutureToApiFutureTest {
+class ListenableFutureToApiFutureTest {
 
   @Test
-  public void testGet() throws Exception {
+  void testGet() throws Exception {
     SettableFuture<Integer> future = SettableFuture.create();
     ListenableFutureToApiFuture<Integer> apiFuture = new ListenableFutureToApiFuture<>(future);
     future.set(3);

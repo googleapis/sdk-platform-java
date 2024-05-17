@@ -35,6 +35,13 @@ library_2 = LibraryConfig(
     product_documentation="",
     gapic_configs=[],
 )
+common_protos_library = LibraryConfig(
+    api_shortname="common-protos",
+    api_description="",
+    name_pretty="",
+    product_documentation="",
+    gapic_configs=[],
+)
 
 
 class GenerationConfigTest(unittest.TestCase):
@@ -123,6 +130,26 @@ class GenerationConfigTest(unittest.TestCase):
         )
         self.assertTrue(config.is_monorepo())
 
+    def test_contains_common_protos_with_common_protos_returns_true(self):
+        config = GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish="",
+            libraries_bom_version="",
+            template_excludes=[],
+            libraries=[library_1, library_2, common_protos_library],
+        )
+        self.assertTrue(config.contains_common_protos())
+
+    def test_contains_common_protos_without_common_protos_returns_false(self):
+        config = GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish="",
+            libraries_bom_version="",
+            template_excludes=[],
+            libraries=[library_1, library_2],
+        )
+        self.assertFalse(config.contains_common_protos())
+
     def test_validate_with_duplicate_library_name_raise_exception(self):
         self.assertRaisesRegex(
             ValueError,
@@ -131,8 +158,6 @@ class GenerationConfigTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries_bom_version="",
-            owlbot_cli_image="",
-            synthtool_commitish="",
             template_excludes=[],
             libraries=[
                 LibraryConfig(
@@ -167,30 +192,6 @@ class GenerationConfigTest(unittest.TestCase):
             "Repo level parameter, googleapis_commitish",
             from_yaml,
             f"{test_config_dir}/config_without_googleapis.yaml",
-        )
-
-    def test_from_yaml_without_libraries_bom_version_raise_exception(self):
-        self.assertRaisesRegex(
-            ValueError,
-            "Repo level parameter, libraries_bom_version",
-            from_yaml,
-            f"{test_config_dir}/config_without_libraries_bom_version.yaml",
-        )
-
-    def test_from_yaml_without_owlbot_cli_image_raise_exception(self):
-        self.assertRaisesRegex(
-            ValueError,
-            "Repo level parameter, owlbot_cli_image",
-            from_yaml,
-            f"{test_config_dir}/config_without_owlbot.yaml",
-        )
-
-    def test_from_yaml_without_synthtool_commitish_raise_exception(self):
-        self.assertRaisesRegex(
-            ValueError,
-            "Repo level parameter, synthtool_commitish",
-            from_yaml,
-            f"{test_config_dir}/config_without_synthtool.yaml",
         )
 
     def test_from_yaml_without_template_excludes_raise_exception(self):

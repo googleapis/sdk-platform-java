@@ -48,7 +48,6 @@ def generate_from_yaml(
 
     for library_path, library in repo_config.libraries.items():
         print(f"generating library {library.get_library_name()}")
-
         generate_composed_library(
             config_path=config_path,
             config=config,
@@ -58,8 +57,7 @@ def generate_from_yaml(
             versions_file=repo_config.versions_file,
         )
 
-    # we skip monorepo_postprocessing if not in a monorepo
-    if not config.is_monorepo():
+    if not config.is_monorepo() or config.contains_common_protos():
         return
 
     monorepo_postprocessing(

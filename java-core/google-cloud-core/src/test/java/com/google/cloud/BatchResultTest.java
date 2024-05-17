@@ -16,27 +16,27 @@
 
 package com.google.cloud;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.cloud.BaseServiceException.ExceptionData;
 import org.easymock.EasyMock;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class BatchResultTest {
+class BatchResultTest {
 
   private BatchResult<Boolean, BaseServiceException> result;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     result = new BatchResult<Boolean, BaseServiceException>() {};
   }
 
   @Test
-  public void testSuccess() {
+  void testSuccess() {
     assertFalse(result.completed());
     try {
       result.get();
@@ -51,7 +51,7 @@ public class BatchResultTest {
   }
 
   @Test
-  public void testError() {
+  void testError() {
     assertFalse(result.completed());
     try {
       result.get();
@@ -77,7 +77,7 @@ public class BatchResultTest {
   }
 
   @Test
-  public void testNotifyError() {
+  void testNotifyError() {
     final BaseServiceException ex =
         new BaseServiceException(ExceptionData.from(0, "message", "reason", false));
     assertFalse(result.completed());
@@ -97,7 +97,7 @@ public class BatchResultTest {
   }
 
   @Test
-  public void testNotifySuccess() {
+  void testNotifySuccess() {
     assertFalse(result.completed());
     BatchResult.Callback<Boolean, BaseServiceException> callback =
         EasyMock.createStrictMock(BatchResult.Callback.class);
