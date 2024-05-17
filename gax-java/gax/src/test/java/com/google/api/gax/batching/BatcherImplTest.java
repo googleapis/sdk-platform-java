@@ -385,7 +385,7 @@ class BatcherImplTest {
 
   /** Validates that the elements are not leaking to multiple batches */
   @Test
-  @Timeout(500)
+  @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
   void testElementsNotLeaking() throws Exception {
     ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
     ScheduledExecutorService multiThreadExecutor = Executors.newScheduledThreadPool(20);
@@ -809,7 +809,7 @@ class BatcherImplTest {
   }
 
   @Test
-  @Timeout(60000)
+  @Timeout(60)
   void testThrottlingBlocking() throws Exception {
     BatchingSettings settings =
         BatchingSettings.newBuilder()

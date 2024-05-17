@@ -30,6 +30,8 @@
 package com.google.api.gax.batching;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiFutures;
 import com.google.api.gax.batching.FlowController.FlowControlException;
@@ -40,7 +42,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.threeten.bp.Duration;
 
@@ -216,19 +217,18 @@ class ThresholdBatcherTest {
 
   @Test
   void testExceptionWithNullFlowController() {
-    try {
-      ThresholdBatcher.<SimpleBatch>newBuilder()
-          .setThresholds(BatchingThresholds.<SimpleBatch>create(100))
-          .setExecutor(EXECUTOR)
-          .setMaxDelay(Duration.ofMillis(10000))
-          .setReceiver(
-              new AccumulatingBatchReceiver<SimpleBatch>(ApiFutures.<Void>immediateFuture(null)))
-          .setBatchMerger(new SimpleBatchMerger())
-          .build();
-      Assertions.fail("ThresholdBatcher should have thrown an exception");
-    } catch (NullPointerException expected) {
-      assertThat(expected).isInstanceOf(NullPointerException.class);
-    }
+    assertThrows(
+        NullPointerException.class,
+        () ->
+            ThresholdBatcher.<SimpleBatch>newBuilder()
+                .setThresholds(BatchingThresholds.<SimpleBatch>create(100))
+                .setExecutor(EXECUTOR)
+                .setMaxDelay(Duration.ofMillis(10000))
+                .setReceiver(
+                    new AccumulatingBatchReceiver<SimpleBatch>(
+                        ApiFutures.<Void>immediateFuture(null)))
+                .setBatchMerger(new SimpleBatchMerger())
+                .build());
   }
 
   @Test
@@ -293,11 +293,9 @@ class ThresholdBatcherTest {
     batcher.add(SimpleBatch.fromInteger(3));
     batcher.add(SimpleBatch.fromInteger(5));
     batcher.add(SimpleBatch.fromInteger(7));
-    try {
-      batcher.add(SimpleBatch.fromInteger(9));
-      Assertions.fail("expected exception");
-    } catch (FlowControlException e) {
-    }
+
+    assertThrows(FlowControlException.class, () -> batcher.add(SimpleBatch.fromInteger(9)));
+
     batcher.pushCurrentBatch().get();
     assertThat(receiver.getBatches()).hasSize(1);
     batcher.add(SimpleBatch.fromInteger(11));
@@ -336,13 +334,11 @@ class ThresholdBatcherTest {
     assertThat(trackedFlowController.getBytesReleased()).isEqualTo(0);
 
     batcher.add(SimpleBatch.fromInteger(3));
-    try {
-      batcher.pushCurrentBatch().get();
-      Assertions.fail("expected exception");
-    } catch (Exception e) {
-      assertThat(e).isInstanceOf(ExecutionException.class);
-      assertThat(e).hasCauseThat().isSameInstanceAs(ex);
-    }
+
+    ExecutionException actualException =
+        assertThrows(ExecutionException.class, () -> batcher.pushCurrentBatch().get());
+    assertEquals(actualException.getCause(), ex);
+
     assertThat(receiver.getBatches()).hasSize(1);
 
     List<List<Integer>> expected = Arrays.asList(Arrays.asList(3));

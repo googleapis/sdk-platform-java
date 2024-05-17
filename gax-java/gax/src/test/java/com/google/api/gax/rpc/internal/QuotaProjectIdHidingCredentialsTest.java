@@ -29,6 +29,10 @@
  */
 package com.google.api.gax.rpc.internal;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
@@ -36,7 +40,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -62,9 +65,9 @@ class QuotaProjectIdHidingCredentialsTest {
     Map<String, List<String>> metaDataHidingQuota =
         quotaProjectIdHidingCredentials.getRequestMetadata();
 
-    Assertions.assertTrue(metaDataWithQuota.containsKey(QUOTA_PROJECT_ID_KEY));
-    Assertions.assertFalse(metaDataHidingQuota.containsKey(QUOTA_PROJECT_ID_KEY));
-    Assertions.assertEquals(metaDataWithQuota.size() - 1, metaDataHidingQuota.size());
+    assertTrue(metaDataWithQuota.containsKey(QUOTA_PROJECT_ID_KEY));
+    assertFalse(metaDataHidingQuota.containsKey(QUOTA_PROJECT_ID_KEY));
+    assertEquals(metaDataWithQuota.size() - 1, metaDataHidingQuota.size());
 
     // Credentials without quota project id
     Map<String, List<String>> metaDataWithoutQuota =
@@ -77,8 +80,7 @@ class QuotaProjectIdHidingCredentialsTest {
     Map<String, List<String>> metaDataHidingQuotaWithout =
         quotaProjectIdHidingCredentials.getRequestMetadata();
 
-    Assertions.assertEquals(
-        quotaProjectIdHidingCredentialsWithout.getRequestMetadata(), metaDataWithoutQuota);
+    assertEquals(quotaProjectIdHidingCredentialsWithout.getRequestMetadata(), metaDataWithoutQuota);
   }
 
   @Test
@@ -93,9 +95,9 @@ class QuotaProjectIdHidingCredentialsTest {
         new QuotaProjectIdHidingCredentials(credentials);
     quotaProjectIdHidingCredentials.refresh();
 
-    Assertions.assertEquals(quotaProjectIdHidingCredentials.getAuthenticationType(), mockType);
-    Assertions.assertTrue(quotaProjectIdHidingCredentials.hasRequestMetadata());
-    Assertions.assertFalse(quotaProjectIdHidingCredentials.hasRequestMetadataOnly());
+    assertEquals(quotaProjectIdHidingCredentials.getAuthenticationType(), mockType);
+    assertTrue(quotaProjectIdHidingCredentials.hasRequestMetadata());
+    assertFalse(quotaProjectIdHidingCredentials.hasRequestMetadataOnly());
 
     Mockito.verify(credentials, Mockito.atLeastOnce()).refresh();
   }

@@ -30,6 +30,7 @@
 package com.google.api.gax.rpc;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiFutures;
 import com.google.api.core.ListenableFutureToApiFuture;
@@ -40,7 +41,6 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import java.io.IOException;
 import java.util.concurrent.Executors;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ApiExceptionsTest {
@@ -55,34 +55,30 @@ class ApiExceptionsTest {
   void throwsApiException() {
     Exception throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.UNAVAILABLE), false);
-    try {
-      ApiExceptions.callAndTranslateApiException(ApiFutures.immediateFailedFuture(throwable));
-      Assertions.fail("ApiExceptions should have thrown an exception");
-    } catch (ApiException expected) {
-      assertThat(expected).isSameInstanceAs(throwable);
-    }
+
+    assertThrows(
+        UnavailableException.class,
+        () ->
+            ApiExceptions.callAndTranslateApiException(
+                ApiFutures.immediateFailedFuture(throwable)));
   }
 
   @Test
   void throwsIOException() {
-    try {
-      ApiExceptions.callAndTranslateApiException(
-          ApiFutures.immediateFailedFuture(new IOException()));
-      Assertions.fail("ApiExceptions should have thrown an exception");
-    } catch (UncheckedExecutionException expected) {
-      assertThat(expected).hasCauseThat().isInstanceOf(IOException.class);
-    }
+    assertThrows(
+        UncheckedExecutionException.class,
+        () ->
+            ApiExceptions.callAndTranslateApiException(
+                ApiFutures.immediateFailedFuture(new IOException())));
   }
 
   @Test
   void throwsRuntimeException() {
-    try {
-      ApiExceptions.callAndTranslateApiException(
-          ApiFutures.immediateFailedFuture(new IllegalArgumentException()));
-      Assertions.fail("ApiExceptions should have thrown an exception");
-    } catch (IllegalArgumentException expected) {
-      assertThat(expected).isInstanceOf(IllegalArgumentException.class);
-    }
+    assertThrows(
+        IllegalArgumentException.class,
+        () ->
+            ApiExceptions.callAndTranslateApiException(
+                ApiFutures.immediateFailedFuture(new IllegalArgumentException())));
   }
 
   /**
@@ -108,12 +104,9 @@ class ApiExceptionsTest {
     executor.shutdown();
 
     // Unwrap the future
-    Exception actualError = null;
-    try {
-      ApiExceptions.callAndTranslateApiException(futureErrorWrapper);
-    } catch (Exception e) {
-      actualError = e;
-    }
+    Exception actualError =
+        assertThrows(
+            Exception.class, () -> ApiExceptions.callAndTranslateApiException(futureErrorWrapper));
 
     // Sanity check that the current stack trace is not in the exception
     assertThat(actualError).isNotNull();

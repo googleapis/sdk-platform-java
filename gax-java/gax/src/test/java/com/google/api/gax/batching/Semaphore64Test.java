@@ -37,6 +37,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
@@ -59,7 +60,7 @@ class Semaphore64Test {
   }
 
   @Test
-  @Timeout(500)
+  @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
   void testBlocking() throws InterruptedException {
     final Semaphore64 semaphore = new BlockingSemaphore(1);
     semaphore.acquire(1);
@@ -84,7 +85,7 @@ class Semaphore64Test {
   }
 
   @Test
-  @Timeout(500)
+  @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
   void testReducePermitLimitBlocking() throws InterruptedException {
     final Semaphore64 semaphore = new BlockingSemaphore(2);
 
@@ -116,7 +117,7 @@ class Semaphore64Test {
   }
 
   @Test
-  @Timeout(500)
+  @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
   void testAcquirePartialBlocking() throws Exception {
     final Semaphore64 semaphore = new BlockingSemaphore(5);
     semaphore.acquirePartial(6);
@@ -150,7 +151,7 @@ class Semaphore64Test {
   }
 
   @Test
-  @Timeout(500)
+  @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
   void testIncreasePermitLimitBlocking() throws Exception {
     final Semaphore64 semaphore = new BlockingSemaphore(1);
     semaphore.acquire(1);
@@ -169,7 +170,7 @@ class Semaphore64Test {
   }
 
   @Test
-  @Timeout(500)
+  @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
   void testReleaseWontOverflowNonBlocking() throws Exception {
     final Semaphore64 semaphore = new NonBlockingSemaphore(10);
     List<Thread> threads = new LinkedList<>();
@@ -196,7 +197,7 @@ class Semaphore64Test {
   }
 
   @Test
-  @Timeout(500)
+  @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
   void testReleaseWontOverflowBlocking() throws Exception {
     final Semaphore64 semaphore = new BlockingSemaphore(10);
     semaphore.acquire(5);
@@ -225,7 +226,7 @@ class Semaphore64Test {
   }
 
   @Test
-  @Timeout(500)
+  @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
   void testPermitLimitUnderflowBlocking() throws Exception {
     final Semaphore64 semaphore = new BlockingSemaphore(10);
     try {

@@ -33,8 +33,8 @@ package com.google.api.gax.rpc.mtls;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,7 +44,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class MtlsProviderTest {
+
   private static class TestCertProviderCommandProcess extends Process {
+
     private boolean runForever;
     private int exitValue;
 
@@ -86,6 +88,7 @@ class MtlsProviderTest {
   }
 
   static class TestProcessProvider implements MtlsProvider.ProcessProvider {
+
     private int exitCode;
 
     public TestProcessProvider(int exitCode) {
@@ -164,18 +167,17 @@ class MtlsProviderTest {
   @Test
   void testGetKeyStoreNonZeroExitCode()
       throws IOException, InterruptedException, GeneralSecurityException {
-    try {
-      InputStream metadata =
-          this.getClass()
-              .getClassLoader()
-              .getResourceAsStream("com/google/api/gax/rpc/mtls/mtlsCertAndKey.pem");
-      MtlsProvider.getKeyStore(metadata, new TestProcessProvider(1));
-      fail("should throw an exception");
-    } catch (IOException e) {
-      assertTrue(
-          e.getMessage().contains("Cert provider command failed with exit code: 1"),
-          "expected to fail with nonzero exit code");
-    }
+    InputStream metadata =
+        this.getClass()
+            .getClassLoader()
+            .getResourceAsStream("com/google/api/gax/rpc/mtls/mtlsCertAndKey.pem");
+    IOException actual =
+        assertThrows(
+            IOException.class,
+            () -> MtlsProvider.getKeyStore(metadata, new TestProcessProvider(1)));
+    assertTrue(
+        actual.getMessage().contains("Cert provider command failed with exit code: 1"),
+        "expected to fail with nonzero exit code");
   }
 
   @Test
@@ -200,13 +202,12 @@ class MtlsProviderTest {
   @Test
   void testRunCertificateProviderCommandTimeout() throws InterruptedException {
     Process certCommandProcess = new TestCertProviderCommandProcess(0, true);
-    try {
-      MtlsProvider.runCertificateProviderCommand(certCommandProcess, 100);
-      fail("should throw an exception");
-    } catch (IOException e) {
-      assertTrue(
-          e.getMessage().contains("cert provider command timed out"),
-          "expected to fail with timeout");
-    }
+    IOException actual =
+        assertThrows(
+            IOException.class,
+            () -> MtlsProvider.runCertificateProviderCommand(certCommandProcess, 100));
+    assertTrue(
+        actual.getMessage().contains("cert provider command timed out"),
+        "expected to fail with timeout");
   }
 }

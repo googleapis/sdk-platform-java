@@ -620,7 +620,7 @@ class FlowControllerTest {
   }
 
   @Test
-  @Timeout(500)
+  @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
   void testElementCountsOutOfBoundaryWontDeadlock() throws Exception {
     // Test the special case where in FlowController#reserve, to avoid deadlocks, it allows
     // reserving byte size greater than current request bytes limit.

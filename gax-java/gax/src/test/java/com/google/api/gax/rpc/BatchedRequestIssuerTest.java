@@ -29,9 +29,12 @@
  */
 package com.google.api.gax.rpc;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.google.common.truth.Truth;
 import java.util.concurrent.ExecutionException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BatchedRequestIssuerTest {
@@ -74,57 +77,53 @@ class BatchedRequestIssuerTest {
     issuer.sendResult();
 
     Truth.assertThat(batchedFuture.isDone()).isTrue();
-    try {
-      batchedFuture.get();
-      Assertions.fail("BatchedFuture should have thrown an exception");
-    } catch (ExecutionException e) {
-      Truth.assertThat(e.getCause()).isInstanceOf(IllegalArgumentException.class);
-    }
+
+    ExecutionException actual = assertThrows(ExecutionException.class, batchedFuture::get);
+    assertInstanceOf(IllegalArgumentException.class, actual.getCause());
   }
 
   @Test
   void testNoResult() {
-    try {
-      BatchedFuture<Integer> batchedFuture = BatchedFuture.<Integer>create();
-      BatchedRequestIssuer<Integer> issuer = new BatchedRequestIssuer<>(batchedFuture, 2);
-      issuer.sendResult();
-      Assertions.fail("BatchedFuture should have thrown an exception");
-    } catch (IllegalStateException expected) {
-      Truth.assertThat(expected)
-          .hasMessageThat()
-          .contains("Neither response nor exception were set in BatchedRequestIssuer");
-    }
+    BatchedFuture<Integer> batchedFuture = BatchedFuture.<Integer>create();
+    BatchedRequestIssuer<Integer> issuer = new BatchedRequestIssuer<>(batchedFuture, 2);
+
+    IllegalStateException actual = assertThrows(IllegalStateException.class, issuer::sendResult);
+    assertTrue(
+        actual
+            .getMessage()
+            .contains("Neither response nor exception were set in BatchedRequestIssuer"));
   }
 
   @Test
   void testResponseAndException() {
-    try {
-      Exception thrownException = new IllegalArgumentException("bad!");
-      BatchedFuture<Integer> batchedFuture = BatchedFuture.<Integer>create();
-      BatchedRequestIssuer<Integer> issuer = new BatchedRequestIssuer<>(batchedFuture, 2);
-      issuer.setResponse(1);
-      issuer.setException(thrownException);
-      Assertions.fail("BatchedFuture should have thrown an exception");
-    } catch (IllegalStateException expected) {
-      Truth.assertThat(expected)
-          .hasMessageThat()
-          .contains("Cannot set both exception and response");
-    }
+    Exception thrownException = new IllegalArgumentException("bad!");
+    BatchedFuture<Integer> batchedFuture = BatchedFuture.<Integer>create();
+    BatchedRequestIssuer<Integer> issuer = new BatchedRequestIssuer<>(batchedFuture, 2);
+
+    IllegalStateException actual =
+        assertThrows(
+            IllegalStateException.class,
+            () -> {
+              issuer.setResponse(1);
+              issuer.setException(thrownException);
+            });
+
+    assertTrue(actual.getMessage().contains("Cannot set both exception and response"));
   }
 
   @Test
   void testExceptionAndResponse() {
-    try {
-      Exception thrownException = new IllegalArgumentException("bad!");
-      BatchedFuture<Integer> batchedFuture = BatchedFuture.<Integer>create();
-      BatchedRequestIssuer<Integer> issuer = new BatchedRequestIssuer<>(batchedFuture, 2);
-      issuer.setException(thrownException);
-      issuer.setResponse(1);
-      Assertions.fail("BatchedFuture should have thrown an exception");
-    } catch (IllegalStateException expected) {
-      Truth.assertThat(expected)
-          .hasMessageThat()
-          .contains("Cannot set both exception and response");
-    }
+    Exception thrownException = new IllegalArgumentException("bad!");
+    BatchedFuture<Integer> batchedFuture = BatchedFuture.<Integer>create();
+    BatchedRequestIssuer<Integer> issuer = new BatchedRequestIssuer<>(batchedFuture, 2);
+
+    IllegalStateException actual =
+        assertThrows(
+            IllegalStateException.class,
+            () -> {
+              issuer.setException(thrownException);
+              issuer.setResponse(1);
+            });
+    assertTrue(actual.getMessage().contains("Cannot set both exception and response"));
   }
 }

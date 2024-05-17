@@ -62,7 +62,7 @@ class GrpcDirectStreamControllerTest {
   private static final int DEFAULT_AWAIT_TERMINATION_SEC = 10;
 
   @Test
-  @Timeout(180_000) // ms
+  @Timeout(180)
   void testRetryNoRaceCondition() throws Exception {
     Server server = ServerBuilder.forPort(1234).addService(new FakeService()).build().start();
     ManagedChannel channel =

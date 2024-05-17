@@ -32,8 +32,8 @@ package com.google.api.gax.rpc.mtls;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.api.gax.rpc.mtls.MtlsProvider.MtlsEndpointUsagePolicy;
 import com.google.api.gax.rpc.testing.FakeMtlsProvider;
@@ -82,13 +82,8 @@ public abstract class AbstractMtlsTransportChannelTest {
     // Test the case where provider.getKeyStore() throws.
     MtlsProvider provider =
         new FakeMtlsProvider(true, MtlsEndpointUsagePolicy.AUTO, null, "", true);
-    try {
-      getMtlsObjectFromTransportChannel(provider);
-      fail("should throw an exception");
-    } catch (IOException e) {
-      assertTrue(
-          e.getMessage().contains("getKeyStore throws exception"),
-          "expected getKeyStore to throw an exception");
-    }
+    IOException actual =
+        assertThrows(IOException.class, () -> getMtlsObjectFromTransportChannel(provider));
+    assertTrue(actual.getMessage().contains("getKeyStore throws exception"));
   }
 }
