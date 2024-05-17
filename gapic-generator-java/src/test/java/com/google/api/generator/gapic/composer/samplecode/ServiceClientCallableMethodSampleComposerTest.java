@@ -31,9 +31,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ServiceClientCallableMethodSampleComposerTest {
+class ServiceClientCallableMethodSampleComposerTest {
   private static final String SHOWCASE_PACKAGE_NAME = "com.google.showcase.v1beta1";
   private static final String LRO_PACKAGE_NAME = "com.google.longrunning";
   private static final String PROTO_PACKAGE_NAME = "com.google.protobuf";
@@ -51,7 +51,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
 
   /*Testing composeLroCallableMethod*/
   @Test
-  public void valid_composeLroCallableMethod_withReturnResponse() {
+  void valid_composeLroCallableMethod_withReturnResponse() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -122,7 +122,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void valid_composeLroCallableMethod_withReturnVoid() {
+  void valid_composeLroCallableMethod_withReturnVoid() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -191,7 +191,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
 
   /*Testing composePagedCallableMethod*/
   @Test
-  public void valid_composePagedCallableMethod() {
+  void valid_composePagedCallableMethod() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -255,7 +255,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void invalid_composePagedCallableMethod_inputTypeNotExistInMessage() {
+  void invalid_composePagedCallableMethod_inputTypeNotExistInMessage() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -303,7 +303,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void invalid_composePagedCallableMethod_noExistMethodResponse() {
+  void invalid_composePagedCallableMethod_noExistMethodResponse() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -351,7 +351,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void invalid_composePagedCallableMethod_noRepeatedResponse() {
+  void invalid_composePagedCallableMethod_noRepeatedResponse() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -414,7 +414,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
 
   /*Testing composeStreamCallableMethod*/
   @Test
-  public void valid_composeStreamCallableMethod_serverStream() {
+  void valid_composeStreamCallableMethod_serverStream() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -472,7 +472,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void invalid_composeStreamCallableMethod_serverStreamNotExistRequest() {
+  void invalid_composeStreamCallableMethod_serverStreamNotExistRequest() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -520,7 +520,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void valid_composeStreamCallableMethod_bidiStream() {
+  void valid_composeStreamCallableMethod_bidiStream() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -587,7 +587,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void invalid_composeStreamCallableMethod_bidiStreamNotExistRequest() {
+  void invalid_composeStreamCallableMethod_bidiStreamNotExistRequest() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -635,7 +635,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void valid_composeStreamCallableMethod_clientStream() {
+  void valid_composeStreamCallableMethod_clientStream() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -716,7 +716,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void invalid_composeStreamCallableMethod_clientStreamNotExistRequest() {
+  void invalid_composeStreamCallableMethod_clientStreamNotExistRequest() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -765,7 +765,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
 
   /*Testing composeRegularCallableMethod*/
   @Test
-  public void valid_composeRegularCallableMethod_unaryRpc() {
+  void valid_composeRegularCallableMethod_unaryRpc() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -824,7 +824,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void valid_composeRegularCallableMethod_lroRpc() {
+  void valid_composeRegularCallableMethod_lroRpc() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -894,7 +894,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void valid_composeRegularCallableMethod_lroRpcWithReturnVoid() {
+  void valid_composeRegularCallableMethod_lroRpcWithReturnVoid() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -961,7 +961,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void valid_composeRegularCallableMethod_pageRpc() {
+  void valid_composeRegularCallableMethod_pageRpc() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -1032,7 +1032,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void invalid_composeRegularCallableMethod_noExistMethodRequest() {
+  void invalid_composeRegularCallableMethod_noExistMethodRequest() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -1075,7 +1075,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void invalid_composeRegularCallableMethod_noExistMethodResponsePagedRpc() {
+  void invalid_composeRegularCallableMethod_noExistMethodResponsePagedRpc() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -1123,7 +1123,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
   }
 
   @Test
-  public void invalid_composeRegularCallableMethod_noRepeatedResponsePagedRpc() {
+  void invalid_composeRegularCallableMethod_noRepeatedResponsePagedRpc() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);

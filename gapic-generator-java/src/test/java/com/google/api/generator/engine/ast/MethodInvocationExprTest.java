@@ -18,12 +18,12 @@ import static org.junit.Assert.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class MethodInvocationExprTest {
+class MethodInvocationExprTest {
 
   @Test
-  public void validBuildMethodInvocationExpr() {
+  void validBuildMethodInvocationExpr() {
     Reference stringRef = ConcreteReference.withClazz(String.class);
     TypeNode returnType =
         TypeNode.withReference(
@@ -37,7 +37,7 @@ public class MethodInvocationExprTest {
   }
 
   @Test
-  public void validBuildMethodInvocationExpr_hasArguments() {
+  void validBuildMethodInvocationExpr_hasArguments() {
     Reference stringRef = ConcreteReference.withClazz(String.class);
     TypeNode returnType =
         TypeNode.withReference(
@@ -59,7 +59,7 @@ public class MethodInvocationExprTest {
   }
 
   @Test
-  public void validBuildMethodInvocationExpr_staticReference() {
+  void validBuildMethodInvocationExpr_staticReference() {
     TypeNode someType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -75,7 +75,7 @@ public class MethodInvocationExprTest {
   }
 
   @Test
-  public void invalidBuildMethodInvocationExpr_nullReturnType() {
+  void invalidBuildMethodInvocationExpr_nullReturnType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -87,7 +87,7 @@ public class MethodInvocationExprTest {
   }
 
   @Test
-  public void invalidBuildMethodInvocationExpr_staticAndExprBoth() {
+  void invalidBuildMethodInvocationExpr_staticAndExprBoth() {
     TypeNode someType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -110,7 +110,7 @@ public class MethodInvocationExprTest {
   }
 
   @Test
-  public void invalidBuildMethodInvocationExpr_nullArgument() {
+  void invalidBuildMethodInvocationExpr_nullArgument() {
     Reference stringRef = ConcreteReference.withClazz(String.class);
     TypeNode returnType =
         TypeNode.withReference(

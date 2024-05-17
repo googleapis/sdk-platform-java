@@ -16,11 +16,11 @@ package com.google.api.generator.engine.ast;
 
 import static org.junit.Assert.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ArithmeticOperationExprTest {
+class ArithmeticOperationExprTest {
   @Test
-  public void concatOperator_validBasic() {
+  void concatOperator_validBasic() {
     // valid type-checking for x + getSomeString()
     VariableExpr lhsExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.INT).setName("x").build());
@@ -34,7 +34,7 @@ public class ArithmeticOperationExprTest {
   }
 
   @Test
-  public void concatOperator_validWithNull() {
+  void concatOperator_validWithNull() {
     // Type-checking for String variable x and null object value.
     VariableExpr lhsExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.STRING).setName("x").build());
@@ -44,7 +44,7 @@ public class ArithmeticOperationExprTest {
   }
 
   @Test
-  public void concatOperator_validWithReferenceType() {
+  void concatOperator_validWithReferenceType() {
     // Type-checking for String variable x, Expr variable y.
     VariableExpr lhsExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.STRING).setName("x").build());
@@ -59,7 +59,7 @@ public class ArithmeticOperationExprTest {
   }
 
   @Test
-  public void concatOperator_invalidVoidType() {
+  void concatOperator_invalidVoidType() {
     // throw exception if one of expr is void-type
     VariableExpr lhsExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.STRING).setName("x").build());
@@ -74,7 +74,7 @@ public class ArithmeticOperationExprTest {
   }
 
   @Test
-  public void concatString_invalidNonStringType() {
+  void concatString_invalidNonStringType() {
     // throw exception for concat usage if none of exprs is String-type
     VariableExpr lhsExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.INT).setName("x").build());
