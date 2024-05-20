@@ -30,22 +30,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-public class ITBidiStreaming {
+class ITBidiStreaming {
 
   private static EchoClient grpcClient;
 
-  @BeforeClass
-  public static void createClients() throws Exception {
+  @BeforeAll
+  static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
   }
 
-  @AfterClass
-  public static void destroyClients() throws Exception {
+  @AfterAll
+  static void destroyClients() throws Exception {
     grpcClient.close();
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
@@ -57,7 +57,7 @@ public class ITBidiStreaming {
   // three requests, respond twice for every request etc. If that happens, the response content may
   // not be exactly the same as request content.
   @Test
-  public void testGrpc_splitCall_shouldListensToResponse() throws Exception {
+  void testGrpc_splitCall_shouldListensToResponse() throws Exception {
     // given
     List<String> expected = Arrays.asList("The rain in Spain stays mainly on the plain".split(" "));
     TestResponseObserver responseObserver = new TestResponseObserver();

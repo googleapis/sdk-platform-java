@@ -17,7 +17,7 @@
 package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.grpc.GrpcStatusCode;
 import com.google.api.gax.rpc.CancelledException;
@@ -28,26 +28,26 @@ import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.concurrent.TimeUnit;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-public class ITUnaryCallable {
+class ITUnaryCallable {
 
   private static EchoClient grpcClient;
 
   private static EchoClient httpjsonClient;
 
-  @BeforeClass
-  public static void createClients() throws Exception {
+  @BeforeAll
+  static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
-  @AfterClass
-  public static void destroyClients() throws InterruptedException {
+  @AfterAll
+  static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();
 
@@ -57,13 +57,13 @@ public class ITUnaryCallable {
   }
 
   @Test
-  public void testGrpc_receiveContent() {
+  void testGrpc_receiveContent() {
     assertThat(echoGrpc("grpc-echo?")).isEqualTo("grpc-echo?");
     assertThat(echoGrpc("grpc-echo!")).isEqualTo("grpc-echo!");
   }
 
   @Test
-  public void testGrpc_serverResponseError_throwsException() {
+  void testGrpc_serverResponseError_throwsException() {
     Status cancelledStatus =
         Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build();
     EchoRequest requestWithServerError = EchoRequest.newBuilder().setError(cancelledStatus).build();
@@ -73,13 +73,13 @@ public class ITUnaryCallable {
   }
 
   @Test
-  public void testHttpJson_receiveContent() {
+  void testHttpJson_receiveContent() {
     assertThat(echoHttpJson("http-echo?")).isEqualTo("http-echo?");
     assertThat(echoHttpJson("http-echo!")).isEqualTo("http-echo!");
   }
 
   @Test
-  public void testHttpJson_serverResponseError_throwsException() {
+  void testHttpJson_serverResponseError_throwsException() {
     EchoRequest requestWithServerError =
         EchoRequest.newBuilder()
             .setError(Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build())
