@@ -32,7 +32,6 @@ COPY library_generation /src
 
 # install protoc
 WORKDIR /protoc
-RUN ls /src
 RUN source /src/utils/utilities.sh \
 	&& download_protoc "${PROTOC_VERSION}" "linux-x86_64"
 # we indicate protoc is available in the container via env vars
