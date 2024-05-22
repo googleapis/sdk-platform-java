@@ -205,10 +205,12 @@
       </exclusions>
       <scope>test</scope>
     </dependency>
+    <!-- Set environment variable for tests in EndpointContextTest  -->
     <dependency>
       <groupId>uk.org.webcompere</groupId>
       <artifactId>system-stubs-jupiter</artifactId>
       <version>2.1.6</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
