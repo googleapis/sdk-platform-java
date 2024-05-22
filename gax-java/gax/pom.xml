@@ -110,21 +110,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>envVarTest</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-              <test>EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet+endpointContextBuild_multipleUniverseDomainConfigurations_clientSettingsHasPriority</test>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>
