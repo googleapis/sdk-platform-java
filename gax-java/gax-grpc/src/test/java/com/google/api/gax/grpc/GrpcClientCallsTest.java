@@ -30,7 +30,7 @@
 package com.google.api.gax.grpc;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 
 import com.google.api.gax.grpc.testing.FakeChannelFactory;
@@ -58,13 +58,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-public class GrpcClientCallsTest {
+class GrpcClientCallsTest {
 
   // Auth Library's GoogleAuthException is package-private. Copy basic functionality for tests
   private static class GoogleAuthException extends IOException implements Retryable {
@@ -91,8 +91,8 @@ public class GrpcClientCallsTest {
   private Credentials credentials;
   private Channel mockChannel;
 
-  @Before
-  public void setUp() throws IOException {
+  @BeforeEach
+  void setUp() throws IOException {
     credentials = Mockito.mock(Credentials.class);
     endpointContext = Mockito.mock(EndpointContext.class);
     mockChannel = Mockito.mock(Channel.class);
@@ -104,7 +104,7 @@ public class GrpcClientCallsTest {
   }
 
   @Test
-  public void testAffinity() throws IOException {
+  void testAffinity() throws IOException {
     MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
 
     @SuppressWarnings("unchecked")
@@ -138,7 +138,7 @@ public class GrpcClientCallsTest {
   }
 
   @Test
-  public void testExtraHeaders() throws IOException {
+  void testExtraHeaders() throws IOException {
     Metadata emptyHeaders = new Metadata();
     final Map<String, List<String>> extraHeaders = new HashMap<>();
     extraHeaders.put(
@@ -179,7 +179,7 @@ public class GrpcClientCallsTest {
   }
 
   @Test
-  public void testTimeoutToDeadlineConversion() throws IOException {
+  void testTimeoutToDeadlineConversion() throws IOException {
     MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
 
     @SuppressWarnings("unchecked")
@@ -209,7 +209,7 @@ public class GrpcClientCallsTest {
   }
 
   @Test
-  public void testTimeoutAfterDeadline() throws IOException {
+  void testTimeoutAfterDeadline() throws IOException {
     MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
 
     @SuppressWarnings("unchecked")
@@ -242,7 +242,7 @@ public class GrpcClientCallsTest {
   }
 
   @Test
-  public void testTimeoutBeforeDeadline() throws IOException {
+  void testTimeoutBeforeDeadline() throws IOException {
     MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
 
     @SuppressWarnings("unchecked")
@@ -279,7 +279,7 @@ public class GrpcClientCallsTest {
   }
 
   @Test
-  public void testValidUniverseDomain() throws IOException {
+  void testValidUniverseDomain() throws IOException {
     GrpcCallContext context =
         GrpcCallContext.createDefault()
             .withChannel(mockChannel)
@@ -295,7 +295,7 @@ public class GrpcClientCallsTest {
 
   // This test is when the universe domain does not match
   @Test
-  public void testInvalidUniverseDomain() throws IOException {
+  void testInvalidUniverseDomain() throws IOException {
     Mockito.doThrow(
             new UnauthenticatedException(
                 null, GrpcStatusCode.of(Status.Code.UNAUTHENTICATED), false))
@@ -319,7 +319,7 @@ public class GrpcClientCallsTest {
 
   // This test is when the MDS is unable to return a valid universe domain
   @Test
-  public void testUniverseDomainNotReady_shouldRetry() throws IOException {
+  void testUniverseDomainNotReady_shouldRetry() throws IOException {
     Mockito.doThrow(new GoogleAuthException(true))
         .when(endpointContext)
         .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));

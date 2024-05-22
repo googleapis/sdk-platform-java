@@ -16,16 +16,16 @@
 
 package com.google.cloud;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.google.cloud.MonitoredResourceDescriptor.LabelDescriptor;
 import com.google.cloud.MonitoredResourceDescriptor.LabelDescriptor.ValueType;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class MonitoredResourceDescriptorTest {
+class MonitoredResourceDescriptorTest {
 
   private static final LabelDescriptor BOOLEAN_LABEL =
       new LabelDescriptor("booleanKey", ValueType.BOOL, "Boolean label");
@@ -50,7 +50,7 @@ public class MonitoredResourceDescriptorTest {
           .build();
 
   @Test
-  public void testLabelDescriptor() {
+  void testLabelDescriptor() {
     assertEquals("booleanKey", BOOLEAN_LABEL.getKey());
     assertEquals(ValueType.BOOL, BOOLEAN_LABEL.getValueType());
     assertEquals("Boolean label", BOOLEAN_LABEL.getDescription());
@@ -66,7 +66,7 @@ public class MonitoredResourceDescriptorTest {
   }
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     assertEquals(TYPE, RESOURCE_DESCRIPTOR.getType());
     assertEquals(NAME, RESOURCE_DESCRIPTOR.getName());
     assertEquals(DISPLAY_NAME, RESOURCE_DESCRIPTOR.getDisplayName());
@@ -82,7 +82,7 @@ public class MonitoredResourceDescriptorTest {
   }
 
   @Test
-  public void testToAndFromPbLabelDescriptor() {
+  void testToAndFromPbLabelDescriptor() {
     compareLabelDescriptor(BOOLEAN_LABEL, LabelDescriptor.fromPb(BOOLEAN_LABEL.toPb()));
     compareLabelDescriptor(STRING_LABEL, LabelDescriptor.fromPb(STRING_LABEL.toPb()));
     compareLabelDescriptor(INT_LABEL, LabelDescriptor.fromPb(INT_LABEL.toPb()));
@@ -91,7 +91,7 @@ public class MonitoredResourceDescriptorTest {
   }
 
   @Test
-  public void testToAndFromPb() {
+  void testToAndFromPb() {
     compareResourceDescriptor(
         RESOURCE_DESCRIPTOR, MonitoredResourceDescriptor.fromPb(RESOURCE_DESCRIPTOR.toPb()));
     MonitoredResourceDescriptor resourceDescriptor =

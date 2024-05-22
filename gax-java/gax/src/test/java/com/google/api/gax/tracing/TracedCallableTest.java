@@ -47,23 +47,16 @@ import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.mockito.quality.Strictness;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class TracedCallableTest {
+@ExtendWith(MockitoExtension.class)
+class TracedCallableTest {
   private static final SpanName SPAN_NAME = SpanName.of("FakeClient", "FakeRpc");
-
-  @Rule
-  public final MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
 
   @Mock private ApiTracerFactory tracerFactory;
   private ApiTracer parentTracer;
@@ -74,8 +67,8 @@ public class TracedCallableTest {
   private ApiCallContext callContext;
   private ClientContext clientContext;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     parentTracer = BaseApiTracer.getInstance();
 
     // Wire the mock tracer factory
@@ -99,7 +92,7 @@ public class TracedCallableTest {
   }
 
   @Test
-  public void testNonRetriedCallable() throws Exception {
+  void testNonRetriedCallable() throws Exception {
     // Verify that callables configured to not retry have the appropriate tracer interactions.
     UnaryCallSettings<Object, Object> callSettings =
         UnaryCallSettings.newUnaryCallSettingsBuilder()

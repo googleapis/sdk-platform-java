@@ -29,17 +29,16 @@
  */
 package com.google.api.gax.rpc;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.google.api.gax.batching.PartitionKey;
 import com.google.api.gax.batching.RequestBuilder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class BatchExecutorTest {
+class BatchExecutorTest {
 
   BatchingDescriptor<List<Integer>, Integer> integerDescriptor =
       new BatchingDescriptor<List<Integer>, Integer>() {
@@ -87,7 +86,7 @@ public class BatchExecutorTest {
       };
 
   @Test
-  public void testValidate() {
+  void testValidate() {
     BatchExecutor<List<Integer>, Integer> executor =
         new BatchExecutor<List<Integer>, Integer>(integerDescriptor, new PartitionKey(0));
     List<Integer> request = new ArrayList<Integer>();
@@ -97,14 +96,14 @@ public class BatchExecutorTest {
     executor.validateBatch(batchingContextOk);
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testValidateFailure() {
+  @Test
+  void testValidateFailure() {
     BatchExecutor<List<Integer>, Integer> executor =
         new BatchExecutor<List<Integer>, Integer>(integerDescriptor, new PartitionKey(0));
     List<Integer> request = new ArrayList<>();
     request.add(3);
     Batch<List<Integer>, Integer> batchingContextOk =
         new Batch<>(integerDescriptor, request, null, null);
-    executor.validateBatch(batchingContextOk);
+    assertThrows(IllegalArgumentException.class, () -> executor.validateBatch(batchingContextOk));
   }
 }

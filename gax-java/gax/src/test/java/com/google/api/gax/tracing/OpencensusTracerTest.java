@@ -49,23 +49,17 @@ import io.opencensus.trace.Status;
 import io.opencensus.trace.Status.CanonicalCode;
 import io.opencensus.trace.Tracer;
 import java.util.Map;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.mockito.quality.Strictness;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class OpencensusTracerTest {
-  @Rule
-  public final MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
+@ExtendWith(MockitoExtension.class)
+class OpencensusTracerTest {
 
   @Mock private Tracer internalTracer;
   @Mock private Span span;
@@ -73,13 +67,13 @@ public class OpencensusTracerTest {
 
   private OpencensusTracer tracer;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     tracer = new OpencensusTracer(internalTracer, span, OperationType.Unary);
   }
 
   @Test
-  public void testUnarySuccessExample() {
+  void testUnarySuccessExample() {
     tracer.attemptStarted(0);
     tracer.connectionSelected("1");
     ApiException error0 =
@@ -119,7 +113,7 @@ public class OpencensusTracerTest {
   }
 
   @Test
-  public void testBatchExample() {
+  void testBatchExample() {
     tracer.batchRequestSent(100, 1000);
     tracer.attemptStarted(0);
     tracer.connectionSelected("1");
@@ -131,7 +125,7 @@ public class OpencensusTracerTest {
   }
 
   @Test
-  public void testLongRunningExample() {
+  void testLongRunningExample() {
     tracer = new OpencensusTracer(internalTracer, span, OperationType.LongRunning);
 
     // Initial poll of the initial rpc
@@ -170,7 +164,7 @@ public class OpencensusTracerTest {
   }
 
   @Test
-  public void testRetriesExhaustedExample() {
+  void testRetriesExhaustedExample() {
     tracer.attemptStarted(0);
     tracer.connectionSelected("1");
     ApiException error0 =
@@ -201,7 +195,7 @@ public class OpencensusTracerTest {
   }
 
   @Test
-  public void testCancellationExample() {
+  void testCancellationExample() {
     tracer.attemptStarted(0);
     tracer.connectionSelected("1");
     tracer.attemptCancelled();
@@ -226,7 +220,7 @@ public class OpencensusTracerTest {
   }
 
   @Test
-  public void testFailureExample() {
+  void testFailureExample() {
     tracer.attemptStarted(0);
     tracer.connectionSelected("1");
     ApiException error0 =
@@ -255,7 +249,7 @@ public class OpencensusTracerTest {
   }
 
   @Test
-  public void testResponseCount() {
+  void testResponseCount() {
     // Initial attempt got 2 messages, then failed
     tracer.attemptStarted(0);
     tracer.responseReceived();
@@ -283,7 +277,7 @@ public class OpencensusTracerTest {
   }
 
   @Test
-  public void testRequestCount() {
+  void testRequestCount() {
     // Initial attempt sent 2 messages, then failed
     tracer.attemptStarted(0);
     tracer.requestSent();
@@ -312,7 +306,7 @@ public class OpencensusTracerTest {
   }
 
   @Test
-  public void testAttemptNumber() {
+  void testAttemptNumber() {
     tracer.attemptStarted(0);
     tracer.attemptFailed(new RuntimeException(), Duration.ofMillis(1));
     tracer.attemptStarted(1);
@@ -334,7 +328,7 @@ public class OpencensusTracerTest {
   }
 
   @Test
-  public void testStatusCode() {
+  void testStatusCode() {
     tracer.attemptStarted(0);
     tracer.attemptFailed(
         new DeadlineExceededException(
@@ -359,7 +353,7 @@ public class OpencensusTracerTest {
   }
 
   @Test
-  public void testErrorConversion() {
+  void testErrorConversion() {
     for (Code code : Code.values()) {
       ApiException error = new ApiException("fake message", null, new FakeStatusCode(code), false);
       Status opencensusStatus = OpencensusTracer.convertErrorToStatus(error);
@@ -369,7 +363,7 @@ public class OpencensusTracerTest {
   }
 
   @Test
-  public void testStreamingErrorConversion() {
+  void testStreamingErrorConversion() {
     ServerStreamingAttemptException error =
         new ServerStreamingAttemptException(
             new DeadlineExceededException(

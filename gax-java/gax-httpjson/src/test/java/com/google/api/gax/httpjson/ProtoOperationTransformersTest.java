@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.httpjson;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.httpjson.ProtoOperationTransformers.MetadataTransformer;
 import com.google.api.gax.httpjson.ProtoOperationTransformers.ResponseTransformer;
@@ -43,12 +43,12 @@ import com.google.rpc.Code;
 import com.google.rpc.Status;
 import com.google.type.Color;
 import com.google.type.Money;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ProtoOperationTransformersTest {
+class ProtoOperationTransformersTest {
 
   @Test
-  public void testResponseTransformer() {
+  void testResponseTransformer() {
     ResponseTransformer<Money> transformer = ResponseTransformer.create(Money.class);
     Money inputMoney = Money.newBuilder().setCurrencyCode("UAH").build();
     OperationSnapshot operationSnapshot =
@@ -63,7 +63,7 @@ public class ProtoOperationTransformersTest {
   }
 
   @Test
-  public void testMetadataTransformer() {
+  void testMetadataTransformer() {
     MetadataTransformer<Money> transformer = MetadataTransformer.create(Money.class);
     Money inputMoney = Money.newBuilder().setCurrencyCode("UAH").build();
     OperationSnapshot operationSnapshot =
@@ -78,7 +78,7 @@ public class ProtoOperationTransformersTest {
   }
 
   @Test
-  public void testAnyResponseTransformer() {
+  void testAnyResponseTransformer() {
     ResponseTransformer<Money> transformer = ResponseTransformer.create(Money.class);
     Money inputMoney = Money.newBuilder().setCurrencyCode("USD").build();
     OperationSnapshot operationSnapshot =
@@ -88,7 +88,7 @@ public class ProtoOperationTransformersTest {
   }
 
   @Test
-  public void testAnyResponseTransformer_exception() {
+  void testAnyResponseTransformer_exception() {
     ResponseTransformer<Money> transformer = ResponseTransformer.create(Money.class);
     Money inputMoney = Money.newBuilder().setCurrencyCode("USD").build();
     Status status = Status.newBuilder().setCode(Code.UNAVAILABLE.getNumber()).build();
@@ -104,7 +104,7 @@ public class ProtoOperationTransformersTest {
   }
 
   @Test
-  public void testAnyResponseTransformer_mismatchedTypes() {
+  void testAnyResponseTransformer_mismatchedTypes() {
     ResponseTransformer<Money> transformer = ResponseTransformer.create(Money.class);
     Status status = Status.newBuilder().setCode(Code.OK.getNumber()).build();
     OperationSnapshot operationSnapshot =
@@ -119,7 +119,7 @@ public class ProtoOperationTransformersTest {
   }
 
   @Test
-  public void testAnyMetadataTransformer() {
+  void testAnyMetadataTransformer() {
     MetadataTransformer<Money> transformer = MetadataTransformer.create(Money.class);
     Money inputMoney = Money.newBuilder().setCurrencyCode("USD").build();
     OperationSnapshot operationSnapshot =
@@ -129,7 +129,7 @@ public class ProtoOperationTransformersTest {
   }
 
   @Test
-  public void testAnyMetadataTransformer_mismatchedTypes() {
+  void testAnyMetadataTransformer_mismatchedTypes() {
     MetadataTransformer<Money> transformer = MetadataTransformer.create(Money.class);
     Status status = Status.newBuilder().setCode(Code.OK.getNumber()).build();
     OperationSnapshot operationSnapshot =

@@ -36,26 +36,26 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.RetryingFuture;
 import com.google.api.gax.retrying.TimedAttemptSettings;
 import com.google.api.gax.rpc.testing.FakeCallContext;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import org.threeten.bp.Duration;
 
-@RunWith(MockitoJUnitRunner.class)
-public class CheckingAttemptCallableTest {
+@ExtendWith(MockitoExtension.class)
+class CheckingAttemptCallableTest {
   @Mock UnaryCallable<String, String> mockInnerCallable;
   ArgumentCaptor<ApiCallContext> capturedCallContext;
   @Mock RetryingFuture<String> mockExternalFuture;
   TimedAttemptSettings currentAttemptSettings;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     capturedCallContext = ArgumentCaptor.forClass(ApiCallContext.class);
     Mockito.when(mockInnerCallable.futureCall(Mockito.<String>any(), capturedCallContext.capture()))
         .thenReturn(SettableApiFuture.<String>create());
@@ -82,7 +82,7 @@ public class CheckingAttemptCallableTest {
   }
 
   @Test
-  public void testRpcTimeout() {
+  void testRpcTimeout() {
     CheckingAttemptCallable<String, String> callable =
         new CheckingAttemptCallable<>(mockInnerCallable, FakeCallContext.createDefault());
     callable.setExternalFuture(mockExternalFuture);

@@ -17,17 +17,18 @@
 package com.google.cloud;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class RoleTest {
+class RoleTest {
 
   private static final Role VIEWER = Role.of("viewer");
   private static final Role EDITOR = Role.of("editor");
   private static final Role OWNER = Role.of("owner");
 
   @Test
-  public void testOf() {
+  void testOf() {
     assertThat(VIEWER.getValue()).isEqualTo("roles/viewer");
     assertThat(EDITOR.getValue()).isEqualTo("roles/editor");
     assertThat(OWNER.getValue()).isEqualTo("roles/owner");
@@ -40,23 +41,23 @@ public class RoleTest {
   }
 
   @Test
-  public void testViewer() {
+  void testViewer() {
     assertThat(Role.viewer().getValue()).isEqualTo("roles/viewer");
   }
 
   @Test
-  public void testEditor() {
+  void testEditor() {
     assertThat(Role.editor().getValue()).isEqualTo("roles/editor");
   }
 
   @Test
-  public void testOwner() {
+  void testOwner() {
     assertThat(Role.owner().getValue()).isEqualTo("roles/owner");
   }
 
-  @Test(expected = NullPointerException.class)
-  public void testOfNullValue() {
-    Role.of(null);
+  @Test
+  void testOfNullValue() {
+    assertThrows(NullPointerException.class, () -> Role.of(null));
   }
 
   private void compareRoles(Role expected, Role actual) {

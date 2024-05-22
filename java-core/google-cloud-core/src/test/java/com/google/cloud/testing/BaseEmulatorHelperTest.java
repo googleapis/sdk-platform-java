@@ -32,10 +32,10 @@ import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 import org.easymock.EasyMock;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.threeten.bp.Duration;
 
-public class BaseEmulatorHelperTest {
+class BaseEmulatorHelperTest {
 
   private static final String BLOCK_UNTIL = "Block until";
 
@@ -82,7 +82,7 @@ public class BaseEmulatorHelperTest {
   }
 
   @Test
-  public void testEmulatorHelper() throws IOException, InterruptedException, TimeoutException {
+  void testEmulatorHelper() throws IOException, InterruptedException, TimeoutException {
     Process process = EasyMock.createStrictMock(Process.class);
     InputStream stream = new ByteArrayInputStream(BLOCK_UNTIL.getBytes(Charsets.UTF_8));
     EmulatorRunner emulatorRunner = EasyMock.createStrictMock(EmulatorRunner.class);
@@ -102,7 +102,7 @@ public class BaseEmulatorHelperTest {
   }
 
   @Test
-  public void testEmulatorHelperDownloadWithRetries()
+  void testEmulatorHelperDownloadWithRetries()
       throws IOException, InterruptedException, TimeoutException {
     String mockExternalForm = "mockExternalForm";
     String mockInputStream = "mockInputStream";
@@ -145,7 +145,7 @@ public class BaseEmulatorHelperTest {
   }
 
   @Test
-  public void testEmulatorHelperMultipleRunners()
+  void testEmulatorHelperMultipleRunners()
       throws IOException, InterruptedException, TimeoutException {
     Process process = EasyMock.createStrictMock(Process.class);
     InputStream stream = new ByteArrayInputStream(BLOCK_UNTIL.getBytes(Charsets.UTF_8));

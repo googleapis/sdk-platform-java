@@ -20,7 +20,6 @@ from library_generation.utils.monorepo_postprocessor import monorepo_postprocess
 
 
 def generate_from_yaml(
-    config_path: str,
     config: GenerationConfig,
     repository_path: str,
     target_library_names: list[str] = None,
@@ -29,7 +28,6 @@ def generate_from_yaml(
     Based on the generation config, generates libraries via
     generate_composed_library.py
 
-    :param config_path: Path to generation configuration.
     :param config: a GenerationConfig object.
     :param repository_path: The repository path to which the generated files
     will be sent.
@@ -48,9 +46,7 @@ def generate_from_yaml(
 
     for library_path, library in repo_config.libraries.items():
         print(f"generating library {library.get_library_name()}")
-
         generate_composed_library(
-            config_path=config_path,
             config=config,
             library_path=library_path,
             library=library,
@@ -58,8 +54,7 @@ def generate_from_yaml(
             versions_file=repo_config.versions_file,
         )
 
-    # we skip monorepo_postprocessing if not in a monorepo
-    if not config.is_monorepo():
+    if not config.is_monorepo() or config.contains_common_protos():
         return
 
     monorepo_postprocessing(

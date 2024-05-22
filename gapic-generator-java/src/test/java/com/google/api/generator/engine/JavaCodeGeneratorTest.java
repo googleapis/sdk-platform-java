@@ -60,9 +60,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class JavaCodeGeneratorTest {
+class JavaCodeGeneratorTest {
 
   private static final String GOLDENFILES_DIRECTORY =
       "src/test/java/com/google/api/generator/engine/goldens/";
@@ -101,7 +101,7 @@ public class JavaCodeGeneratorTest {
   private static final Variable bookKindVar = createVarFromVaporRef(bookKindRef, "bookKind");
 
   @Test
-  public void validJavaClass() {
+  void validJavaClass() {
     // Create outer class variableDecls.
     // [code] private static final String serviceName = "LibraryServiceStub";
     VariableExpr serviceName = createServiceNameVarExpr();

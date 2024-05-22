@@ -30,16 +30,16 @@
 
 package com.google.api.gax.rpc.mtls;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.gax.rpc.mtls.MtlsProvider.MtlsEndpointUsagePolicy;
 import com.google.api.gax.rpc.testing.FakeMtlsProvider;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public abstract class AbstractMtlsTransportChannelTest {
   /**
@@ -52,14 +52,14 @@ public abstract class AbstractMtlsTransportChannelTest {
       throws IOException, GeneralSecurityException;
 
   @Test
-  public void testNotUseClientCertificate() throws IOException, GeneralSecurityException {
+  void testNotUseClientCertificate() throws IOException, GeneralSecurityException {
     MtlsProvider provider =
         new FakeMtlsProvider(false, MtlsEndpointUsagePolicy.AUTO, null, "", false);
     assertNull(getMtlsObjectFromTransportChannel(provider));
   }
 
   @Test
-  public void testUseClientCertificate() throws IOException, GeneralSecurityException {
+  void testUseClientCertificate() throws IOException, GeneralSecurityException {
     MtlsProvider provider =
         new FakeMtlsProvider(
             true,
@@ -71,24 +71,19 @@ public abstract class AbstractMtlsTransportChannelTest {
   }
 
   @Test
-  public void testNoClientCertificate() throws IOException, GeneralSecurityException {
+  void testNoClientCertificate() throws IOException, GeneralSecurityException {
     MtlsProvider provider =
         new FakeMtlsProvider(true, MtlsEndpointUsagePolicy.AUTO, null, "", false);
     assertNull(getMtlsObjectFromTransportChannel(provider));
   }
 
   @Test
-  public void testGetKeyStoreThrows() throws GeneralSecurityException {
+  void testGetKeyStoreThrows() throws GeneralSecurityException {
     // Test the case where provider.getKeyStore() throws.
     MtlsProvider provider =
         new FakeMtlsProvider(true, MtlsEndpointUsagePolicy.AUTO, null, "", true);
-    try {
-      getMtlsObjectFromTransportChannel(provider);
-      fail("should throw an exception");
-    } catch (IOException e) {
-      assertTrue(
-          "expected getKeyStore to throw an exception",
-          e.getMessage().contains("getKeyStore throws exception"));
-    }
+    IOException actual =
+        assertThrows(IOException.class, () -> getMtlsObjectFromTransportChannel(provider));
+    assertTrue(actual.getMessage().contains("getKeyStore throws exception"));
   }
 }

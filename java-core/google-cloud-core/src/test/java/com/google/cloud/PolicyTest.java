@@ -16,12 +16,12 @@
 
 package com.google.cloud;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.cloud.Policy.DefaultMarshaller;
 import com.google.common.collect.ImmutableMap;
@@ -30,9 +30,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PolicyTest {
+class PolicyTest {
 
   private static final Identity ALL_USERS = Identity.allUsers();
   private static final Identity ALL_AUTH_USERS = Identity.allAuthenticatedUsers();
@@ -63,9 +63,9 @@ public class PolicyTest {
           .build();
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     assertEquals(BINDINGS, SIMPLE_POLICY.getBindings());
-    assertEquals(null, SIMPLE_POLICY.getEtag());
+    assertNull(SIMPLE_POLICY.getEtag());
     assertEquals(0, SIMPLE_POLICY.getVersion());
     assertEquals(BINDINGS, FULL_POLICY.getBindings());
     assertEquals("etag", FULL_POLICY.getEtag());
@@ -105,7 +105,7 @@ public class PolicyTest {
   }
 
   @Test
-  public void testPolicyOrderShouldNotMatter() {
+  void testPolicyOrderShouldNotMatter() {
     Role role1 = Role.of("role1");
     Identity identity1 = Identity.user("user1@example.com");
     Role role2 = Role.of("role2");
@@ -118,7 +118,7 @@ public class PolicyTest {
   }
 
   @Test
-  public void testPolicyMultipleAddIdentitiesShouldNotMatter() {
+  void testPolicyMultipleAddIdentitiesShouldNotMatter() {
     Role role1 = Role.of("role1");
     Identity identity1 = Identity.user("user1@example.com");
     Role role2 = Role.of("role2");
@@ -135,7 +135,7 @@ public class PolicyTest {
   }
 
   @Test
-  public void testIllegalPolicies() {
+  void testIllegalPolicies() {
     try {
       Policy.newBuilder().addIdentity(null, USER);
       fail("Null role should cause exception.");
@@ -181,7 +181,7 @@ public class PolicyTest {
   }
 
   @Test
-  public void testEqualsHashCode() {
+  void testEqualsHashCode() {
     assertNotNull(FULL_POLICY);
     Policy emptyPolicy = Policy.newBuilder().build();
     Policy anotherPolicy = Policy.newBuilder().build();
@@ -195,25 +195,25 @@ public class PolicyTest {
   }
 
   @Test
-  public void testBindings() {
+  void testBindings() {
     assertTrue(Policy.newBuilder().build().getBindings().isEmpty());
     assertEquals(BINDINGS, SIMPLE_POLICY.getBindings());
   }
 
   @Test
-  public void testEtag() {
+  void testEtag() {
     assertNull(SIMPLE_POLICY.getEtag());
     assertEquals("etag", FULL_POLICY.getEtag());
   }
 
   @Test
-  public void testVersion() {
+  void testVersion() {
     assertEquals(0, SIMPLE_POLICY.getVersion());
     assertEquals(1, FULL_POLICY.getVersion());
   }
 
   @Test
-  public void testDefaultMarshaller() {
+  void testDefaultMarshaller() {
     DefaultMarshaller marshaller = new DefaultMarshaller();
     Policy emptyPolicy = Policy.newBuilder().build();
     assertEquals(emptyPolicy, marshaller.fromPb(marshaller.toPb(emptyPolicy)));

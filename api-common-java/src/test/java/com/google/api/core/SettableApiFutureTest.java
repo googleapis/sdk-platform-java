@@ -34,11 +34,12 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class SettableApiFutureTest {
+class SettableApiFutureTest {
   @Test
-  public void testSet() throws Exception {
+  void testSet() throws Exception {
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
     Truth.assertThat(future.isDone()).isFalse();
     future.set(42);
@@ -48,7 +49,7 @@ public class SettableApiFutureTest {
   }
 
   @Test
-  public void testCancel() throws Exception {
+  void testCancel() {
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
     Truth.assertThat(future.isDone()).isFalse();
     Truth.assertThat(future.isCancelled()).isFalse();
@@ -57,15 +58,19 @@ public class SettableApiFutureTest {
     Truth.assertThat(future.isCancelled()).isTrue();
   }
 
-  @Test(expected = ExecutionException.class)
-  public void testException() throws Exception {
-    SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
-    future.setException(new Exception());
-    future.get();
+  @Test
+  void testException() {
+    Assertions.assertThrows(
+        ExecutionException.class,
+        () -> {
+          SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
+          future.setException(new Exception());
+          future.get();
+        });
   }
 
   @Test
-  public void testListener() throws Exception {
+  void testListener() {
     final AtomicInteger flag = new AtomicInteger();
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
     future.addListener(

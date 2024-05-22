@@ -18,11 +18,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.IdentifierNode.InvalidIdentifierException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class IdentifierNodeTest {
+class IdentifierNodeTest {
   @Test
-  public void createIdentifier_basic() {
+  void createIdentifier_basic() {
     assertValidIdentifier("foobar");
     assertValidIdentifier("x");
     assertValidIdentifier("afalse");
@@ -34,7 +34,7 @@ public class IdentifierNodeTest {
   }
 
   @Test
-  public void createIdentifier_nameHasLiteral() {
+  void createIdentifier_nameHasLiteral() {
     assertValidIdentifier("a123L");
     assertValidIdentifier("a10e3");
     assertValidIdentifier("anull");
@@ -51,7 +51,7 @@ public class IdentifierNodeTest {
   }
 
   @Test
-  public void createIdentifier_namdHasInvalidSymbols() {
+  void createIdentifier_namdHasInvalidSymbols() {
     assertInvalidIdentifier("a.b");
     assertInvalidIdentifier("a,b");
     assertInvalidIdentifier("a-b");
@@ -81,7 +81,7 @@ public class IdentifierNodeTest {
   }
 
   @Test
-  public void createIdentifier_nameHasKeyword() {
+  void createIdentifier_nameHasKeyword() {
     assertValidIdentifier("aclass");
 
     // Random sampling of keywords.

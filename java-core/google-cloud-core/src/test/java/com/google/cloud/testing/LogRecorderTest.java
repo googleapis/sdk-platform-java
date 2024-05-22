@@ -23,9 +23,9 @@ import com.google.common.collect.Multimap;
 import com.google.common.truth.Truth;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class LogRecorderTest {
+class LogRecorderTest {
 
   private static final String LOG_LINES =
       "INFO: log line 1\n" + "log line 2\n" + "FINE: log line 3\n";
@@ -33,7 +33,7 @@ public class LogRecorderTest {
   private final LogRecorder logRecorder = new LogRecorder(testLogger);
 
   @Test
-  public void shouldAggregateLogs() {
+  void shouldAggregateLogs() {
     for (String logLine : LOG_LINES.split("\n")) {
       logRecorder.record(logLine);
     }
@@ -50,7 +50,7 @@ public class LogRecorderTest {
   }
 
   @Test
-  public void shouldBeEmptyAfterFlushCall() {
+  void shouldBeEmptyAfterFlushCall() {
     for (String logLine : LOG_LINES.split("\n")) {
       logRecorder.record(logLine);
     }

@@ -17,7 +17,7 @@
 package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.SettableApiFuture;
 import com.google.api.gax.rpc.ApiStreamObserver;
@@ -32,28 +32,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-public class ITClientSideStreaming {
+class ITClientSideStreaming {
 
   private static EchoClient grpcClient;
 
-  @BeforeClass
-  public static void createClients() throws Exception {
+  @BeforeAll
+  static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
   }
 
-  @AfterClass
-  public static void destroyClients() throws InterruptedException {
+  @AfterAll
+  static void destroyClients() throws InterruptedException {
     grpcClient.close();
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testGrpc_sendStreamedContent_receiveConcatenatedResponse()
+  void testGrpc_sendStreamedContent_receiveConcatenatedResponse()
       throws ExecutionException, InterruptedException {
     CollectStreamObserver<EchoResponse> responseObserver = new CollectStreamObserver<>();
     ApiStreamObserver<EchoRequest> requestObserver =
@@ -71,7 +71,7 @@ public class ITClientSideStreaming {
   }
 
   @Test
-  public void testGrpc_sendStreamedContent_handleServerError() {
+  void testGrpc_sendStreamedContent_handleServerError() {
     CollectStreamObserver<EchoResponse> responseObserver = new CollectStreamObserver<>();
     ApiStreamObserver<EchoRequest> requestObserver =
         grpcClient.collectCallable().clientStreamingCall(responseObserver);

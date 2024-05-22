@@ -29,8 +29,9 @@
  */
 package com.google.api.gax.grpc.testing;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,15 +42,12 @@ import io.grpc.Server;
 import io.grpc.ServerServiceDefinition;
 import java.io.IOException;
 import java.util.Arrays;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 /** Tests for {@link MockServiceHelper}. */
-@RunWith(JUnit4.class)
 public class MockServiceHelperTest {
   @Mock private MockGrpcService grpcService;
   @Mock private MockGrpcService grpcService2;
@@ -57,8 +55,8 @@ public class MockServiceHelperTest {
   @Mock private Server server;
 
   /** Sets up mocks. */
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     MockitoAnnotations.initMocks(this);
     when(grpcService.getServiceDefinition())
         .thenReturn(ServerServiceDefinition.builder("fake-service").build());
@@ -67,28 +65,28 @@ public class MockServiceHelperTest {
   }
 
   @Test
-  public void testGetService() {
+  void testGetService() {
     MockServiceHelper serviceHelper = new MockServiceHelper(server, "fake-address", grpcService);
     Truth.assertThat(serviceHelper.getService()).isSameInstanceAs(grpcService);
     Truth.assertThat(serviceHelper.getServices().size()).isEqualTo(1);
   }
 
-  @Test(expected = IllegalStateException.class)
-  public void testGetServiceInvalid() {
+  @Test
+  void testGetServiceInvalid() {
     MockServiceHelper serviceHelper =
         new MockServiceHelper(server, "fake-address2", Arrays.asList(grpcService, grpcService2));
-    serviceHelper.getService();
+    assertThrows(IllegalStateException.class, serviceHelper::getService);
   }
 
   @Test
-  public void testStart() throws IOException {
+  void testStart() throws IOException {
     MockServiceHelper serviceHelper = new MockServiceHelper(server, "fake-address", grpcService);
     serviceHelper.start();
     verify(server, times(1)).start();
   }
 
   @Test
-  public void testReset() {
+  void testReset() {
     MockServiceHelper serviceHelper = new MockServiceHelper("fake-address", grpcService);
     serviceHelper.reset();
     verify(grpcService, times(1)).getServiceDefinition();
@@ -96,7 +94,7 @@ public class MockServiceHelperTest {
   }
 
   @Test
-  public void testCreateChannelProvider() throws Exception {
+  void testCreateChannelProvider() throws Exception {
     MockServiceHelper serviceHelper = new MockServiceHelper("fake-address", grpcService);
     TransportChannel channel = serviceHelper.createChannelProvider().getTransportChannel();
     assertNotNull(channel);

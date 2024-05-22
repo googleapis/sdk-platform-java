@@ -18,12 +18,12 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ForStatementTest {
+class ForStatementTest {
 
   @Test
-  public void validForStatement() {
+  void validForStatement() {
     Variable variable = Variable.builder().setName("str").setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -41,7 +41,7 @@ public class ForStatementTest {
   }
 
   @Test
-  public void invalidForStatement() {
+  void invalidForStatement() {
     Variable variable = Variable.builder().setName("str").setType(TypeNode.STRING).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 

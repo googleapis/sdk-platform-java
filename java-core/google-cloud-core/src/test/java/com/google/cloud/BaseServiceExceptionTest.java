@@ -22,18 +22,18 @@ import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.cloud.BaseServiceException.ExceptionData;
 import com.google.common.collect.ImmutableSet;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /** Tests for {@link BaseServiceException}. */
-public class BaseServiceExceptionTest {
+class BaseServiceExceptionTest {
 
   private static final int CODE = 1;
   private static final int CODE_NO_REASON = 2;
@@ -64,7 +64,7 @@ public class BaseServiceExceptionTest {
   }
 
   @Test
-  public void testBaseServiceException() {
+  void testBaseServiceException() {
     BaseServiceException serviceException =
         new BaseServiceException(ExceptionData.from(CODE, MESSAGE, REASON, NOT_RETRYABLE));
     assertEquals(CODE, serviceException.getCode());
@@ -121,7 +121,7 @@ public class BaseServiceExceptionTest {
   }
 
   @Test
-  public void testTranslateAndThrow() throws Exception {
+  void testTranslateAndThrow() throws Exception {
     BaseServiceException cause =
         new BaseServiceException(ExceptionData.from(CODE, MESSAGE, REASON, NOT_RETRYABLE));
     RetryHelper.RetryHelperException exceptionMock =
@@ -141,7 +141,7 @@ public class BaseServiceExceptionTest {
 
   @Test
   @SuppressWarnings("TruthSelfEquals")
-  public void testError_Equal() {
+  void testError_Equal() {
     BaseServiceException.Error error = new BaseServiceException.Error(0, "reason", true);
     assertThat(error).isEqualTo(error);
     assertThat(error.hashCode()).isEqualTo(error.hashCode());
