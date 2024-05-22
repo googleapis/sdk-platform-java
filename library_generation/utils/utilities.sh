@@ -142,8 +142,7 @@ download_tools() {
   if [[ "${DOCKER_PROTOC_VERSION}" == "${protoc_version}" ]]; then
     # if the specified protoc_version matches the one baked in the docker
     # container, we just point protoc_path to its location.
-    export protoc_path="${DOCKER_PROTOC_LOCATION}/protoc-${protoc_version}" \
-      "${output_folder}"
+    export protoc_path="${DOCKER_PROTOC_LOCATION}/protoc-${protoc_version}/bin"
   else
     export protoc_path=$(download_protoc "${protoc_version}" "${os_architecture}")
   fi
