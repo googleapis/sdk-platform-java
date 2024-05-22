@@ -40,13 +40,22 @@ import io.grpc.Status;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import uk.org.webcompere.systemstubs.environment.EnvironmentVariables;
+import uk.org.webcompere.systemstubs.jupiter.SystemStub;
+import uk.org.webcompere.systemstubs.jupiter.SystemStubsExtension;
 
+@ExtendWith(SystemStubsExtension.class)
 class EndpointContextTest {
+
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com:443";
   private static final String DEFAULT_MTLS_ENDPOINT = "test.mtls.googleapis.com:443";
   private EndpointContext.Builder defaultEndpointContextBuilder;
   private StatusCode statusCode;
+
+  @SystemStub
+  private final EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
   @BeforeEach
   void setUp() throws IOException {
@@ -360,6 +369,42 @@ class EndpointContextTest {
     assertThrows(
         UnauthenticatedException.class,
         () -> endpointContext.validateUniverseDomain(noCredentials, statusCode));
+  }
+
+  // This Universe Domain should match the `GOOGLE_CLOUD_UNIVERSE_DOMAIN` Env Var
+  // For this test running locally or in CI, check that the Env Var is set properly.
+  // This test should only run when the maven profile `EnvVarTest` is enabled.
+  @Test
+  void endpointContextBuild_universeDomainEnvVarSet() throws IOException {
+    environmentVariables.set("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "random.com");
+    String envVarUniverseDomain = "random.com";
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder
+            .setUniverseDomain(null)
+            .setClientSettingsEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo("test.random.com:443");
+    Truth.assertThat(endpointContext.resolvedUniverseDomain()).isEqualTo(envVarUniverseDomain);
+  }
+
+  // This Universe Domain should match the `GOOGLE_CLOUD_UNIVERSE_DOMAIN` Env Var
+  // For this test running locally or in CI, check that the Env Var is set properly.
+  // This test should only run when the maven profile `EnvVarTest` is enabled.
+  @Test
+  void endpointContextBuild_multipleUniverseDomainConfigurations_clientSettingsHasPriority()
+      throws IOException {
+    environmentVariables.set("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "random.com");
+    String clientSettingsUniverseDomain = "clientSettingsUniverseDomain.com";
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder
+            .setUniverseDomain(clientSettingsUniverseDomain)
+            .setClientSettingsEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedEndpoint())
+        .isEqualTo("test.clientSettingsUniverseDomain.com:443");
+    // Client Settings Universe Domain (if set) takes priority
+    Truth.assertThat(endpointContext.resolvedUniverseDomain())
+        .isEqualTo(clientSettingsUniverseDomain);
   }
 
   @Test
