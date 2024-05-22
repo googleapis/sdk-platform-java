@@ -130,7 +130,18 @@ download_tools() {
   local os_architecture=$4
   pushd "${output_folder}"
   download_generator_artifact "${gapic_generator_version}" "gapic-generator-java-${gapic_generator_version}.jar"
-  download_protoc "${protoc_version}" "${os_architecture}"
+
+  # the variable protoc_path is used in generate_library.sh. It is explicitly
+  # exported to make clear that it is used outside this utilities file.
+  if [[ "${DOCKER_PROTOC_VERSION}" == "${protoc_version}" ]]; then
+    # if the specified protoc_version matches the one baked in the docker
+    # container, we just point protoc_path to its location.
+    export protoc_path="${DOCKER_PROTOC_LOCATION}/protoc-${protoc_version}" \
+      "${output_folder}"
+  else
+    export protoc_path=$(download_protoc "${protoc_version}" "${os_architecture}")
+  fi
+
   download_grpc_plugin "${grpc_version}" "${os_architecture}"
   popd
 }
@@ -162,19 +173,7 @@ download_protoc() {
   local protoc_version=$1
   local os_architecture=$2
 
-  protoc_dirname="protoc-${protoc_version}"
-  protoc_path="${output_folder}/${protoc_dirname}/bin"
-  if [[ -f "${protoc_path}/protoc" ]]; then
-    return
-  fi
-
-  if [[ "${DOCKER_PROTOC_VERSION}" == "${protoc_version}" ]]; then
-    # if the specified protoc_version matches the one baked in the docker
-    # container, we just copy it into the output folder
-    mkdir -p "${output_folder}/${protoc_dirname}"
-    cp -r "${DOCKER_PROTOC_LOCATION}/${protoc_dirname}" \
-      "${output_folder}"
-  fi
+  local protoc_path="${output_folder}/protoc-${protoc_version}/bin"
 
   if [ ! -d "${protoc_path}" ]; then
     # pull proto files and protoc from protobuf repository as maven central
@@ -187,6 +186,7 @@ download_protoc() {
     cp -r "protoc-${protoc_version}/include/google" .
     rm "protoc-${protoc_version}.zip"
   fi
+  echo "${protoc_path}"
 
 }
 
