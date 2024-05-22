@@ -205,11 +205,18 @@
       </exclusions>
       <scope>test</scope>
     </dependency>
-    <!-- Set environment variable for tests in EndpointContextTest  -->
+    <!-- Use to set environment variable for tests in EndpointContextTest  -->
     <dependency>
       <groupId>uk.org.webcompere</groupId>
       <artifactId>system-stubs-jupiter</artifactId>
       <version>2.1.6</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- Support Java 21 when using uk.org.webcompere:system-stubs-jupiter -->
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>1.14.15</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
