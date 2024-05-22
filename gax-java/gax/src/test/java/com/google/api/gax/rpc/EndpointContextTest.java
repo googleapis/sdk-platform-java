@@ -54,8 +54,7 @@ class EndpointContextTest {
   private EndpointContext.Builder defaultEndpointContextBuilder;
   private StatusCode statusCode;
 
-  @SystemStub
-  private final EnvironmentVariables environmentVariables = new EnvironmentVariables();
+  @SystemStub private final EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
   @BeforeEach
   void setUp() throws IOException {
