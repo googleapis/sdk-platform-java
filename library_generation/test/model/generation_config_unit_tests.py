@@ -52,7 +52,7 @@ class GenerationConfigTest(unittest.TestCase):
         self.assertEqual(
             "1a45bf7393b52407188c82e63101db7dc9c72026", config.googleapis_commitish
         )
-        self.assertEqual("26.37.0", config.libraris_bom_version)
+        self.assertEqual("26.37.0", config.libraries_bom_version)
         self.assertEqual(
             [
                 ".github/*",
