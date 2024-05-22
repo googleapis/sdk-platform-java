@@ -343,33 +343,6 @@ class EndpointContextTest {
         .isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
-  @Test
-  void hasValidUniverseDomain_gdchFlow_anyCredentials() throws IOException {
-    Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
-    Credentials validCredentials = Mockito.mock(Credentials.class);
-    EndpointContext endpointContext =
-        defaultEndpointContextBuilder.setUniverseDomain(null).setUsingGDCH(true).build();
-    endpointContext.validateUniverseDomain(noCredentials, statusCode);
-    endpointContext.validateUniverseDomain(validCredentials, statusCode);
-  }
-
-  @Test
-  void hasValidUniverseDomain_noCredentials_inGDU() throws IOException {
-    Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
-    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
-    endpointContext.validateUniverseDomain(noCredentials, statusCode);
-  }
-
-  @Test
-  void hasValidUniverseDomain_noCredentials_nonGDU() throws IOException {
-    Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
-    EndpointContext endpointContext =
-        defaultEndpointContextBuilder.setUniverseDomain("test.com").build();
-    assertThrows(
-        UnauthenticatedException.class,
-        () -> endpointContext.validateUniverseDomain(noCredentials, statusCode));
-  }
-
   // This Universe Domain should match the `GOOGLE_CLOUD_UNIVERSE_DOMAIN` Env Var
   // For this test running locally or in CI, check that the Env Var is set properly.
   // This test should only run when the maven profile `EnvVarTest` is enabled.
@@ -404,6 +377,33 @@ class EndpointContextTest {
     // Client Settings Universe Domain (if set) takes priority
     Truth.assertThat(endpointContext.resolvedUniverseDomain())
         .isEqualTo(clientSettingsUniverseDomain);
+  }
+
+  @Test
+  void hasValidUniverseDomain_gdchFlow_anyCredentials() throws IOException {
+    Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
+    Credentials validCredentials = Mockito.mock(Credentials.class);
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder.setUniverseDomain(null).setUsingGDCH(true).build();
+    endpointContext.validateUniverseDomain(noCredentials, statusCode);
+    endpointContext.validateUniverseDomain(validCredentials, statusCode);
+  }
+
+  @Test
+  void hasValidUniverseDomain_noCredentials_inGDU() throws IOException {
+    Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
+    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
+    endpointContext.validateUniverseDomain(noCredentials, statusCode);
+  }
+
+  @Test
+  void hasValidUniverseDomain_noCredentials_nonGDU() throws IOException {
+    Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder.setUniverseDomain("test.com").build();
+    assertThrows(
+        UnauthenticatedException.class,
+        () -> endpointContext.validateUniverseDomain(noCredentials, statusCode));
   }
 
   @Test
