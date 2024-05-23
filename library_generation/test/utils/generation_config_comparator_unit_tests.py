@@ -90,8 +90,8 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         self.assertEqual("1.2.4", config_change.current_value)
 
     def test_compare_config_libraries_bom_update(self):
-        self.baseline_config.libraris_bom_version = "26.36.0"
-        self.current_config.libraris_bom_version = "26.37.0"
+        self.baseline_config.libraries_bom_version = "26.36.0"
+        self.current_config.libraries_bom_version = "26.37.0"
         result = compare_config(
             baseline_config=self.baseline_config,
             current_config=self.current_config,
@@ -100,7 +100,7 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 1
         )
         config_change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
-        self.assertEqual("libraris_bom_version", config_change.changed_param)
+        self.assertEqual("libraries_bom_version", config_change.changed_param)
         self.assertEqual("26.37.0", config_change.current_value)
 
     def test_compare_protobuf_update(self):
