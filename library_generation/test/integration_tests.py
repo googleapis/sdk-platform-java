@@ -303,4 +303,3 @@ class IntegrationTest(unittest.TestCase):
             cls.__recursive_diff_files(
                 sub_dcmp, diff_files, left_only, right_only, dirname + sub_dirname + "/"
             )
-
