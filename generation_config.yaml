@@ -1,5 +1,4 @@
 gapic_generator_version: 2.40.2-SNAPSHOT
-protoc_version: '25.3'
 googleapis_commitish: 3d50414a7ff3f0b8ffe8ad7858257396e4f18131
 template_excludes:
 - .github/*
