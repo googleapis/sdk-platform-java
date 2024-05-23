@@ -6,12 +6,12 @@
   "client_documentation": "https://cloud.google.com/java/docs/reference/proto-google-iam-v1/latest/overview",
   "release_level": "stable",
   "transport": "grpc",
-  "requires_billing": true,
   "language": "java",
   "repo": "googleapis/sdk-platform-java",
   "repo_short": "java-iam",
-  "library_type": "OTHER",
   "distribution_name": "com.google.api.grpc:proto-google-iam-v1",
-  "excluded_poms": "proto-google-iam-v1-bom,google-iam-policy,proto-google-iam-v1",
-  "excluded_dependencies": "grpc-google-iam-v1"
+  "library_type": "OTHER",
+  "requires_billing": true,
+  "excluded_dependencies": "grpc-google-iam-v1",
+  "excluded_poms": "proto-google-iam-v1-bom,google-iam-policy,proto-google-iam-v1"
 }
