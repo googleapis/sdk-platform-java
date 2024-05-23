@@ -46,7 +46,6 @@ class GenerateRepoTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries_bom_version="",
-            template_excludes=[],
             libraries=[],
         )
 

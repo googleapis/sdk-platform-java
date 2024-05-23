@@ -115,7 +115,6 @@ class GenerationConfigTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries_bom_version="",
-            template_excludes=[],
             libraries=[library_1],
         )
         self.assertFalse(config.is_monorepo())
@@ -125,7 +124,6 @@ class GenerationConfigTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries_bom_version="",
-            template_excludes=[],
             libraries=[library_1, library_2],
         )
         self.assertTrue(config.is_monorepo())
@@ -135,7 +133,6 @@ class GenerationConfigTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries_bom_version="",
-            template_excludes=[],
             libraries=[library_1, library_2, common_protos_library],
         )
         self.assertTrue(config.contains_common_protos())
@@ -145,7 +142,6 @@ class GenerationConfigTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries_bom_version="",
-            template_excludes=[],
             libraries=[library_1, library_2],
         )
         self.assertFalse(config.contains_common_protos())
@@ -158,7 +154,6 @@ class GenerationConfigTest(unittest.TestCase):
             gapic_generator_version="",
             googleapis_commitish="",
             libraries_bom_version="",
-            template_excludes=[],
             libraries=[
                 LibraryConfig(
                     api_shortname="secretmanager",
@@ -192,14 +187,6 @@ class GenerationConfigTest(unittest.TestCase):
             "Repo level parameter, googleapis_commitish",
             from_yaml,
             f"{test_config_dir}/config_without_googleapis.yaml",
-        )
-
-    def test_from_yaml_without_template_excludes_raise_exception(self):
-        self.assertRaisesRegex(
-            ValueError,
-            "Repo level parameter, template_excludes",
-            from_yaml,
-            f"{test_config_dir}/config_without_temp_excludes.yaml",
         )
 
     def test_from_yaml_without_libraries_raise_exception(self):
