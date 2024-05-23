@@ -98,7 +98,7 @@ jobs:
           mvn verify --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip \
               -Djvm="${JAVA8_HOME}/bin/java" \
-              -Pjava16-unit-test
+              -DargLine=""
 
   build-java8-gapic-generator-java:
     name: "build(8) for gapic-generator-java"
