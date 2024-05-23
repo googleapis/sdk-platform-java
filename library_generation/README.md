@@ -98,7 +98,7 @@ They are shared by library level parameters.
 | grpc_version            |    No    | inferred from the generator if not specified |
 | googleapis-commitish    |   Yes    |                                              |
 | libraries_bom_version   |   Yes    |                                              |
-| template_excludes       |   Yes    |                                              |
+| template_excludes       |    No    | empty list if not specified                  |
 
 ### Library level parameters
 
