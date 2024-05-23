@@ -119,7 +119,8 @@
                 see https://junit-pioneer.org/docs/environment-variables/#warnings-for-reflective-access -->
                 --add-opens java.base/java.util=ALL-UNNAMED
                 --add-opens java.base/java.lang=ALL-UNNAMED
-              </argLine></configuration>
+              </argLine>
+            </configuration>
           </plugin>
         </plugins>
       </build>
@@ -137,7 +138,8 @@
             <configuration>
               <argLine>
                 -Djava.util.logging.SimpleFormatter.format="%1$tY %1$tl:%1$tM:%1$tS.%1$tL %2$s %4$s: %5$s%6$s%n"
-              </argLine></configuration>
+              </argLine>
+            </configuration>
           </plugin>
         </plugins>
       </build>
