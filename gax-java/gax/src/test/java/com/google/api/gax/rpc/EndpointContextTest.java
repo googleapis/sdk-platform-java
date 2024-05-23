@@ -338,9 +338,8 @@ class EndpointContextTest {
 
   // This Universe Domain should match the `GOOGLE_CLOUD_UNIVERSE_DOMAIN` Env Var
   // For this test running locally or in CI, check that the Env Var is set properly.
-  // This test should only run when the maven profile `EnvVarTest` is enabled.
   @Test
-  @SetEnvironmentVariable(key = "GOOGLE_CLOUD_UNIVERSE_DOMAIN", value = "random.com")
+  @SetEnvironmentVariable(key = EndpointContext.GOOGLE_CLOUD_UNIVERSE_DOMAIN, value = "random.com")
   void endpointContextBuild_universeDomainEnvVarSet() throws IOException {
     String envVarUniverseDomain = "random.com";
     EndpointContext endpointContext =
@@ -354,9 +353,8 @@ class EndpointContextTest {
 
   // This Universe Domain should match the `GOOGLE_CLOUD_UNIVERSE_DOMAIN` Env Var
   // For this test running locally or in CI, check that the Env Var is set properly.
-  // This test should only run when the maven profile `EnvVarTest` is enabled.
   @Test
-  @SetEnvironmentVariable(key = "GOOGLE_CLOUD_UNIVERSE_DOMAIN", value = "random.com")
+  @SetEnvironmentVariable(key = EndpointContext.GOOGLE_CLOUD_UNIVERSE_DOMAIN, value = "random.com")
   void endpointContextBuild_multipleUniverseDomainConfigurations_clientSettingsHasPriority()
       throws IOException {
     String clientSettingsUniverseDomain = "clientSettingsUniverseDomain.com";
