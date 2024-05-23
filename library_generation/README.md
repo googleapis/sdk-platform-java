@@ -97,7 +97,7 @@ They are shared by library level parameters.
 | protoc_version          |    No    | inferred from the generator if not specified |
 | grpc_version            |    No    | inferred from the generator if not specified |
 | googleapis-commitish    |   Yes    |                                              |
-| libraries_bom_version   |   Yes    |                                              |
+| libraries_bom_version   |    No    | empty string if not specified                |
 | template_excludes       |    No    | empty list if not specified                  |
 
 ### Library level parameters

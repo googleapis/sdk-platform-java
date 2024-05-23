@@ -39,7 +39,6 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         self.baseline_config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            libraries_bom_version="",
             grpc_version="",
             protoc_version="",
             libraries=[self.baseline_library],
@@ -47,7 +46,6 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         self.current_config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            libraries_bom_version="",
             grpc_version="",
             protoc_version="",
             libraries=[self.current_library],

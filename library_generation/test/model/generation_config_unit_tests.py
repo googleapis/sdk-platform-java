@@ -114,7 +114,6 @@ class GenerationConfigTest(unittest.TestCase):
         config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            libraries_bom_version="",
             libraries=[library_1],
         )
         self.assertFalse(config.is_monorepo())
@@ -123,7 +122,6 @@ class GenerationConfigTest(unittest.TestCase):
         config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            libraries_bom_version="",
             libraries=[library_1, library_2],
         )
         self.assertTrue(config.is_monorepo())
@@ -132,7 +130,6 @@ class GenerationConfigTest(unittest.TestCase):
         config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            libraries_bom_version="",
             libraries=[library_1, library_2, common_protos_library],
         )
         self.assertTrue(config.contains_common_protos())
@@ -141,7 +138,6 @@ class GenerationConfigTest(unittest.TestCase):
         config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            libraries_bom_version="",
             libraries=[library_1, library_2],
         )
         self.assertFalse(config.contains_common_protos())
@@ -153,7 +149,6 @@ class GenerationConfigTest(unittest.TestCase):
             GenerationConfig,
             gapic_generator_version="",
             googleapis_commitish="",
-            libraries_bom_version="",
             libraries=[
                 LibraryConfig(
                     api_shortname="secretmanager",

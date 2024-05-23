@@ -60,7 +60,6 @@ class GeneratePrDescriptionTest(unittest.TestCase):
             config=GenerationConfig(
                 gapic_generator_version="",
                 googleapis_commitish=commit_sha,
-                libraries_bom_version="",
                 grpc_version="",
                 protoc_version="",
                 libraries=[],

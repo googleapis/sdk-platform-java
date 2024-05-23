@@ -40,7 +40,9 @@ class GenerationConfig:
     ):
         self.gapic_generator_version = gapic_generator_version
         self.googleapis_commitish = googleapis_commitish
-        self.libraries_bom_version = libraries_bom_version
+        self.libraries_bom_version = (
+            libraries_bom_version if libraries_bom_version else ""
+        )
         self.template_excludes = template_excludes if template_excludes else []
         self.libraries = libraries
         self.grpc_version = grpc_version
