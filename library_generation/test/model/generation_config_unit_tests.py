@@ -45,6 +45,15 @@ common_protos_library = LibraryConfig(
 
 
 class GenerationConfigTest(unittest.TestCase):
+    def test_generation_config_default_value(self):
+        config = GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish="",
+            libraries=[],
+        )
+        self.assertEqual([], config.template_excludes)
+        self.assertEqual("", config.libraries_bom_version)
+
     def test_from_yaml_succeeds(self):
         config = from_yaml(f"{test_config_dir}/generation_config.yaml")
         self.assertEqual("2.34.0", config.gapic_generator_version)
