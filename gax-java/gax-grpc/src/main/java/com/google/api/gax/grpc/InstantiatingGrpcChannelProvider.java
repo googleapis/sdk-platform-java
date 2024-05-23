@@ -32,7 +32,6 @@ package com.google.api.gax.grpc;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import com.google.api.core.InternalExtensionOnly;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
@@ -82,13 +81,24 @@ import org.threeten.bp.Duration;
  * <p>The client lib header and generator header values are used to form a value that goes into the
  * http header of requests to the service.
  */
-@InternalExtensionOnly
 public final class InstantiatingGrpcChannelProvider implements TransportChannelProvider {
+
+  static String systemProductName;
+
+  static {
+    try {
+      systemProductName =
+          Files.asCharSource(new File("/sys/class/dmi/id/product_name"), StandardCharsets.UTF_8)
+              .readFirstLine();
+    } catch (IOException e) {
+      systemProductName = null;
+    }
+  }
+
   @VisibleForTesting
   static final Logger LOG = Logger.getLogger(InstantiatingGrpcChannelProvider.class.getName());
 
-  private static final String DIRECT_PATH_ENV_DISABLE_DIRECT_PATH =
-      "GOOGLE_CLOUD_DISABLE_DIRECT_PATH";
+  static final String DIRECT_PATH_ENV_DISABLE_DIRECT_PATH = "GOOGLE_CLOUD_DISABLE_DIRECT_PATH";
   private static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
   static final long DIRECT_PATH_KEEP_ALIVE_TIME_SECONDS = 3600;
   static final long DIRECT_PATH_KEEP_ALIVE_TIMEOUT_SECONDS = 20;
@@ -145,6 +155,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         builder.directPathServiceConfig == null
             ? getDefaultDirectPathServiceConfig()
             : builder.directPathServiceConfig;
+    systemProductName = builder.systemProductName;
   }
 
   /**
@@ -319,16 +330,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting
   static boolean isOnComputeEngine() {
     String osName = System.getProperty("os.name");
-    if ("Linux".equals(osName)) {
-      try {
-        String result =
-            Files.asCharSource(new File("/sys/class/dmi/id/product_name"), StandardCharsets.UTF_8)
-                .readFirstLine();
-        return result.contains(GCE_PRODUCTION_NAME_PRIOR_2016)
-            || result.contains(GCE_PRODUCTION_NAME_AFTER_2016);
-      } catch (IOException ignored) {
-        return false;
-      }
+    // systemProductName null check is in case there is an IOException
+    // IOException will set the systemProductName to null and should return false
+    if ("Linux".equals(osName) && systemProductName != null) {
+      return systemProductName.contains(GCE_PRODUCTION_NAME_PRIOR_2016)
+          || systemProductName.contains(GCE_PRODUCTION_NAME_AFTER_2016);
     }
     return false;
   }
@@ -370,10 +376,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
-    if (isDirectPathEnabled()
-        && isCredentialDirectPathCompatible()
-        && isOnComputeEngine()
-        && canUseDirectPathWithUniverseDomain()) {
+    if (canUseDirectPath()) {
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       ChannelCredentials channelCreds =
           GoogleDefaultChannelCredentials.newBuilder().callCredentials(callCreds).build();
@@ -446,6 +449,24 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return managedChannel;
   }
 
+  /**
+   * Marked as Internal Api and intended for internal use. DirectPath must be enabled via the
+   * settings and a few other configurations/settings must also be valid for the request to go
+   * through DirectPath.
+   *
+   * <p>Checks: 1. Credentials are compatible 2.Running on Compute Engine 3. Universe Domain is
+   * configured to for the Google Default Universe
+   *
+   * @return if DirectPath is enabled for the client AND if the configurations are valid
+   */
+  @InternalApi
+  public boolean canUseDirectPath() {
+    return isDirectPathEnabled()
+        && isCredentialDirectPathCompatible()
+        && isOnComputeEngine()
+        && canUseDirectPathWithUniverseDomain();
+  }
+
   /** The endpoint to be used for the channel. */
   @Override
   public String getEndpoint() {
@@ -513,6 +534,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private Boolean attemptDirectPathXds;
     @Nullable private Boolean allowNonDefaultServiceAccount;
     @Nullable private ImmutableMap<String, ?> directPathServiceConfig;
+    @Nullable private String systemProductName;
 
     private Builder() {
       processorCount = Runtime.getRuntime().availableProcessors();
@@ -541,6 +563,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.allowNonDefaultServiceAccount = provider.allowNonDefaultServiceAccount;
       this.directPathServiceConfig = provider.directPathServiceConfig;
       this.mtlsProvider = provider.mtlsProvider;
+      this.systemProductName = null;
     }
 
     /**
@@ -750,6 +773,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @InternalApi("For internal use by google-cloud-java clients only")
     public Builder setAttemptDirectPathXds() {
       this.attemptDirectPathXds = true;
+      return this;
+    }
+
+    @VisibleForTesting
+    Builder setSystemProductName(String systemProductName) {
+      this.systemProductName = systemProductName;
       return this;
     }
 
