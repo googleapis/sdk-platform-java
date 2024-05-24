@@ -70,3 +70,28 @@ class GeneratePrDescriptionTest(unittest.TestCase):
             description_path=cwd,
         )
         self.assertFalse(os.path.isfile(f"{cwd}/pr_description.txt"))
+
+    def test_generate_pr_description_does_not_create_pr_description_without_qualified_commit(
+        self,
+    ):
+        # committed on May 22nd, 2024
+        old_commit_sha = "30717c0b0c9966906880703208a4c820411565c4"
+        # committed on May 23rd, 2024
+        new_commit_sha = "eeed69d446a90eb4a4a2d1762c49d637075390c1"
+        cwd = os.getcwd()
+        generate_pr_descriptions(
+            config=GenerationConfig(
+                gapic_generator_version="",
+                googleapis_commitish=new_commit_sha,
+                libraries_bom_version="",
+                template_excludes=[],
+                grpc_version="",
+                protoc_version="",
+                # use empty libraries to make sure no qualified commit between
+                # two commit sha.
+                libraries=[],
+            ),
+            baseline_commit=old_commit_sha,
+            description_path=cwd,
+        )
+        self.assertFalse(os.path.isfile(f"{cwd}/pr_description.txt"))

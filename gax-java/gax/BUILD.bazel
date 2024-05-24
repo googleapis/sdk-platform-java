@@ -41,7 +41,6 @@ _TEST_COMPILE_DEPS = [
     "@net_bytebuddy_byte_buddy//jar",
     "@org_objenesis_objenesis//jar",
     "@com_googlecode_java_diff_utils_diffutils//jar",
-    "@org_junit_pioneer_junit_pioneer//jar",
 ]
 
 java_library(
