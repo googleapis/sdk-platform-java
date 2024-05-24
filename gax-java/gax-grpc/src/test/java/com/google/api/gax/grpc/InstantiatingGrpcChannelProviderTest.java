@@ -660,54 +660,61 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   @Test
   public void canUseDirectPath_happyPath() {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH)).thenReturn("false");
-    InstantiatingGrpcChannelProvider provider =
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
-            .setEnvProvider(envProvider)
-            .setSystemProductName(GCE_PRODUCTION_NAME_AFTER_2016)
-            .build();
+            .setEnvProvider(envProvider);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isTrue();
   }
 
   @Test
   public void canUseDirectPath_directPathEnvVarDisabled() {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH)).thenReturn("true");
-    InstantiatingGrpcChannelProvider provider =
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("true");
+    InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
-            .setEnvProvider(envProvider)
-            .setSystemProductName(GCE_PRODUCTION_NAME_AFTER_2016)
-            .build();
+            .setEnvProvider(envProvider);
+    //            .setSystemProductName(GCE_PRODUCTION_NAME_AFTER_2016)
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
   }
 
   @Test
   public void canUseDirectPath_directPathEnvVarNotSet_attemptDirectPathIsTrue() {
-    InstantiatingGrpcChannelProvider provider =
+    InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
-            .setEndpoint(DEFAULT_ENDPOINT)
-            .setSystemProductName(GCE_PRODUCTION_NAME_AFTER_2016)
-            .build();
+            .setEndpoint(DEFAULT_ENDPOINT);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isTrue();
   }
 
   @Test
   public void canUseDirectPath_directPathEnvVarNotSet_attemptDirectPathIsFalse() {
-    InstantiatingGrpcChannelProvider provider =
+    InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(false)
             .setCredentials(computeEngineCredentials)
-            .setEndpoint(DEFAULT_ENDPOINT)
-            .setSystemProductName(GCE_PRODUCTION_NAME_AFTER_2016)
-            .build();
+            .setEndpoint(DEFAULT_ENDPOINT);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
   }
 
@@ -715,15 +722,18 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   public void canUseDirectPath_nonComputeCredentials() {
     Credentials credentials = Mockito.mock(Credentials.class);
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH)).thenReturn("false");
-    InstantiatingGrpcChannelProvider provider =
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setCredentials(credentials)
             .setEndpoint(DEFAULT_ENDPOINT)
-            .setEnvProvider(envProvider)
-            .setSystemProductName(GCE_PRODUCTION_NAME_AFTER_2016)
-            .build();
+            .setEnvProvider(envProvider);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
   }
 
@@ -731,61 +741,72 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   public void canUseDirectPath_isNotOnComputeEngine_invalidOsNameSystemProperty() {
     System.setProperty("os.name", "Not Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH)).thenReturn("false");
-    InstantiatingGrpcChannelProvider provider =
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
-            .setEnvProvider(envProvider)
-            .setSystemProductName(GCE_PRODUCTION_NAME_AFTER_2016)
-            .build();
+            .setEnvProvider(envProvider);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
   }
 
   @Test
   public void canUseDirectPath_isNotOnComputeEngine_invalidSystemProductName() {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH)).thenReturn("false");
-    InstantiatingGrpcChannelProvider provider =
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
-            .setEnvProvider(envProvider)
-            .setSystemProductName("testing")
-            .build();
+            .setEnvProvider(envProvider);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, "testing");
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
   }
 
   @Test
   public void canUseDirectPath_isNotOnComputeEngine_unableToGetSystemProductName() {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH)).thenReturn("false");
-    InstantiatingGrpcChannelProvider provider =
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
-            .setEnvProvider(envProvider)
-            .setSystemProductName(null)
-            .build();
+            .setEnvProvider(envProvider);
+    InstantiatingGrpcChannelProvider provider = new InstantiatingGrpcChannelProvider(builder, null);
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
   }
 
   @Test
   public void canUseDirectPath_nonGDUUniverseDomain() {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH)).thenReturn("false");
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
     String nonGDUEndpoint = "test.random.com:443";
-    InstantiatingGrpcChannelProvider provider =
+    InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(nonGDUEndpoint)
-            .setEnvProvider(envProvider)
-            .setSystemProductName(GCE_PRODUCTION_NAME_AFTER_2016)
-            .build();
+            .setEnvProvider(envProvider);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
   }
 

@@ -156,7 +156,19 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         builder.directPathServiceConfig == null
             ? getDefaultDirectPathServiceConfig()
             : builder.directPathServiceConfig;
-    systemProductName = builder.systemProductName;
+  }
+
+  /**
+   * Package-Private constructor that is only visible for testing DirectPath functionality inside
+   * tests. This overrides the computed systemProductName when the class is initialized to help
+   * configure the result of {@link #isOnComputeEngine()} check.
+   *
+   * <p>If productName is null, that represents the result of an IOException
+   */
+  @VisibleForTesting
+  InstantiatingGrpcChannelProvider(Builder builder, String productName) {
+    this(builder);
+    systemProductName = productName;
   }
 
   /**
@@ -535,7 +547,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private Boolean attemptDirectPathXds;
     @Nullable private Boolean allowNonDefaultServiceAccount;
     @Nullable private ImmutableMap<String, ?> directPathServiceConfig;
-    @Nullable private String systemProductName;
 
     private Builder() {
       processorCount = Runtime.getRuntime().availableProcessors();
@@ -564,7 +575,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.allowNonDefaultServiceAccount = provider.allowNonDefaultServiceAccount;
       this.directPathServiceConfig = provider.directPathServiceConfig;
       this.mtlsProvider = provider.mtlsProvider;
-      this.systemProductName = null;
     }
 
     /**
@@ -780,16 +790,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @VisibleForTesting
     Builder setEnvProvider(EnvironmentProvider envProvider) {
       this.envProvider = envProvider;
-      return this;
-    }
-
-    /**
-     * Package-Private scope as it is used to test DirectPath functionality in tests. This overrides
-     * the computed systemProductName when the class is initialized.
-     */
-    @VisibleForTesting
-    Builder setSystemProductName(String systemProductName) {
-      this.systemProductName = systemProductName;
       return this;
     }
 
