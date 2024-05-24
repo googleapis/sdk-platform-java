@@ -58,7 +58,13 @@ jobs:
       - run: mvn -version
       - name: Test with Java 8
         # Direct goal invocation ("surefire:test") prevents recompiling tests
-        run: mvn surefire:test --errors --batch-mode --no-transfer-progress -T 1C
+        run: |
+          mvn surefire:test \
+            --errors \
+            --batch-mode \
+            --no-transfer-progress \
+            -T 1C \
+            -DargLine="-Djava.util.logging.SimpleFormatter.format='%1$tY %1$tl:%1$tM:%1$tS.%1$tL %2$s %4$s: %5$s%6$s%n'"
       - name: Create issue if previous step fails
         if: ${{ failure() }}
         env:
