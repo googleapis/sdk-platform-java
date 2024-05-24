@@ -48,19 +48,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ProtoRestSerializerTest {
+class ProtoRestSerializerTest {
   private ProtoRestSerializer<Field> requestSerializer;
   private Field field;
   private String fieldJson;
   private String fieldJsonNumericEnum;
   private String fieldJsonUnknownNumericEnum;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     // tests with Any type messages require corresponding descriptors in the type registry
     requestSerializer =
         ProtoRestSerializer.create(
@@ -116,33 +116,33 @@ public class ProtoRestSerializerTest {
   }
 
   @Test
-  public void toJson_numericEnumTrue() {
+  void toJson_numericEnumTrue() {
     String fieldToJson = requestSerializer.toJson(field, true);
     Truth.assertThat(fieldToJson).isEqualTo(fieldJsonNumericEnum);
   }
 
   @Test
-  public void toJson_numericEnumFalse() {
+  void toJson_numericEnumFalse() {
     String fieldToJson = requestSerializer.toJson(field, false);
     Truth.assertThat(fieldToJson).isEqualTo(fieldJson);
   }
 
   @Test
-  public void fromJson_numericEnumTrue() {
+  void fromJson_numericEnumTrue() {
     Field fieldFromJson =
         requestSerializer.fromJson(new StringReader(fieldJsonNumericEnum), Field.newBuilder());
     Truth.assertThat(fieldFromJson).isEqualTo(field);
   }
 
   @Test
-  public void fromJson_numericEnumFalse() {
+  void fromJson_numericEnumFalse() {
     Field fieldFromJson =
         requestSerializer.fromJson(new StringReader(fieldJson), Field.newBuilder());
     Truth.assertThat(fieldFromJson).isEqualTo(field);
   }
 
   @Test
-  public void fromJson_numericEnumTrueAndUnknownEnum() {
+  void fromJson_numericEnumTrueAndUnknownEnum() {
     Field expected = field.toBuilder().setCardinalityValue(7).build();
     Field fieldFromJson =
         requestSerializer.fromJson(
@@ -151,17 +151,17 @@ public class ProtoRestSerializerTest {
   }
 
   @Test
-  public void fromJsonInvalidJson() {
+  void fromJsonInvalidJson() {
     try {
       requestSerializer.fromJson(new StringReader("heh"), Field.newBuilder());
-      Assert.fail();
+      Assertions.fail();
     } catch (RestSerializationException e) {
       Truth.assertThat(e.getCause()).isInstanceOf(IOException.class);
     }
   }
 
   @Test
-  public void putPathParam() {
+  void putPathParam() {
     Map<String, String> fields = new HashMap<>();
     requestSerializer.putPathParam(fields, "optName1", 1);
     requestSerializer.putPathParam(fields, "optName2", 0);
@@ -178,7 +178,7 @@ public class ProtoRestSerializerTest {
   }
 
   @Test
-  public void putQueryParamPrimitive() {
+  void putQueryParamPrimitive() {
     Map<String, List<String>> fields = new HashMap<>();
     requestSerializer.putQueryParam(fields, "optName1", 1);
     requestSerializer.putQueryParam(fields, "optName2", 0);
@@ -197,7 +197,7 @@ public class ProtoRestSerializerTest {
   }
 
   @Test
-  public void putQueryParamComplexObject() {
+  void putQueryParamComplexObject() {
     Map<String, List<String>> fields = new HashMap<>();
     requestSerializer.putQueryParam(fields, "object", field);
 
@@ -211,7 +211,7 @@ public class ProtoRestSerializerTest {
   }
 
   @Test
-  public void putQueryParamComplexObjectDuration() {
+  void putQueryParamComplexObjectDuration() {
     Map<String, List<String>> fields = new HashMap<>();
     Duration duration = Duration.newBuilder().setSeconds(1).setNanos(1).build();
     RetryInfo input = RetryInfo.newBuilder().setRetryDelay(duration).build();
@@ -224,7 +224,7 @@ public class ProtoRestSerializerTest {
   }
 
   @Test
-  public void putQueryParamComplexObjectTimestamp() {
+  void putQueryParamComplexObjectTimestamp() {
     Map<String, List<String>> fields = new HashMap<>();
     Timestamp start = Timestamp.newBuilder().setSeconds(1).setNanos(1).build();
     Timestamp end = Timestamp.newBuilder().setSeconds(2).setNanos(2).build();
@@ -240,28 +240,28 @@ public class ProtoRestSerializerTest {
   }
 
   @Test
-  public void putQueryParamDuration() {
+  void putQueryParamDuration() {
     queryParamHelper(Duration.newBuilder().setSeconds(1).setNanos(1).build(), "1.000000001s");
   }
 
   @Test
-  public void putQueryParamTimestamp() {
+  void putQueryParamTimestamp() {
     queryParamHelper(
         Timestamp.newBuilder().setSeconds(1).setNanos(1).build(), "1970-01-01T00:00:01.000000001Z");
   }
 
   @Test
-  public void putQueryParamFieldMask() {
+  void putQueryParamFieldMask() {
     queryParamHelper(FieldMask.newBuilder().addPaths("a.b").addPaths("c.d").build(), "a.b,c.d");
   }
 
   @Test
-  public void putQueryParamInt32Value() {
+  void putQueryParamInt32Value() {
     queryParamHelper(Int32Value.of(1), "1");
   }
 
   @Test
-  public void putQueryParamFloatValue() {
+  void putQueryParamFloatValue() {
     queryParamHelper(FloatValue.of(1.1f), "1.1");
   }
 
@@ -274,7 +274,7 @@ public class ProtoRestSerializerTest {
   }
 
   @Test
-  public void toBody() {
+  void toBody() {
     String body = requestSerializer.toBody("bodyField1", field, false);
     Truth.assertThat(body).isEqualTo(fieldJson);
   }

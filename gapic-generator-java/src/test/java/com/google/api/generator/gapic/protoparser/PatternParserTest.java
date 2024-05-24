@@ -17,22 +17,22 @@ package com.google.api.generator.gapic.protoparser;
 import static com.google.common.truth.Truth.assertThat;
 
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PatternParserTest {
+class PatternParserTest {
   @Test
-  public void getPattenBindings_shouldReturnEmptySetIfPatternIsEmpty() {
+  void getPattenBindings_shouldReturnEmptySetIfPatternIsEmpty() {
     assertThat(PatternParser.getPatternBindings("")).isEmpty();
   }
 
   @Test
-  public void getPattenBindings_shouldFilterOutUnboundVariables() {
+  void getPattenBindings_shouldFilterOutUnboundVariables() {
     Set<String> actual = PatternParser.getPatternBindings("{routing_id=projects/*}/**");
     assertThat(actual).hasSize(1);
   }
 
   @Test
-  public void getPattenBindings_shouldReturnBindingsInNatualOrder() {
+  void getPattenBindings_shouldReturnBindingsInNatualOrder() {
     Set<String> actual =
         PatternParser.getPatternBindings("{routing_id=projects/*}/{name=instance/*}");
     assertThat(actual).containsExactly("name", "routing_id").inOrder();

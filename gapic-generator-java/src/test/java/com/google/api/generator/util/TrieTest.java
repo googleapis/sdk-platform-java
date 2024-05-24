@@ -23,11 +23,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TrieTest {
+class TrieTest {
   @Test
-  public void insertAndSearch_stringTrie() {
+  void insertAndSearch_stringTrie() {
     Trie<String> trie = new Trie<>();
 
     Function<String, List<String>> wordToCharListFn = w -> Arrays.asList(w.split("(?!^)"));
@@ -46,7 +46,7 @@ public class TrieTest {
   }
 
   @Test
-  public void insertAndSearch_multiStringTrie() {
+  void insertAndSearch_multiStringTrie() {
     Trie<String> trie = new Trie<>();
     assertFalse(trie.search(Arrays.asList("user", "identity", "name")));
 
@@ -67,7 +67,7 @@ public class TrieTest {
   }
 
   @Test
-  public void dfsTraverseAndReduce_emptyTrie() {
+  void dfsTraverseAndReduce_emptyTrie() {
     // Add up points in the tree, where each parent gets (num child node points) * 2 + 1.
     Function<String, Integer> parentPreprocFn = nodeVal -> new Integer(0);
     BiFunction<String, Integer, Integer> leafReduceFn =
@@ -81,7 +81,7 @@ public class TrieTest {
   }
 
   @Test
-  public void dfsTraverseAndReduce_singleNodeTrie() {
+  void dfsTraverseAndReduce_singleNodeTrie() {
     // Add up points in the tree, where each parent gets (num child node points) * 2 + 1.
     Function<String, Integer> parentPreprocFn = nodeVal -> new Integer(0);
     BiFunction<String, Integer, Integer> leafReduceFn =
@@ -96,7 +96,7 @@ public class TrieTest {
   }
 
   @Test
-  public void dfsTraverseAndReduce_oneParentOneChildBranchTrie() {
+  void dfsTraverseAndReduce_oneParentOneChildBranchTrie() {
     Function<String, String> toUpperCaseFn = s -> s.substring(0, 1).toUpperCase() + s.substring(1);
     Function<String, StringBuilder> parentPreprocFn =
         nodeVal ->
@@ -137,7 +137,7 @@ public class TrieTest {
   }
 
   @Test
-  public void dfsTraverseAndReduce_oneDeepBranchTrie() {
+  void dfsTraverseAndReduce_oneDeepBranchTrie() {
     // Add up points in the tree, where each parent gets (num child node points) * 2 + 1.
     int simpleBaseValue = 0;
     Function<String, Integer> simpleParentPreprocFn = nodeVal -> new Integer(0);
@@ -195,7 +195,7 @@ public class TrieTest {
   }
 
   @Test
-  public void dfsTraverseAndReduce_depthAndBreathTrie() {
+  void dfsTraverseAndReduce_depthAndBreathTrie() {
     Function<String, String> toUpperCaseFn = s -> s.substring(0, 1).toUpperCase() + s.substring(1);
     Function<String, StringBuilder> parentPreprocFn =
         nodeVal ->

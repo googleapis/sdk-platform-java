@@ -22,13 +22,13 @@ import com.google.api.generator.test.framework.GoldenFileWriter;
 import com.google.api.generator.test.protoloader.TestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ClientLibraryPackageInfoComposerTest {
+class ClientLibraryPackageInfoComposerTest {
   private GapicContext context = TestProtoLoader.instance().parseShowcaseEcho();
 
   @Test
-  public void composePackageInfo_showcase() {
+  void composePackageInfo_showcase() {
     GapicPackageInfo packageInfo = ClientLibraryPackageInfoComposer.generatePackageInfo(context);
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     packageInfo.packageInfo().accept(visitor);

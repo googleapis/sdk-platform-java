@@ -18,12 +18,12 @@ import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ClassDefinitionTest {
+class ClassDefinitionTest {
 
   @Test
-  public void validClassDefinition_basicWithCommentsAndHeader() {
+  void validClassDefinition_basicWithCommentsAndHeader() {
     LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND CLASS");
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
@@ -45,7 +45,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void validClassDefinition_exprCommentAndBlockStatements() {
+  void validClassDefinition_exprCommentAndBlockStatements() {
     ClassDefinition.builder()
         .setName("LibraryServiceStub")
         .setIsNested(true)
@@ -74,7 +74,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void validClassDefinition_nestedBasic() {
+  void validClassDefinition_nestedBasic() {
     ClassDefinition.builder()
         .setName("LibraryServiceStub")
         .setIsNested(true)
@@ -92,7 +92,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void validClassDefinition_withAnnotationsExtendsAndImplements() {
+  void validClassDefinition_withAnnotationsExtendsAndImplements() {
     ClassDefinition.builder()
         .setPackageString("com.google.example.library.v1.stub")
         .setName("LibraryServiceStub")
@@ -110,7 +110,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void validClassDefinition_statementsAndMethods() {
+  void validClassDefinition_statementsAndMethods() {
     List<Statement> statements =
         Arrays.asList(
             ExprStatement.withExpr(createAssignmentExpr()),
@@ -149,7 +149,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void invalidClassDefinition_nestedWithFileHeader() {
+  void invalidClassDefinition_nestedWithFileHeader() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -164,7 +164,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void invalidClassDefinition_implementsNullType() {
+  void invalidClassDefinition_implementsNullType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -178,7 +178,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void invalidClassDefinition_outerClassMissingPackage() {
+  void invalidClassDefinition_outerClassMissingPackage() {
     assertThrows(
         NullPointerException.class,
         () -> {
@@ -190,7 +190,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void invalidClassDefinition_outerClassStatic() {
+  void invalidClassDefinition_outerClassStatic() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -204,7 +204,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void invalidClassDefinition_outerClassPrivate() {
+  void invalidClassDefinition_outerClassPrivate() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -217,7 +217,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void invalidClassDefinition_extendsPrimitiveType() {
+  void invalidClassDefinition_extendsPrimitiveType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -231,7 +231,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void invalidClassDefinition_extendsNullType() {
+  void invalidClassDefinition_extendsNullType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -245,7 +245,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void invalidClassDefinition_abstractFinal() {
+  void invalidClassDefinition_abstractFinal() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -261,7 +261,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void invalidClassDefinition_implementsPrimtiveType() {
+  void invalidClassDefinition_implementsPrimtiveType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -275,7 +275,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void invalidClassDefinition_extendsImplementsSameType() {
+  void invalidClassDefinition_extendsImplementsSameType() {
     TypeNode cloneableType = TypeNode.withReference(ConcreteReference.withClazz(Cloneable.class));
     assertThrows(
         IllegalStateException.class,
@@ -294,7 +294,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void invalidClassDefinition_assignmentWithUnscopedVariableExprStatement() {
+  void invalidClassDefinition_assignmentWithUnscopedVariableExprStatement() {
     Variable variable = createVariable("x", TypeNode.INT);
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -319,7 +319,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void invalidClassDefinition_unscopedVariableExprStatement() {
+  void invalidClassDefinition_unscopedVariableExprStatement() {
     List<Statement> statements =
         Arrays.asList(
             ExprStatement.withExpr(createAssignmentExpr()),
@@ -341,7 +341,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void invalidClassDefinition_badStatementType() {
+  void invalidClassDefinition_badStatementType() {
     List<Statement> statements = Arrays.asList(createForStatement());
     assertThrows(
         IllegalStateException.class,

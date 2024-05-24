@@ -53,10 +53,6 @@ class IntegrationTest(unittest.TestCase):
         IntegrationTest.__build_image(docker_file=build_file, cwd=repo_root_dir)
 
     @classmethod
-    def tearDownClass(cls) -> None:
-        cls.__remove_docker_image()
-
-    @classmethod
     def setUp(cls) -> None:
         cls.__remove_generated_files()
         os.makedirs(f"{golden_dir}", exist_ok=True)
@@ -183,8 +179,10 @@ class IntegrationTest(unittest.TestCase):
 
     @classmethod
     def __build_image(cls, docker_file: str, cwd: str):
+        # we build the docker image without removing intermediate containers so
+        # we can re-test more quickly
         subprocess.check_call(
-            ["docker", "build", "--rm", "-f", docker_file, "-t", image_tag, "."],
+            ["docker", "build", "-f", docker_file, "-t", image_tag, "."],
             cwd=cwd,
         )
 
@@ -305,7 +303,3 @@ class IntegrationTest(unittest.TestCase):
             cls.__recursive_diff_files(
                 sub_dcmp, diff_files, left_only, right_only, dirname + sub_dirname + "/"
             )
-
-    @classmethod
-    def __remove_docker_image(cls):
-        subprocess.check_call(["docker", "image", "rmi", image_tag])

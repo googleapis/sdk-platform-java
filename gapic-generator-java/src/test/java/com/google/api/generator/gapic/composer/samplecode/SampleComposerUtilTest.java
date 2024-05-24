@@ -28,9 +28,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class SampleComposerUtilTest {
+class SampleComposerUtilTest {
   private static final String SHOWCASE_PACKAGE_NAME = "com.google.showcase.v1beta1";
   TypeNode clientType =
       TypeNode.withReference(
@@ -55,7 +55,7 @@ public class SampleComposerUtilTest {
           .build();
 
   @Test
-  public void assignClientVariableWithCreateMethodExpr() {
+  void assignClientVariableWithCreateMethodExpr() {
     String result =
         SampleCodeWriter.write(
             SampleComposerUtil.assignClientVariableWithCreateMethodExpr(echoClientVariableExpr));
@@ -65,14 +65,14 @@ public class SampleComposerUtilTest {
   }
 
   @Test
-  public void createOverloadDisambiguation_noargs() {
+  void createOverloadDisambiguation_noargs() {
     String result = SampleComposerUtil.createOverloadDisambiguation(new ArrayList<>());
     String expected = "Noargs";
     assertEquals(expected, result);
   }
 
   @Test
-  public void createOverloadDisambiguation_sameargs() {
+  void createOverloadDisambiguation_sameargs() {
     List<VariableExpr> methodArgVarExprs = Collections.nCopies(5, stringVariableExpr);
 
     String result = SampleComposerUtil.createOverloadDisambiguation(methodArgVarExprs);
@@ -81,7 +81,7 @@ public class SampleComposerUtilTest {
   }
 
   @Test
-  public void createOverloadDisambiguation_containsInt() {
+  void createOverloadDisambiguation_containsInt() {
     List<VariableExpr> methodArgVarExprs =
         Arrays.asList(echoClientVariableExpr, stringVariableExpr, intVariableExpr);
 
@@ -91,7 +91,7 @@ public class SampleComposerUtilTest {
   }
 
   @Test
-  public void handleDuplicateSamples_actualDuplicates() {
+  void handleDuplicateSamples_actualDuplicates() {
     List<Sample> samples = Collections.nCopies(5, echoClientSample);
     assertEquals(samples.size(), 5);
 
@@ -101,7 +101,7 @@ public class SampleComposerUtilTest {
   }
 
   @Test
-  public void handleDuplicateSamples_distinctDuplicates() {
+  void handleDuplicateSamples_distinctDuplicates() {
     VariableExpr echoClientVariableExprDiffVarName =
         VariableExpr.withVariable(
             Variable.builder().setName("echoClient2").setType(clientType).build());
@@ -128,7 +128,7 @@ public class SampleComposerUtilTest {
   }
 
   @Test
-  public void handleDuplicateSamples_notDuplicateName() {
+  void handleDuplicateSamples_notDuplicateName() {
     Sample echoClientSampleDiffRpcName =
         echoClientSample.withRegionTag(
             echoClientSample.regionTag().toBuilder().setRpcName("createB").build());

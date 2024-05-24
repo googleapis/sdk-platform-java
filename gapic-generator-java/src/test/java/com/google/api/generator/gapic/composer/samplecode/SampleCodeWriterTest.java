@@ -34,17 +34,17 @@ import com.google.api.generator.test.utils.LineFormatter;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-public class SampleCodeWriterTest {
+class SampleCodeWriterTest {
   private static String packageName = "com.google.samples";
   private static List<Statement> testingSampleStatements;
   private static Sample testingSample;
   private static RegionTag regionTag;
 
-  @BeforeClass
-  public static void setUp() {
+  @BeforeAll
+  static void setUp() {
     TypeNode settingType =
         TypeNode.withReference(ConcreteReference.withClazz(ClientSettings.class));
     Variable aVar = Variable.builder().setName("clientSettings").setType(settingType).build();
@@ -92,7 +92,7 @@ public class SampleCodeWriterTest {
   }
 
   @Test
-  public void writeSampleCodeStatements() {
+  void writeSampleCodeStatements() {
     String result = SampleCodeWriter.write(testingSampleStatements);
     String expected =
         "ClientSettings clientSettings = ClientSettings.newBuilder().build();\n"
@@ -103,7 +103,7 @@ public class SampleCodeWriterTest {
   }
 
   @Test
-  public void writeInlineSample() {
+  void writeInlineSample() {
     String result = SampleCodeWriter.writeInlineSample(testingSampleStatements);
     String expected =
         LineFormatter.lines(
@@ -120,7 +120,7 @@ public class SampleCodeWriterTest {
   }
 
   @Test
-  public void writeExecutableSample() {
+  void writeExecutableSample() {
     Sample sample =
         testingSample.withRegionTag(regionTag.withOverloadDisambiguation("ExecutableSample"));
     String result = SampleCodeWriter.writeExecutableSample(sample, packageName);

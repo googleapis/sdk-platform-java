@@ -30,7 +30,7 @@
 package com.google.api.gax.httpjson;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode;
@@ -38,14 +38,11 @@ import com.google.api.gax.rpc.UnauthenticatedException;
 import com.google.auth.Credentials;
 import com.google.auth.Retryable;
 import java.io.IOException;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class HttpJsonClientCallsTest {
+class HttpJsonClientCallsTest {
 
   // Auth Library's GoogleAuthException is package-private. Copy basic functionality for tests
   private static class GoogleAuthException extends IOException implements Retryable {
@@ -74,8 +71,8 @@ public class HttpJsonClientCallsTest {
   private HttpJsonCallOptions callOptions;
   private HttpJsonCallContext callContext;
 
-  @Before
-  public void setUp() throws IOException {
+  @BeforeEach
+  void setUp() throws IOException {
     credentials = Mockito.mock(Credentials.class);
     endpointContext = Mockito.mock(EndpointContext.class);
     mockChannel = Mockito.mock(HttpJsonChannel.class);
@@ -95,14 +92,14 @@ public class HttpJsonClientCallsTest {
   }
 
   @Test
-  public void testValidUniverseDomain() {
+  void testValidUniverseDomain() {
     HttpJsonClientCalls.newCall(descriptor, callContext);
     Mockito.verify(mockChannel, Mockito.times(1)).newCall(descriptor, callOptions);
   }
 
   // This test is when the universe domain does not match
   @Test
-  public void testInvalidUniverseDomain() throws IOException {
+  void testInvalidUniverseDomain() throws IOException {
     Mockito.doThrow(
             new UnauthenticatedException(
                 null, HttpJsonStatusCode.of(StatusCode.Code.UNAUTHENTICATED), false))
@@ -121,7 +118,7 @@ public class HttpJsonClientCallsTest {
 
   // This test is when the MDS is unable to return a valid universe domain
   @Test
-  public void testUniverseDomainNotReady_shouldRetry() throws IOException {
+  void testUniverseDomainNotReady_shouldRetry() throws IOException {
     Mockito.doThrow(new GoogleAuthException(true))
         .when(endpointContext)
         .validateUniverseDomain(

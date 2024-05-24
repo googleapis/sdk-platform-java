@@ -25,9 +25,9 @@ import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class RoutingRuleParserTest {
+class RoutingRuleParserTest {
 
   private static final FileDescriptor TESTING_FILE_DESCRIPTOR =
       RoutingRuleParserTestingOuterClass.getDescriptor();
@@ -35,13 +35,13 @@ public class RoutingRuleParserTest {
       TESTING_FILE_DESCRIPTOR.getServices().get(0);
 
   @Test
-  public void parse_shouldReturnNullRoutingHeadersIfMethodHasNoRoutingRules() {
+  void parse_shouldReturnNullRoutingHeadersIfMethodHasNoRoutingRules() {
     RoutingHeaderRule actual = getRoutingHeaders(0);
     assertThat(actual).isNull();
   }
 
   @Test
-  public void parse_shouldSetPathTemplateToWildcardIfNotDefined() {
+  void parse_shouldSetPathTemplateToWildcardIfNotDefined() {
     RoutingHeaderRule actual = getRoutingHeaders(1);
     RoutingHeaderParam expected =
         RoutingHeaderParam.create("name", "name", String.format("{%s=**}", "name"));
@@ -49,7 +49,7 @@ public class RoutingRuleParserTest {
   }
 
   @Test
-  public void parse_shouldThrowExceptionIfPathTemplateHasZeroNamedSegment() {
+  void parse_shouldThrowExceptionIfPathTemplateHasZeroNamedSegment() {
     IllegalArgumentException illegalArgumentException =
         assertThrows(IllegalArgumentException.class, () -> getRoutingHeaders(2));
     assertThat(illegalArgumentException.getMessage())
@@ -60,7 +60,7 @@ public class RoutingRuleParserTest {
   }
 
   @Test
-  public void parse_shouldThrowExceptionIfPathTemplateHasMoreThanOneNamedSegment() {
+  void parse_shouldThrowExceptionIfPathTemplateHasMoreThanOneNamedSegment() {
     IllegalArgumentException illegalArgumentException =
         assertThrows(IllegalArgumentException.class, () -> getRoutingHeaders(3));
     assertThat(illegalArgumentException.getMessage())
@@ -71,7 +71,7 @@ public class RoutingRuleParserTest {
   }
 
   @Test
-  public void parse_shouldParseRoutingRulesWithOneParameter() {
+  void parse_shouldParseRoutingRulesWithOneParameter() {
     RoutingHeaderRule actual = getRoutingHeaders(4);
     RoutingHeaderParam expected =
         RoutingHeaderParam.create("name", "rename", "/v1beta1/{rename=tests/*}");
@@ -79,7 +79,7 @@ public class RoutingRuleParserTest {
   }
 
   @Test
-  public void parse_shouldParseRoutingRulesWithMultipleParameter() {
+  void parse_shouldParseRoutingRulesWithMultipleParameter() {
     RoutingHeaderRule actual = getRoutingHeaders(5);
     RoutingHeaderParam expectedHeader1 =
         RoutingHeaderParam.create("name", "rename", "/v1beta1/{rename=tests/*}");
@@ -91,7 +91,7 @@ public class RoutingRuleParserTest {
   }
 
   @Test
-  public void parse_shouldParseRoutingRulesWithNestedFields() {
+  void parse_shouldParseRoutingRulesWithNestedFields() {
     RoutingHeaderRule actual = getRoutingHeaders(6);
     RoutingHeaderParam expectedHeader1 =
         RoutingHeaderParam.create("account.name", "rename", "/v1beta1/{rename=tests/*}");
@@ -99,7 +99,7 @@ public class RoutingRuleParserTest {
   }
 
   @Test
-  public void parse_shouldThrowExceptionIfFieldValidationFailed() {
+  void parse_shouldThrowExceptionIfFieldValidationFailed() {
     assertThrows(Exception.class, () -> getRoutingHeaders(7));
   }
 

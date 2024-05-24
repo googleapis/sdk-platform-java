@@ -35,15 +35,15 @@ import com.google.common.truth.Truth;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class AssertByPollingTest {
+class AssertByPollingTest {
 
   @Test
-  public void testFailsWhenTimeoutExceeded() {
+  void testFailsWhenTimeoutExceeded() {
     AssertionError error =
-        Assert.assertThrows(
+        Assertions.assertThrows(
             AssertionError.class,
             () -> assertByPolling(Duration.ofNanos(2), () -> Truth.assertThat(1).isAtLeast(2)));
 
@@ -54,7 +54,7 @@ public class AssertByPollingTest {
   }
 
   @Test
-  public void testImmediateSuccessSucceedsRegardlessOfTimeout() throws InterruptedException {
+  void testImmediateSuccessSucceedsRegardlessOfTimeout() throws InterruptedException {
     Runnable succeedsAfter1ms =
         () -> {
           try {
@@ -68,14 +68,14 @@ public class AssertByPollingTest {
   }
 
   @Test
-  public void testSucceedsAfterInitialFailure() throws InterruptedException {
+  void testSucceedsAfterInitialFailure() throws InterruptedException {
     AtomicInteger attempt = new AtomicInteger(1);
     AtomicInteger numFailures = new AtomicInteger(0);
     Runnable succeedsSecondTime =
         () -> {
           if (attempt.getAndIncrement() < 2) {
             numFailures.incrementAndGet();
-            Assert.fail();
+            Assertions.fail();
           }
         };
 

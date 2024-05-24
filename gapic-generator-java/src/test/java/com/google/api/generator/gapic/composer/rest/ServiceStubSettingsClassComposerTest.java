@@ -23,34 +23,25 @@ import com.google.api.generator.test.framework.GoldenFileWriter;
 import com.google.api.generator.test.protoloader.RestTestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collection;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
-public class ServiceStubSettingsClassComposerTest {
+class ServiceStubSettingsClassComposerTest {
 
-  @Parameterized.Parameters
-  public static Collection<Object[]> data() {
-    return Arrays.asList(
-        new Object[][] {
-          {"ComplianceStubSettings.golden", RestTestProtoLoader.instance().parseCompliance()},
-          {
+  static Stream<Arguments> data() {
+    return Stream.of(
+        Arguments.of(
+            "ComplianceStubSettings.golden", RestTestProtoLoader.instance().parseCompliance()),
+        Arguments.of(
             "HttpJsonApiVersionTestingStubSettings.golden",
-            RestTestProtoLoader.instance().parseApiVersionTesting()
-          }
-        });
+            RestTestProtoLoader.instance().parseApiVersionTesting()));
   }
 
-  @Parameterized.Parameter public String goldenFileName;
-
-  @Parameterized.Parameter(1)
-  public GapicContext context;
-
-  @Test
-  public void generateServiceClasses() {
+  @ParameterizedTest
+  @MethodSource("data")
+  void generateServiceClasses(String goldenFileName, GapicContext context) {
     Service protoService = context.services().get(0);
     GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, protoService);
 

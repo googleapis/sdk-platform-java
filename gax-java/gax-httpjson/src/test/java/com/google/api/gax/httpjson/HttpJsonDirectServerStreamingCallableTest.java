@@ -61,17 +61,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class HttpJsonDirectServerStreamingCallableTest {
+class HttpJsonDirectServerStreamingCallableTest {
   private static final Color DEFAULT_REQUEST = Color.newBuilder().setRed(0.5f).build();
   private static final Color ASYNC_REQUEST = DEFAULT_REQUEST.toBuilder().setGreen(1000).build();
   private static final Color ERROR_REQUEST = Color.newBuilder().setRed(-1).build();
@@ -89,12 +86,12 @@ public class HttpJsonDirectServerStreamingCallableTest {
   private MockHttpService mockService;
   ApiMethodDescriptor<Color, Money> methodServerStreamingRecognize;
 
-  @Before
-  public void initialize() throws IOException {
+  @BeforeEach
+  void initialize() throws IOException {
     initialize(Duration.ofSeconds(30));
   }
 
-  public void initialize(Duration timeout) throws IOException {
+  void initialize(Duration timeout) throws IOException {
     this.methodServerStreamingRecognize =
         ApiMethodDescriptor.<Color, Money>newBuilder()
             .setFullMethodName("google.cloud.v1.Fake/ServerStreamingRecognize")
@@ -162,14 +159,14 @@ public class HttpJsonDirectServerStreamingCallableTest {
             clientContext);
   }
 
-  @After
-  public void destroy() throws InterruptedException {
+  @AfterEach
+  void destroy() throws InterruptedException {
     executorService.shutdown();
     channel.shutdown();
   }
 
   @Test
-  public void testBadContext() {
+  void testBadContext() {
     mockService.addResponse(new Money[] {DEFAULT_RESPONSE});
     // Create a local callable with a bad context
     ServerStreamingCallable<Color, Money> streamingCallable =
@@ -186,7 +183,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
     MoneyObserver observer = new MoneyObserver(true, latch);
     try {
       streamingCallable.call(DEFAULT_REQUEST, observer);
-      Assert.fail("Callable should have thrown an exception");
+      Assertions.fail("Callable should have thrown an exception");
     } catch (IllegalArgumentException expected) {
       Truth.assertThat(expected)
           .hasMessageThat()
@@ -195,7 +192,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testServerStreamingStart() throws InterruptedException {
+  void testServerStreamingStart() throws InterruptedException {
     mockService.addResponse(new Money[] {DEFAULT_RESPONSE});
     CountDownLatch latch = new CountDownLatch(1);
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
@@ -206,7 +203,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testServerStreaming() throws InterruptedException {
+  void testServerStreaming() throws InterruptedException {
     mockService.addResponse(new Money[] {DEFAULT_RESPONSE, DEFAULTER_RESPONSE});
     CountDownLatch latch = new CountDownLatch(3);
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
@@ -220,7 +217,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testManualFlowControl() throws Exception {
+  void testManualFlowControl() throws Exception {
     mockService.addResponse(new Money[] {DEFAULT_RESPONSE});
     CountDownLatch latch = new CountDownLatch(2);
     MoneyObserver moneyObserver = new MoneyObserver(false, latch);
@@ -240,7 +237,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testCancelClientCall() throws Exception {
+  void testCancelClientCall() throws Exception {
     mockService.addResponse(new Money[] {DEFAULT_RESPONSE});
     CountDownLatch latch = new CountDownLatch(1);
     MoneyObserver moneyObserver = new MoneyObserver(false, latch);
@@ -256,7 +253,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testOnResponseError() throws Throwable {
+  void testOnResponseError() throws Throwable {
     mockService.addException(404, new RuntimeException("some error"));
 
     CountDownLatch latch = new CountDownLatch(1);
@@ -281,7 +278,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testObserverErrorCancelsCall() throws Throwable {
+  void testObserverErrorCancelsCall() throws Throwable {
     mockService.addResponse(new Money[] {DEFAULT_RESPONSE});
     final RuntimeException expectedCause = new RuntimeException("some error");
     final SettableApiFuture<Throwable> actualErrorF = SettableApiFuture.create();
@@ -321,7 +318,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testBlockingServerStreaming() {
+  void testBlockingServerStreaming() {
     mockService.addResponse(new Money[] {DEFAULT_RESPONSE});
     Color request = Color.newBuilder().setRed(0.5f).build();
     ServerStream<Money> response = streamingCallable.call(request);
@@ -333,7 +330,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
   // This test ensures that the server-side streaming does not exceed the timeout value
   @Test
-  public void testDeadlineExceededServerStreaming() throws InterruptedException, IOException {
+  void testDeadlineExceededServerStreaming() throws InterruptedException, IOException {
     // set a low timeout to trigger deadline-exceeded sooner
     initialize(Duration.ofSeconds(1));
 

@@ -34,18 +34,18 @@ import static org.mockito.Mockito.when;
 
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import com.google.common.truth.Truth;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-public class MetricsTracerFactoryTest {
+class MetricsTracerFactoryTest {
   @Mock private MetricsRecorder metricsRecorder;
   @Mock private ApiTracer parent;
   private SpanName spanName;
   private MetricsTracerFactory metricsTracerFactory;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     // Create an instance of MetricsTracerFactory with the mocked MetricsRecorder
     metricsTracerFactory = new MetricsTracerFactory(metricsRecorder);
 
@@ -55,7 +55,7 @@ public class MetricsTracerFactoryTest {
   }
 
   @Test
-  public void testNewTracer_notNull() {
+  void testNewTracer_notNull() {
     // Call the newTracer method
     ApiTracer apiTracer = metricsTracerFactory.newTracer(parent, spanName, OperationType.Unary);
 
@@ -65,7 +65,7 @@ public class MetricsTracerFactoryTest {
   }
 
   @Test
-  public void testNewTracer_HasCorrectParameters() {
+  void testNewTracer_HasCorrectParameters() {
 
     // Call the newTracer method
     ApiTracer apiTracer = metricsTracerFactory.newTracer(parent, spanName, OperationType.Unary);

@@ -30,21 +30,21 @@
 
 package com.google.api.gax.rpc;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.google.common.collect.ImmutableMap;
 import java.util.Collections;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-public class RequestUrlParamsEncoderTest {
+class RequestUrlParamsEncoderTest {
 
   private final String key = "key";
 
   @Test
-  public void testEncode() {
+  void testEncode() {
     RequestParamsExtractor<String> extractor = getMockExtractor(ImmutableMap.of("param", "value"));
     RequestUrlParamsEncoder<String> encoder = new RequestUrlParamsEncoder<>(extractor);
     String encodedParams = encoder.encode(key);
@@ -53,7 +53,7 @@ public class RequestUrlParamsEncoderTest {
   }
 
   @Test
-  public void testEncode_multipleEntriesConcatenation() {
+  void testEncode_multipleEntriesConcatenation() {
     RequestParamsExtractor<String> extractor =
         getMockExtractor(ImmutableMap.of("param1", "value1", "param2", "value2"));
     RequestUrlParamsEncoder<String> encoder = new RequestUrlParamsEncoder<>(extractor);
@@ -63,7 +63,7 @@ public class RequestUrlParamsEncoderTest {
   }
 
   @Test
-  public void testEncode_multipleEntriesConcatenation_encodedKeyAndValues() {
+  void testEncode_multipleEntriesConcatenation_encodedKeyAndValues() {
     RequestParamsExtractor<String> extractor =
         getMockExtractor(ImmutableMap.of("param1!@#", "value+1", "param2()", "value+2+&"));
     RequestUrlParamsEncoder<String> encoder = new RequestUrlParamsEncoder<>(extractor);
@@ -73,7 +73,7 @@ public class RequestUrlParamsEncoderTest {
   }
 
   @Test
-  public void testEncodeEmptyMap() {
+  void testEncodeEmptyMap() {
     RequestParamsExtractor<String> extractor = getMockExtractor(Collections.emptyMap());
     RequestUrlParamsEncoder<String> encoder = new RequestUrlParamsEncoder<>(extractor);
     String encodedParams = encoder.encode(key);
@@ -89,7 +89,7 @@ public class RequestUrlParamsEncoderTest {
   }
 
   @Test
-  public void percentEncodeString_shouldEncodeAllSpecialCharacter() {
+  void percentEncodeString_shouldEncodeAllSpecialCharacter() {
     String[] specialCharactersToEncode = {
       "xy", "x/y", "x;y", "(xy)", "x-y", "x_y", "x+y", "x%y", "x.y", "x~y", "x?y", "x&y", "x#y",
       "[xy]", "x$y", "x y", "x\\y", "x😀y", "x€y", "x,y", "x=y"

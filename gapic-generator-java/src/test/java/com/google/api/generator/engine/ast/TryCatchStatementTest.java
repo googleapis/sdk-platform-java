@@ -20,12 +20,12 @@ import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
 import java.util.Collections;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TryCatchStatementTest {
+class TryCatchStatementTest {
 
   @Test
-  public void validTryCatchStatement_simple() {
+  void validTryCatchStatement_simple() {
     Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
@@ -41,7 +41,7 @@ public class TryCatchStatementTest {
   }
 
   @Test
-  public void validTryCatchStatement_simpleMultiBlock() {
+  void validTryCatchStatement_simpleMultiBlock() {
     VariableExpr firstCatchVarExpr =
         VariableExpr.builder()
             .setVariable(
@@ -67,7 +67,7 @@ public class TryCatchStatementTest {
   }
 
   @Test
-  public void validTryCatchStatement_withResources() {
+  void validTryCatchStatement_withResources() {
     Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
@@ -85,7 +85,7 @@ public class TryCatchStatementTest {
   }
 
   @Test
-  public void validTryCatchStatement_sampleCode() {
+  void validTryCatchStatement_sampleCode() {
     TryCatchStatement tryCatch =
         TryCatchStatement.builder()
             .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
@@ -95,7 +95,7 @@ public class TryCatchStatementTest {
   }
 
   @Test
-  public void invalidTryCatchStatement_missingCatchVariable() {
+  void invalidTryCatchStatement_missingCatchVariable() {
     assertThrows(
         IllegalStateException.class,
         () ->
@@ -105,7 +105,7 @@ public class TryCatchStatementTest {
   }
 
   @Test
-  public void invalidTryCatchStatement_catchVariableNotDecl() {
+  void invalidTryCatchStatement_catchVariableNotDecl() {
     Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
@@ -121,7 +121,7 @@ public class TryCatchStatementTest {
   }
 
   @Test
-  public void invalidTryCatchStatement_nonExceptionReference() {
+  void invalidTryCatchStatement_nonExceptionReference() {
     Reference exceptionReference = ConcreteReference.withClazz(Integer.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =

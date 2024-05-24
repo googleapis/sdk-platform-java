@@ -38,9 +38,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ServiceClientHeaderSampleComposerTest {
+class ServiceClientHeaderSampleComposerTest {
   private static final String SHOWCASE_PACKAGE_NAME = "com.google.showcase.v1beta1";
   private static final String LRO_PACKAGE_NAME = "com.google.longrunning";
   private static final String PROTO_PACKAGE_NAME = "com.google.protobuf";
@@ -58,7 +58,7 @@ public class ServiceClientHeaderSampleComposerTest {
 
   /*Testing composeClassHeaderSample*/
   @Test
-  public void composeClassHeaderSample_unaryRpc() {
+  void composeClassHeaderSample_unaryRpc() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -86,7 +86,7 @@ public class ServiceClientHeaderSampleComposerTest {
   }
 
   @Test
-  public void composeClassHeaderSample_firstMethodIsNotUnaryRpc() {
+  void composeClassHeaderSample_firstMethodIsNotUnaryRpc() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -170,7 +170,7 @@ public class ServiceClientHeaderSampleComposerTest {
   }
 
   @Test
-  public void composeClassHeaderSample_firstMethodHasNoSignatures() {
+  void composeClassHeaderSample_firstMethodHasNoSignatures() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -232,7 +232,7 @@ public class ServiceClientHeaderSampleComposerTest {
   }
 
   @Test
-  public void composeClassHeaderSample_firstMethodIsStream() {
+  void composeClassHeaderSample_firstMethodIsStream() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -291,7 +291,7 @@ public class ServiceClientHeaderSampleComposerTest {
 
   /*Testing composeSetCredentialsSample*/
   @Test
-  public void composeSetCredentialsSample() {
+  void composeSetCredentialsSample() {
     TypeNode clientType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -320,7 +320,7 @@ public class ServiceClientHeaderSampleComposerTest {
 
   /*Testing composeSetEndpointSample*/
   @Test
-  public void composeSetEndpointSample() {
+  void composeSetEndpointSample() {
     TypeNode clientType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -347,7 +347,7 @@ public class ServiceClientHeaderSampleComposerTest {
 
   /*Testing composeShowcaseMethodSample*/
   @Test
-  public void valid_composeShowcaseMethodSample_pagedRpcWithMultipleMethodArguments() {
+  void valid_composeShowcaseMethodSample_pagedRpcWithMultipleMethodArguments() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -455,7 +455,7 @@ public class ServiceClientHeaderSampleComposerTest {
   }
 
   @Test
-  public void valid_composeShowcaseMethodSample_pagedRpcWithNoMethodArguments() {
+  void valid_composeShowcaseMethodSample_pagedRpcWithNoMethodArguments() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -537,7 +537,7 @@ public class ServiceClientHeaderSampleComposerTest {
   }
 
   @Test
-  public void invalid_composeShowcaseMethodSample_noMatchedRepeatedResponseTypeInPagedMethod() {
+  void invalid_composeShowcaseMethodSample_noMatchedRepeatedResponseTypeInPagedMethod() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -587,7 +587,7 @@ public class ServiceClientHeaderSampleComposerTest {
   }
 
   @Test
-  public void invalid_composeShowcaseMethodSample_noRepeatedResponseTypeInPagedMethod() {
+  void invalid_composeShowcaseMethodSample_noRepeatedResponseTypeInPagedMethod() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -659,7 +659,7 @@ public class ServiceClientHeaderSampleComposerTest {
   }
 
   @Test
-  public void valid_composeShowcaseMethodSample_lroUnaryRpcWithNoMethodArgument() {
+  void valid_composeShowcaseMethodSample_lroUnaryRpcWithNoMethodArgument() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -727,7 +727,7 @@ public class ServiceClientHeaderSampleComposerTest {
   }
 
   @Test
-  public void valid_composeShowcaseMethodSample_lroRpcWithReturnResponseType() {
+  void valid_composeShowcaseMethodSample_lroRpcWithReturnResponseType() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -813,7 +813,7 @@ public class ServiceClientHeaderSampleComposerTest {
   }
 
   @Test
-  public void valid_composeShowcaseMethodSample_lroRpcWithReturnVoid() {
+  void valid_composeShowcaseMethodSample_lroRpcWithReturnVoid() {
     Descriptors.FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);

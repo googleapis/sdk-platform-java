@@ -18,18 +18,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class LambdaExprTest {
+class LambdaExprTest {
   @Test
-  public void validLambdaExpr_noArguments() {
+  void validLambdaExpr_noArguments() {
     LambdaExpr.builder()
         .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("foo")))
         .build();
   }
 
   @Test
-  public void validLambdaExpr_inferTypeFromReturnExpr() {
+  void validLambdaExpr_inferTypeFromReturnExpr() {
     LambdaExpr lambdaExpr =
         LambdaExpr.builder()
             .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("foo")))
@@ -38,7 +38,7 @@ public class LambdaExprTest {
   }
 
   @Test
-  public void validLambdaExpr_severalArguments() {
+  void validLambdaExpr_severalArguments() {
     VariableExpr argOneVarExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("arg").setType(TypeNode.INT).build())
@@ -62,7 +62,7 @@ public class LambdaExprTest {
   }
 
   @Test
-  public void validLambdaExpr_withBody() {
+  void validLambdaExpr_withBody() {
     VariableExpr fooVarExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("foo").setType(TypeNode.INT).build())
@@ -85,7 +85,7 @@ public class LambdaExprTest {
   }
 
   @Test
-  public void validLambdaExpr_returnsVoid() {
+  void validLambdaExpr_returnsVoid() {
     LambdaExpr voidLambda =
         LambdaExpr.builder()
             .setReturnExpr(
@@ -98,7 +98,7 @@ public class LambdaExprTest {
   }
 
   @Test
-  public void invalidLambdaExpr_undeclaredArgVarExpr() {
+  void invalidLambdaExpr_undeclaredArgVarExpr() {
     VariableExpr argVarExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("arg").setType(TypeNode.INT).build())
@@ -114,7 +114,7 @@ public class LambdaExprTest {
   }
 
   @Test
-  public void invalidLambdaExpr_argVarExprWithModifiers() {
+  void invalidLambdaExpr_argVarExprWithModifiers() {
     VariableExpr argVarExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("arg").setType(TypeNode.INT).build())
@@ -132,7 +132,7 @@ public class LambdaExprTest {
   }
 
   @Test
-  public void invalidLambdaExpr_argVarExprWithNonLocalScope() {
+  void invalidLambdaExpr_argVarExprWithNonLocalScope() {
     VariableExpr argVarExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("arg").setType(TypeNode.INT).build())
@@ -150,7 +150,7 @@ public class LambdaExprTest {
   }
 
   @Test
-  public void invalidLambdaExpr_repeatedArgName() {
+  void invalidLambdaExpr_repeatedArgName() {
     VariableExpr argOneVarExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("arg").setType(TypeNode.INT).build())
