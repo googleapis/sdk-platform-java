@@ -63,8 +63,9 @@ jobs:
             --errors \
             --batch-mode \
             --no-transfer-progress \
-            -T 1C \
-            -DargLine="-Djava.util.logging.SimpleFormatter.format='%1$tY %1$tl:%1$tM:%1$tS.%1$tL %2$s %4$s: %5$s%6$s%n'"
+            -DargLine="-Djava.util.logging.SimpleFormatter.format='%1$tY %1$tl:%1$tM:%1$tS.%1$tL %2$s %4$s: %5$s%6$s%n'" \
+            -T 1C
+
       - name: Create issue if previous step fails
         if: ${{ failure() }}
         env:
