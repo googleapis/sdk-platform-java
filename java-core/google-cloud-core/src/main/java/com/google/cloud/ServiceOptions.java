@@ -157,6 +157,7 @@ public abstract class ServiceOptions<
       serviceRpcFactory = options.serviceRpcFactory;
       clock = options.clock;
       transportOptions = options.transportOptions;
+      headerProvider = options.headerProvider;
       clientLibToken = options.clientLibToken;
       quotaProjectId = options.quotaProjectId;
       apiTracerFactory = options.apiTracerFactory;
