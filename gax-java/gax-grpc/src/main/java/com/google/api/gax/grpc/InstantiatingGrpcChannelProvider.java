@@ -91,6 +91,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           Files.asCharSource(new File("/sys/class/dmi/id/product_name"), StandardCharsets.UTF_8)
               .readFirstLine();
     } catch (IOException e) {
+      // Keep existing behavior the same (null means it is not on compute engine)
       systemProductName = null;
     }
   }
@@ -330,8 +331,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting
   static boolean isOnComputeEngine() {
     String osName = System.getProperty("os.name");
-    // systemProductName null check is in case there is an IOException
-    // IOException will set the systemProductName to null and should return false
+    // The additional systemProductName null check is in case there is an IOException.
+    // The IOException will set the systemProductName to null and will return false
     if ("Linux".equals(osName) && systemProductName != null) {
       return systemProductName.contains(GCE_PRODUCTION_NAME_PRIOR_2016)
           || systemProductName.contains(GCE_PRODUCTION_NAME_AFTER_2016);
@@ -776,6 +777,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
+    /**
+     * Package-Private scope as it is used to test DirectPath functionality in tests. This overrides
+     * the computed systemProductName when the class is initialized.
+     */
     @VisibleForTesting
     Builder setSystemProductName(String systemProductName) {
       this.systemProductName = systemProductName;
