@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.41.0](https://github.com/googleapis/sdk-platform-java/compare/v2.40.1...v2.41.0) (2024-05-24)
+
+
+### Features
+
+* add a github client ([#2747](https://github.com/googleapis/sdk-platform-java/issues/2747)) ([f8ea0a0](https://github.com/googleapis/sdk-platform-java/commit/f8ea0a086ddff10a2484a1e2ea249d4832a02f34))
+* generate proto-only repository ([#2720](https://github.com/googleapis/sdk-platform-java/issues/2720)) ([f7a5161](https://github.com/googleapis/sdk-platform-java/commit/f7a5161b637cbefe922b655582f5604e080f51e5))
+
+
+### Bug Fixes
+
+* [#2785](https://github.com/googleapis/sdk-platform-java/issues/2785). ([599f5da](https://github.com/googleapis/sdk-platform-java/commit/599f5da13b3e640387a2917b64d6c888167c41f6))
+
+
+### Dependencies
+
+* update dependency net.bytebuddy:byte-buddy to v1.14.16 ([#2797](https://github.com/googleapis/sdk-platform-java/issues/2797)) ([dfedafc](https://github.com/googleapis/sdk-platform-java/commit/dfedafc37ff31450663296f69cf91718a0a68557))
+* update dependency requests to v2.32.0 [security] ([#2791](https://github.com/googleapis/sdk-platform-java/issues/2791)) ([c2ea6cc](https://github.com/googleapis/sdk-platform-java/commit/c2ea6ccf4f0e3b2547c030dbcc6bb003b70f8b9b))
+* update google api dependencies ([#2672](https://github.com/googleapis/sdk-platform-java/issues/2672)) ([6643536](https://github.com/googleapis/sdk-platform-java/commit/66435369822a32cb36cdb67cf4a897071f6ab844))
+
 ## [2.40.1](https://github.com/googleapis/sdk-platform-java/compare/v2.40.0...v2.40.1) (2024-05-15)
 
 
