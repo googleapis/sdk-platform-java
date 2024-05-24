@@ -59,7 +59,7 @@ jobs:
       - name: Test with Java 8
         # Direct goal invocation ("surefire:test") prevents recompiling tests
         run: |
-          mvn surefire:test \
+          mvn org.apache.maven.plugins:maven-surefire-plugin:test \
             --errors \
             --batch-mode \
             --no-transfer-progress \
