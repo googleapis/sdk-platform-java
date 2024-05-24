@@ -777,6 +777,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
+    @VisibleForTesting
+    Builder setEnvProvider(EnvironmentProvider envProvider) {
+      this.envProvider = envProvider;
+      return this;
+    }
+
     /**
      * Package-Private scope as it is used to test DirectPath functionality in tests. This overrides
      * the computed systemProductName when the class is initialized.
