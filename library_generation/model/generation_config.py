@@ -33,7 +33,6 @@ class GenerationConfig:
         gapic_generator_version: str,
         googleapis_commitish: str,
         libraries: list[LibraryConfig],
-        template_excludes: Optional[list[str]] = None,
         libraries_bom_version: Optional[str] = None,
         grpc_version: Optional[str] = None,
         protoc_version: Optional[str] = None,
@@ -43,7 +42,6 @@ class GenerationConfig:
         self.libraries_bom_version = (
             libraries_bom_version if libraries_bom_version else ""
         )
-        self.template_excludes = template_excludes if template_excludes else []
         self.libraries = libraries
         self.grpc_version = grpc_version
         self.protoc_version = protoc_version
@@ -151,7 +149,6 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         googleapis_commitish=__required(
             config, "googleapis_commitish", REPO_LEVEL_PARAMETER
         ),
-        template_excludes=__optional(config, "template_excludes", None),
         grpc_version=__optional(config, "grpc_version", None),
         protoc_version=__optional(config, "protoc_version", None),
         libraries_bom_version=__optional(config, "libraries_bom_version", None),

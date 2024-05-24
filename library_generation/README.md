@@ -98,7 +98,6 @@ They are shared by library level parameters.
 | grpc_version            |    No    | inferred from the generator if not specified |
 | googleapis-commitish    |   Yes    |                                              |
 | libraries_bom_version   |    No    | empty string if not specified                |
-| template_excludes       |    No    | empty list if not specified                  |
 
 ### Library level parameters
 
@@ -147,19 +146,6 @@ gapic_generator_version: 2.34.0
 protoc_version: 25.2
 googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
 libraries_bom_version: 26.37.0
-destination_path: google-cloud-java
-template_excludes:
-  - ".github/*"
-  - ".kokoro/*"
-  - "samples/*"
-  - "CODE_OF_CONDUCT.md"
-  - "CONTRIBUTING.md"
-  - "LICENSE"
-  - "SECURITY.md"
-  - "java.header"
-  - "license-checks.xml"
-  - "renovate.json"
-  - ".gitignore"
 libraries:
   - api_shortname: apigeeconnect
     name_pretty: Apigee Connect

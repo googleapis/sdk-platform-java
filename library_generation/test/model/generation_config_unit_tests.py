@@ -51,7 +51,6 @@ class GenerationConfigTest(unittest.TestCase):
             googleapis_commitish="",
             libraries=[],
         )
-        self.assertEqual([], config.template_excludes)
         self.assertEqual("", config.libraries_bom_version)
 
     def test_from_yaml_succeeds(self):
@@ -62,22 +61,6 @@ class GenerationConfigTest(unittest.TestCase):
             "1a45bf7393b52407188c82e63101db7dc9c72026", config.googleapis_commitish
         )
         self.assertEqual("26.37.0", config.libraries_bom_version)
-        self.assertEqual(
-            [
-                ".github/*",
-                ".kokoro/*",
-                "samples/*",
-                "CODE_OF_CONDUCT.md",
-                "CONTRIBUTING.md",
-                "LICENSE",
-                "SECURITY.md",
-                "java.header",
-                "license-checks.xml",
-                "renovate.json",
-                ".gitignore",
-            ],
-            config.template_excludes,
-        )
         library = config.libraries[0]
         self.assertEqual("cloudasset", library.api_shortname)
         self.assertEqual("Cloud Asset Inventory", library.name_pretty)
