@@ -45,6 +45,14 @@ common_protos_library = LibraryConfig(
 
 
 class GenerationConfigTest(unittest.TestCase):
+    def test_generation_config_default_value(self):
+        config = GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish="",
+            libraries=[],
+        )
+        self.assertEqual("", config.libraries_bom_version)
+
     def test_from_yaml_succeeds(self):
         config = from_yaml(f"{test_config_dir}/generation_config.yaml")
         self.assertEqual("2.34.0", config.gapic_generator_version)
@@ -53,22 +61,6 @@ class GenerationConfigTest(unittest.TestCase):
             "1a45bf7393b52407188c82e63101db7dc9c72026", config.googleapis_commitish
         )
         self.assertEqual("26.37.0", config.libraries_bom_version)
-        self.assertEqual(
-            [
-                ".github/*",
-                ".kokoro/*",
-                "samples/*",
-                "CODE_OF_CONDUCT.md",
-                "CONTRIBUTING.md",
-                "LICENSE",
-                "SECURITY.md",
-                "java.header",
-                "license-checks.xml",
-                "renovate.json",
-                ".gitignore",
-            ],
-            config.template_excludes,
-        )
         library = config.libraries[0]
         self.assertEqual("cloudasset", library.api_shortname)
         self.assertEqual("Cloud Asset Inventory", library.name_pretty)
@@ -114,8 +106,6 @@ class GenerationConfigTest(unittest.TestCase):
         config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            libraries_bom_version="",
-            template_excludes=[],
             libraries=[library_1],
         )
         self.assertFalse(config.is_monorepo())
@@ -124,8 +114,6 @@ class GenerationConfigTest(unittest.TestCase):
         config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            libraries_bom_version="",
-            template_excludes=[],
             libraries=[library_1, library_2],
         )
         self.assertTrue(config.is_monorepo())
@@ -134,8 +122,6 @@ class GenerationConfigTest(unittest.TestCase):
         config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            libraries_bom_version="",
-            template_excludes=[],
             libraries=[library_1, library_2, common_protos_library],
         )
         self.assertTrue(config.contains_common_protos())
@@ -144,8 +130,6 @@ class GenerationConfigTest(unittest.TestCase):
         config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            libraries_bom_version="",
-            template_excludes=[],
             libraries=[library_1, library_2],
         )
         self.assertFalse(config.contains_common_protos())
@@ -157,8 +141,6 @@ class GenerationConfigTest(unittest.TestCase):
             GenerationConfig,
             gapic_generator_version="",
             googleapis_commitish="",
-            libraries_bom_version="",
-            template_excludes=[],
             libraries=[
                 LibraryConfig(
                     api_shortname="secretmanager",
@@ -192,14 +174,6 @@ class GenerationConfigTest(unittest.TestCase):
             "Repo level parameter, googleapis_commitish",
             from_yaml,
             f"{test_config_dir}/config_without_googleapis.yaml",
-        )
-
-    def test_from_yaml_without_template_excludes_raise_exception(self):
-        self.assertRaisesRegex(
-            ValueError,
-            "Repo level parameter, template_excludes",
-            from_yaml,
-            f"{test_config_dir}/config_without_temp_excludes.yaml",
         )
 
     def test_from_yaml_without_libraries_raise_exception(self):
