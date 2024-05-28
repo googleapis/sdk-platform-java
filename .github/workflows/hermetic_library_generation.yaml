@@ -30,7 +30,10 @@ jobs:
     - name: Build image
       shell: bash
       run: |
-        docker build -f .cloudbuild/library_generation/library_generation.Dockerfile -t local:latest .
+        docker build \
+          -f .cloudbuild/library_generation/library_generation.Dockerfile \
+          -t gcr.io/cloud-devrel-public-resources/java-library-generation:latest \
+          .
     - name: Install gapic-generator-java-pom-parent
       shell: bash
       run: |
@@ -44,7 +47,7 @@ jobs:
         bash library_generation/scripts/hermetic_library_generation.sh \
           --target_branch "${base_ref}" \
           --current_branch "${head_ref}" \
-          --image_tag local:latest
+          --image_tag latest
       env:
         base_ref: ${{ github.base_ref }}
         head_ref: ${{ github.head_ref }}
