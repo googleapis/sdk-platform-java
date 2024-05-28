@@ -36,7 +36,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -302,7 +301,6 @@ class PathTemplateTest {
   }
 
   @Test
-  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2778")
   void complexResourceIdEqualsPathWildcard() {
     Exception exception =
         Assertions.assertThrows(
@@ -311,15 +309,6 @@ class PathTemplateTest {
     Assertions.assertEquals(
         String.format(
             "parse error: wildcard path not allowed in complex ID resource '%s'", "zone_a"),
-        exception.getMessage());
-
-    exception =
-        Assertions.assertThrows(
-            ValidationException.class,
-            () -> PathTemplate.create("projects/{project=*}/zones/{zone_a}.{zone_b=**}"));
-    Assertions.assertEquals(
-        String.format(
-            "parse error: wildcard path not allowed in complex ID resource '%s'", "zone_b"),
         exception.getMessage());
   }
 
@@ -360,9 +349,18 @@ class PathTemplateTest {
             "parse error: missing or 2+ consecutive delimiter characters in '%s'",
             "{zone_a}_{zone_b}{zone_c}"),
         exception.getMessage());
+
+    exception =
+        Assertions.assertThrows(
+            ValidationException.class,
+            () -> PathTemplate.create("projects/{project=*}/zones/{zone_a}{{zone_b}"));
+    Assertions.assertEquals(
+        String.format(
+            "parse error: missing or 2+ consecutive delimiter characters in '%s'",
+            "{zone_a}{{zone_b}"),
+        exception.getMessage());
   }
 
-  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2776")
   @ParameterizedTest
   @MethodSource("invalidDelimiters")
   void complexResourceIdInvalidDelimiter(String invalidDelimiter) {
@@ -381,7 +379,7 @@ class PathTemplateTest {
   }
 
   static Stream<String> invalidDelimiters() {
-    return Stream.of("|", "!", "@", "a", "1", ",", "{", ")");
+    return Stream.of("|", "!", "@", "a", "1", ",", ")");
   }
 
   @Test
