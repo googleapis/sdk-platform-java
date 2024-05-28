@@ -38,15 +38,12 @@ import java.util.jar.JarOutputStream;
 public class Writer {
 
   static class GapicWriterException extends RuntimeException {
-
-    public GapicWriterException(String errorMessage) {
-      super(errorMessage);
-    }
-
     public GapicWriterException(String errorMessage, Throwable cause) {
       super(errorMessage, cause);
     }
   }
+
+  public static final CodeGeneratorResponse EMPTY_RESPONSE = null;
 
   @VisibleForTesting
   protected static CodeGeneratorResponse write(
@@ -59,6 +56,10 @@ public class Writer {
       ByteString.Output output)
       throws IOException {
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
+
+    if (!context.containsServices()) {
+      return EMPTY_RESPONSE;
+    }
 
     for (GapicClass gapicClazz : clazzes) {
       if (gapicClazz.kind() == GapicClass.Kind.NON_GENERATED) {
@@ -77,13 +78,11 @@ public class Writer {
     jos.flush();
 
     CodeGeneratorResponse.Builder responseBuilder = CodeGeneratorResponse.newBuilder();
-    if (context.containsServices()) {
-      responseBuilder
-          .setSupportedFeatures(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL_VALUE)
-          .addFileBuilder()
-          .setName(outputFilePath)
-          .setContentBytes(output.toByteString());
-    }
+    responseBuilder
+            .setSupportedFeatures(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL_VALUE)
+            .addFileBuilder()
+            .setName(outputFilePath)
+            .setContentBytes(output.toByteString());
     return responseBuilder.build();
   }
 

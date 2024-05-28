@@ -169,14 +169,8 @@ class ComposerTest {
   }
 
   @Test
-  public void testEmptyGapicContext_succeeds() {
-    Exception unexpected = null;
-    try {
-      Composer.composeServiceClasses(GapicContext.EMPTY);
-    } catch (Exception ex) {
-      unexpected = ex;
-    }
-    assertNull(unexpected);
+  public void testEmptyGapicContext_doesNotThrow() {
+    Composer.composeServiceClasses(GapicContext.EMPTY);
   }
 
   @Test

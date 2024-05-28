@@ -41,8 +41,6 @@ class WriterTest {
   @TempDir Path tempDir;
   private JarOutputStream jarOutputStream;
 
-  private JavaWriterVisitor visitor;
-
   private File file;
 
   @BeforeEach
@@ -50,7 +48,6 @@ class WriterTest {
     Path path = tempDir.resolve("test.jar");
     jarOutputStream = new JarOutputStream(Files.newOutputStream(path));
     file = path.toFile();
-    visitor = new JavaWriterVisitor();
   }
 
   public void closeJarOutputStream() throws IOException {
@@ -140,17 +137,11 @@ class WriterTest {
     // We don't need the output stream
     jarOutputStream.close();
 
-    Exception unexpected = null;
-    try {
-      Writer.write(
-          GapicContext.EMPTY,
-          ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
-          GapicPackageInfo.with(PackageInfoDefinition.builder().setPakkage("com.test").build()),
-          Collections.emptyList(),
-          "temp-codegen.srcjar");
-    } catch (Exception ex) {
-      unexpected = ex;
-    }
-    assertNull(unexpected);
+    Writer.write(
+        GapicContext.EMPTY,
+        ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
+        GapicPackageInfo.with(PackageInfoDefinition.builder().setPakkage("com.test").build()),
+        Collections.emptyList(),
+        "temp-codegen.srcjar");
   }
 }

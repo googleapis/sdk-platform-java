@@ -20,6 +20,8 @@ import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.io.IOException;
 
+import static com.google.api.generator.gapic.protowriter.Writer.EMPTY_RESPONSE;
+
 public class Main {
 
   public static void main(String[] args) throws IOException {
@@ -27,6 +29,8 @@ public class Main {
     ProtoRegistry.registerAllExtensions(registry);
     CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(System.in, registry);
     CodeGeneratorResponse response = Generator.generateGapic(request);
-    response.writeTo(System.out);
+    if (response != EMPTY_RESPONSE) {
+      response.writeTo(System.out);
+    }
   }
 }
