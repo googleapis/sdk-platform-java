@@ -30,7 +30,7 @@ Note: googleapis repo is found in https://github.com/googleapis/googleapis.
 import os
 from pathlib import Path
 from typing import List
-import library_generation.utilities as util
+import library_generation.utils.utilities as util
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.gapic_inputs import GapicInputs
@@ -49,6 +49,7 @@ def generate_composed_library(
 ) -> None:
     """
     Generate libraries composed of more than one service or service version
+
     :param config: a GenerationConfig object representing a parsed configuration
     yaml
     :param library_path: the path to which the generated file goes
@@ -69,7 +70,7 @@ def generate_composed_library(
         build_file_folder = Path(f"{output_folder}/{gapic.proto_path}").resolve()
         print(f"build_file_folder: {build_file_folder}")
         gapic_inputs = parse_build_file(build_file_folder, gapic.proto_path)
-        # generate prerequisite files (.repo-metadata.json, .OwlBot.yaml,
+        # generate prerequisite files (.repo-metadata.json, .OwlBot-hermetic.yaml,
         # owlbot.py) here because transport is parsed from BUILD.bazel,
         # which lives in a versioned proto_path.
         util.generate_prerequisite_files(
@@ -109,10 +110,8 @@ def generate_composed_library(
             "",
             versions_file,
             owlbot_cli_source_folder,
-            config.owlbot_cli_image,
-            config.synthtool_commitish,
-            str(config.is_monorepo).lower(),
-            config.path_to_yaml,
+            str(config.is_monorepo()).lower(),
+            config.libraries_bom_version,
         ],
         "Library postprocessing",
     )
@@ -127,7 +126,7 @@ def __construct_tooling_arg(config: GenerationConfig) -> List[str]:
     arguments = []
     arguments += util.create_argument("gapic_generator_version", config)
     arguments += util.create_argument("grpc_version", config)
-    arguments += util.create_argument("protobuf_version", config)
+    arguments += util.create_argument("protoc_version", config)
 
     return arguments
 

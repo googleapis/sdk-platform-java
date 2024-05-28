@@ -29,23 +29,20 @@
  */
 package com.google.api.gax.batching;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.api.gax.batching.FlowControlEventStats.FlowControlEvent;
 import com.google.api.gax.batching.FlowController.MaxOutstandingRequestBytesReachedException;
 import java.util.concurrent.TimeUnit;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class FlowControlEventStatsTest {
+class FlowControlEventStatsTest {
 
   @Test
-  public void testCreateEvent() {
+  void testCreateEvent() {
     long timestamp = 12345, throttledTimeMs = 5000;
     FlowControlEvent event = FlowControlEvent.createReserveDelayed(timestamp, throttledTimeMs);
     assertEquals(event.getTimestampMs(), event.getTimestampMs());
@@ -69,7 +66,7 @@ public class FlowControlEventStatsTest {
   }
 
   @Test
-  public void testGetLastEvent() {
+  void testGetLastEvent() {
     FlowControlEventStats stats = new FlowControlEventStats();
     long currentTime = System.currentTimeMillis();
 

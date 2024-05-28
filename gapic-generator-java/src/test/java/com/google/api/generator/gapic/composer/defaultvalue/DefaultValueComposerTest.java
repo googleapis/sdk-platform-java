@@ -38,19 +38,19 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class DefaultValueComposerTest {
+class DefaultValueComposerTest {
   private JavaWriterVisitor writerVisitor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     writerVisitor = new JavaWriterVisitor();
   }
 
   @Test
-  public void defaultValue_mapField() {
+  void defaultValue_mapField() {
     // Incorrect and will never happen in real usage, but proves that map detection is based on
     // isMap rather than type().
     Field field =
@@ -75,7 +75,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_listField() {
+  void defaultValue_listField() {
     // Incorrect and will never happen in real usage, but proves that list detection is based on
     // isRepeated rather than type().
     Field field =
@@ -86,7 +86,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_enumField() {
+  void defaultValue_enumField() {
     // Incorrect and will never happen in real usage, but proves that enum detection is based on
     // isEnum() rather than type().
     Field field =
@@ -97,7 +97,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_messageField() {
+  void defaultValue_messageField() {
     // Incorrect and will never happen in real usage, but proves that message detection is based on
     // isMessage() rather than type().
     Field field =
@@ -108,7 +108,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_stringField() {
+  void defaultValue_stringField() {
     Field field = Field.builder().setName("foobar").setType(TypeNode.STRING).build();
     Expr expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
@@ -124,7 +124,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_numericField() {
+  void defaultValue_numericField() {
     Field field = Field.builder().setName("foobar").setType(TypeNode.INT).build();
     Expr expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
@@ -138,7 +138,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_booleanField() {
+  void defaultValue_booleanField() {
     Field field = Field.builder().setName("foobar").setType(TypeNode.BOOLEAN).build();
     Expr expr = DefaultValueComposer.createValue(field);
     expr.accept(writerVisitor);
@@ -146,7 +146,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_byteStringField() {
+  void defaultValue_byteStringField() {
     Field field =
         Field.builder()
             .setName("foobar")
@@ -158,7 +158,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameWithOnePattern() {
+  void defaultValue_resourceNameWithOnePattern() {
     FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(lockerServiceFileDescriptor);
@@ -176,7 +176,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameWithMultiplePatterns_noBindings() {
+  void defaultValue_resourceNameWithMultiplePatterns_noBindings() {
     FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(lockerServiceFileDescriptor);
@@ -201,7 +201,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameWithMultiplePatterns_matchesBindings() {
+  void defaultValue_resourceNameWithMultiplePatterns_matchesBindings() {
     FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(lockerServiceFileDescriptor);
@@ -230,7 +230,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameWithWildcardPattern() {
+  void defaultValue_resourceNameWithWildcardPattern() {
     FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(lockerServiceFileDescriptor);
@@ -248,7 +248,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_wildcardResourceNameWithOnlyDeletedTopic() {
+  void defaultValue_wildcardResourceNameWithOnlyDeletedTopic() {
     // Edge case that should never happen in practice.
     // Wildcard, but the resource names map has only other names that contain only the deleted-topic
     // constant.
@@ -272,7 +272,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameWithOnlyWildcards_valueOnly() {
+  void defaultValue_resourceNameWithOnlyWildcards_valueOnly() {
     // Edge case that occurs in GCS.
     // Wildcard, but the resource names map has only other names that contain only the deleted-topic
     // constant.
@@ -296,7 +296,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameWithOnlyWildcards_matchingBinding() {
+  void defaultValue_resourceNameWithOnlyWildcards_matchingBinding() {
     FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(lockerServiceFileDescriptor);
@@ -334,7 +334,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameWithOnlyWildcards_mismatchingBinding() {
+  void defaultValue_resourceNameWithOnlyWildcards_mismatchingBinding() {
     FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(lockerServiceFileDescriptor);
@@ -373,7 +373,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameWithOnlyWildcards_allowAnonResourceNameClass() {
+  void defaultValue_resourceNameWithOnlyWildcards_allowAnonResourceNameClass() {
     // Edge case that occurs in GCS.
     // Wildcard, but the resource names map has only other names that contain only the deleted-topic
     // constant.
@@ -412,7 +412,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void createSimpleMessageBuilderValue_resourceNameMultiplePatterns_matchesHttpBinding() {
+  void createSimpleMessageBuilderValue_resourceNameMultiplePatterns_matchesHttpBinding() {
     FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
@@ -446,8 +446,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void
-      createSimpleMessageBuilderValue_resourceNameMultiplePatterns_matchesAdditionalHttpBinding() {
+  void createSimpleMessageBuilderValue_resourceNameMultiplePatterns_matchesAdditionalHttpBinding() {
     FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
@@ -482,8 +481,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void
-      createSimpleMessageBuilderValue_resourceNameMultiplePatterns_doesNotMatchHttpBinding() {
+  void createSimpleMessageBuilderValue_resourceNameMultiplePatterns_doesNotMatchHttpBinding() {
     FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
@@ -518,7 +516,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameMultiplePatterns_noHttpBinding() {
+  void defaultValue_resourceNameMultiplePatterns_noHttpBinding() {
     FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
@@ -537,7 +535,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void createSimpleMessage_basicPrimitivesOnly() {
+  void createSimpleMessage_basicPrimitivesOnly() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
@@ -554,7 +552,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void createSimpleMessage_containsMessagesEnumsAndResourceName() {
+  void createSimpleMessage_containsMessagesEnumsAndResourceName() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
@@ -574,7 +572,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void createSimpleMessage_valueField() {
+  void createSimpleMessage_valueField() {
     FileDescriptor echoFileDescriptor =
         com.google.showcase.grpcrest.v1beta1.EchoGrpcrest.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -596,7 +594,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void createSimpleMessage_containsRepeatedField() {
+  void createSimpleMessage_containsRepeatedField() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
@@ -613,7 +611,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void createSimpleMessage_onlyOneofs() {
+  void createSimpleMessage_onlyOneofs() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
@@ -627,7 +625,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void createAnonymousResourceNameClass() {
+  void createAnonymousResourceNameClass() {
     Expr expr = DefaultValueComposer.createAnonymousResourceNameClassValue("resource", null);
     expr.accept(writerVisitor);
     String expected =

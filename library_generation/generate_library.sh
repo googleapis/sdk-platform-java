@@ -20,8 +20,8 @@ case $key in
     export gapic_generator_version
     shift
     ;;
-  --protobuf_version)
-    protobuf_version="$2"
+  --protoc_version)
+    protoc_version="$2"
     shift
     ;;
   --grpc_version)
@@ -74,7 +74,7 @@ done
 
 script_dir=$(dirname "$(readlink -f "$0")")
 # source utility functions
-source "${script_dir}"/utilities.sh
+source "${script_dir}"/utils/utilities.sh
 output_folder="$(get_output_folder)"
 
 if [ -z "${gapic_generator_version}" ]; then
@@ -82,8 +82,8 @@ if [ -z "${gapic_generator_version}" ]; then
   exit 1
 fi
 
-if [ -z "${protobuf_version}" ]; then
-  protobuf_version=$(get_protobuf_version "${gapic_generator_version}")
+if [ -z "${protoc_version}" ]; then
+  protoc_version=$(get_protoc_version "${gapic_generator_version}")
 fi
 
 if [ -z "${grpc_version}" ]; then
@@ -170,6 +170,12 @@ case "${proto_path}" in
     # and //google/cloud/oslogin/v1beta1:google-cloud-oslogin-v1-java
     proto_files="${proto_files} google/cloud/oslogin/common/common.proto"
     ;;
+  "google/cloud/visionai/v1"*)
+      # this proto is excluded in //google/cloud/visionai/v1:google-cloud-visionai-v1-java
+      # we can remove this exclusion after cl/631529749 is submitted.
+      removed_proto="google/cloud/visionai/v1/prediction.proto"
+      proto_files="${proto_files//${removed_proto}/}"
+      ;;
   "google/rpc")
     # this proto is excluded from //google/rpc:google-rpc-java
     removed_proto="google/rpc/http.proto"
@@ -177,7 +183,7 @@ case "${proto_path}" in
     ;;
 esac
 # download gapic-generator-java, protobuf and grpc plugin.
-download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_version}" "${os_architecture}"
+download_tools "${gapic_generator_version}" "${protoc_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################

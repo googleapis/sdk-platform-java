@@ -22,34 +22,34 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
-public class WriterTest {
+class WriterTest {
   private static final TypeToken<List<ReflectConfig>> REFLECT_CONFIG_JSON_FORMAT =
       new TypeToken<List<ReflectConfig>>() {};
 
-  @Rule public TemporaryFolder tempFolder = new TemporaryFolder();
-
+  @TempDir Path tempDir;
   private JarOutputStream jarOutputStream;
 
   private JavaWriterVisitor visitor;
 
   private File file;
 
-  @Before
-  public void createJarOutputStream() throws IOException {
-    file = tempFolder.newFile("test.jar");
-    jarOutputStream = new JarOutputStream(Files.newOutputStream(file.toPath()));
+  @BeforeEach
+  void createJarOutputStream() throws IOException {
+    Path path = tempDir.resolve("test.jar");
+    jarOutputStream = new JarOutputStream(Files.newOutputStream(path));
+    file = path.toFile();
     visitor = new JavaWriterVisitor();
   }
 
@@ -59,14 +59,14 @@ public class WriterTest {
     jarOutputStream.close();
   }
 
-  @After
-  public void assertJarOutputStream_isClosed() {
+  @AfterEach
+  void assertJarOutputStream_isClosed() {
     assertThrows(
         IOException.class, () -> jarOutputStream.putNextEntry(new JarEntry("should.fail")));
   }
 
   @Test
-  public void reflectConfig_notWritten_ifEmptyInput() throws IOException {
+  void reflectConfig_notWritten_ifEmptyInput() throws IOException {
     Writer.writeReflectConfigFile("com.google", Collections.emptyList(), jarOutputStream);
 
     closeJarOutputStream();
@@ -77,7 +77,7 @@ public class WriterTest {
   }
 
   @Test
-  public void reflectConfig_isWritten() throws IOException {
+  void reflectConfig_isWritten() throws IOException {
     Writer.writeReflectConfigFile(
         "com.google",
         Collections.singletonList(new ReflectConfig("com.google.Class")),

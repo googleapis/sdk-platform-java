@@ -29,21 +29,18 @@
  */
 package com.google.api.gax.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.common.base.Strings;
 import java.util.regex.Pattern;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class GaxPropertiesTest {
+class GaxPropertiesTest {
 
   @Test
-  public void testGaxVersion() {
+  void testGaxVersion() {
     String gaxVersion = GaxProperties.getGaxVersion();
     assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(gaxVersion).find());
     String[] versionComponents = gaxVersion.split("\\.");
@@ -62,8 +59,8 @@ public class GaxPropertiesTest {
   private static String originalJavaVendor = System.getProperty("java.vendor");
   private static String originalJavaVendorVersion = System.getProperty("java.vendor.version");
 
-  @After
-  public void cleanup() {
+  @AfterEach
+  void cleanup() {
     if (Strings.isNullOrEmpty(originalJavaVersion)) {
       System.clearProperty("java.version");
     } else {
@@ -84,7 +81,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_graalVM() {
+  void testGetJavaRuntimeInfo_graalVM() {
     // This case is one of major Java vendors
     System.setProperty("java.version", "17.0.3");
     System.setProperty("java.vendor", "GraalVM Community");
@@ -95,7 +92,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_temurin() {
+  void testGetJavaRuntimeInfo_temurin() {
     // This case is one of major Java vendors
     System.setProperty("java.version", "11.0.19");
     System.setProperty("java.vendor", "Eclipse Adoptium");
@@ -106,7 +103,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_coretto() {
+  void testGetJavaRuntimeInfo_coretto() {
     // This case is one of major Java vendors
     System.setProperty("java.version", "11.0.19");
     System.setProperty("java.vendor", "Amazon.com Inc.");
@@ -117,7 +114,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_specialCharacters() {
+  void testGetJavaRuntimeInfo_specialCharacters() {
     // testing for unsupported characters and spaces
     System.setProperty("java.version", "20%^.&0~.1#45`*");
     System.setProperty("java.vendor", "A^!@#$*B()[]{} C ~%& D-E ?");
@@ -128,7 +125,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_nullVendorVersion() {
+  void testGetJavaRuntimeInfo_nullVendorVersion() {
     // testing for null java.vendor.version
     System.setProperty("java.version", "20.0.1");
     System.setProperty("java.vendor", "Oracle");
@@ -139,7 +136,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_nullVendorAndVendorVersion() {
+  void testGetJavaRuntimeInfo_nullVendorAndVendorVersion() {
     // testing for null java.vendor and java.vendor.version
     System.setProperty("java.version", "20.0.1");
     System.clearProperty("java.vendor");
@@ -150,7 +147,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_nullJavaVersion() {
+  void testGetJavaRuntimeInfo_nullJavaVersion() {
     // testing for null java.version
     // We don't expect this case to happen, however we don't want the method to fail when it really
     // happens.

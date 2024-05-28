@@ -19,58 +19,48 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.protoloader.GrpcTestProtoLoader;
-import java.util.Arrays;
-import java.util.Collection;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
-public class ServiceStubSettingsClassComposerTest {
-  @Parameterized.Parameters
-  public static Collection<Object[]> data() {
-    return Arrays.asList(
-        new Object[][] {
-          {
+class ServiceStubSettingsClassComposerTest {
+  static Stream<Arguments> data() {
+    return Stream.of(
+        Arguments.of(
             "LoggingServiceV2StubSettings",
             GrpcTestProtoLoader.instance().parseLogging(),
             "logging",
-            "v2"
-          },
-          {
+            "v2"),
+        Arguments.of(
             "PublisherStubSettings",
             GrpcTestProtoLoader.instance().parsePubSubPublisher(),
             "pubsub",
-            "v1"
-          },
-          {
+            "v1"),
+        Arguments.of(
             "EchoStubSettings",
             GrpcTestProtoLoader.instance().parseShowcaseEcho(),
             "localhost:7469",
-            "v1beta1"
-          },
-          {
+            "v1beta1"),
+        Arguments.of(
             "DeprecatedServiceStubSettings",
             GrpcTestProtoLoader.instance().parseDeprecatedService(),
             "localhost:7469",
-            "v1"
-          }
-        });
+            "v1"),
+        Arguments.of(
+            "ApiVersionTestingStubSettings",
+            GrpcTestProtoLoader.instance().parseApiVersionTesting(),
+            "localhost:7469",
+            "v1"));
   }
 
-  @Parameterized.Parameter public String name;
-
-  @Parameterized.Parameter(1)
-  public GapicContext context;
-
-  @Parameterized.Parameter(2)
-  public String apiShortNameExpected;
-
-  @Parameterized.Parameter(3)
-  public String apiVersionExpected;
-
-  @Test
-  public void generateServiceStubSettingsClasses() {
+  @ParameterizedTest
+  @MethodSource("data")
+  void generateServiceStubSettingsClasses(
+      String name,
+      GapicContext context,
+      String apiShortNameExpected,
+      String packageVersionExpected) {
     Service service = context.services().get(0);
     GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, service);
 
@@ -81,6 +71,6 @@ public class ServiceStubSettingsClassComposerTest {
         clazz.classDefinition().packageString(),
         clazz.samples());
     Assert.assertCodeEquals(clazz.apiShortName(), apiShortNameExpected);
-    Assert.assertCodeEquals(clazz.apiVersion(), apiVersionExpected);
+    Assert.assertCodeEquals(clazz.packageVersion(), packageVersionExpected);
   }
 }

@@ -80,7 +80,7 @@ class FailingCallable implements Callable<String> {
   // to accurately mimic the behavior of AttemptCallable. We use the external
   // future to check that the future is done and that none of the callable's
   // logic is run.
-  public void setExternalFuture(RetryingFuture<String> externalFuture) {
+  void setExternalFuture(RetryingFuture<String> externalFuture) {
     this.externalFuture = Preconditions.checkNotNull(externalFuture);
   }
 

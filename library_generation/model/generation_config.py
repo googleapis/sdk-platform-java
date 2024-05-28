@@ -12,12 +12,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-
 import yaml
-from typing import List, Optional, Dict
+from typing import Optional
 from library_generation.model.library_config import LibraryConfig
 from library_generation.model.gapic_config import GapicConfig
+
+REPO_LEVEL_PARAMETER = "Repo level parameter"
+LIBRARY_LEVEL_PARAMETER = "Library level parameter"
+GAPIC_LEVEL_PARAMETER = "GAPIC level parameter"
+COMMON_PROTOS_LIBRARY_NAME = "common-protos"
 
 
 class GenerationConfig:
@@ -29,25 +32,60 @@ class GenerationConfig:
         self,
         gapic_generator_version: str,
         googleapis_commitish: str,
-        owlbot_cli_image: str,
-        synthtool_commitish: str,
-        template_excludes: List[str],
-        path_to_yaml: str,
-        libraries: List[LibraryConfig],
+        libraries: list[LibraryConfig],
+        libraries_bom_version: Optional[str] = None,
         grpc_version: Optional[str] = None,
-        protobuf_version: Optional[str] = None,
+        protoc_version: Optional[str] = None,
     ):
         self.gapic_generator_version = gapic_generator_version
         self.googleapis_commitish = googleapis_commitish
-        self.owlbot_cli_image = owlbot_cli_image
-        self.synthtool_commitish = synthtool_commitish
-        self.template_excludes = template_excludes
-        self.path_to_yaml = path_to_yaml
+        self.libraries_bom_version = (
+            libraries_bom_version if libraries_bom_version else ""
+        )
         self.libraries = libraries
         self.grpc_version = grpc_version
-        self.protobuf_version = protobuf_version
-        # monorepos have more than one library defined in the config yaml
-        self.is_monorepo = len(libraries) > 1
+        self.protoc_version = protoc_version
+        # explicit set to None so that we can compute the
+        # value in getter.
+        self.__contains_common_protos = None
+        self.__validate()
+
+    def get_proto_path_to_library_name(self) -> dict[str, str]:
+        """
+        Get versioned proto_path to library_name mapping from configuration.
+
+        :return: versioned proto_path to library_name mapping
+        """
+        paths = {}
+        for library in self.libraries:
+            for gapic_config in library.gapic_configs:
+                paths[gapic_config.proto_path] = library.get_library_name()
+        return paths
+
+    def is_monorepo(self) -> bool:
+        return len(self.libraries) > 1
+
+    def contains_common_protos(self) -> bool:
+        if self.__contains_common_protos is None:
+            self.__contains_common_protos = False
+            for library in self.libraries:
+                if library.get_library_name() == COMMON_PROTOS_LIBRARY_NAME:
+                    self.__contains_common_protos = True
+                    break
+        return self.__contains_common_protos
+
+    def __validate(self) -> None:
+        seen_library_names = dict()
+        for library in self.libraries:
+            library_name = library.get_library_name()
+            if library_name in seen_library_names:
+                raise ValueError(
+                    f"Both {library.name_pretty} and "
+                    f"{seen_library_names.get(library_name)} have the same "
+                    f"library name: {library_name}, please update one of the "
+                    f"library to have a different library name."
+                )
+            seen_library_names[library_name] = library.name_pretty
 
 
 def from_yaml(path_to_yaml: str) -> GenerationConfig:
@@ -59,15 +97,19 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
     with open(path_to_yaml, "r") as file_stream:
         config = yaml.safe_load(file_stream)
 
-    libraries = __required(config, "libraries")
+    libraries = __required(config, "libraries", REPO_LEVEL_PARAMETER)
+    if not libraries:
+        raise ValueError(f"Library is None in {path_to_yaml}.")
 
     parsed_libraries = list()
     for library in libraries:
         gapics = __required(library, "GAPICs")
 
         parsed_gapics = list()
+        if not gapics:
+            raise ValueError(f"GAPICs is None in {library}.")
         for gapic in gapics:
-            proto_path = __required(gapic, "proto_path")
+            proto_path = __required(gapic, "proto_path", GAPIC_LEVEL_PARAMETER)
             new_gapic = GapicConfig(proto_path)
             parsed_gapics.append(new_gapic)
 
@@ -101,27 +143,33 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         parsed_libraries.append(new_library)
 
     parsed_config = GenerationConfig(
-        gapic_generator_version=__required(config, "gapic_generator_version"),
+        gapic_generator_version=__required(
+            config, "gapic_generator_version", REPO_LEVEL_PARAMETER
+        ),
+        googleapis_commitish=__required(
+            config, "googleapis_commitish", REPO_LEVEL_PARAMETER
+        ),
         grpc_version=__optional(config, "grpc_version", None),
-        protobuf_version=__optional(config, "protobuf_version", None),
-        googleapis_commitish=__required(config, "googleapis_commitish"),
-        owlbot_cli_image=__required(config, "owlbot_cli_image"),
-        synthtool_commitish=__required(config, "synthtool_commitish"),
-        template_excludes=__required(config, "template_excludes"),
-        path_to_yaml=path_to_yaml,
+        protoc_version=__optional(config, "protoc_version", None),
+        libraries_bom_version=__optional(config, "libraries_bom_version", None),
         libraries=parsed_libraries,
     )
 
     return parsed_config
 
 
-def __required(config: Dict, key: str):
+def __required(config: dict, key: str, level: str = LIBRARY_LEVEL_PARAMETER):
     if key not in config:
-        raise ValueError(f"required key {key} not found in yaml")
+        message = (
+            f"{level}, {key}, is not found in {config} in yaml."
+            if level != REPO_LEVEL_PARAMETER
+            else f"{level}, {key}, is not found in yaml."
+        )
+        raise ValueError(message)
     return config[key]
 
 
-def __optional(config: Dict, key: str, default: any):
+def __optional(config: dict, key: str, default: any):
     if key not in config:
         return default
     return config[key]

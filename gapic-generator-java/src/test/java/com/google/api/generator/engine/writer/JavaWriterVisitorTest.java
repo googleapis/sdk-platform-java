@@ -90,26 +90,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import javax.annotation.Generated;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class JavaWriterVisitorTest {
+class JavaWriterVisitorTest {
   private JavaWriterVisitor writerVisitor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     writerVisitor = new JavaWriterVisitor();
   }
 
   @Test
-  public void writeIdentifier() {
+  void writeIdentifier() {
     String idName = "foobar";
     IdentifierNode.builder().setName(idName).build().accept(writerVisitor);
     assertEquals(idName, writerVisitor.write());
   }
 
   @Test
-  public void writePrimitiveType() {
+  void writePrimitiveType() {
     TypeNode intType = TypeNode.INT;
     assertThat(intType).isNotNull();
     intType.accept(writerVisitor);
@@ -117,7 +117,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writePrimitiveArrayType() {
+  void writePrimitiveArrayType() {
     TypeNode byteArrayType =
         TypeNode.builder().setTypeKind(TypeNode.TypeKind.BYTE).setIsArray(true).build();
     assertThat(byteArrayType).isNotNull();
@@ -126,7 +126,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeReferenceType_basic() {
+  void writeReferenceType_basic() {
     TypeNode.withReference(ConcreteReference.withClazz(List.class)).accept(writerVisitor);
     assertEquals("List", writerVisitor.write());
 
@@ -138,7 +138,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVaporReferenceType_nestedClasses() {
+  void writeVaporReferenceType_nestedClasses() {
     VaporReference nestedVaporReference =
         VaporReference.builder()
             .setName("Inner")
@@ -150,7 +150,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeConcreteReferenceType_nestedClasses() {
+  void writeConcreteReferenceType_nestedClasses() {
     ConcreteReference nestedConcreteReference =
         ConcreteReference.withClazz(Outer.Middle.Inner.class);
     TypeNode.withReference(nestedConcreteReference).accept(writerVisitor);
@@ -158,7 +158,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeReferenceType_useFullName() {
+  void writeReferenceType_useFullName() {
     TypeNode.withReference(
             ConcreteReference.builder().setClazz(List.class).setUseFullName(true).build())
         .accept(writerVisitor);
@@ -176,21 +176,21 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnnotation_simple() {
+  void writeAnnotation_simple() {
     AnnotationNode annotation = AnnotationNode.OVERRIDE;
     annotation.accept(writerVisitor);
     assertEquals("@Override\n", writerVisitor.write());
   }
 
   @Test
-  public void writeAnnotation_withStringDescription() {
+  void writeAnnotation_withStringDescription() {
     AnnotationNode annotation = AnnotationNode.withSuppressWarnings("all");
     annotation.accept(writerVisitor);
     assertEquals("@SuppressWarnings(\"all\")\n", writerVisitor.write());
   }
 
   @Test
-  public void writeAnnotation_withValueDescription() {
+  void writeAnnotation_withValueDescription() {
     TypeNode fakeAnnotationType =
         TypeNode.withReference(
             VaporReference.builder().setName("FakeAnnotation").setPakkage("com.foo.bar").build());
@@ -206,7 +206,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnnotation_withVariableExprDescription() {
+  void writeAnnotation_withVariableExprDescription() {
     TypeNode conditionalOnPropertyType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -235,7 +235,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnnotation_withMultipleNamedDescriptions() {
+  void writeAnnotation_withMultipleNamedDescriptions() {
     TypeNode conditionalOnPropertyType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -274,7 +274,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnnotation_withInvalidDescriptions() {
+  void writeAnnotation_withInvalidDescriptions() {
     TypeNode fakeAnnotationType =
         TypeNode.withReference(
             VaporReference.builder().setName("FakeAnnotation").setPakkage("com.foo.bar").build());
@@ -339,7 +339,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnnotation_withArrayExpr() {
+  void writeAnnotation_withArrayExpr() {
     TypeNode fakeAnnotationType =
         TypeNode.withReference(
             VaporReference.builder().setName("FakeAnnotation").setPakkage("com.foo.bar").build());
@@ -358,7 +358,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnnotation_withArrayExprAssignment() {
+  void writeAnnotation_withArrayExprAssignment() {
     TypeNode fakeAnnotationType =
         TypeNode.withReference(
             VaporReference.builder().setName("FakeAnnotation").setPakkage("com.foo.bar").build());
@@ -404,7 +404,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeArrayExpr_add1StringExpr() {
+  void writeArrayExpr_add1StringExpr() {
     ArrayExpr expr =
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.STRING))
@@ -415,7 +415,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeArrayExpr_addManyStrExpr() {
+  void writeArrayExpr_addManyStrExpr() {
     ArrayExpr expr =
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.STRING))
@@ -428,7 +428,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeArrayExpr_addManyClassExpr() {
+  void writeArrayExpr_addManyClassExpr() {
     ArrayExpr expr =
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
@@ -441,7 +441,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeArrayExpr_mixedVariablesStaticAndNormalReference() {
+  void writeArrayExpr_mixedVariablesStaticAndNormalReference() {
     VariableExpr clazzVar =
         VariableExpr.builder()
             .setVariable(
@@ -458,7 +458,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeArrayExpr_assignemntWithDeclaration() {
+  void writeArrayExpr_assignemntWithDeclaration() {
     VariableExpr varExpr =
         VariableExpr.builder()
             .setVariable(
@@ -481,7 +481,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeNewObjectExpr_basic() {
+  void writeNewObjectExpr_basic() {
     // isGeneric() is true, but generics() is empty.
     ConcreteReference ref = ConcreteReference.withClazz(List.class);
     TypeNode type = TypeNode.withReference(ref);
@@ -491,7 +491,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeNewObjectExpr_withMethodExprArgs() {
+  void writeNewObjectExpr_withMethodExprArgs() {
     // isGeneric() is false, and generics() is empty.
     // [Constructing] `new IOException(message, cause())` and `cause()` is a method invocation.
     TypeNode type = TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
@@ -512,7 +512,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeNewObjectExpr_withGenericsAndArgs() {
+  void writeNewObjectExpr_withGenericsAndArgs() {
     // isGeneric() is true and generics() is not empty.
     ConcreteReference listRef =
         ConcreteReference.builder()
@@ -553,7 +553,7 @@ public class JavaWriterVisitorTest {
 
   /** =============================== EXPRESSIONS =============================== */
   @Test
-  public void writeValueExpr() {
+  void writeValueExpr() {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
     ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
     valueExpr.accept(writerVisitor);
@@ -561,7 +561,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr_basic() {
+  void writeVariableExpr_basic() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
@@ -570,7 +570,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr_wildcardType() {
+  void writeVariableExpr_wildcardType() {
     TypeNode wildcardListType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -587,7 +587,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr_wildcardTypeWithUpperBound() {
+  void writeVariableExpr_wildcardTypeWithUpperBound() {
     TypeNode wildcardListType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -607,7 +607,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr_staticReference() {
+  void writeVariableExpr_staticReference() {
     VariableExpr variableExpr =
         VariableExpr.builder()
             .setVariable(
@@ -620,7 +620,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr_nonDeclIgnoresModifiers() {
+  void writeVariableExpr_nonDeclIgnoresModifiers() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr expr =
         VariableExpr.builder()
@@ -635,7 +635,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr_basicLocalDecl() {
+  void writeVariableExpr_basicLocalDecl() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr expr = VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
@@ -644,7 +644,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr_localFinalDecl() {
+  void writeVariableExpr_localFinalDecl() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
 
     VariableExpr expr =
@@ -655,7 +655,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr_scopedDecl() {
+  void writeVariableExpr_scopedDecl() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr expr =
         VariableExpr.builder()
@@ -669,7 +669,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr_scopedStaticFinalDecl() {
+  void writeVariableExpr_scopedStaticFinalDecl() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr expr =
         VariableExpr.builder()
@@ -685,7 +685,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr_scopedStaticFinalVolatileDecl() {
+  void writeVariableExpr_scopedStaticFinalVolatileDecl() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr expr =
         VariableExpr.builder()
@@ -702,7 +702,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr_basicReference() {
+  void writeVariableExpr_basicReference() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
@@ -714,7 +714,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr_basicReferenceWithModifiersSet() {
+  void writeVariableExpr_basicReferenceWithModifiersSet() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
@@ -732,7 +732,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr_nestedReference() {
+  void writeVariableExpr_nestedReference() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
@@ -751,7 +751,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeArithmeticOperationExpr_concatStringWithMethod() {
+  void writeArithmeticOperationExpr_concatStringWithMethod() {
     ValueExpr lhsExpr = ValueExpr.withValue(StringObjectValue.withValue("someWord"));
     MethodInvocationExpr methodInvocationExpr =
         MethodInvocationExpr.builder().setMethodName("getMethod").build();
@@ -768,7 +768,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeArithmeticOperationExpr_concatStringWithNumber() {
+  void writeArithmeticOperationExpr_concatStringWithNumber() {
     ValueExpr rhsExpr =
         ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("5").build());
     ValueExpr lhsExpr = ValueExpr.withValue(StringObjectValue.withValue("someWord"));
@@ -780,7 +780,7 @@ public class JavaWriterVisitorTest {
 
   /** =============================== COMMENT =============================== */
   @Test
-  public void writeBlockCommentStatement_basic() {
+  void writeBlockCommentStatement_basic() {
     String content = "this is a test comment";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     CommentStatement commentStatement = CommentStatement.withComment(blockComment);
@@ -790,7 +790,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeLineCommentStatement_basic() {
+  void writeLineCommentStatement_basic() {
     String content = "this is a test comment";
     LineComment lineComment = LineComment.builder().setComment(content).build();
     CommentStatement commentStatement = CommentStatement.withComment(lineComment);
@@ -800,7 +800,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeJavaDocCommentStatement_allComponents() {
+  void writeJavaDocCommentStatement_allComponents() {
     String content = "this is a test comment";
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
     String paramName = "shelfName";
@@ -861,7 +861,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeBlockComment_shortLines() {
+  void writeBlockComment_shortLines() {
     String content = "Apache License \nThis is a test file header";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected =
@@ -871,7 +871,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeBlockComment_newLineInBetween() {
+  void writeBlockComment_newLineInBetween() {
     String content =
         "Apache License \n"
             + "Licensed under the Apache License, Version 2.0 (the \"License\");\n\n"
@@ -890,7 +890,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeLineComment_longLine() {
+  void writeLineComment_longLine() {
     String content =
         "this is a long test comment with so many words, hello world, hello again, hello for 3"
             + " times, blah, blah!";
@@ -905,7 +905,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeLineComment_specialChar() {
+  void writeLineComment_specialChar() {
     String content =
         "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
             + " [--args='[--shelf \"Novel\\\"`\b\t\n\r"
@@ -923,7 +923,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeJavaDocComment_specialChar() {
+  void writeJavaDocComment_specialChar() {
     // Only comments and sample codes in JavaDocComment need this escaper.
     // <p> <ol> <li> <ul> are hard-coded in monolith generator, which do not need escaping.
     JavaDocComment javaDocComment =
@@ -962,7 +962,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeFailingComment_specialChar() {
+  void writeFailingComment_specialChar() {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .addUnescapedComment(
@@ -981,7 +981,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeTernaryExpr_basic() {
+  void writeTernaryExpr_basic() {
     Variable conditionVariable =
         Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
@@ -1002,7 +1002,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAssignmentExpr_basicValue() {
+  void writeAssignmentExpr_basicValue() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -1018,7 +1018,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAssignmentExpr_varToVar() {
+  void writeAssignmentExpr_varToVar() {
     Variable variable = Variable.builder().setName("foobar").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder()
@@ -1040,7 +1040,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAssignmentExpr_nullObjectValueReferenceType() {
+  void writeAssignmentExpr_nullObjectValueReferenceType() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -1056,7 +1056,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeStringObjectValue_basic() {
+  void writeStringObjectValue_basic() {
     Value value = StringObjectValue.withValue("test");
     Expr valueExpr = ValueExpr.builder().setValue(value).build();
     valueExpr.accept(writerVisitor);
@@ -1064,7 +1064,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAssignmentExpr_stringObjectValue() {
+  void writeAssignmentExpr_stringObjectValue() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -1079,7 +1079,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAssignmentExpr_variableDeclarationWithAnnotation() {
+  void writeAssignmentExpr_variableDeclarationWithAnnotation() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
         VariableExpr.builder()
@@ -1098,7 +1098,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodInvocationExpr_basic() {
+  void writeMethodInvocationExpr_basic() {
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder().setMethodName("foobar").build();
 
@@ -1107,7 +1107,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodInvocationExpr_staticRef() {
+  void writeMethodInvocationExpr_staticRef() {
     TypeNode someType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -1126,7 +1126,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodInvocationExpr_genericWithArgs() {
+  void writeMethodInvocationExpr_genericWithArgs() {
     Reference mapReference =
         ConcreteReference.builder()
             .setClazz(HashMap.class)
@@ -1173,7 +1173,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodInvocationExpr_chained() {
+  void writeMethodInvocationExpr_chained() {
     Variable variable = Variable.builder().setType(TypeNode.INT).setName("libraryClient").build();
     VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
 
@@ -1199,7 +1199,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeCastExpr_basic() {
+  void writeCastExpr_basic() {
     Variable variable = Variable.builder().setType(TypeNode.STRING).setName("str").build();
     VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
     CastExpr castExpr =
@@ -1212,7 +1212,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeCastExpr_methodInvocation() {
+  void writeCastExpr_methodInvocation() {
     TypeNode someType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -1236,7 +1236,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeCastExpr_nested() {
+  void writeCastExpr_nested() {
     Variable variable = Variable.builder().setType(TypeNode.STRING).setName("str").build();
     VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
     CastExpr castExpr =
@@ -1250,7 +1250,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnonymousClassExpr_basic() {
+  void writeAnonymousClassExpr_basic() {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
     AssignmentExpr assignmentExpr = createAssignmentExpr("foobar", "false", TypeNode.BOOLEAN);
@@ -1277,7 +1277,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnonymousClassExpr_withStatementsMethods() {
+  void writeAnonymousClassExpr_withStatementsMethods() {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
     // [Constructing] private static final String s = "foo";
@@ -1322,7 +1322,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAnonymousClassExpr_generics() {
+  void writeAnonymousClassExpr_generics() {
     // [Constructing] Function<List<IOException>, MethodDefinition>
     ConcreteReference exceptionListRef =
         ConcreteReference.builder()
@@ -1378,7 +1378,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeThrowExpr_basic() {
+  void writeThrowExpr_basic() {
     TypeNode npeType =
         TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
     ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).build();
@@ -1387,7 +1387,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeThrowExpr_basicThrowExpr() {
+  void writeThrowExpr_basicThrowExpr() {
     Expr exprToThrow =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
@@ -1402,7 +1402,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeThrowExpr_basicWithMessage() {
+  void writeThrowExpr_basicWithMessage() {
     TypeNode npeType =
         TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
     String message = "Some message asdf";
@@ -1412,7 +1412,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeThrowExpr_basicWithCause() {
+  void writeThrowExpr_basicWithCause() {
     TypeNode npeType =
         TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
     ThrowExpr throwExpr =
@@ -1428,7 +1428,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeThrowExpr_messageExpr() {
+  void writeThrowExpr_messageExpr() {
     TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
     Expr messageExpr =
         MethodInvocationExpr.builder()
@@ -1442,7 +1442,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeThrowExpr_messageAndCauseExpr() {
+  void writeThrowExpr_messageAndCauseExpr() {
     TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
     Expr messageExpr =
         MethodInvocationExpr.builder()
@@ -1465,7 +1465,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeInstanceofExpr() {
+  void writeInstanceofExpr() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
     InstanceofExpr instanceofExpr =
@@ -1475,7 +1475,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeEnumRefExpr_basic() {
+  void writeEnumRefExpr_basic() {
     TypeNode enumType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -1489,7 +1489,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeEnumRefExpr_nested() {
+  void writeEnumRefExpr_nested() {
     TypeNode enumType =
         TypeNode.withReference(ConcreteReference.withClazz(TypeNode.TypeKind.class));
     EnumRefExpr enumRefExpr = EnumRefExpr.builder().setName("VOID").setType(enumType).build();
@@ -1498,7 +1498,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeReturnExpr_basic() {
+  void writeReturnExpr_basic() {
     ReturnExpr returnExpr =
         ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue("asdf")));
     returnExpr.accept(writerVisitor);
@@ -1507,7 +1507,7 @@ public class JavaWriterVisitorTest {
 
   /** =============================== STATEMENTS =============================== */
   @Test
-  public void writeExprStatement() {
+  void writeExprStatement() {
     TypeNode someType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -1527,14 +1527,14 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeBlockStatement_empty() {
+  void writeBlockStatement_empty() {
     BlockStatement blockStatement = BlockStatement.builder().build();
     blockStatement.accept(writerVisitor);
     assertEquals("{\n}\n", writerVisitor.write());
   }
 
   @Test
-  public void writeBlockStatement_simple() {
+  void writeBlockStatement_simple() {
     TypeNode someType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -1555,7 +1555,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeBlockStatement_static() {
+  void writeBlockStatement_static() {
     TypeNode someType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -1581,7 +1581,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeIfStatement_simple() {
+  void writeIfStatement_simple() {
     AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
     Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
     List<Statement> ifBody = Arrays.asList(assignExprStatement, assignExprStatement);
@@ -1597,7 +1597,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeIfStatement_withElse() {
+  void writeIfStatement_withElse() {
     AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
     Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
     List<Statement> ifBody = Arrays.asList(assignExprStatement, assignExprStatement);
@@ -1625,7 +1625,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeIfStatement_elseIfs() {
+  void writeIfStatement_elseIfs() {
     List<Statement> ifBody =
         Arrays.asList(
             ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT)),
@@ -1666,7 +1666,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeIfStatement_nested() {
+  void writeIfStatement_nested() {
     List<Statement> ifBody =
         Arrays.asList(
             ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT)),
@@ -1729,7 +1729,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeWhileStatement_simple() {
+  void writeWhileStatement_simple() {
     AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
     Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
     List<Statement> whileBody = Arrays.asList(assignExprStatement, assignExprStatement);
@@ -1745,7 +1745,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeForStatement() {
+  void writeForStatement() {
     AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
     Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
     List<Statement> body = Arrays.asList(assignExprStatement, assignExprStatement);
@@ -1769,7 +1769,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeGeneralForStatement_basicIsDecl() {
+  void writeGeneralForStatement_basicIsDecl() {
     AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
     Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
     List<Statement> body = Arrays.asList(assignExprStatement, assignExprStatement);
@@ -1792,7 +1792,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeGeneralForStatement_basicIsNotDecl() {
+  void writeGeneralForStatement_basicIsNotDecl() {
     AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
     Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
     List<Statement> body = Arrays.asList(assignExprStatement, assignExprStatement);
@@ -1814,7 +1814,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeTryCatchStatement_simple() {
+  void writeTryCatchStatement_simple() {
     Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
@@ -1836,7 +1836,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeTryCatchStatement_simpleMultiCatch() {
+  void writeTryCatchStatement_simpleMultiCatch() {
     VariableExpr firstCatchVarExpr =
         VariableExpr.builder()
             .setVariable(
@@ -1869,7 +1869,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeTryCatchStatement_simpleMultiCatchOrderMatters() {
+  void writeTryCatchStatement_simpleMultiCatchOrderMatters() {
     VariableExpr firstCatchVarExpr =
         VariableExpr.builder()
             .setVariable(
@@ -1902,7 +1902,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeTryCatchStatement_withResources() {
+  void writeTryCatchStatement_withResources() {
     Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
@@ -1932,7 +1932,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeTryCatchStatement_sampleCodeNoCatch() {
+  void writeTryCatchStatement_sampleCodeNoCatch() {
     TryCatchStatement tryCatch =
         TryCatchStatement.builder()
             .setTryBody(
@@ -1945,7 +1945,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeTryCatchStatement_sampleCodeWithCatch() {
+  void writeTryCatchStatement_sampleCodeWithCatch() {
     Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
@@ -1976,7 +1976,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeSynchronizedStatement_basicThis() {
+  void writeSynchronizedStatement_basicThis() {
     SynchronizedStatement synchronizedStatement =
         SynchronizedStatement.builder()
             .setLock(
@@ -1993,7 +1993,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeSynchronizedStatement_basicVariableExpr() {
+  void writeSynchronizedStatement_basicVariableExpr() {
     VariableExpr strVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("str").setType(TypeNode.STRING).build());
@@ -2012,7 +2012,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodDefinition_basic() {
+  void writeMethodDefinition_basic() {
     MethodDefinition methodDefinition =
         MethodDefinition.builder()
             .setName("close")
@@ -2029,7 +2029,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodDefinition_constructor() {
+  void writeMethodDefinition_constructor() {
     TypeNode returnType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -2047,7 +2047,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodDefinition_basicEmptyBody() {
+  void writeMethodDefinition_basicEmptyBody() {
     MethodDefinition methodDefinition =
         MethodDefinition.builder()
             .setName("close")
@@ -2060,7 +2060,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodDefinition_basicAbstract() {
+  void writeMethodDefinition_basicAbstract() {
     MethodDefinition methodDefinition =
         MethodDefinition.builder()
             .setName("close")
@@ -2078,7 +2078,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodDefinition_basicAbstractEmptyBody() {
+  void writeMethodDefinition_basicAbstractEmptyBody() {
     MethodDefinition methodDefinition =
         MethodDefinition.builder()
             .setName("close")
@@ -2092,7 +2092,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodDefinition_withArgumentsAndReturnExpr() {
+  void writeMethodDefinition_withArgumentsAndReturnExpr() {
     ValueExpr returnExpr =
         ValueExpr.builder()
             .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
@@ -2131,7 +2131,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodDefinition_withCommentsAnnotationsAndThrows() {
+  void writeMethodDefinition_withCommentsAnnotationsAndThrows() {
     LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND METHOD");
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
@@ -2208,7 +2208,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodDefinition_templatedReturnTypeAndArguments() {
+  void writeMethodDefinition_templatedReturnTypeAndArguments() {
     Reference mapRef = ConcreteReference.withClazz(Map.class);
     List<VariableExpr> arguments =
         Arrays.asList(
@@ -2249,7 +2249,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeClassDefinition_basicWithFileHeader() {
+  void writeClassDefinition_basicWithFileHeader() {
     List<CommentStatement> fileHeader =
         Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
     ClassDefinition classDef =
@@ -2273,7 +2273,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeClassDefinition_withAnnotationsExtendsAndImplements() {
+  void writeClassDefinition_withAnnotationsExtendsAndImplements() {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString("com.google.example.library.v1.stub")
@@ -2304,7 +2304,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeClassDefinition_commentsStatementsAndMethods() {
+  void writeClassDefinition_commentsStatementsAndMethods() {
     LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND CLASS");
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
@@ -2443,7 +2443,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeClassDefinition_withImportCollision() {
+  void writeClassDefinition_withImportCollision() {
 
     VaporReference firstType =
         VaporReference.builder()
@@ -2508,7 +2508,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeReferenceConstructorExpr_thisConstructorWithArguments() {
+  void writeReferenceConstructorExpr_thisConstructorWithArguments() {
     VaporReference ref =
         VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
     TypeNode classType = TypeNode.withReference(ref);
@@ -2530,7 +2530,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeReferenceConstructorExpr_superConstructorWithNoArguments() {
+  void writeReferenceConstructorExpr_superConstructorWithNoArguments() {
     VaporReference ref =
         VaporReference.builder().setName("Parent").setPakkage("com.google.example.v1").build();
     TypeNode classType = TypeNode.withReference(ref);
@@ -2541,7 +2541,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeThisObjectValue_methodReturn() {
+  void writeThisObjectValue_methodReturn() {
     VaporReference ref =
         VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
     TypeNode classType = TypeNode.withReference(ref);
@@ -2560,7 +2560,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeThisObjectValue_accessFieldAndInvokeMethod() {
+  void writeThisObjectValue_accessFieldAndInvokeMethod() {
     VaporReference ref =
         VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
     TypeNode classType = TypeNode.withReference(ref);
@@ -2589,7 +2589,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeSuperObjectValue_accessFieldAndInvokeMethod() {
+  void writeSuperObjectValue_accessFieldAndInvokeMethod() {
     VaporReference ref =
         VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
     TypeNode classType = TypeNode.withReference(ref);
@@ -2619,7 +2619,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeUnaryOperationExpr_postfixIncrement() {
+  void writeUnaryOperationExpr_postfixIncrement() {
     VariableExpr variableExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.INT).setName("i").build());
     UnaryOperationExpr postIncrementOperationExpr =
@@ -2629,7 +2629,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeUnaryOperationExpr_logicalNot() {
+  void writeUnaryOperationExpr_logicalNot() {
     MethodInvocationExpr methodInvocationExpr =
         MethodInvocationExpr.builder()
             .setMethodName("isEmpty")
@@ -2642,7 +2642,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeRelationalOperationExpr_equalTo() {
+  void writeRelationalOperationExpr_equalTo() {
     VariableExpr variableExprLHS =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.BOOLEAN_OBJECT).setName("isGood").build());
@@ -2659,7 +2659,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeRelationOperationExpr_notEqualTo() {
+  void writeRelationOperationExpr_notEqualTo() {
     TypeNode someType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -2681,7 +2681,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeRelationalOperationExpr_lessThan() {
+  void writeRelationalOperationExpr_lessThan() {
     VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("i", TypeNode.INT));
     MethodInvocationExpr rhsExpr =
         MethodInvocationExpr.builder()
@@ -2696,7 +2696,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeLogicalOperationExpr_logicalAnd() {
+  void writeLogicalOperationExpr_logicalAnd() {
     VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("isEmpty", TypeNode.BOOLEAN));
     VaporReference ref =
         VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
@@ -2714,7 +2714,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeLogicalOperationExpr_logicalOr() {
+  void writeLogicalOperationExpr_logicalOr() {
     VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("isGood", TypeNode.BOOLEAN));
     MethodInvocationExpr rhsExpr =
         MethodInvocationExpr.builder()
@@ -2728,7 +2728,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAssignmentOperationExpr_multiplyAssignment() {
+  void writeAssignmentOperationExpr_multiplyAssignment() {
     VariableExpr lhsExpr = createVariableExpr("h", TypeNode.INT);
     ValueExpr rhsExpr =
         ValueExpr.withValue(
@@ -2740,7 +2740,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAssignmentOperationExpr_xorAssignment() {
+  void writeAssignmentOperationExpr_xorAssignment() {
     VariableExpr lhsExpr = createVariableExpr("h", TypeNode.INT);
     TypeNode objectType =
         TypeNode.withReference(
@@ -2761,7 +2761,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeLambdaExpr_noParameters() {
+  void writeLambdaExpr_noParameters() {
     LambdaExpr lambdaExpr =
         LambdaExpr.builder()
             .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("foo")))
@@ -2771,7 +2771,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeLambdaExpr_assignToVariable() {
+  void writeLambdaExpr_assignToVariable() {
     LambdaExpr lambdaExpr =
         LambdaExpr.builder()
             .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("foo")))
@@ -2788,7 +2788,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeLambdaExpr_oneParameter() {
+  void writeLambdaExpr_oneParameter() {
     VariableExpr argVarExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("arg").setType(TypeNode.INT).build())
@@ -2805,7 +2805,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeLambdaExpr_severalParameters() {
+  void writeLambdaExpr_severalParameters() {
     VariableExpr argOneVarExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("arg").setType(TypeNode.INT).build())
@@ -2832,7 +2832,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeLambdaExpr_body() {
+  void writeLambdaExpr_body() {
     VariableExpr argVarExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("arg").setType(TypeNode.INT).build())
@@ -2864,21 +2864,21 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeEmptyLineStatement() {
+  void writeEmptyLineStatement() {
     EmptyLineStatement statement = EmptyLineStatement.create();
     statement.accept(writerVisitor);
     assertEquals("\n", writerVisitor.write());
   }
 
   @Test
-  public void writeBreakStatement() {
+  void writeBreakStatement() {
     BreakStatement statement = BreakStatement.create();
     statement.accept(writerVisitor);
     assertEquals("break;", writerVisitor.write());
   }
 
   @Test
-  public void writePackageInfoDefinition() {
+  void writePackageInfoDefinition() {
     PackageInfoDefinition packageInfo =
         PackageInfoDefinition.builder()
             .setPakkage("com.google.example.library.v1")
@@ -2917,7 +2917,7 @@ public class JavaWriterVisitorTest {
 
   /** =============================== GOLDEN TESTS =============================== */
   @Test
-  public void writeSGrpcServiceClientWithNestedClassImport() {
+  void writeSGrpcServiceClientWithNestedClassImport() {
     GapicContext context = TestProtoLoader.instance().parseNestedMessage();
     Service nestedService = context.services().get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(context, nestedService);

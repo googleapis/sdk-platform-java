@@ -478,6 +478,11 @@ public class Parser {
                 }
               }
 
+              if (serviceOptions.hasExtension(ClientProto.apiVersion)) {
+                String apiVersion = serviceOptions.getExtension(ClientProto.apiVersion);
+                serviceBuilder.setApiVersion(apiVersion);
+              }
+
               String serviceName = s.getName();
               String overriddenServiceName = serviceName;
               String pakkage = TypeParser.getPackage(fileDescriptor);
@@ -1066,12 +1071,10 @@ public class Parser {
         .setType(TypeParser.parseType(fieldDescriptor))
         .setIsMessage(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.MESSAGE)
         .setIsEnum(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.ENUM)
-        .setIsContainedInOneof(
-            fieldDescriptor.getContainingOneof() != null
-                && !fieldDescriptor.getContainingOneof().isSynthetic())
+        .setIsContainedInOneof(fieldDescriptor.getRealContainingOneof() != null)
         .setIsProto3Optional(
             fieldDescriptor.getContainingOneof() != null
-                && fieldDescriptor.getContainingOneof().isSynthetic())
+                && fieldDescriptor.getRealContainingOneof() == null)
         .setIsRepeated(fieldDescriptor.isRepeated())
         .setIsRequired(isRequired)
         .setFieldInfoFormat(fieldInfoFormat)

@@ -18,8 +18,8 @@ package com.google.cloud;
 
 import static com.google.common.testing.SerializableTester.reserializeAndAssert;
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.common.testing.EqualsTester;
 import java.util.Calendar;
@@ -27,14 +27,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
 /** Unit tests for {@link com.google.cloud.Timestamp}. */
-@RunWith(JUnit4.class)
-public class TimestampTest {
+class TimestampTest {
   private static final String TEST_TIME_ISO = "2015-10-12T15:14:54Z";
   private static final long TEST_TIME_SECONDS = 1444662894L;
   private static final long TEST_TIME_MICROSECONDS = 10000100L;
@@ -45,14 +41,14 @@ public class TimestampTest {
   private static final Date TEST_DATE_PRE_EPOCH = new Date(TEST_TIME_MILLISECONDS_NEGATIVE);
 
   @Test
-  public void minValue() {
+  void minValue() {
     // MIN_VALUE is before the start of the Gregorian calendar... use magic value.
     assertThat(Timestamp.MIN_VALUE.getSeconds()).isEqualTo(-62135596800L);
     assertThat(Timestamp.MIN_VALUE.getNanos()).isEqualTo(0);
   }
 
   @Test
-  public void maxValue() {
+  void maxValue() {
     TimeZone tz = TimeZone.getTimeZone("UTC");
     GregorianCalendar calendar = new GregorianCalendar(tz);
     calendar.set(9999, Calendar.DECEMBER, 31, 23, 59, 59);
@@ -64,14 +60,14 @@ public class TimestampTest {
   }
 
   @Test
-  public void ofMicroseconds() {
+  void ofMicroseconds() {
     Timestamp timestamp = Timestamp.ofTimeMicroseconds(TEST_TIME_MICROSECONDS);
     assertThat(timestamp.getSeconds()).isEqualTo(TEST_TIME_MICROSECONDS / 1000000L);
     assertThat(timestamp.getNanos()).isEqualTo(TEST_TIME_MICROSECONDS % 1000000L * 1000);
   }
 
   @Test
-  public void ofDate() {
+  void ofDate() {
     Timestamp timestamp = Timestamp.of(TEST_DATE);
     Long expectedSeconds = TimeUnit.MILLISECONDS.toSeconds(TEST_TIME_MILLISECONDS);
     Long expectedNanos =
@@ -82,7 +78,7 @@ public class TimestampTest {
   }
 
   @Test
-  public void testOf() {
+  void testOf() {
     String expectedTimestampString = "1970-01-01T00:00:12.345000000Z";
     java.sql.Timestamp input = new java.sql.Timestamp(12345);
     Timestamp timestamp = Timestamp.of(input);
@@ -90,7 +86,7 @@ public class TimestampTest {
   }
 
   @Test
-  public void testOf_exactSecond() {
+  void testOf_exactSecond() {
     String expectedTimestampString = "1970-01-01T00:00:12Z";
     java.sql.Timestamp input = new java.sql.Timestamp(12000);
     Timestamp timestamp = Timestamp.of(input);
@@ -98,7 +94,7 @@ public class TimestampTest {
   }
 
   @Test
-  public void testOf_preEpoch() {
+  void testOf_preEpoch() {
     String expectedTimestampString = "1969-12-31T23:59:47.655000000Z";
     java.sql.Timestamp input = new java.sql.Timestamp(-12345);
     Timestamp timestamp = Timestamp.of(input);
@@ -106,7 +102,7 @@ public class TimestampTest {
   }
 
   @Test
-  public void testOf_onEpoch() {
+  void testOf_onEpoch() {
     String expectedTimestampString = "1970-01-01T00:00:00Z";
     java.sql.Timestamp input = new java.sql.Timestamp(0);
     Timestamp timestamp = Timestamp.of(input);
@@ -114,7 +110,7 @@ public class TimestampTest {
   }
 
   @Test
-  public void testOf_preEpochExactSecond() {
+  void testOf_preEpochExactSecond() {
     String expectedTimestampString = "1969-12-31T23:59:59Z";
     java.sql.Timestamp input = new java.sql.Timestamp(-1000);
     Timestamp timestamp = Timestamp.of(input);
@@ -122,7 +118,7 @@ public class TimestampTest {
   }
 
   @Test
-  public void ofDatePreEpoch() {
+  void ofDatePreEpoch() {
     Timestamp timestamp = Timestamp.of(TEST_DATE_PRE_EPOCH);
     long expectedSeconds = TEST_TIME_MILLISECONDS_NEGATIVE / 1_000;
     int expectedNanos = (int) (TEST_TIME_MILLISECONDS_NEGATIVE % 1_000 * 1000_000);
@@ -135,14 +131,14 @@ public class TimestampTest {
   }
 
   @Test
-  public void toDate() {
+  void toDate() {
     Timestamp timestamp = Timestamp.ofTimeSecondsAndNanos(TEST_TIME_SECONDS, 1234 * 1000);
     Date date = timestamp.toDate();
     assertThat(TEST_TIME_MILLISECONDS).isEqualTo(date.getTime());
   }
 
   @Test
-  public void toFromSqlTimestamp() {
+  void toFromSqlTimestamp() {
     long seconds = TEST_TIME_SECONDS;
     int nanos = 500000000;
 
@@ -157,67 +153,49 @@ public class TimestampTest {
   }
 
   @Test
-  public void boundsSecondsMin() {
-    try {
-      Timestamp.ofTimeSecondsAndNanos(Timestamp.MIN_VALUE.getSeconds() - 1, 999999999);
-      Assert.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+  void boundsSecondsMin() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Timestamp.ofTimeSecondsAndNanos(Timestamp.MIN_VALUE.getSeconds() - 1, 999999999));
   }
 
   @Test
-  public void boundsSecondsMax() {
-    try {
-      Timestamp.ofTimeSecondsAndNanos(Timestamp.MAX_VALUE.getSeconds() + 1, 0);
-      Assert.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+  void boundsSecondsMax() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Timestamp.ofTimeSecondsAndNanos(Timestamp.MAX_VALUE.getSeconds() + 1, 0));
   }
 
   @Test
-  public void boundsNanosMin() {
-    try {
-      Timestamp.ofTimeSecondsAndNanos(TEST_TIME_SECONDS, -1);
-      Assert.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+  void boundsNanosMin() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Timestamp.ofTimeSecondsAndNanos(TEST_TIME_SECONDS, -1));
   }
 
   @Test
-  public void boundsNanosMax() {
-    try {
-      Timestamp.ofTimeSecondsAndNanos(TEST_TIME_SECONDS, 1000000000);
-      Assert.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+  void boundsNanosMax() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Timestamp.ofTimeSecondsAndNanos(TEST_TIME_SECONDS, 1000000000));
   }
 
   @Test
-  public void boundsSqlTimestampMin() {
-    try {
-      Timestamp.of(new java.sql.Timestamp((Timestamp.MIN_VALUE.getSeconds() - 1) * 1000));
-      Assert.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+  void boundsSqlTimestampMin() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Timestamp.of(new java.sql.Timestamp((Timestamp.MIN_VALUE.getSeconds() - 1) * 1000)));
   }
 
   @Test
-  public void boundsSqlTimestampMax() {
-    try {
-      Timestamp.of(new java.sql.Timestamp((Timestamp.MAX_VALUE.getSeconds() + 1) * 1000));
-      Assert.fail();
-    } catch (IllegalArgumentException ex) {
-      assertNotNull(ex.getMessage());
-    }
+  void boundsSqlTimestampMax() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Timestamp.of(new java.sql.Timestamp((Timestamp.MAX_VALUE.getSeconds() + 1) * 1000)));
   }
 
   @Test
-  public void equalsAndHashCode() {
+  void equalsAndHashCode() {
     EqualsTester tester = new EqualsTester();
     tester.addEqualityGroup(
         Timestamp.ofTimeSecondsAndNanos(TEST_TIME_SECONDS, 0),
@@ -229,7 +207,7 @@ public class TimestampTest {
   }
 
   @Test
-  public void testToString() {
+  void testToString() {
     assertThat(Timestamp.MIN_VALUE.toString()).isEqualTo("0001-01-01T00:00:00Z");
     assertThat(Timestamp.MAX_VALUE.toString()).isEqualTo("9999-12-31T23:59:59.999999999Z");
     assertThat(Timestamp.ofTimeSecondsAndNanos(0, 0).toString()).isEqualTo("1970-01-01T00:00:00Z");
@@ -240,7 +218,7 @@ public class TimestampTest {
   }
 
   @Test
-  public void parseTimestamp() {
+  void parseTimestamp() {
     assertThat(Timestamp.parseTimestamp("0001-01-01T00:00:00Z")).isEqualTo(Timestamp.MIN_VALUE);
     assertThat(Timestamp.parseTimestamp("9999-12-31T23:59:59.999999999Z"))
         .isEqualTo(Timestamp.MAX_VALUE);
@@ -249,7 +227,7 @@ public class TimestampTest {
   }
 
   @Test
-  public void parseTimestampWithoutTimeZoneOffset() {
+  void parseTimestampWithoutTimeZoneOffset() {
     assertThat(Timestamp.parseTimestamp("0001-01-01T00:00:00")).isEqualTo(Timestamp.MIN_VALUE);
     assertThat(Timestamp.parseTimestamp("9999-12-31T23:59:59.999999999"))
         .isEqualTo(Timestamp.MAX_VALUE);
@@ -258,7 +236,7 @@ public class TimestampTest {
   }
 
   @Test
-  public void parseTimestampWithTimeZoneOffset() {
+  void parseTimestampWithTimeZoneOffset() {
     assertThat(Timestamp.parseTimestamp("0001-01-01T00:00:00-00:00"))
         .isEqualTo(Timestamp.MIN_VALUE);
     assertThat(Timestamp.parseTimestamp("9999-12-31T23:59:59.999999999-00:00"))
@@ -270,7 +248,7 @@ public class TimestampTest {
   }
 
   @Test
-  public void fromProto() {
+  void fromProto() {
     com.google.protobuf.Timestamp proto =
         com.google.protobuf.Timestamp.newBuilder().setSeconds(1234).setNanos(567).build();
     Timestamp timestamp = Timestamp.fromProto(proto);
@@ -279,7 +257,7 @@ public class TimestampTest {
   }
 
   @Test
-  public void comparable() {
+  void comparable() {
     assertThat(Timestamp.MIN_VALUE).isLessThan(Timestamp.MAX_VALUE);
     assertThat(Timestamp.MAX_VALUE).isGreaterThan(Timestamp.MIN_VALUE);
 
@@ -300,7 +278,7 @@ public class TimestampTest {
   }
 
   @Test
-  public void serialization() throws Exception {
+  void serialization() {
     reserializeAndAssert(Timestamp.parseTimestamp("9999-12-31T23:59:59.999999999Z"));
   }
 }

@@ -11,35 +11,30 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import difflib
 import json
+from filecmp import cmp
+from filecmp import dircmp
+from git import Repo
 import os
 import shutil
+import subprocess
 import unittest
 from distutils.dir_util import copy_tree
 from distutils.file_util import copy_file
-from filecmp import cmp
-from filecmp import dircmp
-
-from git import Repo
 from pathlib import Path
-from typing import List
-
-from library_generation.generate_pr_description import generate_pr_descriptions
-from library_generation.generate_repo import generate_from_yaml
-from library_generation.model.generation_config import from_yaml, GenerationConfig
+from library_generation.model.generation_config import GenerationConfig
+from library_generation.model.generation_config import from_yaml
 from library_generation.test.compare_poms import compare_xml
-from library_generation.utilities import (
-    sh_util as shell_call,
-    run_process_and_print_output,
-)
+from library_generation.utils.utilities import sh_util as shell_call
 
-config_name = "generation_config.yaml"
 script_dir = os.path.dirname(os.path.realpath(__file__))
-# for simplicity, the configuration files should be in a relative directory
-# within config_dir named {repo}/generation_config.yaml, where repo is
-# the name of the repository the target libraries live.
-config_dir = f"{script_dir}/resources/integration"
-golden_dir = f"{config_dir}/golden"
+golden_dir = os.path.join(script_dir, "resources", "integration", "golden")
+repo_root_dir = os.path.join(script_dir, "..", "..")
+build_file = os.path.join(
+    repo_root_dir, ".cloudbuild", "library_generation", "library_generation.Dockerfile"
+)
+image_tag = "test-image:latest"
 repo_prefix = "https://github.com/googleapis"
 output_dir = shell_call("get_output_folder")
 # this map tells which branch of each repo should we use for our diff tests
@@ -47,83 +42,60 @@ committish_map = {
     "google-cloud-java": "chore/test-hermetic-build",
     "java-bigtable": "chore/test-hermetic-build",
 }
+config_dir = f"{script_dir}/resources/integration"
+baseline_config_name = "baseline_generation_config.yaml"
+current_config_name = "current_generation_config.yaml"
 
 
 class IntegrationTest(unittest.TestCase):
-    def test_get_commit_message_success(self):
-        repo_url = "https://github.com/googleapis/googleapis.git"
-        config_files = self.__get_config_files(config_dir)
-        monorepo_baseline_commit = "a17d4caf184b050d50cacf2b0d579ce72c31ce74"
-        split_repo_baseline_commit = "679060c64136e85b52838f53cfe612ce51e60d1d"
-        for repo, config_file in config_files:
-            baseline_commit = (
-                monorepo_baseline_commit
-                if repo == "google-cloud-java"
-                else split_repo_baseline_commit
-            )
-            description = generate_pr_descriptions(
-                generation_config_yaml=config_file,
-                repo_url=repo_url,
-                baseline_commit=baseline_commit,
-            )
-            description_file = f"{config_dir}/{repo}/pr-description.txt"
-            if os.path.isfile(f"{description_file}"):
-                os.remove(f"{description_file}")
-            with open(f"{description_file}", "w+") as f:
-                f.write(description)
-            self.assertTrue(
-                cmp(
-                    f"{config_dir}/{repo}/pr-description-golden.txt",
-                    f"{description_file}",
-                ),
-                "The generated PR description does not match the expected golden file",
-            )
-            os.remove(f"{description_file}")
+    @classmethod
+    def setUpClass(cls) -> None:
+        IntegrationTest.__build_image(docker_file=build_file, cwd=repo_root_dir)
 
-    def test_generate_repo(self):
-        shutil.rmtree(f"{golden_dir}", ignore_errors=True)
+    @classmethod
+    def setUp(cls) -> None:
+        cls.__remove_generated_files()
         os.makedirs(f"{golden_dir}", exist_ok=True)
+
+    def test_entry_point_running_in_container(self):
         config_files = self.__get_config_files(config_dir)
         for repo, config_file in config_files:
             config = from_yaml(config_file)
+            repo_location = f"{output_dir}/{repo}"
+            config_location = f"{golden_dir}/../{repo}"
+            # 1. pull repository
             repo_dest = self.__pull_repo_to(
-                Path(f"{output_dir}/{repo}"), repo, committish_map[repo]
+                Path(repo_location), repo, committish_map[repo]
             )
+            # 2. prepare golden files
             library_names = self.__get_library_names_from_config(config)
-            # prepare golden files
-            for library_name in library_names:
-                if config.is_monorepo:
-                    copy_tree(
-                        f"{repo_dest}/{library_name}", f"{golden_dir}/{library_name}"
-                    )
-                    copy_tree(
-                        f"{repo_dest}/gapic-libraries-bom",
-                        f"{golden_dir}/gapic-libraries-bom",
-                    )
-                    copy_file(f"{repo_dest}/pom.xml", golden_dir)
-                else:
-                    copy_tree(f"{repo_dest}", f"{golden_dir}/{library_name}")
-            generate_from_yaml(
-                generation_config_yaml=config_file, repository_path=repo_dest
+            self.__prepare_golden_files(
+                config=config, library_names=library_names, repo_dest=repo_dest
             )
-            # compare result
+            # 3. run entry_point.py in docker container
+            self.__run_entry_point_in_docker_container(
+                repo_location=repo_location,
+                config_location=config_location,
+                baseline_config=baseline_config_name,
+                current_config=current_config_name,
+            )
+            # 4. compare generation result with golden files
             print(
-                "Generation finished successfully. Will now compare differences between generated and existing libraries"
+                "Generation finished successfully. "
+                "Will now compare differences between generated and existing "
+                "libraries"
             )
             for library_name in library_names:
                 actual_library = (
-                    f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
+                    f"{repo_dest}/{library_name}" if config.is_monorepo() else repo_dest
                 )
                 print("*" * 50)
                 print(f"Checking for differences in '{library_name}'.")
                 print(f"  The expected library is in {golden_dir}/{library_name}.")
                 print(f"  The actual library is in {actual_library}. ")
-                target_repo_dest = (
-                    f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
-                )
                 compare_result = dircmp(
                     f"{golden_dir}/{library_name}",
-                    target_repo_dest,
+                    actual_library,
                     ignore=[".repo-metadata.json"],
                 )
                 diff_files = []
@@ -138,30 +110,42 @@ class IntegrationTest(unittest.TestCase):
                 print_file = lambda f: print(f"   -  {f}")
                 if len(diff_files) > 0:
                     print("  Some files (found in both folders) are differing:")
-                    [print_file(f) for f in diff_files]
+                    for diff_file in diff_files:
+                        print(f"Difference in {diff_file}:")
+                        with open(
+                            f"{golden_dir}/{library_name}/{diff_file}"
+                        ) as expected_file:
+                            with open(f"{actual_library}/{diff_file}") as actual_file:
+                                [
+                                    print(line)
+                                    for line in difflib.unified_diff(
+                                        expected_file.readlines(),
+                                        actual_file.readlines(),
+                                    )
+                                ]
                 if len(golden_only) > 0:
                     print("  There were files found only in the golden dir:")
                     [print_file(f) for f in golden_only]
                 if len(generated_only) > 0:
-                    print("  Some files were found to have differences:")
+                    print("  There were files found only in the generated dir:")
                     [print_file(f) for f in generated_only]
 
                 self.assertTrue(len(golden_only) == 0)
                 self.assertTrue(len(generated_only) == 0)
                 self.assertTrue(len(diff_files) == 0)
 
-                print("  No differences found in {library_name}")
+                print(f"  No differences found in {library_name}")
                 # compare .repo-metadata.json
                 self.assertTrue(
                     self.__compare_json_files(
                         f"{golden_dir}/{library_name}/.repo-metadata.json",
-                        f"{target_repo_dest}/.repo-metadata.json",
+                        f"{actual_library}/.repo-metadata.json",
                     ),
                     msg=f"  The generated {library_name}/.repo-metadata.json is different from golden.",
                 )
                 print("  .repo-metadata.json comparison succeed.")
 
-                if not config.is_monorepo:
+                if not config.is_monorepo():
                     continue
 
                 # compare gapic-libraries-bom/pom.xml and pom.xml
@@ -181,36 +165,44 @@ class IntegrationTest(unittest.TestCase):
                     )
                 )
                 print("  pom.xml comparison succeed.")
+                # compare PR description
+                description_file = f"{output_dir}/{repo}/pr_description.txt"
+                self.assertTrue(
+                    cmp(
+                        f"{config_dir}/{repo}/pr-description-golden.txt",
+                        f"{description_file}",
+                    ),
+                    "The generated PR description does not match the expected golden file",
+                )
+                print("  PR description comparison succeed.")
+        self.__remove_generated_files()
 
     @classmethod
-    def __pull_repo_to(cls, default_dest: Path, repo: str, committish: str) -> str:
-        if "RUNNING_IN_DOCKER" in os.environ:
-            # the docker image expects the repo to be in /workspace
-            dest_in_docker = f"/workspace/{repo}"
-            run_process_and_print_output(
-                [
-                    "git",
-                    "config",
-                    "--global",
-                    "--add",
-                    "safe.directory",
-                    dest_in_docker,
-                ],
-                f"Add /workspace/{repo} to safe directories",
-            )
-            dest = Path(dest_in_docker)
-            repo = Repo(dest)
-        else:
-            dest = default_dest
-            shutil.rmtree(dest, ignore_errors=True)
-            repo_url = f"{repo_prefix}/{repo}"
-            print(f"Cloning repository {repo_url}")
-            repo = Repo.clone_from(repo_url, dest)
+    def __build_image(cls, docker_file: str, cwd: str):
+        # we build the docker image without removing intermediate containers so
+        # we can re-test more quickly
+        subprocess.check_call(
+            ["docker", "build", "-f", docker_file, "-t", image_tag, "."],
+            cwd=cwd,
+        )
+
+    @classmethod
+    def __remove_generated_files(cls):
+        shutil.rmtree(f"{output_dir}", ignore_errors=True)
+        if os.path.isdir(f"{golden_dir}"):
+            shutil.rmtree(f"{golden_dir}")
+
+    @classmethod
+    def __pull_repo_to(cls, dest: Path, repo: str, committish: str) -> str:
+        shutil.rmtree(dest, ignore_errors=True)
+        repo_url = f"{repo_prefix}/{repo}"
+        print(f"Cloning repository {repo_url}")
+        repo = Repo.clone_from(repo_url, dest)
         repo.git.checkout(committish)
         return str(dest)
 
     @classmethod
-    def __get_library_names_from_config(cls, config: GenerationConfig) -> List[str]:
+    def __get_library_names_from_config(cls, config: GenerationConfig) -> list[str]:
         library_names = []
         for library in config.libraries:
             library_names.append(f"java-{library.get_library_name()}")
@@ -218,7 +210,53 @@ class IntegrationTest(unittest.TestCase):
         return library_names
 
     @classmethod
-    def __get_config_files(cls, path: str) -> List[tuple[str, str]]:
+    def __prepare_golden_files(
+        cls, config: GenerationConfig, library_names: list[str], repo_dest: str
+    ):
+        for library_name in library_names:
+            if config.is_monorepo():
+                copy_tree(f"{repo_dest}/{library_name}", f"{golden_dir}/{library_name}")
+                copy_tree(
+                    f"{repo_dest}/gapic-libraries-bom",
+                    f"{golden_dir}/gapic-libraries-bom",
+                )
+                copy_file(f"{repo_dest}/pom.xml", golden_dir)
+            else:
+                copy_tree(f"{repo_dest}", f"{golden_dir}/{library_name}")
+
+    @classmethod
+    def __run_entry_point_in_docker_container(
+        cls,
+        repo_location: str,
+        config_location: str,
+        baseline_config: str,
+        current_config: str,
+    ):
+        # we use the calling user to prevent the mapped volumes from changing
+        # owners
+        user_id = shell_call("id -u")
+        group_id = shell_call("id -g")
+        subprocess.check_call(
+            [
+                "docker",
+                "run",
+                "-u",
+                f"{user_id}:{group_id}",
+                "--rm",
+                "-v",
+                f"{repo_location}:/workspace/repo",
+                "-v",
+                f"{config_location}:/workspace/config",
+                "-w",
+                "/workspace/repo",
+                image_tag,
+                f"--baseline-generation-config-path=/workspace/config/{baseline_config}",
+                f"--current-generation-config-path=/workspace/config/{current_config}",
+            ],
+        )
+
+    @classmethod
+    def __get_config_files(cls, path: str) -> list[tuple[str, str]]:
         config_files = []
         for sub_dir in Path(path).resolve().iterdir():
             if sub_dir.is_file():
@@ -226,9 +264,8 @@ class IntegrationTest(unittest.TestCase):
             repo = sub_dir.name
             if repo in ["golden", "java-bigtable"]:
                 continue
-            config = f"{sub_dir}/{config_name}"
+            config = f"{sub_dir}/{current_config_name}"
             config_files.append((repo, config))
-
         return config_files
 
     @classmethod
@@ -238,7 +275,7 @@ class IntegrationTest(unittest.TestCase):
         ) == cls.__load_json_to_sorted_list(actual)
 
     @classmethod
-    def __load_json_to_sorted_list(cls, path: str) -> List[tuple]:
+    def __load_json_to_sorted_list(cls, path: str) -> list[tuple]:
         with open(path) as f:
             data = json.load(f)
         res = [(key, value) for key, value in data.items()]
@@ -249,9 +286,9 @@ class IntegrationTest(unittest.TestCase):
     def __recursive_diff_files(
         cls,
         dcmp: dircmp,
-        diff_files: List[str],
-        left_only: List[str],
-        right_only: List[str],
+        diff_files: list[str],
+        left_only: list[str],
+        right_only: list[str],
         dirname: str = "",
     ):
         """

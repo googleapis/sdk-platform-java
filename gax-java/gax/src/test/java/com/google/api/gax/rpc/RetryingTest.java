@@ -29,8 +29,9 @@
  */
 package com.google.api.gax.rpc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
@@ -48,17 +49,13 @@ import com.google.common.collect.Sets;
 import com.google.common.truth.Truth;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.UncheckedExecutionException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class RetryingTest {
+class RetryingTest {
 
   @SuppressWarnings("unchecked")
   private UnaryCallable<Integer, Integer> callInt = Mockito.mock(UnaryCallable.class);
@@ -89,8 +86,8 @@ public class RetryingTest {
           .setTotalTimeout(Duration.ofNanos(1L))
           .build();
 
-  @Before
-  public void resetClock() {
+  @BeforeEach
+  void resetClock() {
     fakeClock = new FakeApiClock(System.nanoTime());
     executor = RecordingScheduler.create(fakeClock);
     clientContext =
@@ -102,8 +99,8 @@ public class RetryingTest {
             .build();
   }
 
-  @After
-  public void teardown() {
+  @AfterEach
+  void teardown() {
     executor.shutdownNow();
   }
 
@@ -112,7 +109,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retry() {
+  void retry() {
     Throwable throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.UNAVAILABLE), true);
     Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
@@ -125,7 +122,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryUsingContext() {
+  void retryUsingContext() {
     Throwable throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.INTERNAL), false);
     Mockito.when(callInt.futureCall(Mockito.<Integer>any(), Mockito.<ApiCallContext>any()))
@@ -141,8 +138,8 @@ public class RetryingTest {
             .withRetryableCodes(Sets.newHashSet(StatusCode.Code.INTERNAL)));
   }
 
-  @Test(expected = ApiException.class)
-  public void retryTotalTimeoutExceeded() {
+  @Test
+  void retryTotalTimeoutExceeded() {
     Throwable throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.UNAVAILABLE), true);
     Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
@@ -156,11 +153,11 @@ public class RetryingTest {
             .setMaxRetryDelay(Duration.ofMillis(Integer.MAX_VALUE))
             .build();
 
-    assertRetrying(retrySettings);
+    assertThrows(ApiException.class, () -> assertRetrying(retrySettings));
   }
 
   @Test
-  public void retryUsingContextTotalTimeoutExceeded() {
+  void retryUsingContextTotalTimeoutExceeded() {
     Throwable throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.INTERNAL), false);
     Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
@@ -186,20 +183,21 @@ public class RetryingTest {
     }
   }
 
-  @Test(expected = ApiException.class)
-  public void retryMaxAttemptsExceeded() {
+  @Test
+  void retryMaxAttemptsExceeded() {
     Throwable throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.UNAVAILABLE), true);
     Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
         .thenReturn(RetryingTest.<Integer>immediateFailedFuture(throwable))
         .thenReturn(RetryingTest.<Integer>immediateFailedFuture(throwable))
         .thenReturn(ApiFutures.<Integer>immediateFuture(2));
-
-    assertRetrying(FAST_RETRY_SETTINGS.toBuilder().setMaxAttempts(2).build());
+    assertThrows(
+        ApiException.class,
+        () -> assertRetrying(FAST_RETRY_SETTINGS.toBuilder().setMaxAttempts(2).build()));
   }
 
   @Test
-  public void retryUsingContextMaxAttemptsExceeded() {
+  void retryUsingContextMaxAttemptsExceeded() {
     Throwable throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.INTERNAL), false);
     Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
@@ -220,7 +218,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryWithinMaxAttempts() {
+  void retryWithinMaxAttempts() {
     Throwable throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.UNAVAILABLE), true);
     Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
@@ -232,7 +230,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryUsingContextWithinMaxAttempts() {
+  void retryUsingContextWithinMaxAttempts() {
     Throwable throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.INTERNAL), false);
     Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
@@ -248,7 +246,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryWithOnlyMaxAttempts() {
+  void retryWithOnlyMaxAttempts() {
     Throwable throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.UNAVAILABLE), true);
     Mockito.when(callInt.futureCall(Mockito.<Integer>any(), Mockito.<ApiCallContext>any()))
@@ -264,7 +262,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryUsingContextWithOnlyMaxAttempts() {
+  void retryUsingContextWithOnlyMaxAttempts() {
     Throwable throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.INTERNAL), false);
     Mockito.when(callInt.futureCall(Mockito.<Integer>any(), Mockito.<ApiCallContext>any()))
@@ -284,7 +282,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryWithoutRetrySettings() {
+  void retryWithoutRetrySettings() {
     Mockito.when(callInt.futureCall(Mockito.<Integer>any(), Mockito.<ApiCallContext>any()))
         .thenReturn(ApiFutures.immediateFuture(2));
 
@@ -295,7 +293,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryUsingContextWithoutRetrySettings() {
+  void retryUsingContextWithoutRetrySettings() {
     Mockito.when(callInt.futureCall(Mockito.<Integer>any(), Mockito.<ApiCallContext>any()))
         .thenReturn(ApiFutures.immediateFuture(2));
 
@@ -307,7 +305,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryOnStatusUnknown() {
+  void retryOnStatusUnknown() {
     Throwable throwable =
         new UnknownException(null, FakeStatusCode.of(StatusCode.Code.UNKNOWN), true);
     Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
@@ -320,58 +318,46 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryOnUnexpectedException() {
+  void retryOnUnexpectedException() {
     Throwable throwable =
         new UnknownException("foobar", null, FakeStatusCode.of(StatusCode.Code.UNKNOWN), false);
     Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
         .thenReturn(RetryingTest.<Integer>immediateFailedFuture(throwable));
-    try {
-      assertRetrying(FAST_RETRY_SETTINGS);
-      Assert.fail("Callable should have thrown an exception");
-    } catch (ApiException expected) {
-      Truth.assertThat(expected).isSameInstanceAs(throwable);
-    }
+    assertThrows(UnknownException.class, () -> assertRetrying(FAST_RETRY_SETTINGS));
   }
 
   @Test
-  public void retryNoRecover() {
+  void retryNoRecover() {
     Throwable throwable =
         new FailedPreconditionException(
             "foobar", null, FakeStatusCode.of(StatusCode.Code.FAILED_PRECONDITION), false);
     Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
         .thenReturn(RetryingTest.<Integer>immediateFailedFuture(throwable))
         .thenReturn(ApiFutures.<Integer>immediateFuture(2));
-    try {
-      assertRetrying(FAST_RETRY_SETTINGS);
-      Assert.fail("Callable should have thrown an exception");
-    } catch (ApiException expected) {
-      Truth.assertThat(expected).isSameInstanceAs(throwable);
-    }
+    assertThrows(FailedPreconditionException.class, () -> assertRetrying(FAST_RETRY_SETTINGS));
   }
 
   @Test
-  public void retryUsingContextNoRecover() {
+  void retryUsingContextNoRecover() {
     Throwable throwable =
         new FailedPreconditionException(
             "foobar", null, FakeStatusCode.of(StatusCode.Code.FAILED_PRECONDITION), false);
     Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
         .thenReturn(RetryingTest.<Integer>immediateFailedFuture(throwable))
         .thenReturn(ApiFutures.<Integer>immediateFuture(2));
-    try {
-      assertRetryingUsingContext(
-          FAILING_RETRY_SETTINGS,
-          FakeCallContext.createDefault()
-              .withRetrySettings(FAST_RETRY_SETTINGS)
-              .withRetryableCodes(
-                  Sets.newHashSet(Code.UNAVAILABLE, Code.DEADLINE_EXCEEDED, Code.UNKNOWN)));
-      Assert.fail("Callable should have thrown an exception");
-    } catch (ApiException expected) {
-      Truth.assertThat(expected).isSameInstanceAs(throwable);
-    }
+    assertThrows(
+        FailedPreconditionException.class,
+        () ->
+            assertRetryingUsingContext(
+                FAILING_RETRY_SETTINGS,
+                FakeCallContext.createDefault()
+                    .withRetrySettings(FAST_RETRY_SETTINGS)
+                    .withRetryableCodes(
+                        Sets.newHashSet(Code.UNAVAILABLE, Code.DEADLINE_EXCEEDED, Code.UNKNOWN))));
   }
 
   @Test
-  public void retryKeepFailing() {
+  void retryKeepFailing() {
     Throwable throwable =
         new UnavailableException(
             "foobar", null, FakeStatusCode.of(StatusCode.Code.UNAVAILABLE), true);
@@ -382,16 +368,14 @@ public class RetryingTest {
         FakeCallableFactory.createUnaryCallable(callInt, callSettings, clientContext);
     // Need to advance time inside the call.
     ApiFuture<Integer> future = callable.futureCall(1);
-    try {
-      Futures.getUnchecked(future);
-      Assert.fail("Callable should have thrown an exception");
-    } catch (UncheckedExecutionException expected) {
-      Truth.assertThat(expected).hasCauseThat().isSameInstanceAs(throwable);
-    }
+
+    UncheckedExecutionException actual =
+        assertThrows(UncheckedExecutionException.class, () -> Futures.getUnchecked(future));
+    assertEquals(actual.getCause(), throwable);
   }
 
   @Test
-  public void testKnownStatusCode() {
+  void testKnownStatusCode() {
     ImmutableSet<StatusCode.Code> retryable = ImmutableSet.of(StatusCode.Code.UNAVAILABLE);
     Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
         .thenReturn(
@@ -404,16 +388,12 @@ public class RetryingTest {
             .build();
     UnaryCallable<Integer, Integer> callable =
         FakeCallableFactory.createUnaryCallable(callInt, callSettings, clientContext);
-    try {
-      callable.call(1);
-      Assert.fail("Callable should have thrown an exception");
-    } catch (FailedPreconditionException expected) {
-      Truth.assertThat(expected.getMessage()).isEqualTo("known");
-    }
+
+    assertThrows(FailedPreconditionException.class, () -> callable.call(1));
   }
 
   @Test
-  public void testUnknownStatusCode() {
+  void testUnknownStatusCode() {
     ImmutableSet<StatusCode.Code> retryable = ImmutableSet.of();
     Mockito.when(callInt.futureCall((Integer) Mockito.any(), (ApiCallContext) Mockito.any()))
         .thenReturn(RetryingTest.<Integer>immediateFailedFuture(new RuntimeException("unknown")));
@@ -423,12 +403,8 @@ public class RetryingTest {
             .build();
     UnaryCallable<Integer, Integer> callable =
         FakeCallableFactory.createUnaryCallable(callInt, callSettings, clientContext);
-    try {
-      callable.call(1);
-      Assert.fail("Callable should have thrown an exception");
-    } catch (RuntimeException expected) {
-      Truth.assertThat(expected).isInstanceOf(RuntimeException.class);
-    }
+
+    assertThrows(RuntimeException.class, () -> callable.call(1));
   }
 
   public static UnaryCallSettings<Integer, Integer> createSettings(RetrySettings retrySettings) {

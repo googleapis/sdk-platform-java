@@ -31,25 +31,22 @@ package com.google.api.gax.rpc;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class ApiClientHeaderProviderTest {
+class ApiClientHeaderProviderTest {
 
   private static final String X_GOOG_API_CLIENT = "x-goog-api-client";
   private static final String CLOUD_RESOURCE_PREFIX = "google-cloud-resource-prefix";
 
   @Test
-  public void testServiceHeaderDefault() {
+  void testServiceHeaderDefault() {
     ApiClientHeaderProvider provider = ApiClientHeaderProvider.newBuilder().build();
     assertThat(provider.getHeaders().size()).isEqualTo(1);
     assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT)).matches("^gl-java/.* gax/.*$");
   }
 
   @Test
-  public void testServiceHeaderManual() {
+  void testServiceHeaderManual() {
     ApiClientHeaderProvider provider =
         ApiClientHeaderProvider.newBuilder().setClientLibToken("gccl", "1.2.3").build();
     assertThat(provider.getHeaders().size()).isEqualTo(1);
@@ -58,7 +55,7 @@ public class ApiClientHeaderProviderTest {
   }
 
   @Test
-  public void testServiceHeaderManualGapic() {
+  void testServiceHeaderManualGapic() {
     ApiClientHeaderProvider provider =
         ApiClientHeaderProvider.newBuilder()
             .setTransportToken("grpc", "1.2.3")
@@ -71,7 +68,7 @@ public class ApiClientHeaderProviderTest {
   }
 
   @Test
-  public void testServiceHeaderManualGrpc() {
+  void testServiceHeaderManualGrpc() {
     ApiClientHeaderProvider provider =
         ApiClientHeaderProvider.newBuilder()
             .setTransportToken("grpc", "1.2.3")
@@ -83,7 +80,7 @@ public class ApiClientHeaderProviderTest {
   }
 
   @Test
-  public void testServiceHeaderGapic() {
+  void testServiceHeaderGapic() {
     ApiClientHeaderProvider provider =
         ApiClientHeaderProvider.newBuilder()
             .setTransportToken("grpc", "1.2.3")
@@ -95,7 +92,7 @@ public class ApiClientHeaderProviderTest {
   }
 
   @Test
-  public void testCloudResourcePrefixHeader() {
+  void testCloudResourcePrefixHeader() {
     ApiClientHeaderProvider provider =
         ApiClientHeaderProvider.newBuilder()
             .setTransportToken("grpc", "1.2.3")
@@ -109,7 +106,7 @@ public class ApiClientHeaderProviderTest {
   }
 
   @Test
-  public void testCustomHeaderKeys() {
+  void testCustomHeaderKeys() {
     ApiClientHeaderProvider provider =
         ApiClientHeaderProvider.newBuilder()
             .setTransportToken("grpc", "1.2.3")
@@ -125,7 +122,7 @@ public class ApiClientHeaderProviderTest {
   }
 
   @Test
-  public void testQuotaProjectHeader() {
+  void testQuotaProjectHeader() {
     String quotaProjectHeaderValue = "quota-project-id-value";
     ApiClientHeaderProvider provider =
         ApiClientHeaderProvider.newBuilder()
@@ -137,5 +134,19 @@ public class ApiClientHeaderProviderTest {
         .matches("^gl-java/.* gccl/1\\.2\\.3 gax/.*$");
     assertThat(provider.getHeaders().get(ApiClientHeaderProvider.QUOTA_PROJECT_ID_HEADER_KEY))
         .matches(quotaProjectHeaderValue);
+  }
+
+  @Test
+  void testApiVersionHeader() {
+    ApiClientHeaderProvider provider =
+        ApiClientHeaderProvider.newBuilder().setApiVersionToken("fake-version-string").build();
+    assertThat(provider.getHeaders().size()).isEqualTo(2);
+    assertThat(provider.getHeaders().get(ApiClientHeaderProvider.API_VERSION_HEADER_KEY))
+        .matches("fake-version-string");
+
+    ApiClientHeaderProvider emptyProvider =
+        ApiClientHeaderProvider.newBuilder().setApiVersionToken("").build();
+    assertThat(
+        emptyProvider.getHeaders().get(ApiClientHeaderProvider.API_VERSION_HEADER_KEY).isEmpty());
   }
 }

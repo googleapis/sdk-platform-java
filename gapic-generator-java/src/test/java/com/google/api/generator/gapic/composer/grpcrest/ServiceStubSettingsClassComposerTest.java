@@ -23,37 +23,31 @@ import com.google.api.generator.test.framework.GoldenFileWriter;
 import com.google.api.generator.test.protoloader.GrpcRestTestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.junit.Test;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-public class ServiceStubSettingsClassComposerTest {
-  @Test
-  public void generateServiceClasses() {
-    GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseEcho();
+class ServiceStubSettingsClassComposerTest {
+  static Stream<Arguments> data() {
+    return Stream.of(
+        Arguments.of(
+            "EchoStubSettings.golden", GrpcRestTestProtoLoader.instance().parseShowcaseEcho()),
+        Arguments.of(
+            "WickedStubSettings.golden", GrpcRestTestProtoLoader.instance().parseShowcaseWicked()));
+  }
+
+  @ParameterizedTest
+  @MethodSource("data")
+  void generateServiceClasses(String goldenFileName, GapicContext context) {
     Service echoProtoService = context.services().get(0);
     GapicClass clazz =
         ServiceStubSettingsClassComposer.instance().generate(context, echoProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    GoldenFileWriter.saveCodegenToFile(this.getClass(), "EchoStubSettings.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "EchoStubSettings.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
-  }
-
-  @Test
-  public void generateServiceClassesWicked() {
-    GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseWicked();
-    Service wickedProtoService = context.services().get(0);
-    GapicClass clazz =
-        ServiceStubSettingsClassComposer.instance().generate(context, wickedProtoService);
-
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    GoldenFileWriter.saveCodegenToFile(
-        this.getClass(), "WickedStubSettings.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "WickedStubSettings.golden");
+    GoldenFileWriter.saveCodegenToFile(this.getClass(), goldenFileName, visitor.write());
+    Path goldenFilePath = Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), goldenFileName);
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

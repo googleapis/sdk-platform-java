@@ -1,0 +1,19 @@
+absl-py==2.1.0
+attr==0.3.2
+attrs==23.2.0
+black==24.4.2
+click==8.1.7
+gitdb==4.0.11
+GitPython==3.1.43
+Jinja2==3.1.4
+lxml==5.2.2
+MarkupSafe==2.1.5
+mypy-extensions==1.0.0
+packaging==23.2
+pathspec==0.12.1
+PyYAML==6.0.1
+smmap==5.0.1
+typing==3.7.4.3
+parameterized==0.9.0 # used in parameterized test
+colorlog==6.8.2
+watchdog==4.0.0

@@ -15,6 +15,7 @@
 package com.google.api.generator.test.protoloader;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
 
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
@@ -25,6 +26,7 @@ import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.api.generator.gapic.protoparser.ServiceYamlParser;
+import com.google.api.version.test.ApiVersionTestingOuterClass;
 import com.google.longrunning.OperationsProto;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
@@ -116,6 +118,39 @@ public class RestTestProtoLoader extends TestProtoLoader {
         .setServices(services)
         .setServiceConfig(config)
         .setServiceYamlProto(service)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(getTransport())
+        .setRestNumericEnumsEnabled(true)
+        .build();
+  }
+
+  public GapicContext parseApiVersionTesting() {
+    FileDescriptor testingFileDescriptor = ApiVersionTestingOuterClass.getDescriptor();
+    ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
+    assertEquals(testingService.getName(), "EchoWithVersion");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            testingFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
+
+    String jsonFilename = "showcase_grpc_service_config.json";
+    Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertThat(configOpt.isPresent()).isTrue();
+    GapicServiceConfig config = configOpt.get();
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(getTransport())
         .setRestNumericEnumsEnabled(true)

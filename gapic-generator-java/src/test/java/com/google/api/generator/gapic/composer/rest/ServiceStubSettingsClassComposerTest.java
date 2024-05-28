@@ -23,22 +23,32 @@ import com.google.api.generator.test.framework.GoldenFileWriter;
 import com.google.api.generator.test.protoloader.RestTestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.junit.Test;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-public class ServiceStubSettingsClassComposerTest {
-  @Test
-  public void generateServiceClasses() {
-    GapicContext context = RestTestProtoLoader.instance().parseCompliance();
-    Service echoProtoService = context.services().get(0);
-    GapicClass clazz =
-        ServiceStubSettingsClassComposer.instance().generate(context, echoProtoService);
+class ServiceStubSettingsClassComposerTest {
+
+  static Stream<Arguments> data() {
+    return Stream.of(
+        Arguments.of(
+            "ComplianceStubSettings.golden", RestTestProtoLoader.instance().parseCompliance()),
+        Arguments.of(
+            "HttpJsonApiVersionTestingStubSettings.golden",
+            RestTestProtoLoader.instance().parseApiVersionTesting()));
+  }
+
+  @ParameterizedTest
+  @MethodSource("data")
+  void generateServiceClasses(String goldenFileName, GapicContext context) {
+    Service protoService = context.services().get(0);
+    GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, protoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    GoldenFileWriter.saveCodegenToFile(
-        this.getClass(), "ComplianceStubSettings.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "ComplianceStubSettings.golden");
+    GoldenFileWriter.saveCodegenToFile(this.getClass(), goldenFileName, visitor.write());
+    Path goldenFilePath = Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), goldenFileName);
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.tracing;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
@@ -46,28 +46,21 @@ import io.opentelemetry.api.metrics.LongCounterBuilder;
 import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.api.metrics.MeterBuilder;
 import java.util.Map;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.mockito.quality.Strictness;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(JUnit4.class)
-public class OpenTelemetryMetricsRecorderTest {
+@ExtendWith(MockitoExtension.class)
+class OpenTelemetryMetricsRecorderTest {
   private static final String SERVICE_NAME = "OtelRecorderTest";
   private static final String ATTEMPT_COUNT = SERVICE_NAME + "/attempt_count";
   private static final String OPERATION_COUNT = SERVICE_NAME + "/operation_count";
   private static final String ATTEMPT_LATENCY = SERVICE_NAME + "/attempt_latency";
   private static final String OPERATION_LATENCY = SERVICE_NAME + "/operation_latency";
   private static final String DEFAULT_METHOD_NAME = "fake_service.fake_method";
-  // stricter way of testing for early detection of unused stubs and argument mismatches
-  @Rule
-  public final MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
 
   private OpenTelemetryMetricsRecorder otelMetricsRecorder;
   @Mock private OpenTelemetry openTelemetry;
@@ -82,8 +75,8 @@ public class OpenTelemetryMetricsRecorderTest {
   @Mock private LongCounter operationCountRecorder;
   @Mock private LongCounterBuilder operationCountRecorderBuilder;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     Mockito.when(openTelemetry.meterBuilder(Mockito.anyString())).thenReturn(meterBuilder);
     Mockito.when(meterBuilder.setInstrumentationVersion(Mockito.anyString()))
         .thenReturn(meterBuilder);
@@ -108,7 +101,7 @@ public class OpenTelemetryMetricsRecorderTest {
   }
 
   @Test
-  public void testAttemptCountRecorder_recordsAttributes() {
+  void testAttemptCountRecorder_recordsAttributes() {
     Map<String, String> attributes = getAttributes(Code.OK);
 
     Attributes otelAttributes = otelMetricsRecorder.toOtelAttributes(attributes);
@@ -119,7 +112,7 @@ public class OpenTelemetryMetricsRecorderTest {
   }
 
   @Test
-  public void testAttemptLatencyRecorder_recordsAttributes() {
+  void testAttemptLatencyRecorder_recordsAttributes() {
     Map<String, String> attributes = getAttributes(Code.NOT_FOUND);
 
     Attributes otelAttributes = otelMetricsRecorder.toOtelAttributes(attributes);
@@ -130,7 +123,7 @@ public class OpenTelemetryMetricsRecorderTest {
   }
 
   @Test
-  public void testOperationCountRecorder_recordsAttributes() {
+  void testOperationCountRecorder_recordsAttributes() {
     Map<String, String> attributes = getAttributes(Code.OK);
 
     Attributes otelAttributes = otelMetricsRecorder.toOtelAttributes(attributes);
@@ -141,7 +134,7 @@ public class OpenTelemetryMetricsRecorderTest {
   }
 
   @Test
-  public void testOperationLatencyRecorder_recordsAttributes() {
+  void testOperationLatencyRecorder_recordsAttributes() {
     Map<String, String> attributes = getAttributes(Code.INVALID_ARGUMENT);
 
     Attributes otelAttributes = otelMetricsRecorder.toOtelAttributes(attributes);
@@ -152,7 +145,7 @@ public class OpenTelemetryMetricsRecorderTest {
   }
 
   @Test
-  public void testToOtelAttributes_correctConversion() {
+  void testToOtelAttributes_correctConversion() {
     Map<String, String> attributes = getAttributes(Code.OK);
 
     Attributes otelAttributes = otelMetricsRecorder.toOtelAttributes(attributes);
@@ -166,7 +159,7 @@ public class OpenTelemetryMetricsRecorderTest {
   }
 
   @Test
-  public void testToOtelAttributes_nullInput() {
+  void testToOtelAttributes_nullInput() {
     Throwable thrown =
         assertThrows(NullPointerException.class, () -> otelMetricsRecorder.toOtelAttributes(null));
     Truth.assertThat(thrown).hasMessageThat().contains("Attributes map cannot be null");

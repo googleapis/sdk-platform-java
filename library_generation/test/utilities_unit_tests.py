@@ -15,28 +15,21 @@
 """
 Unit tests for python scripts
 """
-
+import shutil
 import unittest
 import os
 import io
 import contextlib
 from pathlib import Path
-from parameterized import parameterized
-from library_generation import utilities as util
+from library_generation.utils import utilities as util
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
-from library_generation.model.gapic_inputs import parse as parse_build_file
-from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
 from library_generation.test.test_utils import FileComparator
 from library_generation.test.test_utils import cleanup
-from library_generation.utilities import find_versioned_proto_path
-from library_generation.utilities import get_file_paths
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
-build_file = Path(os.path.join(resources_dir, "misc")).resolve()
-test_config_dir = Path(os.path.join(resources_dir, "test-config")).resolve()
 file_comparator = FileComparator()
 library_1 = LibraryConfig(
     api_shortname="baremetalsolution",
@@ -55,12 +48,11 @@ library_2 = LibraryConfig(
     api_description="allows you to encrypt, store, manage, and audit infrastructure and application-level secrets.",
     gapic_configs=list(),
 )
-library_3 = LibraryConfig(
-    api_shortname="secret",
-    name_pretty="Secret Management Example",
-    product_documentation="https://cloud.google.com/solutions/",
-    api_description="allows you to encrypt, store, and audit infrastructure and application-level secrets.",
-    library_name="secretmanager",
+common_protos = LibraryConfig(
+    api_shortname="common-protos",
+    name_pretty="Common Protos",
+    product_documentation="",
+    api_description="example description",
     gapic_configs=list(),
 )
 
@@ -105,6 +97,65 @@ class UtilitiesTest(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             result = util.sh_util("nonexistent_function")
 
+    def test_mv_src_files_gapic_main_succeeds(self):
+        previous_dir = os.getcwd()
+        os.chdir(f"{resources_dir}/test_mv_src/gapic")
+        os.environ["folder_name"] = "example"
+        util.sh_util("mv_src_files gapic main destination")
+        self.assertTrue(
+            os.path.isfile("destination/gapic-example/src/main/java/example_main.txt")
+        )
+        shutil.rmtree("destination/gapic-example")
+        os.chdir(previous_dir)
+
+    def test_mv_src_files_gapic_test_succeeds(self):
+        previous_dir = os.getcwd()
+        os.chdir(f"{resources_dir}/test_mv_src/gapic")
+        os.environ["folder_name"] = "example"
+        util.sh_util("mv_src_files gapic test destination")
+        self.assertTrue(
+            os.path.isfile("destination/gapic-example/src/test/java/example_test.txt")
+        )
+        shutil.rmtree("destination/gapic-example")
+        os.chdir(previous_dir)
+
+    def test_mv_src_files_proto_main_succeeds(self):
+        previous_dir = os.getcwd()
+        os.chdir(f"{resources_dir}/test_mv_src/proto")
+        os.environ["folder_name"] = "example"
+        util.sh_util("mv_src_files proto main destination")
+        self.assertTrue(
+            os.path.isfile(
+                "destination/proto-example/src/main/java/example_proto_main.txt"
+            )
+        )
+        shutil.rmtree("destination/proto-example")
+        os.chdir(previous_dir)
+
+    def test_mv_src_files_sample_suffix_io_succeeds(self):
+        previous_dir = os.getcwd()
+        os.chdir(f"{resources_dir}/test_mv_src/samples")
+        util.sh_util("mv_src_files samples main destination_io")
+        self.assertTrue(
+            os.path.isfile(
+                "destination_io/samples/snippets/generated/io/example_io_sample.txt"
+            )
+        )
+        shutil.rmtree("destination_io/samples")
+        os.chdir(previous_dir)
+
+    def test_mv_src_files_sample_suffix_com_succeeds(self):
+        previous_dir = os.getcwd()
+        os.chdir(f"{resources_dir}/test_mv_src/samples")
+        util.sh_util("mv_src_files samples main destination_com")
+        self.assertTrue(
+            os.path.isfile(
+                "destination_com/samples/snippets/generated/com/example_com_sample.txt"
+            )
+        )
+        shutil.rmtree("destination_com/samples")
+        os.chdir(previous_dir)
+
     def test_eprint_valid_input_succeeds(self):
         test_input = "This is some test input"
         # create a stdio capture object
@@ -116,284 +167,9 @@ class UtilitiesTest(unittest.TestCase):
         # print() appends a `\n` each time it's called
         self.assertEqual(test_input + "\n", result)
 
-    # parameterized tests need to run from the class, see
-    # https://github.com/wolever/parameterized/issues/37 for more info.
-    # This test confirms that a ValueError with an error message about a
-    # missing key (specified in the first parameter of each `parameterized`
-    # tuple) when parsing a test configuration yaml (second parameter) will
-    # be raised.
-    @parameterized.expand(
-        [
-            ("libraries", f"{test_config_dir}/config_without_libraries.yaml"),
-            ("GAPICs", f"{test_config_dir}/config_without_gapics.yaml"),
-            ("proto_path", f"{test_config_dir}/config_without_proto_path.yaml"),
-            ("api_shortname", f"{test_config_dir}/config_without_api_shortname.yaml"),
-            (
-                "api_description",
-                f"{test_config_dir}/config_without_api_description.yaml",
-            ),
-            ("name_pretty", f"{test_config_dir}/config_without_name_pretty.yaml"),
-            (
-                "product_documentation",
-                f"{test_config_dir}/config_without_product_docs.yaml",
-            ),
-            (
-                "gapic_generator_version",
-                f"{test_config_dir}/config_without_generator.yaml",
-            ),
-            (
-                "googleapis_commitish",
-                f"{test_config_dir}/config_without_googleapis.yaml",
-            ),
-            ("owlbot_cli_image", f"{test_config_dir}/config_without_owlbot.yaml"),
-            ("synthtool_commitish", f"{test_config_dir}/config_without_synthtool.yaml"),
-            (
-                "template_excludes",
-                f"{test_config_dir}/config_without_temp_excludes.yaml",
-            ),
-        ]
-    )
-    def test_from_yaml_without_key_fails(self, error_message_contains, path_to_yaml):
-        self.assertRaisesRegex(
-            ValueError,
-            error_message_contains,
-            from_yaml,
-            path_to_yaml,
-        )
-
-    def test_from_yaml_succeeds(self):
-        config = from_yaml(f"{test_config_dir}/generation_config.yaml")
-        self.assertEqual("2.34.0", config.gapic_generator_version)
-        self.assertEqual(25.2, config.protobuf_version)
-        self.assertEqual(
-            "1a45bf7393b52407188c82e63101db7dc9c72026", config.googleapis_commitish
-        )
-        self.assertEqual(
-            "sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409",
-            config.owlbot_cli_image,
-        )
-        self.assertEqual(
-            "6612ab8f3afcd5e292aecd647f0fa68812c9f5b5", config.synthtool_commitish
-        )
-        self.assertEqual(
-            [
-                ".github/*",
-                ".kokoro/*",
-                "samples/*",
-                "CODE_OF_CONDUCT.md",
-                "CONTRIBUTING.md",
-                "LICENSE",
-                "SECURITY.md",
-                "java.header",
-                "license-checks.xml",
-                "renovate.json",
-                ".gitignore",
-            ],
-            config.template_excludes,
-        )
-        library = config.libraries[0]
-        self.assertEqual("cloudasset", library.api_shortname)
-        self.assertEqual("Cloud Asset Inventory", library.name_pretty)
-        self.assertEqual(
-            "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview",
-            library.product_documentation,
-        )
-        self.assertEqual(
-            "provides inventory services based on a time series database.",
-            library.api_description,
-        )
-        self.assertEqual("asset", library.library_name)
-        self.assertEqual("@googleapis/analytics-dpe", library.codeowner_team)
-        self.assertEqual(
-            "proto-google-iam-v1-bom,google-iam-policy,proto-google-iam-v1",
-            library.excluded_poms,
-        )
-        self.assertEqual("google-iam-policy", library.excluded_dependencies)
-        gapics = library.gapic_configs
-        self.assertEqual(5, len(gapics))
-        self.assertEqual("google/cloud/asset/v1", gapics[0].proto_path)
-        self.assertEqual("google/cloud/asset/v1p1beta1", gapics[1].proto_path)
-        self.assertEqual("google/cloud/asset/v1p2beta1", gapics[2].proto_path)
-        self.assertEqual("google/cloud/asset/v1p5beta1", gapics[3].proto_path)
-        self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
-
-    def test_get_file_paths_from_yaml_success(self):
-        paths = get_file_paths(from_yaml(f"{test_config_dir}/generation_config.yaml"))
-        self.assertEqual(
-            {
-                "google/cloud/asset/v1": "asset",
-                "google/cloud/asset/v1p1beta1": "asset",
-                "google/cloud/asset/v1p2beta1": "asset",
-                "google/cloud/asset/v1p5beta1": "asset",
-                "google/cloud/asset/v1p7beta1": "asset",
-            },
-            paths,
-        )
-
-    @parameterized.expand(
-        [
-            (
-                "google/cloud/aiplatform/v1/schema/predict/params/image_classification.proto",
-                "google/cloud/aiplatform/v1",
-            ),
-            (
-                "google/cloud/asset/v1p2beta1/assets.proto",
-                "google/cloud/asset/v1p2beta1",
-            ),
-            ("google/type/color.proto", "google/type/color.proto"),
-        ]
-    )
-    def test_find_versioned_proto_path(self, file_path, expected):
-        proto_path = find_versioned_proto_path(file_path)
-        self.assertEqual(expected, proto_path)
-
-    @parameterized.expand(
-        [
-            ("BUILD_no_additional_protos.bazel", " "),
-            ("BUILD_common_resources.bazel", "  google/cloud/common_resources.proto"),
-            ("BUILD_comment_common_resources.bazel", " "),
-            ("BUILD_locations.bazel", "  google/cloud/location/locations.proto"),
-            ("BUILD_comment_locations.bazel", " "),
-            ("BUILD_iam_policy.bazel", "  google/iam/v1/iam_policy.proto"),
-            ("BUILD_comment_iam_policy.bazel", " "),
-            (
-                "BUILD_iam_locations.bazel",
-                "  google/cloud/location/locations.proto google/iam/v1/iam_policy.proto",
-            ),
-        ]
-    )
-    def test_gapic_inputs_parse_additional_protos(self, build_name, expected):
-        parsed = parse_build_file(build_file, "", build_name)
-        self.assertEqual(
-            expected,
-            parsed.additional_protos,
-        )
-
-    def test_gapic_inputs_parse_grpc_only_succeeds(self):
-        parsed = parse_build_file(build_file, "", "BUILD_grpc.bazel")
-        self.assertEqual("grpc", parsed.transport)
-
-    def test_gapic_inputs_parse_grpc_rest_succeeds(self):
-        parsed = parse_build_file(build_file, "", "BUILD_grpc_rest.bazel")
-        self.assertEqual("grpc+rest", parsed.transport)
-
-    def test_gapic_inputs_parse_rest_succeeds(self):
-        parsed = parse_build_file(build_file, "", "BUILD_rest.bazel")
-        self.assertEqual("rest", parsed.transport)
-
-    def test_gapic_inputs_parse_empty_include_samples_succeeds(self):
-        parsed = parse_build_file(build_file, "", "BUILD_include_samples_empty.bazel")
-        self.assertEqual("false", parsed.include_samples)
-
-    def test_gapic_inputs_parse_include_samples_false_succeeds(self):
-        parsed = parse_build_file(build_file, "", "BUILD_include_samples_false.bazel")
-        self.assertEqual("false", parsed.include_samples)
-
-    def test_gapic_inputs_parse_include_samples_true_succeeds(self):
-        parsed = parse_build_file(build_file, "", "BUILD_include_samples_true.bazel")
-        self.assertEqual("true", parsed.include_samples)
-
-    def test_gapic_inputs_parse_empty_rest_numeric_enums_succeeds(self):
-        parsed = parse_build_file(
-            build_file, "", "BUILD_rest_numeric_enums_empty.bazel"
-        )
-        self.assertEqual("false", parsed.rest_numeric_enum)
-
-    def test_gapic_inputs_parse_rest_numeric_enums_false_succeeds(self):
-        parsed = parse_build_file(
-            build_file, "", "BUILD_rest_numeric_enums_false.bazel"
-        )
-        self.assertEqual("false", parsed.rest_numeric_enum)
-
-    def test_gapic_inputs_parse_rest_numeric_enums_true_succeeds(self):
-        parsed = parse_build_file(build_file, "", "BUILD_rest_numeric_enums_true.bazel")
-        self.assertEqual("true", parsed.rest_numeric_enum)
-
-    def test_gapic_inputs_parse_no_gapic_library_returns_proto_only_true(self):
-        # include_samples_empty only has a gradle assembly rule
-        parsed = parse_build_file(build_file, "", "BUILD_include_samples_empty.bazel")
-        self.assertEqual("true", parsed.proto_only)
-
-    def test_gapic_inputs_parse_with_gapic_library_returns_proto_only_false(self):
-        # rest.bazel has a java_gapic_library rule
-        parsed = parse_build_file(build_file, "", "BUILD_rest.bazel")
-        self.assertEqual("false", parsed.proto_only)
-
-    def test_gapic_inputs_parse_gapic_yaml_succeeds(self):
-        parsed = parse_build_file(
-            build_file, "test/versioned/path", "BUILD_gapic_yaml.bazel"
-        )
-        self.assertEqual("test/versioned/path/test_gapic_yaml.yaml", parsed.gapic_yaml)
-
-    def test_gapic_inputs_parse_no_gapic_yaml_returns_empty_string(self):
-        parsed = parse_build_file(
-            build_file, "test/versioned/path", "BUILD_no_gapic_yaml.bazel"
-        )
-        self.assertEqual("", parsed.gapic_yaml)
-
-    def test_gapic_inputs_parse_service_config_succeeds(self):
-        parsed = parse_build_file(
-            build_file, "test/versioned/path", "BUILD_service_config.bazel"
-        )
-        self.assertEqual(
-            "test/versioned/path/test_service_config.json", parsed.service_config
-        )
-
-    def test_gapic_inputs_parse_service_yaml_relative_target(self):
-        parsed = parse_build_file(
-            build_file,
-            "google/cloud/compute/v1",
-            "BUILD_service_config_relative_target.bazel",
-        )
-        self.assertEqual(
-            "google/cloud/compute/v1/compute_grpc_service_config.json",
-            parsed.service_config,
-        )
-
-    def test_gapic_inputs_parse_no_service_config_returns_empty_string(self):
-        parsed = parse_build_file(
-            build_file, "test/versioned/path", "BUILD_no_service_config.bazel"
-        )
-        self.assertEqual("", parsed.service_config)
-
-    def test_gapic_inputs_parse_service_yaml_succeeds(self):
-        parsed = parse_build_file(
-            build_file, "test/versioned/path", "BUILD_service_yaml.bazel"
-        )
-        self.assertEqual(
-            "test/versioned/path/test_service_yaml.yaml", parsed.service_yaml
-        )
-
-    def test_gapic_inputs_parse_service_yaml_absolute_target(self):
-        parsed = parse_build_file(
-            build_file, "", "BUILD_service_yaml_absolute_target.bazel"
-        )
-        self.assertEqual(
-            "google/cloud/videointelligence/videointelligence_v1p3beta1.yaml",
-            parsed.service_yaml,
-        )
-
-    def test_gapic_inputs_parse_no_service_yaml_returns_empty_string(self):
-        parsed = parse_build_file(
-            build_file, "test/versioned/path", "BUILD_no_service_yaml.bazel"
-        )
-        self.assertEqual("", parsed.service_yaml)
-
-    def test_remove_version_from_returns_non_versioned_path(self):
-        proto_path = "google/cloud/aiplatform/v1"
-        self.assertEqual(
-            "google/cloud/aiplatform", util.remove_version_from(proto_path)
-        )
-
-    def test_remove_version_from_returns_self(self):
-        proto_path = "google/cloud/aiplatform"
-        self.assertEqual(
-            "google/cloud/aiplatform", util.remove_version_from(proto_path)
-        )
-
     def test_generate_prerequisite_files_non_monorepo_success(self):
         library_path = self.__setup_prerequisite_files(
-            num_libraries=1, library_type="GAPIC_COMBO"
+            combination=1, library_type="GAPIC_COMBO"
         )
 
         file_comparator.compare_files(
@@ -403,27 +179,47 @@ class UtilitiesTest(unittest.TestCase):
         # since this is a single library, we treat this as HW repository,
         # meaning that the owlbot yaml will be inside a .github folder
         file_comparator.compare_files(
-            f"{library_path}/.github/.OwlBot.yaml",
-            f"{library_path}/.OwlBot-golden.yaml",
+            f"{library_path}/.github/.OwlBot-hermetic.yaml",
+            f"{library_path}/.OwlBot-hermetic-golden.yaml",
         )
         file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
         )
+        self.__remove_prerequisite_files(path=library_path, is_monorepo=False)
 
     def test_generate_prerequisite_files_monorepo_success(self):
-        library_path = self.__setup_prerequisite_files(num_libraries=2)
+        library_path = self.__setup_prerequisite_files(combination=2)
 
         file_comparator.compare_files(
             f"{library_path}/.repo-metadata.json",
             f"{library_path}/.repo-metadata-monorepo-golden.json",
         )
         file_comparator.compare_files(
-            f"{library_path}/.OwlBot.yaml",
-            f"{library_path}/.OwlBot-golden.yaml",
+            f"{library_path}/.OwlBot-hermetic.yaml",
+            f"{library_path}/.OwlBot-hermetic-golden.yaml",
         )
         file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
         )
+        self.__remove_prerequisite_files(path=library_path)
+
+    def test_generate_prerequisite_files_proto_only_repo_success(self):
+        library_path = self.__setup_prerequisite_files(
+            combination=3, library_type="OTHER"
+        )
+
+        file_comparator.compare_files(
+            f"{library_path}/.repo-metadata.json",
+            f"{library_path}/.repo-metadata-proto-only-golden.json",
+        )
+        file_comparator.compare_files(
+            f"{library_path}/.OwlBot-hermetic.yaml",
+            f"{library_path}/.OwlBot-hermetic-golden.yaml",
+        )
+        file_comparator.compare_files(
+            f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
+        )
+        self.__remove_prerequisite_files(path=library_path)
 
     def test_prepare_repo_monorepo_success(self):
         gen_config = self.__get_a_gen_config(2)
@@ -436,17 +232,6 @@ class UtilitiesTest(unittest.TestCase):
         library_path = sorted([Path(key).name for key in repo_config.libraries])
         self.assertEqual(
             ["java-bare-metal-solution", "java-secretmanager"], library_path
-        )
-
-    def test_prepare_repo_monorepo_duplicated_library_name_failed(self):
-        gen_config = self.__get_a_gen_config(3)
-        self.assertRaisesRegex(
-            ValueError,
-            "secretmanager",
-            util.prepare_repo,
-            gen_config,
-            gen_config.libraries,
-            f"{resources_dir}/misc",
         )
 
     def test_prepare_repo_monorepo_failed(self):
@@ -469,23 +254,28 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual("output", Path(repo_config.output_folder).name)
         library_path = sorted([Path(key).name for key in repo_config.libraries])
         self.assertEqual(["misc"], library_path)
+        shutil.rmtree(repo_config.output_folder)
 
     def __setup_prerequisite_files(
-        self, num_libraries: int, library_type: str = "GAPIC_AUTO"
+        self,
+        combination: int,
+        library_type: str = "GAPIC_AUTO",
+        library: LibraryConfig = library_1,
     ) -> str:
         library_path = f"{resources_dir}/goldens"
         files = [
             f"{library_path}/.repo-metadata.json",
-            f"{library_path}/.OwlBot.yaml",
+            f"{library_path}/.OwlBot-hermetic.yaml",
             f"{library_path}/owlbot.py",
         ]
         cleanup(files)
-        config = self.__get_a_gen_config(num_libraries, library_type=library_type)
+        library.library_type = library_type
+        config = self.__get_a_gen_config(combination, library_type=library_type)
         proto_path = "google/cloud/baremetalsolution/v2"
         transport = "grpc"
         util.generate_prerequisite_files(
             config=config,
-            library=library_1,
+            library=library,
             proto_path=proto_path,
             transport=transport,
             library_path=library_path,
@@ -494,28 +284,28 @@ class UtilitiesTest(unittest.TestCase):
 
     @staticmethod
     def __get_a_gen_config(
-        num_libraries: int, library_type: str = "GAPIC_AUTO"
+        combination: int, library_type: str = "GAPIC_AUTO"
     ) -> GenerationConfig:
         """
         Returns an object of GenerationConfig with one to three of
         LibraryConfig objects. Other attributes are set to empty str.
 
-        :param num_libraries: the number of LibraryConfig objects associated with
+        :param combination: combination of LibraryConfig objects associated with
         the GenerationConfig. Only support 1, 2 or 3.
         :return: an object of GenerationConfig
         """
-        if num_libraries == 2:
-            libraries = [library_1, library_2]
-        elif num_libraries == 3:
-            libraries = [library_1, library_2, library_3]
-        else:
+        if combination == 1:
             libraries = [library_1]
+        elif combination == 2:
+            libraries = [library_1, library_2]
+        else:
+            libraries = [library_1, common_protos]
 
         # update libraries with custom configuration (for now, only
         # library_type)
         for library in libraries:
             library.library_type = library_type
-            if num_libraries == 1:
+            if combination == 1:
                 # treat this as a HW library case to generate a real-life
                 # repo-metadata
                 library.extra_versioned_modules = "test-module"
@@ -525,24 +315,18 @@ class UtilitiesTest(unittest.TestCase):
         return GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            owlbot_cli_image="",
-            synthtool_commitish="",
-            template_excludes=[
-                ".github/*",
-                ".kokoro/*",
-                "samples/*",
-                "CODE_OF_CONDUCT.md",
-                "CONTRIBUTING.md",
-                "LICENSE",
-                "SECURITY.md",
-                "java.header",
-                "license-checks.xml",
-                "renovate.json",
-                ".gitignore",
-            ],
-            path_to_yaml=".",
             libraries=libraries,
         )
+
+    @staticmethod
+    def __remove_prerequisite_files(path: str, is_monorepo: bool = True) -> None:
+        os.remove(f"{path}/.repo-metadata.json")
+        os.remove(f"{path}/owlbot.py")
+        if is_monorepo:
+            os.remove(f"{path}/.OwlBot-hermetic.yaml")
+            return
+        if os.path.isdir(f"{path}/.github"):
+            shutil.rmtree(f"{path}/.github", ignore_errors=True)
 
 
 if __name__ == "__main__":

@@ -16,9 +16,12 @@
 # This is the entrypoint script for java owlbot. This is not intended to be
 # called directly but rather be called from postproces_library.sh
 # For reference, the positional arguments are
-# 1: scripts_root: location of postprocess_library.sh
+# 1: scripts_root: location of the root of the library_generation scripts. When
+# in a Docker container, this value should be /src/
 # 2: versions_file: points to a versions.txt containing versions to be applied
 # both to README and pom.xml files
+# 3: is_monorepo: whether we are postprocessing a monorepo
+# 4: libraries_bom_version: used to render the readme
 
 # The scripts assumes the CWD is the folder where postprocessing is going to be
 # applied
@@ -26,47 +29,35 @@
 set -ex
 scripts_root=$1
 versions_file=$2
-configuration_yaml=$3
+is_monorepo=$3
+libraries_bom_version=$4
 
 
-# This script can be used to process HW libraries and monorepo
-# (google-cloud-java) libraries, which require a slightly different treatment
-# monorepo folders have an .OwlBot.yaml file in the module folder (e.g.
-# java-asset/.OwlBot.yaml), whereas HW libraries have the yaml in
-# `.github/.OwlBot.yaml`
-monorepo="false"
-if [[ -f "$(pwd)/.OwlBot.yaml" ]]; then
-  monorepo="true"
-fi
-
-if [[ "${monorepo}" == "true" ]]; then
+if [[ "${is_monorepo}" == "true" ]]; then
   mv owl-bot-staging/* temp
   rm -rd owl-bot-staging/
   mv temp owl-bot-staging
 fi
 
-
-# Runs template and etc in current working directory
-
-# apply repo templates
-echo "Rendering templates"
-python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" "${configuration_yaml}" "${monorepo}"
-
 # templates as well as retrieving files from owl-bot-staging
 echo "Retrieving files from owl-bot-staging directory..."
 if [ -f "owlbot.py" ]
 then
-  # we use an empty synthtool folder to prevent cached templates from being used
-  export SYNTHTOOL_TEMPLATES=$(mktemp -d)
+  # we copy the templates to a temp folder because we need to do a special
+  # modification regarding libraries_bom_version that can't be handled by the
+  # synthtool library considering the way owlbot.py files are written
+  export SYNTHTOOL_TEMPLATES="${scripts_root}/owlbot/templates"
+  export SYNTHTOOL_LIBRARIES_BOM_VERSION="${libraries_bom_version}"
   # defaults to run owlbot.py
   python3 owlbot.py
-  export SYNTHTOOL_TEMPLATES=""
+  unset SYNTHTOOL_TEMPLATES
+  unset SYNTHTOOL_LIBRARIES_BOM_VERSION
 fi
 echo "...done"
 
 # write or restore pom.xml files
 echo "Generating missing pom.xml..."
-python3 "${scripts_root}/owlbot/src/fix-poms.py" "${versions_file}" "${monorepo}"
+python3 "${scripts_root}/owlbot/src/fix_poms.py" "${versions_file}" "${is_monorepo}"
 echo "...done"
 
 # write or restore clirr-ignored-differences.xml
@@ -79,7 +70,12 @@ echo "Fixing missing license headers..."
 python3 "${scripts_root}/owlbot/src/fix-license-headers.py"
 echo "...done"
 
-# ensure formatting on all .java files in the repository
+# Ensure formatting on all .java files in the repository.
+# Here we manually set the user.home system variable. Unfortunately, Maven
+# user.home inference involves the /etc/passwd file (confirmed empirically),
+# instead of the presumable $HOME env var, which may not work properly
+# when `docker run`ning with the -u flag because we may incur in users
+# not registered in the container's /etc/passwd file
 echo "Reformatting source..."
-mvn fmt:format -V --batch-mode --no-transfer-progress
+mvn fmt:format -Duser.home="${HOME}" -V --batch-mode --no-transfer-progress
 echo "...done"

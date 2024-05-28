@@ -4,7 +4,8 @@ This focuses on the tree structure of both XML files, meaning that element order
 The only comparison points are: element path (e.g. project/dependencies) and element text
 There is a special case for `dependency`, where the maven coordinates are prepared as well
 """
-from library_generation.utilities import eprint
+
+from library_generation.utils.utilities import eprint
 import xml.etree.ElementTree as et
 from collections import Counter
 import sys
@@ -99,6 +100,16 @@ def compare_xml(expected, actual, print_trees):
         print_counter(only_in_actual)
         return True
     return False
+
+
+def compare_pom_in_subdir(base_dir: str, subdir: str) -> bool:
+    golden = os.path.join(base_dir, subdir, "pom-golden.xml")
+    pom = os.path.join(base_dir, subdir, "pom.xml")
+    return compare_xml(
+        golden,
+        pom,
+        False,
+    )
 
 
 if __name__ == "__main__":

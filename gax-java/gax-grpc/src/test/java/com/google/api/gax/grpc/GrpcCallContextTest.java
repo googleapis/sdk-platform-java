@@ -29,9 +29,9 @@
  */
 package com.google.api.gax.grpc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
@@ -53,21 +53,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class GrpcCallContextTest {
+class GrpcCallContextTest {
 
   @Test
-  public void testNullToSelfWrongType() {
+  void testNullToSelfWrongType() {
     try {
       GrpcCallContext.createDefault().nullToSelf(FakeCallContext.createDefault());
-      Assert.fail("GrpcCallContext should have thrown an exception");
+      Assertions.fail("GrpcCallContext should have thrown an exception");
     } catch (IllegalArgumentException expected) {
       Truth.assertThat(expected)
           .hasMessageThat()
@@ -76,7 +73,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithCredentials() {
+  void testWithCredentials() {
     Credentials credentials = Mockito.mock(Credentials.class);
     GrpcCallContext emptyContext = GrpcCallContext.createDefault();
     assertNull(emptyContext.getCallOptions().getCredentials());
@@ -85,7 +82,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithTransportChannel() {
+  void testWithTransportChannel() {
     ManagedChannel channel = Mockito.mock(ManagedChannel.class);
     GrpcCallContext context =
         GrpcCallContext.createDefault().withTransportChannel(GrpcTransportChannel.create(channel));
@@ -93,21 +90,21 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithTransportChannelWrongType() {
+  void testWithTransportChannelWrongType() {
     FakeChannel channel = new FakeChannel();
     try {
       GrpcCallContext.createDefault().withTransportChannel(FakeTransportChannel.create(channel));
-      Assert.fail("GrpcCallContext should have thrown an exception");
+      Assertions.fail("GrpcCallContext should have thrown an exception");
     } catch (IllegalArgumentException expected) {
       Truth.assertThat(expected).hasMessageThat().contains("Expected GrpcTransportChannel");
     }
   }
 
   @Test
-  public void testMergeWrongType() {
+  void testMergeWrongType() {
     try {
       GrpcCallContext.createDefault().merge(FakeCallContext.createDefault());
-      Assert.fail("GrpcCallContext should have thrown an exception");
+      Assertions.fail("GrpcCallContext should have thrown an exception");
     } catch (IllegalArgumentException expected) {
       Truth.assertThat(expected)
           .hasMessageThat()
@@ -116,7 +113,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithRequestParamsDynamicHeaderOption() {
+  void testWithRequestParamsDynamicHeaderOption() {
     String encodedRequestParams = "param1=value&param2.param3=value23";
     GrpcCallContext context =
         GrpcCallContext.createDefault().withRequestParamsDynamicHeaderOption(encodedRequestParams);
@@ -129,22 +126,22 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithTimeout() {
+  void testWithTimeout() {
     assertNull(GrpcCallContext.createDefault().withTimeout(null).getTimeout());
   }
 
   @Test
-  public void testWithNegativeTimeout() {
+  void testWithNegativeTimeout() {
     assertNull(GrpcCallContext.createDefault().withTimeout(Duration.ofSeconds(-1L)).getTimeout());
   }
 
   @Test
-  public void testWithZeroTimeout() {
+  void testWithZeroTimeout() {
     assertNull(GrpcCallContext.createDefault().withTimeout(Duration.ofSeconds(0L)).getTimeout());
   }
 
   @Test
-  public void testWithShorterTimeout() {
+  void testWithShorterTimeout() {
     GrpcCallContext ctxWithLongTimeout =
         GrpcCallContext.createDefault().withTimeout(Duration.ofSeconds(10));
 
@@ -157,7 +154,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithLongerTimeout() {
+  void testWithLongerTimeout() {
     GrpcCallContext ctxWithShortTimeout =
         GrpcCallContext.createDefault().withTimeout(Duration.ofSeconds(5));
 
@@ -171,7 +168,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testMergeWithNullTimeout() {
+  void testMergeWithNullTimeout() {
     Duration timeout = Duration.ofSeconds(10);
     GrpcCallContext baseContext = GrpcCallContext.createDefault().withTimeout(timeout);
 
@@ -183,7 +180,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testMergeWithTimeout() {
+  void testMergeWithTimeout() {
     Duration timeout = Duration.ofSeconds(19);
     GrpcCallContext ctx1 = GrpcCallContext.createDefault();
     GrpcCallContext ctx2 = GrpcCallContext.createDefault().withTimeout(timeout);
@@ -192,14 +189,14 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithStreamingWaitTimeout() {
+  void testWithStreamingWaitTimeout() {
     Duration timeout = Duration.ofSeconds(15);
     GrpcCallContext context = GrpcCallContext.createDefault().withStreamWaitTimeout(timeout);
     Truth.assertThat(context.getStreamWaitTimeout()).isEqualTo(timeout);
   }
 
   @Test
-  public void testMergeWithNullStreamingWaitTimeout() {
+  void testMergeWithNullStreamingWaitTimeout() {
     Duration timeout = Duration.ofSeconds(10);
     GrpcCallContext baseContext = GrpcCallContext.createDefault().withStreamWaitTimeout(timeout);
 
@@ -213,7 +210,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithZeroStreamingWaitTimeout() {
+  void testWithZeroStreamingWaitTimeout() {
     Duration timeout = Duration.ZERO;
     Truth.assertThat(
             GrpcCallContext.createDefault().withStreamWaitTimeout(timeout).getStreamWaitTimeout())
@@ -221,7 +218,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testMergeWithStreamingWaitTimeout() {
+  void testMergeWithStreamingWaitTimeout() {
     Duration timeout = Duration.ofSeconds(19);
     GrpcCallContext ctx1 = GrpcCallContext.createDefault();
     GrpcCallContext ctx2 = GrpcCallContext.createDefault().withStreamWaitTimeout(timeout);
@@ -230,14 +227,14 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithStreamingIdleTimeout() {
+  void testWithStreamingIdleTimeout() {
     Duration timeout = Duration.ofSeconds(15);
     GrpcCallContext context = GrpcCallContext.createDefault().withStreamIdleTimeout(timeout);
     Truth.assertThat(context.getStreamIdleTimeout()).isEqualTo(timeout);
   }
 
   @Test
-  public void testMergeWithNullStreamingIdleTimeout() {
+  void testMergeWithNullStreamingIdleTimeout() {
     Duration timeout = Duration.ofSeconds(10);
     GrpcCallContext baseContext = GrpcCallContext.createDefault().withStreamIdleTimeout(timeout);
 
@@ -251,7 +248,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithZeroStreamingIdleTimeout() {
+  void testWithZeroStreamingIdleTimeout() {
     Duration timeout = Duration.ZERO;
     Truth.assertThat(
             GrpcCallContext.createDefault().withStreamIdleTimeout(timeout).getStreamIdleTimeout())
@@ -259,7 +256,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testMergeWithStreamingIdleTimeout() {
+  void testMergeWithStreamingIdleTimeout() {
     Duration timeout = Duration.ofSeconds(19);
     GrpcCallContext ctx1 = GrpcCallContext.createDefault();
     GrpcCallContext ctx2 = GrpcCallContext.createDefault().withStreamIdleTimeout(timeout);
@@ -268,7 +265,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testMergeWithCustomCallOptions() {
+  void testMergeWithCustomCallOptions() {
     CallOptions.Key<String> key = CallOptions.Key.createWithDefault("somekey", "somedefault");
     GrpcCallContext ctx1 = GrpcCallContext.createDefault();
     GrpcCallContext ctx2 =
@@ -283,7 +280,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithExtraHeaders() {
+  void testWithExtraHeaders() {
     Map<String, List<String>> extraHeaders =
         createTestExtraHeaders("key1", "value1", "key1", "value2");
     GrpcCallContext ctx = GrpcCallContext.createDefault().withExtraHeaders(extraHeaders);
@@ -298,7 +295,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testMergeWithExtraHeaders() {
+  void testMergeWithExtraHeaders() {
     Map<String, List<String>> extraHeaders1 =
         createTestExtraHeaders("key1", "value1", "key1", "value2");
     GrpcCallContext ctx1 = GrpcCallContext.createDefault().withExtraHeaders(extraHeaders1);
@@ -316,7 +313,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testMergeWithTracer() {
+  void testMergeWithTracer() {
     ApiTracer explicitTracer = Mockito.mock(ApiTracer.class);
     GrpcCallContext ctxWithExplicitTracer =
         GrpcCallContext.createDefault().withTracer(explicitTracer);
@@ -338,7 +335,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithRetrySettings() {
+  void testWithRetrySettings() {
     RetrySettings retrySettings = Mockito.mock(RetrySettings.class);
     GrpcCallContext emptyContext = GrpcCallContext.createDefault();
     assertNull(emptyContext.getRetrySettings());
@@ -347,7 +344,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithRetryableCodes() {
+  void testWithRetryableCodes() {
     Set<StatusCode.Code> codes = Collections.singleton(StatusCode.Code.UNAVAILABLE);
     GrpcCallContext emptyContext = GrpcCallContext.createDefault();
     assertNull(emptyContext.getRetryableCodes());
@@ -356,7 +353,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testWithOptions() {
+  void testWithOptions() {
     GrpcCallContext emptyCallContext = GrpcCallContext.createDefault();
     ApiCallContext.Key<String> contextKey1 = ApiCallContext.Key.create("testKey1");
     ApiCallContext.Key<String> contextKey2 = ApiCallContext.Key.create("testKey2");
@@ -374,7 +371,7 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testMergeOptions() throws IOException {
+  void testMergeOptions() throws IOException {
     GrpcCallContext emptyCallContext = GrpcCallContext.createDefault();
     ApiCallContext.Key<String> contextKey1 = ApiCallContext.Key.create("testKey1");
     ApiCallContext.Key<String> contextKey2 = ApiCallContext.Key.create("testKey2");
