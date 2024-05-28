@@ -16,7 +16,6 @@ package com.google.api.generator.gapic.composer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -27,7 +26,6 @@ import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryCl
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;

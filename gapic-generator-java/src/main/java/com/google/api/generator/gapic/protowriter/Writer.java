@@ -69,20 +69,20 @@ public class Writer {
       writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
     }
 
-    if (!gapicPackageInfo.shouldGenerateFile()) {
-      writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
-      writeReflectConfigFile(gapicPackageInfo.packageInfo().pakkage(), reflectConfigInfo, jos);
-    }
+    // package info may come as null if we have no services, but we will exit
+    // this function early if so.
+    writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
+    writeReflectConfigFile(gapicPackageInfo.packageInfo().pakkage(), reflectConfigInfo, jos);
 
     jos.finish();
     jos.flush();
 
     CodeGeneratorResponse.Builder responseBuilder = CodeGeneratorResponse.newBuilder();
     responseBuilder
-            .setSupportedFeatures(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL_VALUE)
-            .addFileBuilder()
-            .setName(outputFilePath)
-            .setContentBytes(output.toByteString());
+        .setSupportedFeatures(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL_VALUE)
+        .addFileBuilder()
+        .setName(outputFilePath)
+        .setContentBytes(output.toByteString());
     return responseBuilder.build();
   }
 

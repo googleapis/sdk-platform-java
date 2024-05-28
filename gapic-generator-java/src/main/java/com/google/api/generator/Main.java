@@ -14,13 +14,13 @@
 
 package com.google.api.generator;
 
+import static com.google.api.generator.gapic.protowriter.Writer.EMPTY_RESPONSE;
+
 import com.google.api.generator.gapic.Generator;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.io.IOException;
-
-import static com.google.api.generator.gapic.protowriter.Writer.EMPTY_RESPONSE;
 
 public class Main {
   public static void main(String[] args) throws IOException {

@@ -2,12 +2,10 @@ package com.google.api.generator.gapic.protowriter;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
@@ -106,7 +104,7 @@ class WriterTest {
         Writer.write(
             GapicContext.EMPTY,
             Collections.emptyList(),
-            GapicPackageInfo.EMPTY,
+            null,
             Collections.emptyList(),
             "temp-codegen.srcjar",
             jarOutputStream,

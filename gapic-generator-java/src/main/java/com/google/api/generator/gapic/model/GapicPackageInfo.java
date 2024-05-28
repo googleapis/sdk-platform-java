@@ -20,15 +20,7 @@ import com.google.auto.value.AutoValue;
 /** A thin wrapper around PackageInfoDefinition to maintain a clean separation of concerns. */
 @AutoValue
 public abstract class GapicPackageInfo {
-
-  public static final GapicPackageInfo EMPTY =
-      builder().setPackageInfo(PackageInfoDefinition.EMPTY).build();
-
   public abstract PackageInfoDefinition packageInfo();
-
-  public boolean shouldGenerateFile() {
-    return packageInfo().shouldGenerateFile();
-  }
 
   public static GapicPackageInfo with(PackageInfoDefinition packageInfo) {
     return builder().setPackageInfo(packageInfo).build();
@@ -40,7 +32,6 @@ public abstract class GapicPackageInfo {
 
   @AutoValue.Builder
   abstract static class Builder {
-
     abstract Builder setPackageInfo(PackageInfoDefinition packageInfo);
 
     abstract GapicPackageInfo build();
