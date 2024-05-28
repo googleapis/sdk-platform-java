@@ -60,8 +60,6 @@ class GeneratePrDescriptionTest(unittest.TestCase):
             config=GenerationConfig(
                 gapic_generator_version="",
                 googleapis_commitish=commit_sha,
-                libraries_bom_version="",
-                template_excludes=[],
                 grpc_version="",
                 protoc_version="",
                 libraries=[],
@@ -84,7 +82,6 @@ class GeneratePrDescriptionTest(unittest.TestCase):
                 gapic_generator_version="",
                 googleapis_commitish=new_commit_sha,
                 libraries_bom_version="",
-                template_excludes=[],
                 grpc_version="",
                 protoc_version="",
                 # use empty libraries to make sure no qualified commit between
