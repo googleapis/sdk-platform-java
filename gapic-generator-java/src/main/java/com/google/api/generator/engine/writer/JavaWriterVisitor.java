@@ -1034,7 +1034,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(PackageInfoDefinition packageInfoDefinition) {
-
     statements(packageInfoDefinition.fileHeader().stream().collect(Collectors.toList()));
     newline();
     statements(

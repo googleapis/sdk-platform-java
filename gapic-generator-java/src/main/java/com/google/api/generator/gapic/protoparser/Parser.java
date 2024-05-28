@@ -114,7 +114,6 @@ public class Parser {
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
 
   static class GapicParserException extends RuntimeException {
-
     public GapicParserException(String errorMessage) {
       super(errorMessage);
     }
