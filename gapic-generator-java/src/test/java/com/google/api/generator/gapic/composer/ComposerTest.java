@@ -83,11 +83,6 @@ class ComposerTest {
   }
 
   @Test
-  public void testGapicPackageInfoAddLicense_emptyPackageInfo_noop() {
-    assertTrue(Composer.addApacheLicense(GapicPackageInfo.EMPTY).isEmpty());
-  }
-
-  @Test
   void composeSamples_showcase() {
     GapicClass testClass = clazzes.get(0).withSamples(ListofSamples);
     List<GapicClass> testClassList = Arrays.asList(new GapicClass[] {testClass});
@@ -171,11 +166,6 @@ class ComposerTest {
   @Test
   public void testEmptyGapicContext_doesNotThrow() {
     Composer.composeServiceClasses(GapicContext.EMPTY);
-  }
-
-  @Test
-  public void gapicClass_addApacheLicense_emptyPackageInfo_noop() {
-    assertTrue(Composer.addApacheLicense(GapicPackageInfo.EMPTY).isEmpty());
   }
 
   private List<GapicClass> getTestClassListFromService(Service testService) {

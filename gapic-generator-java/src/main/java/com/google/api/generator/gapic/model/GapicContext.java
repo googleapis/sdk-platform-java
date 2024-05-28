@@ -104,7 +104,6 @@ public abstract class GapicContext {
 
   @AutoValue.Builder
   public abstract static class Builder {
-
     public abstract Builder setMessages(Map<String, Message> messages);
 
     public abstract Builder setResourceNames(Map<String, ResourceName> resourceNames);

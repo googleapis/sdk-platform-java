@@ -23,7 +23,6 @@ import java.io.IOException;
 import static com.google.api.generator.gapic.protowriter.Writer.EMPTY_RESPONSE;
 
 public class Main {
-
   public static void main(String[] args) throws IOException {
     ExtensionRegistry registry = ExtensionRegistry.newInstance();
     ProtoRegistry.registerAllExtensions(registry);

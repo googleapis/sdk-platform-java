@@ -239,11 +239,7 @@ public class Composer {
         .collect(Collectors.toList());
   }
 
-  @VisibleForTesting
-  static GapicPackageInfo addApacheLicense(GapicPackageInfo gapicPackageInfo) {
-    if (gapicPackageInfo.isEmpty()) {
-      return gapicPackageInfo;
-    }
+  private static GapicPackageInfo addApacheLicense(GapicPackageInfo gapicPackageInfo) {
     return GapicPackageInfo.with(
         gapicPackageInfo
             .packageInfo()

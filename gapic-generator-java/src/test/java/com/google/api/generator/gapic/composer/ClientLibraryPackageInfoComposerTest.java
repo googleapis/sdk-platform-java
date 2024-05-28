@@ -44,6 +44,6 @@ class ClientLibraryPackageInfoComposerTest {
 
   @Test
   public void testGeneratePackageInfo_noServices_returnsEmptyPackageInfo() {
-    assertTrue(ClientLibraryPackageInfoComposer.generatePackageInfo(GapicContext.EMPTY).isEmpty());
+    assertTrue(ClientLibraryPackageInfoComposer.generatePackageInfo(GapicContext.EMPTY).shouldGenerateFile());
   }
 }

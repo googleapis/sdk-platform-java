@@ -48,7 +48,7 @@ public class ClientLibraryPackageInfoComposer {
   private static final String SERVICE_DESCRIPTION_HEADER_PATTERN = "Service Description: %s";
 
   public static GapicPackageInfo generatePackageInfo(GapicContext context) {
-    if (context.services().isEmpty()) {
+    if (!context.containsServices()) {
       LOGGER.warning("Generating empty package info since no services were found");
       return GapicPackageInfo.EMPTY;
     }
