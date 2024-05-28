@@ -793,12 +793,16 @@ class ITOtelMetrics {
     InstantiatingGrpcChannelProvider channelProvider =
         EchoSettings.defaultGrpcTransportProviderBuilder()
             .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+            .setAttemptDirectPathXds()
             .build();
 
     // Add custom attributes to be added as client level attributes
     Map<String, String> customAttributes = new HashMap<>();
     String directpathEnabled = "directpath_enabled";
     customAttributes.put(directpathEnabled, String.valueOf(channelProvider.canUseDirectPath()));
+    String directpathXdsEnabled = "directpathxds_enabled";
+    customAttributes.put(
+        directpathXdsEnabled, String.valueOf(channelProvider.isDirectPathXdsEnabled()));
     String randomAttributeKey1 = "testing";
     String randomAttributeValue1 = "showcase";
     String randomAttributeKey2 = "hello";
@@ -841,6 +845,8 @@ class ITOtelMetrics {
             MetricsTracer.DEFAULT_LANGUAGE,
             directpathEnabled,
             "false",
+            directpathXdsEnabled,
+            "true",
             randomAttributeKey1,
             randomAttributeValue1,
             randomAttributeKey2,

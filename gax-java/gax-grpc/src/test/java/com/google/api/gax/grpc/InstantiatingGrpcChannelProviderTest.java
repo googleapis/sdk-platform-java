@@ -688,7 +688,6 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
             .setEnvProvider(envProvider);
-    //            .setSystemProductName(GCE_PRODUCTION_NAME_AFTER_2016)
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
@@ -787,7 +786,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
             .setEnvProvider(envProvider);
-    InstantiatingGrpcChannelProvider provider = new InstantiatingGrpcChannelProvider(builder, null);
+    InstantiatingGrpcChannelProvider provider = new InstantiatingGrpcChannelProvider(builder, "");
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
   }
 

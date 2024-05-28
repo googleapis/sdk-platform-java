@@ -91,8 +91,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           Files.asCharSource(new File("/sys/class/dmi/id/product_name"), StandardCharsets.UTF_8)
               .readFirstLine();
     } catch (IOException e) {
-      // Keep existing behavior the same (null means it is not on compute engine)
-      systemProductName = null;
+      // If not on Compute Engine, FileNotFoundException will be thrown. Use empty string
+      // as it won't match with the GCE_PRODUCTION_NAME constants
+      systemProductName = "";
     }
   }
 
@@ -281,8 +282,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return false;
   }
 
-  @VisibleForTesting
-  boolean isDirectPathXdsEnabled() {
+  @InternalApi
+  public boolean isDirectPathXdsEnabled() {
     // Method 1: Enable DirectPath xDS by option.
     if (Boolean.TRUE.equals(attemptDirectPathXds)) {
       return true;
@@ -343,9 +344,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting
   static boolean isOnComputeEngine() {
     String osName = System.getProperty("os.name");
-    // The additional systemProductName null check is in case there is an IOException.
-    // The IOException will set the systemProductName to null and will return false
-    if ("Linux".equals(osName) && systemProductName != null) {
+    if ("Linux".equals(osName)) {
+      // systemProductName will be empty string if not on Compute Engine
       return systemProductName.contains(GCE_PRODUCTION_NAME_PRIOR_2016)
           || systemProductName.contains(GCE_PRODUCTION_NAME_AFTER_2016);
     }
