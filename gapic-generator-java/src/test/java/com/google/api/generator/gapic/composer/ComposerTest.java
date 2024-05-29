@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.composer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -164,6 +165,11 @@ class ComposerTest {
   @Test
   public void testEmptyGapicContext_doesNotThrow() {
     Composer.composeServiceClasses(GapicContext.EMPTY);
+  }
+
+  @Test
+  public void testComposePackageInfo_emptyGapicContext_returnsNull() {
+    assertNull(Composer.composePackageInfo(GapicContext.EMPTY));
   }
 
   private List<GapicClass> getTestClassListFromService(Service testService) {

@@ -77,13 +77,13 @@ public class Writer {
     jos.finish();
     jos.flush();
 
-    CodeGeneratorResponse.Builder responseBuilder = CodeGeneratorResponse.newBuilder();
-    responseBuilder
+    CodeGeneratorResponse.Builder response = CodeGeneratorResponse.newBuilder();
+    response
         .setSupportedFeatures(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL_VALUE)
         .addFileBuilder()
         .setName(outputFilePath)
         .setContentBytes(output.toByteString());
-    return responseBuilder.build();
+    return response.build();
   }
 
   public static CodeGeneratorResponse write(
