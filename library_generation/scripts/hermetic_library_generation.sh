@@ -100,7 +100,7 @@ docker run \
 
 # commit the change to the pull request.
 rm -rdf output googleapis "${baseline_generation_config}"
-git add .
+git add --all -- ':!pr_description.txt'
 changed_files=$(git diff --cached --name-only)
 if [[ "${changed_files}" == "" ]]; then
     echo "There is no generated code change with the generation config change ${config_diff}."
