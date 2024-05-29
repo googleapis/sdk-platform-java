@@ -79,6 +79,16 @@ public final class Watchdog implements Runnable, BackgroundResource {
   private final ScheduledExecutorService executor;
   private ScheduledFuture<?> future;
 
+  /**
+   * Backport of {@link #create(ApiClock, java.time.Duration, ScheduledExecutorService)} using
+   * {@link org.threeten.bp.Duration}
+   */
+  @ObsoleteApi("Use create(ApiClock, java.time.Duration, ScheduledExecutorService) instead")
+  public static Watchdog create(
+          ApiClock clock, org.threeten.bp.Duration scheduleInterval, ScheduledExecutorService executor) {
+    return create(clock, toJavaTimeDuration(scheduleInterval), executor);
+  }
+
   /** returns a Watchdog which is scheduled at the provided interval. */
   public static Watchdog create(
       ApiClock clock, java.time.Duration scheduleInterval, ScheduledExecutorService executor) {
