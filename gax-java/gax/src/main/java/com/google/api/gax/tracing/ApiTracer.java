@@ -112,9 +112,7 @@ public interface ApiTracer {
 
   /** Backport of {@link #attemptFailedDuration(Throwable, java.time.Duration)} */
   @ObsoleteApi("Use attemptFailedDuration(Throwable, java.time.Duration) instead")
-  default void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {
-    attemptFailedDuration(error, toJavaTimeDuration(delay));
-  };
+  default void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {};
 
   /**
    * Adds an annotation that the attempt failed, but another attempt will be made after the delay.
