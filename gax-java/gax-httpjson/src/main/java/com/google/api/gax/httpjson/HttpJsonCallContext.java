@@ -30,9 +30,7 @@
 package com.google.api.gax.httpjson;
 
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
-import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeInstant;
 import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
-import static com.google.api.gax.util.TimeConversionUtils.toThreetenInstant;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
@@ -53,7 +51,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import java.io.IOException;
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -596,7 +593,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   @Deprecated
   public HttpJsonCallContext withDeadline(org.threeten.bp.Instant newDeadline) {
     HttpJsonCallOptions.Builder builder =
-            callOptions != null ? callOptions.toBuilder() : HttpJsonCallOptions.newBuilder();
+        callOptions != null ? callOptions.toBuilder() : HttpJsonCallOptions.newBuilder();
     return withCallOptions(builder.setDeadline(newDeadline).build());
   }
 

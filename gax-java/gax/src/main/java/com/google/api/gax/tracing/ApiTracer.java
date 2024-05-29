@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.tracing;
 
-import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 
 import com.google.api.core.InternalApi;
 import com.google.api.core.ObsoleteApi;

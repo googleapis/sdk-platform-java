@@ -131,7 +131,7 @@ public abstract class RetrySettings implements Serializable {
   /** Backport of {@link #getMaxRetryDelayDuration()} */
   @ObsoleteApi("Use getMaxRetryDelayDuration()")
   public org.threeten.bp.Duration getMaxRetryDelay() {
-  return toThreetenDuration(getMaxRetryDelayDuration());
+    return toThreetenDuration(getMaxRetryDelayDuration());
   }
 
   /**

@@ -30,7 +30,6 @@
 package com.google.api.gax.httpjson;
 
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
-import static com.google.api.gax.util.TimeConversionTestUtils.testInstantMethod;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
