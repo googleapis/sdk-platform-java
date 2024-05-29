@@ -509,18 +509,10 @@ public final class HttpJsonCallContext implements ApiCallContext {
     return callOptions;
   }
 
-  /** Backport of {@link #getDeadlineInstant()} */
   @Deprecated
   @Nullable
-  @ObsoleteApi("Use getDeadlineInstant() instead")
   public org.threeten.bp.Instant getDeadline() {
-    return toThreetenInstant(getDeadlineInstant());
-  }
-
-  @Deprecated
-  @Nullable
-  public java.time.Instant getDeadlineInstant() {
-    return getCallOptions() != null ? getCallOptions().getDeadlineInstant() : null;
+    return getCallOptions() != null ? getCallOptions().getDeadline() : null;
   }
 
   @Deprecated
@@ -601,18 +593,11 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.endpointContext);
   }
 
-  /** Backport of {@link #withDeadlineInstant(java.time.Instant)} using {@link org.threeten.bp.Instant} */
   @Deprecated
-  @ObsoleteApi("Use withDeadline(java.time.Instant) instead")
   public HttpJsonCallContext withDeadline(org.threeten.bp.Instant newDeadline) {
-    return withDeadlineInstant(toJavaTimeInstant(newDeadline));
-  }
-
-  @Deprecated
-  public HttpJsonCallContext withDeadlineInstant(java.time.Instant newDeadline) {
     HttpJsonCallOptions.Builder builder =
             callOptions != null ? callOptions.toBuilder() : HttpJsonCallOptions.newBuilder();
-    return withCallOptions(builder.setDeadlineInstant(newDeadline).build());
+    return withCallOptions(builder.setDeadline(newDeadline).build());
   }
 
   @Nonnull

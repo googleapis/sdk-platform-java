@@ -141,17 +141,6 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testDeadline() {
-    final long millis = 3;
-    final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
-    testInstantMethod( millis,
-            jt -> defaultContext.withDeadlineInstant(jt),
-            tt -> defaultContext.withDeadline(tt),
-            c -> c.getDeadlineInstant(),
-            c -> c.getDeadline());
-  }
-
-  @Test
   public void testTimeout() {
     final long millis = 3;
     final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
