@@ -97,13 +97,10 @@ docker run \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
   --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
   --current-generation-config-path="${workspace_name}/${generation_config}"
-# gapic-libraries-bom/pom.xml is specific to google-cloud-java, only commit
-# this file if it exists.
-if [ -f gapic-libraries-bom/pom.xml ]; then
-    git add gapic-libraries-bom/pom.xml
-fi
 
-git add java-* pom.xml versions.txt
+# commit the change to the pull request.
+rm -rdf output googleapis "${baseline_generation_config}"
+git add --all -- ':!pr_description.txt'
 changed_files=$(git diff --cached --name-only)
 if [[ "${changed_files}" == "" ]]; then
     echo "There is no generated code change with the generation config change ${config_diff}."
