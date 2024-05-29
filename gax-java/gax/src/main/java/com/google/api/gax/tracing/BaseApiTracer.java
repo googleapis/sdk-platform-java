@@ -114,7 +114,7 @@ public class BaseApiTracer implements ApiTracer {
   @Override
   @ObsoleteApi("Use attemptFailed(Throwable, java.time.Duration) instead")
   public void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {
-    attemptFailedDuration(error, toJavaTimeDuration(delay));
+    // noop
   }
 
   @Override
