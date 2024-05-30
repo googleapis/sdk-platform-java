@@ -158,13 +158,7 @@ def __combine_commit_messages(
 ) -> str:
     messages = [
         f"This pull request is generated with proto changes between googleapis commit {baseline_commit} (exclusive) and {current_commit} (inclusive).",
-        "Qualified commits are:",
     ]
-    for commit in commits:
-        short_sha = commit.hexsha[:7]
-        messages.append(
-            f"[googleapis/googleapis@{short_sha}](https://github.com/googleapis/googleapis/commit/{commit.hexsha})"
-        )
 
     messages.extend(
         wrap_override_commit(

@@ -47,19 +47,24 @@ def format_commit_message(commits: Dict[Commit, str], is_monorepo: bool) -> List
                 messages.append(formatted_message)
             else:
                 messages.append(message_line)
-        all_commits.extend(wrap_nested_commit(messages))
+        all_commits.extend(wrap_nested_commit(commit, messages))
     return all_commits
 
 
-def wrap_nested_commit(messages: List[str]) -> List[str]:
+def wrap_nested_commit(commit: Commit, messages: List[str]) -> List[str]:
     """
     Wrap message between `BEGIN_NESTED_COMMIT` and `BEGIN_NESTED_COMMIT`.
 
+    :param commit: a GitHub commit.
     :param messages: a (multi-line) commit message, one line per item.
     :return: wrapped messages.
     """
+    short_sha = commit.hexsha[:7]
     result = ["BEGIN_NESTED_COMMIT"]
     result.extend(messages)
+    result.append(
+        f"Source: [googleapis/googleapis@{short_sha}](https://github.com/googleapis/googleapis/commit/{commit.hexsha})"
+    )
     result.append("END_NESTED_COMMIT")
     return result
 
