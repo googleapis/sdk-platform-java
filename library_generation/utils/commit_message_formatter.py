@@ -63,7 +63,7 @@ def wrap_nested_commit(commit: Commit, messages: List[str]) -> List[str]:
     result = ["BEGIN_NESTED_COMMIT"]
     result.extend(messages)
     result.append(
-        f"Source: [googleapis/googleapis@{short_sha}](https://github.com/googleapis/googleapis/commit/{commit.hexsha})"
+        f"Source Link: [googleapis/googleapis@{short_sha}](https://github.com/googleapis/googleapis/commit/{commit.hexsha})"
     )
     result.append("END_NESTED_COMMIT")
     return result
