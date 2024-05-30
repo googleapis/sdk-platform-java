@@ -161,8 +161,7 @@ def __combine_commit_messages(
     is_monorepo: bool,
 ) -> str:
     messages = [
-        f"This pull request is generated with proto changes between {commit_link(baseline_commit)} "
-        f"(exclusive) and {commit_link(current_commit)} (inclusive).\n",
+        f"This pull request is generated with proto changes between {commit_link(baseline_commit)} (exclusive) and {commit_link(current_commit)} (inclusive).\n",
     ]
 
     messages.extend(
