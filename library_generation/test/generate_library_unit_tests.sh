@@ -28,6 +28,15 @@ get_grpc_version_failed_with_invalid_generator_version_test() {
   assertEquals 1 $((res))
 }
 
+get_protoc_version_succeed_docker_env_var_test() {
+  local version_with_docker
+  local version_without_docker
+  export DOCKER_PROTOC_VERSION="9.9.9"
+  version_with_docker=$(get_protoc_version "2.24.0")
+  assertEquals "${DOCKER_PROTOC_VERSION}" "${version_with_docker}"
+  unset DOCKER_PROTOC_VERSION
+}
+
 get_protoc_version_succeed_with_valid_generator_version_test() {
   local actual_version
   actual_version=$(get_protoc_version "2.24.0")
@@ -132,6 +141,34 @@ download_protoc_failed_with_invalid_arch_test() {
   local res=0
   $(download_protoc "23.2" "customized-x86_64") || res=$?
   assertEquals 1 $((res))
+}
+
+download_tools_succeed_with_baked_protoc() {
+  # This mimics a docker container scenario.
+  # This test consists of creating an empty /tmp/.../protoc-99.99/bin folder and map
+  # it to the DOCKER_PROTOC_LOCATION env var (which is treated specially in the
+  # `download_tools` function). If `DOCKER_PROTOC_VERSION` matches exactly as
+  # the version passed to `download_protoc`, then we will not download protoc
+  # but simply have the variable `protoc_path` pointing to DOCKER_PROTOC_LOCATION 
+  # (which we manually created in this test)
+  local test_dir=$(mktemp -d)
+  pushd "${test_dir}"
+  export DOCKER_PROTOC_LOCATION=$(mktemp -d)
+  export DOCKER_PROTOC_VERSION="99.99"
+  export output_folder=$(get_output_folder)
+  mkdir "${output_folder}"
+  local protoc_bin_folder="${DOCKER_PROTOC_LOCATION}/protoc-99.99/bin"
+  mkdir -p "${protoc_bin_folder}"
+
+  local test_ggj_version="2.40.0"
+  local test_grpc_version="1.64.0"
+  download_tools "${test_ggj_version}" "99.99" "${test_grpc_version}" "linux-x86_64"
+  assertEquals "${protoc_bin_folder}" "${protoc_path}"
+
+  rm -rdf "${output_folder}"
+  unset DOCKER_PROTOC_LOCATION
+  unset DOCKER_PROTOC_VERSION
+  unset output_folder
 }
 
 download_grpc_plugin_succeed_with_valid_version_linux_test() {
@@ -256,6 +293,7 @@ test_list=(
   extract_folder_name_test
   get_grpc_version_succeed_with_valid_generator_version_test
   get_grpc_version_failed_with_invalid_generator_version_test
+  get_protoc_version_succeed_docker_env_var_test
   get_protoc_version_succeed_with_valid_generator_version_test
   get_protoc_version_failed_with_invalid_generator_version_test
   get_gapic_opts_with_rest_test
@@ -268,6 +306,7 @@ test_list=(
   download_protoc_succeed_with_valid_version_macos_test
   download_protoc_failed_with_invalid_version_linux_test
   download_protoc_failed_with_invalid_arch_test
+  download_tools_succeed_with_baked_protoc
   download_grpc_plugin_succeed_with_valid_version_linux_test
   download_grpc_plugin_succeed_with_valid_version_macos_test
   download_grpc_plugin_failed_with_invalid_version_linux_test
