@@ -26,9 +26,9 @@ import com.google.api.generator.test.protoloader.TestProtoLoader;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ClientLibraryReflectConfigComposerTest {
+class ClientLibraryReflectConfigComposerTest {
 
   private final Message.Builder testMessageBuilder =
       Message.builder()
@@ -37,7 +37,7 @@ public class ClientLibraryReflectConfigComposerTest {
           .setType(TypeNode.OBJECT);
 
   @Test
-  public void composeReflectConfigs_showcase() {
+  void composeReflectConfigs_showcase() {
     final GapicContext context = TestProtoLoader.instance().parseShowcaseEcho();
     List<ReflectConfig> configs = Composer.composeNativeReflectConfig(context);
     assertThat(configs).isNotEmpty();
@@ -75,7 +75,7 @@ public class ClientLibraryReflectConfigComposerTest {
   }
 
   @Test
-  public void composeReflectConfigs_SimpleMessage() {
+  void composeReflectConfigs_SimpleMessage() {
     List<String> entries =
         ClientLibraryReflectConfigComposer.calculateReflectConfigList(
             "foo.Bar", testMessageBuilder.build());
@@ -85,7 +85,7 @@ public class ClientLibraryReflectConfigComposerTest {
   }
 
   @Test
-  public void composeReflectConfigs_Enum() {
+  void composeReflectConfigs_Enum() {
     List<String> entries =
         ClientLibraryReflectConfigComposer.calculateReflectConfigList(
             "e.Num",
@@ -96,7 +96,7 @@ public class ClientLibraryReflectConfigComposerTest {
   }
 
   @Test
-  public void composeReflectConfigs_NestedEnums() {
+  void composeReflectConfigs_NestedEnums() {
     List<String> nestedEnums = Arrays.asList("NestedEnum1", "NestedEnum2");
     List<String> entries =
         ClientLibraryReflectConfigComposer.calculateReflectConfigList(
@@ -112,27 +112,27 @@ public class ClientLibraryReflectConfigComposerTest {
   }
 
   @Test
-  public void formatNestedClassFullyQualifiedNames_noNested() {
+  void formatNestedClassFullyQualifiedNames_noNested() {
     assertEquals("a.B", ClientLibraryReflectConfigComposer.convertToBinaryName("a.B"));
     assertEquals("aa.bb.CC", ClientLibraryReflectConfigComposer.convertToBinaryName("aa.bb.CC"));
   }
 
   @Test
-  public void formatNestedClassFullyQualifiedNames_oneNested() {
+  void formatNestedClassFullyQualifiedNames_oneNested() {
     assertEquals("a.B$C", ClientLibraryReflectConfigComposer.convertToBinaryName("a.B.C"));
     assertEquals(
         "aa.bb.Cc$Dd", ClientLibraryReflectConfigComposer.convertToBinaryName("aa.bb.Cc.Dd"));
   }
 
   @Test
-  public void formatNestedClassFullyQualifiedNames_twoNested() {
+  void formatNestedClassFullyQualifiedNames_twoNested() {
     assertEquals("a.B$C$D", ClientLibraryReflectConfigComposer.convertToBinaryName("a.B.C.D"));
     assertEquals(
         "aa.bb.Cc$Dd$Ee", ClientLibraryReflectConfigComposer.convertToBinaryName("aa.bb.Cc.Dd.Ee"));
   }
 
   @Test
-  public void duplicateEntries_found() {
+  void duplicateEntries_found() {
     assertThat(ClientLibraryReflectConfigComposer.calculateDuplicates(Arrays.asList("a", "a", "b")))
         .containsExactly("a");
 

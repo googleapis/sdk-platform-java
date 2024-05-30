@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api</groupId>
   <artifactId>gapic-generator-java</artifactId>
-  <version>2.40.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+  <version>2.40.2-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
   <name>GAPIC Generator Java</name>
   <description>GAPIC generator Java</description>
 
@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.google.api</groupId>
     <artifactId>gapic-generator-java-pom-parent</artifactId>
-    <version>2.40.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+    <version>2.40.2-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
     <relativePath>../gapic-generator-java-pom-parent</relativePath>
   </parent>
 
@@ -31,7 +31,7 @@
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>gapic-generator-java-bom</artifactId>
-        <version>2.40.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+        <version>2.40.2-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -474,6 +474,18 @@
       <groupId>io.github.java-diff-utils</groupId>
       <artifactId>java-diff-utils</artifactId>
       <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

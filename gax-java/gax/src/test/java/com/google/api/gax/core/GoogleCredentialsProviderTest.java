@@ -30,20 +30,17 @@
 package com.google.api.gax.core;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.auth.oauth2.ServiceAccountJwtAccessCredentials;
 import com.google.common.collect.ImmutableList;
 import java.security.PrivateKey;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class GoogleCredentialsProviderTest {
+class GoogleCredentialsProviderTest {
   ServiceAccountCredentials CreateServiceAccountCredentials() {
     return ServiceAccountCredentials.newBuilder()
         .setClientId("fake-client-id")
@@ -54,7 +51,7 @@ public class GoogleCredentialsProviderTest {
   }
 
   @Test
-  public void serviceAccountReplacedWithJwtTokens() throws Exception {
+  void serviceAccountReplacedWithJwtTokens() throws Exception {
     ServiceAccountCredentials serviceAccountCredentials = CreateServiceAccountCredentials();
 
     GoogleCredentialsProvider provider =
@@ -74,7 +71,7 @@ public class GoogleCredentialsProviderTest {
   }
 
   @Test
-  public void noJwtWithoutScopeMatch() throws Exception {
+  void noJwtWithoutScopeMatch() throws Exception {
     ServiceAccountCredentials serviceAccountCredentials = CreateServiceAccountCredentials();
 
     GoogleCredentialsProvider provider =
@@ -100,7 +97,7 @@ public class GoogleCredentialsProviderTest {
   }
 
   @Test
-  public void useJwtAccessWithScope() throws Exception {
+  void useJwtAccessWithScope() throws Exception {
     ServiceAccountCredentials serviceAccountCredentials = CreateServiceAccountCredentials();
 
     GoogleCredentialsProvider provider =

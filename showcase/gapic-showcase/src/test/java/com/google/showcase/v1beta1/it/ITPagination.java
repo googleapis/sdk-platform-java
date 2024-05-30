@@ -23,25 +23,25 @@ import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.PagedExpandRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.concurrent.TimeUnit;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-public class ITPagination {
+class ITPagination {
 
   private static EchoClient grpcClient;
   private static EchoClient httpjsonClient;
 
-  @BeforeClass
-  public static void createClients() throws Exception {
+  @BeforeAll
+  static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
-  @AfterClass
-  public static void destroyClients() throws InterruptedException {
+  @AfterAll
+  static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();
 
@@ -60,7 +60,7 @@ public class ITPagination {
   // Page #  | - | -       | -   | 1     | 1     | 2     | 2   | 3     | 3     | 4   | 4   | 5
   // Token # | 0 | 1       | 2   | 3     | 4     | 5     | 6   | 7     | 8     | 9   | 10  | 11
   @Test
-  public void testPagedExpandWithTokenGrpc() {
+  void testPagedExpandWithTokenGrpc() {
     int pageSize = 2;
     int pageToken = 3;
     String content = "A series of words that will be sent back one by one";
@@ -97,7 +97,7 @@ public class ITPagination {
   // Page #  | - | -       | -   | 1     | 1     | 2     | 2   | 3     | 3     | 4   | 4   | 5
   // Token # | 0 | 1       | 2   | 3     | 4     | 5     | 6   | 7     | 8     | 9   | 10  | 11
   @Test
-  public void testPagedExpandWithTokenHttpJson() {
+  void testPagedExpandWithTokenHttpJson() {
     int pageSize = 2;
     int pageToken = 3;
     String content = "A series of words that will be sent back one by one";

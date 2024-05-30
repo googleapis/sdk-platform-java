@@ -30,12 +30,12 @@
 package com.google.api.gax.retrying;
 
 import static com.google.api.gax.retrying.FailingCallable.FAST_RETRY_SETTINGS;
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.core.ApiFuture;
 import com.google.api.core.NanoClock;
@@ -48,13 +48,14 @@ import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-// @RunWith(MockitoJUnitRunner.class)
-public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
+class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
   private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
   // Number of test runs, essential for multithreaded tests.
@@ -78,13 +79,13 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
     return new ScheduledRetryingExecutor<>(retryAlgorithm, scheduler);
   }
 
-  @After
-  public void after() {
+  @AfterEach
+  void after() {
     scheduler.shutdownNow();
   }
 
   @Test
-  public void testSuccessWithFailuresPeekAttempt() throws Exception {
+  void testSuccessWithFailuresPeekAttempt() throws Exception {
     for (int executionsCount = 0; executionsCount < EXECUTIONS_COUNT; executionsCount++) {
       final int maxRetries = 100;
 
@@ -136,7 +137,7 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
   }
 
   @Test
-  public void testSuccessWithFailuresGetAttempt() throws Exception {
+  void testSuccessWithFailuresGetAttempt() throws Exception {
     for (int executionsCount = 0; executionsCount < EXECUTIONS_COUNT; executionsCount++) {
       final int maxRetries = 100;
 
@@ -184,13 +185,15 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
       assertTrue(future.isDone());
       assertFutureSuccess(future);
       assertEquals(15, future.getAttemptSettings().getAttemptCount());
-      assertTrue("checks is equal to " + checks, checks > 1 && checks <= maxRetries);
+      assertTrue(checks > 1 && checks <= maxRetries, "checks is equal to " + checks);
       localExecutor.shutdownNow();
     }
   }
 
-  @Test
-  public void testCancelGetAttempt() throws Exception {
+  @ParameterizedTest
+  @MethodSource("data")
+  void testCancelGetAttempt(boolean withCustomRetrySettings) throws Exception {
+    setUp(withCustomRetrySettings);
     for (int executionsCount = 0; executionsCount < EXECUTIONS_COUNT; executionsCount++) {
       ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
       final int maxRetries = 100;
@@ -250,7 +253,7 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
   }
 
   @Test
-  public void testCancelOuterFutureAfterStart() throws Exception {
+  void testCancelOuterFutureAfterStart() throws Exception {
     ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
@@ -303,7 +306,7 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
   }
 
   @Test
-  public void testCancelProxiedFutureAfterStart() throws Exception {
+  void testCancelProxiedFutureAfterStart() throws Exception {
     // this is a heavy test, which takes a lot of time, so only few executions.
     for (int executionsCount = 0; executionsCount < 2; executionsCount++) {
       ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();

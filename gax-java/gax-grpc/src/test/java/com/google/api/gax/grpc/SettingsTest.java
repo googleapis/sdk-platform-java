@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.grpc;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.api.gax.batching.BatchingSettings;
 import com.google.api.gax.core.CredentialsProvider;
@@ -58,14 +58,11 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.truth.Truth;
 import java.io.IOException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class SettingsTest {
+class SettingsTest {
 
   interface FakePagedListResponse extends PagedListResponse<Integer> {}
 
@@ -265,7 +262,7 @@ public class SettingsTest {
   // ====
 
   @Test
-  public void customCredentials() throws IOException {
+  void customCredentials() throws IOException {
     Credentials credentials = Mockito.mock(Credentials.class);
 
     FakeStubSettings settings =
@@ -287,7 +284,7 @@ public class SettingsTest {
   }
 
   @Test
-  public void channelCustomCredentialScopes() throws IOException {
+  void channelCustomCredentialScopes() throws IOException {
     ImmutableList<String> inputScopes =
         ImmutableList.<String>builder().add("https://www.googleapis.com/auth/fakeservice").build();
 
@@ -319,7 +316,7 @@ public class SettingsTest {
   // ====
 
   @Test
-  public void callSettingsToBuilder() {
+  void callSettingsToBuilder() {
     UnaryCallSettings.Builder<?, ?> builderA = UnaryCallSettings.newUnaryCallSettingsBuilder();
     UnaryCallSettings<?, ?> settingsA = builderA.build();
     UnaryCallSettings.Builder<?, ?> builderB = settingsA.toBuilder();
@@ -329,14 +326,14 @@ public class SettingsTest {
   }
 
   @Test
-  public void unaryCallSettingsBuilderBuildDoesNotFailUnsetProperties() {
+  void unaryCallSettingsBuilderBuildDoesNotFailUnsetProperties() {
     UnaryCallSettings.Builder<Integer, Integer> builder =
         UnaryCallSettings.newUnaryCallSettingsBuilder();
     builder.build();
   }
 
   @Test
-  public void callSettingsBuildFromTimeoutNoRetries() {
+  void callSettingsBuildFromTimeoutNoRetries() {
     Duration timeout = Duration.ofMillis(60000);
 
     UnaryCallSettings.Builder<Integer, Integer> builderA =
@@ -361,6 +358,6 @@ public class SettingsTest {
                 .build());
     UnaryCallSettings<Integer, Integer> settingsB = builderB.build();
 
-    assertEquals("UnaryCallSettings", settingsA, settingsB);
+    assertEquals(settingsA, settingsB, "UnaryCallSettings");
   }
 }

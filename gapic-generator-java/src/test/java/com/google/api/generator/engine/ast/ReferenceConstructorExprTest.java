@@ -16,12 +16,12 @@ package com.google.api.generator.engine.ast;
 
 import static org.junit.Assert.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ReferenceConstructorExprTest {
+class ReferenceConstructorExprTest {
 
   @Test
-  public void validReferenceConstructorExpr_thisConstructorBasic() {
+  void validReferenceConstructorExpr_thisConstructorBasic() {
     VaporReference ref =
         VaporReference.builder()
             .setName("Student")
@@ -33,7 +33,7 @@ public class ReferenceConstructorExprTest {
   }
 
   @Test
-  public void validReferenceConstructorExpr_hasArguments() {
+  void validReferenceConstructorExpr_hasArguments() {
     VaporReference ref =
         VaporReference.builder()
             .setName("Student")
@@ -51,7 +51,7 @@ public class ReferenceConstructorExprTest {
   }
 
   @Test
-  public void validReferenceConstructorExpr_superConstructorBasic() {
+  void validReferenceConstructorExpr_superConstructorBasic() {
     VaporReference ref =
         VaporReference.builder()
             .setName("Student")
@@ -63,7 +63,7 @@ public class ReferenceConstructorExprTest {
   }
 
   @Test
-  public void invalidReferenceConstructorExpr_nonReferenceType() {
+  void invalidReferenceConstructorExpr_nonReferenceType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -72,7 +72,7 @@ public class ReferenceConstructorExprTest {
   }
 
   @Test
-  public void invalidReferenceConstructorExpr_nullType() {
+  void invalidReferenceConstructorExpr_nullType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -81,7 +81,7 @@ public class ReferenceConstructorExprTest {
   }
 
   @Test
-  public void invalidReferenceConstructorExpr_nullArgument() {
+  void invalidReferenceConstructorExpr_nullArgument() {
     VaporReference ref =
         VaporReference.builder()
             .setName("Student")

@@ -51,18 +51,14 @@ import io.grpc.ServerInterceptor;
 import io.grpc.Status;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.stub.StreamObserver;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-@RunWith(JUnit4.class)
-public class GrpcResponseMetadataTest {
+class GrpcResponseMetadataTest {
 
   private static final String HEADER_KEY = "inprocessheaderkey";
   private static final String HEADER_VALUE = "inprocessheadervalue";
@@ -75,25 +71,23 @@ public class GrpcResponseMetadataTest {
 
   private Metadata requestHeaders = null;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
     String serverName = "fakeservice";
     FakeServiceImplBase serviceImpl = Mockito.mock(FakeServiceImplBase.class);
     Mockito.doAnswer(
-            new Answer<Void>() {
-              @Override
-              public Void answer(InvocationOnMock invocation) {
-                Color color = invocation.getArgument(0);
-                StreamObserver<Money> observer = invocation.getArgument(1);
-                observer.onNext(
-                    Money.newBuilder()
-                        .setCurrencyCode("USD")
-                        .setUnits((long) (color.getRed() * 255))
-                        .build());
-                observer.onCompleted();
-                return null;
-              }
-            })
+            (Answer<Void>)
+                invocation -> {
+                  Color color = invocation.getArgument(0);
+                  StreamObserver<Money> observer = invocation.getArgument(1);
+                  observer.onNext(
+                      Money.newBuilder()
+                          .setCurrencyCode("USD")
+                          .setUnits((long) (color.getRed() * 255))
+                          .build());
+                  observer.onCompleted();
+                  return null;
+                })
         .when(serviceImpl)
         .recognize(Mockito.<Color>any(), Mockito.<StreamObserver<Money>>any());
     requestHeaders = null;
@@ -150,14 +144,14 @@ public class GrpcResponseMetadataTest {
             .build();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     channel.shutdown();
     inprocessServer.stop();
   }
 
   @Test
-  public void testResponseMetadataUnaryCall() {
+  void testResponseMetadataUnaryCall() {
     GrpcCallSettings<Color, Money> grpcCallSettings =
         GrpcCallSettings.create(FakeServiceGrpc.METHOD_RECOGNIZE);
 
@@ -167,19 +161,19 @@ public class GrpcResponseMetadataTest {
     UnaryCallable<Color, Money> callable =
         GrpcCallableFactory.createUnaryCallable(grpcCallSettings, callSettings, clientContext);
 
-    Assert.assertNull(requestHeaders);
+    Assertions.assertNull(requestHeaders);
 
     GrpcResponseMetadata responseMetadata = new GrpcResponseMetadata();
     callable.call(Color.getDefaultInstance(), responseMetadata.createContextWithHandlers());
 
-    Assert.assertNotNull(requestHeaders);
+    Assertions.assertNotNull(requestHeaders);
 
     Metadata metadata = responseMetadata.getMetadata();
     Metadata trailingMetadata = responseMetadata.getTrailingMetadata();
 
-    Assert.assertEquals(
+    Assertions.assertEquals(
         metadata.get(Key.of(HEADER_KEY, Metadata.ASCII_STRING_MARSHALLER)), HEADER_VALUE);
-    Assert.assertEquals(
+    Assertions.assertEquals(
         trailingMetadata.get(Key.of(TRAILER_KEY, Metadata.ASCII_STRING_MARSHALLER)), TRAILER_VALUE);
   }
 }

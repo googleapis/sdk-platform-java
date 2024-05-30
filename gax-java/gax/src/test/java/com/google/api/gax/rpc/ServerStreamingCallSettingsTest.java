@@ -35,15 +35,12 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.common.collect.ImmutableSet;
 import java.util.Set;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class ServerStreamingCallSettingsTest {
+class ServerStreamingCallSettingsTest {
   @Test
-  public void retryableCodesAreNotLost() {
+  void retryableCodesAreNotLost() {
     Set<Code> codes = ImmutableSet.of(Code.UNAVAILABLE, Code.RESOURCE_EXHAUSTED);
     ServerStreamingCallSettings.Builder<Object, Object> builder =
         ServerStreamingCallSettings.newBuilder();
@@ -55,7 +52,7 @@ public class ServerStreamingCallSettingsTest {
   }
 
   @Test
-  public void retryableCodesVarArgs() {
+  void retryableCodesVarArgs() {
     ServerStreamingCallSettings.Builder<Object, Object> builder =
         ServerStreamingCallSettings.newBuilder().setRetryableCodes(Code.UNKNOWN, Code.ABORTED);
 
@@ -63,7 +60,7 @@ public class ServerStreamingCallSettingsTest {
   }
 
   @Test
-  public void retryableSettingsAreNotLost() {
+  void retryableSettingsAreNotLost() {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelay(Duration.ofMillis(5))
@@ -86,7 +83,7 @@ public class ServerStreamingCallSettingsTest {
   }
 
   @Test
-  public void idleTimeoutIsNotLost() {
+  void idleTimeoutIsNotLost() {
     Duration idleTimeout = Duration.ofSeconds(5);
 
     ServerStreamingCallSettings.Builder<Object, Object> builder =
@@ -99,7 +96,7 @@ public class ServerStreamingCallSettingsTest {
   }
 
   @Test
-  public void waitTimeoutIsNotLost() {
+  void waitTimeoutIsNotLost() {
     Duration waitTimeout = Duration.ofSeconds(5);
 
     ServerStreamingCallSettings.Builder<Object, Object> builder =
@@ -113,7 +110,7 @@ public class ServerStreamingCallSettingsTest {
   }
 
   @Test
-  public void testRetrySettingsBuilder() {
+  void testRetrySettingsBuilder() {
     RetrySettings initialSettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelay(Duration.ofMillis(5))
@@ -137,7 +134,7 @@ public class ServerStreamingCallSettingsTest {
   }
 
   @Test
-  public void testToString() {
+  void testToString() {
     RetrySettings retrySettings = RetrySettings.newBuilder().build();
     Set<StatusCode.Code> retryableCodes = ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED);
     Duration idleTime = Duration.ofSeconds(100);

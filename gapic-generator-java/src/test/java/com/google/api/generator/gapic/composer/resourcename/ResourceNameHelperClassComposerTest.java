@@ -48,25 +48,25 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ResourceNameHelperClassComposerTest {
+class ResourceNameHelperClassComposerTest {
 
   private final String COLLIDING_RESOURCE_NAME_KEY = "config.googleapis.com/Resource";
 
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     echoFileDescriptor = EchoOuterClass.getDescriptor();
     echoService = echoFileDescriptor.getServices().get(0);
     assertEquals(echoService.getName(), "Echo");
   }
 
   @Test
-  public void getTokenSet_basic() {
+  void getTokenSet_basic() {
     List<String> patterns =
         Arrays.asList(
             "projects/{project}/agent/sessions/{session}",
@@ -80,7 +80,7 @@ public class ResourceNameHelperClassComposerTest {
   }
 
   @Test
-  public void concatToUpperSnakeCaseName_basic() {
+  void concatToUpperSnakeCaseName_basic() {
     assertEquals(
         "PROJECT_LOCATION_AUTOSCALING_POLICY",
         ResourceNameHelperClassComposer.concatToUpperSnakeCaseName(
@@ -88,7 +88,7 @@ public class ResourceNameHelperClassComposerTest {
   }
 
   @Test
-  public void concatToUpperCamelCaseName_basic() {
+  void concatToUpperCamelCaseName_basic() {
     assertEquals(
         "ProjectLocationAutoscalingPolicy",
         ResourceNameHelperClassComposer.concatToUpperCamelCaseName(
@@ -96,7 +96,7 @@ public class ResourceNameHelperClassComposerTest {
   }
 
   @Test
-  public void generateResourceNameClass_echoFoobarMultiplePatterns() {
+  void generateResourceNameClass_echoFoobarMultiplePatterns() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -119,7 +119,7 @@ public class ResourceNameHelperClassComposerTest {
   }
 
   @Test
-  public void generateResourceNameClass_loggingOnePatternMultipleVariables() {
+  void generateResourceNameClass_loggingOnePatternMultipleVariables() {
     FileDescriptor serviceFileDescriptor = LoggingConfigProto.getDescriptor();
     ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
     assertEquals(serviceDescriptor.getName(), "ConfigServiceV2");
@@ -166,7 +166,7 @@ public class ResourceNameHelperClassComposerTest {
   }
 
   @Test
-  public void generateResourceNameClass_testingSessionOnePattern() {
+  void generateResourceNameClass_testingSessionOnePattern() {
     FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
     assertEquals(testingService.getName(), "Testing");
@@ -193,7 +193,7 @@ public class ResourceNameHelperClassComposerTest {
   }
 
   @Test
-  public void generateResourceNameClass_testingBlueprintPatternWithNonSlashSeparator() {
+  void generateResourceNameClass_testingBlueprintPatternWithNonSlashSeparator() {
     FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
     assertEquals(testingService.getName(), "Testing");
@@ -220,7 +220,7 @@ public class ResourceNameHelperClassComposerTest {
   }
 
   @Test
-  public void generateResourceNameClass_childSingleton() {
+  void generateResourceNameClass_childSingleton() {
     ResourceName agentResname =
         ResourceName.builder()
             .setVariableName("agent")
@@ -245,7 +245,7 @@ public class ResourceNameHelperClassComposerTest {
   }
 
   @Test
-  public void generateResourceNameClass_resourceNameCollisionIsAvoided() {
+  void generateResourceNameClass_resourceNameCollisionIsAvoided() {
     ResourceName collidingResourceName =
         Parser.parseResourceNames(CollisionsOuterClass.getDescriptor())
             .get(COLLIDING_RESOURCE_NAME_KEY);

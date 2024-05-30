@@ -45,15 +45,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class WatchdogTest {
+class WatchdogTest {
   private static final ScheduledExecutorService EXECUTOR = Executors.newScheduledThreadPool(1);
 
   private FakeApiClock clock;
@@ -66,8 +63,8 @@ public class WatchdogTest {
   private AccumulatingObserver<String> innerObserver;
   private MockServerStreamingCall<String, String> call;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     clock = new FakeApiClock(0);
     watchdog = Watchdog.create(clock, checkInterval, EXECUTOR);
 
@@ -78,13 +75,13 @@ public class WatchdogTest {
   }
 
   @Test
-  public void testRequestPassthrough() throws Exception {
+  void testRequestPassthrough() throws Exception {
     innerObserver.controller.get().request(1);
     assertThat(call.getController().popLastPull()).isEqualTo(1);
   }
 
   @Test
-  public void testWaitTimeout() throws Exception {
+  void testWaitTimeout() throws Exception {
     innerObserver.controller.get(1, TimeUnit.MILLISECONDS).request(1);
 
     clock.incrementNanoTime(waitTime.toNanos() - 1);
@@ -108,7 +105,7 @@ public class WatchdogTest {
   }
 
   @Test
-  public void testIdleTimeout() throws InterruptedException {
+  void testIdleTimeout() throws InterruptedException {
     clock.incrementNanoTime(idleTime.toNanos() - 1);
     watchdog.run();
     assertThat(call.getController().isCancelled()).isFalse();
@@ -130,7 +127,7 @@ public class WatchdogTest {
   }
 
   @Test
-  public void testTimedOutBeforeStart() throws InterruptedException {
+  void testTimedOutBeforeStart() throws InterruptedException {
     MockServerStreamingCallable<String, String> callable1 = new MockServerStreamingCallable<>();
     AccumulatingObserver<String> downstreamObserver1 = new AccumulatingObserver<>();
     ResponseObserver observer = watchdog.watch(downstreamObserver1, waitTime, idleTime);
@@ -155,7 +152,7 @@ public class WatchdogTest {
   }
 
   @Test
-  public void testTimedOutBeforeResponse() throws InterruptedException {
+  void testTimedOutBeforeResponse() throws InterruptedException {
     MockServerStreamingCallable<String, String> autoFlowControlCallable =
         new MockServerStreamingCallable<>();
     AutoFlowControlObserver<String> downstreamObserver = new AutoFlowControlObserver<>();
@@ -180,7 +177,7 @@ public class WatchdogTest {
   }
 
   @Test
-  public void testMultiple() throws Exception {
+  void testMultiple() throws Exception {
     // Start stream1
     AccumulatingObserver<String> downstreamObserver1 = new AccumulatingObserver<>();
     callable.call("request", watchdog.watch(downstreamObserver1, waitTime, idleTime));
@@ -219,7 +216,7 @@ public class WatchdogTest {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void testWatchdogBeingClosed() {
+  void testWatchdogBeingClosed() {
     ScheduledFuture future = Mockito.mock(ScheduledFuture.class);
     ScheduledExecutorService mockExecutor = getMockExecutorService(future);
     Watchdog underTest = Watchdog.create(clock, checkInterval, mockExecutor);
@@ -239,7 +236,7 @@ public class WatchdogTest {
   }
 
   @Test
-  public void awaitTermination_shouldReturnTrueIfFutureIsDone() throws Exception {
+  void awaitTermination_shouldReturnTrueIfFutureIsDone() throws Exception {
     int duration = 1000;
     TimeUnit timeUnit = TimeUnit.MILLISECONDS;
     ScheduledFuture future = Mockito.mock(ScheduledFuture.class);
@@ -253,7 +250,7 @@ public class WatchdogTest {
   }
 
   @Test
-  public void awaitTermination_shouldReturnFalseIfGettingFutureTimedOut() throws Exception {
+  void awaitTermination_shouldReturnFalseIfGettingFutureTimedOut() throws Exception {
     int duration = 1000;
     TimeUnit timeUnit = TimeUnit.MILLISECONDS;
     ScheduledFuture future = Mockito.mock(ScheduledFuture.class);
@@ -267,7 +264,7 @@ public class WatchdogTest {
   }
 
   @Test
-  public void awaitTermination_shouldReturnTrueIfFutureIsAlreadyCancelled() throws Exception {
+  void awaitTermination_shouldReturnTrueIfFutureIsAlreadyCancelled() throws Exception {
     int duration = 1000;
     TimeUnit timeUnit = TimeUnit.MILLISECONDS;
     ScheduledFuture future = Mockito.mock(ScheduledFuture.class);
@@ -281,7 +278,7 @@ public class WatchdogTest {
   }
 
   @Test
-  public void awaitTermination_shouldReturnFalseIfGettingFutureThrowsExecutionException()
+  void awaitTermination_shouldReturnFalseIfGettingFutureThrowsExecutionException()
       throws Exception {
     int duration = 1000;
     TimeUnit timeUnit = TimeUnit.MILLISECONDS;

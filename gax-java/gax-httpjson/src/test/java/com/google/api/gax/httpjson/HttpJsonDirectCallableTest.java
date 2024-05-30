@@ -49,18 +49,15 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class HttpJsonDirectCallableTest {
+class HttpJsonDirectCallableTest {
 
   private static final ApiMethodDescriptor<Field, Field> FAKE_METHOD_DESCRIPTOR =
       ApiMethodDescriptor.<Field, Field>newBuilder()
@@ -111,7 +108,7 @@ public class HttpJsonDirectCallableTest {
 
   private static HttpJsonCallContext defaultCallContext;
 
-  @BeforeClass
+  @BeforeAll
   public static void initialize() throws IOException {
     executorService =
         Executors.newFixedThreadPool(
@@ -133,18 +130,18 @@ public class HttpJsonDirectCallableTest {
             .withEndpointContext(endpointContext);
   }
 
-  @AfterClass
+  @AfterAll
   public static void destroy() {
     executorService.shutdownNow();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     MOCK_SERVICE.reset();
   }
 
   @Test
-  public void testSuccessfulUnaryResponse() throws ExecutionException, InterruptedException {
+  void testSuccessfulUnaryResponse() throws ExecutionException, InterruptedException {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
@@ -173,7 +170,7 @@ public class HttpJsonDirectCallableTest {
    * @throws ExecutionException
    */
   @Test
-  public void testSuccessfulMultipleResponsesForUnaryCall()
+  void testSuccessfulMultipleResponsesForUnaryCall()
       throws InterruptedException, ExecutionException {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
@@ -203,8 +200,7 @@ public class HttpJsonDirectCallableTest {
    * @throws ExecutionException
    */
   @Test
-  public void testErrorMultipleResponsesForUnaryCall()
-      throws InterruptedException, ExecutionException {
+  void testErrorMultipleResponsesForUnaryCall() throws InterruptedException, ExecutionException {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
@@ -231,7 +227,7 @@ public class HttpJsonDirectCallableTest {
    * @throws InterruptedException
    */
   @Test
-  public void testErrorUnaryResponse() throws InterruptedException {
+  void testErrorUnaryResponse() throws InterruptedException {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
@@ -242,7 +238,7 @@ public class HttpJsonDirectCallableTest {
 
     try {
       callable.futureCall(createTestMessage(2), defaultCallContext).get();
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (ExecutionException e) {
       HttpResponseException respExp = (HttpResponseException) e.getCause();
       assertThat(respExp.getStatusCode()).isEqualTo(400);
@@ -258,7 +254,7 @@ public class HttpJsonDirectCallableTest {
    * @throws InterruptedException
    */
   @Test
-  public void testErrorNullContentSuccessfulResponse() throws InterruptedException {
+  void testErrorNullContentSuccessfulResponse() throws InterruptedException {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
@@ -266,7 +262,7 @@ public class HttpJsonDirectCallableTest {
 
     try {
       callable.futureCall(createTestMessage(2), defaultCallContext).get();
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (ExecutionException e) {
       HttpJsonStatusRuntimeException respExp = (HttpJsonStatusRuntimeException) e.getCause();
       assertThat(respExp.getStatusCode()).isEqualTo(200);
@@ -282,7 +278,7 @@ public class HttpJsonDirectCallableTest {
    * @throws InterruptedException
    */
   @Test
-  public void testErrorNullContentFailedResponse() throws InterruptedException {
+  void testErrorNullContentFailedResponse() throws InterruptedException {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
@@ -290,7 +286,7 @@ public class HttpJsonDirectCallableTest {
 
     try {
       callable.futureCall(createTestMessage(2), defaultCallContext).get();
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (ExecutionException e) {
       HttpResponseException respExp = (HttpResponseException) e.getCause();
       assertThat(respExp.getStatusCode()).isEqualTo(400);
@@ -304,7 +300,7 @@ public class HttpJsonDirectCallableTest {
    * @throws InterruptedException
    */
   @Test
-  public void testErrorNon2xxOr4xxResponse() throws InterruptedException {
+  void testErrorNon2xxOr4xxResponse() throws InterruptedException {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
@@ -315,7 +311,7 @@ public class HttpJsonDirectCallableTest {
 
     try {
       callable.futureCall(createTestMessage(2), defaultCallContext).get();
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (ExecutionException e) {
       HttpResponseException respExp = (HttpResponseException) e.getCause();
       assertThat(respExp.getStatusCode()).isEqualTo(500);
@@ -331,7 +327,7 @@ public class HttpJsonDirectCallableTest {
    * @throws InterruptedException
    */
   @Test
-  public void testDeadlineExceededResponse() throws InterruptedException {
+  void testDeadlineExceededResponse() throws InterruptedException {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
@@ -342,7 +338,7 @@ public class HttpJsonDirectCallableTest {
 
     try {
       callable.futureCall(createTestMessage(10), callContext).get();
-      Assert.fail("No exception raised");
+      Assertions.fail("No exception raised");
     } catch (ExecutionException e) {
       HttpJsonStatusRuntimeException respExp = (HttpJsonStatusRuntimeException) e.getCause();
       assertThat(respExp.getStatusCode()).isEqualTo(504);

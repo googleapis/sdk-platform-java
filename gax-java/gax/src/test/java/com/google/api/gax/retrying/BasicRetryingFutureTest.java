@@ -36,31 +36,28 @@ import java.lang.reflect.Field;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class BasicRetryingFutureTest {
+class BasicRetryingFutureTest {
   private Level logLevel;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
     logLevel = getLoggerInstance().getLevel();
   }
 
-  @After
-  public void tearDown() throws Exception {
+  @AfterEach
+  void tearDown() throws Exception {
     getLoggerInstance().setLevel(logLevel);
   }
 
   @Test
-  public void testHandleAttemptDoesNotThrowNPEWhenLogLevelLowerThanFiner() throws Exception {
+  void testHandleAttemptDoesNotThrowNPEWhenLogLevelLowerThanFiner() throws Exception {
     @SuppressWarnings("unchecked")
     Callable<Integer> callable = mock(Callable.class);
     @SuppressWarnings("unchecked")
@@ -101,7 +98,7 @@ public class BasicRetryingFutureTest {
   }
 
   @Test
-  public void testUsesRetryingContext() throws Exception {
+  void testUsesRetryingContext() throws Exception {
     @SuppressWarnings("unchecked")
     Callable<Integer> callable = mock(Callable.class);
     @SuppressWarnings("unchecked")
