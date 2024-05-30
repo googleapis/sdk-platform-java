@@ -66,7 +66,6 @@ class MetricsTracerFactoryTest {
 
   @Test
   void testNewTracer_HasCorrectParameters() {
-
     // Call the newTracer method
     ApiTracer apiTracer = metricsTracerFactory.newTracer(parent, spanName, OperationType.Unary);
 
@@ -75,7 +74,9 @@ class MetricsTracerFactoryTest {
     Truth.assertThat(apiTracer).isNotNull();
 
     MetricsTracer metricsTracer = (MetricsTracer) apiTracer;
-    Truth.assertThat(metricsTracer.getAttributes().get("method_name"))
+    Truth.assertThat(metricsTracer.getAttributes().get(MetricsTracer.METHOD_ATTRIBUTE))
         .isEqualTo("testService.testMethod");
+    Truth.assertThat(metricsTracer.getAttributes().get(MetricsTracer.LANGUAGE_ATTRIBUTE))
+        .isEqualTo(MetricsTracer.DEFAULT_LANGUAGE);
   }
 }

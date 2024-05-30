@@ -301,7 +301,7 @@ class ITOtelMetrics {
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
-            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            MetricsTracer.METHOD_ATTRIBUTE,
             "Echo.Echo",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
@@ -324,7 +324,7 @@ class ITOtelMetrics {
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
-            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            MetricsTracer.METHOD_ATTRIBUTE,
             "google.showcase.v1beta1.Echo/Echo",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
@@ -354,7 +354,7 @@ class ITOtelMetrics {
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
-            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            MetricsTracer.METHOD_ATTRIBUTE,
             "Echo.Block",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
@@ -382,7 +382,7 @@ class ITOtelMetrics {
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
-            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            MetricsTracer.METHOD_ATTRIBUTE,
             "google.showcase.v1beta1.Echo/Block",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
@@ -411,7 +411,7 @@ class ITOtelMetrics {
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
-            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            MetricsTracer.METHOD_ATTRIBUTE,
             "Echo.Block",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
@@ -441,7 +441,7 @@ class ITOtelMetrics {
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
-            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            MetricsTracer.METHOD_ATTRIBUTE,
             "google.showcase.v1beta1.Echo/Block",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
@@ -504,7 +504,7 @@ class ITOtelMetrics {
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
-            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            MetricsTracer.METHOD_ATTRIBUTE,
             "Echo.Echo",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
@@ -572,7 +572,7 @@ class ITOtelMetrics {
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
-            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            MetricsTracer.METHOD_ATTRIBUTE,
             "google.showcase.v1beta1.Echo/Echo",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
@@ -602,7 +602,7 @@ class ITOtelMetrics {
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
-            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            MetricsTracer.METHOD_ATTRIBUTE,
             "Echo.Block",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
@@ -630,7 +630,7 @@ class ITOtelMetrics {
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
-            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            MetricsTracer.METHOD_ATTRIBUTE,
             "google.showcase.v1beta1.Echo/Block",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
@@ -699,7 +699,7 @@ class ITOtelMetrics {
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
-            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            MetricsTracer.METHOD_ATTRIBUTE,
             "Echo.Block",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
@@ -769,7 +769,7 @@ class ITOtelMetrics {
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
-            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            MetricsTracer.METHOD_ATTRIBUTE,
             "google.showcase.v1beta1.Echo/Block",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
