@@ -1,4 +1,4 @@
-This pull request is generated with proto changes between googleapis commit a17d4caf184b050d50cacf2b0d579ce72c31ce74 (exclusive) and 4ce0ff67a3d4509be641cbe47a35844ddc1268fc (inclusive).
+This pull request is generated with proto changes between [googleapis/googleapis@a17d4ca](https://github.com/googleapis/googleapis/commit/a17d4caf184b050d50cacf2b0d579ce72c31ce74) (exclusive) and [googleapis/googleapis@4ce0ff6](https://github.com/googleapis/googleapis/commit/4ce0ff67a3d4509be641cbe47a35844ddc1268fc) (inclusive).
 
 BEGIN_COMMIT_OVERRIDE
 BEGIN_NESTED_COMMIT
