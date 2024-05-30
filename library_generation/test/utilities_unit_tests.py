@@ -315,20 +315,6 @@ class UtilitiesTest(unittest.TestCase):
         return GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
-            libraries_bom_version="",
-            template_excludes=[
-                ".github/*",
-                ".kokoro/*",
-                "samples/*",
-                "CODE_OF_CONDUCT.md",
-                "CONTRIBUTING.md",
-                "LICENSE",
-                "SECURITY.md",
-                "java.header",
-                "license-checks.xml",
-                "renovate.json",
-                ".gitignore",
-            ],
             libraries=libraries,
         )
 
