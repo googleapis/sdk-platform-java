@@ -59,12 +59,9 @@ def wrap_nested_commit(commit: Commit, messages: List[str]) -> List[str]:
     :param messages: a (multi-line) commit message, one line per item.
     :return: wrapped messages.
     """
-    short_sha = commit.hexsha[:7]
     result = ["BEGIN_NESTED_COMMIT"]
     result.extend(messages)
-    result.append(
-        f"Source Link: [googleapis/googleapis@{short_sha}](https://github.com/googleapis/googleapis/commit/{commit.hexsha})"
-    )
+    result.append(f"Source Link: {commit_link(commit)}")
     result.append("END_NESTED_COMMIT")
     return result
 
@@ -80,3 +77,14 @@ def wrap_override_commit(messages: List[str]) -> List[str]:
     result.extend(messages)
     result.append("END_COMMIT_OVERRIDE")
     return result
+
+
+def commit_link(commit: Commit) -> str:
+    """
+    Create a link to the commit in Markdown format.
+
+    :param commit: a GitHub commit.
+    :return: a link in Markdown format.
+    """
+    short_sha = commit.hexsha[:7]
+    return f"[googleapis/googleapis@{short_sha}](https://github.com/googleapis/googleapis/commit/{commit.hexsha})"

@@ -14,7 +14,10 @@
 import unittest
 from unittest.mock import patch
 
-from library_generation.utils.commit_message_formatter import format_commit_message
+from library_generation.utils.commit_message_formatter import (
+    format_commit_message,
+    commit_link,
+)
 from library_generation.utils.commit_message_formatter import wrap_nested_commit
 from library_generation.utils.commit_message_formatter import wrap_override_commit
 
@@ -141,3 +144,12 @@ class CommitMessageFormatterTest(unittest.TestCase):
             ],
             wrap_override_commit(messages),
         )
+
+    def test_commit_link_success(self):
+        with patch("git.Commit") as mock_commit:
+            commit = mock_commit.return_value
+            commit.hexsha = "1234567abcdefg"
+            self.assertEqual(
+                "[googleapis/googleapis@1234567](https://github.com/googleapis/googleapis/commit/1234567abcdefg)",
+                commit_link(commit),
+            )
