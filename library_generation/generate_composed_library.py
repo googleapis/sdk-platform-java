@@ -41,7 +41,6 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 
 
 def generate_composed_library(
-    config_path: str,
     config: GenerationConfig,
     library_path: str,
     library: LibraryConfig,
@@ -51,7 +50,6 @@ def generate_composed_library(
     """
     Generate libraries composed of more than one service or service version
 
-    :param config_path: Path to generation configuration.
     :param config: a GenerationConfig object representing a parsed configuration
     yaml
     :param library_path: the path to which the generated file goes
@@ -113,7 +111,7 @@ def generate_composed_library(
             versions_file,
             owlbot_cli_source_folder,
             str(config.is_monorepo()).lower(),
-            config_path,
+            config.libraries_bom_version,
         ],
         "Library postprocessing",
     )

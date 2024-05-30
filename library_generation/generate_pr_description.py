@@ -22,6 +22,8 @@ from library_generation.utils.proto_path_utils import find_versioned_proto_path
 from library_generation.utils.commit_message_formatter import format_commit_message
 from library_generation.utils.commit_message_formatter import wrap_override_commit
 
+EMPTY_MESSAGE = ""
+
 
 def generate_pr_descriptions(
     config: GenerationConfig,
@@ -61,6 +63,10 @@ def generate_pr_descriptions(
         paths=paths,
         is_monorepo=config.is_monorepo(),
     )
+
+    if description == EMPTY_MESSAGE:
+        print("Empty commit messages, skip creating pull request description.")
+        return
 
     description_file = f"{description_path}/pr_description.txt"
     print(f"Writing pull request description to {description_file}")
@@ -115,6 +121,9 @@ def get_commit_messages(
             break
         commit = commit_parents[0]
     shutil.rmtree(tmp_dir, ignore_errors=True)
+    if len(qualified_commits) == 0:
+        return EMPTY_MESSAGE
+
     return __combine_commit_messages(
         current_commit=current_commit,
         baseline_commit=baseline_commit,

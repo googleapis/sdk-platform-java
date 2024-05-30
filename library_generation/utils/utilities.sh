@@ -116,6 +116,11 @@ get_grpc_version() {
 get_protoc_version() {
   local gapic_generator_version=$1
   local protoc_version
+  if [[ -n "${DOCKER_PROTOC_VERSION}" ]]; then
+    >&2 echo "Using protoc version baked into the container: ${DOCKER_PROTOC_VERSION}"
+    echo "${DOCKER_PROTOC_VERSION}"
+    return
+  fi
   pushd "${output_folder}" > /dev/null
   # get protobuf version from gapic-generator-java-pom-parent/pom.xml
   download_gapic_generator_pom_parent "${gapic_generator_version}"
@@ -131,7 +136,17 @@ download_tools() {
   local os_architecture=$4
   pushd "${output_folder}"
   download_generator_artifact "${gapic_generator_version}" "gapic-generator-java-${gapic_generator_version}.jar"
-  download_protoc "${protoc_version}" "${os_architecture}"
+
+  # the variable protoc_path is used in generate_library.sh. It is explicitly
+  # exported to make clear that it is used outside this utilities file.
+  if [[ "${DOCKER_PROTOC_VERSION}" == "${protoc_version}" ]]; then
+    # if the specified protoc_version matches the one baked in the docker
+    # container, we just point protoc_path to its location.
+    export protoc_path="${DOCKER_PROTOC_LOCATION}/protoc-${protoc_version}/bin"
+  else
+    export protoc_path=$(download_protoc "${protoc_version}" "${os_architecture}")
+  fi
+
   download_grpc_plugin "${grpc_version}" "${os_architecture}"
   popd
 }
@@ -162,7 +177,10 @@ download_generator_artifact() {
 download_protoc() {
   local protoc_version=$1
   local os_architecture=$2
-  if [ ! -d "protoc-${protoc_version}" ]; then
+
+  local protoc_path="${output_folder}/protoc-${protoc_version}/bin"
+
+  if [ ! -d "${protoc_path}" ]; then
     # pull proto files and protoc from protobuf repository as maven central
     # doesn't have proto files
     download_from \
@@ -173,8 +191,8 @@ download_protoc() {
     cp -r "protoc-${protoc_version}/include/google" .
     rm "protoc-${protoc_version}.zip"
   fi
+  echo "${protoc_path}"
 
-  protoc_path="${output_folder}/protoc-${protoc_version}/bin"
 }
 
 download_grpc_plugin() {
