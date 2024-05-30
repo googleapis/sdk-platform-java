@@ -157,7 +157,7 @@ def __combine_commit_messages(
     is_monorepo: bool,
 ) -> str:
     messages = [
-        f"This pull request is generated with proto changes between googleapis commit {baseline_commit} (exclusive) and {current_commit} (inclusive).",
+        f"This pull request is generated with proto changes between googleapis commit {baseline_commit} (exclusive) and {current_commit} (inclusive).\n",
     ]
 
     messages.extend(
