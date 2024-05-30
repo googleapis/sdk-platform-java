@@ -19,11 +19,11 @@ import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class WhileStatementTest {
+class WhileStatementTest {
   @Test
-  public void validWhileStatement_simple() {
+  void validWhileStatement_simple() {
     WhileStatement whileStatement =
         WhileStatement.builder()
             .setConditionExpr(createConditionExpr("condition"))
@@ -33,7 +33,7 @@ public class WhileStatementTest {
   }
 
   @Test
-  public void validWhileStatement_booleanObjectCondition() {
+  void validWhileStatement_booleanObjectCondition() {
     // The condition expression type can be boolean or its boxed type.
     VariableExpr condExpr =
         VariableExpr.withVariable(
@@ -47,7 +47,7 @@ public class WhileStatementTest {
   }
 
   @Test
-  public void validWhileStatement_nested() {
+  void validWhileStatement_nested() {
     WhileStatement nestedWhileStatement =
         WhileStatement.builder()
             .setConditionExpr(createConditionExpr("nestedCondition"))
@@ -62,7 +62,7 @@ public class WhileStatementTest {
   }
 
   @Test
-  public void invalidWhileStatement_emptyBody() {
+  void invalidWhileStatement_emptyBody() {
     assertThrows(
         IllegalStateException.class,
         () -> {

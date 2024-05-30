@@ -44,19 +44,15 @@ import com.google.api.gax.rpc.BatchingDescriptor;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.mockito.quality.Strictness;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class TracedBatchingCallableTest {
+@ExtendWith(MockitoExtension.class)
+class TracedBatchingCallableTest {
   private static final SpanName SPAN_NAME = SpanName.of("FakeClient", "FakeRpc");
-
-  @Rule
-  public final MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
 
   @Mock private ApiTracerFactory tracerFactory;
   @Mock private ApiTracer tracer;
@@ -67,8 +63,8 @@ public class TracedBatchingCallableTest {
   private TracedBatchingCallable<String, String> tracedBatchingCallable;
   private FakeCallContext callContext;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     // Wire the mock tracer factory
     when(tracerFactory.newTracer(
             any(ApiTracer.class), any(SpanName.class), eq(OperationType.Batching)))
@@ -86,14 +82,14 @@ public class TracedBatchingCallableTest {
   }
 
   @Test
-  public void testRootTracerCreated() {
+  void testRootTracerCreated() {
     tracedBatchingCallable.futureCall("test", callContext);
     verify(tracerFactory, times(1))
         .newTracer(callContext.getTracer(), SPAN_NAME, OperationType.Batching);
   }
 
   @Test
-  public void testBatchAttributesStamped() {
+  void testBatchAttributesStamped() {
     when(batchingDescriptor.countElements(anyString())).thenReturn(10L);
     when(batchingDescriptor.countBytes(anyString())).thenReturn(20L);
 
@@ -102,7 +98,7 @@ public class TracedBatchingCallableTest {
   }
 
   @Test
-  public void testOperationFinish() {
+  void testOperationFinish() {
     innerResult.set("successful result");
     tracedBatchingCallable.futureCall("test", callContext);
 
@@ -110,7 +106,7 @@ public class TracedBatchingCallableTest {
   }
 
   @Test
-  public void testOperationFailed() {
+  void testOperationFailed() {
     RuntimeException fakeError = new RuntimeException("fake error");
     innerResult.setException(fakeError);
     tracedBatchingCallable.futureCall("test", callContext);
@@ -119,7 +115,7 @@ public class TracedBatchingCallableTest {
   }
 
   @Test
-  public void testSyncError() {
+  void testSyncError() {
     RuntimeException fakeError = new RuntimeException("fake error");
 
     // Reset the irrelevant expectations from setup. (only needed to silence the warnings).

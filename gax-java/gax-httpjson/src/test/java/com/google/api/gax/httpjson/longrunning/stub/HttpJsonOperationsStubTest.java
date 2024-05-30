@@ -45,12 +45,12 @@ import com.google.longrunning.ListOperationsRequest;
 import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class HttpJsonOperationsStubTest {
+class HttpJsonOperationsStubTest {
 
   @Test
-  public void testMethodDescriptorsURI() throws IOException {
+  void testMethodDescriptorsURI() throws IOException {
     String operationListURI = "testList";
     String operationGetURI = "testGet";
     String operationDeleteURI = "testDelete";
@@ -86,7 +86,7 @@ public class HttpJsonOperationsStubTest {
   }
 
   @Test
-  public void testMethodDescriptorsAdditionalBindings() throws IOException {
+  void testMethodDescriptorsAdditionalBindings() throws IOException {
     // We set a random URI in this OperationsStub, otherwise PathTemplate won't compile
     String operationListAdditionalBindingURI = "testList2";
     String operationGetAdditionalBindingURI = "testGet2";

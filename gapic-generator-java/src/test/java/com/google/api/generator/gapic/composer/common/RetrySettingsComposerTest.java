@@ -53,10 +53,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class RetrySettingsComposerTest {
+class RetrySettingsComposerTest {
   private static final VariableExpr RETRY_PARAM_DEFINITIONS_VAR_EXPR =
       createRetryParamDefinitionsVarExpr();
   private static final VariableExpr RETRY_CODES_DEFINITIONS_VAR_EXPR =
@@ -64,13 +64,13 @@ public class RetrySettingsComposerTest {
 
   private JavaWriterVisitor writerVisitor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     writerVisitor = new JavaWriterVisitor();
   }
 
   @Test
-  public void paramDefinitionsBlock_noConfigsFound() {
+  void paramDefinitionsBlock_noConfigsFound() {
     GapicContext context = TestProtoLoader.instance().parseShowcaseEcho();
     Service service = context.services().get(0);
 
@@ -98,7 +98,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void paramDefinitionsBlock_basic() {
+  void paramDefinitionsBlock_basic() {
     GapicContext context = TestProtoLoader.instance().parseShowcaseEcho();
     Service service = context.services().get(0);
 
@@ -140,7 +140,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void codesDefinitionsBlock_noConfigsFound() {
+  void codesDefinitionsBlock_noConfigsFound() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
@@ -176,7 +176,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void codesDefinitionsBlock_basic() {
+  void codesDefinitionsBlock_basic() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
@@ -215,7 +215,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void simpleBuilderExpr_basic() {
+  void simpleBuilderExpr_basic() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
@@ -296,7 +296,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void lroBuilderExpr() {
+  void lroBuilderExpr() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
@@ -350,7 +350,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void batchingSettings_minimalFlowControlSettings() {
+  void batchingSettings_minimalFlowControlSettings() {
     String filename = "pubsub_gapic.yaml";
     Path path = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), filename);
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
@@ -404,7 +404,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void batchingSettings_fullFlowControlSettings() {
+  void batchingSettings_fullFlowControlSettings() {
     String filename = "logging_gapic.yaml";
     Path path = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), filename);
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =

@@ -32,35 +32,32 @@ package com.google.api.gax.rpc;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.common.truth.Truth;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class ApiExceptionFactoryTest {
+class ApiExceptionFactoryTest {
 
   @Test
-  public void cancelled() {
+  void cancelled() {
     Truth.assertThat(createException(Code.CANCELLED)).isInstanceOf(CancelledException.class);
     Truth.assertThat(createExceptionWithMessage(Code.CANCELLED))
         .isInstanceOf(CancelledException.class);
   }
 
   @Test
-  public void notFound() {
+  void notFound() {
     Truth.assertThat(createException(Code.NOT_FOUND)).isInstanceOf(NotFoundException.class);
     Truth.assertThat(createExceptionWithMessage(Code.NOT_FOUND))
         .isInstanceOf(NotFoundException.class);
   }
 
   @Test
-  public void unknown() {
+  void unknown() {
     Truth.assertThat(createException(Code.UNKNOWN)).isInstanceOf(UnknownException.class);
     Truth.assertThat(createExceptionWithMessage(Code.UNKNOWN)).isInstanceOf(UnknownException.class);
   }
 
   @Test
-  public void invalidArgument() {
+  void invalidArgument() {
     Truth.assertThat(createException(Code.INVALID_ARGUMENT))
         .isInstanceOf(InvalidArgumentException.class);
     Truth.assertThat(createExceptionWithMessage(Code.INVALID_ARGUMENT))
@@ -68,7 +65,7 @@ public class ApiExceptionFactoryTest {
   }
 
   @Test
-  public void deadlineExceeded() {
+  void deadlineExceeded() {
     Truth.assertThat(createException(Code.DEADLINE_EXCEEDED))
         .isInstanceOf(DeadlineExceededException.class);
     Truth.assertThat(createExceptionWithMessage(Code.DEADLINE_EXCEEDED))
@@ -76,7 +73,7 @@ public class ApiExceptionFactoryTest {
   }
 
   @Test
-  public void alreadyExists() {
+  void alreadyExists() {
     Truth.assertThat(createException(Code.ALREADY_EXISTS))
         .isInstanceOf(AlreadyExistsException.class);
     Truth.assertThat(createExceptionWithMessage(Code.ALREADY_EXISTS))
@@ -84,7 +81,7 @@ public class ApiExceptionFactoryTest {
   }
 
   @Test
-  public void permissionDenied() {
+  void permissionDenied() {
     Truth.assertThat(createException(Code.PERMISSION_DENIED))
         .isInstanceOf(PermissionDeniedException.class);
     Truth.assertThat(createExceptionWithMessage(Code.PERMISSION_DENIED))
@@ -92,7 +89,7 @@ public class ApiExceptionFactoryTest {
   }
 
   @Test
-  public void resourceExhausted() {
+  void resourceExhausted() {
     Truth.assertThat(createException(Code.RESOURCE_EXHAUSTED))
         .isInstanceOf(ResourceExhaustedException.class);
     Truth.assertThat(createExceptionWithMessage(Code.RESOURCE_EXHAUSTED))
@@ -100,7 +97,7 @@ public class ApiExceptionFactoryTest {
   }
 
   @Test
-  public void failedPrecondition() {
+  void failedPrecondition() {
     Truth.assertThat(createException(Code.FAILED_PRECONDITION))
         .isInstanceOf(FailedPreconditionException.class);
     Truth.assertThat(createExceptionWithMessage(Code.FAILED_PRECONDITION))
@@ -108,41 +105,41 @@ public class ApiExceptionFactoryTest {
   }
 
   @Test
-  public void aborted() {
+  void aborted() {
     Truth.assertThat(createException(Code.ABORTED)).isInstanceOf(AbortedException.class);
     Truth.assertThat(createExceptionWithMessage(Code.ABORTED)).isInstanceOf(AbortedException.class);
   }
 
   @Test
-  public void outOfRange() {
+  void outOfRange() {
     Truth.assertThat(createException(Code.OUT_OF_RANGE)).isInstanceOf(OutOfRangeException.class);
     Truth.assertThat(createExceptionWithMessage(Code.OUT_OF_RANGE))
         .isInstanceOf(OutOfRangeException.class);
   }
 
   @Test
-  public void internal() {
+  void internal() {
     Truth.assertThat(createException(Code.INTERNAL)).isInstanceOf(InternalException.class);
     Truth.assertThat(createExceptionWithMessage(Code.INTERNAL))
         .isInstanceOf(InternalException.class);
   }
 
   @Test
-  public void unavailable() {
+  void unavailable() {
     Truth.assertThat(createException(Code.UNAVAILABLE)).isInstanceOf(UnavailableException.class);
     Truth.assertThat(createExceptionWithMessage(Code.UNAVAILABLE))
         .isInstanceOf(UnavailableException.class);
   }
 
   @Test
-  public void dataLoss() {
+  void dataLoss() {
     Truth.assertThat(createException(Code.DATA_LOSS)).isInstanceOf(DataLossException.class);
     Truth.assertThat(createExceptionWithMessage(Code.DATA_LOSS))
         .isInstanceOf(DataLossException.class);
   }
 
   @Test
-  public void unauthenticated() {
+  void unauthenticated() {
     Truth.assertThat(createException(Code.UNAUTHENTICATED))
         .isInstanceOf(UnauthenticatedException.class);
     Truth.assertThat(createExceptionWithMessage(Code.UNAUTHENTICATED))
@@ -150,7 +147,7 @@ public class ApiExceptionFactoryTest {
   }
 
   @Test
-  public void unimplemented() {
+  void unimplemented() {
     Truth.assertThat(createException(Code.UNIMPLEMENTED))
         .isInstanceOf(UnimplementedException.class);
     Truth.assertThat(createExceptionWithMessage(Code.UNIMPLEMENTED))
@@ -158,7 +155,7 @@ public class ApiExceptionFactoryTest {
   }
 
   @Test
-  public void unknown_default() {
+  void unknown_default() {
     Truth.assertThat(createException(Code.OK)).isInstanceOf(UnknownException.class);
     Truth.assertThat(createExceptionWithMessage(Code.OK)).isInstanceOf(UnknownException.class);
   }

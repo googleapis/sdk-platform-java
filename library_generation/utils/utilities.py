@@ -303,10 +303,23 @@ def generate_prerequisite_files(
 
     # generate owlbot.py
     py_file = "owlbot.py"
+    template_excludes = [
+        ".github/*",
+        ".kokoro/*",
+        "samples/*",
+        "CODE_OF_CONDUCT.md",
+        "CONTRIBUTING.md",
+        "LICENSE",
+        "SECURITY.md",
+        "java.header",
+        "license-checks.xml",
+        "renovate.json",
+        ".gitignore",
+    ]
     if not os.path.exists(f"{library_path}/{py_file}"):
         render(
             template_name="owlbot.py.j2",
             output_name=f"{library_path}/{py_file}",
             should_include_templates=True,
-            template_excludes=config.template_excludes,
+            template_excludes=template_excludes,
         )

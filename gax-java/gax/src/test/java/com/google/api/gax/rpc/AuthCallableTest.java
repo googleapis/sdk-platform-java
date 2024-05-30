@@ -38,18 +38,15 @@ import com.google.auth.Credentials;
 import com.google.common.truth.Truth;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class AuthCallableTest {
+class AuthCallableTest {
   private ClientContext clientContext;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     clientContext =
         ClientContext.newBuilder()
             .setDefaultCallContext(FakeCallContext.createDefault())
@@ -58,7 +55,7 @@ public class AuthCallableTest {
   }
 
   @Test
-  public void testAuth() throws InterruptedException, ExecutionException, CancellationException {
+  void testAuth() throws InterruptedException, ExecutionException, CancellationException {
     StashCallable<Integer, Integer> stash = new StashCallable<>(42);
     Truth.assertThat(stash.getContext()).isNull();
 

@@ -45,11 +45,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ITDynamicRoutingHeaders {
+class ITDynamicRoutingHeaders {
   private static final String SPLIT_TOKEN = "&";
   private static final Metadata.Key<String> REQUEST_PARAMS_HEADER_KEY =
       Metadata.Key.of(DYNAMIC_ROUTING_HEADER_KEY, Metadata.ASCII_STRING_MARSHALLER);
@@ -117,18 +118,18 @@ public class ITDynamicRoutingHeaders {
     }
   }
 
-  private HttpJsonCapturingClientInterceptor httpJsonInterceptor;
-  private HttpJsonCapturingClientInterceptor httpJsonComplianceInterceptor;
-  private GrpcCapturingClientInterceptor grpcInterceptor;
-  private GrpcCapturingClientInterceptor grpcComplianceInterceptor;
+  private static HttpJsonCapturingClientInterceptor httpJsonInterceptor;
+  private static HttpJsonCapturingClientInterceptor httpJsonComplianceInterceptor;
+  private static GrpcCapturingClientInterceptor grpcInterceptor;
+  private static GrpcCapturingClientInterceptor grpcComplianceInterceptor;
 
-  private EchoClient grpcClient;
-  private EchoClient httpJsonClient;
-  private ComplianceClient grpcComplianceClient;
-  private ComplianceClient httpJsonComplianceClient;
+  private static EchoClient grpcClient;
+  private static EchoClient httpJsonClient;
+  private static ComplianceClient grpcComplianceClient;
+  private static ComplianceClient httpJsonComplianceClient;
 
-  @Before
-  public void createClients() throws Exception {
+  @BeforeAll
+  static void createClients() throws Exception {
     // Create gRPC Interceptor and Client
     grpcInterceptor = new GrpcCapturingClientInterceptor();
     grpcClient = TestClientInitializer.createGrpcEchoClient(ImmutableList.of(grpcInterceptor));
@@ -153,8 +154,16 @@ public class ITDynamicRoutingHeaders {
         TestClientInitializer.createHttpJsonEchoClient(ImmutableList.of(httpJsonInterceptor));
   }
 
-  @After
-  public void destroyClient() throws InterruptedException {
+  @BeforeEach
+  void cleanUpParams() {
+    grpcInterceptor.metadata = null;
+    grpcComplianceInterceptor.metadata = null;
+    httpJsonInterceptor.requestParam = null;
+    httpJsonComplianceInterceptor.requestParam = null;
+  }
+
+  @AfterAll
+  static void destroyClient() throws InterruptedException {
     grpcClient.close();
     grpcComplianceClient.close();
 
@@ -172,35 +181,35 @@ public class ITDynamicRoutingHeaders {
   }
 
   @Test
-  public void testGrpc_noRoutingHeaderUsed() {
+  void testGrpc_noRoutingHeaderUsed() {
     grpcClient.echo(EchoRequest.newBuilder().build());
     String headerValue = grpcInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
     assertThat(headerValue).isNull();
   }
 
   @Test
-  public void testHttpJson_noRoutingHeaderUsed() {
+  void testHttpJson_noRoutingHeaderUsed() {
     httpJsonClient.echo(EchoRequest.newBuilder().build());
     String headerValue = httpJsonInterceptor.requestParam;
     assertThat(headerValue).isNull();
   }
 
   @Test
-  public void testGrpc_emptyHeader() {
+  void testGrpc_emptyHeader() {
     grpcClient.echo(EchoRequest.newBuilder().setHeader("").build());
     String headerValue = grpcInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
     assertThat(headerValue).isNull();
   }
 
   @Test
-  public void testHttpJson_emptyHeader() {
+  void testHttpJson_emptyHeader() {
     httpJsonClient.echo(EchoRequest.newBuilder().setHeader("").build());
     String headerValue = httpJsonInterceptor.requestParam;
     assertThat(headerValue).isNull();
   }
 
   @Test
-  public void testGrpc_matchesHeaderName() {
+  void testGrpc_matchesHeaderName() {
     grpcClient.echo(EchoRequest.newBuilder().setHeader("potato").build());
     String headerValue = grpcInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
     assertThat(headerValue).isNotNull();
@@ -211,7 +220,7 @@ public class ITDynamicRoutingHeaders {
   }
 
   @Test
-  public void testGrpc_implicitHeaders_enumsEncodedasInt() {
+  void testGrpc_implicitHeaders_enumsEncodedasInt() {
     RepeatRequest request =
         RepeatRequest.newBuilder().setInfo(ComplianceData.newBuilder().setFKingdomValue(5)).build();
     RepeatResponse actualResponse = grpcComplianceClient.repeatDataSimplePath(request);
@@ -228,7 +237,7 @@ public class ITDynamicRoutingHeaders {
   }
 
   @Test
-  public void testHttpJson_implicitHeaders_enumsEncodedasInt() {
+  void testHttpJson_implicitHeaders_enumsEncodedasInt() {
     RepeatRequest request =
         RepeatRequest.newBuilder()
             .setInfo(
@@ -256,7 +265,7 @@ public class ITDynamicRoutingHeaders {
   }
 
   @Test
-  public void testHttpJson_matchesHeaderName() {
+  void testHttpJson_matchesHeaderName() {
     httpJsonClient.echo(EchoRequest.newBuilder().setHeader("potato").build());
     String headerValue = httpJsonInterceptor.requestParam;
     assertThat(headerValue).isNotNull();
@@ -267,7 +276,7 @@ public class ITDynamicRoutingHeaders {
   }
 
   @Test
-  public void testGrpc_matchesOtherHeaderName() {
+  void testGrpc_matchesOtherHeaderName() {
     grpcClient.echo(EchoRequest.newBuilder().setOtherHeader("instances/456").build());
     String headerValue = grpcInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
     assertThat(headerValue).isNotNull();
@@ -278,7 +287,7 @@ public class ITDynamicRoutingHeaders {
   }
 
   @Test
-  public void testHttpJson_matchesOtherHeaderName() {
+  void testHttpJson_matchesOtherHeaderName() {
     httpJsonClient.echo(EchoRequest.newBuilder().setOtherHeader("instances/456").build());
     String headerValue = httpJsonInterceptor.requestParam;
     assertThat(headerValue).isNotNull();
@@ -289,7 +298,7 @@ public class ITDynamicRoutingHeaders {
   }
 
   @Test
-  public void testGrpc_matchesMultipleOfSameRoutingHeader_usesHeader() {
+  void testGrpc_matchesMultipleOfSameRoutingHeader_usesHeader() {
     grpcClient.echo(EchoRequest.newBuilder().setHeader("projects/123/instances/456").build());
     String headerValue = grpcInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
     assertThat(headerValue).isNotNull();
@@ -306,7 +315,7 @@ public class ITDynamicRoutingHeaders {
   }
 
   @Test
-  public void testHttpJson_matchesMultipleOfSameRoutingHeader_usesHeader() {
+  void testHttpJson_matchesMultipleOfSameRoutingHeader_usesHeader() {
     httpJsonClient.echo(EchoRequest.newBuilder().setHeader("projects/123/instances/456").build());
     String headerValue = httpJsonInterceptor.requestParam;
     assertThat(headerValue).isNotNull();
@@ -323,7 +332,7 @@ public class ITDynamicRoutingHeaders {
   }
 
   @Test
-  public void testGrpc_matchesMultipleOfSameRoutingHeader_usesOtherHeader() {
+  void testGrpc_matchesMultipleOfSameRoutingHeader_usesOtherHeader() {
     grpcClient.echo(EchoRequest.newBuilder().setOtherHeader("projects/123/instances/456").build());
     String headerValue = grpcInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
     assertThat(headerValue).isNotNull();
@@ -335,7 +344,7 @@ public class ITDynamicRoutingHeaders {
   }
 
   @Test
-  public void testHttpJson_matchesMultipleOfSameRoutingHeader_usesOtherHeader() {
+  void testHttpJson_matchesMultipleOfSameRoutingHeader_usesOtherHeader() {
     httpJsonClient.echo(
         EchoRequest.newBuilder().setOtherHeader("projects/123/instances/456").build());
     String headerValue = httpJsonInterceptor.requestParam;
@@ -348,7 +357,7 @@ public class ITDynamicRoutingHeaders {
   }
 
   @Test
-  public void testGrpc_matchesMultipleRoutingHeaders() {
+  void testGrpc_matchesMultipleRoutingHeaders() {
     grpcClient.echo(
         EchoRequest.newBuilder()
             .setHeader("regions/123/zones/456")
@@ -369,7 +378,7 @@ public class ITDynamicRoutingHeaders {
   }
 
   @Test
-  public void testHttpJson_matchesMultipleRoutingHeaders() {
+  void testHttpJson_matchesMultipleRoutingHeaders() {
     httpJsonClient.echo(
         EchoRequest.newBuilder()
             .setHeader("regions/123/zones/456")

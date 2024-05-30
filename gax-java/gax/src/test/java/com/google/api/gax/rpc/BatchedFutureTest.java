@@ -36,14 +36,11 @@ import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.common.truth.Truth;
 import java.util.concurrent.TimeUnit;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class BatchedFutureTest {
+class BatchedFutureTest {
   @Test
-  public void testSet() throws Exception {
+  void testSet() throws Exception {
     BatchedFuture<Integer> future = BatchedFuture.create();
     Truth.assertThat(future.isDone()).isFalse();
     future.set(42);
@@ -53,7 +50,7 @@ public class BatchedFutureTest {
   }
 
   @Test
-  public void testTransform() throws Exception {
+  void testTransform() throws Exception {
     BatchedFuture<Integer> inputFuture = BatchedFuture.<Integer>create();
     ApiFuture<String> transformedFuture =
         ApiFutures.transform(

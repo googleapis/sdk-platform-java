@@ -35,9 +35,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ComposerTest {
+class ComposerTest {
   private final GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
   private final Service echoProtoService = context.services().get(0);
   private final List<GapicClass> clazzes =
@@ -54,7 +54,7 @@ public class ComposerTest {
   private List<Sample> ListofSamples = Arrays.asList(new Sample[] {sample});
 
   @Test
-  public void gapicClass_addApacheLicense() {
+  void gapicClass_addApacheLicense() {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString("com.google.showcase.v1beta1.stub")
@@ -74,7 +74,7 @@ public class ComposerTest {
   }
 
   @Test
-  public void composeSamples_showcase() {
+  void composeSamples_showcase() {
     GapicClass testClass = clazzes.get(0).withSamples(ListofSamples);
     List<GapicClass> testClassList = Arrays.asList(new GapicClass[] {testClass});
 
@@ -96,7 +96,7 @@ public class ComposerTest {
   }
 
   @Test
-  public void gapicClass_addRegionTagAndHeaderToSample() {
+  void gapicClass_addRegionTagAndHeaderToSample() {
     Sample testSample;
     testSample = Composer.addRegionTagAndHeaderToSample(sample, "showcase", "v1");
     assertEquals("Showcase", testSample.regionTag().apiShortName());
@@ -105,7 +105,7 @@ public class ComposerTest {
   }
 
   @Test
-  public void composeSamples_parseProtoPackage() {
+  void composeSamples_parseProtoPackage() {
 
     String defaultHost = "accessapproval.googleapis.com:443";
     String protoPack = "google.cloud.accessapproval.v1";

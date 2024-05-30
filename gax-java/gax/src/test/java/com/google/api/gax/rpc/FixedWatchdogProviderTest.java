@@ -33,22 +33,19 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.core.ApiClock;
 import java.util.concurrent.ScheduledExecutorService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class FixedWatchdogProviderTest {
+class FixedWatchdogProviderTest {
   @Test
-  public void testNull() {
+  void testNull() {
     WatchdogProvider provider = FixedWatchdogProvider.create(null);
     assertThat(provider.getWatchdog()).isNull();
   }
 
   @Test
-  public void testSameInstance() {
+  void testSameInstance() {
     Watchdog watchdog =
         Watchdog.create(
             Mockito.mock(ApiClock.class),
@@ -60,7 +57,7 @@ public class FixedWatchdogProviderTest {
   }
 
   @Test
-  public void testNoModifications() {
+  void testNoModifications() {
     Watchdog watchdog =
         Watchdog.create(
             Mockito.mock(ApiClock.class),

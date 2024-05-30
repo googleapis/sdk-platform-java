@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.truth.Truth;
@@ -50,13 +50,10 @@ import com.google.rpc.RequestInfo;
 import com.google.rpc.ResourceInfo;
 import com.google.rpc.RetryInfo;
 import java.util.Collections;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class ErrorDetailsTest {
+class ErrorDetailsTest {
 
   private static final ErrorInfo ERROR_INFO =
       ErrorInfo.newBuilder()
@@ -126,8 +123,8 @@ public class ErrorDetailsTest {
 
   ErrorDetails errorDetails;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
     ImmutableList<Any> rawErrorMessages =
         ImmutableList.of(
             Any.pack(ERROR_INFO),
@@ -145,14 +142,14 @@ public class ErrorDetailsTest {
   }
 
   @Test
-  public void unpack_shouldReturnNullIfRawErrorMessagesIsNull() {
+  void unpack_shouldReturnNullIfRawErrorMessagesIsNull() {
     errorDetails = ErrorDetails.builder().setRawErrorMessages(null).build();
 
     Truth.assertThat(errorDetails.unpack(ErrorInfo.class)).isNull();
   }
 
   @Test
-  public void unpack_shouldReturnNullIfErrorMessageTypeDoesNotExist() {
+  void unpack_shouldReturnNullIfErrorMessageTypeDoesNotExist() {
     errorDetails =
         ErrorDetails.builder().setRawErrorMessages(ImmutableList.of(Any.pack(ERROR_INFO))).build();
 
@@ -160,7 +157,7 @@ public class ErrorDetailsTest {
   }
 
   @Test
-  public void unpack_shouldThrowExceptionIfUnpackingErrorMassageFailed() {
+  void unpack_shouldThrowExceptionIfUnpackingErrorMassageFailed() {
     Any malformedErrorType =
         Any.newBuilder()
             .setTypeUrl("type.googleapis.com/google.rpc.ErrorInfo")
@@ -178,57 +175,57 @@ public class ErrorDetailsTest {
   }
 
   @Test
-  public void unpack_shouldReturnDesiredErrorMessageTypeIfItExist() {
+  void unpack_shouldReturnDesiredErrorMessageTypeIfItExist() {
     Truth.assertThat(errorDetails.unpack(ErrorInfo.class)).isEqualTo(ERROR_INFO);
   }
 
   @Test
-  public void errorInfo_shouldUnpackErrorInfoProtoMessage() {
+  void errorInfo_shouldUnpackErrorInfoProtoMessage() {
     Truth.assertThat(errorDetails.getErrorInfo()).isEqualTo(ERROR_INFO);
   }
 
   @Test
-  public void retryInfo_shouldUnpackRetryInfoProtoMessage() {
+  void retryInfo_shouldUnpackRetryInfoProtoMessage() {
     Truth.assertThat(errorDetails.getRetryInfo()).isEqualTo(RETRY_INFO);
   }
 
   @Test
-  public void debugInfo_shouldUnpackDebugInfoProtoMessage() {
+  void debugInfo_shouldUnpackDebugInfoProtoMessage() {
     Truth.assertThat(errorDetails.getDebugInfo()).isEqualTo(DEBUG_INFO);
   }
 
   @Test
-  public void quotaFailure_shouldUnpackQuotaFailureProtoMessage() {
+  void quotaFailure_shouldUnpackQuotaFailureProtoMessage() {
     Truth.assertThat(errorDetails.getQuotaFailure()).isEqualTo(QUOTA_FAILURE);
   }
 
   @Test
-  public void preconditionFailure_shouldUnpackPreconditionFailureProtoMessage() {
+  void preconditionFailure_shouldUnpackPreconditionFailureProtoMessage() {
     Truth.assertThat(errorDetails.getPreconditionFailure()).isEqualTo(PRECONDITION_FAILURE);
   }
 
   @Test
-  public void badRequest_shouldUnpackBadRequestProtoMessage() {
+  void badRequest_shouldUnpackBadRequestProtoMessage() {
     Truth.assertThat(errorDetails.getBadRequest()).isEqualTo(BAD_REQUEST);
   }
 
   @Test
-  public void requestInfo_shouldUnpackRequestInfoProtoMessage() {
+  void requestInfo_shouldUnpackRequestInfoProtoMessage() {
     Truth.assertThat(errorDetails.getRequestInfo()).isEqualTo(REQUEST_INFO);
   }
 
   @Test
-  public void resourceInfo_shouldUnpackResourceInfoProtoMessage() {
+  void resourceInfo_shouldUnpackResourceInfoProtoMessage() {
     Truth.assertThat(errorDetails.getResourceInfo()).isEqualTo(RESOURCE_INFO);
   }
 
   @Test
-  public void help_shouldUnpackHelpProtoMessage() {
+  void help_shouldUnpackHelpProtoMessage() {
     Truth.assertThat(errorDetails.getHelp()).isEqualTo(HELP);
   }
 
   @Test
-  public void localizedMessage_shouldUnpackLocalizedMessageProtoMessage() {
+  void localizedMessage_shouldUnpackLocalizedMessageProtoMessage() {
     Truth.assertThat(errorDetails.getHelp()).isEqualTo(HELP);
   }
 }

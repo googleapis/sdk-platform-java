@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
@@ -38,21 +38,18 @@ import com.google.auth.Credentials;
 import com.google.common.truth.Truth;
 import io.grpc.Status;
 import java.io.IOException;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class EndpointContextTest {
+class EndpointContextTest {
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com:443";
   private static final String DEFAULT_MTLS_ENDPOINT = "test.mtls.googleapis.com:443";
   private EndpointContext.Builder defaultEndpointContextBuilder;
   private StatusCode statusCode;
 
-  @Before
-  public void setUp() throws IOException {
+  @BeforeEach
+  void setUp() throws IOException {
     defaultEndpointContextBuilder =
         EndpointContext.newBuilder()
             .setServiceName("test")
@@ -65,7 +62,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void mtlsEndpointResolver_switchToMtlsAllowedIsFalse() throws IOException {
+  void mtlsEndpointResolver_switchToMtlsAllowedIsFalse() throws IOException {
     boolean useClientCertificate = true;
     boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
@@ -83,7 +80,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageAuto() throws IOException {
+  void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageAuto() throws IOException {
     boolean useClientCertificate = true;
     boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
@@ -101,7 +98,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageAlways() throws IOException {
+  void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageAlways() throws IOException {
     boolean useClientCertificate = true;
     boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
@@ -119,7 +116,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageNever() throws IOException {
+  void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageNever() throws IOException {
     boolean useClientCertificate = true;
     boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
@@ -137,9 +134,8 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void
-      mtlsEndpointResolver_switchToMtlsAllowedIsTrue_useCertificateIsFalse_nullMtlsKeystore()
-          throws IOException {
+  void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_useCertificateIsFalse_nullMtlsKeystore()
+      throws IOException {
     boolean useClientCertificate = false;
     boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
@@ -157,7 +153,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void mtlsEndpointResolver_getKeyStore_throwsIOException() throws IOException {
+  void mtlsEndpointResolver_getKeyStore_throwsIOException() throws IOException {
     boolean useClientCertificate = true;
     boolean throwExceptionForGetKeyStore = true;
     MtlsProvider mtlsProvider =
@@ -179,8 +175,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void endpointContextBuild_noUniverseDomain_usesClientSettingsEndpoint()
-      throws IOException {
+  void endpointContextBuild_noUniverseDomain_usesClientSettingsEndpoint() throws IOException {
     EndpointContext endpointContext =
         defaultEndpointContextBuilder.setClientSettingsEndpoint(DEFAULT_ENDPOINT).build();
     Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
@@ -189,7 +184,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void endpointContextBuild_noUniverseDomain_usesTransportChannelProviderEndpoint()
+  void endpointContextBuild_noUniverseDomain_usesTransportChannelProviderEndpoint()
       throws IOException {
     String transportChannelProviderEndpoint = "random.endpoint.com:443";
     EndpointContext endpointContext =
@@ -204,7 +199,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void endpointContextBuild_noUniverseDomain_overrideUsesTransportChannelProviderEndpoint()
+  void endpointContextBuild_noUniverseDomain_overrideUsesTransportChannelProviderEndpoint()
       throws IOException {
     String transportChannelProviderEndpoint = "random.endpoint.com";
     EndpointContext endpointContext =
@@ -219,7 +214,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void endpointContextBuild_emptyStringUniverseDomain_throwsIllegalArgumentException() {
+  void endpointContextBuild_emptyStringUniverseDomain_throwsIllegalArgumentException() {
     EndpointContext.Builder endpointContextBuilder =
         defaultEndpointContextBuilder.setUniverseDomain("");
     IllegalArgumentException exception =
@@ -229,7 +224,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void endpointContextBuild_GDUUniverseDomain() throws IOException {
+  void endpointContextBuild_GDUUniverseDomain() throws IOException {
     EndpointContext endpointContext = defaultEndpointContextBuilder.build();
     Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
     Truth.assertThat(endpointContext.resolvedUniverseDomain())
@@ -237,7 +232,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void endpointContextBuild_nonGDUUniverseDomain() throws IOException {
+  void endpointContextBuild_nonGDUUniverseDomain() throws IOException {
     String universeDomain = "random.com";
     EndpointContext endpointContext =
         defaultEndpointContextBuilder.setUniverseDomain(universeDomain).build();
@@ -246,7 +241,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void endpointContextBuild_noUniverseDomain_noEndpoints() throws IOException {
+  void endpointContextBuild_noUniverseDomain_noEndpoints() throws IOException {
     String expectedEndpoint = "random.googleapis.com:443";
     EndpointContext endpointContext =
         defaultEndpointContextBuilder
@@ -260,7 +255,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void endpointContextBuild_mtlsConfigured_GDU() throws IOException {
+  void endpointContextBuild_mtlsConfigured_GDU() throws IOException {
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
             true,
@@ -281,7 +276,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void endpointContextBuild_mtlsConfigured_nonGDU_throwsIllegalArgumentException()
+  void endpointContextBuild_mtlsConfigured_nonGDU_throwsIllegalArgumentException()
       throws IOException {
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
@@ -304,7 +299,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void endpointContextBuild_gdchFlow_setUniverseDomain() throws IOException {
+  void endpointContextBuild_gdchFlow_setUniverseDomain() throws IOException {
     EndpointContext.Builder endpointContextBuilder =
         defaultEndpointContextBuilder.setUsingGDCH(true);
     IllegalArgumentException exception =
@@ -314,7 +309,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void endpointContextBuild_gdchFlow_noUniverseDomain_noCustomEndpoint() throws IOException {
+  void endpointContextBuild_gdchFlow_noUniverseDomain_noCustomEndpoint() throws IOException {
     EndpointContext endpointContext =
         defaultEndpointContextBuilder
             .setUniverseDomain(null)
@@ -327,7 +322,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void endpointContextBuild_gdchFlow_noUniverseDomain_customEndpoint() throws IOException {
+  void endpointContextBuild_gdchFlow_noUniverseDomain_customEndpoint() throws IOException {
     String clientSettingsEndpoint = "random.endpoint.com:443";
     EndpointContext endpointContext =
         defaultEndpointContextBuilder
@@ -344,7 +339,7 @@ public class EndpointContextTest {
   // For this test running locally or in CI, check that the Env Var is set properly.
   // This test should only run when the maven profile `EnvVarTest` is enabled.
   @Test
-  public void endpointContextBuild_universeDomainEnvVarSet() throws IOException {
+  void endpointContextBuild_universeDomainEnvVarSet() throws IOException {
     String envVarUniverseDomain = "random.com";
     EndpointContext endpointContext =
         defaultEndpointContextBuilder
@@ -359,7 +354,7 @@ public class EndpointContextTest {
   // For this test running locally or in CI, check that the Env Var is set properly.
   // This test should only run when the maven profile `EnvVarTest` is enabled.
   @Test
-  public void endpointContextBuild_multipleUniverseDomainConfigurations_clientSettingsHasPriority()
+  void endpointContextBuild_multipleUniverseDomainConfigurations_clientSettingsHasPriority()
       throws IOException {
     // This test has `GOOGLE_CLOUD_UNIVERSE_DOMAIN` = `random.com`
     String clientSettingsUniverseDomain = "clientSettingsUniverseDomain.com";
@@ -376,7 +371,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void hasValidUniverseDomain_gdchFlow_anyCredentials() throws IOException {
+  void hasValidUniverseDomain_gdchFlow_anyCredentials() throws IOException {
     Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
     Credentials validCredentials = Mockito.mock(Credentials.class);
     EndpointContext endpointContext =
@@ -386,14 +381,14 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void hasValidUniverseDomain_noCredentials_inGDU() throws IOException {
+  void hasValidUniverseDomain_noCredentials_inGDU() throws IOException {
     Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
     EndpointContext endpointContext = defaultEndpointContextBuilder.build();
     endpointContext.validateUniverseDomain(noCredentials, statusCode);
   }
 
   @Test
-  public void hasValidUniverseDomain_noCredentials_nonGDU() throws IOException {
+  void hasValidUniverseDomain_noCredentials_nonGDU() throws IOException {
     Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
     EndpointContext endpointContext =
         defaultEndpointContextBuilder.setUniverseDomain("test.com").build();
@@ -403,7 +398,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void hasValidUniverseDomain_credentialsInGDU_configInGDU() throws IOException {
+  void hasValidUniverseDomain_credentialsInGDU_configInGDU() throws IOException {
     Credentials credentials = Mockito.mock(Credentials.class);
     Mockito.when(credentials.getUniverseDomain()).thenReturn(Credentials.GOOGLE_DEFAULT_UNIVERSE);
     EndpointContext endpointContext = defaultEndpointContextBuilder.build();
@@ -412,7 +407,7 @@ public class EndpointContextTest {
 
   // Non-GDU Universe Domain could be any domain, but this test refers uses `test.com`
   @Test
-  public void hasValidUniverseDomain_credentialsNonGDU_configInGDU() throws IOException {
+  void hasValidUniverseDomain_credentialsNonGDU_configInGDU() throws IOException {
     Credentials credentials = Mockito.mock(Credentials.class);
     Mockito.when(credentials.getUniverseDomain()).thenReturn("test.com");
     EndpointContext endpointContext = defaultEndpointContextBuilder.build();
@@ -423,7 +418,7 @@ public class EndpointContextTest {
 
   // Non-GDU Universe Domain could be any domain, but this test refers uses `test.com`
   @Test
-  public void hasValidUniverseDomain_credentialsNonGDU_configNonGDU() throws IOException {
+  void hasValidUniverseDomain_credentialsNonGDU_configNonGDU() throws IOException {
     Credentials credentials = Mockito.mock(Credentials.class);
     Mockito.when(credentials.getUniverseDomain()).thenReturn("test.com");
     EndpointContext endpointContext =
@@ -433,7 +428,7 @@ public class EndpointContextTest {
 
   // Non-GDU Universe Domain could be any domain, but this test refers uses `test.com`
   @Test
-  public void hasValidUniverseDomain_credentialsInGDU_configNonGDU() throws IOException {
+  void hasValidUniverseDomain_credentialsInGDU_configNonGDU() throws IOException {
     Credentials credentials = Mockito.mock(Credentials.class);
     Mockito.when(credentials.getUniverseDomain()).thenReturn(Credentials.GOOGLE_DEFAULT_UNIVERSE);
     EndpointContext endpointContext =

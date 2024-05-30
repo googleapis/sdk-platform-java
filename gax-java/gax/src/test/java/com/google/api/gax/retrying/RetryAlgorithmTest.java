@@ -29,21 +29,18 @@
  */
 package com.google.api.gax.retrying;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({"unchecked", "deprecation"})
-@RunWith(JUnit4.class)
-public class RetryAlgorithmTest {
+class RetryAlgorithmTest {
 
   @Test
-  public void testCreateFirstAttempt() {
+  void testCreateFirstAttempt() {
     TimedRetryAlgorithm timedAlgorithm = mock(TimedRetryAlgorithm.class);
     RetryAlgorithm<Void> algorithm =
         new RetryAlgorithm<>(mock(ResultRetryAlgorithm.class), timedAlgorithm);
@@ -53,7 +50,7 @@ public class RetryAlgorithmTest {
   }
 
   @Test
-  public void testCreateFirstAttemptWithUnusedContext() {
+  void testCreateFirstAttemptWithUnusedContext() {
     TimedRetryAlgorithm timedAlgorithm = mock(TimedRetryAlgorithm.class);
     RetryAlgorithm<Void> algorithm =
         new RetryAlgorithm<>(mock(ResultRetryAlgorithm.class), timedAlgorithm);
@@ -64,7 +61,7 @@ public class RetryAlgorithmTest {
   }
 
   @Test
-  public void testCreateFirstAttemptWithContext() {
+  void testCreateFirstAttemptWithContext() {
     TimedRetryAlgorithmWithContext timedAlgorithm = mock(TimedRetryAlgorithmWithContext.class);
     RetryAlgorithm<Void> algorithm =
         new RetryAlgorithm<>(mock(ResultRetryAlgorithmWithContext.class), timedAlgorithm);
@@ -75,7 +72,7 @@ public class RetryAlgorithmTest {
   }
 
   @Test
-  public void testCreateFirstAttemptWithNullContext() {
+  void testCreateFirstAttemptWithNullContext() {
     TimedRetryAlgorithmWithContext timedAlgorithm = mock(TimedRetryAlgorithmWithContext.class);
     RetryAlgorithm<Void> algorithm =
         new RetryAlgorithm<>(mock(ResultRetryAlgorithmWithContext.class), timedAlgorithm);
@@ -85,7 +82,7 @@ public class RetryAlgorithmTest {
   }
 
   @Test
-  public void testNextAttempt() {
+  void testNextAttempt() {
     ResultRetryAlgorithm<Object> resultAlgorithm = mock(ResultRetryAlgorithm.class);
     TimedRetryAlgorithm timedAlgorithm = mock(TimedRetryAlgorithm.class);
     RetryAlgorithm<Object> algorithm = new RetryAlgorithm<>(resultAlgorithm, timedAlgorithm);
@@ -99,7 +96,7 @@ public class RetryAlgorithmTest {
   }
 
   @Test
-  public void testNextAttemptWithContext() {
+  void testNextAttemptWithContext() {
     ResultRetryAlgorithmWithContext<Object> resultAlgorithm =
         mock(ResultRetryAlgorithmWithContext.class);
     TimedRetryAlgorithmWithContext timedAlgorithm = mock(TimedRetryAlgorithmWithContext.class);
@@ -115,7 +112,7 @@ public class RetryAlgorithmTest {
   }
 
   @Test
-  public void testShouldRetry() {
+  void testShouldRetry() {
     ResultRetryAlgorithm<Object> resultAlgorithm = mock(ResultRetryAlgorithm.class);
     TimedRetryAlgorithm timedAlgorithm = mock(TimedRetryAlgorithm.class);
     RetryAlgorithm<Object> algorithm = new RetryAlgorithm<>(resultAlgorithm, timedAlgorithm);
@@ -129,7 +126,7 @@ public class RetryAlgorithmTest {
   }
 
   @Test
-  public void testShouldRetry_usesTimedAlgorithm() {
+  void testShouldRetry_usesTimedAlgorithm() {
     ResultRetryAlgorithm<Object> resultAlgorithm = mock(ResultRetryAlgorithm.class);
     TimedRetryAlgorithm timedAlgorithm = mock(TimedRetryAlgorithm.class);
     RetryAlgorithm<Object> algorithm = new RetryAlgorithm<>(resultAlgorithm, timedAlgorithm);
@@ -144,7 +141,7 @@ public class RetryAlgorithmTest {
   }
 
   @Test
-  public void testShouldRetryWithContext() {
+  void testShouldRetryWithContext() {
     ResultRetryAlgorithmWithContext<Object> resultAlgorithm =
         mock(ResultRetryAlgorithmWithContext.class);
     TimedRetryAlgorithmWithContext timedAlgorithm = mock(TimedRetryAlgorithmWithContext.class);
@@ -160,7 +157,7 @@ public class RetryAlgorithmTest {
   }
 
   @Test
-  public void testShouldRetryWithContext_usesTimedAlgorithm() {
+  void testShouldRetryWithContext_usesTimedAlgorithm() {
     ResultRetryAlgorithmWithContext<Object> resultAlgorithm =
         mock(ResultRetryAlgorithmWithContext.class);
     TimedRetryAlgorithmWithContext timedAlgorithm = mock(TimedRetryAlgorithmWithContext.class);
@@ -177,7 +174,7 @@ public class RetryAlgorithmTest {
   }
 
   @Test
-  public void testShouldRetry_noPreviousSettings() {
+  void testShouldRetry_noPreviousSettings() {
     ResultRetryAlgorithm<Object> resultAlgorithm = mock(ResultRetryAlgorithm.class);
     TimedRetryAlgorithm timedAlgorithm = mock(TimedRetryAlgorithm.class);
     RetryAlgorithm<Object> algorithm = new RetryAlgorithm<>(resultAlgorithm, timedAlgorithm);
@@ -190,7 +187,7 @@ public class RetryAlgorithmTest {
   }
 
   @Test
-  public void testShouldRetryWithContext_noPreviousSettings() {
+  void testShouldRetryWithContext_noPreviousSettings() {
     ResultRetryAlgorithmWithContext<Object> resultAlgorithm =
         mock(ResultRetryAlgorithmWithContext.class);
     TimedRetryAlgorithmWithContext timedAlgorithm = mock(TimedRetryAlgorithmWithContext.class);

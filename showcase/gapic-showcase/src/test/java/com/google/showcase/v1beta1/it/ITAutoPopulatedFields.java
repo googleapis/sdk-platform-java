@@ -15,7 +15,7 @@
  */
 package com.google.showcase.v1beta1.it;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall;
@@ -47,12 +47,12 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.threeten.bp.Duration;
 
-public class ITAutoPopulatedFields {
+class ITAutoPopulatedFields {
 
   private static class HttpJsonInterceptor implements HttpJsonClientInterceptor {
     private Consumer<Object> onRequestIntercepted;
@@ -120,8 +120,8 @@ public class ITAutoPopulatedFields {
   private EchoClient httpJsonClient;
   private EchoClient httpJsonClientWithRetries;
 
-  @Before
-  public void createClients() throws Exception {
+  @BeforeEach
+  void createClients() throws Exception {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(5000L))
@@ -156,15 +156,22 @@ public class ITAutoPopulatedFields {
             defaultRetrySettings, retryableCodes, ImmutableList.of(httpJsonInterceptor));
   }
 
-  @After
-  public void destroyClient() {
+  @AfterEach
+  void destroyClient() throws InterruptedException {
     grpcClientWithoutRetries.close();
     grpcClientWithRetries.close();
     httpJsonClient.close();
+
+    grpcClientWithoutRetries.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    grpcClientWithRetries.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    httpJsonClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testGrpc_autoPopulateRequestIdWhenAttemptedOnceSuccessfully() {
+  void testGrpc_autoPopulateRequestIdWhenAttemptedOnceSuccessfully() {
     List<String> capturedRequestIds = new ArrayList<>();
     grpcRequestInterceptor.setOnRequestIntercepted(
         request -> {
@@ -181,7 +188,7 @@ public class ITAutoPopulatedFields {
   }
 
   @Test
-  public void testGrpc_shouldNotAutoPopulateRequestIdIfSetInRequest() {
+  void testGrpc_shouldNotAutoPopulateRequestIdIfSetInRequest() {
     List<String> capturedRequestIds = new ArrayList<>();
     grpcRequestInterceptor.setOnRequestIntercepted(
         request -> {
@@ -197,7 +204,7 @@ public class ITAutoPopulatedFields {
   }
 
   @Test
-  public void testHttpJson_autoPopulateRequestIdWhenAttemptedOnceSuccessfully() {
+  void testHttpJson_autoPopulateRequestIdWhenAttemptedOnceSuccessfully() {
     List<String> capturedRequestIds = new ArrayList<>();
     httpJsonInterceptor.setOnRequestIntercepted(
         request -> {
@@ -214,7 +221,7 @@ public class ITAutoPopulatedFields {
   }
 
   @Test
-  public void testHttpJson_shouldNotAutoPopulateRequestIdIfSetInRequest() {
+  void testHttpJson_shouldNotAutoPopulateRequestIdIfSetInRequest() {
     String UUIDsent = UUID.randomUUID().toString();
     List<String> capturedRequestIds = new ArrayList<>();
     httpJsonInterceptor.setOnRequestIntercepted(
@@ -230,7 +237,7 @@ public class ITAutoPopulatedFields {
   }
 
   @Test
-  public void testGRPC_setsSameRequestIdIfSetInRequestWhenRequestsAreRetried() throws Exception {
+  void testGRPC_setsSameRequestIdIfSetInRequestWhenRequestsAreRetried() throws Exception {
     List<String> capturedRequestIds = new ArrayList<>();
     grpcRequestInterceptor.setOnRequestIntercepted(
         request -> {
@@ -264,7 +271,7 @@ public class ITAutoPopulatedFields {
   }
 
   @Test
-  public void testGRPC_setsSameAutoPopulatedRequestIdWhenRequestsAreRetried() throws Exception {
+  void testGRPC_setsSameAutoPopulatedRequestIdWhenRequestsAreRetried() throws Exception {
     List<String> capturedRequestIds = new ArrayList<>();
     grpcRequestInterceptor.setOnRequestIntercepted(
         request -> {
@@ -302,8 +309,7 @@ public class ITAutoPopulatedFields {
   }
 
   @Test
-  public void testHttpJson_setsSameRequestIdIfSetInRequestWhenRequestsAreRetried()
-      throws Exception {
+  void testHttpJson_setsSameRequestIdIfSetInRequestWhenRequestsAreRetried() throws Exception {
     List<String> capturedRequestIds = new ArrayList<>();
     httpJsonInterceptor.setOnRequestIntercepted(
         request -> {
@@ -336,7 +342,7 @@ public class ITAutoPopulatedFields {
   }
 
   @Test
-  public void testHttpJson_setsSameAutoPopulatedRequestIdWhenRequestsAreRetried() throws Exception {
+  void testHttpJson_setsSameAutoPopulatedRequestIdWhenRequestsAreRetried() throws Exception {
     List<String> capturedRequestIds = new ArrayList<>();
     httpJsonInterceptor.setOnRequestIntercepted(
         request -> {
