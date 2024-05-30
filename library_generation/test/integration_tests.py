@@ -169,6 +169,9 @@ class IntegrationTest(unittest.TestCase):
                 description_file = f"{output_dir}/{repo}/pr_description.txt"
                 with open(description_file) as f:
                     print(f.readlines())
+                print("====")
+                with open(f"{config_dir}/{repo}/pr-description-golden.txt") as f:
+                    print(f.readlines())
                 self.assertTrue(
                     cmp(
                         f"{config_dir}/{repo}/pr-description-golden.txt",
