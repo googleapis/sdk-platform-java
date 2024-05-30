@@ -116,14 +116,15 @@ def get_commit_messages(
             f"({baseline_commit_sha[:7]}, committed on {baseline_commit_time})."
         )
     qualified_commits = {}
-    while str(current_commit.hexsha) != baseline_commit_sha:
-        commit_and_name = __filter_qualified_commit(paths=paths, commit=current_commit)
+    commit = current_commit
+    while str(commit.hexsha) != baseline_commit_sha:
+        commit_and_name = __filter_qualified_commit(paths=paths, commit=commit)
         if commit_and_name != ():
             qualified_commits[commit_and_name[0]] = commit_and_name[1]
-        commit_parents = current_commit.parents
+        commit_parents = commit.parents
         if len(commit_parents) == 0:
             break
-        current_commit = commit_parents[0]
+        commit = commit_parents[0]
     shutil.rmtree(tmp_dir, ignore_errors=True)
     if len(qualified_commits) == 0:
         return EMPTY_MESSAGE
@@ -163,7 +164,7 @@ def __combine_commit_messages(
     messages = [
         f"This pull request is generated with proto changes between {commit_link(baseline_commit)} (exclusive) "
         f"and {commit_link(current_commit)} (inclusive).",
-        ""
+        "",
     ]
 
     messages.extend(
