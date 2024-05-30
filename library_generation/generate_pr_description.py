@@ -163,6 +163,7 @@ def __combine_commit_messages(
     messages = [
         f"This pull request is generated with proto changes between {commit_link(baseline_commit)} (exclusive) "
         f"and {commit_link(current_commit)} (inclusive).",
+        ""
     ]
 
     messages.extend(
