@@ -13,13 +13,23 @@
 # limitations under the License.
 import os
 import unittest
+from filecmp import cmp
 
 from library_generation.generate_pr_description import (
     get_commit_messages,
     generate_pr_descriptions,
 )
-from library_generation.model.config_change import ConfigChange
+from library_generation.model.config_change import (
+    ConfigChange,
+    ChangeType,
+    LibraryChange,
+)
+from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
+from library_generation.model.library_config import LibraryConfig
+
+script_dir = os.path.dirname(os.path.realpath(__file__))
+resources_dir = os.path.join(script_dir, "resources", "goldens")
 
 
 class GeneratePrDescriptionTest(unittest.TestCase):
@@ -104,3 +114,58 @@ class GeneratePrDescriptionTest(unittest.TestCase):
             description_path=cwd,
         )
         self.assertFalse(os.path.isfile(f"{cwd}/pr_description.txt"))
+
+    def test_generate_pr_description_with_combined_message(
+        self,
+    ):
+        # no other commits between these two commits.
+        baseline_commit_sha = "3b6f144d47b0a1d2115ab2445ec06e80cc324a44"
+        documentai_commit_sha = "0cea7170404bec3d994f43db4fa292f5034cbe9a"
+        cwd = os.getcwd()
+        library = LibraryConfig(
+            api_shortname="documentai",
+            api_description="",
+            name_pretty="",
+            product_documentation="",
+            gapic_configs=[GapicConfig(proto_path="google/cloud/documentai/v1")],
+        )
+        generate_pr_descriptions(
+            config_change=ConfigChange(
+                change_to_libraries={
+                    ChangeType.REPO_LEVEL_CHANGE: [
+                        LibraryChange(
+                            changed_param="gapic_generator_version",
+                            current_value="1.2.3",
+                        ),
+                        LibraryChange(
+                            changed_param="libraries_bom_version", current_value="2.3.4"
+                        ),
+                        LibraryChange(
+                            changed_param="protoc_version", current_value="3.4.5"
+                        ),
+                    ],
+                    ChangeType.GOOGLEAPIS_COMMIT: [],
+                },
+                baseline_config=GenerationConfig(
+                    gapic_generator_version="",
+                    googleapis_commitish=baseline_commit_sha,
+                    libraries=[library],
+                ),
+                current_config=GenerationConfig(
+                    gapic_generator_version="1.2.3",
+                    googleapis_commitish=documentai_commit_sha,
+                    libraries_bom_version="2.3.4",
+                    libraries=[library],
+                ),
+            ),
+            description_path=cwd,
+        )
+        self.assertTrue(os.path.isfile(f"{cwd}/pr_description.txt"))
+        self.assertTrue(
+            cmp(
+                f"{resources_dir}/pr_description-golden.txt",
+                f"{cwd}/pr_description.txt",
+            ),
+            "The generated PR description does not match the expected golden file",
+        )
+        os.remove(f"{cwd}/pr_description.txt")
