@@ -64,7 +64,7 @@ class GeneratePrDescriptionTest(unittest.TestCase):
             ),
         )
 
-    def test_generate_pr_description_with_same_googleapis_commits(self):
+    def test_generate_pr_description_with_no_change_in_config(self):
         commit_sha = "36441693dddaf0ed73951ad3a15c215a332756aa"
         config = GenerationConfig(
             gapic_generator_version="",
@@ -140,6 +140,8 @@ class GeneratePrDescriptionTest(unittest.TestCase):
                         LibraryChange(
                             changed_param="libraries_bom_version", current_value="2.3.4"
                         ),
+                        # this change is ignored since protoc_version is not
+                        # an allowed parameter when generating pr description.
                         LibraryChange(
                             changed_param="protoc_version", current_value="3.4.5"
                         ),

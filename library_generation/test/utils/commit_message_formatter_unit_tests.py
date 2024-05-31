@@ -175,6 +175,8 @@ class CommitMessageFormatterTest(unittest.TestCase):
                     LibraryChange(
                         changed_param="libraries_bom_version", current_value="2.3.4"
                     ),
+                    # this change is ignored since protoc_version is not
+                    # an allowed parameter when generating pr description.
                     LibraryChange(
                         changed_param="protoc_version", current_value="3.4.5"
                     ),
