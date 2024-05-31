@@ -136,6 +136,7 @@ def generate(
     )
     generate_pr_descriptions(
         config=config_change.current_config,
+        config_change=config_change,
         baseline_commit=config_change.baseline_config.googleapis_commitish,
         description_path=repository_path,
     )

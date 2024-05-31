@@ -17,11 +17,14 @@ import os
 import shutil
 from typing import Dict
 from git import Commit, Repo
+
+from library_generation.model.config_change import ConfigChange
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.utils.proto_path_utils import find_versioned_proto_path
 from library_generation.utils.commit_message_formatter import (
     format_commit_message,
     commit_link,
+    format_repo_level_change,
 )
 from library_generation.utils.commit_message_formatter import wrap_override_commit
 
@@ -30,6 +33,7 @@ EMPTY_MESSAGE = ""
 
 def generate_pr_descriptions(
     config: GenerationConfig,
+    config_change: ConfigChange,
     baseline_commit: str,
     description_path: str,
     repo_url: str = "https://github.com/googleapis/googleapis.git",
@@ -47,6 +51,8 @@ def generate_pr_descriptions(
     :param config: a GenerationConfig object. The googleapis commit in this
     configuration is the latest commit, inclusively, from which the commit
     message is considered.
+    :param config_change: a ConfigChange object, containing changes in
+    generation config.
     :param baseline_commit: The baseline (oldest) commit, exclusively, from
     which the commit message is considered. This commit should be an ancestor
     of googleapis commit in configuration.
@@ -55,9 +61,7 @@ def generate_pr_descriptions(
     :param repo_url: the GitHub repository from which retrieves the commit
     history.
     """
-    if baseline_commit == config.googleapis_commitish:
-        return
-
+    repo_level_message = format_repo_level_change(config_change)
     paths = config.get_proto_path_to_library_name()
     description = get_commit_messages(
         repo_url=repo_url,
@@ -65,6 +69,7 @@ def generate_pr_descriptions(
         baseline_commit_sha=baseline_commit,
         paths=paths,
         is_monorepo=config.is_monorepo(),
+        repo_level_message=repo_level_message,
     )
 
     if description == EMPTY_MESSAGE:
@@ -83,6 +88,7 @@ def get_commit_messages(
     baseline_commit_sha: str,
     paths: Dict[str, str],
     is_monorepo: bool,
+    repo_level_message: list[str] = None,
 ) -> str:
     """
     Combine commit messages of a repository from latest_commit to
@@ -97,10 +103,13 @@ def get_commit_messages(
     selecting commit message. This commit should be an ancestor of
     :param paths: a mapping from file paths to library_name.
     :param is_monorepo: whether to generate commit messages in a monorepo.
+    :param repo_level_message: commit messages regarding repo-level changes.
     :return: commit messages.
     :raise ValueError: if current_commit is older than or equal to
     baseline_commit.
     """
+    if current_commit_sha == baseline_commit_sha:
+        return EMPTY_MESSAGE
     tmp_dir = "/tmp/repo"
     shutil.rmtree(tmp_dir, ignore_errors=True)
     os.mkdir(tmp_dir)
@@ -134,6 +143,7 @@ def get_commit_messages(
         baseline_commit=baseline_commit,
         commits=qualified_commits,
         is_monorepo=is_monorepo,
+        repo_level_message=repo_level_message,
     )
 
 
@@ -160,12 +170,16 @@ def __combine_commit_messages(
     baseline_commit: Commit,
     commits: Dict[Commit, str],
     is_monorepo: bool,
+    repo_level_message: list[str],
 ) -> str:
-    messages = [
-        f"This pull request is generated with proto changes between {commit_link(baseline_commit)} (exclusive) "
-        f"and {commit_link(current_commit)} (inclusive).",
-        "",
-    ]
+    messages = repo_level_message
+    messages.extend(
+        [
+            f"This pull request is generated with proto changes between {commit_link(baseline_commit)} (exclusive) "
+            f"and {commit_link(current_commit)} (inclusive).",
+            "",
+        ]
+    )
 
     messages.extend(
         wrap_override_commit(
