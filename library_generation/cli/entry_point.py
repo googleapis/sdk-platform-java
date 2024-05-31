@@ -135,9 +135,7 @@ def generate(
         target_library_names=config_change.get_changed_libraries(),
     )
     generate_pr_descriptions(
-        config=config_change.current_config,
         config_change=config_change,
-        baseline_commit=config_change.baseline_config.googleapis_commitish,
         description_path=repository_path,
     )
 
