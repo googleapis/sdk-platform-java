@@ -19,7 +19,6 @@ from typing import Dict
 from git import Commit, Repo
 
 from library_generation.model.config_change import ConfigChange
-from library_generation.model.generation_config import GenerationConfig
 from library_generation.utils.proto_path_utils import find_versioned_proto_path
 from library_generation.utils.commit_message_formatter import (
     format_commit_message,
@@ -32,43 +31,37 @@ EMPTY_MESSAGE = ""
 
 
 def generate_pr_descriptions(
-    config: GenerationConfig,
     config_change: ConfigChange,
-    baseline_commit: str,
     description_path: str,
     repo_url: str = "https://github.com/googleapis/googleapis.git",
 ) -> None:
     """
-    Generate pull request description from baseline_commit (exclusive) to the
-    googleapis commit (inclusive) in the given generation config.
+    Generate pull request description from configuration comparison result.
+
+    The pull request description contains repo-level changes, if applicable,
+    and googleapis commit from baseline config (exclusive) to current config
+    (inclusive).
 
     The pull request description will be generated into
     description_path/pr_description.txt.
 
-    If baseline_commit is the same as googleapis commit in the given generation
-    config, no pr_description.txt will be generated.
+    No pr_description.txt will be generated if no changes in the configurations.
 
-    :param config: a GenerationConfig object. The googleapis commit in this
-    configuration is the latest commit, inclusively, from which the commit
-    message is considered.
-    :param config_change: a ConfigChange object, containing changes in
-    generation config.
-    :param baseline_commit: The baseline (oldest) commit, exclusively, from
-    which the commit message is considered. This commit should be an ancestor
-    of googleapis commit in configuration.
+    :param config_change: a ConfigChange object, containing changes in baseline
+    and current generation configurations.
     :param description_path: the path to which the pull request description
     file goes.
     :param repo_url: the GitHub repository from which retrieves the commit
     history.
     """
     repo_level_message = format_repo_level_change(config_change)
-    paths = config.get_proto_path_to_library_name()
+    paths = config_change.current_config.get_proto_path_to_library_name()
     description = get_commit_messages(
         repo_url=repo_url,
-        current_commit_sha=config.googleapis_commitish,
-        baseline_commit_sha=baseline_commit,
+        current_commit_sha=config_change.current_config.googleapis_commitish,
+        baseline_commit_sha=config_change.baseline_config.googleapis_commitish,
         paths=paths,
-        is_monorepo=config.is_monorepo(),
+        is_monorepo=config_change.current_config.is_monorepo(),
         repo_level_message=repo_level_message,
     )
 

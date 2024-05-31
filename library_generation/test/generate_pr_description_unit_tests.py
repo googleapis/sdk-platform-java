@@ -18,6 +18,7 @@ from library_generation.generate_pr_description import (
     get_commit_messages,
     generate_pr_descriptions,
 )
+from library_generation.model.config_change import ConfigChange
 from library_generation.model.generation_config import GenerationConfig
 
 
@@ -55,16 +56,21 @@ class GeneratePrDescriptionTest(unittest.TestCase):
 
     def test_generate_pr_description_with_same_googleapis_commits(self):
         commit_sha = "36441693dddaf0ed73951ad3a15c215a332756aa"
+        config = GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish=commit_sha,
+            libraries_bom_version="",
+            # use empty libraries to make sure no qualified commit between
+            # two commit sha.
+            libraries=[],
+        )
         cwd = os.getcwd()
         generate_pr_descriptions(
-            config=GenerationConfig(
-                gapic_generator_version="",
-                googleapis_commitish=commit_sha,
-                grpc_version="",
-                protoc_version="",
-                libraries=[],
+            config_change=ConfigChange(
+                change_to_libraries={},
+                baseline_config=config,
+                current_config=config,
             ),
-            baseline_commit=commit_sha,
             description_path=cwd,
         )
         self.assertFalse(os.path.isfile(f"{cwd}/pr_description.txt"))
@@ -78,17 +84,23 @@ class GeneratePrDescriptionTest(unittest.TestCase):
         new_commit_sha = "eeed69d446a90eb4a4a2d1762c49d637075390c1"
         cwd = os.getcwd()
         generate_pr_descriptions(
-            config=GenerationConfig(
-                gapic_generator_version="",
-                googleapis_commitish=new_commit_sha,
-                libraries_bom_version="",
-                grpc_version="",
-                protoc_version="",
-                # use empty libraries to make sure no qualified commit between
-                # two commit sha.
-                libraries=[],
+            config_change=ConfigChange(
+                change_to_libraries={},
+                baseline_config=GenerationConfig(
+                    gapic_generator_version="",
+                    googleapis_commitish=old_commit_sha,
+                    # use empty libraries to make sure no qualified commit between
+                    # two commit sha.
+                    libraries=[],
+                ),
+                current_config=GenerationConfig(
+                    gapic_generator_version="",
+                    googleapis_commitish=new_commit_sha,
+                    # use empty libraries to make sure no qualified commit between
+                    # two commit sha.
+                    libraries=[],
+                ),
             ),
-            baseline_commit=old_commit_sha,
             description_path=cwd,
         )
         self.assertFalse(os.path.isfile(f"{cwd}/pr_description.txt"))
