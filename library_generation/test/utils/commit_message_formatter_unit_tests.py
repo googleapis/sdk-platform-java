@@ -14,12 +14,23 @@
 import unittest
 from unittest.mock import patch
 
+from library_generation.model.config_change import (
+    ConfigChange,
+    ChangeType,
+    LibraryChange,
+)
+from library_generation.model.generation_config import GenerationConfig
 from library_generation.utils.commit_message_formatter import (
     format_commit_message,
     commit_link,
+    format_repo_level_change,
 )
-from library_generation.utils.commit_message_formatter import wrap_nested_commit
+from library_generation.utils.commit_message_formatter import wrap_googleapis_commit
 from library_generation.utils.commit_message_formatter import wrap_override_commit
+
+gen_config = GenerationConfig(
+    gapic_generator_version="1.2.3", googleapis_commitish="123abc", libraries=[]
+)
 
 
 class CommitMessageFormatterTest(unittest.TestCase):
@@ -130,7 +141,7 @@ class CommitMessageFormatterTest(unittest.TestCase):
                     "Source Link: [googleapis/googleapis@1234567](https://github.com/googleapis/googleapis/commit/1234567abcdefg)",
                     "END_NESTED_COMMIT",
                 ],
-                wrap_nested_commit(commit, messages),
+                wrap_googleapis_commit(commit, messages),
             )
 
     def test_wrap_override_commit_success(self):
@@ -153,3 +164,33 @@ class CommitMessageFormatterTest(unittest.TestCase):
                 "[googleapis/googleapis@1234567](https://github.com/googleapis/googleapis/commit/1234567abcdefg)",
                 commit_link(commit),
             )
+
+    def test_format_repo_level_change_success(self):
+        config_change = ConfigChange(
+            change_to_libraries={
+                ChangeType.REPO_LEVEL_CHANGE: [
+                    LibraryChange(
+                        changed_param="gapic_generator_version", current_value="1.2.3"
+                    ),
+                    LibraryChange(
+                        changed_param="libraries_bom_version", current_value="2.3.4"
+                    ),
+                    LibraryChange(
+                        changed_param="protoc_version", current_value="3.4.5"
+                    ),
+                ]
+            },
+            baseline_config=gen_config,
+            current_config=gen_config,
+        )
+        self.assertEqual(
+            [
+                "BEGIN_NESTED_COMMIT",
+                "Update repo-level parameter gapic_generator_version to 1.2.3",
+                "END_NESTED_COMMIT",
+                "BEGIN_NESTED_COMMIT",
+                "Update repo-level parameter libraries_bom_version to 2.3.4",
+                "END_NESTED_COMMIT",
+            ],
+            format_repo_level_change(config_change),
+        )

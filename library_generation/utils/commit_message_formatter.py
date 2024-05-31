@@ -72,7 +72,10 @@ def format_repo_level_change(config_change: ConfigChange) -> list[str]:
             continue
         messages.extend(
             __wrap_nested_commit(
-                [f"Update repo-level parameter {repo_level_change.changed_param} to {repo_level_change.current_value}"]
+                [
+                    f"Update repo-level parameter {repo_level_change.changed_param} to "
+                    f"{repo_level_change.current_value}"
+                ]
             )
         )
     return messages
