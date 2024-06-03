@@ -61,6 +61,7 @@ public class MetricsTracer implements ApiTracer {
       "Operation has already been completed";
   private Stopwatch attemptTimer;
   private final Stopwatch operationTimer = Stopwatch.createStarted();
+  // These are RPC specific attributes and pertain to a specific API Trace
   private final Map<String, String> attributes = new HashMap<>();
   private final MetricsRecorder metricsRecorder;
   private final AtomicBoolean operationFinished;
