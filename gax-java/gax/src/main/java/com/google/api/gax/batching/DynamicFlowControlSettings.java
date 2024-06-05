@@ -33,7 +33,7 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /** Settings for dynamic flow control */
 @AutoValue

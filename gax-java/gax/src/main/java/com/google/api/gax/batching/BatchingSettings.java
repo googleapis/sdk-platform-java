@@ -32,7 +32,7 @@ package com.google.api.gax.batching;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.threeten.bp.Duration;
 
 /**

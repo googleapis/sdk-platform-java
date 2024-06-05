@@ -36,7 +36,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /** An instance of HeaderProvider that always provides the same headers. */
 @AutoValue
