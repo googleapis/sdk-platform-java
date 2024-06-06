@@ -84,7 +84,7 @@ public final class Watchdog implements Runnable, BackgroundResource {
    * ScheduledExecutorService)} instead.
    */
   @ObsoleteApi("Use create(ApiClock, java.time.Duration, ScheduledExecutorService) instead")
-  public static Watchdog createDuration(
+  public static Watchdog create(
       ApiClock clock,
       org.threeten.bp.Duration scheduleInterval,
       ScheduledExecutorService executor) {
@@ -116,8 +116,9 @@ public final class Watchdog implements Runnable, BackgroundResource {
    * This method is obsolete. Use {@link #watchDuration(ResponseObserver, java.time.Duration,
    * java.time.Duration)} instead.
    */
-  @ObsoleteApi("Use watch(ResponseObserver, java.time.Duration, java.time.Duration) instead")
-  public <ResponseT> ResponseObserver<ResponseT> watchDuration(
+  @ObsoleteApi(
+      "Use watchDuration(ResponseObserver, java.time.Duration, java.time.Duration) instead")
+  public <ResponseT> ResponseObserver<ResponseT> watch(
       ResponseObserver<ResponseT> innerObserver,
       @Nonnull org.threeten.bp.Duration waitTimeout,
       @Nonnull org.threeten.bp.Duration idleTimeout) {

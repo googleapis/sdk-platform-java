@@ -729,6 +729,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
+    /** This method is obsolete. Use {@link #getKeepAliveTimeoutDuration()} instead */
+    @ObsoleteApi("Use getKeepAliveTimeoutDuration() instead")
+    public org.threeten.bp.Duration getKeepAliveTimeout() {
+      return toThreetenDuration(getKeepAliveTimeoutDuration());
+    }
+
     /** The time without read activity after sending a keepalive ping. */
     public java.time.Duration getKeepAliveTimeoutDuration() {
       return keepAliveTimeout;
