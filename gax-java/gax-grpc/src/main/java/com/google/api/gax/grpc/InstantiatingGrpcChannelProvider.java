@@ -655,9 +655,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     /**
-     * Backport of {@link #setKeepAliveTime(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
-     */
+     * <p> This method is obsolete. Use {@link #setKeepAliveTime(java.time.Duration)} instead. </p> */
     @ObsoleteApi("Use setKeepAliveTimeDuration(java.time.Duration) instead")
     public Builder setKeepAliveTime(org.threeten.bp.Duration duration) {
       return setKeepAliveTimeDuration(toJavaTimeDuration(duration));
@@ -668,7 +666,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    /** Backport of {@link #getKeepAliveTimeDuration()} */
+    /** <p> This method is obsolete. Use {@link #getKeepAliveTimeDuration()} instead. </p> */
     @ObsoleteApi("Use getKeepAliveTimeDuration() instead")
     public org.threeten.bp.Duration getKeepAliveTime() {
       return toThreetenDuration(getKeepAliveTimeDuration());

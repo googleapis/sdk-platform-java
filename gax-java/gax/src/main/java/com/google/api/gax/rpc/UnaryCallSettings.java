@@ -196,7 +196,7 @@ public class UnaryCallSettings<RequestT, ResponseT> {
       return this;
     }
 
-    /** Backport of {@link #setSimpleTimeoutNoRetriesDuration(java.time.Duration)} */
+    /** <p> This method is obsolete. Use {@link #setSimpleTimeoutNoRetriesDuration(java.time.Duration)} instead. </p> */
     @ObsoleteApi("Use setSimpleTimeoutNoRetriesDuration(java.time.Duration) instead")
     public UnaryCallSettings.Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
         org.threeten.bp.Duration timeout) {

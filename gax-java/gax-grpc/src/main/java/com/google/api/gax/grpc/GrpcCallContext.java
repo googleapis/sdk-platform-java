@@ -232,9 +232,7 @@ public final class GrpcCallContext implements ApiCallContext {
   }
 
   /**
-   * Backport of {@link #withTimeoutDuration(java.time.Duration)} using {@link
-   * org.threeten.bp.Duration}
-   */
+   * <p> This method is obsolete. Use {@link #withTimeoutDuration(java.time.Duration)} instead. </p> */
   @Override
   @ObsoleteApi("Use withTimeoutDuration(java.time.Duration) instead")
   public GrpcCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout) {
@@ -282,9 +280,7 @@ public final class GrpcCallContext implements ApiCallContext {
   }
 
   /**
-   * Backport of {@link #withStreamWaitTimeoutDuration(java.time.Duration)} using {@link
-   * org.threeten.bp.Duration}
-   */
+   * <p> This method is obsolete. Use {@link #withStreamWaitTimeoutDuration(java.time.Duration)} instead. </p> */
   @Override
   @ObsoleteApi("Use withStreamWaitTimeoutDuration(java.time.Duration) instead")
   public GrpcCallContext withStreamWaitTimeout(
@@ -316,9 +312,7 @@ public final class GrpcCallContext implements ApiCallContext {
   }
 
   /**
-   * Backport of {@link #withStreamIdleTimeoutDuration(java.time.Duration)} using {@link
-   * org.threeten.bp.Duration}
-   *
+   * <p> This method is obsolete. Use {@link #withStreamIdleTimeoutDuration(java.time.Duration)} instead. </p> */
    * @param streamIdleTimeout
    * @return
    */
@@ -543,7 +537,7 @@ public final class GrpcCallContext implements ApiCallContext {
     return callOptions;
   }
 
-  /** Backport of {@link #getStreamWaitTimeoutDuration()} */
+  /** <p> This method is obsolete. Use {@link #getStreamWaitTimeoutDuration()} instead. </p> */
   @Override
   @Nullable
   @ObsoleteApi("Use getStreamWaitTimeoutDuration() instead")

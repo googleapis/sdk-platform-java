@@ -253,9 +253,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   }
 
   /**
-   * Backport of {@link #withTimeoutDuration(java.time.Duration)} using {@link
-   * org.threeten.bp.Duration}
-   */
+   * <p> This method is obsolete. Use {@link #withTimeoutDuration(java.time.Duration)} instead. </p> */
   @Override
   @ObsoleteApi("Use withTimeoutDuration(java.time.Duration) instead")
   public HttpJsonCallContext withTimeout(org.threeten.bp.Duration timeout) {
@@ -305,7 +303,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.endpointContext);
   }
 
-  /** Backport of {@link #getTimeoutDuration()} */
+  /** <p> This method is obsolete. Use {@link #getTimeoutDuration()} instead. </p> */
   @Nullable
   @Override
   @ObsoleteApi("Use getTimeoutDuration instead")
@@ -320,9 +318,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   }
 
   /**
-   * Backport of {@link #withStreamWaitTimeoutDuration(java.time.Duration)} using {@link
-   * org.threeten.bp.Duration}
-   */
+   * <p> This method is obsolete. Use {@link #withStreamWaitTimeoutDuration(java.time.Duration)} instead. </p> */
   @Override
   @ObsoleteApi("Use withStreamWaitTimeoutDuration(java.time.Duration) instead")
   public HttpJsonCallContext withStreamWaitTimeout(
@@ -352,7 +348,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.endpointContext);
   }
 
-  /** Backport of {@link #getStreamWaitTimeoutDuration()} */
+  /** <p> This method is obsolete. Use {@link #getStreamWaitTimeoutDuration()} instead. </p> */
   @Override
   @Nullable
   @ObsoleteApi("Use getStreamWaitTimeoutDuration() instead")
@@ -372,9 +368,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   }
 
   /**
-   * Backport of {@link #withStreamIdleTimeoutDuration(java.time.Duration)} using {@link
-   * org.threeten.bp.Duration}
-   */
+   * <p> This method is obsolete. Use {@link #withStreamIdleTimeoutDuration(java.time.Duration)} instead. </p> */
   @Override
   @ObsoleteApi("Use withStreamIdleTimeoutDuration(java.time.Duration) instead")
   public HttpJsonCallContext withStreamIdleTimeout(
@@ -404,7 +398,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.endpointContext);
   }
 
-  /** Backport of {@link #getStreamIdleTimeoutDuration()} */
+  /** <p> This method is obsolete. Use {@link #getStreamIdleTimeoutDuration()} instead. </p> */
   @Override
   @Nullable
   @ObsoleteApi("Use getStreamIdleTimeoutDuration() instead")

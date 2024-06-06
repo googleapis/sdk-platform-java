@@ -41,6 +41,8 @@ import com.google.api.core.SettableApiFuture;
 import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.Future;
@@ -124,7 +126,9 @@ public final class ThresholdBatcher<E> {
       return this;
     }
 
-    /** Backport of {@link #setMaxDelayDuration(java.time.Duration} */
+    /**
+     * <p> This method is obsolete. Use {@link #setMaxDelayDuration(Duration)} instead </p>
+     */
     @ObsoleteApi("Use setMaxDelayDuration(java.time.Duration) instead")
     public Builder<E> setMaxDelay(org.threeten.bp.Duration maxDelay) {
       return setMaxDelayDuration(toJavaTimeDuration(maxDelay));

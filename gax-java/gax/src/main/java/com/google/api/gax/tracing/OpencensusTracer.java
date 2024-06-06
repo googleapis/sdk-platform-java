@@ -359,7 +359,7 @@ public class OpencensusTracer extends BaseApiTracer {
     lastConnectionId = null;
   }
 
-  /** Backport of {@link #attemptFailedDuration(Throwable, java.time.Duration)} */
+  /** <p> This method is obsolete. Use {@link #attemptFailedDuration(Throwable, java.time.Duration)} instead. </p> */
   @Override
   @ObsoleteApi("Use attemptFailedDuration(Throwable, java.time.Duration) instead")
   public void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {

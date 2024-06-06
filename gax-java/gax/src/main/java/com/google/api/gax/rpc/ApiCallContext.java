@@ -67,9 +67,7 @@ public interface ApiCallContext extends RetryingContext {
   ApiCallContext withEndpointContext(EndpointContext endpointContext);
 
   /**
-   * Backport of {@link #withTimeoutDuration(java.time.Duration)} using {@link
-   * org.threeten.bp.Duration}
-   */
+   * <p> This method is obsolete. Use {@link #withTimeoutDuration(java.time.Duration)} instead. </p> */
   @ObsoleteApi("Use withTimeoutDuration(java.time.Duration) instead")
   ApiCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout);
 
@@ -87,7 +85,7 @@ public interface ApiCallContext extends RetryingContext {
    */
   ApiCallContext withTimeoutDuration(@Nullable java.time.Duration timeout);
 
-  /** Backport of {@link #getTimeoutDuration()} */
+  /** <p> This method is obsolete. Use {@link #getTimeoutDuration()} instead. </p> */
   @Nullable
   @ObsoleteApi("Use getTimeoutDuration() instead")
   org.threeten.bp.Duration getTimeout();
@@ -97,9 +95,7 @@ public interface ApiCallContext extends RetryingContext {
   java.time.Duration getTimeoutDuration();
 
   /**
-   * Backport of {@link #withStreamWaitTimeoutDuration(java.time.Duration)} using {@link
-   * org.threeten.bp.Duration }
-   */
+   * <p> This method is obsolete. Use {@link #withStreamWaitTimeoutDuration(java.time.Duration)} instead. </p> */
   @ObsoleteApi("Use withStreamWaitTimeoutDuration(java.time.Duration) instead")
   ApiCallContext withStreamWaitTimeout(@Nullable org.threeten.bp.Duration streamWaitTimeout);
 
@@ -122,7 +118,7 @@ public interface ApiCallContext extends RetryingContext {
    */
   ApiCallContext withStreamWaitTimeoutDuration(@Nullable java.time.Duration streamWaitTimeout);
 
-  /** Backport of {@link #getStreamWaitTimeoutDuration()} */
+  /** <p> This method is obsolete. Use {@link #getStreamWaitTimeoutDuration()} instead. </p> */
   @Nullable
   @ObsoleteApi("Use getStreamWaitTimeoutDuration() instead")
   org.threeten.bp.Duration getStreamWaitTimeout();
@@ -136,9 +132,7 @@ public interface ApiCallContext extends RetryingContext {
   java.time.Duration getStreamWaitTimeoutDuration();
 
   /**
-   * Backport of {@link #withStreamIdleTimeoutDuration(java.time.Duration)} using {@link
-   * org.threeten.bp.Duration}
-   */
+   * <p> This method is obsolete. Use {@link #withStreamIdleTimeoutDuration(java.time.Duration)} instead. </p> */
   @ObsoleteApi("Use withStreamIdleTimeoutDuration(java.time.Duration) instead")
   ApiCallContext withStreamIdleTimeout(@Nullable org.threeten.bp.Duration streamIdleTimeout);
 
@@ -162,7 +156,7 @@ public interface ApiCallContext extends RetryingContext {
    */
   ApiCallContext withStreamIdleTimeoutDuration(@Nullable java.time.Duration streamIdleTimeout);
 
-  /** Backport of {@link #getStreamIdleTimeoutDuration()} */
+  /** <p> This method is obsolete. Use {@link #getStreamIdleTimeoutDuration()} instead. </p> */
   @Nullable
   @ObsoleteApi("Use getStreamIdleTimeoutDuration() instead")
   org.threeten.bp.Duration getStreamIdleTimeout();

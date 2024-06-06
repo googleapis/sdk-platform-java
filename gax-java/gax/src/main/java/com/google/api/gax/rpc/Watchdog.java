@@ -80,9 +80,7 @@ public final class Watchdog implements Runnable, BackgroundResource {
   private ScheduledFuture<?> future;
 
   /**
-   * Backport of {@link #create(ApiClock, java.time.Duration, ScheduledExecutorService)} using
-   * {@link org.threeten.bp.Duration}
-   */
+   * <p> This method is obsolete. Use {@link #create(ApiClock, java.time.Duration, ScheduledExecutorService)} instead. </p> */
   @ObsoleteApi("Use create(ApiClock, java.time.Duration, ScheduledExecutorService) instead")
   public static Watchdog create(
       ApiClock clock,
@@ -113,9 +111,7 @@ public final class Watchdog implements Runnable, BackgroundResource {
   }
 
   /**
-   * Backport of {@link #watch(ResponseObserver, java.time.Duration, java.time.Duration)} using
-   * {@link org.threeten.bp.Duration}
-   */
+   * <p> This method is obsolete. Use {@link #watch(ResponseObserver, java.time.Duration, java.time.Duration)} instead. </p> */
   @ObsoleteApi("Use watch(ResponseObserver, java.time.Duration, java.time.Duration) instead")
   public <ResponseT> ResponseObserver<ResponseT> watch(
       ResponseObserver<ResponseT> innerObserver,

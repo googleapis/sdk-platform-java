@@ -113,9 +113,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
   }
 
   /**
-   * Backport of {@link #getWatchdogCheckIntervalDuration()}
-   *
-   * @return
+   * This method is obsolete. Use {@link #getWatchdogCheckIntervalDuration()} instead.
    */
   @Nonnull
   @ObsoleteApi("Use getWatchdogCheckIntervalDuration() instead")
@@ -280,7 +278,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
-    /** Backport of {@link #setWatchdogCheckIntervalDuration(java.time.Duration)} */
+    /** <p> This method is obsolete. Use {@link #setWatchdogCheckIntervalDuration(java.time.Duration)} instead. </p> */
     @ObsoleteApi("Use setWatchdogCheckIntervalDuration(java.time.Duration) instead")
     public B setWatchdogCheckInterval(@Nullable org.threeten.bp.Duration checkInterval) {
       return setWatchdogCheckIntervalDuration(toJavaTimeDuration(checkInterval));

@@ -121,7 +121,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     return resumptionStrategy;
   }
 
-  /** Backport of {@link #getIdleTimeoutDuration()} */
+  /** <p> This method is obsolete. Use {@link #getIdleTimeoutDuration()} instead. </p> */
   @Nonnull
   @ObsoleteApi("Use getIdleTimeoutDuration() instead")
   public org.threeten.bp.Duration getIdleTimeout() {
@@ -137,7 +137,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     return idleTimeout;
   }
 
-  /** Backport of {@link #getWaitTimeoutDuration()} */
+  /** <p> This method is obsolete. Use {@link #getWaitTimeoutDuration()} instead. </p> */
   @Nonnull
   @ObsoleteApi("Use getWaitTimeoutDuration() instead")
   public org.threeten.bp.Duration getWaitTimeout() {
@@ -260,9 +260,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     }
 
     /**
-     * Backport of {@link #setSimpleTimeoutNoRetriesDuration(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
-     */
+     * <p> This method is obsolete. Use {@link #setSimpleTimeoutNoRetriesDuration(java.time.Duration)} instead. </p> */
     @ObsoleteApi("Use setSimpleTimeoutNoRetriesDuration(java.time.Duration) instead")
     public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
         @Nonnull org.threeten.bp.Duration timeout) {
@@ -304,7 +302,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
       return resumptionStrategy;
     }
 
-    /** Backport of {@link #getIdleTimeoutDuration()} */
+    /** <p> This method is obsolete. Use {@link #getIdleTimeoutDuration()} instead. </p> */
     @Nonnull
     @ObsoleteApi("Use getIdleTimeoutDuration() instead")
     public org.threeten.bp.Duration getIdleTimeout() {
@@ -336,7 +334,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
       return this;
     }
 
-    /** Backport of {@link #getWaitTimeoutDuration()} */
+    /** <p> This method is obsolete. Use {@link #getWaitTimeoutDuration()} instead. </p> */
     @Nonnull
     @ObsoleteApi("Use getWaitTimeoutDuration() instead")
     public org.threeten.bp.Duration getWaitTimeout() {
@@ -349,9 +347,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     }
 
     /**
-     * Backport of {@link #setWaitTimeoutDuration(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
-     */
+     * <p> This method is obsolete. Use {@link #setWaitTimeoutDuration(java.time.Duration)} instead. </p> */
     @ObsoleteApi("Use setWaitTimeoutDuration(java.time.Duration) instead")
     public Builder<RequestT, ResponseT> setWaitTimeout(
         @Nonnull org.threeten.bp.Duration waitTimeout) {

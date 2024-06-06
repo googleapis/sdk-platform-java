@@ -109,7 +109,7 @@ public class BaseApiTracer implements ApiTracer {
     // noop
   }
 
-  /** Backport of {@link #attemptFailedDuration(Throwable, java.time.Duration)} */
+  /** <p> This method is obsolete. Use {@link #attemptFailedDuration(Throwable, java.time.Duration)} instead. </p> */
   @Override
   @ObsoleteApi("Use attemptFailed(Throwable, java.time.Duration) instead")
   public void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {

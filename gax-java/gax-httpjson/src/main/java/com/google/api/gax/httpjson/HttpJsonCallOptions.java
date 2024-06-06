@@ -109,7 +109,7 @@ public abstract class HttpJsonCallOptions {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    /** Backport of {@link #setTimeoutDuration(java.time.Duration)} */
+    /** <p> This method is obsolete. Use {@link #setTimeoutDuration(java.time.Duration)} instead. </p> */
     @ObsoleteApi("Use setTimeoutDuration(java.time.Duration) instead")
     public final Builder setTimeout(org.threeten.bp.Duration value) {
       return setTimeoutDuration(toJavaTimeDuration(value));
@@ -117,7 +117,7 @@ public abstract class HttpJsonCallOptions {
 
     public abstract Builder setTimeoutDuration(java.time.Duration value);
 
-    /** Backport of {@link #setDeadlineInstant(java.time.Instant)} */
+    /** <p> This method is obsolete. Use {@link #setDeadlineInstant(java.time.Instant)} instead. </p> */
     @ObsoleteApi("Use setDeadlineInstant(java.time.Instant) instead")
     public final Builder setDeadline(org.threeten.bp.Instant value) {
       return setDeadlineInstant(toJavaTimeInstant(value));

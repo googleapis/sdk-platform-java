@@ -109,7 +109,7 @@ public interface ApiTracer {
   /** Add an annotation that the attempt was cancelled by the user. */
   default void attemptCancelled() {};
 
-  /** Backport of {@link #attemptFailedDuration(Throwable, java.time.Duration)} */
+  /** <p> This method is obsolete. Use {@link #attemptFailedDuration(Throwable, java.time.Duration)} instead. </p> */
   @ObsoleteApi("Use attemptFailedDuration(Throwable, java.time.Duration) instead")
   default void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {};
 
