@@ -47,7 +47,7 @@
     <className>com/google/api/gax/rpc/StubSettings</className>
     <method>* getServiceName()</method>
   </difference>
-  <!-- Update default method_name Otel attribute to method -->
+  <!-- Ignore all field name changes as MetricsTracer is InternalApi -->
   <difference>
     <differenceType>6011</differenceType>
     <className>com/google/api/gax/tracing/MetricsTracer</className>
