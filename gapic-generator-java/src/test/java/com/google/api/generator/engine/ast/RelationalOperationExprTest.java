@@ -17,12 +17,12 @@ package com.google.api.generator.engine.ast;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class RelationalOperationExprTest {
+class RelationalOperationExprTest {
   /** ==================== Equality Operators: LHS data type is numeric ======================= */
   @Test
-  public void equalToOperationExpr_validBasic() {
+  void equalToOperationExpr_validBasic() {
     // LHS: numeric type, RHS: matched numeric type.
     // No need swap LHS and RHS test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
@@ -32,7 +32,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validNumericTYpe() {
+  void equalToOperationExpr_validNumericTYpe() {
     // LHS: numeric type, RHS: unmatched numeric type.
     // No need swap LHS and RHS test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.CHAR, "x");
@@ -42,7 +42,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void notEqualToOperationExpr_validMatchedNumericBoxTYpe() {
+  void notEqualToOperationExpr_validMatchedNumericBoxTYpe() {
     // LHS: numeric type, RHS: matched numeric Boxed type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validBoxedWithMatchedUnBoxedType".
@@ -53,7 +53,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void notEqualToOperationExpr_validNumericBoxTYpe() {
+  void notEqualToOperationExpr_validNumericBoxTYpe() {
     // LHS: numeric type, RHS: unmatched numeric Boxed type.
     // Swapping LHS and RHS test case is covered in
     // equalToOperationExpr_validBoxedWithUnmatchedUnBoxedType".
@@ -64,7 +64,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidNumericBooleanBoxedType() {
+  void equalToOperationExpr_invalidNumericBooleanBoxedType() {
     // LHS: numeric type, RHS: boolean boxed Type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidBoxedBooleanWithNumericType".
@@ -76,7 +76,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void notEqualToOperationExpr_invalidNumericStringType() {
+  void notEqualToOperationExpr_invalidNumericStringType() {
     // LHS: numeric type, RHS: referenced type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidReferenceWithNumericType".
@@ -88,7 +88,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void notEqualToOperationExpr_invalidNumericNullType() {
+  void notEqualToOperationExpr_invalidNumericNullType() {
     // LHS: numeric type, RHS: null.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidNullWithNumericType".
@@ -100,7 +100,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidNumericBooleanType() {
+  void equalToOperationExpr_invalidNumericBooleanType() {
     // LHS: numeric type, RHS: boolean boxed Type.
     // Swapping LHS and RHS test case is covered in
     // notEqualToOperationExpr_invalidBooleanToNumericType.
@@ -112,7 +112,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidNumericTypeWithArrayType() {
+  void equalToOperationExpr_invalidNumericTypeWithArrayType() {
     // LHS: Numeric Type, RHS: Array with numeric type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidArrayWithNotArrayType".
@@ -127,7 +127,7 @@ public class RelationalOperationExprTest {
 
   /** =============== Equality Operators: LHS data type is numeric boxed type ================ */
   @Test
-  public void equalToOperationExpr_validBoxedWithMatchedBoxedType() {
+  void equalToOperationExpr_validBoxedWithMatchedBoxedType() {
     // LHS: Boxed type, RHS: Matched Boxed.
     // No need swap LHS and RHS test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
@@ -137,7 +137,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validBoxedWithMatchedUnBoxedType() {
+  void equalToOperationExpr_validBoxedWithMatchedUnBoxedType() {
     // LHS: Boxed type, RHS: Unmatched Boxed.
     // Swapping LHS and RHS test case is covered in
     // "notEqualToOperationExpr_validMatchedNumericBoxTYpe".
@@ -148,7 +148,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validBoxedWithUnmatchedUnBoxedType() {
+  void equalToOperationExpr_validBoxedWithUnmatchedUnBoxedType() {
     // LHS: Numeric boxed type, RHS: other numeric type.
     // Swapping LHS and RHS test case is covered in "notEqualToOperationExpr_validNumericBoxTYpe".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
@@ -158,7 +158,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validNumericBoxedWithNullType() {
+  void equalToOperationExpr_validNumericBoxedWithNullType() {
     // LHS: Boxed type, RHS: Null.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validNullWithNumericBoxedType".
@@ -169,7 +169,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validNumericBoxedWithNewObjectType() {
+  void equalToOperationExpr_validNumericBoxedWithNewObjectType() {
     // LHS: Numeric boxed type, RHS: new object.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validObjectWithNumericBoxedType".
@@ -180,7 +180,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidNumericBoxedWithBooleanType() {
+  void equalToOperationExpr_invalidNumericBoxedWithBooleanType() {
     // LHS: Numeric boxed type, RHS: Boolean type.
     // Swapping LHS and RHS test case is covered in
     // "notEqualToOperationExpr_invalidBooleanToOtherBoxedType".
@@ -192,7 +192,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidNumericBoxedWithBooleanBoxedType() {
+  void equalToOperationExpr_invalidNumericBoxedWithBooleanBoxedType() {
     // LHS: Numeric boxed type, RHS: Boolean Boxed type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidBooleanBoxedWithNumericBoxedType".
@@ -204,7 +204,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidNumericBoxedWithReferenceType() {
+  void equalToOperationExpr_invalidNumericBoxedWithReferenceType() {
     // LHS: Numeric boxed type, RHS: Reference type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidReferenceWithNumericBoxedType".
@@ -217,7 +217,7 @@ public class RelationalOperationExprTest {
 
   /** ============= Equality Operators: LHS data type is boolean or its boxed type ============== */
   @Test
-  public void equalToOperationExpr_validBooleanType() {
+  void equalToOperationExpr_validBooleanType() {
     // LHS: boolean type, RHS: boolean Type.
     // No need swap LHS and RHS test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
@@ -227,7 +227,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validRHSBooleanBoxedType() {
+  void equalToOperationExpr_validRHSBooleanBoxedType() {
     // LHS: boolean type, RHS: boolean boxed Type.
     // Swapping LHS and RHS test case is covered in "equalToOperationExpr_validLHSBooleanBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
@@ -237,7 +237,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validLHSBooleanBoxedType() {
+  void equalToOperationExpr_validLHSBooleanBoxedType() {
     // LHS: boolean boxed type, RHS: boolean Type.
     // Swapping LHS and RHS test case is covered in "equalToOperationExpr_validRHSBooleanBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN_OBJECT, "x");
@@ -247,7 +247,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void notEqualToOperationExpr_validBooleanBoxedToNullType() {
+  void notEqualToOperationExpr_validBooleanBoxedToNullType() {
     // LHS: boolean boxed type, RHS: null.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validNullWithBooleanBoxedType".
@@ -258,7 +258,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void notEqualToOperationExpr_validBooleanBoxedToObjectType() {
+  void notEqualToOperationExpr_validBooleanBoxedToObjectType() {
     // LHS: boolean boxed type, RHS: null.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validObjectWithBooleanBoxedType".
@@ -269,7 +269,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void notEqualToOperationExpr_invalidBooleanToNumericType() {
+  void notEqualToOperationExpr_invalidBooleanToNumericType() {
     // LHS: boolean type, RHS: char boxed type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidNumericBooleanType".
@@ -281,7 +281,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void notEqualToOperationExpr_invalidBooleanToOtherBoxedType() {
+  void notEqualToOperationExpr_invalidBooleanToOtherBoxedType() {
     // LHS: boolean type, RHS: numeric boxed type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidNumericBoxedWithBooleanType".
@@ -293,7 +293,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void notEqualToOperationExpr_invalidBooleanToReferenceType() {
+  void notEqualToOperationExpr_invalidBooleanToReferenceType() {
     // LHS: boolean type, RHS: object type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidReferenceWithBooleanType".
@@ -305,7 +305,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidBooleanWithNullType() {
+  void equalToOperationExpr_invalidBooleanWithNullType() {
     // LHS: boolean type, RHS: null type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidNullWithBooleanType".
@@ -317,7 +317,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidBooleanWithObjectType() {
+  void equalToOperationExpr_invalidBooleanWithObjectType() {
     // LHS: boolean type, RHS: object type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidObjectWithBooleanType".
@@ -329,7 +329,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidBoxedBooleanWithNumericType() {
+  void equalToOperationExpr_invalidBoxedBooleanWithNumericType() {
     // LHS: boolean boxed type, RHS: numeric
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidNumericBooleanBoxedType".
@@ -341,7 +341,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidBooleanBoxedWithNumericBoxedType() {
+  void equalToOperationExpr_invalidBooleanBoxedWithNumericBoxedType() {
     // LHS: boolean boxed type, RHS: numeric
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidNumericBoxedWithBooleanBoxedType".
@@ -353,7 +353,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidBoxedBooleanWithReferencedType() {
+  void equalToOperationExpr_invalidBoxedBooleanWithReferencedType() {
     // LHS: boolean boxed type, RHS: reference type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidReferenceWithBooleanBoxedType".
@@ -366,7 +366,7 @@ public class RelationalOperationExprTest {
 
   /** ===================== Equality Operators: LHS data type is Array ======================== */
   @Test
-  public void equalToOperationExpr_validArrayWithMatchedType() {
+  void equalToOperationExpr_validArrayWithMatchedType() {
     // LHS: Array with numeric type, RHS: Array with matched numeric type.
     // No need swap LHS and RHS test case.
     VariableExpr lhsExpr =
@@ -380,7 +380,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validArrayWithNullType() {
+  void equalToOperationExpr_validArrayWithNullType() {
     // LHS: Array with numeric type, RHS: null
     // Swapping LHS and RHS test case is covered in "equalToOperationExpr_validANullWithArrayType".
     VariableExpr lhsExpr =
@@ -393,7 +393,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void notEqualToOperationExpr_invalidArrayWithUnmatchedType() {
+  void notEqualToOperationExpr_invalidArrayWithUnmatchedType() {
     // LHS: Array with numeric type, RHS: Array with unmatched numeric type.
     // No need swap LHS and RHS test case.
     VariableExpr lhsExpr =
@@ -408,7 +408,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidArrayWithNotArrayType() {
+  void equalToOperationExpr_invalidArrayWithNotArrayType() {
     // LHS: Array with numeric type, RHS: not Array
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidNumericTypeWithArrayType".
@@ -422,7 +422,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidArrayWithObjectType() {
+  void equalToOperationExpr_invalidArrayWithObjectType() {
     // LHS: Array with numeric type, RHS: New Object type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidObjectTypeWithArray".
@@ -437,7 +437,7 @@ public class RelationalOperationExprTest {
 
   /** ================== Equality Operators: LHS data type is reference type =================== */
   @Test
-  public void equalToOperationExpr_validReferenceWithMatchedType() {
+  void equalToOperationExpr_validReferenceWithMatchedType() {
     // LHS: String type, RHS: matched String type.
     // No need swap LHS and RHS test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.STRING, "x");
@@ -447,7 +447,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validReferenceWithNullType() {
+  void equalToOperationExpr_validReferenceWithNullType() {
     // LHS: String type, RHS: null.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validNullWithReferenceType".
@@ -458,7 +458,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validReferenceWithObjectType() {
+  void equalToOperationExpr_validReferenceWithObjectType() {
     // LHS: String type, RHS: New object type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validObjectWithStringType".
@@ -469,7 +469,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validAnyObjectTypeWithObject() {
+  void equalToOperationExpr_validAnyObjectTypeWithObject() {
     // LHS: Any reference type, RHS: Object type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validObjectWithAnyObjectType".
@@ -486,7 +486,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validAnyReferenceTypeWithNull() {
+  void equalToOperationExpr_validAnyReferenceTypeWithNull() {
     // LHS: Any reference type, RHS: Null type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validNullWithAnyReferenceType".
@@ -503,7 +503,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidReferenceWithUnmatchedReferenceType() {
+  void equalToOperationExpr_invalidReferenceWithUnmatchedReferenceType() {
     // LHS: String type, RHS: Unmatched reference type.
     // No need swap LHS and RHS test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.STRING, "x");
@@ -520,7 +520,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidReferenceWithNumericType() {
+  void equalToOperationExpr_invalidReferenceWithNumericType() {
     // LHS: String type, RHS: Numeric type
     // Swapping LHS and RHS test case is covered in
     // "notEqualToOperationExpr_invalidNumericStringType".
@@ -532,7 +532,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidReferenceWithNumericBoxedType() {
+  void equalToOperationExpr_invalidReferenceWithNumericBoxedType() {
     // LHS: String type, RHS: numeric boxed type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidNumericBoxedWithReferenceType".
@@ -544,7 +544,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidReferenceWithBooleanType() {
+  void equalToOperationExpr_invalidReferenceWithBooleanType() {
     // LHS: String type, RHS: Boolean boxed type.
     // Swapping LHS and RHS test case is covered in
     // "notEqualToOperationExpr_invalidBooleanToReferenceType".
@@ -556,7 +556,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidReferenceWithBooleanBoxedType() {
+  void equalToOperationExpr_invalidReferenceWithBooleanBoxedType() {
     // LHS: String type, RHS: Boolean boxed type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidBoxedBooleanWithReferencedType".
@@ -569,7 +569,7 @@ public class RelationalOperationExprTest {
 
   /** ================== Equality Operators: LHS data type is Object or null =================== */
   @Test
-  public void equalToOperationExpr_validObjectWithAnyObjectType() {
+  void equalToOperationExpr_validObjectWithAnyObjectType() {
     // LHS: Object type, RHS: Any reference type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validAnyObjectTypeWithObject".
@@ -586,7 +586,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validNullWithAnyReferenceType() {
+  void equalToOperationExpr_validNullWithAnyReferenceType() {
     // LHS: Null type, RHS: any reference type
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validAnyReferenceTypeWithNull".
@@ -603,7 +603,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validObjectWithNullType() {
+  void equalToOperationExpr_validObjectWithNullType() {
     // LHS: Object, RHS: Null.
     // Swapping LHS and RHS test case is covered in "equalToOperationExpr_validNullWithObjectType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.OBJECT, "x");
@@ -613,7 +613,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validNullWithObjectType() {
+  void equalToOperationExpr_validNullWithObjectType() {
     // LHS: Null, RHS: Object.
     // Swapping LHS and RHS test case is covered in "equalToOperationExpr_validObjectWithNullType".
     VariableExpr rhsExpr = createVariableExpr(TypeNode.OBJECT, "x");
@@ -623,7 +623,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validNullWithNullType() {
+  void equalToOperationExpr_validNullWithNullType() {
     // LHS: Null, RHS: Null.
     // No need swap LHS and RHS test case.
     ValueExpr lhsExpr = ValueExpr.createNullExpr();
@@ -633,7 +633,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validObjectWithStringType() {
+  void equalToOperationExpr_validObjectWithStringType() {
     // LHS: Object type, RHS: Reference type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validReferenceWithObjectType".
@@ -644,7 +644,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validObjectWithBooleanBoxedType() {
+  void equalToOperationExpr_validObjectWithBooleanBoxedType() {
     // LHS: Object type, RHS: Boolean boxed type.
     // Swapping LHS and RHS test case is covered in
     // "notEqualToOperationExpr_validBooleanBoxedToObjectType".
@@ -655,7 +655,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validObjectWithNumericBoxedType() {
+  void equalToOperationExpr_validObjectWithNumericBoxedType() {
     // LHS: Object type, RHS: Any Boxed type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validNumericBoxedWithNewObjectType".
@@ -666,7 +666,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validNullWithReferenceType() {
+  void equalToOperationExpr_validNullWithReferenceType() {
     // LHS: Null type, RHS: Reference type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validNullWithReferenceType".
@@ -677,7 +677,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validNullWithBooleanBoxedType() {
+  void equalToOperationExpr_validNullWithBooleanBoxedType() {
     // LHS: Object type, RHS: Any Boxed type
     // Swapping LHS and RHS test case is covered in
     // "notEqualToOperationExpr_validBooleanBoxedToNullType".
@@ -688,7 +688,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validNullWithNumericBoxedType() {
+  void equalToOperationExpr_validNullWithNumericBoxedType() {
     // LHS: Object type, RHS: Any Boxed type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validNumericBoxedWithNullType".
@@ -699,7 +699,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_validANullWithArrayType() {
+  void equalToOperationExpr_validANullWithArrayType() {
     // LHS: Null, RHS: Array with numeric type.
     // Swapping LHS and RHS test case is covered in "equalToOperationExpr_validArrayWithNullType".
     NullObjectValue nullObjectValue = NullObjectValue.create();
@@ -712,7 +712,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidNullWithNumericType() {
+  void equalToOperationExpr_invalidNullWithNumericType() {
     // LHS: Null type, RHS: Nny Numeric type.
     // Swapping LHS and RHS test case is covered in
     // "notEqualToOperationExpr_invalidNumericNullType".
@@ -724,7 +724,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidNullWithBooleanType() {
+  void equalToOperationExpr_invalidNullWithBooleanType() {
     // LHS: Null type, RHS: Boolean type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidBooleanWithNullType".
@@ -736,7 +736,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidObjectWithNumericType() {
+  void equalToOperationExpr_invalidObjectWithNumericType() {
     // LHS: Object type, RHS: Any Numeric type.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.DOUBLE, "y");
@@ -746,7 +746,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidObjectWithBooleanType() {
+  void equalToOperationExpr_invalidObjectWithBooleanType() {
     // LHS: Object type, RHS: Boolean type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidBooleanWithObjectType".
@@ -758,7 +758,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void equalToOperationExpr_invalidObjectTypeWithArray() {
+  void equalToOperationExpr_invalidObjectTypeWithArray() {
     // LHS: New Object type, RHS: Array with numeric type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidArrayWithObjectType".
@@ -774,7 +774,7 @@ public class RelationalOperationExprTest {
   /** ================== Less Than Operators: expr types are numeric types =================== */
   // The expression types on LHS or RHS could be any numeric type or any numeric boxed type.
   @Test
-  public void lessThanOperationExpr_validMatchedNumericType() {
+  void lessThanOperationExpr_validMatchedNumericType() {
     // LHS: Numeric type, RHS: Matched numeric type.
     // No need swap LHS and RHS test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
@@ -784,7 +784,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_validUnmatchedNumericType() {
+  void lessThanOperationExpr_validUnmatchedNumericType() {
     // LHS: Numeric type, RHS: Unmatched numeric type.
     // No need swap LHS and RHS test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
@@ -794,7 +794,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_validMatchedNumericBoxedType() {
+  void lessThanOperationExpr_validMatchedNumericBoxedType() {
     // LHS: Numeric type, RHS: Matched numeric type.
     // Swap case in "lessThanOperationExpr_validNumericBoxedTypeWithMatchedNumericType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT, "x");
@@ -804,7 +804,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_validNumericBoxedTypeWithMatchedNumericType() {
+  void lessThanOperationExpr_validNumericBoxedTypeWithMatchedNumericType() {
     // LHS: Numeric boxed type, RHS: Matched numeric type.
     // Swap case in "lessThanOperationExpr_validMatchedNumericBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.CHAR_OBJECT, "x");
@@ -814,7 +814,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_validUnmatchedNumericBoxedType() {
+  void lessThanOperationExpr_validUnmatchedNumericBoxedType() {
     // LHS: Numeric type, RHS: Unmatched numeric boxed type.
     // Swap case in "lessThanOperationExpr_validNumericBoxedTypeWithUnmatchedUnBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE, "x");
@@ -824,7 +824,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_validNumericBoxedTypeWithUnmatchedUnBoxedType() {
+  void lessThanOperationExpr_validNumericBoxedTypeWithUnmatchedUnBoxedType() {
     // LHS: Numeric boxed type, RHS: Unmatched numeric type.
     // Swap case in "lessThanOperationExpr_validUnmatchedNumericBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
@@ -834,7 +834,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_validNumericBoxedTypeWithMatchedBoxedType() {
+  void lessThanOperationExpr_validNumericBoxedTypeWithMatchedBoxedType() {
     // LHS: Numeric boxed type, RHS: Matched numeric boxed type.
     // No need swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
@@ -844,7 +844,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_validNumericBoxedTypeWithUnmatchedBoxedType() {
+  void lessThanOperationExpr_validNumericBoxedTypeWithUnmatchedBoxedType() {
     // LHS: Numeric boxed type, RHS: Unmatched numeric boxed type.
     // No need swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
@@ -856,7 +856,7 @@ public class RelationalOperationExprTest {
   /** ================= Less Than Operators: expr types are non-numeric types ================== */
   // Invalid if any of expression type on LHS or RHS is non-numeric type or non numeric boxed type.
   @Test
-  public void lessThanOperationExpr_invalidNumericTypeWithNullType() {
+  void lessThanOperationExpr_invalidNumericTypeWithNullType() {
     // LHS: Null type, RHS: Numeric type.
     // Swap case in "lessThanOperationExpr_invalidNumericWithNullType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
@@ -867,7 +867,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_invalidNumericBoxedTypeWithNullType() {
+  void lessThanOperationExpr_invalidNumericBoxedTypeWithNullType() {
     // LHS: Numeric boxed type, RHS: Null type.
     // Swap case in "lessThanOperationExpr_invalidNullWithNumericBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
@@ -878,7 +878,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_invalidNumericTypeWithObjectType() {
+  void lessThanOperationExpr_invalidNumericTypeWithObjectType() {
     // LHS: Numeric type, RHS: Object Type.
     // Swap case in "lessThanOperationExpr_invalidObjectNumericType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
@@ -889,7 +889,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_invalidNumericBoxedTypeWithObjectType() {
+  void lessThanOperationExpr_invalidNumericBoxedTypeWithObjectType() {
     // LHS: Numeric boxed type, RHS: Object Type.
     // Swap case in "lessThanOperationExpr_invalidObjectNumericBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
@@ -900,7 +900,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_invalidNumericBoxedTypeWithReferenceType() {
+  void lessThanOperationExpr_invalidNumericBoxedTypeWithReferenceType() {
     // LHS: Numeric boxed type, RHS: Reference Type.
     // Swap case in "lessThanOperationExpr_invalidReferenceTypeWithNumericBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
@@ -911,7 +911,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_invalidReferenceTypeWithNumericBoxedType() {
+  void lessThanOperationExpr_invalidReferenceTypeWithNumericBoxedType() {
     // LHS: Reference type, RHS: Numeric boxed Type.
     // Swap case in "lessThanOperationExpr_invalidNumericBoxedTypeWithReferenceType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.STRING, "x");
@@ -922,7 +922,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_invalidObjectNumericType() {
+  void lessThanOperationExpr_invalidObjectNumericType() {
     // LHS: Object type, RHS: Numeric Type.
     // Swap case in "lessThanOperationExpr_invalidNumericTypeWithObjectType".
     NewObjectExpr lhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
@@ -933,7 +933,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_invalidObjectNumericBoxedType() {
+  void lessThanOperationExpr_invalidObjectNumericBoxedType() {
     // LHS: Object type, RHS: Numeric boxed Type.
     // Swap case in "lessThanOperationExpr_invalidNumericBoxedTypeWithObjectType".
     NewObjectExpr lhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
@@ -944,7 +944,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_invalidNumericWithNullType() {
+  void lessThanOperationExpr_invalidNumericWithNullType() {
     // LHS: Null type, RHS: Numeric box type.
 
     ValueExpr lhsExpr = ValueExpr.createNullExpr();
@@ -955,7 +955,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_invalidNullWithNumericBoxedType() {
+  void lessThanOperationExpr_invalidNullWithNumericBoxedType() {
     // LHS: Null type, RHS: Numeric box type.
     // Swap case in "lessThanOperationExpr_invalidNumericTypeWithNullType".
     ValueExpr lhsExpr = ValueExpr.createNullExpr();
@@ -966,7 +966,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_invalidVoidType() {
+  void lessThanOperationExpr_invalidVoidType() {
     // LHS: Null type, RHS: Numeric box type.
     // No need swap case
     MethodInvocationExpr lhsExpr =

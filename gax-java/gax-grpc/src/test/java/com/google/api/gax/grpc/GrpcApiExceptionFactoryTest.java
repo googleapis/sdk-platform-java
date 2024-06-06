@@ -44,13 +44,10 @@ import io.grpc.Metadata;
 import io.grpc.StatusException;
 import io.grpc.StatusRuntimeException;
 import java.util.Collections;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class GrpcApiExceptionFactoryTest {
+class GrpcApiExceptionFactoryTest {
 
   private static final ErrorInfo ERROR_INFO =
       ErrorInfo.newBuilder()
@@ -72,13 +69,13 @@ public class GrpcApiExceptionFactoryTest {
 
   private GrpcApiExceptionFactory factory;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
     factory = new GrpcApiExceptionFactory(Collections.emptySet());
   }
 
   @Test
-  public void create_shouldCreateApiExceptionWithErrorDetailsForStatusException() {
+  void create_shouldCreateApiExceptionWithErrorDetailsForStatusException() {
     Metadata trailers = new Metadata();
     Status status = Status.newBuilder().addAllDetails(RAW_ERROR_MESSAGES).build();
     trailers.put(
@@ -91,7 +88,7 @@ public class GrpcApiExceptionFactoryTest {
   }
 
   @Test
-  public void create_shouldCreateApiExceptionWithErrorDetailsForStatusRuntimeException() {
+  void create_shouldCreateApiExceptionWithErrorDetailsForStatusRuntimeException() {
     Metadata trailers = new Metadata();
     Status status = Status.newBuilder().addAllDetails(RAW_ERROR_MESSAGES).build();
     trailers.put(
@@ -104,7 +101,7 @@ public class GrpcApiExceptionFactoryTest {
   }
 
   @Test
-  public void create_shouldCreateApiExceptionWithNoErrorDetailsIfMetadataIsNull() {
+  void create_shouldCreateApiExceptionWithNoErrorDetailsIfMetadataIsNull() {
     StatusRuntimeException statusException = new StatusRuntimeException(GRPC_STATUS, null);
 
     ApiException actual = factory.create(statusException);
@@ -113,7 +110,7 @@ public class GrpcApiExceptionFactoryTest {
   }
 
   @Test
-  public void create_shouldCreateApiExceptionWithNoErrorDetailsIfMetadataDoesNotHaveErrorDetails() {
+  void create_shouldCreateApiExceptionWithNoErrorDetailsIfMetadataDoesNotHaveErrorDetails() {
     StatusRuntimeException statusException =
         new StatusRuntimeException(GRPC_STATUS, new Metadata());
 
@@ -123,7 +120,7 @@ public class GrpcApiExceptionFactoryTest {
   }
 
   @Test
-  public void create_shouldCreateApiExceptionWithNoErrorDetailsIfStatusIsMalformed() {
+  void create_shouldCreateApiExceptionWithNoErrorDetailsIfStatusIsMalformed() {
     Metadata trailers = new Metadata();
     Status status = Status.newBuilder().addDetails(Any.pack(ERROR_INFO)).build();
     byte[] bytes = status.toByteArray();

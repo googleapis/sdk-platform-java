@@ -42,28 +42,25 @@ import com.google.common.truth.Truth;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class BatcherFactoryTest {
+class BatcherFactoryTest {
   private ScheduledExecutorService batchingExecutor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     batchingExecutor = new ScheduledThreadPoolExecutor(1);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     batchingExecutor.shutdownNow();
   }
 
   @Test
-  public void testGetPushingBatcher() {
+  void testGetPushingBatcher() {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
             .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))

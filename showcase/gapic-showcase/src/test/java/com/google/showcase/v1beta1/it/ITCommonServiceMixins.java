@@ -27,11 +27,11 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-public class ITCommonServiceMixins {
+class ITCommonServiceMixins {
 
   // The showcase server always returns a fixed list of locations. See
   // https://github.com/googleapis/gapic-showcase/blob/main/server/services/locations_service.go
@@ -56,8 +56,8 @@ public class ITCommonServiceMixins {
   private static EchoClient grpcClient;
   private static EchoClient httpjsonClient;
 
-  @BeforeClass
-  public static void createClients() throws Exception {
+  @BeforeAll
+  static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
 
@@ -65,8 +65,8 @@ public class ITCommonServiceMixins {
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
-  @AfterClass
-  public static void destroyClients() throws InterruptedException {
+  @AfterAll
+  static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();
 
@@ -76,7 +76,7 @@ public class ITCommonServiceMixins {
   }
 
   @Test
-  public void testGrpc_getLocation() {
+  void testGrpc_getLocation() {
     GetLocationRequest request =
         GetLocationRequest.newBuilder().setName("projects/showcase/location/us-central1").build();
     Location location = grpcClient.getLocation(request);
@@ -89,7 +89,7 @@ public class ITCommonServiceMixins {
   }
 
   @Test
-  public void testGrpc_listLocations() {
+  void testGrpc_listLocations() {
     ListLocationsRequest request =
         ListLocationsRequest.newBuilder().setName("projects/showcase").build();
     EchoClient.ListLocationsPagedResponse locationsPagedResponse =
@@ -104,7 +104,7 @@ public class ITCommonServiceMixins {
   }
 
   @Test
-  public void testHttpJson_getLocation() {
+  void testHttpJson_getLocation() {
     GetLocationRequest request =
         GetLocationRequest.newBuilder().setName("projects/showcase/locations/us-central1").build();
     Location location = httpjsonClient.getLocation(request);
@@ -117,7 +117,7 @@ public class ITCommonServiceMixins {
   }
 
   @Test
-  public void testHttpJson_listLocations() {
+  void testHttpJson_listLocations() {
     ListLocationsRequest request =
         ListLocationsRequest.newBuilder().setName("projects/showcase").build();
     EchoClient.ListLocationsPagedResponse locationsPagedResponse =

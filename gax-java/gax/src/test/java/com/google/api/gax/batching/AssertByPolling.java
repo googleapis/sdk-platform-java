@@ -42,7 +42,7 @@ import java.util.Objects;
  * assertByPolling(java.time.Duration.ofSeconds(2), () -> assertThat(...));
  * }</pre>
  */
-public class AssertByPolling {
+class AssertByPolling {
 
   public static void assertByPolling(java.time.Duration timeout, Runnable assertion)
       throws InterruptedException {

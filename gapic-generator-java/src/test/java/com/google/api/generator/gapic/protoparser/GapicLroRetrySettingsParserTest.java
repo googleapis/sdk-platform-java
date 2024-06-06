@@ -22,15 +22,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class GapicLroRetrySettingsParserTest {
+class GapicLroRetrySettingsParserTest {
 
   private static final double DELTA = 0.0001;
   private static final String YAML_DIRECTORY = "src/test/resources/";
 
   @Test
-  public void parseLroRetrySettings_methodsPresentNoLroRetrySettings() {
+  void parseLroRetrySettings_methodsPresentNoLroRetrySettings() {
     String filename = "datastore_gapic.yaml";
     Path path = Paths.get(YAML_DIRECTORY, filename);
     Optional<List<GapicLroRetrySettings>> settingsOpt =
@@ -39,7 +39,7 @@ public class GapicLroRetrySettingsParserTest {
   }
 
   @Test
-  public void parseGapicSettings_noMethodSettings() {
+  void parseGapicSettings_noMethodSettings() {
     String filename = "showcase_gapic.yaml";
     Path path = Paths.get(YAML_DIRECTORY, filename);
     Optional<List<GapicLroRetrySettings>> settingsOpt =
@@ -48,7 +48,7 @@ public class GapicLroRetrySettingsParserTest {
   }
 
   @Test
-  public void parseLroRetrySettings_lroRetrySettingsPresent() {
+  void parseLroRetrySettings_lroRetrySettingsPresent() {
     String filename = "dataproc_gapic.yaml";
     Path path = Paths.get(YAML_DIRECTORY, filename);
     Optional<List<GapicLroRetrySettings>> settingsOpt =

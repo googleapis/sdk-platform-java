@@ -18,11 +18,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class VaporReferenceTest {
+class VaporReferenceTest {
   @Test
-  public void basic() {
+  void basic() {
     String pkg = "com.google.example.examples.library.v1";
     String name = "Babbage";
     Reference ref = VaporReference.builder().setName(name).setPakkage(pkg).build();
@@ -34,7 +34,7 @@ public class VaporReferenceTest {
   }
 
   @Test
-  public void basic_isStaticImport() {
+  void basic_isStaticImport() {
     String pkg = "com.google.example.examples.library.v1";
     String name = "Babbage";
     Reference ref =
@@ -49,7 +49,7 @@ public class VaporReferenceTest {
   }
 
   @Test
-  public void basic_nested() {
+  void basic_nested() {
     String pkg = "com.google.example.examples.library.v1";
     String name = "Charles";
     Reference ref =
@@ -69,7 +69,7 @@ public class VaporReferenceTest {
   }
 
   @Test
-  public void basic_nestedAndStaticImport() {
+  void basic_nestedAndStaticImport() {
     String pkg = "com.google.example.examples.library.v1";
     String name = "Charles";
     String enclosingClassName = "Babbage";
@@ -89,7 +89,7 @@ public class VaporReferenceTest {
   }
 
   @Test
-  public void concreteHierarchiesNotHandled() {
+  void concreteHierarchiesNotHandled() {
     String pkg = "java.io";
     String name = "IOException";
     Reference ref = VaporReference.builder().setName(name).setPakkage(pkg).build();
@@ -101,7 +101,7 @@ public class VaporReferenceTest {
   }
 
   @Test
-  public void enclosingClass() {
+  void enclosingClass() {
     String pkg = "java.util";
     String enclosingName = "Map";
     String name = "Entry";

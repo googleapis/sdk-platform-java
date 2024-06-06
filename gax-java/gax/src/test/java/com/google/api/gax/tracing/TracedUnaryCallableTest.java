@@ -42,22 +42,15 @@ import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.mockito.quality.Strictness;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(JUnit4.class)
-public class TracedUnaryCallableTest {
+@ExtendWith(MockitoExtension.class)
+class TracedUnaryCallableTest {
   private static final SpanName SPAN_NAME = SpanName.of("FakeClient", "FakeRpc");
-
-  @Rule
-  public final MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
 
   @Mock private ApiTracerFactory tracerFactory;
   private ApiTracer parentTracer;
@@ -68,8 +61,8 @@ public class TracedUnaryCallableTest {
   private TracedUnaryCallable<String, String> tracedUnaryCallable;
   private FakeCallContext callContext;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     parentTracer = BaseApiTracer.getInstance();
 
     // Wire the mock tracer factory
@@ -87,13 +80,13 @@ public class TracedUnaryCallableTest {
   }
 
   @Test
-  public void testTracerCreated() {
+  void testTracerCreated() {
     tracedUnaryCallable.futureCall("test", callContext);
     verify(tracerFactory, times(1)).newTracer(parentTracer, SPAN_NAME, OperationType.Unary);
   }
 
   @Test
-  public void testOperationFinish() {
+  void testOperationFinish() {
     innerResult.set("successful result");
     tracedUnaryCallable.futureCall("test", callContext);
 
@@ -101,14 +94,14 @@ public class TracedUnaryCallableTest {
   }
 
   @Test
-  public void testOperationCancelled() {
+  void testOperationCancelled() {
     innerResult.cancel(true);
     tracedUnaryCallable.futureCall("test", callContext);
     verify(tracer, times(1)).operationCancelled();
   }
 
   @Test
-  public void testOperationFailed() {
+  void testOperationFailed() {
     RuntimeException fakeError = new RuntimeException("fake error");
     innerResult.setException(fakeError);
     tracedUnaryCallable.futureCall("test", callContext);
@@ -117,7 +110,7 @@ public class TracedUnaryCallableTest {
   }
 
   @Test
-  public void testSyncError() {
+  void testSyncError() {
     RuntimeException fakeError = new RuntimeException("fake error");
 
     // Reset the irrelevant expectations from setup. (only needed to silence the warnings).

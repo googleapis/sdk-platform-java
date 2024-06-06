@@ -31,12 +31,12 @@ package com.google.api.gax.batching;
 
 import static com.google.api.gax.batching.AssertByPolling.assertByPolling;
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
@@ -52,16 +52,14 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 /** Tests for {@link FlowController}. */
-@RunWith(JUnit4.class)
-public class FlowControllerTest {
+class FlowControllerTest {
 
   @Test
-  public void testReserveRelease_ok() throws Exception {
+  void testReserveRelease_ok() throws Exception {
     FlowController flowController =
         new FlowController(
             FlowControlSettings.newBuilder()
@@ -75,7 +73,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testInvalidArguments() throws Exception {
+  void testInvalidArguments() throws Exception {
     FlowController flowController =
         new FlowController(
             FlowControlSettings.newBuilder()
@@ -114,7 +112,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testReserveRelease_noLimits_ok() throws Exception {
+  void testReserveRelease_noLimits_ok() throws Exception {
     FlowController flowController =
         new FlowController(
             FlowControlSettings.newBuilder()
@@ -126,7 +124,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testReserveRelease_ignore_ok() throws Exception {
+  void testReserveRelease_ignore_ok() throws Exception {
     FlowController flowController =
         new FlowController(
             FlowControlSettings.newBuilder()
@@ -140,7 +138,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testReserveRelease_blockedByElementCount() throws Exception {
+  void testReserveRelease_blockedByElementCount() throws Exception {
     FlowController flowController =
         new FlowController(
             FlowControlSettings.newBuilder()
@@ -153,7 +151,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testReserveRelease_blockedByElementCount_noBytesLimit() throws Exception {
+  void testReserveRelease_blockedByElementCount_noBytesLimit() throws Exception {
     FlowController flowController =
         new FlowController(
             FlowControlSettings.newBuilder()
@@ -165,7 +163,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testReserveRelease_blockedByNumberOfBytes() throws Exception {
+  void testReserveRelease_blockedByNumberOfBytes() throws Exception {
     FlowController flowController =
         new FlowController(
             FlowControlSettings.newBuilder()
@@ -178,7 +176,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testReserveRelease_blockedByNumberOfBytes_noElementCountLimit() throws Exception {
+  void testReserveRelease_blockedByNumberOfBytes_noElementCountLimit() throws Exception {
     FlowController flowController =
         new FlowController(
             FlowControlSettings.newBuilder()
@@ -199,15 +197,12 @@ public class FlowControllerTest {
     Future<?> finished =
         Executors.newCachedThreadPool()
             .submit(
-                new Runnable() {
-                  @Override
-                  public void run() {
-                    try {
-                      permitsReserved.set(null);
-                      flowController.reserve(maxElementCount, maxNumBytes);
-                    } catch (FlowController.FlowControlException e) {
-                      throw new AssertionError(e);
-                    }
+                () -> {
+                  try {
+                    permitsReserved.set(null);
+                    flowController.reserve(maxElementCount, maxNumBytes);
+                  } catch (FlowControlException e) {
+                    throw new AssertionError(e);
                   }
                 });
 
@@ -220,7 +215,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testReserveRelease_rejectedByElementCount() throws Exception {
+  void testReserveRelease_rejectedByElementCount() throws Exception {
     FlowController flowController =
         new FlowController(
             FlowControlSettings.newBuilder()
@@ -237,7 +232,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testReserveRelease_rejectedByElementCount_noBytesLimit() throws Exception {
+  void testReserveRelease_rejectedByElementCount_noBytesLimit() throws Exception {
     FlowController flowController =
         new FlowController(
             FlowControlSettings.newBuilder()
@@ -250,7 +245,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testReserveRelease_rejectedByNumberOfBytes() throws Exception {
+  void testReserveRelease_rejectedByNumberOfBytes() throws Exception {
     FlowController flowController =
         new FlowController(
             FlowControlSettings.newBuilder()
@@ -267,7 +262,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testReserveRelease_rejectedByNumberOfBytes_noElementCountLimit() throws Exception {
+  void testReserveRelease_rejectedByNumberOfBytes_noElementCountLimit() throws Exception {
     FlowController flowController =
         new FlowController(
             FlowControlSettings.newBuilder()
@@ -280,7 +275,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testRestoreAfterFail() throws FlowController.FlowControlException {
+  void testRestoreAfterFail() throws FlowController.FlowControlException {
     FlowController flowController =
         new FlowController(
             FlowControlSettings.newBuilder()
@@ -301,7 +296,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testConstructedByDynamicFlowControlSetting() {
+  void testConstructedByDynamicFlowControlSetting() {
     FlowController flowController =
         new FlowController(
             DynamicFlowControlSettings.newBuilder()
@@ -341,7 +336,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testIncreaseThresholds_blocking() throws Exception {
+  void testIncreaseThresholds_blocking() throws Exception {
     FlowController flowController =
         new FlowController(
             DynamicFlowControlSettings.newBuilder()
@@ -374,7 +369,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testDecreaseThresholds_blocking() throws Exception {
+  void testDecreaseThresholds_blocking() throws Exception {
     FlowController flowController =
         new FlowController(
             DynamicFlowControlSettings.newBuilder()
@@ -407,7 +402,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testIncreaseThresholds_nonBlocking() throws Exception {
+  void testIncreaseThresholds_nonBlocking() throws Exception {
     FlowController flowController =
         new FlowController(
             DynamicFlowControlSettings.newBuilder()
@@ -446,7 +441,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testDecreaseThresholds_nonBlocking() throws Exception {
+  void testDecreaseThresholds_nonBlocking() throws Exception {
     FlowController flowController =
         new FlowController(
             DynamicFlowControlSettings.newBuilder()
@@ -506,7 +501,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testConcurrentUpdateThresholds_blocking() throws Exception {
+  void testConcurrentUpdateThresholds_blocking() throws Exception {
     int initialValue = 5000;
     FlowController flowController =
         new FlowController(
@@ -540,7 +535,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testConcurrentUpdateThresholds_nonBlocking() throws Exception {
+  void testConcurrentUpdateThresholds_nonBlocking() throws Exception {
     int initialValue = 5000;
     FlowController flowController =
         new FlowController(
@@ -581,7 +576,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testNumberOfBytesOutOfBoundaryWontDeadlock() throws Exception {
+  void testNumberOfBytesOutOfBoundaryWontDeadlock() throws Exception {
     // Test the special case where in FlowController#reserve, to avoid deadlocks, it allows
     // reserving byte size greater than current request bytes limit.
     int initial = 50;
@@ -624,8 +619,9 @@ public class FlowControllerTest {
     testBlockingReserveRelease(flowController, 0, expectedNewThreshold);
   }
 
-  @Test(timeout = 500)
-  public void testElementCountsOutOfBoundaryWontDeadlock() throws Exception {
+  @Test
+  @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
+  void testElementCountsOutOfBoundaryWontDeadlock() throws Exception {
     // Test the special case where in FlowController#reserve, to avoid deadlocks, it allows
     // reserving byte size greater than current request bytes limit.
     final int initial = 50;
@@ -668,7 +664,7 @@ public class FlowControllerTest {
   }
 
   @Test
-  public void testFlowControlBlockEventIsRecorded() throws Exception {
+  void testFlowControlBlockEventIsRecorded() throws Exception {
     // Test when reserve is blocked for at least FlowController#RESERVE_FLOW_CONTROL_THRESHOLD_MS,
     // FlowController will record the FlowControlEvent in FlowControlEventStats
     final FlowController flowController =
@@ -683,14 +679,11 @@ public class FlowControllerTest {
                 .setLimitExceededBehavior(LimitExceededBehavior.Block)
                 .build());
     Runnable runnable =
-        new Runnable() {
-          @Override
-          public void run() {
-            try {
-              flowController.reserve(1, 1);
-            } catch (FlowController.FlowControlException e) {
-              throw new AssertionError(e);
-            }
+        () -> {
+          try {
+            flowController.reserve(1, 1);
+          } catch (FlowControlException e) {
+            throw new AssertionError(e);
           }
         };
     // blocked by element. Reserve all 5 elements first, reserve in the runnable will be blocked
@@ -746,33 +739,24 @@ public class FlowControllerTest {
       throws InterruptedException, TimeoutException, ExecutionException {
     final Random random = new Random();
     Runnable increaseRunnable =
-        new Runnable() {
-          @Override
-          public void run() {
-            int increase = random.nextInt(increaseStepRange) + 1;
-            flowController.increaseThresholds(increase, increase);
-            totalIncreased.addAndGet(increase);
-          }
+        () -> {
+          int increase = random.nextInt(increaseStepRange) + 1;
+          flowController.increaseThresholds(increase, increase);
+          totalIncreased.addAndGet(increase);
         };
     Runnable decreaseRunnable =
-        new Runnable() {
-          @Override
-          public void run() {
-            int decrease = random.nextInt(decreaseStepRange) + 1;
-            flowController.decreaseThresholds(decrease, decrease);
-            totalDecreased.addAndGet(decrease);
-          }
+        () -> {
+          int decrease = random.nextInt(decreaseStepRange) + 1;
+          flowController.decreaseThresholds(decrease, decrease);
+          totalDecreased.addAndGet(decrease);
         };
     Runnable reserveReleaseRunnable =
-        new Runnable() {
-          @Override
-          public void run() {
-            try {
-              flowController.reserve(reserve, reserve);
-              flowController.release(reserve, reserve);
-              releasedCounter.incrementAndGet();
-            } catch (Exception e) {
-            }
+        () -> {
+          try {
+            flowController.reserve(reserve, reserve);
+            flowController.release(reserve, reserve);
+            releasedCounter.incrementAndGet();
+          } catch (Exception e) {
           }
         };
     List<Future<?>> updateFuture = new ArrayList<>();

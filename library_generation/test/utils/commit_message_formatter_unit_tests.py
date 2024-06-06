@@ -14,7 +14,10 @@
 import unittest
 from unittest.mock import patch
 
-from library_generation.utils.commit_message_formatter import format_commit_message
+from library_generation.utils.commit_message_formatter import (
+    format_commit_message,
+    commit_link,
+)
 from library_generation.utils.commit_message_formatter import wrap_nested_commit
 from library_generation.utils.commit_message_formatter import wrap_override_commit
 
@@ -26,12 +29,14 @@ class CommitMessageFormatterTest(unittest.TestCase):
         with patch("git.Commit") as mock_commit:
             commit = mock_commit.return_value
             commit.message = "feat: a commit message\nPiperOrigin-RevId: 123456"
+            commit.hexsha = "1234567abcdefg"
             commits = {commit: "example_library"}
             self.assertEqual(
                 [
                     "BEGIN_NESTED_COMMIT",
                     "feat: [example_library] a commit message",
                     "PiperOrigin-RevId: 123456",
+                    "Source Link: [googleapis/googleapis@1234567](https://github.com/googleapis/googleapis/commit/1234567abcdefg)",
                     "END_NESTED_COMMIT",
                 ],
                 format_commit_message(commits, True),
@@ -43,6 +48,7 @@ class CommitMessageFormatterTest(unittest.TestCase):
         with patch("git.Commit") as mock_commit:
             commit = mock_commit.return_value
             commit.message = "feat: a commit message\nfix: an another commit message\nPiperOrigin-RevId: 123456"
+            commit.hexsha = "1234567abcdefg"
             commits = {commit: "example_library"}
             self.assertEqual(
                 [
@@ -50,6 +56,7 @@ class CommitMessageFormatterTest(unittest.TestCase):
                     "feat: [example_library] a commit message",
                     "fix: [example_library] an another commit message",
                     "PiperOrigin-RevId: 123456",
+                    "Source Link: [googleapis/googleapis@1234567](https://github.com/googleapis/googleapis/commit/1234567abcdefg)",
                     "END_NESTED_COMMIT",
                 ],
                 format_commit_message(commits, True),
@@ -61,11 +68,13 @@ class CommitMessageFormatterTest(unittest.TestCase):
         with patch("git.Commit") as mock_commit:
             commit = mock_commit.return_value
             commit.message = "PiperOrigin-RevId: 123456"
+            commit.hexsha = "1234567abcdefg"
             commits = {commit: "example_library"}
             self.assertEqual(
                 [
                     "BEGIN_NESTED_COMMIT",
                     "PiperOrigin-RevId: 123456",
+                    "Source Link: [googleapis/googleapis@1234567](https://github.com/googleapis/googleapis/commit/1234567abcdefg)",
                     "END_NESTED_COMMIT",
                 ],
                 format_commit_message(commits, True),
@@ -75,12 +84,14 @@ class CommitMessageFormatterTest(unittest.TestCase):
         with patch("git.Commit") as mock_commit:
             commit = mock_commit.return_value
             commit.message = "feat: a commit message\nPiperOrigin-RevId: 123456"
+            commit.hexsha = "1234567abcdefg"
             commits = {commit: "example_library"}
             self.assertEqual(
                 [
                     "BEGIN_NESTED_COMMIT",
                     "feat: a commit message",
                     "PiperOrigin-RevId: 123456",
+                    "Source Link: [googleapis/googleapis@1234567](https://github.com/googleapis/googleapis/commit/1234567abcdefg)",
                     "END_NESTED_COMMIT",
                 ],
                 format_commit_message(commits, False),
@@ -92,6 +103,7 @@ class CommitMessageFormatterTest(unittest.TestCase):
         with patch("git.Commit") as mock_commit:
             commit = mock_commit.return_value
             commit.message = "feat: a commit message\nfix: an another commit message\nPiperOrigin-RevId: 123456"
+            commit.hexsha = "1234567abcdefg"
             commits = {commit: "example_library"}
             self.assertEqual(
                 [
@@ -99,22 +111,27 @@ class CommitMessageFormatterTest(unittest.TestCase):
                     "feat: a commit message",
                     "fix: an another commit message",
                     "PiperOrigin-RevId: 123456",
+                    "Source Link: [googleapis/googleapis@1234567](https://github.com/googleapis/googleapis/commit/1234567abcdefg)",
                     "END_NESTED_COMMIT",
                 ],
                 format_commit_message(commits, False),
             )
 
     def test_wrap_nested_commit_success(self):
-        messages = ["a commit message", "another message"]
-        self.assertEqual(
-            [
-                "BEGIN_NESTED_COMMIT",
-                "a commit message",
-                "another message",
-                "END_NESTED_COMMIT",
-            ],
-            wrap_nested_commit(messages),
-        )
+        with patch("git.Commit") as mock_commit:
+            commit = mock_commit.return_value
+            commit.hexsha = "1234567abcdefg"
+            messages = ["a commit message", "another message"]
+            self.assertEqual(
+                [
+                    "BEGIN_NESTED_COMMIT",
+                    "a commit message",
+                    "another message",
+                    "Source Link: [googleapis/googleapis@1234567](https://github.com/googleapis/googleapis/commit/1234567abcdefg)",
+                    "END_NESTED_COMMIT",
+                ],
+                wrap_nested_commit(commit, messages),
+            )
 
     def test_wrap_override_commit_success(self):
         messages = ["a commit message", "another message"]
@@ -127,3 +144,12 @@ class CommitMessageFormatterTest(unittest.TestCase):
             ],
             wrap_override_commit(messages),
         )
+
+    def test_commit_link_success(self):
+        with patch("git.Commit") as mock_commit:
+            commit = mock_commit.return_value
+            commit.hexsha = "1234567abcdefg"
+            self.assertEqual(
+                "[googleapis/googleapis@1234567](https://github.com/googleapis/googleapis/commit/1234567abcdefg)",
+                commit_link(commit),
+            )

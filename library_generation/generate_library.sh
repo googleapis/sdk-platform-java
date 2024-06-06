@@ -170,6 +170,12 @@ case "${proto_path}" in
     # and //google/cloud/oslogin/v1beta1:google-cloud-oslogin-v1-java
     proto_files="${proto_files} google/cloud/oslogin/common/common.proto"
     ;;
+  "google/cloud/visionai/v1"*)
+      # this proto is excluded in //google/cloud/visionai/v1:google-cloud-visionai-v1-java
+      # we can remove this exclusion after cl/631529749 is submitted.
+      removed_proto="google/cloud/visionai/v1/prediction.proto"
+      proto_files="${proto_files//${removed_proto}/}"
+      ;;
   "google/rpc")
     # this proto is excluded from //google/rpc:google-rpc-java
     removed_proto="google/rpc/http.proto"

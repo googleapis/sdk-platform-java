@@ -29,21 +29,21 @@
  */
 package com.google.api.gax.longrunning;
 
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.api.gax.core.FakeApiClock;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.TimedAttemptSettings;
 import com.google.api.gax.util.FakeLogHandler;
 import java.util.concurrent.CancellationException;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.threeten.bp.Duration;
 
-public class OperationTimedPollAlgorithmTest {
+class OperationTimedPollAlgorithmTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
@@ -62,8 +62,8 @@ public class OperationTimedPollAlgorithmTest {
 
   private FakeLogHandler logHandler;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     logHandler = new FakeLogHandler();
     OperationTimedPollAlgorithm.LOGGER.addHandler(logHandler);
     clock = new FakeApiClock(System.nanoTime());
@@ -78,15 +78,15 @@ public class OperationTimedPollAlgorithmTest {
             .build();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     OperationTimedPollAlgorithm.LOGGER.removeHandler(logHandler);
     // redundant null assignment for readability - a new log handler will be used
     logHandler = null;
   }
 
   @Test
-  public void testAlgorithmThatShouldRetry_doesNotLogTimeoutHelpMessage() {
+  void testAlgorithmThatShouldRetry_doesNotLogTimeoutHelpMessage() {
     OperationTimedPollAlgorithm algorithm =
         OperationTimedPollAlgorithm.create(FAST_RETRY_SETTINGS, clock);
     try {
@@ -101,7 +101,7 @@ public class OperationTimedPollAlgorithmTest {
   }
 
   @Test
-  public void testAlgorithmThatShouldNotRetry_logsTimeoutHelpMessage() {
+  void testAlgorithmThatShouldNotRetry_logsTimeoutHelpMessage() {
     OperationTimedPollAlgorithm algorithm =
         OperationTimedPollAlgorithm.create(FAST_RETRY_SETTINGS, clock);
     clock.incrementNanoTime(1 * 1000 * 1000 * 1000); // force rpc timeout

@@ -46,17 +46,14 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class HttpJsonClientInterceptorTest {
+class HttpJsonClientInterceptorTest {
 
   private static class CapturingClientInterceptor implements HttpJsonClientInterceptor {
     // Manually capturing arguments instead of using Mockito. This is intentional, as this
@@ -142,7 +139,7 @@ public class HttpJsonClientInterceptorTest {
   private CapturingClientInterceptor interceptor;
   private ManagedHttpJsonChannel channel;
 
-  @BeforeClass
+  @BeforeAll
   public static void initialize() {
     executorService =
         Executors.newFixedThreadPool(
@@ -154,13 +151,13 @@ public class HttpJsonClientInterceptorTest {
             });
   }
 
-  @AfterClass
+  @AfterAll
   public static void destroy() {
     executorService.shutdownNow();
   }
 
-  @Before
-  public void setUp() throws IOException {
+  @BeforeEach
+  void setUp() throws IOException {
     interceptor = new CapturingClientInterceptor();
     channel =
         InstantiatingHttpJsonChannelProvider.newBuilder()
@@ -174,13 +171,13 @@ public class HttpJsonClientInterceptorTest {
             .getManagedChannel();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     MOCK_SERVICE.reset();
   }
 
   @Test
-  public void testCustomInterceptor() throws ExecutionException, InterruptedException, IOException {
+  void testCustomInterceptor() throws ExecutionException, InterruptedException, IOException {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 

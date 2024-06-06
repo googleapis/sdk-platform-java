@@ -30,6 +30,7 @@
 package com.google.api.gax.rpc;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiFutures;
 import com.google.api.core.ListenableFutureToApiFuture;
@@ -40,52 +41,44 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import java.io.IOException;
 import java.util.concurrent.Executors;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class ApiExceptionsTest {
+class ApiExceptionsTest {
 
   @Test
-  public void noException() {
+  void noException() {
     Integer result = ApiExceptions.callAndTranslateApiException(ApiFutures.immediateFuture(2));
     assertThat(result).isEqualTo(2);
   }
 
   @Test
-  public void throwsApiException() {
+  void throwsApiException() {
     Exception throwable =
         new UnavailableException(null, FakeStatusCode.of(StatusCode.Code.UNAVAILABLE), false);
-    try {
-      ApiExceptions.callAndTranslateApiException(ApiFutures.immediateFailedFuture(throwable));
-      Assert.fail("ApiExceptions should have thrown an exception");
-    } catch (ApiException expected) {
-      assertThat(expected).isSameInstanceAs(throwable);
-    }
+
+    assertThrows(
+        UnavailableException.class,
+        () ->
+            ApiExceptions.callAndTranslateApiException(
+                ApiFutures.immediateFailedFuture(throwable)));
   }
 
   @Test
-  public void throwsIOException() {
-    try {
-      ApiExceptions.callAndTranslateApiException(
-          ApiFutures.immediateFailedFuture(new IOException()));
-      Assert.fail("ApiExceptions should have thrown an exception");
-    } catch (UncheckedExecutionException expected) {
-      assertThat(expected).hasCauseThat().isInstanceOf(IOException.class);
-    }
+  void throwsIOException() {
+    assertThrows(
+        UncheckedExecutionException.class,
+        () ->
+            ApiExceptions.callAndTranslateApiException(
+                ApiFutures.immediateFailedFuture(new IOException())));
   }
 
   @Test
-  public void throwsRuntimeException() {
-    try {
-      ApiExceptions.callAndTranslateApiException(
-          ApiFutures.immediateFailedFuture(new IllegalArgumentException()));
-      Assert.fail("ApiExceptions should have thrown an exception");
-    } catch (IllegalArgumentException expected) {
-      assertThat(expected).isInstanceOf(IllegalArgumentException.class);
-    }
+  void throwsRuntimeException() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () ->
+            ApiExceptions.callAndTranslateApiException(
+                ApiFutures.immediateFailedFuture(new IllegalArgumentException())));
   }
 
   /**
@@ -93,7 +86,7 @@ public class ApiExceptionsTest {
    * stacktrace will be preserved as a suppressed RuntimeException.
    */
   @Test
-  public void containsCurrentStacktrace() {
+  void containsCurrentStacktrace() {
     final String currentMethod = "containsCurrentStacktrace";
 
     // Throw an error in an executor, which will cause it to lose the current stack frame
@@ -102,23 +95,18 @@ public class ApiExceptionsTest {
 
     ListenableFuture<?> futureError =
         executor.submit(
-            new Runnable() {
-              @Override
-              public void run() {
-                throw new IllegalArgumentException();
-              }
-            });
+            (Runnable)
+                () -> {
+                  throw new IllegalArgumentException();
+                });
     ListenableFutureToApiFuture<?> futureErrorWrapper =
         new ListenableFutureToApiFuture<>(futureError);
     executor.shutdown();
 
     // Unwrap the future
-    Exception actualError = null;
-    try {
-      ApiExceptions.callAndTranslateApiException(futureErrorWrapper);
-    } catch (Exception e) {
-      actualError = e;
-    }
+    Exception actualError =
+        assertThrows(
+            Exception.class, () -> ApiExceptions.callAndTranslateApiException(futureErrorWrapper));
 
     // Sanity check that the current stack trace is not in the exception
     assertThat(actualError).isNotNull();

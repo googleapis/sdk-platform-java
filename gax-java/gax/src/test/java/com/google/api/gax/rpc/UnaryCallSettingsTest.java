@@ -31,21 +31,18 @@ package com.google.api.gax.rpc;
 
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.common.collect.ImmutableSet;
 import java.util.Set;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class UnaryCallSettingsTest {
+class UnaryCallSettingsTest {
 
   @Test
-  public void testSetSimpleTimeoutNoRetries() {
+  void testSetSimpleTimeoutNoRetries() {
     UnaryCallSettings.Builder<?, ?> builder = new UnaryCallSettings.Builder<Object, Object>();
     builder.setSimpleTimeoutNoRetriesDuration(java.time.Duration.ofSeconds(13));
 
@@ -56,7 +53,7 @@ public class UnaryCallSettingsTest {
   }
 
   @Test
-  public void testEquals() {
+  void testEquals() {
     UnaryCallSettings.Builder<?, ?> builder = new UnaryCallSettings.Builder<Object, Object>();
     builder.setSimpleTimeoutNoRetriesDuration(java.time.Duration.ofSeconds(13));
 
@@ -75,7 +72,7 @@ public class UnaryCallSettingsTest {
   }
 
   @Test
-  public void testEquals_retrySettings() {
+  void testEquals_retrySettings() {
     RetrySettings initialSettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelayDuration(java.time.Duration.ofMillis(5))
@@ -98,7 +95,7 @@ public class UnaryCallSettingsTest {
   }
 
   @Test
-  public void testEquals_retryableCodes() {
+  void testEquals_retryableCodes() {
     UnaryCallSettings.Builder<?, ?> builder = new UnaryCallSettings.Builder<Object, Object>();
     UnaryCallSettings<?, ?> settingsNoCodes = builder.build();
 
@@ -112,7 +109,7 @@ public class UnaryCallSettingsTest {
   }
 
   @Test
-  public void testRetrySettingsBuilder() {
+  void testRetrySettingsBuilder() {
     RetrySettings initialSettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelayDuration(java.time.Duration.ofMillis(5))
@@ -137,7 +134,7 @@ public class UnaryCallSettingsTest {
   }
 
   @Test
-  public void testToString() {
+  void testToString() {
     RetrySettings retrySettings = RetrySettings.newBuilder().build();
     Set<StatusCode.Code> retryableCodes = ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED);
     UnaryCallSettings<?, ?> unaryCallSettings =

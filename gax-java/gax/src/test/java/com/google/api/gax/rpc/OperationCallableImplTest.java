@@ -66,16 +66,13 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.LockSupport;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class OperationCallableImplTest {
+class OperationCallableImplTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
@@ -115,8 +112,8 @@ public class OperationCallableImplTest {
   private FakeApiClock clock;
   private OperationTimedPollAlgorithm pollingAlgorithm;
 
-  @Before
-  public void setUp() throws IOException {
+  @BeforeEach
+  void setUp() throws IOException {
     initialChannel = mock(FakeChannel.class);
     pollTransportChannel = mock(TransportChannel.class);
     TransportChannelProvider operationsChannelProvider = mock(TransportChannelProvider.class);
@@ -192,13 +189,13 @@ public class OperationCallableImplTest {
     }
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     executor.shutdown();
   }
 
   @Test
-  public void testCall() {
+  void testCall() {
     Color resp = getColor(1.0f);
     Currency meta = Currency.getInstance("UAH");
     OperationSnapshot resultOperation = getOperation("testCall", resp, null, meta, true);
@@ -216,7 +213,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testResumeFutureCall() throws Exception {
+  void testResumeFutureCall() throws Exception {
     String opName = "testResumeFutureCall";
     Color resp = getColor(0.5f);
     Currency meta = Currency.getInstance("UAH");
@@ -235,7 +232,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testCancelOperation() throws Exception {
+  void testCancelOperation() throws Exception {
     String opName = "testCancelOperation";
     LongRunningClient longRunningClient = mockCancelOperation(StatusCode.Code.OK);
 
@@ -249,7 +246,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialDone() throws Exception {
+  void testFutureCallInitialDone() throws Exception {
     String opName = "testFutureCallInitialDone";
     Color resp = getColor(0.5f);
     Currency meta = Currency.getInstance("UAH");
@@ -270,7 +267,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialError() throws Exception {
+  void testFutureCallInitialError() throws Exception {
     String opName = "testFutureCallInitialError";
     Color resp = getColor(1.0f);
     Currency meta = Currency.getInstance("UAH");
@@ -291,7 +288,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialDoneWithError() throws Exception {
+  void testFutureCallInitialDoneWithError() throws Exception {
     String opName = "testFutureCallInitialDoneWithError";
     StatusCode errorCode = FakeStatusCode.of(StatusCode.Code.ALREADY_EXISTS);
     Currency meta = Currency.getInstance("UAH");
@@ -321,7 +318,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialDoneWrongType() throws Exception {
+  void testFutureCallInitialDoneWrongType() throws Exception {
     String opName = "testFutureCallInitialDoneWrongType";
     Currency resp = Currency.getInstance("USD");
     Currency meta = Currency.getInstance("UAH");
@@ -346,7 +343,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialDoneMetaWrongType() throws Exception {
+  void testFutureCallInitialDoneMetaWrongType() throws Exception {
     String opName = "testFutureCallInitialDoneMetaWrongType";
     Color resp = getColor(1.0f);
     Color meta = getColor(1.0f);
@@ -367,7 +364,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialCancel() throws Exception {
+  void testFutureCallInitialCancel() throws Exception {
     String opName = "testFutureCallInitialCancel";
     OperationSnapshot initialOperation = getOperation(opName, null, null, null, false);
     OperationSnapshot resultOperation = getOperation(opName, null, null, null, false);
@@ -403,7 +400,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialOperationUnexpectedFail() throws Exception {
+  void testFutureCallInitialOperationUnexpectedFail() throws Exception {
     String opName = "testFutureCallInitialOperationUnexpectedFail";
     OperationSnapshot initialOperation = getOperation(opName, null, null, null, false);
     OperationSnapshot resultOperation = getOperation(opName, null, null, null, false);
@@ -426,7 +423,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollDoneOnFirst() throws Exception {
+  void testFutureCallPollDoneOnFirst() throws Exception {
     String opName = "testFutureCallPollDoneOnFirst";
     Color resp = getColor(0.5f);
     Currency meta = Currency.getInstance("UAH");
@@ -448,7 +445,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollDoneOnSecond() throws Exception {
+  void testFutureCallPollDoneOnSecond() throws Exception {
     String opName = "testFutureCallPollDoneOnSecond";
     Color resp = getColor(0.5f);
     Currency meta1 = Currency.getInstance("UAH");
@@ -473,7 +470,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollRPCTimeout() throws Exception {
+  void testFutureCallPollRPCTimeout() throws Exception {
     String opName = "testFutureCallPollRPCTimeout";
     pollingAlgorithm =
         OperationTimedPollAlgorithm.create(
@@ -537,7 +534,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallContextPropagation() throws Exception {
+  void testFutureCallContextPropagation() throws Exception {
     String opName = "testFutureCallContextPropagation";
 
     Color resp = getColor(0.5f);
@@ -572,7 +569,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollDoneOnMany() throws Exception {
+  void testFutureCallPollDoneOnMany() throws Exception {
     final int iterationsCount = 1000;
     String opName = "testFutureCallPollDoneOnMany";
     Color resp = getColor(0.5f);
@@ -612,7 +609,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollError() throws Exception {
+  void testFutureCallPollError() throws Exception {
     String opName = "testFutureCallPollError";
     Currency meta = Currency.getInstance("UAH");
     Color resp = getColor(1.0f);
@@ -634,7 +631,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollDoneWithError() throws Exception {
+  void testFutureCallPollDoneWithError() throws Exception {
     String opName = "testFutureCallPollDoneWithError";
     Currency meta = Currency.getInstance("UAH");
     Color resp = getColor(1.0f);
@@ -667,7 +664,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollCancelOnTimeoutExceeded() throws Exception {
+  void testFutureCallPollCancelOnTimeoutExceeded() throws Exception {
     String opName = "testFutureCallPollCancelOnPollingTimeoutExceeded";
     OperationSnapshot initialOperation = getOperation(opName, null, null, null, false);
     OperationSnapshot resultOperation = getOperation(opName, null, null, null, false);
@@ -686,7 +683,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollCancelOnLongTimeoutExceeded() throws Exception {
+  void testFutureCallPollCancelOnLongTimeoutExceeded() throws Exception {
     final int iterationsCount = 1000;
     String opName = "testFutureCallPollCancelOnLongTimeoutExceeded";
     OperationSnapshot initialOperation = getOperation(opName, null, null, null, false);
@@ -720,7 +717,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCancelImmediately() throws Exception {
+  void testFutureCancelImmediately() throws Exception {
     int iterationsCount = 3;
     String opName = "testCancelImmediately";
     Color resp = getColor(0.5f);
@@ -756,7 +753,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCancelInTheMiddle() throws Exception {
+  void testFutureCancelInTheMiddle() throws Exception {
     int iterationsCount = 1000;
     String opName = "testCancelInTheMiddle";
     Color resp = getColor(0.5f);
@@ -788,7 +785,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testInitialServerSideCancel() throws Exception {
+  void testInitialServerSideCancel() throws Exception {
     String opName = "testInitialServerSideCancel";
     StatusCode errorCode = FakeStatusCode.of(StatusCode.Code.CANCELLED);
     Currency meta = Currency.getInstance("UAH");
@@ -817,7 +814,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testPollServerSideCancel() throws Exception {
+  void testPollServerSideCancel() throws Exception {
     String opName = "testPollServerSideCancel";
     StatusCode errorCode = FakeStatusCode.of(StatusCode.Code.CANCELLED);
     Currency meta = Currency.getInstance("UAH");
@@ -849,7 +846,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void call() {
+  void call() {
     ApiCallContext defaultCallContext = FakeCallContext.createDefault();
     OperationStashCallable stashCallable = new OperationStashCallable();
     OperationCallable<Integer, String, Long> callable =
@@ -861,7 +858,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void callWithContext() {
+  void callWithContext() {
     FakeChannel channel = new FakeChannel();
     Credentials credentials = Mockito.mock(Credentials.class);
     ApiCallContext context =
@@ -878,7 +875,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void callResume() throws Exception {
+  void callResume() throws Exception {
     ApiCallContext defaultCallContext = FakeCallContext.createDefault();
     OperationStashCallable stashCallable = new OperationStashCallable();
     OperationCallable<Integer, String, Long> callable =
@@ -892,7 +889,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void callResumeWithContext() throws Exception {
+  void callResumeWithContext() throws Exception {
     FakeChannel channel = new FakeChannel();
     Credentials credentials = Mockito.mock(Credentials.class);
     ApiCallContext context =
@@ -911,7 +908,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void callCancel() throws Exception {
+  void callCancel() throws Exception {
     ApiCallContext defaultCallContext = FakeCallContext.createDefault();
     OperationStashCallable stashCallable = new OperationStashCallable();
     OperationCallable<Integer, String, Long> callable =
@@ -925,7 +922,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void callCancelWithContext() throws Exception {
+  void callCancelWithContext() throws Exception {
     FakeChannel channel = new FakeChannel();
     Credentials credentials = Mockito.mock(Credentials.class);
     ApiCallContext context =

@@ -30,10 +30,11 @@
 package com.google.api.gax.httpjson;
 
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
@@ -50,29 +51,23 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class HttpJsonCallContextTest {
+class HttpJsonCallContextTest {
 
   @Test
-  public void testNullToSelfWrongType() {
-    try {
-      HttpJsonCallContext.createDefault().nullToSelf(FakeCallContext.createDefault());
-      Assert.fail("HttpJsonCallContext should have thrown an exception");
-    } catch (IllegalArgumentException expected) {
-      Truth.assertThat(expected)
-          .hasMessageThat()
-          .contains("context must be an instance of HttpJsonCallContext");
-    }
+  void testNullToSelfWrongType() {
+    IllegalArgumentException actual =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> HttpJsonCallContext.createDefault().nullToSelf(FakeCallContext.createDefault()));
+    assertTrue(actual.getMessage().contains("context must be an instance of HttpJsonCallContext"));
   }
 
   @Test
-  public void testWithCredentials() {
+  void testWithCredentials() {
     Credentials credentials = Mockito.mock(Credentials.class);
     HttpJsonCallContext emptyContext = HttpJsonCallContext.createDefault();
     assertNull(emptyContext.getCredentials());
@@ -81,7 +76,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testWithTransportChannel() {
+  void testWithTransportChannel() {
     ManagedHttpJsonChannel channel = Mockito.mock(ManagedHttpJsonChannel.class);
 
     HttpJsonCallContext context =
@@ -92,22 +87,22 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testWithTransportChannelWrongType() {
+  void testWithTransportChannelWrongType() {
     try {
       FakeChannel channel = new FakeChannel();
       HttpJsonCallContext.createDefault()
           .withTransportChannel(FakeTransportChannel.create(channel));
-      Assert.fail("HttpJsonCallContext should have thrown an exception");
+      Assertions.fail("HttpJsonCallContext should have thrown an exception");
     } catch (IllegalArgumentException expected) {
       Truth.assertThat(expected).hasMessageThat().contains("Expected HttpJsonTransportChannel");
     }
   }
 
   @Test
-  public void testMergeWrongType() {
+  void testMergeWrongType() {
     try {
       HttpJsonCallContext.createDefault().merge(FakeCallContext.createDefault());
-      Assert.fail("HttpJsonCallContext should have thrown an exception");
+      Assertions.fail("HttpJsonCallContext should have thrown an exception");
     } catch (IllegalArgumentException expected) {
       Truth.assertThat(expected)
           .hasMessageThat()
@@ -116,7 +111,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testStreamIdleTimeout() {
+  void testStreamIdleTimeout() {
     final long millis = 3;
     final HttpJsonCallContext defaultContext = HttpJsonCallContext.createDefault();
     testDurationMethod(
@@ -163,7 +158,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testWithNegativeTimeout() {
+  void testWithNegativeTimeout() {
     assertNull(
         HttpJsonCallContext.createDefault()
             .withTimeoutDuration(java.time.Duration.ofSeconds(-1L))
@@ -171,7 +166,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testWithZeroTimeout() {
+  void testWithZeroTimeout() {
     assertNull(
         HttpJsonCallContext.createDefault()
             .withTimeoutDuration(java.time.Duration.ofSeconds(0L))
@@ -179,7 +174,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testWithShorterTimeout() {
+  void testWithShorterTimeout() {
     HttpJsonCallContext ctxWithLongTimeout =
         HttpJsonCallContext.createDefault().withTimeoutDuration(java.time.Duration.ofSeconds(10));
 
@@ -195,7 +190,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testWithLongerTimeout() {
+  void testWithLongerTimeout() {
     HttpJsonCallContext ctxWithShortTimeout =
         HttpJsonCallContext.createDefault().withTimeoutDuration(java.time.Duration.ofSeconds(5));
 
@@ -211,7 +206,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testMergeWithNullTimeout() {
+  void testMergeWithNullTimeout() {
     java.time.Duration timeout = java.time.Duration.ofSeconds(10);
     HttpJsonCallContext baseContext =
         HttpJsonCallContext.createDefault().withTimeoutDuration(timeout);
@@ -227,7 +222,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testMergeWithTimeout() {
+  void testMergeWithTimeout() {
     java.time.Duration timeout = java.time.Duration.ofSeconds(19);
     HttpJsonCallContext ctx1 = HttpJsonCallContext.createDefault();
     HttpJsonCallContext ctx2 = HttpJsonCallContext.createDefault().withTimeoutDuration(timeout);
@@ -236,7 +231,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testMergeWithTracer() {
+  void testMergeWithTracer() {
     ApiTracer explicitTracer = Mockito.mock(ApiTracer.class);
     HttpJsonCallContext ctxWithExplicitTracer =
         HttpJsonCallContext.createDefault().withTracer(explicitTracer);
@@ -258,7 +253,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testWithRetrySettings() {
+  void testWithRetrySettings() {
     RetrySettings retrySettings = Mockito.mock(RetrySettings.class);
     HttpJsonCallContext emptyContext = HttpJsonCallContext.createDefault();
     assertNull(emptyContext.getRetrySettings());
@@ -267,7 +262,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testWithRetryableCodes() {
+  void testWithRetryableCodes() {
     Set<StatusCode.Code> codes = Collections.singleton(StatusCode.Code.UNAVAILABLE);
     HttpJsonCallContext emptyContext = HttpJsonCallContext.createDefault();
     assertNull(emptyContext.getRetryableCodes());
@@ -276,7 +271,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testWithExtraHeaders() {
+  void testWithExtraHeaders() {
     Map<String, List<String>> headers = ImmutableMap.of("k", Arrays.asList("v"));
     ApiCallContext emptyContext = HttpJsonCallContext.createDefault();
     assertTrue(emptyContext.getExtraHeaders().isEmpty());
@@ -285,7 +280,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testWithOptions() {
+  void testWithOptions() {
     ApiCallContext emptyCallContext = HttpJsonCallContext.createDefault();
     ApiCallContext.Key<String> contextKey1 = ApiCallContext.Key.create("testKey1");
     ApiCallContext.Key<String> contextKey2 = ApiCallContext.Key.create("testKey2");
@@ -303,7 +298,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testMergeOptions() {
+  void testMergeOptions() {
     ApiCallContext emptyCallContext = HttpJsonCallContext.createDefault();
     ApiCallContext.Key<String> contextKey1 = ApiCallContext.Key.create("testKey1");
     ApiCallContext.Key<String> contextKey2 = ApiCallContext.Key.create("testKey2");

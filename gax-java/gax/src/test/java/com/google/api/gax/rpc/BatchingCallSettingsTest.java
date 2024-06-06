@@ -36,16 +36,13 @@ import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.common.collect.Sets;
 import com.google.common.truth.Truth;
 import java.util.Set;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class BatchingCallSettingsTest {
+class BatchingCallSettingsTest {
 
   @Test
-  public void testEmptyBuilder() {
+  void testEmptyBuilder() {
     @SuppressWarnings("unchecked")
     BatchingDescriptor<Integer, Integer> batchingDescriptor =
         Mockito.mock(BatchingDescriptor.class);
@@ -71,7 +68,7 @@ public class BatchingCallSettingsTest {
   }
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     @SuppressWarnings("unchecked")
     BatchingDescriptor<Integer, Integer> batchingDescriptor =
         Mockito.mock(BatchingDescriptor.class);
@@ -115,7 +112,7 @@ public class BatchingCallSettingsTest {
   }
 
   @Test
-  public void testBuilderFromSettings() throws Exception {
+  void testBuilderFromSettings() throws Exception {
     @SuppressWarnings("unchecked")
     BatchingDescriptor<Integer, Integer> batchingDescriptor =
         Mockito.mock(BatchingDescriptor.class);
@@ -154,7 +151,7 @@ public class BatchingCallSettingsTest {
   }
 
   @Test
-  public void testNoFlowControlSettings() throws Exception {
+  void testNoFlowControlSettings() throws Exception {
     @SuppressWarnings("unchecked")
     BatchingDescriptor<Integer, Integer> batchingDescriptor =
         Mockito.mock(BatchingDescriptor.class);
@@ -172,7 +169,7 @@ public class BatchingCallSettingsTest {
   }
 
   @Test
-  public void testToString() {
+  void testToString() {
     @SuppressWarnings("unchecked")
     BatchingDescriptor<Integer, Integer> batchingDescriptor =
         Mockito.mock(BatchingDescriptor.class);

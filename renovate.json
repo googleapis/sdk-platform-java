@@ -31,6 +31,18 @@
     {
       "customType": "regex",
       "fileMatch": [
+		"^\\.cloudbuild/library_generation/library_generation\\.Dockerfile$"
+      ],
+      "matchStrings": [
+        "ARG PROTOC_VERSION=[\"']?(?<currentValue>.+?)[\"']?\\s+"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "protocolbuffers/protobuf",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "^gax-java/dependencies\\.properties$"
       ],
       "matchStrings": [
@@ -141,7 +153,8 @@
     },
     {
       "matchPackagePatterns": [
-        "^com.google.protobuf"
+        "^com.google.protobuf",
+		"^protocolbuffers/protobuf"
       ],
       "groupName": "Protobuf dependencies",
       "enabled": false
@@ -161,7 +174,11 @@
     },
     {
       "matchPackagePatterns": [
-        "^com.google.api"
+        "com.google.api.grpc:grpc-google-common-protos",
+        "com.google.api.grpc:grpc-google-iam-v1",
+        "com.google.api.grpc:proto-google-common-protos",
+        "com.google.api.grpc:proto-google-iam-v1",
+        "com.google.api:api-common"
       ],
       "groupName": "Google API dependencies"
     },

@@ -31,7 +31,7 @@ package com.google.api.gax.tracing;
 
 import static com.google.api.gax.tracing.MetricsTestUtils.reportFailedAttempt;
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.verify;
@@ -44,28 +44,21 @@ import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.mockito.quality.Strictness;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(JUnit4.class)
-public class MetricsTracerTest {
+@ExtendWith(MockitoExtension.class)
+class MetricsTracerTest {
   private static final String DEFAULT_METHOD_NAME = "fake_service.fake_method";
-  // stricter way of testing for early detection of unused stubs and argument mismatches
-  @Rule
-  public final MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
 
   private MetricsTracer metricsTracer;
   @Mock private MetricsRecorder metricsRecorder;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     metricsTracer =
         new MetricsTracer(MethodName.of("fake_service", "fake_method"), metricsRecorder);
   }
@@ -81,7 +74,7 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testOperationSucceeded_recordsAttributes() {
+  void testOperationSucceeded_recordsAttributes() {
     metricsTracer.operationSucceeded();
 
     Map<String, String> attributes = getAttributes(Code.OK);
@@ -93,7 +86,7 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testOperationFailed_recordsAttributes() {
+  void testOperationFailed_recordsAttributes() {
     ApiException error0 =
         new NotFoundException(
             "invalid argument", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
@@ -108,7 +101,7 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testOperationCancelled_recordsAttributes() {
+  void testOperationCancelled_recordsAttributes() {
     metricsTracer.operationCancelled();
 
     Map<String, String> attributes = getAttributes(Code.CANCELLED);
@@ -120,7 +113,7 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testAttemptSucceeded_recordsAttributes() {
+  void testAttemptSucceeded_recordsAttributes() {
     // initialize mock-request
     Object mockSuccessfulRequest = new Object();
 
@@ -137,7 +130,7 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testAttemptFailed_usingJavaTime_recordsAttributes() {
+  void testAttemptFailed_usingJavaTime_recordsAttributes() {
     testAttemptFailed_recordsAttributes(java.time.Duration.ofMillis(2));
   }
 
@@ -147,7 +140,6 @@ public class MetricsTracerTest {
   }
 
   public void testAttemptFailed_recordsAttributes(final Object attemptFailedValue) {
-
     // initialize mock-request
     Object mockFailedRequest = new Object();
 
@@ -167,7 +159,7 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testAttemptCancelled_recordsAttributes() {
+  void testAttemptCancelled_recordsAttributes() {
     // initialize mock-request
     Object mockCancelledRequest = new Object();
     // Attempt #1
@@ -183,7 +175,7 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testAttemptFailedRetriesExhausted_recordsAttributes() {
+  void testAttemptFailedRetriesExhausted_recordsAttributes() {
     // initialize mock-request
     Object mockRequest = new Object();
     // Attempt #1
@@ -202,7 +194,7 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testAttemptPermanentFailure_recordsAttributes() {
+  void testAttemptPermanentFailure_recordsAttributes() {
     // initialize mock-request
     Object mockRequest = new Object();
     // Attempt #1
@@ -220,7 +212,7 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testMultipleOperationCalls_throwsError() {
+  void testMultipleOperationCalls_throwsError() {
     metricsTracer.operationSucceeded();
     IllegalStateException exception1 =
         assertThrows(IllegalStateException.class, () -> metricsTracer.operationCancelled());
@@ -231,13 +223,13 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testAddAttributes_recordsAttributes() {
+  void testAddAttributes_recordsAttributes() {
     metricsTracer.addAttributes("FakeTableId", "12345");
     assertThat(metricsTracer.getAttributes().get("FakeTableId")).isEqualTo("12345");
   }
 
   @Test
-  public void testExtractStatus_errorConversion_apiExceptions() {
+  void testExtractStatus_errorConversion_apiExceptions() {
     ApiException error =
         new ApiException("fake_error", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
     String errorCode = metricsTracer.extractStatus(error);
@@ -245,14 +237,14 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testExtractStatus_errorConversion_noError() {
+  void testExtractStatus_errorConversion_noError() {
     // test "OK", which corresponds to a "null" error.
     String successCode = metricsTracer.extractStatus(null);
     assertThat(successCode).isEqualTo(Code.OK.toString());
   }
 
   @Test
-  public void testExtractStatus_errorConversion_unknownException() {
+  void testExtractStatus_errorConversion_unknownException() {
     // test "UNKNOWN"
     Throwable unknownException = new RuntimeException();
     String errorCode2 = metricsTracer.extractStatus(unknownException);

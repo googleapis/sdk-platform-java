@@ -42,13 +42,10 @@ import com.google.api.gax.retrying.RetryingContext;
 import com.google.api.gax.retrying.ServerStreamingAttemptException;
 import com.google.api.gax.retrying.StreamingRetryAlgorithm;
 import com.google.api.gax.retrying.TimedAttemptSettings;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class StreamingRetryAlgorithmTest {
+class StreamingRetryAlgorithmTest {
   private static final RetrySettings DEFAULT_RETRY_SETTINGS =
       RetrySettings.newBuilder()
           .setInitialRetryDelayDuration(java.time.Duration.ofMillis(10L))
@@ -74,7 +71,7 @@ public class StreamingRetryAlgorithmTest {
           .build();
 
   @Test
-  public void testFirstAttemptUsesDefaultSettings() {
+  void testFirstAttemptUsesDefaultSettings() {
     RetryingContext context = mock(RetryingContext.class);
     BasicResultRetryAlgorithm<String> resultAlgorithm = new BasicResultRetryAlgorithm<>();
     ExponentialRetryAlgorithm timedAlgorithm =
@@ -90,7 +87,7 @@ public class StreamingRetryAlgorithmTest {
   }
 
   @Test
-  public void testFirstAttemptUsesContextSettings() {
+  void testFirstAttemptUsesContextSettings() {
     RetryingContext context = mock(RetryingContext.class);
     when(context.getRetrySettings()).thenReturn(CONTEXT_RETRY_SETTINGS);
     BasicResultRetryAlgorithm<String> resultAlgorithm = new BasicResultRetryAlgorithm<>();
@@ -107,7 +104,7 @@ public class StreamingRetryAlgorithmTest {
   }
 
   @Test
-  public void testNextAttemptReturnsNullWhenShouldNotRetry() {
+  void testNextAttemptReturnsNullWhenShouldNotRetry() {
     RetryingContext context = mock(RetryingContext.class);
     @SuppressWarnings("unchecked")
     BasicResultRetryAlgorithm<String> resultAlgorithm = mock(BasicResultRetryAlgorithm.class);
@@ -129,7 +126,7 @@ public class StreamingRetryAlgorithmTest {
   }
 
   @Test
-  public void testNextAttemptReturnsResultAlgorithmSettingsWhenShouldRetry() {
+  void testNextAttemptReturnsResultAlgorithmSettingsWhenShouldRetry() {
     RetryingContext context = mock(RetryingContext.class);
     @SuppressWarnings("unchecked")
     BasicResultRetryAlgorithm<String> resultAlgorithm = mock(BasicResultRetryAlgorithm.class);
@@ -154,7 +151,7 @@ public class StreamingRetryAlgorithmTest {
   }
 
   @Test
-  public void testNextAttemptResetsTimedSettings() {
+  void testNextAttemptResetsTimedSettings() {
     RetryingContext context = mock(RetryingContext.class);
     BasicResultRetryAlgorithm<String> resultAlgorithm = new BasicResultRetryAlgorithm<>();
 
@@ -180,7 +177,7 @@ public class StreamingRetryAlgorithmTest {
   }
 
   @Test
-  public void testShouldNotRetryIfAttemptIsNonResumable() {
+  void testShouldNotRetryIfAttemptIsNonResumable() {
     RetryingContext context = mock(RetryingContext.class);
 
     ServerStreamingAttemptException exception = mock(ServerStreamingAttemptException.class);
@@ -206,7 +203,7 @@ public class StreamingRetryAlgorithmTest {
   }
 
   @Test
-  public void testShouldRetryIfAllSayYes() {
+  void testShouldRetryIfAllSayYes() {
     RetryingContext context = mock(RetryingContext.class);
 
     ServerStreamingAttemptException exception = mock(ServerStreamingAttemptException.class);

@@ -30,18 +30,15 @@
 package com.google.api.gax.retrying;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.gax.core.FakeApiClock;
 import com.google.api.gax.rpc.testing.FakeCallContext;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class ExponentialRetryAlgorithmTest {
+class ExponentialRetryAlgorithmTest {
   private final FakeApiClock clock = new FakeApiClock(0L);
   private final RetrySettings retrySettings =
       RetrySettings.newBuilder()
@@ -71,7 +68,7 @@ public class ExponentialRetryAlgorithmTest {
       FakeCallContext.createDefault().withRetrySettings(retrySettingsOverride);
 
   @Test
-  public void testCreateFirstAttempt() {
+  void testCreateFirstAttempt() {
     TimedAttemptSettings attempt = algorithm.createFirstAttempt();
 
     // Checking only the most core values, to not make this test too implementation specific.
@@ -84,7 +81,7 @@ public class ExponentialRetryAlgorithmTest {
   }
 
   @Test
-  public void testCreateFirstAttemptOverride() {
+  void testCreateFirstAttemptOverride() {
     TimedAttemptSettings attempt = algorithm.createFirstAttempt(retryingContext);
 
     // Checking only the most core values, to not make this test too implementation specific.
@@ -98,7 +95,7 @@ public class ExponentialRetryAlgorithmTest {
   }
 
   @Test
-  public void testCreateFirstAttemptHasCorrectTimeout() {
+  void testCreateFirstAttemptHasCorrectTimeout() {
     long rpcTimeout = 100;
     long totalTimeout = 10;
     RetrySettings retrySettings =
@@ -142,7 +139,7 @@ public class ExponentialRetryAlgorithmTest {
   }
 
   @Test
-  public void testCreateNextAttempt() {
+  void testCreateNextAttempt() {
     TimedAttemptSettings firstAttempt = algorithm.createFirstAttempt();
     TimedAttemptSettings secondAttempt = algorithm.createNextAttempt(firstAttempt);
 
@@ -159,7 +156,7 @@ public class ExponentialRetryAlgorithmTest {
   }
 
   @Test
-  public void testCreateNextAttemptOverride() {
+  void testCreateNextAttemptOverride() {
     TimedAttemptSettings firstAttempt = algorithm.createFirstAttempt(retryingContext);
     TimedAttemptSettings secondAttempt = algorithm.createNextAttempt(firstAttempt);
 
@@ -176,7 +173,7 @@ public class ExponentialRetryAlgorithmTest {
   }
 
   @Test
-  public void testTruncateToTotalTimeout() {
+  void testTruncateToTotalTimeout() {
     RetrySettings timeoutSettings =
         retrySettings
             .toBuilder()
@@ -197,7 +194,7 @@ public class ExponentialRetryAlgorithmTest {
   }
 
   @Test
-  public void testShouldRetryTrue() {
+  void testShouldRetryTrue() {
     TimedAttemptSettings attempt = algorithm.createFirstAttempt();
     for (int i = 0; i < 2; i++) {
       attempt = algorithm.createNextAttempt(attempt);
@@ -207,7 +204,7 @@ public class ExponentialRetryAlgorithmTest {
   }
 
   @Test
-  public void testShouldRetryFalseOnMaxAttempts() {
+  void testShouldRetryFalseOnMaxAttempts() {
     TimedAttemptSettings attempt = algorithm.createFirstAttempt();
     for (int i = 0; i < 6; i++) {
       assertTrue(algorithm.shouldRetry(attempt));
@@ -227,7 +224,7 @@ public class ExponentialRetryAlgorithmTest {
   // Fifth attempt runs at 60ms if shouldRetry is true
   // - RPC timeout is 8ms and Time Left is -40ms (shouldRetry == false)
   @Test
-  public void testShouldRetryFalseOnMaxTimeout() {
+  void testShouldRetryFalseOnMaxTimeout() {
     // Simulate each attempt with 60ms of clock time.
     // "attempt" = RPC Timeout + createNextAttempt() and shouldRetry()
     TimedAttemptSettings attempt = algorithm.createFirstAttempt();

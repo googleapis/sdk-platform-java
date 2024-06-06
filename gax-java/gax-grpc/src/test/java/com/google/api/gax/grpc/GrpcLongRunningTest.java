@@ -66,14 +66,11 @@ import io.grpc.Status;
 import io.grpc.Status.Code;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class GrpcLongRunningTest {
+class GrpcLongRunningTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
@@ -97,8 +94,8 @@ public class GrpcLongRunningTest {
   private FakeApiClock clock;
   private OperationTimedPollAlgorithm pollingAlgorithm;
 
-  @Before
-  public void setUp() throws IOException {
+  @BeforeEach
+  void setUp() throws IOException {
     channel = mock(ManagedChannel.class);
     TransportChannelProvider operationsChannelProvider = mock(TransportChannelProvider.class);
     TransportChannel transportChannel =
@@ -153,7 +150,7 @@ public class GrpcLongRunningTest {
   }
 
   @Test
-  public void testCall() throws IOException {
+  void testCall() throws IOException {
     Color resp = getColor(1.0f);
     Money meta = getMoney("UAH");
     Operation resultOperation = getOperation("testCall", resp, meta, true);
@@ -175,7 +172,7 @@ public class GrpcLongRunningTest {
   }
 
   @Test
-  public void testFutureCallPollDoneOnFirst() throws Exception {
+  void testFutureCallPollDoneOnFirst() throws Exception {
     String opName = "testFutureCallPollDoneOnFirst";
     Color resp = getColor(0.5f);
     Money meta = getMoney("UAH");

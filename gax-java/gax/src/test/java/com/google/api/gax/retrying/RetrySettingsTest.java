@@ -32,16 +32,16 @@ package com.google.api.gax.retrying;
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 
 import com.google.common.truth.Truth;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class RetrySettingsTest {
+class RetrySettingsTest {
   private static final RetrySettings.Builder DEFAULT_BUILDER =
       RetrySettings.newBuilder()
           .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(5000l))
           .setMaxRetryDelayDuration(java.time.Duration.ofMillis(5000l));
 
   @Test
-  public void retrySettingsSetLogicalTimeout() {
+  void retrySettingsSetLogicalTimeout() {
     java.time.Duration timeout = java.time.Duration.ofMillis(60000);
     RetrySettings retrySettings = RetrySettings.newBuilder().setLogicalTimeout(timeout).build();
 
@@ -52,7 +52,7 @@ public class RetrySettingsTest {
   }
 
   @Test
-  public void retrySettingsMerge() {
+  void retrySettingsMerge() {
     RetrySettings.Builder builder =
         RetrySettings.newBuilder()
             .setTotalTimeoutDuration(java.time.Duration.ofMillis(45000))

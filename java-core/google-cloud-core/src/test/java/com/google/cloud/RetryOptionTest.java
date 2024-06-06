@@ -16,14 +16,14 @@
 
 package com.google.cloud;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.google.api.gax.retrying.RetrySettings;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.threeten.bp.Duration;
 
-public class RetryOptionTest {
+class RetryOptionTest {
 
   private static final RetryOption TOTAL_TIMEOUT =
       RetryOption.totalTimeout(Duration.ofMillis(420L));
@@ -46,7 +46,7 @@ public class RetryOptionTest {
           .build();
 
   @Test
-  public void testEqualsAndHashCode() {
+  void testEqualsAndHashCode() {
     assertEquals(TOTAL_TIMEOUT, TOTAL_TIMEOUT);
     assertEquals(INITIAL_RETRY_DELAY, INITIAL_RETRY_DELAY);
     assertEquals(RETRY_DELAY_MULTIPLIER, RETRY_DELAY_MULTIPLIER);
@@ -84,7 +84,7 @@ public class RetryOptionTest {
   }
 
   @Test
-  public void testMergeToSettings() {
+  void testMergeToSettings() {
     RetrySettings defRetrySettings = RetrySettings.newBuilder().build();
 
     assertEquals(defRetrySettings, RetryOption.mergeToSettings(defRetrySettings));

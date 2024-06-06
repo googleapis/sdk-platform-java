@@ -30,7 +30,7 @@
 package com.google.api.gax.httpjson;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
@@ -59,16 +59,13 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import com.google.protobuf.TypeRegistry;
 import java.util.Set;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class RetryingTest {
+class RetryingTest {
 
   @SuppressWarnings("unchecked")
   private final UnaryCallable<Integer, Integer> callInt = Mockito.mock(UnaryCallable.class);
@@ -114,8 +111,8 @@ public class RetryingTest {
           .setTotalTimeoutDuration(java.time.Duration.ofMillis(10L))
           .build();
 
-  @Before
-  public void resetClock() {
+  @BeforeEach
+  void resetClock() {
     fakeClock = new FakeApiClock(System.nanoTime());
     executor = RecordingScheduler.create(fakeClock);
     clientContext =
@@ -126,13 +123,13 @@ public class RetryingTest {
             .build();
   }
 
-  @After
-  public void teardown() {
+  @AfterEach
+  void teardown() {
     executor.shutdownNow();
   }
 
   @Test
-  public void retry() {
+  void retry() {
     ImmutableSet<StatusCode.Code> retryable = ImmutableSet.of(Code.UNAVAILABLE);
     Mockito.when(callInt.futureCall((Integer) any(), (ApiCallContext) any()))
         .thenReturn(ApiFutures.<Integer>immediateFailedFuture(HTTP_SERVICE_UNAVAILABLE_EXCEPTION))
@@ -154,7 +151,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryTotalTimeoutExceeded() {
+  void retryTotalTimeoutExceeded() {
     ImmutableSet<StatusCode.Code> retryable = ImmutableSet.of(Code.UNAVAILABLE);
     HttpResponseException httpResponseException =
         new HttpResponseException.Builder(
@@ -190,7 +187,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryMaxAttemptsExceeded() {
+  void retryMaxAttemptsExceeded() {
     ImmutableSet<StatusCode.Code> retryable = ImmutableSet.of(Code.UNAVAILABLE);
     Mockito.when(callInt.futureCall((Integer) any(), (ApiCallContext) any()))
         .thenReturn(ApiFutures.<Integer>immediateFailedFuture(HTTP_SERVICE_UNAVAILABLE_EXCEPTION))
@@ -210,7 +207,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryWithinMaxAttempts() {
+  void retryWithinMaxAttempts() {
     ImmutableSet<StatusCode.Code> retryable = ImmutableSet.of(Code.UNAVAILABLE);
     Mockito.when(callInt.futureCall((Integer) any(), (ApiCallContext) any()))
         .thenReturn(ApiFutures.<Integer>immediateFailedFuture(HTTP_SERVICE_UNAVAILABLE_EXCEPTION))
@@ -230,7 +227,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryOnStatusUnknown() {
+  void retryOnStatusUnknown() {
     ImmutableSet<StatusCode.Code> retryable = ImmutableSet.of(Code.UNKNOWN);
     HttpResponseException throwable =
         new HttpResponseException.Builder(
@@ -256,7 +253,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryOnUnexpectedException() {
+  void retryOnUnexpectedException() {
     ImmutableSet<StatusCode.Code> retryable = ImmutableSet.of(Code.UNKNOWN);
     Throwable throwable = new RuntimeException("foobar");
     Mockito.when(callInt.futureCall((Integer) any(), (ApiCallContext) any()))
@@ -275,7 +272,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryNoRecover() {
+  void retryNoRecover() {
     ImmutableSet<StatusCode.Code> retryable = ImmutableSet.of(Code.UNAVAILABLE);
     HttpResponseException httpResponseException =
         new HttpResponseException.Builder(
@@ -304,7 +301,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void retryKeepFailing() {
+  void retryKeepFailing() {
     ImmutableSet<StatusCode.Code> retryable = ImmutableSet.of(Code.UNAVAILABLE);
     HttpResponseException throwable =
         new HttpResponseException.Builder(
@@ -331,7 +328,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void testKnownStatusCode() {
+  void testKnownStatusCode() {
     ImmutableSet<StatusCode.Code> retryable = ImmutableSet.of(Code.UNAVAILABLE);
     String throwableMessage =
         "{\n"
@@ -372,7 +369,7 @@ public class RetryingTest {
   }
 
   @Test
-  public void testUnknownStatusCode() {
+  void testUnknownStatusCode() {
     ImmutableSet<StatusCode.Code> retryable = ImmutableSet.of();
     Mockito.when(callInt.futureCall((Integer) any(), (ApiCallContext) any()))
         .thenReturn(ApiFutures.<Integer>immediateFailedFuture(new RuntimeException("unknown")));

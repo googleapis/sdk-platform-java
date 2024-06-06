@@ -35,20 +35,20 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.api.core.ApiClock;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class InstantiatingWatchdogProviderTest {
+@ExtendWith(MockitoExtension.class)
+class InstantiatingWatchdogProviderTest {
   @Mock private ScheduledExecutorService executor;
   @Mock private ApiClock clock;
   private java.time.Duration checkInterval = java.time.Duration.ofSeconds(11);
 
   @Test
-  public void happyPath() {
+  void happyPath() {
     WatchdogProvider provider = InstantiatingWatchdogProvider.create();
 
     assertThat(provider.needsExecutor()).isTrue();
@@ -69,7 +69,7 @@ public class InstantiatingWatchdogProviderTest {
   }
 
   @Test
-  public void requiresExecutor() {
+  void requiresExecutor() {
     WatchdogProvider provider =
         InstantiatingWatchdogProvider.create()
             .withCheckIntervalDuration(checkInterval)
@@ -85,7 +85,7 @@ public class InstantiatingWatchdogProviderTest {
   }
 
   @Test
-  public void requiresCheckInterval() {
+  void requiresCheckInterval() {
     WatchdogProvider provider =
         InstantiatingWatchdogProvider.create().withExecutor(executor).withClock(clock);
 
@@ -99,7 +99,7 @@ public class InstantiatingWatchdogProviderTest {
   }
 
   @Test
-  public void requiresClock() {
+  void requiresClock() {
     WatchdogProvider provider =
         InstantiatingWatchdogProvider.create()
             .withExecutor(executor)

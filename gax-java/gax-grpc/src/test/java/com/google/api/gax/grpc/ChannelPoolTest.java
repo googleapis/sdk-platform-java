@@ -69,29 +69,26 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
-@RunWith(JUnit4.class)
-public class ChannelPoolTest {
+class ChannelPoolTest {
   private static final int DEFAULT_AWAIT_TERMINATION_SEC = 10;
   private ChannelPool pool;
 
-  @After
-  public void cleanup() throws InterruptedException {
+  @AfterEach
+  void cleanup() throws InterruptedException {
     Preconditions.checkNotNull(pool, "Channel pool was never created");
     pool.shutdown();
     pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testAuthority() throws IOException {
+  void testAuthority() throws IOException {
     ManagedChannel sub1 = Mockito.mock(ManagedChannel.class);
     ManagedChannel sub2 = Mockito.mock(ManagedChannel.class);
 
@@ -105,7 +102,7 @@ public class ChannelPoolTest {
   }
 
   @Test
-  public void testRoundRobin() throws IOException {
+  void testRoundRobin() throws IOException {
     ManagedChannel sub1 = Mockito.mock(ManagedChannel.class);
     ManagedChannel sub2 = Mockito.mock(ManagedChannel.class);
 
@@ -144,7 +141,7 @@ public class ChannelPoolTest {
   }
 
   @Test
-  public void ensureEvenDistribution() throws InterruptedException, IOException {
+  void ensureEvenDistribution() throws InterruptedException, IOException {
     int numChannels = 10;
     final ManagedChannel[] channels = new ManagedChannel[numChannels];
     final AtomicInteger[] counts = new AtomicInteger[numChannels];
@@ -197,7 +194,7 @@ public class ChannelPoolTest {
 
   // Test channelPrimer is called same number of times as poolSize if executorService is set to null
   @Test
-  public void channelPrimerShouldCallPoolConstruction() throws IOException {
+  void channelPrimerShouldCallPoolConstruction() throws IOException {
     ChannelPrimer mockChannelPrimer = Mockito.mock(ChannelPrimer.class);
     ManagedChannel channel1 = Mockito.mock(ManagedChannel.class);
     ManagedChannel channel2 = Mockito.mock(ManagedChannel.class);
@@ -215,7 +212,7 @@ public class ChannelPoolTest {
 
   // Test channelPrimer is called periodically, if there's an executorService
   @Test
-  public void channelPrimerIsCalledPeriodically() throws IOException {
+  void channelPrimerIsCalledPeriodically() throws IOException {
     ChannelPrimer mockChannelPrimer = Mockito.mock(ChannelPrimer.class);
     ManagedChannel channel1 = Mockito.mock(ManagedChannel.class);
     ManagedChannel channel2 = Mockito.mock(ManagedChannel.class);
@@ -266,7 +263,7 @@ public class ChannelPoolTest {
   // ----
   // call should be allowed to complete and the channel should not be shutdown
   @Test
-  public void callShouldCompleteAfterCreation() throws IOException {
+  void callShouldCompleteAfterCreation() throws IOException {
     ManagedChannel underlyingChannel = Mockito.mock(ManagedChannel.class);
     ManagedChannel replacementChannel = Mockito.mock(ManagedChannel.class);
     FakeChannelFactory channelFactory =
@@ -314,7 +311,7 @@ public class ChannelPoolTest {
 
   // call should be allowed to complete and the channel should not be shutdown
   @Test
-  public void callShouldCompleteAfterStarted() throws IOException {
+  void callShouldCompleteAfterStarted() throws IOException {
     final ManagedChannel underlyingChannel = Mockito.mock(ManagedChannel.class);
     ManagedChannel replacementChannel = Mockito.mock(ManagedChannel.class);
 
@@ -359,7 +356,7 @@ public class ChannelPoolTest {
 
   // Channel should be shutdown after a refresh all the calls have completed
   @Test
-  public void channelShouldShutdown() throws IOException {
+  void channelShouldShutdown() throws IOException {
     ManagedChannel underlyingChannel = Mockito.mock(ManagedChannel.class);
     ManagedChannel replacementChannel = Mockito.mock(ManagedChannel.class);
 
@@ -402,7 +399,7 @@ public class ChannelPoolTest {
   }
 
   @Test
-  public void channelRefreshShouldSwapChannels() throws IOException {
+  void channelRefreshShouldSwapChannels() throws IOException {
     ManagedChannel underlyingChannel1 = Mockito.mock(ManagedChannel.class);
     ManagedChannel underlyingChannel2 = Mockito.mock(ManagedChannel.class);
 
@@ -442,7 +439,7 @@ public class ChannelPoolTest {
   }
 
   @Test
-  public void channelCountShouldNotChangeWhenOutstandingRpcsAreWithinLimits() throws Exception {
+  void channelCountShouldNotChangeWhenOutstandingRpcsAreWithinLimits() throws Exception {
     ScheduledExecutorService executor = Mockito.mock(ScheduledExecutorService.class);
 
     List<ManagedChannel> channels = new ArrayList<>();
@@ -521,7 +518,7 @@ public class ChannelPoolTest {
   }
 
   @Test
-  public void removedIdleChannelsAreShutdown() throws Exception {
+  void removedIdleChannelsAreShutdown() throws Exception {
     ScheduledExecutorService executor = Mockito.mock(ScheduledExecutorService.class);
 
     List<ManagedChannel> channels = new ArrayList<>();
@@ -561,7 +558,7 @@ public class ChannelPoolTest {
   }
 
   @Test
-  public void removedActiveChannelsAreShutdown() throws Exception {
+  void removedActiveChannelsAreShutdown() throws Exception {
     ScheduledExecutorService executor = Mockito.mock(ScheduledExecutorService.class);
 
     List<ManagedChannel> channels = new ArrayList<>();
@@ -622,7 +619,7 @@ public class ChannelPoolTest {
   }
 
   @Test
-  public void testReleasingClientCallCancelEarly() throws IOException {
+  void testReleasingClientCallCancelEarly() throws IOException {
     ClientCall mockClientCall = Mockito.mock(ClientCall.class);
     Mockito.doAnswer(invocation -> null).when(mockClientCall).cancel(Mockito.any(), Mockito.any());
     ManagedChannel fakeChannel = Mockito.mock(ManagedChannel.class);
@@ -650,7 +647,7 @@ public class ChannelPoolTest {
     Color request = Color.newBuilder().setRed(0.5f).build();
 
     IllegalStateException e =
-        Assert.assertThrows(
+        Assertions.assertThrows(
             IllegalStateException.class,
             () ->
                 streamingCallable.call(
@@ -675,7 +672,7 @@ public class ChannelPoolTest {
   }
 
   @Test
-  public void testDoubleRelease() throws Exception {
+  void testDoubleRelease() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
     ChannelPool.LOG.addHandler(logHandler);
 

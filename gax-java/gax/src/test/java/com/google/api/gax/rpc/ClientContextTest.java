@@ -31,12 +31,12 @@ package com.google.api.gax.rpc;
 
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -66,13 +66,10 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class ClientContextTest {
+class ClientContextTest {
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com";
   private static final String DEFAULT_UNIVERSE_DOMAIN = "googleapis.com";
 
@@ -238,28 +235,28 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testNoAutoCloseContextNeedsNoExecutor() throws Exception {
+  void testNoAutoCloseContextNeedsNoExecutor() throws Exception {
     runTest(false, false, false, false);
   }
 
   @Test
-  public void testWithAutoCloseContextNeedsNoExecutor() throws Exception {
+  void testWithAutoCloseContextNeedsNoExecutor() throws Exception {
     runTest(true, false, false, false);
   }
 
   @Test
-  public void testWithAutoCloseContextNeedsExecutor() throws Exception {
+  void testWithAutoCloseContextNeedsExecutor() throws Exception {
     runTest(true, true, false, false);
   }
 
   @Test
-  public void testNeedsHeaders() throws Exception {
+  void testNeedsHeaders() throws Exception {
     runTest(false, false, true, false);
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testNeedsHeadersCollision() throws Exception {
-    runTest(false, false, true, true);
+  @Test
+  void testNeedsHeadersCollision() throws Exception {
+    assertThrows(IllegalArgumentException.class, () -> runTest(false, false, true, true));
   }
 
   private void runTest(
@@ -349,7 +346,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testWatchdogProvider() throws IOException {
+  void testWatchdogProvider() throws IOException {
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
 
     InterceptingExecutor executor = new InterceptingExecutor(1);
@@ -386,7 +383,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testMergeHeaders_getQuotaProjectIdFromHeadersProvider() throws IOException {
+  void testMergeHeaders_getQuotaProjectIdFromHeadersProvider() throws IOException {
     final String QUOTA_PROJECT_ID_KEY = "x-goog-user-project";
     final String QUOTA_PROJECT_ID_FROM_SETTINGS = "quota_project_id_from_settings";
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
@@ -420,7 +417,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testMergeHeaders_getQuotaProjectIdFromSettings() throws IOException {
+  void testMergeHeaders_getQuotaProjectIdFromSettings() throws IOException {
     final String QUOTA_PROJECT_ID_KEY = "x-goog-user-project";
     final String QUOTA_PROJECT_ID_FROM_HEADERS = "quota_project_id_from_headers";
     final String QUOTA_PROJECT_ID_FROM_INTERNAL_HEADERS = "quota_project_id_from_internal_headers";
@@ -469,7 +466,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testMergeHeaders_noQuotaProjectIdSet() throws IOException {
+  void testMergeHeaders_noQuotaProjectIdSet() throws IOException {
     final String QUOTA_PROJECT_ID_KEY = "x-goog-user-project";
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
 
@@ -499,7 +496,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testHidingQuotaProjectId_quotaSetFromSetting() throws IOException {
+  void testHidingQuotaProjectId_quotaSetFromSetting() throws IOException {
     final String QUOTA_PROJECT_ID_KEY = "x-goog-user-project";
     final String QUOTA_PROJECT_ID_FROM_CREDENTIALS_VALUE = "quota_project_id_from_credentials";
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
@@ -542,7 +539,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testHidingQuotaProjectId_noQuotaSetFromSetting() throws IOException {
+  void testHidingQuotaProjectId_noQuotaSetFromSetting() throws IOException {
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
 
     InterceptingExecutor executor = new InterceptingExecutor(1);
@@ -572,7 +569,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testQuotaProjectId_worksWithNullCredentials() throws IOException {
+  void testQuotaProjectId_worksWithNullCredentials() throws IOException {
     final String QUOTA_PROJECT_ID = "quota_project_id";
 
     final InterceptingExecutor executor = new InterceptingExecutor(1);
@@ -597,7 +594,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testUserAgentInternalOnly() throws Exception {
+  void testUserAgentInternalOnly() throws Exception {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()),
@@ -625,7 +622,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testUserAgentExternalOnly() throws Exception {
+  void testUserAgentExternalOnly() throws Exception {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()),
@@ -653,7 +650,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testUserAgentConcat() throws Exception {
+  void testUserAgentConcat() throws Exception {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()),
@@ -686,7 +683,7 @@ public class ClientContextTest {
   private static String mtlsEndpoint = "https://foo.mtls.googleapis.com";
 
   @Test
-  public void testSwitchToMtlsEndpointAllowed() throws IOException {
+  void testSwitchToMtlsEndpointAllowed() throws IOException {
     StubSettings settings = new FakeStubSettings.Builder().setEndpoint(endpoint).build();
     assertFalse(settings.getSwitchToMtlsEndpointAllowed());
     assertEquals(endpoint, settings.getEndpoint());
@@ -710,7 +707,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testExecutorSettings() throws Exception {
+  void testExecutorSettings() throws Exception {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()),
@@ -792,7 +789,7 @@ public class ClientContextTest {
 
   // EndpointContext will construct a valid endpoint if nothing is provided
   @Test
-  public void testCreateClientContext_withGdchCredentialNoAudienceNoEndpoint() throws IOException {
+  void testCreateClientContext_withGdchCredentialNoAudienceNoEndpoint() throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
@@ -818,7 +815,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_withGdchCredentialNoAudienceEmptyEndpoint_throws()
+  void testCreateClientContext_withGdchCredentialNoAudienceEmptyEndpoint_throws()
       throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
@@ -841,7 +838,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_withGdchCredentialWithoutAudienceWithEndpoint_correct()
+  void testCreateClientContext_withGdchCredentialWithoutAudienceWithEndpoint_correct()
       throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
@@ -874,7 +871,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_withGdchCredentialAndValidAudience() throws IOException {
+  void testCreateClientContext_withGdchCredentialAndValidAudience() throws IOException {
     Credentials creds = getMockGdchCredentials();
     CredentialsProvider provider = FixedCredentialsProvider.create(creds);
     TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
@@ -903,8 +900,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_withGdchCredentialAndInvalidAudience_throws()
-      throws IOException {
+  void testCreateClientContext_withGdchCredentialAndInvalidAudience_throws() throws IOException {
     TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
     Credentials creds = getMockGdchCredentials();
     CredentialsProvider provider = FixedCredentialsProvider.create(creds);
@@ -934,8 +930,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_withNonGdchCredentialAndAnyAudience_throws()
-      throws IOException {
+  void testCreateClientContext_withNonGdchCredentialAndAnyAudience_throws() throws IOException {
     TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
 
     // it should throw if apiAudience is set but not using GDC-H creds
@@ -956,7 +951,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_SetEndpointViaClientSettings() throws IOException {
+  void testCreateClientContext_SetEndpointViaClientSettings() throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
@@ -976,7 +971,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_SetEndpointViaTransportChannelProvider() throws IOException {
+  void testCreateClientContext_SetEndpointViaTransportChannelProvider() throws IOException {
     String transportChannelProviderEndpoint = "transport.endpoint.com";
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
@@ -1002,7 +997,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_SetEndpointViaClientSettingsAndTransportChannelProvider()
+  void testCreateClientContext_SetEndpointViaClientSettingsAndTransportChannelProvider()
       throws IOException {
     String clientSettingsEndpoint = "clientSettingsEndpoint.com";
     String transportChannelProviderEndpoint = "transportChannelProviderEndpoint.com";
@@ -1033,7 +1028,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_doNotSetUniverseDomain() throws IOException {
+  void testCreateClientContext_doNotSetUniverseDomain() throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
@@ -1052,7 +1047,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_setUniverseDomain() throws IOException {
+  void testCreateClientContext_setUniverseDomain() throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);

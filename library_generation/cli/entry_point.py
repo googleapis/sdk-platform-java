@@ -117,7 +117,6 @@ def generate(
         # baseline_generation_config is not specified.
         # Do not generate pull request description.
         generate_from_yaml(
-            config_path=current_generation_config_path,
             config=from_yaml(current_generation_config_path),
             repository_path=repository_path,
         )
@@ -131,7 +130,6 @@ def generate(
         current_config=from_yaml(current_generation_config_path),
     )
     generate_from_yaml(
-        config_path=current_generation_config_path,
         config=config_change.current_config,
         repository_path=repository_path,
         target_library_names=config_change.get_changed_libraries(),

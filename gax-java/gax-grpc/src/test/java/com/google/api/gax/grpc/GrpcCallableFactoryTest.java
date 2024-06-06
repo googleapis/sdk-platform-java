@@ -55,21 +55,18 @@ import io.grpc.MethodDescriptor.Marshaller;
 import io.grpc.MethodDescriptor.MethodType;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import java.util.List;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class GrpcCallableFactoryTest {
+class GrpcCallableFactoryTest {
   private InProcessServer<FakeServiceImpl> inprocessServer;
   private ManagedChannel channel;
   private ClientContext clientContext;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
     String serverName = "fakeservice";
     FakeServiceImpl serviceImpl = new FakeServiceImpl();
     inprocessServer = new InProcessServer<>(serviceImpl, serverName);
@@ -89,14 +86,14 @@ public class GrpcCallableFactoryTest {
             .build();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     channel.shutdown();
     inprocessServer.stop();
   }
 
   @Test
-  public void createServerStreamingCallableRetryableExceptions() {
+  void createServerStreamingCallableRetryableExceptions() {
     GrpcCallSettings<Color, Money> grpcCallSettings =
         GrpcCallSettings.create(FakeServiceGrpc.METHOD_STREAMING_RECOGNIZE_ERROR);
 
@@ -150,7 +147,7 @@ public class GrpcCallableFactoryTest {
   }
 
   @Test
-  public void testGetSpanName() {
+  void testGetSpanName() {
     @SuppressWarnings("unchecked")
     MethodDescriptor<?, ?> descriptor =
         MethodDescriptor.newBuilder()
@@ -165,7 +162,7 @@ public class GrpcCallableFactoryTest {
   }
 
   @Test
-  public void testGetSpanNameUnqualified() {
+  void testGetSpanNameUnqualified() {
     @SuppressWarnings("unchecked")
     MethodDescriptor<?, ?> descriptor =
         MethodDescriptor.newBuilder()
@@ -180,7 +177,7 @@ public class GrpcCallableFactoryTest {
   }
 
   @Test
-  public void testGetSpanNameInvalid() {
+  void testGetSpanNameInvalid() {
     List<String> invalidNames = ImmutableList.of("BareMethod", "/MethodWithoutService");
 
     for (String invalidName : invalidNames) {

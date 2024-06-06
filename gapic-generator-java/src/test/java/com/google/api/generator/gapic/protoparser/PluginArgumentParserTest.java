@@ -22,11 +22,11 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.Arrays;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PluginArgumentParserTest {
+class PluginArgumentParserTest {
   @Test
-  public void parseJsonPath_onlyOnePresent() {
+  void parseJsonPath_onlyOnePresent() {
     String jsonPath = "/tmp/grpc_service_config.json";
     assertEquals(
         jsonPath,
@@ -34,7 +34,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseJsonPath_returnsFirstOneFound() {
+  void parseJsonPath_returnsFirstOneFound() {
     String jsonPathOne = "/tmp/foobar_grpc_service_config.json";
     String jsonPathTwo = "/tmp/some_other_grpc_service_config.json";
     assertEquals(
@@ -49,7 +49,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseJsonPath_similarFileAppearsFirst() {
+  void parseJsonPath_similarFileAppearsFirst() {
     String jsonPath = "/tmp/foo_grpc_service_config.json";
     String gapicPath = "/tmp/something_gapic.yaml";
     String rawArgument =
@@ -65,7 +65,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseJsonPath_argumentHasSpaces() {
+  void parseJsonPath_argumentHasSpaces() {
     String jsonPath = "/tmp/foo_grpc_service_config.json";
     String gapicPath = "/tmp/something_gapic.yaml";
     String rawArgument =
@@ -81,7 +81,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseJsonPath_restAreEmpty() {
+  void parseJsonPath_restAreEmpty() {
     String jsonPath = "/tmp/foobar_grpc_service_config.json";
     String gapicPath = "";
     String rawArgument =
@@ -90,14 +90,14 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseJsonPath_noneFound() {
+  void parseJsonPath_noneFound() {
     String gapicPath = "/tmp/something_gapic.yaml";
     String rawArgument = String.join(",", Arrays.asList(gapicPath));
     assertFalse(PluginArgumentParser.parseJsonConfigPath(rawArgument).isPresent());
   }
 
   @Test
-  public void parseGapicYamlPath_onlyOnePresent() {
+  void parseGapicYamlPath_onlyOnePresent() {
     String gapicPath = "/tmp/something_gapic.yaml";
     assertEquals(
         gapicPath,
@@ -105,7 +105,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseGapicYamlPath_returnsFirstOneFound() {
+  void parseGapicYamlPath_returnsFirstOneFound() {
     String gapicPathOne = "/tmp/something_gapic.yaml";
     String gapicPathTwo = "/tmp/other_gapic.yaml";
     assertEquals(
@@ -119,7 +119,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseGapicYamlPath_similarFileAppearsFirst() {
+  void parseGapicYamlPath_similarFileAppearsFirst() {
     String jsonPath = "/tmp/foo_grpc_service_config.json";
     String gapicPath = "/tmp/something_gapic.yaml";
     String rawArgument =
@@ -134,7 +134,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseGapicYamlPath_restAreEmpty() {
+  void parseGapicYamlPath_restAreEmpty() {
     String jsonPath = "";
     String gapicPath = "/tmp/something_gapic.yaml";
     String rawArgument =
@@ -143,7 +143,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseGapicYamlPath_noneFound() {
+  void parseGapicYamlPath_noneFound() {
     String jsonPath = "/tmp/foo_grpc_service_config.json";
     String gapicPath = "";
     String rawArgument =
@@ -152,7 +152,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseServiceYamlPath_onlyOnePresent() {
+  void parseServiceYamlPath_onlyOnePresent() {
     String servicePath = "/tmp/something.yaml";
     assertEquals(
         servicePath,
@@ -160,7 +160,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseServiceYamlPath_returnsFirstOneFound() {
+  void parseServiceYamlPath_returnsFirstOneFound() {
     String servicePathOne = "/tmp/something.yaml";
     String servicePathTwo = "/tmp/other.yaml";
     assertEquals(
@@ -174,7 +174,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseServiceYamlPath_gapicFilePresent() {
+  void parseServiceYamlPath_gapicFilePresent() {
     String gapicPath = "/tmp/something_gapic.yaml";
     String servicePath = "/tmp/something.yaml";
     // Both passed under the service yaml flag.
@@ -203,7 +203,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseServiceYamlPath_similarFileAppearsFirst() {
+  void parseServiceYamlPath_similarFileAppearsFirst() {
     String jsonPath = "/tmp/foo_grpc_service_config.json";
     String gapicPath = "/tmp/something_gapic.yaml";
     String servicePath = "/tmp/something.yaml";
@@ -220,7 +220,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void parseServiceYamlPath_noneFound() {
+  void parseServiceYamlPath_noneFound() {
     String jsonPath = "/tmp/foo_grpc_service_config.json";
     String gapicPath = "";
     String rawArgument =
@@ -229,7 +229,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void hasMetadataFlag() {
+  void hasMetadataFlag() {
     CodeGeneratorRequest request =
         CodeGeneratorRequest.newBuilder()
             .setParameter(String.join(",", KEY_METADATA, "does-not-matter"))
@@ -238,7 +238,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void hasNumericEnumFlag() {
+  void hasNumericEnumFlag() {
     CodeGeneratorRequest request =
         CodeGeneratorRequest.newBuilder()
             .setParameter(String.join(",", KEY_NUMERIC_ENUM, "does-not-matter"))
@@ -247,7 +247,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void hasFlag_noneFound() {
+  void hasFlag_noneFound() {
     String jsonPath = "/tmp/foo_grpc_service_config.json";
     String gapicPath = "";
     String rawArgument =
@@ -261,7 +261,7 @@ public class PluginArgumentParserTest {
   }
 
   @Test
-  public void hasFlag_flagFound() {
+  void hasFlag_flagFound() {
     String jsonPath = "/tmp/foo_grpc_service_config.json";
     String gapicPath = "";
     String rawArgument =

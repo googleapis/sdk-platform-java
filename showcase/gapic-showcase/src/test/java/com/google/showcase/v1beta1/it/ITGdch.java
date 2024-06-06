@@ -18,10 +18,10 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.client.json.GenericJson;
 import com.google.api.client.json.JsonFactory;
@@ -41,21 +41,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Test suite to confirm a client can be instantiated with GDCH credentials. No calls are made since
  * it is not feasible to test against real GDCH servers (or replicate an environment)
  */
-public class ITGdch {
+class ITGdch {
 
   private static final String CA_CERT_FILENAME = "fake_cert.pem";
   private static final String CA_CERT_RESOURCE_PATH = "/" + CA_CERT_FILENAME;
@@ -64,8 +63,6 @@ public class ITGdch {
   private static final String GDCH_CREDENTIAL_RESOURCE_PATH = "/" + GDCH_CREDENTIAL_FILENAME;
   private static final String GDCH_TOKEN_STRING = "1/MkSJoj1xsli0AccessToken_NKPY2";
   private static final String SID_NAME = "service-identity-name";
-
-  @Rule public TemporaryFolder tempFolder = new TemporaryFolder();
 
   private EchoClient client;
   private EchoSettings settings;
@@ -76,27 +73,27 @@ public class ITGdch {
   private String projectId;
   private URI tokenUri;
 
-  @Before
-  public void setup() throws IOException, URISyntaxException {
+  @BeforeEach
+  void setup(@TempDir Path tempDir) throws IOException {
     transportFactory = new InterceptingMockTokenServerTransportFactory();
-    prepareCredentials();
+    prepareCredentials(tempDir);
     settings =
         EchoSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(initialCredentials))
             .build();
   }
 
-  @After
-  public void tearDown() throws InterruptedException {
+  @AfterEach
+  void tearDown() throws InterruptedException {
     if (client != null) {
       client.close();
       client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
 
-  private void prepareCredentials() throws IOException {
+  private void prepareCredentials(Path tempDir) throws IOException {
     // Copy file so it can be referenced by Path even in native-image builds
-    File caCertFile = tempFolder.newFile(CA_CERT_FILENAME);
+    File caCertFile = new File(tempDir.toFile(), CA_CERT_FILENAME);
     try (InputStream inputStream = getClass().getResourceAsStream(CA_CERT_RESOURCE_PATH)) {
       assertThat(inputStream).isNotNull();
       Files.copy(inputStream, caCertFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -115,7 +112,7 @@ public class ITGdch {
     projectId = converted.get("project").toString();
     tokenUri = URI.create(converted.get("token_uri").toString());
 
-    File tempGdchCredentialFile = tempFolder.newFile(GDCH_CREDENTIAL_FILENAME);
+    File tempGdchCredentialFile = new File(tempDir.toFile(), GDCH_CREDENTIAL_FILENAME);
     try (FileWriter fileWriter = new FileWriter(tempGdchCredentialFile)) {
       String preparedJson = converted.toPrettyString();
       fileWriter.write(preparedJson);
@@ -133,7 +130,7 @@ public class ITGdch {
    * @throws IOException
    */
   @Test
-  public void testCreateClient_withGdchCredentialAndNoAudience_defaultsToEndpointBasedAudience()
+  void testCreateClient_withGdchCredentialAndNoAudience_defaultsToEndpointBasedAudience()
       throws IOException {
 
     // we create the client as usual - no audience passed
@@ -178,9 +175,8 @@ public class ITGdch {
    * @throws IOException
    */
   @Test
-  public void
-      testCreateClient_withGdchCredentialWithValidAudience_usesCredentialWithPassedAudience()
-          throws IOException {
+  void testCreateClient_withGdchCredentialWithValidAudience_usesCredentialWithPassedAudience()
+      throws IOException {
 
     // Similar to the previous test, create a client as usual but this time we pass a explicit
     // audience. It should

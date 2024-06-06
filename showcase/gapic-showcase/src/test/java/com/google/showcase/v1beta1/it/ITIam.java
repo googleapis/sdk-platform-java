@@ -16,7 +16,7 @@
 package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.common.collect.ImmutableList;
@@ -31,12 +31,12 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ITIam {
+class ITIam {
   private static final Policy DEFAULT_POLICY =
       Policy.newBuilder()
           .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
@@ -45,18 +45,18 @@ public class ITIam {
   private static IdentityClient httpjsonClient;
   private String resourceName;
 
-  @BeforeClass
-  public static void createClients() throws Exception {
+  @BeforeAll
+  static void createClients() throws Exception {
     grpcClient = TestClientInitializer.createGrpcIdentityClient();
     httpjsonClient = TestClientInitializer.createHttpJsonIdentityClient();
   }
 
-  @Before
-  public void setupTests() {
+  @BeforeEach
+  void setupTests() {
     resourceName = "users/" + UUID.randomUUID().toString().substring(0, 8);
   }
 
-  @AfterClass
+  @AfterAll
   public static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();
@@ -67,7 +67,7 @@ public class ITIam {
   }
 
   @Test
-  public void testGrpc_setIamPolicy() {
+  void testGrpc_setIamPolicy() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
@@ -78,7 +78,7 @@ public class ITIam {
   }
 
   @Test
-  public void testHttpJson_setIamPolicy() {
+  void testHttpJson_setIamPolicy() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
@@ -89,7 +89,7 @@ public class ITIam {
   }
 
   @Test
-  public void testGrpc_getIamPolicy() {
+  void testGrpc_getIamPolicy() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
@@ -104,7 +104,7 @@ public class ITIam {
   }
 
   @Test
-  public void testHttpJson_getIamPolicy() {
+  void testHttpJson_getIamPolicy() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
@@ -119,7 +119,7 @@ public class ITIam {
   }
 
   @Test
-  public void testGrpc_testIamPermissions() {
+  void testGrpc_testIamPermissions() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
@@ -140,7 +140,7 @@ public class ITIam {
   }
 
   @Test
-  public void testHttpJson_testIamPermissions() {
+  void testHttpJson_testIamPermissions() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
@@ -165,14 +165,14 @@ public class ITIam {
   // cases, and we simply assert that an exception has been thrown for a single case with a single
   // RPC (No resource in the request for SetIamPolicy's RPC).
   @Test
-  public void testGrpc_iamThrowsException() {
+  void testGrpc_iamThrowsException() {
     SetIamPolicyRequest setIamPolicyRequest = SetIamPolicyRequest.newBuilder().build();
     assertThrows(
         InvalidArgumentException.class, () -> grpcClient.setIamPolicy(setIamPolicyRequest));
   }
 
   @Test
-  public void testHttpJson_iamThrowsException() {
+  void testHttpJson_iamThrowsException() {
     SetIamPolicyRequest setIamPolicyRequest = SetIamPolicyRequest.newBuilder().build();
     assertThrows(
         InvalidArgumentException.class, () -> httpjsonClient.setIamPolicy(setIamPolicyRequest));

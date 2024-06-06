@@ -36,25 +36,25 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.RetryingFuture;
 import com.google.api.gax.retrying.TimedAttemptSettings;
 import com.google.api.gax.rpc.testing.FakeCallContext;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
-@RunWith(MockitoJUnitRunner.class)
-public class AttemptCallableTest {
+@ExtendWith(MockitoExtension.class)
+class AttemptCallableTest {
   @Mock UnaryCallable<String, String> mockInnerCallable;
   ArgumentCaptor<ApiCallContext> capturedCallContext;
   @Mock RetryingFuture<String> mockExternalFuture;
   TimedAttemptSettings currentAttemptSettings;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     capturedCallContext = ArgumentCaptor.forClass(ApiCallContext.class);
     Mockito.when(mockInnerCallable.futureCall(Mockito.anyString(), capturedCallContext.capture()))
         .thenReturn(SettableApiFuture.<String>create());
@@ -81,7 +81,7 @@ public class AttemptCallableTest {
   }
 
   @Test
-  public void testRpcTimeout() {
+  void testRpcTimeout() {
     AttemptCallable<String, String> callable =
         new AttemptCallable<>(mockInnerCallable, "fake-request", FakeCallContext.createDefault());
     callable.setExternalFuture(mockExternalFuture);
@@ -104,7 +104,7 @@ public class AttemptCallableTest {
   }
 
   @Test
-  public void testRpcTimeoutIsNotErased() {
+  void testRpcTimeoutIsNotErased() {
     java.time.Duration callerTimeout = java.time.Duration.ofMillis(10);
     ApiCallContext callerCallContext =
         FakeCallContext.createDefault().withTimeoutDuration(callerTimeout);

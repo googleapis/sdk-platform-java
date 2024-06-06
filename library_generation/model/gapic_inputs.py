@@ -56,7 +56,7 @@ class GapicInputs:
         self,
         proto_only="true",
         additional_protos="google/cloud/common_resources.proto",
-        transport="",
+        transport="grpc",
         rest_numeric_enum="",
         gapic_yaml="",
         service_config="",

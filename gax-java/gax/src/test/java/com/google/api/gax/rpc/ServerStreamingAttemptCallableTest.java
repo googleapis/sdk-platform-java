@@ -48,14 +48,11 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class ServerStreamingAttemptCallableTest {
+class ServerStreamingAttemptCallableTest {
   private MockServerStreamingCallable<String, String> innerCallable;
   private AccumulatingObserver observer;
   private FakeRetryingFuture fakeRetryingFuture;
@@ -64,8 +61,8 @@ public class ServerStreamingAttemptCallableTest {
   private static final java.time.Duration attemptTimeout = java.time.Duration.ofMinutes(1);
   private FakeCallContext mockedCallContext;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     innerCallable = new MockServerStreamingCallable<>();
     observer = new AccumulatingObserver(true);
     resumptionStrategy = new MyStreamResumptionStrategy();
@@ -88,7 +85,7 @@ public class ServerStreamingAttemptCallableTest {
   }
 
   @Test
-  public void testUserProvidedContextTimeout() {
+  void testUserProvidedContextTimeout() {
     // Mock up the ApiCallContext as if the user provided a timeout and streamWaitTimeout.
     Mockito.doReturn(BaseApiTracer.getInstance()).when(mockedCallContext).getTracer();
     Mockito.doReturn(java.time.Duration.ofHours(5)).when(mockedCallContext).getTimeoutDuration();
@@ -124,7 +121,7 @@ public class ServerStreamingAttemptCallableTest {
   }
 
   @Test
-  public void testNoUserProvidedContextTimeout() {
+  void testNoUserProvidedContextTimeout() {
     // Mock up the ApiCallContext as if the user did not provide custom timeouts.
     Mockito.doReturn(BaseApiTracer.getInstance()).when(mockedCallContext).getTracer();
     Mockito.doReturn(null).when(mockedCallContext).getTimeoutDuration();
@@ -161,7 +158,7 @@ public class ServerStreamingAttemptCallableTest {
   }
 
   @Test
-  public void testNoErrorsAutoFlow() {
+  void testNoErrorsAutoFlow() {
     ServerStreamingAttemptCallable<String, String> callable = createCallable();
     callable.start();
 
@@ -184,7 +181,7 @@ public class ServerStreamingAttemptCallableTest {
   }
 
   @Test
-  public void testNoErrorsManualFlow() {
+  void testNoErrorsManualFlow() {
     observer = new AccumulatingObserver(false);
     ServerStreamingAttemptCallable<String, String> callable = createCallable();
     callable.start();
@@ -216,7 +213,7 @@ public class ServerStreamingAttemptCallableTest {
 
   @Test
   @SuppressWarnings("ConstantConditions")
-  public void testInitialRetry() {
+  void testInitialRetry() {
     resumptionStrategy = new MyStreamResumptionStrategy();
     ServerStreamingAttemptCallable<String, String> callable = createCallable();
     callable.start();
@@ -251,7 +248,7 @@ public class ServerStreamingAttemptCallableTest {
 
   @Test
   @SuppressWarnings("ConstantConditions")
-  public void testMidRetry() {
+  void testMidRetry() {
     resumptionStrategy = new MyStreamResumptionStrategy();
     ServerStreamingAttemptCallable<String, String> callable = createCallable();
     callable.start();
@@ -293,7 +290,7 @@ public class ServerStreamingAttemptCallableTest {
   }
 
   @Test
-  public void testRequestCountIsPreserved() {
+  void testRequestCountIsPreserved() {
     observer = new AccumulatingObserver(false);
     ServerStreamingAttemptCallable<String, String> callable = createCallable();
     callable.start();
@@ -322,7 +319,7 @@ public class ServerStreamingAttemptCallableTest {
   }
 
   @Test
-  public void testCancel() {
+  void testCancel() {
     observer = new AccumulatingObserver(false);
     ServerStreamingAttemptCallable<String, String> callable = createCallable();
     callable.start();
@@ -371,7 +368,7 @@ public class ServerStreamingAttemptCallableTest {
   }
 
   @Test
-  public void testResponseSubstitution() {
+  void testResponseSubstitution() {
     resumptionStrategy =
         new MyStreamResumptionStrategy() {
           @Override

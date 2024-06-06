@@ -31,6 +31,8 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import com.google.common.collect.ImmutableMap;
+import java.util.Map;
 
 /**
  * A {@link ApiTracerFactory} to build instances of {@link MetricsTracer}.
@@ -45,13 +47,29 @@ import com.google.api.core.InternalApi;
 public class MetricsTracerFactory implements ApiTracerFactory {
   protected MetricsRecorder metricsRecorder;
 
+  /** Mapping of client attributes that are set for every MetricsTracer */
+  private final Map<String, String> attributes;
+
+  /** Creates a MetricsTracerFactory with no additional client level attributes. */
   public MetricsTracerFactory(MetricsRecorder metricsRecorder) {
+    this(metricsRecorder, ImmutableMap.of());
+  }
+
+  /**
+   * Pass in a Map of client level attributes which will be added to every single MetricsTracer
+   * created from the ApiTracerFactory.
+   */
+  public MetricsTracerFactory(MetricsRecorder metricsRecorder, Map<String, String> attributes) {
     this.metricsRecorder = metricsRecorder;
+    this.attributes = ImmutableMap.copyOf(attributes);
   }
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    return new MetricsTracer(
-        MethodName.of(spanName.getClientName(), spanName.getMethodName()), metricsRecorder);
+    MetricsTracer metricsTracer =
+        new MetricsTracer(
+            MethodName.of(spanName.getClientName(), spanName.getMethodName()), metricsRecorder);
+    attributes.forEach(metricsTracer::addAttributes);
+    return metricsTracer;
   }
 }

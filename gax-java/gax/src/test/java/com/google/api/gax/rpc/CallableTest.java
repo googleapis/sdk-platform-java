@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
@@ -40,19 +40,15 @@ import com.google.api.core.ApiFuture;
 import com.google.api.core.SettableApiFuture;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.testing.FakeCallContext;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.mockito.quality.Strictness;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class CallableTest {
-
-  @Rule
-  public final MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
+@ExtendWith(MockitoExtension.class)
+class CallableTest {
 
   @Mock private UnaryCallable<String, String> innerCallable;
   private SettableApiFuture<String> innerResult;
@@ -76,7 +72,7 @@ public class CallableTest {
       ClientContext.newBuilder().setDefaultCallContext(callContext).build();
 
   @Test
-  public void testNonRetriedCallable() throws Exception {
+  void testNonRetriedCallable() throws Exception {
     innerResult = SettableApiFuture.create();
     when(innerCallable.futureCall(anyString(), any(ApiCallContext.class))).thenReturn(innerResult);
     java.time.Duration timeout = java.time.Duration.ofMillis(5L);
@@ -107,7 +103,7 @@ public class CallableTest {
   }
 
   @Test
-  public void testNonRetriedCallableWithRetrySettings() throws Exception {
+  void testNonRetriedCallableWithRetrySettings() throws Exception {
     innerResult = SettableApiFuture.create();
     when(innerCallable.futureCall(anyString(), any(ApiCallContext.class))).thenReturn(innerResult);
 
@@ -141,7 +137,7 @@ public class CallableTest {
   }
 
   @Test
-  public void testNonRetriedServerStreamingCallable() throws Exception {
+  void testNonRetriedServerStreamingCallable() throws Exception {
     java.time.Duration timeout = java.time.Duration.ofMillis(5L);
     ServerStreamingCallSettings<Object, Object> callSettings =
         ServerStreamingCallSettings.newBuilder().setSimpleTimeoutNoRetriesDuration(timeout).build();
@@ -156,7 +152,7 @@ public class CallableTest {
   }
 
   @Test
-  public void testNonRetriedServerStreamingCallableWithRetrySettings() throws Exception {
+  void testNonRetriedServerStreamingCallableWithRetrySettings() throws Exception {
     ServerStreamingCallSettings<Object, Object> callSettings =
         ServerStreamingCallSettings.newBuilder()
             .setSimpleTimeoutNoRetriesDuration(java.time.Duration.ofMillis(10L))

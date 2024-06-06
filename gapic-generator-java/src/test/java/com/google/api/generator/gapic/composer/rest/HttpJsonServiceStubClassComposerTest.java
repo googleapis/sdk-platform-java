@@ -35,20 +35,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class HttpJsonServiceStubClassComposerTest {
+class HttpJsonServiceStubClassComposerTest {
 
   private HttpJsonServiceStubClassComposer composer;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
     composer = HttpJsonServiceStubClassComposer.instance();
   }
 
   @Test
-  public void generateComplianceServiceClasses() {
+  void generateComplianceServiceClasses() {
     GapicContext context = RestTestProtoLoader.instance().parseCompliance();
     Service complianceProtoServices = context.services().get(0);
     GapicClass clazz = composer.generate(context, complianceProtoServices);
@@ -63,7 +63,7 @@ public class HttpJsonServiceStubClassComposerTest {
   }
 
   @Test
-  public void generateEchoServiceClasses() {
+  void generateEchoServiceClasses() {
     GapicContext context = RestTestProtoLoader.instance().parseEcho();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = composer.generate(context, echoProtoService);
@@ -77,8 +77,7 @@ public class HttpJsonServiceStubClassComposerTest {
   }
 
   @Test
-  public void
-      getBindingFieldMethodName_shouldReturnGetFieldListIfTheFieldIsInLastPositionAndIsRepeated() {
+  void getBindingFieldMethodName_shouldReturnGetFieldListIfTheFieldIsInLastPositionAndIsRepeated() {
     Field field =
         Field.builder()
             .setIsRepeated(true)
@@ -92,8 +91,7 @@ public class HttpJsonServiceStubClassComposerTest {
   }
 
   @Test
-  public void
-      getBindingFieldMethodName_shouldReturnGetFieldValueIfTheFieldIsInLastPositionAndIsEnum() {
+  void getBindingFieldMethodName_shouldReturnGetFieldValueIfTheFieldIsInLastPositionAndIsEnum() {
     Field field =
         Field.builder().setIsEnum(true).setName("doesNotMatter").setType(TypeNode.OBJECT).build();
     HttpBinding httpBinding =
@@ -103,7 +101,7 @@ public class HttpJsonServiceStubClassComposerTest {
   }
 
   @Test
-  public void
+  void
       getBindingFieldMethodName_shouldReturnGetFieldIfTheFieldIsInLastPositionAndNotRepeatedOrEnum() {
     Field field = Field.builder().setName("doesNotMatter").setType(TypeNode.OBJECT).build();
     HttpBinding httpBinding =
@@ -113,7 +111,7 @@ public class HttpJsonServiceStubClassComposerTest {
   }
 
   @Test
-  public void getBindingFieldMethodName_shouldReturnGetFieldIfTheFieldIsNotInLastPosition() {
+  void getBindingFieldMethodName_shouldReturnGetFieldIfTheFieldIsNotInLastPosition() {
     Field field = Field.builder().setName("doesNotMatter").setType(TypeNode.OBJECT).build();
     HttpBinding httpBinding =
         HttpBinding.builder().setField(field).setName("doesNotMatter").build();
@@ -122,7 +120,7 @@ public class HttpJsonServiceStubClassComposerTest {
   }
 
   @Test
-  public void parseOperationsCustomHttpRules_shouldReturnMapIfContextContainsValidServiceYaml() {
+  void parseOperationsCustomHttpRules_shouldReturnMapIfContextContainsValidServiceYaml() {
     List<HttpRule> httpRuleList =
         ImmutableList.of(
             HttpRule.newBuilder()
@@ -152,7 +150,7 @@ public class HttpJsonServiceStubClassComposerTest {
   }
 
   @Test
-  public void parseOperationsCustomHttpRules_shouldReturnEmptyMapIfContextHasInvalidServiceYaml() {
+  void parseOperationsCustomHttpRules_shouldReturnEmptyMapIfContextHasInvalidServiceYaml() {
     GapicContext contextNullServiceYaml = RestTestProtoLoader.instance().parseCompliance();
     contextNullServiceYaml = contextNullServiceYaml.toBuilder().setServiceYamlProto(null).build();
     Map<String, HttpRule> httpRuleMapNull =
@@ -171,7 +169,7 @@ public class HttpJsonServiceStubClassComposerTest {
   }
 
   @Test
-  public void testGetOperationsURIValueFromHttpRule() {
+  void testGetOperationsURIValueFromHttpRule() {
     HttpRule getHttpRule = HttpRule.newBuilder().setGet("Get").build();
     Truth.assertThat(composer.getOperationsURIValueFromHttpRule(getHttpRule)).isEqualTo("Get");
     HttpRule postHttpRule = HttpRule.newBuilder().setPost("Post").build();
@@ -198,7 +196,7 @@ public class HttpJsonServiceStubClassComposerTest {
   }
 
   @Test
-  public void generateGrpcServiceStubClass_routingHeaders() {
+  void generateGrpcServiceStubClass_routingHeaders() {
     GapicContext context =
         RestTestProtoLoader.instance().parseExplicitDynamicRoutingHeaderTesting();
     Service service = context.services().get(0);
@@ -209,7 +207,7 @@ public class HttpJsonServiceStubClassComposerTest {
   }
 
   @Test
-  public void generateHttpJsonServiceStubClass_autopopulateField() {
+  void generateHttpJsonServiceStubClass_autopopulateField() {
     GapicContext context = RestTestProtoLoader.instance().parseAutoPopulateFieldTesting();
     Service service = context.services().get(0);
     GapicClass clazz = HttpJsonServiceStubClassComposer.instance().generate(context, service);
