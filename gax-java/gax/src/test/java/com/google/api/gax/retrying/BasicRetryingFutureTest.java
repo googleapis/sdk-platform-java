@@ -30,6 +30,8 @@
 package com.google.api.gax.retrying;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import com.google.api.gax.tracing.ApiTracer;
 import java.lang.reflect.Field;
@@ -64,6 +66,9 @@ class BasicRetryingFutureTest {
     RetryingContext retryingContext = mock(RetryingContext.class);
     ApiTracer tracer = mock(ApiTracer.class);
     TimedAttemptSettings timedAttemptSettings = mock(TimedAttemptSettings.class);
+    java.time.Duration testDuration = java.time.Duration.ofMillis(123);
+    Mockito.when(timedAttemptSettings.getRandomizedRetryDelayDuration()).thenReturn(testDuration);
+    Mockito.when(timedAttemptSettings.getRetryDelayDuration()).thenReturn(testDuration);
 
     Mockito.when(retryingContext.getTracer()).thenReturn(tracer);
 
@@ -90,6 +95,9 @@ class BasicRetryingFutureTest {
         new BasicRetryingFuture<>(callable, retryAlgorithm, retryingContext);
 
     future.handleAttempt(null, null);
+
+    Mockito.verify(tracer).attemptFailedDuration(ArgumentMatchers.isNull(), ArgumentMatchers.eq(testDuration));
+    Mockito.verify(timedAttemptSettings, times(1)).getRetryDelayDuration();
 
     Mockito.verify(tracer)
         .attemptFailedDuration(
