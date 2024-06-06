@@ -839,7 +839,7 @@ class ITOtelMetrics {
     List<MetricData> actualMetricDataList = getMetricDataList(inMemoryMetricReader);
     Map<String, String> expectedAttributes =
         ImmutableMap.of(
-            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            MetricsTracer.METHOD_ATTRIBUTE,
             "Echo.Echo",
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE,
