@@ -37,7 +37,6 @@ import com.google.api.core.ObsoleteApi;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import java.io.Serializable;
-import java.time.Duration;
 
 /**
  * Holds the parameters for <b>retry</b> or <b>poll</b> logic with jitter, timeout and exponential
@@ -82,7 +81,7 @@ public abstract class RetrySettings implements Serializable {
 
   private static final long serialVersionUID = 8258475264439710899L;
 
-  /** <p> This method is obsolete. Use {@link #getTotalTimeoutDuration()} instead </p> */
+  /** This method is obsolete. Use {@link #getTotalTimeoutDuration()} instead */
   @ObsoleteApi("Use getTotalTimeoutDuration() instead")
   public org.threeten.bp.Duration getTotalTimeout() {
     return toThreetenDuration(getTotalTimeoutDuration());
@@ -103,7 +102,7 @@ public abstract class RetrySettings implements Serializable {
    */
   public abstract java.time.Duration getTotalTimeoutDuration();
 
-  /** <p> This method is obsolete. Use {@link #getInitialRetryDelayDuration()} instead </p> */
+  /** This method is obsolete. Use {@link #getInitialRetryDelayDuration()} instead */
   @ObsoleteApi("Use getInitialRetryDelayDuration() instead")
   public org.threeten.bp.Duration getInitialRetryDelay() {
     return toThreetenDuration(getInitialRetryDelayDuration());
@@ -129,7 +128,7 @@ public abstract class RetrySettings implements Serializable {
    */
   public abstract double getRetryDelayMultiplier();
 
-  /** <p> This method is obsolete. Use {@link #getMaxRetryDelayDuration()} instead */
+  /** This method is obsolete. Use {@link #getMaxRetryDelayDuration()} instead */
   @ObsoleteApi("Use getMaxRetryDelayDuration()")
   public org.threeten.bp.Duration getMaxRetryDelay() {
     return toThreetenDuration(getMaxRetryDelayDuration());
@@ -174,7 +173,7 @@ public abstract class RetrySettings implements Serializable {
   @VisibleForTesting
   public abstract boolean isJittered();
 
-  /** <p> This method is obsolete. Use {@link #getInitialRpcTimeoutDuration()} instead */
+  /** This method is obsolete. Use {@link #getInitialRpcTimeoutDuration()} instead */
   @ObsoleteApi("Use getInitialRpcTimeoutDuration() instead")
   public final org.threeten.bp.Duration getInitialRpcTimeout() {
     return toThreetenDuration(getInitialRpcTimeoutDuration());
@@ -204,7 +203,7 @@ public abstract class RetrySettings implements Serializable {
    */
   public abstract double getRpcTimeoutMultiplier();
 
-  /** <p> This method is obsolete. Use {@link #getMaxRpcTimeoutDuration()} instead */
+  /** This method is obsolete. Use {@link #getMaxRpcTimeoutDuration()} instead */
   @ObsoleteApi("Use getMaxRpcTimeoutDuration() instead")
   public final org.threeten.bp.Duration getMaxRpcTimeout() {
     return toThreetenDuration(getMaxRpcTimeoutDuration());
@@ -241,7 +240,7 @@ public abstract class RetrySettings implements Serializable {
   @AutoValue.Builder
   public abstract static class Builder {
 
-    /** <p> This method is obsolete. Use {@link #setTotalTimeoutDuration(java.time.Duration)} instead */
+    /** This method is obsolete. Use {@link #setTotalTimeoutDuration(java.time.Duration)} instead */
     @ObsoleteApi("Use setTotalTimeoutDuration(java.time.Duration) instead")
     public final Builder setTotalTimeout(org.threeten.bp.Duration totalTimeout) {
       return setTotalTimeoutDuration(toJavaTimeDuration(totalTimeout));
@@ -262,7 +261,10 @@ public abstract class RetrySettings implements Serializable {
      */
     public abstract Builder setTotalTimeoutDuration(java.time.Duration totalTimeout);
 
-    /** <p> This method is obsolete. Use {@link #setInitialRetryDelayDuration(java.time.Duration)} instead */
+    /**
+     * This method is obsolete. Use {@link #setInitialRetryDelayDuration(java.time.Duration)}
+     * instead
+     */
     @ObsoleteApi("Use setInitialRetryDelayDuration(java.time.Duration) instead")
     public final Builder setInitialRetryDelay(org.threeten.bp.Duration initialDelay) {
       return setInitialRetryDelayDuration(toJavaTimeDuration(initialDelay));
@@ -288,7 +290,9 @@ public abstract class RetrySettings implements Serializable {
      */
     public abstract Builder setRetryDelayMultiplier(double multiplier);
 
-    /** <p> This method is obsolete. Use {@link #setMaxRetryDelayDuration(java.time.Duration)} instead */
+    /**
+     * This method is obsolete. Use {@link #setMaxRetryDelayDuration(java.time.Duration)} instead
+     */
     @ObsoleteApi("Use setMaxRetryDelayDuration(java.time.Duration) instead")
     public final Builder setMaxRetryDelay(org.threeten.bp.Duration maxDelay) {
       return setMaxRetryDelayDuration(toJavaTimeDuration(maxDelay));
@@ -333,7 +337,10 @@ public abstract class RetrySettings implements Serializable {
     @VisibleForTesting
     public abstract Builder setJittered(boolean jittered);
 
-    /** <p> This method is obsolete. Use {@link #setInitialRpcTimeoutDuration(java.time.Duration)} instead */
+    /**
+     * This method is obsolete. Use {@link #setInitialRpcTimeoutDuration(java.time.Duration)}
+     * instead
+     */
     @ObsoleteApi("Use setInitialRpcTimeoutDuration(java.time.Duration) instead")
     public final Builder setInitialRpcTimeout(org.threeten.bp.Duration initialTimeout) {
       return setInitialRpcTimeoutDuration(toJavaTimeDuration(initialTimeout));
@@ -363,7 +370,9 @@ public abstract class RetrySettings implements Serializable {
      */
     public abstract Builder setRpcTimeoutMultiplier(double multiplier);
 
-    /** <p> This method is obsolete. Use {@link #setMaxRpcTimeoutDuration(java.time.Duration)} instead */
+    /**
+     * This method is obsolete. Use {@link #setMaxRpcTimeoutDuration(java.time.Duration)} instead
+     */
     @ObsoleteApi("Use setMaxRpcTimeoutDuration(java.time.Duration) instead")
     public final Builder setMaxRpcTimeout(org.threeten.bp.Duration maxTimeout) {
       return setMaxRpcTimeoutDuration(toJavaTimeDuration(maxTimeout));
@@ -378,7 +387,7 @@ public abstract class RetrySettings implements Serializable {
      */
     public abstract Builder setMaxRpcTimeoutDuration(java.time.Duration maxTimeout);
 
-    /** <p> This method is obsolete. Use {@link #getTotalTimeoutDuration()} instead */
+    /** This method is obsolete. Use {@link #getTotalTimeoutDuration()} instead */
     @ObsoleteApi("Use getTotalTimeoutDuration() instead")
     public final org.threeten.bp.Duration getTotalTimeout() {
       return toThreetenDuration(getTotalTimeoutDuration());
@@ -399,7 +408,7 @@ public abstract class RetrySettings implements Serializable {
      */
     public abstract java.time.Duration getTotalTimeoutDuration();
 
-    /** <p> This method is obsolete. Use {@link #getInitialRetryDelayDuration()} instead */
+    /** This method is obsolete. Use {@link #getInitialRetryDelayDuration()} instead */
     @ObsoleteApi("Use getInitialRetryDelayDuration() instead")
     public final org.threeten.bp.Duration getInitialRetryDelay() {
       return toThreetenDuration(getInitialRetryDelayDuration());
@@ -450,7 +459,7 @@ public abstract class RetrySettings implements Serializable {
      */
     public abstract boolean isJittered();
 
-    /** <p> This method is obsolete. Use {@link #getMaxRetryDelayDuration()} instead */
+    /** This method is obsolete. Use {@link #getMaxRetryDelayDuration()} instead */
     @ObsoleteApi("Use getMaxRetryDelayDuration() instead")
     public final org.threeten.bp.Duration getMaxRetryDelay() {
       return toThreetenDuration(getMaxRetryDelayDuration());
@@ -466,7 +475,7 @@ public abstract class RetrySettings implements Serializable {
      */
     public abstract java.time.Duration getMaxRetryDelayDuration();
 
-    /** <p> This method is obsolete. Use {@link #getInitialRpcTimeoutDuration()} instead */
+    /** This method is obsolete. Use {@link #getInitialRpcTimeoutDuration()} instead */
     @ObsoleteApi("Use getInitialRpcTimeoutDuration() instead")
     public final org.threeten.bp.Duration getInitialRpcTimeout() {
       return toThreetenDuration(getInitialRpcTimeoutDuration());
@@ -496,7 +505,7 @@ public abstract class RetrySettings implements Serializable {
      */
     public abstract double getRpcTimeoutMultiplier();
 
-    /** <p> This method is obsolete. Use {@link #getMaxRpcTimeoutDuration()} instead */
+    /** This method is obsolete. Use {@link #getMaxRpcTimeoutDuration()} instead */
     @ObsoleteApi("Use getMaxRpcTimeoutDuration() instead")
     public final org.threeten.bp.Duration getMaxRpcTimeout() {
       return toThreetenDuration(getMaxRpcTimeoutDuration());
@@ -511,9 +520,7 @@ public abstract class RetrySettings implements Serializable {
      */
     public abstract java.time.Duration getMaxRpcTimeoutDuration();
 
-    /**
-     * <p> This method is obsolete. Use {@link #setLogicalTimeout(java.time.Duration)} instead.
-     */
+    /** This method is obsolete. Use {@link #setLogicalTimeout(java.time.Duration)} instead. */
     @BetaApi
     @ObsoleteApi("Use setLogicalTimeout(java.time.Duration) instead")
     public Builder setLogicalTimeout(org.threeten.bp.Duration timeout) {

@@ -41,6 +41,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import java.time.Duration;
 import java.util.Set;
 import javax.annotation.Nonnull;
 
@@ -121,7 +122,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     return resumptionStrategy;
   }
 
-  /** <p> This method is obsolete. Use {@link #getIdleTimeoutDuration()} instead. </p> */
+  /** This method is obsolete. Use {@link #getIdleTimeoutDuration()} instead. */
   @Nonnull
   @ObsoleteApi("Use getIdleTimeoutDuration() instead")
   public org.threeten.bp.Duration getIdleTimeout() {
@@ -137,7 +138,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     return idleTimeout;
   }
 
-  /** <p> This method is obsolete. Use {@link #getWaitTimeoutDuration()} instead. </p> */
+  /** This method is obsolete. Use {@link #getWaitTimeoutDuration()} instead. */
   @Nonnull
   @ObsoleteApi("Use getWaitTimeoutDuration() instead")
   public org.threeten.bp.Duration getWaitTimeout() {
@@ -260,7 +261,9 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     }
 
     /**
-     * <p> This method is obsolete. Use {@link #setSimpleTimeoutNoRetriesDuration(java.time.Duration)} instead. </p> */
+     * This method is obsolete. Use {@link #setSimpleTimeoutNoRetriesDuration(java.time.Duration)}
+     * instead.
+     */
     @ObsoleteApi("Use setSimpleTimeoutNoRetriesDuration(java.time.Duration) instead")
     public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
         @Nonnull org.threeten.bp.Duration timeout) {
@@ -302,7 +305,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
       return resumptionStrategy;
     }
 
-    /** <p> This method is obsolete. Use {@link #getIdleTimeoutDuration()} instead. </p> */
+    /** This method is obsolete. Use {@link #getIdleTimeoutDuration()} instead. */
     @Nonnull
     @ObsoleteApi("Use getIdleTimeoutDuration() instead")
     public org.threeten.bp.Duration getIdleTimeout() {
@@ -314,10 +317,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
       return idleTimeout;
     }
 
-    /**
-     * Overlad of {@link #setIdleTimeoutDuration(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
-     */
+    /** This method is obsolete. Use {@link #setIdleTimeoutDuration(Duration)} instead. */
     @ObsoleteApi("Use setIdleTimeoutDuration(java.time.Duration) instead")
     public Builder<RequestT, ResponseT> setIdleTimeout(
         @Nonnull org.threeten.bp.Duration idleTimeout) {
@@ -334,7 +334,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
       return this;
     }
 
-    /** <p> This method is obsolete. Use {@link #getWaitTimeoutDuration()} instead. </p> */
+    /** This method is obsolete. Use {@link #getWaitTimeoutDuration()} instead. */
     @Nonnull
     @ObsoleteApi("Use getWaitTimeoutDuration() instead")
     public org.threeten.bp.Duration getWaitTimeout() {
@@ -346,8 +346,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
       return waitTimeout;
     }
 
-    /**
-     * <p> This method is obsolete. Use {@link #setWaitTimeoutDuration(java.time.Duration)} instead. </p> */
+    /** This method is obsolete. Use {@link #setWaitTimeoutDuration(java.time.Duration)} instead. */
     @ObsoleteApi("Use setWaitTimeoutDuration(java.time.Duration) instead")
     public Builder<RequestT, ResponseT> setWaitTimeout(
         @Nonnull org.threeten.bp.Duration waitTimeout) {

@@ -206,7 +206,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return streamWatchdogProvider;
   }
 
-  /** <p> This method is obsolete. Use {@link #getStreamWatchdogCheckIntervalDuration()} instead. </p> */
+  /** This method is obsolete. Use {@link #getStreamWatchdogCheckIntervalDuration()} instead. */
   @Nonnull
   @ObsoleteApi("Use getStreamWatchdogCheckIntervalDuration() instead")
   public final org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
@@ -532,7 +532,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
 
     /**
-     * <p> This method is obsolete. Use {@link #setStreamWatchdogCheckIntervalDuration(java.time.Duration)} instead. </p> */
+     * This method is obsolete. Use {@link
+     * #setStreamWatchdogCheckIntervalDuration(java.time.Duration)} instead.
+     */
     @ObsoleteApi("Use setStreamWatchdogCheckIntervalDuration(java.time.Duration) instead")
     public B setStreamWatchdogCheckInterval(@Nonnull org.threeten.bp.Duration checkInterval) {
       return setStreamWatchdogCheckIntervalDuration(toJavaTimeDuration(checkInterval));
@@ -638,6 +640,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return quotaProjectId;
     }
 
+    /** This method is obsolete. Use {@link #getStreamWatchdogCheckIntervalDuration()} instead */
     @ObsoleteApi("Use getStreamWatchdogCheckIntervalDuration() instead")
     public org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
       return toThreetenDuration(getStreamWatchdogCheckIntervalDuration());

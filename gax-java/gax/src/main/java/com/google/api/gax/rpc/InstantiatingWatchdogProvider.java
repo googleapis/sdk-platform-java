@@ -80,7 +80,9 @@ public final class InstantiatingWatchdogProvider implements WatchdogProvider {
     return checkInterval == null;
   }
 
-  /** <p> This method is obsolete. Use {@link #withCheckIntervalDuration(java.time.Duration)} instead. </p> */
+  /**
+   * This method is obsolete. Use {@link #withCheckIntervalDuration(java.time.Duration)} instead.
+   */
   @Override
   @ObsoleteApi("Use withCheckIntervalDuration(java.time.Duration) instead")
   public WatchdogProvider withCheckInterval(@Nonnull org.threeten.bp.Duration checkInterval) {

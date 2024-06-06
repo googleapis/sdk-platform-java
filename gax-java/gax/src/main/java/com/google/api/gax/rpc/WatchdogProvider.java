@@ -41,7 +41,9 @@ public interface WatchdogProvider {
 
   boolean needsCheckInterval();
 
-  /** <p> This method is obsolete. Use {@link #withCheckIntervalDuration(java.time.Duration)} instead. </p> */
+  /**
+   * This method is obsolete. Use {@link #withCheckIntervalDuration(java.time.Duration)} instead.
+   */
   @ObsoleteApi("Use withCheckIntervalDuration(java.time.Duration) instead")
   WatchdogProvider withCheckInterval(org.threeten.bp.Duration checkInterval);
 

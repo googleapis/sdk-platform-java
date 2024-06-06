@@ -179,7 +179,10 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
-  /** <p> This method is obsolete. Use {@link #attemptFailedDuration(Throwable, java.time.Duration)} instead. </p> */
+  /**
+   * This method is obsolete. Use {@link #attemptFailedDuration(Throwable, java.time.Duration)}
+   * instead.
+   */
   @Override
   @ObsoleteApi("Use attemptFailedDuration(Throwable, java.time.Duration) instead")
   public void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {

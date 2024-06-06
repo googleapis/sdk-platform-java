@@ -45,6 +45,7 @@ import javax.annotation.Nullable;
 public abstract class HttpJsonCallOptions {
   public static final HttpJsonCallOptions DEFAULT = newBuilder().build();
 
+  /** This method is obsolete. Use {@link #getTimeoutDuration()} instead. */
   @Nullable
   @ObsoleteApi("Use getTimeoutDuration() instead")
   public final org.threeten.bp.Duration getTimeout() {
@@ -54,6 +55,7 @@ public abstract class HttpJsonCallOptions {
   @Nullable
   public abstract java.time.Duration getTimeoutDuration();
 
+  /** This method is obsolete. Use {@link #getDeadlineInstant()} instead. */
   @Nullable
   @ObsoleteApi("Use getDeadlineInstant() instead")
   public final org.threeten.bp.Instant getDeadline() {
@@ -109,7 +111,7 @@ public abstract class HttpJsonCallOptions {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    /** <p> This method is obsolete. Use {@link #setTimeoutDuration(java.time.Duration)} instead. </p> */
+    /** This method is obsolete. Use {@link #setTimeoutDuration(java.time.Duration)} instead. */
     @ObsoleteApi("Use setTimeoutDuration(java.time.Duration) instead")
     public final Builder setTimeout(org.threeten.bp.Duration value) {
       return setTimeoutDuration(toJavaTimeDuration(value));
@@ -117,7 +119,7 @@ public abstract class HttpJsonCallOptions {
 
     public abstract Builder setTimeoutDuration(java.time.Duration value);
 
-    /** <p> This method is obsolete. Use {@link #setDeadlineInstant(java.time.Instant)} instead. </p> */
+    /** This method is obsolete. Use {@link #setDeadlineInstant(java.time.Instant)} instead. */
     @ObsoleteApi("Use setDeadlineInstant(java.time.Instant) instead")
     public final Builder setDeadline(org.threeten.bp.Instant value) {
       return setDeadlineInstant(toJavaTimeInstant(value));

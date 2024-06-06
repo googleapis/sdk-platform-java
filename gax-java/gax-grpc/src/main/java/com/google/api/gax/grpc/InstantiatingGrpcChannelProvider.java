@@ -455,6 +455,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return endpoint;
   }
 
+  /** This method is obsolete. Use {@link #getKeepAliveTimeDuration()} instead. */
   @ObsoleteApi("Use getKeepAliveTimeDuration() instead")
   public org.threeten.bp.Duration getKeepAliveTime() {
     return toThreetenDuration(getKeepAliveTimeDuration());
@@ -465,6 +466,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return keepAliveTime;
   }
 
+  /** This method is obsolete. Use {@link #getKeepAliveTimeoutDuration()} instead */
   @ObsoleteApi("Use getKeepAliveTimeoutDuration() instead")
   public org.threeten.bp.Duration getKeepAliveTimeout() {
     return toThreetenDuration(getKeepAliveTimeoutDuration());
@@ -655,7 +657,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     /**
-     * <p> This method is obsolete. Use {@link #setKeepAliveTime(java.time.Duration)} instead. </p> */
+     * This method is obsolete. Use {@link #setKeepAliveTimeDuration(java.time.Duration)} instead.
+     */
     @ObsoleteApi("Use setKeepAliveTimeDuration(java.time.Duration) instead")
     public Builder setKeepAliveTime(org.threeten.bp.Duration duration) {
       return setKeepAliveTimeDuration(toJavaTimeDuration(duration));
@@ -666,7 +669,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    /** <p> This method is obsolete. Use {@link #getKeepAliveTimeDuration()} instead. </p> */
+    /** This method is obsolete. Use {@link #getKeepAliveTimeDuration()} instead. */
     @ObsoleteApi("Use getKeepAliveTimeDuration() instead")
     public org.threeten.bp.Duration getKeepAliveTime() {
       return toThreetenDuration(getKeepAliveTimeDuration());
@@ -677,6 +680,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return keepAliveTime;
     }
 
+    /**
+     * This method is obsolete. Use {@link #setKeepAliveTimeoutDuration(java.time.Duration)}
+     * instead.
+     */
     @ObsoleteApi("Use setKeepAliveTimeoutDuration(java.time.Duration) instead")
     public Builder setKeepAliveTimeout(org.threeten.bp.Duration duration) {
       return setKeepAliveTimeoutDuration(toJavaTimeDuration(duration));

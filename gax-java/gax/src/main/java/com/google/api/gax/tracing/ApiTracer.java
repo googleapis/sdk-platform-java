@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.tracing;
 
-
 import com.google.api.core.InternalApi;
 import com.google.api.core.ObsoleteApi;
 
@@ -109,7 +108,10 @@ public interface ApiTracer {
   /** Add an annotation that the attempt was cancelled by the user. */
   default void attemptCancelled() {};
 
-  /** <p> This method is obsolete. Use {@link #attemptFailedDuration(Throwable, java.time.Duration)} instead. </p> */
+  /**
+   * This method is obsolete. Use {@link #attemptFailedDuration(Throwable, java.time.Duration)}
+   * instead.
+   */
   @ObsoleteApi("Use attemptFailedDuration(Throwable, java.time.Duration) instead")
   default void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {};
 

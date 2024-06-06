@@ -231,8 +231,7 @@ public final class GrpcCallContext implements ApiCallContext {
         endpointContext);
   }
 
-  /**
-   * <p> This method is obsolete. Use {@link #withTimeoutDuration(java.time.Duration)} instead. </p> */
+  /** This method is obsolete. Use {@link #withTimeoutDuration(java.time.Duration)} instead. */
   @Override
   @ObsoleteApi("Use withTimeoutDuration(java.time.Duration) instead")
   public GrpcCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout) {
@@ -266,6 +265,7 @@ public final class GrpcCallContext implements ApiCallContext {
         endpointContext);
   }
 
+  /** This method is obsolete. Use {@link #getTimeoutDuration()} instead. */
   @Nullable
   @Override
   @ObsoleteApi("Use getTimeoutDuration() instead")
@@ -280,7 +280,9 @@ public final class GrpcCallContext implements ApiCallContext {
   }
 
   /**
-   * <p> This method is obsolete. Use {@link #withStreamWaitTimeoutDuration(java.time.Duration)} instead. </p> */
+   * This method is obsolete. Use {@link #withStreamWaitTimeoutDuration(java.time.Duration)}
+   * instead.
+   */
   @Override
   @ObsoleteApi("Use withStreamWaitTimeoutDuration(java.time.Duration) instead")
   public GrpcCallContext withStreamWaitTimeout(
@@ -312,9 +314,8 @@ public final class GrpcCallContext implements ApiCallContext {
   }
 
   /**
-   * <p> This method is obsolete. Use {@link #withStreamIdleTimeoutDuration(java.time.Duration)} instead. </p> */
-   * @param streamIdleTimeout
-   * @return
+   * This method is obsolete. Use {@link #withStreamIdleTimeoutDuration(java.time.Duration)}
+   * instead.
    */
   @Override
   @ObsoleteApi("Use withStreamIdleTimeoutDuration(java.time.Duration) instead")
@@ -537,7 +538,7 @@ public final class GrpcCallContext implements ApiCallContext {
     return callOptions;
   }
 
-  /** <p> This method is obsolete. Use {@link #getStreamWaitTimeoutDuration()} instead. </p> */
+  /** This method is obsolete. Use {@link #getStreamWaitTimeoutDuration()} instead. */
   @Override
   @Nullable
   @ObsoleteApi("Use getStreamWaitTimeoutDuration() instead")
@@ -556,6 +557,7 @@ public final class GrpcCallContext implements ApiCallContext {
     return streamWaitTimeout;
   }
 
+  /** This method is obsolete. Use {@link #getStreamIdleTimeoutDuration()} instead. */
   @Override
   @Nullable
   @ObsoleteApi("Use getStreamIdleTimeoutDuration() instead")

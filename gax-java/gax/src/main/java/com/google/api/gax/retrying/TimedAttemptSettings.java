@@ -43,7 +43,7 @@ public abstract class TimedAttemptSettings {
   /** Returns global (attempt-independent) retry settings. */
   public abstract RetrySettings getGlobalSettings();
 
-  /** <p> This method is obsolete. Use {@link #getRetryDelayDuration()} instead */
+  /** This method is obsolete. Use {@link #getRetryDelayDuration()} instead */
   @ObsoleteApi("Use getRetryDelayDuration() instead")
   public final org.threeten.bp.Duration getRetryDelay() {
     return toThreetenDuration(getRetryDelayDuration());
@@ -55,7 +55,7 @@ public abstract class TimedAttemptSettings {
    */
   public abstract java.time.Duration getRetryDelayDuration();
 
-  /** <p> This method is obsolete. Use {@link #getRpcTimeoutDuration()} instead */
+  /** This method is obsolete. Use {@link #getRpcTimeoutDuration()} instead */
   @ObsoleteApi("Use getRpcTimeoutDuration() instead")
   public final org.threeten.bp.Duration getRpcTimeout() {
     return toThreetenDuration(getRpcTimeoutDuration());
@@ -64,7 +64,7 @@ public abstract class TimedAttemptSettings {
   /** Returns rpc timeout used for this attempt. */
   public abstract java.time.Duration getRpcTimeoutDuration();
 
-  /** <p> This method is obsolete. Use {@link #getRandomizedRetryDelayDuration()} instead */
+  /** This method is obsolete. Use {@link #getRandomizedRetryDelayDuration()} instead */
   @ObsoleteApi("Use getRandomizedRetryDelayDuration() instead")
   public final org.threeten.bp.Duration getRandomizedRetryDelay() {
     return toThreetenDuration(getRandomizedRetryDelayDuration());
@@ -106,9 +106,7 @@ public abstract class TimedAttemptSettings {
     /** Sets global (attempt-independent) retry settings. */
     public abstract Builder setGlobalSettings(RetrySettings value);
 
-    /**
-     * <p> This method is obsolete. Use {@link #setRetryDelayDuration(java.time.Duration)} instead.
-     */
+    /** This method is obsolete. Use {@link #setRetryDelayDuration(java.time.Duration)} instead. */
     @ObsoleteApi("Use setRetryDelayDuration(java.time.Duration) instead")
     public final Builder setRetryDelay(org.threeten.bp.Duration value) {
       return setRetryDelayDuration(toJavaTimeDuration(value));
@@ -120,9 +118,7 @@ public abstract class TimedAttemptSettings {
      */
     public abstract Builder setRetryDelayDuration(java.time.Duration value);
 
-    /**
-     * This methods is obsolete. Use {@link #setRpcTimeoutDuration(java.time.Duration)} instead.
-     */
+    /** This method is obsolete. Use {@link #setRpcTimeoutDuration(java.time.Duration)} instead. */
     @ObsoleteApi("Use setRpcTimeoutDuration(java.time.Duration) instead")
     public final Builder setRpcTimeout(org.threeten.bp.Duration value) {
       return setRpcTimeoutDuration(toJavaTimeDuration(value));
@@ -132,7 +128,8 @@ public abstract class TimedAttemptSettings {
     public abstract Builder setRpcTimeoutDuration(java.time.Duration value);
 
     /**
-     * <p> This method is obsolete. Use {@link #setRandomizedRetryDelayDuration(java.time.Duration)} instead.
+     * This method is obsolete. Use {@link #setRandomizedRetryDelayDuration(java.time.Duration)}
+     * instead.
      */
     @ObsoleteApi("Use setRandomizedRetryDelayDuration(java.time.Duration) instead")
     public final Builder setRandomizedRetryDelay(org.threeten.bp.Duration value) {

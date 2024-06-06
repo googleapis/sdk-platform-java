@@ -100,9 +100,7 @@ public abstract class ClientContext {
   @Nullable
   public abstract Watchdog getStreamWatchdog();
 
-  /**
-   * This method is obsolete. Use {@link #getStreamWatchdogCheckIntervalDuration()} instead.
-   */
+  /** This method is obsolete. Use {@link #getStreamWatchdogCheckIntervalDuration()} instead. */
   @Nonnull
   @ObsoleteApi("Use getStreamWatchdogCheckIntervalDuration() instead")
   public final org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
@@ -358,7 +356,10 @@ public abstract class ClientContext {
 
     public abstract Builder setStreamWatchdog(Watchdog watchdog);
 
-    /** <p> This method is obsolete. Use {@link #setStreamWatchdogCheckIntervalDuration(java.time.Duration)} instead. </p> */
+    /**
+     * This method is obsolete. Use {@link
+     * #setStreamWatchdogCheckIntervalDuration(java.time.Duration)} instead.
+     */
     @ObsoleteApi("Use setStreamWatchdogCheckIntervalDuration(java.time.Duration) instead")
     public final Builder setStreamWatchdogCheckInterval(org.threeten.bp.Duration duration) {
       return setStreamWatchdogCheckIntervalDuration(toJavaTimeDuration(duration));
