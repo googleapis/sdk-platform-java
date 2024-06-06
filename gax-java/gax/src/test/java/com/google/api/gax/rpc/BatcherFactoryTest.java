@@ -45,6 +45,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 class BatcherFactoryTest {
   private ScheduledExecutorService batchingExecutor;
@@ -61,12 +62,11 @@ class BatcherFactoryTest {
 
   @Test
   void testGetPushingBatcher() {
-    BatchingSettings batchingSettings =
-        BatchingSettings.newBuilder()
-            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
-            .setElementCountThreshold(2L)
-            .setRequestByteThreshold(1000L)
-            .build();
+    final java.time.Duration delayThreshold = java.time.Duration.ofSeconds(1);
+    BatchingSettings batchingSettings = Mockito.mock(BatchingSettings.class);
+    Mockito.when(batchingSettings.getDelayThresholdDuration()).thenReturn(delayThreshold);
+    Mockito.when(batchingSettings.getElementCountThreshold()).thenReturn(2L);
+    Mockito.when(batchingSettings.getRequestByteThreshold()).thenReturn(1000L);
     FlowControlSettings flowControlSettings =
         FlowControlSettings.newBuilder()
             .setLimitExceededBehavior(LimitExceededBehavior.Ignore)
@@ -85,6 +85,8 @@ class BatcherFactoryTest {
 
     ThresholdBatcher<Batch<LabeledIntList, List<Integer>>> batcherBar =
         batcherFactory.getPushingBatcher(new PartitionKey("bar"));
+
+    Mockito.verify(batchingSettings, Mockito.times(2)).getDelayThresholdDuration();
 
     Truth.assertThat(batcherFoo).isSameInstanceAs(batcherFoo2);
     Truth.assertThat(batcherFoo).isNotSameInstanceAs(batcherBar);
