@@ -31,7 +31,7 @@ package com.google.api.gax.retrying;
 
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TimedAttemptSettingsTest {
 
