@@ -29,135 +29,134 @@
  */
 package com.google.api.gax.tracing;
 
-
 import org.junit.jupiter.api.Test;
 
 public class BaseApiTracerTest {
 
-    @Test
-    public void testInScope() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        ApiTracer.Scope scope = tracer.inScope();
-        scope.close();
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testInScope() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    ApiTracer.Scope scope = tracer.inScope();
+    scope.close();
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testOperationSucceeded() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.operationSucceeded();
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testOperationSucceeded() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.operationSucceeded();
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testOperationCancelled() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.operationCancelled();
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testOperationCancelled() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.operationCancelled();
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testOperationFailed() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.operationFailed(new RuntimeException());
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testOperationFailed() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.operationFailed(new RuntimeException());
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testConnectionSelected() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.connectionSelected("test-connection");
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testConnectionSelected() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.connectionSelected("test-connection");
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testAttemptStarted() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.attemptStarted(1);
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testAttemptStarted() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.attemptStarted(1);
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testAttemptStartedWithRequest() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.attemptStarted(new Object(), 1);
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testAttemptStartedWithRequest() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.attemptStarted(new Object(), 1);
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testAttemptSucceeded() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.attemptSucceeded();
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testAttemptSucceeded() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.attemptSucceeded();
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testAttemptCancelled() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.attemptCancelled();
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testAttemptCancelled() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.attemptCancelled();
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testAttemptFailedDuration() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.attemptFailedDuration(new RuntimeException(), java.time.Duration.ofMillis(100));
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testAttemptFailedDuration() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.attemptFailedDuration(new RuntimeException(), java.time.Duration.ofMillis(100));
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testAttemptFailed() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.attemptFailed(new RuntimeException(), org.threeten.bp.Duration.ofMillis(100));
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testAttemptFailed() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.attemptFailed(new RuntimeException(), org.threeten.bp.Duration.ofMillis(100));
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testAttemptFailedRetriesExhausted() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.attemptFailedRetriesExhausted(new RuntimeException());
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testAttemptFailedRetriesExhausted() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.attemptFailedRetriesExhausted(new RuntimeException());
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testAttemptPermanentFailure() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.attemptPermanentFailure(new RuntimeException());
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testAttemptPermanentFailure() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.attemptPermanentFailure(new RuntimeException());
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testLroStartFailed() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.lroStartFailed(new RuntimeException());
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testLroStartFailed() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.lroStartFailed(new RuntimeException());
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testLroStartSucceeded() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.lroStartSucceeded();
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testLroStartSucceeded() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.lroStartSucceeded();
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testResponseReceived() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.responseReceived();
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testResponseReceived() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.responseReceived();
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testRequestSent() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.requestSent();
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testRequestSent() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.requestSent();
+    // No-op, so nothing to verify.
+  }
 
-    @Test
-    public void testBatchRequestSent() {
-        BaseApiTracer tracer = new BaseApiTracer();
-        tracer.batchRequestSent(10, 100);
-        // No-op, so nothing to verify.
-    }
+  @Test
+  public void testBatchRequestSent() {
+    BaseApiTracer tracer = new BaseApiTracer();
+    tracer.batchRequestSent(10, 100);
+    // No-op, so nothing to verify.
+  }
 }

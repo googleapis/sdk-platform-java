@@ -99,7 +99,6 @@ class AttemptCallableTest {
     currentAttemptSettings =
         currentAttemptSettings.toBuilder().setRpcTimeoutDuration(timeout).build();
 
-
     callable.call();
 
     Mockito.verify(callContext).withTimeoutDuration(timeout);

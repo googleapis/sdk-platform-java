@@ -34,6 +34,10 @@ import static com.google.api.gax.rpc.testing.FakeBatchableApi.callLabeledIntSqua
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.google.api.core.ApiFuture;
@@ -129,6 +133,20 @@ class BatcherImplTest {
   @Test
   void testSendOutstanding() {
     final AtomicInteger callableCounter = new AtomicInteger();
+    ScheduledExecutorService mockExecutor = mock(ScheduledExecutorService.class);
+    BatchingSettings mockBatchingSettings = mock(BatchingSettings.class);
+    java.time.Duration mockDelayThresholdDuration = java.time.Duration.ofSeconds(1000L);
+    when(mockBatchingSettings.getDelayThresholdDuration()).thenReturn(mockDelayThresholdDuration);
+    when(mockBatchingSettings.getRequestByteThreshold()).thenReturn(1000L);
+    when(mockBatchingSettings.getElementCountThreshold()).thenReturn(1000L);
+    when(mockBatchingSettings.getFlowControlSettings())
+        .thenReturn(batchingSettings.getFlowControlSettings());
+    when(mockExecutor.scheduleWithFixedDelay(
+            any(Runnable.class),
+            eq(mockDelayThresholdDuration.toMillis()),
+            eq(mockDelayThresholdDuration.toMillis()),
+            any(TimeUnit.class)))
+        .thenReturn(mock(ScheduledFuture.class));
 
     underTest =
         new BatcherImpl<>(
@@ -142,8 +160,8 @@ class BatcherImplTest {
               }
             },
             labeledIntList,
-            batchingSettings,
-            EXECUTOR);
+            mockBatchingSettings,
+            mockExecutor);
 
     // Empty Batcher
     underTest.sendOutstanding();
@@ -154,6 +172,12 @@ class BatcherImplTest {
     underTest.add(4);
     underTest.sendOutstanding();
     assertThat(callableCounter.get()).isEqualTo(1);
+    verify(mockExecutor)
+        .scheduleWithFixedDelay(
+            any(Runnable.class),
+            eq(mockDelayThresholdDuration.toMillis()),
+            eq(mockDelayThresholdDuration.toMillis()),
+            any(TimeUnit.class));
   }
 
   /** Element results are resolved after batch is closed. */
@@ -832,7 +856,7 @@ class BatcherImplTest {
                 .build());
     ExecutorService executor = Executors.newFixedThreadPool(2);
 
-    ApiCallContext callContext = Mockito.mock(ApiCallContext.class);
+    ApiCallContext callContext = mock(ApiCallContext.class);
     ArgumentCaptor<ApiCallContext.Key<Long>> key =
         ArgumentCaptor.forClass(ApiCallContext.Key.class);
     ArgumentCaptor<Long> value = ArgumentCaptor.forClass(Long.class);
