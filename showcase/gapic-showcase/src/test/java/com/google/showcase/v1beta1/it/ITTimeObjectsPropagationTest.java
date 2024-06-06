@@ -24,11 +24,16 @@ public class ITTimeObjectsPropagationTest {
             .setTotalTimeoutDuration(javaTimeCommonValue)
             .build();
 
-    assertEquals(threetenConvertedValue, javaTimeRetrySettings.getInitialRetryDelay());
-    assertEquals(threetenConvertedValue, javaTimeRetrySettings.getMaxRetryDelay());
-    assertEquals(threetenConvertedValue, javaTimeRetrySettings.getInitialRpcTimeout());
-    assertEquals(threetenConvertedValue, javaTimeRetrySettings.getMaxRpcTimeout());
-    assertEquals(threetenConvertedValue, javaTimeRetrySettings.getTotalTimeout());
+    assertEquals(
+        threetenConvertedValue.toMillis(), javaTimeRetrySettings.getInitialRetryDelay().toMillis());
+    assertEquals(
+        threetenConvertedValue.toMillis(), javaTimeRetrySettings.getMaxRetryDelay().toMillis());
+    assertEquals(
+        threetenConvertedValue.toMillis(), javaTimeRetrySettings.getInitialRpcTimeout().toMillis());
+    assertEquals(
+        threetenConvertedValue.toMillis(), javaTimeRetrySettings.getMaxRpcTimeout().toMillis());
+    assertEquals(
+        threetenConvertedValue.toMillis(), javaTimeRetrySettings.getTotalTimeout().toMillis());
   }
 
   @Test
@@ -45,10 +50,15 @@ public class ITTimeObjectsPropagationTest {
             .setTotalTimeout(threetenCommonValue)
             .build();
 
-    assertEquals(javaTimeConvertedValue, threetenRetrySettings.getInitialRetryDelay());
-    assertEquals(javaTimeConvertedValue, threetenRetrySettings.getMaxRetryDelay());
-    assertEquals(javaTimeConvertedValue, threetenRetrySettings.getInitialRpcTimeout());
-    assertEquals(javaTimeConvertedValue, threetenRetrySettings.getMaxRpcTimeout());
-    assertEquals(javaTimeConvertedValue, threetenRetrySettings.getTotalTimeout());
+    assertEquals(
+        javaTimeConvertedValue.toMillis(), threetenRetrySettings.getInitialRetryDelay().toMillis());
+    assertEquals(
+        javaTimeConvertedValue.toMillis(), threetenRetrySettings.getMaxRetryDelay().toMillis());
+    assertEquals(
+        javaTimeConvertedValue.toMillis(), threetenRetrySettings.getInitialRpcTimeout().toMillis());
+    assertEquals(
+        javaTimeConvertedValue.toMillis(), threetenRetrySettings.getMaxRpcTimeout().toMillis());
+    assertEquals(
+        javaTimeConvertedValue.toMillis(), threetenRetrySettings.getTotalTimeout().toMillis());
   }
 }
