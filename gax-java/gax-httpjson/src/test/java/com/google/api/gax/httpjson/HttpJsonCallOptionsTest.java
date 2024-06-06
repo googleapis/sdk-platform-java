@@ -32,7 +32,7 @@ package com.google.api.gax.httpjson;
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.api.gax.util.TimeConversionTestUtils.testInstantMethod;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class HttpJsonCallOptionsTest {
   private final HttpJsonCallOptions.Builder OPTIONS_BUILDER = HttpJsonCallOptions.newBuilder();
