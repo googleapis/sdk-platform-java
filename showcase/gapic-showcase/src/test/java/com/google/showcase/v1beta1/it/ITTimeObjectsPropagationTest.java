@@ -17,11 +17,11 @@ public class ITTimeObjectsPropagationTest {
         org.threeten.bp.Duration.ofMillis(javaTimeCommonValue.toMillis());
     RetrySettings javaTimeRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(javaTimeCommonValue)
-            .setMaxRetryDelay(javaTimeCommonValue)
-            .setInitialRpcTimeout(javaTimeCommonValue)
-            .setMaxRpcTimeout(javaTimeCommonValue)
-            .setTotalTimeout(javaTimeCommonValue)
+            .setInitialRetryDelayDuration(javaTimeCommonValue)
+            .setMaxRetryDelayDuration(javaTimeCommonValue)
+            .setInitialRpcTimeoutDuration(javaTimeCommonValue)
+            .setMaxRpcTimeoutDuration(javaTimeCommonValue)
+            .setTotalTimeoutDuration(javaTimeCommonValue)
             .build();
 
     assertEquals(threetenConvertedValue, javaTimeRetrySettings.getInitialRetryDelay());
@@ -33,9 +33,9 @@ public class ITTimeObjectsPropagationTest {
 
   @Test
   public void testRetrySettings_fromThreetenHasEquivalentJavaTimeValues() {
-    java.time.Duration threetenCommonValue = java.time.Duration.ofMillis(123l);
-    org.threeten.bp.Duration javaTimeConvertedValue =
-        org.threeten.bp.Duration.ofMillis(threetenCommonValue.toMillis());
+    org.threeten.bp.Duration threetenCommonValue = org.threeten.bp.Duration.ofMillis(123l);
+    java.time.Duration javaTimeConvertedValue =
+        java.time.Duration.ofMillis(threetenCommonValue.toMillis());
     RetrySettings threetenRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelay(threetenCommonValue)
