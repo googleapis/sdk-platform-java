@@ -32,18 +32,23 @@ package com.google.api.gax.rpc;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.SettableApiFuture;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.testing.FakeCallContext;
+import java.util.concurrent.ScheduledExecutorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -167,5 +172,31 @@ class CallableTest {
     verify(callContextWithRetrySettings, atLeastOnce()).getRetrySettings();
     verify(callContextWithRetrySettings).getTimeoutDuration();
     verify(callContextWithRetrySettings).withTimeoutDuration(timeout);
+  }
+
+  @Test
+  void testWatched_usesJavaTimeMethods() {
+    java.time.Duration timeout = java.time.Duration.ofMillis(5L);
+    doReturn(callContext).when(callContext).withStreamIdleTimeoutDuration(eq(timeout));
+    Watchdog watchdog =
+        Watchdog.createDuration(
+            Mockito.mock(ApiClock.class),
+            java.time.Duration.ZERO,
+            Mockito.mock(ScheduledExecutorService.class));
+    ClientContext clientContext =
+        ClientContext.newBuilder()
+            .setStreamWatchdog(watchdog)
+            .setDefaultCallContext(callContext)
+            .build();
+    ServerStreamingCallSettings<Object, Object> callSettings =
+        ServerStreamingCallSettings.newBuilder()
+            .setIdleTimeoutDuration(timeout)
+            .setWaitTimeoutDuration(timeout)
+            .build();
+    ServerStreamingCallable<Object, Object> callable =
+        Callables.retrying(innerServerStreamingCallable, callSettings, clientContext);
+    Callables.watched(callable, callSettings, clientContext);
+    verify(callContext, atLeastOnce()).withStreamIdleTimeoutDuration(eq(timeout));
+    verify(callContext, atLeastOnce()).withStreamWaitTimeoutDuration(eq(timeout));
   }
 }
