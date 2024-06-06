@@ -36,6 +36,21 @@ import java.util.function.Function;
 
 public class TimeConversionTestUtils {
 
+  /**
+   * Confirms that the behavior of getters and setters of an Instant property (both {@link
+   * java.time.Instant} and {@link org.threeten.bp.Instant}) is the same.
+   *
+   * @param testValue the value in millis to be tested
+   * @param javaTimeTargetSupplier a supplier of a {@link Target} that is created using an {@link
+   *     java.time.Instant}
+   * @param threetenTargetSupplier a supplier of a {@link Target} that is created using an {@link
+   *     org.threeten.bp.Instant}
+   * @param javaTimeGetter a getter of the {@link java.time.Instant} obtained from the instance of
+   *     {@link Target}
+   * @param threetenGetter a getter of the {{@link org.threeten.bp.Instant} obtained from the
+   *     instance of {@link Target}
+   * @param <Target> the type of the target containing the Instant property
+   */
   public static <Target> void testInstantMethod(
       Long testValue,
       Function<java.time.Instant, Target> javaTimeTargetSupplier,
@@ -66,6 +81,21 @@ public class TimeConversionTestUtils {
         threetenTester);
   }
 
+  /**
+   * Confirms that the behavior of getters and setters of a Duration property (both {@link
+   * java.time.Duration} and {@link org.threeten.bp.Duration}) is the same.
+   *
+   * @param testValue the value in millis to be tested
+   * @param javaTimeTargetSupplier a supplier of a {@link Target} that is created using an {@link
+   *     java.time.Duration}
+   * @param threetenTargetSupplier a supplier of a {@link Target} that is created using an {@link
+   *     org.threeten.bp.Duration}
+   * @param javaTimeGetter a getter of the {@link java.time.Duration} obtained from the instance of
+   *     {@link Target}
+   * @param threetenGetter a getter of the {{@link org.threeten.bp.Duration} obtained from the
+   *     instance of {@link Target}
+   * @param <Target> the type of the target containing the Duration property
+   */
   public static <Target> void testDurationMethod(
       Long testValue,
       Function<java.time.Duration, Target> javaTimeTargetSupplier,
@@ -96,6 +126,11 @@ public class TimeConversionTestUtils {
         threetenTester);
   }
 
+  /**
+   * Contains the common implementation of {@link #testInstantMethod(Long, Function, Function,
+   * Function, Function)} and {@link #testDurationMethod(Long, Function, Function, Function,
+   * Function)} and performs the corresponding assertions.
+   */
   private static <Target, Threeten, JavaTime, SupplierType> void testTimeObjectMethod(
       Long testValue,
       SupplierType targetSupplierValue,
