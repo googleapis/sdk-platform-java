@@ -215,7 +215,7 @@ public class ClientSettingsTest {
         FakeCallContext.createDefault().withEndpointContext(endpointContext);
     Map<String, String> headers = Collections.singletonMap("spiffykey", "spiffyvalue");
     Watchdog watchdog =
-        Watchdog.create(
+        Watchdog.createDuration(
             Mockito.mock(ApiClock.class),
             java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));

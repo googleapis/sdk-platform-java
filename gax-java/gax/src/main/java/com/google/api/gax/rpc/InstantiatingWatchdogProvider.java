@@ -119,7 +119,7 @@ public final class InstantiatingWatchdogProvider implements WatchdogProvider {
       return null;
     }
 
-    return Watchdog.create(clock, checkInterval, executor);
+    return Watchdog.createDuration(clock, checkInterval, executor);
   }
 
   @Override

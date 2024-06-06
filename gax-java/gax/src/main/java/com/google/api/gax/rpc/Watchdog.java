@@ -80,19 +80,19 @@ public final class Watchdog implements Runnable, BackgroundResource {
   private ScheduledFuture<?> future;
 
   /**
-   * This method is obsolete. Use {@link #create(ApiClock, java.time.Duration,
+   * This method is obsolete. Use {@link #createDuration(ApiClock, java.time.Duration,
    * ScheduledExecutorService)} instead.
    */
   @ObsoleteApi("Use create(ApiClock, java.time.Duration, ScheduledExecutorService) instead")
-  public static Watchdog create(
+  public static Watchdog createDuration(
       ApiClock clock,
       org.threeten.bp.Duration scheduleInterval,
       ScheduledExecutorService executor) {
-    return create(clock, toJavaTimeDuration(scheduleInterval), executor);
+    return createDuration(clock, toJavaTimeDuration(scheduleInterval), executor);
   }
 
   /** returns a Watchdog which is scheduled at the provided interval. */
-  public static Watchdog create(
+  public static Watchdog createDuration(
       ApiClock clock, java.time.Duration scheduleInterval, ScheduledExecutorService executor) {
     Watchdog watchdog = new Watchdog(clock, scheduleInterval, executor);
     watchdog.start();
@@ -113,18 +113,19 @@ public final class Watchdog implements Runnable, BackgroundResource {
   }
 
   /**
-   * This method is obsolete. Use {@link #watch(ResponseObserver, java.time.Duration,
+   * This method is obsolete. Use {@link #watchDuration(ResponseObserver, java.time.Duration,
    * java.time.Duration)} instead.
    */
   @ObsoleteApi("Use watch(ResponseObserver, java.time.Duration, java.time.Duration) instead")
-  public <ResponseT> ResponseObserver<ResponseT> watch(
+  public <ResponseT> ResponseObserver<ResponseT> watchDuration(
       ResponseObserver<ResponseT> innerObserver,
       @Nonnull org.threeten.bp.Duration waitTimeout,
       @Nonnull org.threeten.bp.Duration idleTimeout) {
-    return watch(innerObserver, toJavaTimeDuration(waitTimeout), toJavaTimeDuration(idleTimeout));
+    return watchDuration(
+        innerObserver, toJavaTimeDuration(waitTimeout), toJavaTimeDuration(idleTimeout));
   }
   /** Wraps the target observer with timing constraints. */
-  public <ResponseT> ResponseObserver<ResponseT> watch(
+  public <ResponseT> ResponseObserver<ResponseT> watchDuration(
       ResponseObserver<ResponseT> innerObserver,
       @Nonnull java.time.Duration waitTimeout,
       @Nonnull java.time.Duration idleTimeout) {

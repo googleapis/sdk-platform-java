@@ -50,7 +50,7 @@ public class FixedWatchdogProviderTest {
   @Test
   public void testSameInstance() {
     Watchdog watchdog =
-        Watchdog.create(
+        Watchdog.createDuration(
             Mockito.mock(ApiClock.class),
             java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));
@@ -62,7 +62,7 @@ public class FixedWatchdogProviderTest {
   @Test
   public void testNoModifications() {
     Watchdog watchdog =
-        Watchdog.create(
+        Watchdog.createDuration(
             Mockito.mock(ApiClock.class),
             java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));

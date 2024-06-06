@@ -66,7 +66,7 @@ class WatchdogServerStreamingCallable<RequestT, ResponseT>
     java.time.Duration idleTimeout =
         MoreObjects.firstNonNull(context.getStreamIdleTimeoutDuration(), java.time.Duration.ZERO);
 
-    responseObserver = watchdog.watch(responseObserver, waitTimeout, idleTimeout);
+    responseObserver = watchdog.watchDuration(responseObserver, waitTimeout, idleTimeout);
     inner.call(request, responseObserver, context);
   }
 }
