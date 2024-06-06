@@ -51,6 +51,6 @@
   <difference>
     <differenceType>6011</differenceType>
     <className>com/google/api/gax/tracing/MetricsTracer</className>
-    <field>METHOD_NAME_ATTRIBUTE</field>
+    <field>*</field>
   </difference>
 </differences>
