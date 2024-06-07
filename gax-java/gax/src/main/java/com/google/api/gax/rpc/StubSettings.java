@@ -648,7 +648,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
 
     @Nonnull
     public java.time.Duration getStreamWatchdogCheckIntervalDuration() {
-      return streamWatchdogCheckInterval;
+      return Preconditions.checkNotNull(streamWatchdogCheckInterval);
     }
 
     @BetaApi("The surface for tracing is not stable yet and may change in the future.")
