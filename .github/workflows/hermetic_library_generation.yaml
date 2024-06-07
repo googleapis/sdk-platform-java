@@ -37,7 +37,7 @@ jobs:
     - name: Install gapic-generator-java-pom-parent
       shell: bash
       run: |
-        mvn -V -B -ntp clean install -DskipTests
+        mvn clean install -pl gapic-generator-java-pom-parent
     - name: Generate changed libraries
       shell: bash
       run: |
