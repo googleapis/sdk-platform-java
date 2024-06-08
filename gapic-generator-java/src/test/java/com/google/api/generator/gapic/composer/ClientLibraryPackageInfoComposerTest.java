@@ -14,7 +14,7 @@
 
 package com.google.api.generator.gapic.composer;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -43,7 +43,7 @@ class ClientLibraryPackageInfoComposerTest {
   }
 
   @Test
-  public void testGeneratePackageInfo_noServices_returnsNullPackageInfo() {
+  void testGeneratePackageInfo_noServices_returnsNullPackageInfo() {
     assertNull(ClientLibraryPackageInfoComposer.generatePackageInfo(GapicContext.EMPTY));
   }
 }

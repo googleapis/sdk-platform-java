@@ -1,9 +1,10 @@
 package com.google.api.generator.gapic.protowriter;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.gapic.model.GapicClass;
@@ -38,7 +39,6 @@ class WriterTest {
 
   @TempDir Path tempDir;
   private JarOutputStream jarOutputStream;
-
   private File file;
 
   @BeforeEach
@@ -48,7 +48,7 @@ class WriterTest {
     file = path.toFile();
   }
 
-  public void closeJarOutputStream() throws IOException {
+  private void closeJarOutputStream() throws IOException {
     jarOutputStream.finish();
     jarOutputStream.flush();
     jarOutputStream.close();
@@ -98,7 +98,7 @@ class WriterTest {
   }
 
   @Test
-  public void write_emptyGapicContext_writesNoBytes() throws IOException {
+  void write_emptyGapicContext_writesNoBytes() throws IOException {
     ByteString.Output output = ByteString.newOutput();
     CodeGeneratorResponse response =
         Writer.write(
@@ -114,7 +114,7 @@ class WriterTest {
   }
 
   @Test
-  public void write_emptyGapicContextAndFilledPackageInfo_succeeds() throws IOException {
+  void write_emptyGapicContextAndFilledPackageInfo_succeeds() throws IOException {
     ByteString.Output output = ByteString.newOutput();
     CodeGeneratorResponse response =
         Writer.write(
@@ -130,16 +130,18 @@ class WriterTest {
   }
 
   @Test
-  public void productionWrite_emptyGapicContext_succeeds() throws IOException {
-    // This is a special case test to confirm the production function work as expected.
+  void productionWrite_emptyGapicContext_succeeds() throws IOException {
+    // This is a special case test to confirm the production function works as expected.
     // We don't need the output stream
     jarOutputStream.close();
 
-    Writer.write(
-        GapicContext.EMPTY,
-        ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
-        GapicPackageInfo.with(PackageInfoDefinition.builder().setPakkage("com.test").build()),
-        Collections.emptyList(),
-        "temp-codegen.srcjar");
+    CodeGeneratorResponse result =
+        Writer.write(
+            GapicContext.EMPTY,
+            ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
+            GapicPackageInfo.with(PackageInfoDefinition.builder().setPakkage("com.test").build()),
+            Collections.emptyList(),
+            "temp-codegen.srcjar");
+    assertNull(result);
   }
 }

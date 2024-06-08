@@ -14,10 +14,10 @@
 
 package com.google.api.generator.gapic.composer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -37,7 +37,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ComposerTest {
@@ -56,8 +56,8 @@ class ComposerTest {
           .build();
   private List<Sample> ListofSamples = Arrays.asList(new Sample[] {sample});
 
-  @Before
-  public void initialSanityCheck() {
+  @BeforeEach
+  void initialSanityCheck() {
     assertTrue(context.containsServices());
   }
 
@@ -92,9 +92,9 @@ class ComposerTest {
     assertFalse(composedSamples.isEmpty());
     for (Sample sample : composedSamples) {
       assertEquals(
-          "File header should be APACHE",
           Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT),
-          sample.fileHeader());
+          sample.fileHeader(),
+          "File header should be APACHE");
       assertEquals(
           "ApiShortName should be Localhost7469",
           "Localhost7469",
@@ -163,12 +163,12 @@ class ComposerTest {
   }
 
   @Test
-  public void testEmptyGapicContext_doesNotThrow() {
-    Composer.composeServiceClasses(GapicContext.EMPTY);
+  void testEmptyGapicContext_doesNotThrow() {
+    assertTrue(Composer.composeServiceClasses(GapicContext.EMPTY).isEmpty());
   }
 
   @Test
-  public void testComposePackageInfo_emptyGapicContext_returnsNull() {
+  void testComposePackageInfo_emptyGapicContext_returnsNull() {
     assertNull(Composer.composePackageInfo(GapicContext.EMPTY));
   }
 

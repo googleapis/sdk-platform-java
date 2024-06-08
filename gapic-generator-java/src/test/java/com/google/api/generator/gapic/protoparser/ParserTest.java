@@ -15,11 +15,11 @@
 package com.google.api.generator.gapic.protoparser;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.FieldInfo.Format;
 import com.google.api.MethodSettings;
@@ -612,13 +612,13 @@ class ParserTest {
   }
 
   @Test
-  public void testParse_noServices_returnsEmptyGapicContext() {
+  void testParse_noServices_returnsEmptyGapicContext() {
     GapicContext result = Parser.parse(CodeGeneratorRequest.newBuilder().build());
-    assertFalse(result.containsServices());
+    assertEquals(GapicContext.EMPTY, result);
   }
 
   @Test
-  public void testParseServiceJavaPackage_emptyRequest_noop() {
+  void testParseServiceJavaPackage_emptyRequest_noop() {
     assertThat(Parser.parseServiceJavaPackage(CodeGeneratorRequest.newBuilder().build())).isEmpty();
   }
 
