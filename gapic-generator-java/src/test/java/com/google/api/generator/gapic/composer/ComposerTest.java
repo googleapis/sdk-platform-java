@@ -96,10 +96,10 @@ class ComposerTest {
           sample.fileHeader(),
           "File header should be APACHE");
       assertEquals(
-          "ApiShortName should be Localhost7469",
           "Localhost7469",
-          sample.regionTag().apiShortName());
-      assertEquals("ApiVersion should be V1Beta1", "V1Beta1", sample.regionTag().apiVersion());
+          sample.regionTag().apiShortName(),
+          "ApiShortName should be Localhost7469");
+      assertEquals("V1Beta1", sample.regionTag().apiVersion(), "ApiVersion should be V1Beta1");
     }
   }
 
@@ -128,10 +128,10 @@ class ComposerTest {
 
     for (Sample sample : composedSamples) {
       assertEquals(
-          "ApiShortName should be Accessapproval",
+          "Accessapproval",
           sample.regionTag().apiShortName(),
-          "Accessapproval");
-      assertEquals("ApiVersion should be V1", sample.regionTag().apiVersion(), "V1");
+          "ApiShortName should be Accessapproval");
+      assertEquals("V1", sample.regionTag().apiVersion(), "ApiVersion should be V1");
     }
 
     protoPack = "google.cloud.vision.v1p1beta1";
@@ -144,8 +144,8 @@ class ComposerTest {
     assertFalse(composedSamples.isEmpty());
 
     for (Sample sample : composedSamples) {
-      assertEquals("ApiShortName should be Vision", sample.regionTag().apiShortName(), "Vision");
-      assertEquals("ApiVersion should be V1P1Beta1", sample.regionTag().apiVersion(), "V1P1Beta1");
+      assertEquals("Vision", sample.regionTag().apiShortName(), "ApiShortName should be Vision");
+      assertEquals("V1P1Beta1", sample.regionTag().apiVersion(), "ApiVersion should be V1P1Beta1");
     }
 
     protoPack = "google.cloud.vision";
@@ -157,8 +157,8 @@ class ComposerTest {
     assertFalse(composedSamples.isEmpty());
 
     for (Sample sample : composedSamples) {
-      assertEquals("ApiShortName should be Vision", sample.regionTag().apiShortName(), "Vision");
-      assertEquals("ApiVersion should be empty", sample.regionTag().apiVersion(), "");
+      assertEquals("Vision", sample.regionTag().apiShortName(), "ApiShortName should be Vision");
+      assertTrue(sample.regionTag().apiVersion().isEmpty(), "ApiVersion should be empty");
     }
   }
 

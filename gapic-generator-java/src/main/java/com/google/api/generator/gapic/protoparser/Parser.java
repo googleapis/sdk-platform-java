@@ -180,7 +180,7 @@ public class Parser {
             transport);
 
     if (services.isEmpty()) {
-      LOGGER.warning("No services found to generate. This will produce an empty zip file");
+      LOGGER.warning("No services found to generate. This will cause a no-op (no files generated)");
       return GapicContext.EMPTY;
     }
 

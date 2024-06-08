@@ -69,8 +69,6 @@ public class Writer {
       writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
     }
 
-    // package info may come as null if we have no services, but we will exit
-    // this function early if so.
     writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
     writeReflectConfigFile(gapicPackageInfo.packageInfo().pakkage(), reflectConfigInfo, jos);
 
