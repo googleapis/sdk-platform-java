@@ -74,16 +74,16 @@ class GeneratePrDescriptionTest(unittest.TestCase):
             # two commit sha.
             libraries=[],
         )
-        cwd = os.getcwd()
+        path = os.path.join(os.getcwd(), "no_config_change")
         generate_pr_descriptions(
             config_change=ConfigChange(
                 change_to_libraries={},
                 baseline_config=config,
                 current_config=config,
             ),
-            description_path=cwd,
+            description_path=path,
         )
-        self.assertFalse(os.path.isfile(f"{cwd}/pr_description.txt"))
+        self.assertFalse(os.path.isfile(f"{path}/pr_description.txt"))
 
     def test_generate_pr_description_does_not_create_pr_description_without_qualified_commit(
         self,
@@ -92,7 +92,7 @@ class GeneratePrDescriptionTest(unittest.TestCase):
         old_commit_sha = "30717c0b0c9966906880703208a4c820411565c4"
         # committed on May 23rd, 2024
         new_commit_sha = "eeed69d446a90eb4a4a2d1762c49d637075390c1"
-        cwd = os.getcwd()
+        path = os.path.join(os.getcwd(), "no_qualified_commit")
         generate_pr_descriptions(
             config_change=ConfigChange(
                 change_to_libraries={},
@@ -111,9 +111,9 @@ class GeneratePrDescriptionTest(unittest.TestCase):
                     libraries=[],
                 ),
             ),
-            description_path=cwd,
+            description_path=path,
         )
-        self.assertFalse(os.path.isfile(f"{cwd}/pr_description.txt"))
+        self.assertFalse(os.path.isfile(f"{path}/pr_description.txt"))
 
     def test_generate_pr_description_with_combined_message(
         self,
@@ -140,8 +140,6 @@ class GeneratePrDescriptionTest(unittest.TestCase):
                         LibraryChange(
                             changed_param="libraries_bom_version", current_value="2.3.4"
                         ),
-                        # this change is ignored since protoc_version is not
-                        # an allowed parameter when generating pr description.
                         LibraryChange(
                             changed_param="protoc_version", current_value="3.4.5"
                         ),
@@ -158,6 +156,7 @@ class GeneratePrDescriptionTest(unittest.TestCase):
                     googleapis_commitish=documentai_commit_sha,
                     libraries_bom_version="2.3.4",
                     libraries=[library],
+                    protoc_version="3.4.5",
                 ),
             ),
             description_path=cwd,

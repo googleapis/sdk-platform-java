@@ -15,12 +15,6 @@ import re
 from git import Commit
 
 from library_generation.model.config_change import ConfigChange, ChangeType
-from library_generation.model.generation_config import (
-    GAPIC_GENERATOR_VERSION,
-    LIBRARIES_BOM_VERSION,
-)
-
-ALLOWED_REPO_LEVEL_PARAS = [GAPIC_GENERATOR_VERSION, LIBRARIES_BOM_VERSION]
 
 
 def format_commit_message(commits: dict[Commit, str], is_monorepo: bool) -> list[str]:
@@ -68,8 +62,6 @@ def format_repo_level_change(config_change: ConfigChange) -> list[str]:
     for repo_level_change in config_change.change_to_libraries.get(
         ChangeType.REPO_LEVEL_CHANGE, []
     ):
-        if repo_level_change.changed_param not in ALLOWED_REPO_LEVEL_PARAS:
-            continue
         messages.extend(
             __wrap_nested_commit(
                 [

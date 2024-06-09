@@ -175,8 +175,6 @@ class CommitMessageFormatterTest(unittest.TestCase):
                     LibraryChange(
                         changed_param="libraries_bom_version", current_value="2.3.4"
                     ),
-                    # this change is ignored since protoc_version is not
-                    # an allowed parameter when generating pr description.
                     LibraryChange(
                         changed_param="protoc_version", current_value="3.4.5"
                     ),
@@ -192,6 +190,9 @@ class CommitMessageFormatterTest(unittest.TestCase):
                 "END_NESTED_COMMIT",
                 "BEGIN_NESTED_COMMIT",
                 "Update repo-level parameter libraries_bom_version to 2.3.4",
+                "END_NESTED_COMMIT",
+                "BEGIN_NESTED_COMMIT",
+                "Update repo-level parameter protoc_version to 3.4.5",
                 "END_NESTED_COMMIT",
             ],
             format_repo_level_change(config_change),
