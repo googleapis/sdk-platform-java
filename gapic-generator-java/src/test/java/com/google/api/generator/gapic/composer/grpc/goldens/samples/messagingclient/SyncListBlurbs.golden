@@ -20,7 +20,7 @@ package com.google.showcase.v1beta1.samples;
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.ListBlurbsRequest;
 import com.google.showcase.v1beta1.MessagingClient;
-import com.google.showcase.v1beta1.ProfileName;
+import com.google.showcase.v1beta1.RoomName;
 
 public class SyncListBlurbs {
 
@@ -37,7 +37,7 @@ public class SyncListBlurbs {
     try (MessagingClient messagingClient = MessagingClient.create()) {
       ListBlurbsRequest request =
           ListBlurbsRequest.newBuilder()
-              .setParent(ProfileName.of("[USER]").toString())
+              .setParent(RoomName.of("[ROOM]").toString())
               .setPageSize(883849137)
               .setPageToken("pageToken873572522")
               .build();

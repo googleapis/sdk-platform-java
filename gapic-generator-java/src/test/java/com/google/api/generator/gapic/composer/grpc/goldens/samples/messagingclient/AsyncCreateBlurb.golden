@@ -21,7 +21,7 @@ import com.google.api.core.ApiFuture;
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.CreateBlurbRequest;
 import com.google.showcase.v1beta1.MessagingClient;
-import com.google.showcase.v1beta1.ProfileName;
+import com.google.showcase.v1beta1.RoomName;
 
 public class AsyncCreateBlurb {
 
@@ -38,7 +38,7 @@ public class AsyncCreateBlurb {
     try (MessagingClient messagingClient = MessagingClient.create()) {
       CreateBlurbRequest request =
           CreateBlurbRequest.newBuilder()
-              .setParent(ProfileName.of("[USER]").toString())
+              .setParent(RoomName.of("[ROOM]").toString())
               .setBlurb(Blurb.newBuilder().build())
               .build();
       ApiFuture<Blurb> future = messagingClient.createBlurbCallable().futureCall(request);

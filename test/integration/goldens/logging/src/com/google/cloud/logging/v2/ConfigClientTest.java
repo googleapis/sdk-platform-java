@@ -2445,9 +2445,7 @@ public class ConfigClientTest {
     mockConfigServiceV2.addResponse(expectedResponse);
 
     GetCmekSettingsRequest request =
-        GetCmekSettingsRequest.newBuilder()
-            .setName(CmekSettingsName.ofProjectName("[PROJECT]").toString())
-            .build();
+        GetCmekSettingsRequest.newBuilder().setName("name3373707").build();
 
     CmekSettings actualResponse = client.getCmekSettings(request);
     Assert.assertEquals(expectedResponse, actualResponse);
@@ -2470,9 +2468,7 @@ public class ConfigClientTest {
 
     try {
       GetCmekSettingsRequest request =
-          GetCmekSettingsRequest.newBuilder()
-              .setName(CmekSettingsName.ofProjectName("[PROJECT]").toString())
-              .build();
+          GetCmekSettingsRequest.newBuilder().setName("name3373707").build();
       client.getCmekSettings(request);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {

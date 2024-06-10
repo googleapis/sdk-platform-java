@@ -39,7 +39,7 @@ service Identity {
   // Creates a user.
   rpc CreateUser(CreateUserRequest) returns (User) {
     option (google.api.http) = {
-      post: "/v1beta1/{parent=users}"
+      post: "/v1beta1/{parent=users/*}"
       body: "*"
     };
     option (google.api.method_signature) =
@@ -101,11 +101,11 @@ message User {
 
   // The timestamp at which the user was created.
   google.protobuf.Timestamp create_time = 4
-      [(google.api.field_behavior) = OUTPUT_ONLY];
+  [(google.api.field_behavior) = OUTPUT_ONLY];
 
   // The latest timestamp at which the user was updated.
   google.protobuf.Timestamp update_time = 5
-      [(google.api.field_behavior) = OUTPUT_ONLY];
+  [(google.api.field_behavior) = OUTPUT_ONLY];
 
   // The age of the use in years.
   optional int32 age = 6;

@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer.defaultvalue;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -28,6 +29,8 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.test.utils.LineFormatter;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.StructProto;
@@ -38,6 +41,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -412,36 +416,123 @@ class DefaultValueComposerTest {
   }
 
   @Test
+  void createSimpleMessageBuilderValue_resourceNameMatchesHttpBinding_mixinCustomPath() {
+    FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(messagingFileDescriptor);
+
+    // GetRoomRequest is not a Mixin resource, but showcase's descriptor does not have
+    // Mixins included in. Replicate this custom Mixin paths by simulating the message
+    // and setting a custom pattern.
+    Message message = messageTypes.get("com.google.showcase.v1beta1.GetBlurbRequest");
+
+    HttpBindings bindings =
+        HttpBindings.builder()
+            .setHttpVerb(HttpVerb.POST)
+            // Simulate the path being overriden in the service.yaml, but it is an
+            // valid path that does match a resource pattern
+            .setPattern("/v1/{name=rooms/*/blurbs/*}")
+            .setAdditionalPatterns(ImmutableList.of())
+            .setIsAsteriskBody(true)
+            .build();
+
+    Expr expr =
+        DefaultValueComposer.createSimpleMessageBuilderValue(
+            message,
+            typeStringsToResourceNames,
+            messageTypes,
+            ImmutableMap.of("name", "room/*"),
+            bindings);
+    expr.accept(writerVisitor);
+    assertEquals(
+        "GetBlurbRequest.newBuilder().setName(BlurbName.ofRoomBlurbName(\"[ROOM]\", \"[BLURB]\").toString()).build()",
+        writerVisitor.write());
+  }
+
+  @Test
+  void createSimpleMessageBuilderValue_resourceNameDoesNotMatchHttpBinding_mixinCustomPath() {
+    FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(messagingFileDescriptor);
+
+    // GetRoomRequest is not a Mixin resource, but showcase's descriptor does not have
+    // Mixins included in. Replicate this custom Mixin paths by simulating the message
+    // and setting a custom pattern.
+    Message message = messageTypes.get("com.google.showcase.v1beta1.GetRoomRequest");
+
+    HttpBindings bindings =
+        HttpBindings.builder()
+            .setHttpVerb(HttpVerb.POST)
+            // Simulate the path being overriden in the service.yaml, but it is an
+            // invalid path that does not match any resource pattern
+            .setPattern("/v1/{name=customPath/*}")
+            .setAdditionalPatterns(ImmutableList.of())
+            .setPathParameters(
+                ImmutableSet.of(
+                    HttpBindings.HttpBinding.builder()
+                        .setName("name")
+                        .setValuePattern("customPath/*")
+                        .build()))
+            .setIsAsteriskBody(true)
+            .build();
+
+    Expr expr =
+        DefaultValueComposer.createSimpleMessageBuilderValue(
+            message,
+            typeStringsToResourceNames,
+            messageTypes,
+            ImmutableMap.of("name", "customPath/*"),
+            bindings);
+    expr.accept(writerVisitor);
+    String actual = writerVisitor.write();
+    System.out.println(actual);
+    // Cannot directly use assertEquals since the output of DefaultValueComposer will return a a
+    // variable with a random value back (i.e. customPath/customPat-{randomId})
+    Assertions.assertTrue(
+        actual.matches(
+            "GetRoomRequest.newBuilder\\(\\).*setName\\(\"customPath/.+\"\\)\\.build\\(\\)"),
+        String.format("The message's name field should contain `customPath/` but was %s", actual));
+  }
+
+  @Test
   void createSimpleMessageBuilderValue_resourceNameMultiplePatterns_matchesHttpBinding() {
     FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(messagingFileDescriptor);
     /*
+    Use the DeleteBlurbRequest message as it contains a resource reference to the Blurb message.
+
     Blurb Resource contains four patterns (in order of):
       - pattern: "users/{user}/profile/blurbs/legacy/{legacy_user}~{blurb}"
       - pattern: "users/{user}/profile/blurbs/{blurb}"
       - pattern: "rooms/{room}/blurbs/{blurb}"
       - pattern: "rooms/{room}/blurbs/legacy/{legacy_room}.{blurb}"
     */
-    Message message = messageTypes.get("com.google.showcase.v1beta1.Blurb");
+    Message message = messageTypes.get("com.google.showcase.v1beta1.DeleteBlurbRequest");
 
     HttpBindings bindings =
         HttpBindings.builder()
             .setHttpVerb(HttpVerb.PATCH)
-            .setPattern("/v1beta1/{blurb.name=rooms/*/blurbs/*}")
+            .setPattern("/v1beta1/{name=rooms/*/blurbs/*}")
             .setAdditionalPatterns(
-                Collections.singletonList("/v1beta1/{blurb.name=users/*/profile/blurbs/*}"))
+                Collections.singletonList("/v1beta1/{name=users/*/profile/blurbs/*}"))
             .setIsAsteriskBody(false)
             .build();
 
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            message, typeStringsToResourceNames, messageTypes, bindings);
+            message,
+            typeStringsToResourceNames,
+            messageTypes,
+            ImmutableMap.of("name", "rooms/*/blurbs/*"),
+            bindings);
     expr.accept(writerVisitor);
-    // Matches with the default pattern in the HttpBindings and uses the variables in the pattern
+    // Found a resource (Blurb) that is able to match the httpbindings
     assertEquals(
-        "Blurb.newBuilder().setName(BlurbName.ofRoomBlurbName(\"[ROOM]\", \"[BLURB]\").toString()).build()",
+        "DeleteBlurbRequest.newBuilder().setName(BlurbName.ofRoomBlurbName(\"[ROOM]\", \"[BLURB]\").toString()).build()",
         writerVisitor.write());
   }
 
@@ -452,31 +543,37 @@ class DefaultValueComposerTest {
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(messagingFileDescriptor);
     /*
+    Use the DeleteBlurbRequest message as it contains a resource reference to the Blurb message.
+
     Blurb Resource contains four patterns (in order of):
       - pattern: "users/{user}/profile/blurbs/legacy/{legacy_user}~{blurb}"
       - pattern: "users/{user}/profile/blurbs/{blurb}"
       - pattern: "rooms/{room}/blurbs/{blurb}"
       - pattern: "rooms/{room}/blurbs/legacy/{legacy_room}.{blurb}"
     */
-    Message message = messageTypes.get("com.google.showcase.v1beta1.Blurb");
+    Message message = messageTypes.get("com.google.showcase.v1beta1.DeleteBlurbRequest");
 
     HttpBindings bindings =
         HttpBindings.builder()
             .setHttpVerb(HttpVerb.PATCH)
-            .setPattern("/v1beta1/{blurb.name=invalid/pattern/*}")
+            .setPattern("/v1beta1/{name=invalid/*/pattern/*}")
             .setAdditionalPatterns(
-                Collections.singletonList("/v1beta1/{blurb.name=users/*/profile/blurbs/*}"))
+                Collections.singletonList("/v1beta1/{name=users/*/profile/blurbs/*}"))
             .setIsAsteriskBody(false)
             .build();
 
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            message, typeStringsToResourceNames, messageTypes, bindings);
+            message,
+            typeStringsToResourceNames,
+            messageTypes,
+            ImmutableMap.of("name", "invalid/*/pattern/*"),
+            bindings);
     expr.accept(writerVisitor);
     // Because the default pattern does not match, it will attempt to match with patterns in the
-    // additional bindings and use variables for any pattern that matches
+    // additional bindings and use any resource that has a pattern that matches the bindings
     assertEquals(
-        "Blurb.newBuilder().setName(BlurbName.ofUserBlurbName(\"[USER]\", \"[BLURB]\").toString()).build()",
+        "DeleteBlurbRequest.newBuilder().setName(BlurbName.ofUserBlurbName(\"[USER]\", \"[BLURB]\").toString()).build()",
         writerVisitor.write());
   }
 
@@ -487,32 +584,50 @@ class DefaultValueComposerTest {
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(messagingFileDescriptor);
     /*
+    Use the DeleteBlurbRequest message as it contains a resource reference to the Blurb message.
+
     Blurb Resource contains four patterns (in order of):
       - pattern: "users/{user}/profile/blurbs/legacy/{legacy_user}~{blurb}"
       - pattern: "users/{user}/profile/blurbs/{blurb}"
       - pattern: "rooms/{room}/blurbs/{blurb}"
       - pattern: "rooms/{room}/blurbs/legacy/{legacy_room}.{blurb}"
     */
-    Message message = messageTypes.get("com.google.showcase.v1beta1.Blurb");
+    Message message = messageTypes.get("com.google.showcase.v1beta1.DeleteBlurbRequest");
 
     HttpBindings bindings =
         HttpBindings.builder()
             .setHttpVerb(HttpVerb.PATCH)
-            .setPattern("/v1beta1/{blurb.name=invalid/pattern/*}")
-            .setAdditionalPatterns(
-                Collections.singletonList("/v1beta1/{blurb.name=nothing/matches/*}"))
+            .setPattern("/v1beta1/{name=invalid/*/pattern/*}")
+            .setAdditionalPatterns(Collections.singletonList("/v1beta1/{name=nothing/*/matches/*}"))
+            .setPathParameters(
+                ImmutableSet.of(
+                    HttpBindings.HttpBinding.builder()
+                        .setName("name")
+                        .setValuePattern("invalid/*/pattern/*")
+                        .build(),
+                    HttpBindings.HttpBinding.builder()
+                        .setName("name")
+                        .setValuePattern("nothing/*/matches/*")
+                        .build()))
             .setIsAsteriskBody(false)
             .build();
 
     Expr expr =
         DefaultValueComposer.createSimpleMessageBuilderValue(
-            message, typeStringsToResourceNames, messageTypes, bindings);
+            message,
+            typeStringsToResourceNames,
+            messageTypes,
+            ImmutableMap.of("name", "invalid/*/pattern/*"),
+            bindings);
     expr.accept(writerVisitor);
-    // If no pattern matches (default and additional bindings), it will simply pick the first
-    // resource pattern in the resource definition.
-    assertEquals(
-        "Blurb.newBuilder().setName(BlurbName.ofUserLegacyUserBlurbName(\"[USER]\", \"[LEGACY_USER]\", \"[BLURB]\").toString()).build()",
-        writerVisitor.write());
+    // If no pattern matches (default and additional bindings), then it will attempt to create a
+    // string that matches the httpbindings path
+    String actual = writerVisitor.write();
+    Assertions.assertTrue(
+        actual.matches(
+            "DeleteBlurbRequest.newBuilder\\(\\).*setName\\(\"invalid/.+/pattern/.+\"\\)\\.build\\(\\)"),
+        String.format(
+            "The message's name field should include `invalid/*/pattern/*` but was %s", actual));
   }
 
   @Test
@@ -651,5 +766,182 @@ class DefaultValueComposerTest {
             "}");
 
     assertEquals(expected, writerVisitor.write());
+  }
+
+  @Test
+  void getMatchingResource_fieldHasNoResourceReference() {
+    FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(messagingFileDescriptor);
+
+    Message message = messageTypes.get("com.google.showcase.v1beta1.ConnectRequest");
+    // The config field has no resource reference
+    Field configField = message.fieldMap().get("config");
+    assertNull(
+        DefaultValueComposer.getMatchingResource(configField, typeStringsToResourceNames, null));
+  }
+
+  @Test
+  void getMatchingResource_fieldHasUnknownResourceReference() {
+    FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(messagingFileDescriptor);
+
+    // Remove this from the known map to simulate this being an invalid resource
+    typeStringsToResourceNames.remove("showcase.googleapis.com/Blurb");
+
+    Message message = messageTypes.get("com.google.showcase.v1beta1.GetBlurbRequest");
+    // The name field has a resource reference to `showcase.googleapis.com/Blurb`
+    Field nameField = message.fieldMap().get("name");
+    assertNull(
+        DefaultValueComposer.getMatchingResource(nameField, typeStringsToResourceNames, null));
+  }
+
+  @Test
+  void getMatchingResource_fieldUsedInPath_nullBindings() {
+    FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(messagingFileDescriptor);
+
+    /*
+    Use the GetBlurbRequest message as it is a simple message with a name field to match.
+    The name field has a resource reference to Blurb.
+     */
+    Message message = messageTypes.get("com.google.showcase.v1beta1.GetBlurbRequest");
+    Field nameField = message.fieldMap().get("name");
+    ResourceName expected = typeStringsToResourceNames.get("showcase.googleapis.com/Blurb");
+    Assertions.assertEquals(
+        expected,
+        DefaultValueComposer.getMatchingResource(nameField, typeStringsToResourceNames, null));
+  }
+
+  @Test
+  void getMatchingResource_fieldUsedInPath_nullBindings_childType() {
+    FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(messagingFileDescriptor);
+
+    Message message = messageTypes.get("com.google.showcase.v1beta1.ListBlurbsRequest");
+    Field nameField = message.fieldMap().get("parent");
+
+    /*
+     The possible parents are:
+     - users/{user}/profile/blurbs
+     - users/{user}/profile
+     - rooms/{room}
+     - rooms/{room}/blurbs
+     It matches with `rooms/{room}` which is the only known ResourceName from the message
+     descriptor.
+    */
+    ResourceName expected = typeStringsToResourceNames.get("showcase.googleapis.com/Room");
+    Assertions.assertEquals(
+        expected,
+        DefaultValueComposer.getMatchingResource(nameField, typeStringsToResourceNames, null));
+  }
+
+  @Test
+  void getMatchingResource_fieldUsedInPath_isChildType() {
+    FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(messagingFileDescriptor);
+
+    /*
+    Use the ListBlurbsRequest message as it contains a child_type resource reference to the Blurb message.
+
+    Blurb Resource contains four patterns (in order of):
+      - pattern: "users/{user}/profile/blurbs/legacy/{legacy_user}~{blurb}"
+      - pattern: "users/{user}/profile/blurbs/{blurb}"
+      - pattern: "rooms/{room}/blurbs/{blurb}"
+      - pattern: "rooms/{room}/blurbs/legacy/{legacy_room}.{blurb}"
+
+      The parents for this resource are `rooms/{room}` and `user/{user}/profile` which will match
+      with the patterns configured for the ListBlurb RPC:
+      - /v1beta1/{parent=rooms/*}/blurbs
+      - /v1beta1/{parent=users/&#42;&#47;profile}/blurbs
+    */
+    Message message = messageTypes.get("com.google.showcase.v1beta1.ListBlurbsRequest");
+    Field parentField = message.fieldMap().get("parent");
+    HttpBindings httpBindings =
+        HttpBindings.builder()
+            .setHttpVerb(HttpVerb.GET)
+            .setPattern("/v1beta1/{parent=rooms/*}/blurbs")
+            .setAdditionalPatterns(ImmutableList.of("/v1beta1/{parent=users/*/profile}/blurbs"))
+            .setIsAsteriskBody(true)
+            .build();
+    // The request's parent field is a `reference_resource.child_type`. It will use the configured
+    // HttpBinding to try and match the parent resource. The HttpBinding is `{parent=room/*}` which
+    // matches to the Room resource. It will also check the additional bindings which has
+    // `{parent=users/*/profile}`, but the default binding was able to match first.
+    ResourceName expected = typeStringsToResourceNames.get("showcase.googleapis.com/Room");
+    Assertions.assertEquals(
+        expected,
+        DefaultValueComposer.getMatchingResource(
+            parentField, typeStringsToResourceNames, httpBindings));
+  }
+
+  @Test
+  void getMatchingResource_fieldUsedInPath_unableToMatchBindings() {
+    FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(messagingFileDescriptor);
+
+    Message message = messageTypes.get("com.google.showcase.v1beta1.GetBlurbRequest");
+    Field nameField = message.fieldMap().get("name");
+    HttpBindings httpBindings =
+        HttpBindings.builder()
+            .setHttpVerb(HttpVerb.GET)
+            .setPattern("/v1/{name=pattern/*/does/*/not/*/match}")
+            .setAdditionalPatterns(ImmutableList.of())
+            .setPathParameters(
+                ImmutableSet.of(
+                    HttpBindings.HttpBinding.builder()
+                        .setName("name")
+                        .setValuePattern("pattern/*/does/*/not/*/match")
+                        .build()))
+            .setIsAsteriskBody(true)
+            .build();
+    assertNull(
+        DefaultValueComposer.getMatchingResource(
+            nameField, typeStringsToResourceNames, httpBindings));
+  }
+
+  @Test
+  void getMatchingResource_fieldUsedInPath_ableToMatchBindings() {
+    FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(messagingFileDescriptor);
+
+    /*
+    Use the GetBlurbRequest message as it is a simple message with a name field to match
+
+    Blurb Resource contains four patterns (in order of):
+      - pattern: "users/{user}/profile/blurbs/legacy/{legacy_user}~{blurb}"
+      - pattern: "users/{user}/profile/blurbs/{blurb}"
+      - pattern: "rooms/{room}/blurbs/{blurb}"
+      - pattern: "rooms/{room}/blurbs/legacy/{legacy_room}.{blurb}"
+     */
+    Message message = messageTypes.get("com.google.showcase.v1beta1.GetBlurbRequest");
+    Field nameField = message.fieldMap().get("name");
+    HttpBindings httpBindings =
+        HttpBindings.builder()
+            .setHttpVerb(HttpVerb.GET)
+            .setPattern("/v1beta1/{name=users/*/profile/blurbs/*}")
+            .setAdditionalPatterns(ImmutableList.of())
+            .setIsAsteriskBody(true)
+            .build();
+
+    // Matches with `users/{user}/profile/blurbs/{blurb}`
+    ResourceName expected = typeStringsToResourceNames.get("showcase.googleapis.com/Blurb");
+    Assertions.assertEquals(
+        expected,
+        DefaultValueComposer.getMatchingResource(
+            nameField, typeStringsToResourceNames, httpBindings));
   }
 }

@@ -21,7 +21,7 @@ import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.CreateBlurbRequest;
 import com.google.showcase.v1beta1.MessagingClient;
-import com.google.showcase.v1beta1.ProfileName;
+import com.google.showcase.v1beta1.RoomName;
 import com.google.showcase.v1beta1.SendBlurbsResponse;
 
 public class AsyncSendBlurbs {
@@ -58,7 +58,7 @@ public class AsyncSendBlurbs {
           messagingClient.sendBlurbs().clientStreamingCall(responseObserver);
       CreateBlurbRequest request =
           CreateBlurbRequest.newBuilder()
-              .setParent(ProfileName.of("[USER]").toString())
+              .setParent(RoomName.of("[ROOM]").toString())
               .setBlurb(Blurb.newBuilder().build())
               .build();
       requestObserver.onNext(request);

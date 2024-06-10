@@ -19,7 +19,7 @@ package com.google.showcase.v1beta1.samples;
 // [START goldensample_generated_Messaging_StreamBlurbs_async]
 import com.google.api.gax.rpc.ServerStream;
 import com.google.showcase.v1beta1.MessagingClient;
-import com.google.showcase.v1beta1.ProfileName;
+import com.google.showcase.v1beta1.RoomName;
 import com.google.showcase.v1beta1.StreamBlurbsRequest;
 import com.google.showcase.v1beta1.StreamBlurbsResponse;
 
@@ -37,7 +37,7 @@ public class AsyncStreamBlurbs {
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
     try (MessagingClient messagingClient = MessagingClient.create()) {
       StreamBlurbsRequest request =
-          StreamBlurbsRequest.newBuilder().setName(ProfileName.of("[USER]").toString()).build();
+          StreamBlurbsRequest.newBuilder().setName(RoomName.of("[ROOM]").toString()).build();
       ServerStream<StreamBlurbsResponse> stream =
           messagingClient.streamBlurbsCallable().call(request);
       for (StreamBlurbsResponse response : stream) {

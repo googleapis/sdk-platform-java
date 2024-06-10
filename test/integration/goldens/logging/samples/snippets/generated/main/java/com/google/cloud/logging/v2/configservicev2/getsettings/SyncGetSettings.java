@@ -20,7 +20,6 @@ package com.google.cloud.logging.v2.samples;
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.GetSettingsRequest;
 import com.google.logging.v2.Settings;
-import com.google.logging.v2.SettingsName;
 
 public class SyncGetSettings {
 
@@ -35,10 +34,7 @@ public class SyncGetSettings {
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
     try (ConfigClient configClient = ConfigClient.create()) {
-      GetSettingsRequest request =
-          GetSettingsRequest.newBuilder()
-              .setName(SettingsName.ofProjectName("[PROJECT]").toString())
-              .build();
+      GetSettingsRequest request = GetSettingsRequest.newBuilder().setName("name3373707").build();
       Settings response = configClient.getSettings(request);
     }
   }

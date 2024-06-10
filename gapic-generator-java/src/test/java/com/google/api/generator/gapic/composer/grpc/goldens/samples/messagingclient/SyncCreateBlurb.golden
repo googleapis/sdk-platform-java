@@ -20,7 +20,7 @@ package com.google.showcase.v1beta1.samples;
 import com.google.showcase.v1beta1.Blurb;
 import com.google.showcase.v1beta1.CreateBlurbRequest;
 import com.google.showcase.v1beta1.MessagingClient;
-import com.google.showcase.v1beta1.ProfileName;
+import com.google.showcase.v1beta1.RoomName;
 
 public class SyncCreateBlurb {
 
@@ -37,7 +37,7 @@ public class SyncCreateBlurb {
     try (MessagingClient messagingClient = MessagingClient.create()) {
       CreateBlurbRequest request =
           CreateBlurbRequest.newBuilder()
-              .setParent(ProfileName.of("[USER]").toString())
+              .setParent(RoomName.of("[ROOM]").toString())
               .setBlurb(Blurb.newBuilder().build())
               .build();
       Blurb response = messagingClient.createBlurb(request);

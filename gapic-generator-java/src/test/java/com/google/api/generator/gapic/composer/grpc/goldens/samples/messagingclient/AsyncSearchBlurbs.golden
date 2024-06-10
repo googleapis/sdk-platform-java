@@ -20,7 +20,7 @@ package com.google.showcase.v1beta1.samples;
 import com.google.api.core.ApiFuture;
 import com.google.longrunning.Operation;
 import com.google.showcase.v1beta1.MessagingClient;
-import com.google.showcase.v1beta1.ProfileName;
+import com.google.showcase.v1beta1.RoomName;
 import com.google.showcase.v1beta1.SearchBlurbsRequest;
 
 public class AsyncSearchBlurbs {
@@ -39,7 +39,7 @@ public class AsyncSearchBlurbs {
       SearchBlurbsRequest request =
           SearchBlurbsRequest.newBuilder()
               .setQuery("query107944136")
-              .setParent(ProfileName.of("[USER]").toString())
+              .setParent(RoomName.of("[ROOM]").toString())
               .setPageSize(883849137)
               .setPageToken("pageToken873572522")
               .build();
