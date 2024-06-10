@@ -23,6 +23,7 @@ from library_generation.utils.proto_path_utils import find_versioned_proto_path
 from library_generation.utils.commit_message_formatter import (
     format_commit_message,
     format_repo_level_change,
+    commit_link,
 )
 from library_generation.utils.commit_message_formatter import wrap_override_commit
 
@@ -131,6 +132,8 @@ def get_repo_level_commit_messages(
         return EMPTY_MESSAGE
 
     return __combine_commit_messages(
+        current_commit=current_commit,
+        baseline_commit=baseline_commit,
         commits=qualified_commits,
         is_monorepo=is_monorepo,
         repo_level_message=repo_level_message,
@@ -156,13 +159,23 @@ def __filter_qualified_commit(paths: Dict[str, str], commit: Commit) -> (Commit,
 
 
 def __combine_commit_messages(
+    current_commit: Commit,
+    baseline_commit: Commit,
     commits: Dict[Commit, str],
     is_monorepo: bool,
     repo_level_message: list[str],
 ) -> str:
-    messages = repo_level_message
-    messages.extend(format_commit_message(commits=commits, is_monorepo=is_monorepo))
-    return "\n".join(wrap_override_commit(messages))
+    description = [
+        f"This pull request is generated with proto changes between "
+        f"{commit_link(baseline_commit)} (exclusive) "
+        f"and {commit_link(current_commit)} (inclusive).\n",
+    ]
+    commit_message = repo_level_message
+    commit_message.extend(
+        format_commit_message(commits=commits, is_monorepo=is_monorepo)
+    )
+    description.extend(wrap_override_commit(commit_message))
+    return "\n".join(description)
 
 
 def __get_commit_timestamp(commit: Commit) -> int:
