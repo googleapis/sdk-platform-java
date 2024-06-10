@@ -1,12 +1,21 @@
 package com.google.api.generator.gapic.protowriter;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.google.api.generator.engine.ast.PackageInfoDefinition;
+import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.ReflectConfig;
+import com.google.common.collect.ImmutableList;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.protobuf.ByteString;
+import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -39,6 +48,12 @@ class WriterTest {
     file = path.toFile();
   }
 
+  private void closeJarOutputStream() throws IOException {
+    jarOutputStream.finish();
+    jarOutputStream.flush();
+    jarOutputStream.close();
+  }
+
   @AfterEach
   void assertJarOutputStream_isClosed() {
     assertThrows(
@@ -49,9 +64,7 @@ class WriterTest {
   void reflectConfig_notWritten_ifEmptyInput() throws IOException {
     Writer.writeReflectConfigFile("com.google", Collections.emptyList(), jarOutputStream);
 
-    jarOutputStream.finish();
-    jarOutputStream.flush();
-    jarOutputStream.close();
+    closeJarOutputStream();
 
     try (JarFile jarFile = new JarFile(file)) {
       assertThat(jarFile.entries().hasMoreElements()).isFalse();
@@ -65,9 +78,7 @@ class WriterTest {
         Collections.singletonList(new ReflectConfig("com.google.Class")),
         jarOutputStream);
 
-    jarOutputStream.finish();
-    jarOutputStream.flush();
-    jarOutputStream.close();
+    closeJarOutputStream();
 
     try (JarFile jarFile = new JarFile(file)) {
       Enumeration<JarEntry> entries = jarFile.entries();
@@ -84,5 +95,53 @@ class WriterTest {
         assertEquals("com.google.Class", config.getName());
       }
     }
+  }
+
+  @Test
+  void write_emptyGapicContext_writesNoBytes() throws IOException {
+    ByteString.Output output = ByteString.newOutput();
+    CodeGeneratorResponse response =
+        Writer.write(
+            GapicContext.EMPTY,
+            Collections.emptyList(),
+            null,
+            Collections.emptyList(),
+            "temp-codegen.srcjar",
+            jarOutputStream,
+            output);
+    assertTrue(output.size() == 0);
+    closeJarOutputStream();
+  }
+
+  @Test
+  void write_emptyGapicContextAndFilledPackageInfo_succeeds() throws IOException {
+    ByteString.Output output = ByteString.newOutput();
+    CodeGeneratorResponse response =
+        Writer.write(
+            GapicContext.EMPTY,
+            ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
+            GapicPackageInfo.with(PackageInfoDefinition.builder().setPakkage("com.test").build()),
+            Collections.emptyList(),
+            "temp-codegen.srcjar",
+            jarOutputStream,
+            output);
+    assertTrue(output.size() == 0);
+    closeJarOutputStream();
+  }
+
+  @Test
+  void productionWrite_emptyGapicContext_succeeds() throws IOException {
+    // This is a special case test to confirm the production function works as expected.
+    // We don't need the output stream
+    jarOutputStream.close();
+
+    CodeGeneratorResponse result =
+        Writer.write(
+            GapicContext.EMPTY,
+            ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
+            GapicPackageInfo.with(PackageInfoDefinition.builder().setPakkage("com.test").build()),
+            Collections.emptyList(),
+            "temp-codegen.srcjar");
+    assertNull(result);
   }
 }

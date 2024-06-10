@@ -14,8 +14,10 @@
 
 package com.google.api.generator.gapic.composer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -35,6 +37,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ComposerTest {
@@ -53,8 +56,13 @@ class ComposerTest {
           .build();
   private List<Sample> ListofSamples = Arrays.asList(new Sample[] {sample});
 
+  @BeforeEach
+  void initialSanityCheck() {
+    assertTrue(context.containsServices());
+  }
+
   @Test
-  void gapicClass_addApacheLicense() {
+  public void gapicClass_addApacheLicense_validInput_succeeds() {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString("com.google.showcase.v1beta1.stub")
@@ -84,14 +92,14 @@ class ComposerTest {
     assertFalse(composedSamples.isEmpty());
     for (Sample sample : composedSamples) {
       assertEquals(
-          "File header should be APACHE",
           Arrays.asList(CommentComposer.APACHE_LICENSE_COMMENT),
-          sample.fileHeader());
+          sample.fileHeader(),
+          "File header should be APACHE");
       assertEquals(
-          "ApiShortName should be Localhost7469",
           "Localhost7469",
-          sample.regionTag().apiShortName());
-      assertEquals("ApiVersion should be V1Beta1", "V1Beta1", sample.regionTag().apiVersion());
+          sample.regionTag().apiShortName(),
+          "ApiShortName should be Localhost7469");
+      assertEquals("V1Beta1", sample.regionTag().apiVersion(), "ApiVersion should be V1Beta1");
     }
   }
 
@@ -120,10 +128,10 @@ class ComposerTest {
 
     for (Sample sample : composedSamples) {
       assertEquals(
-          "ApiShortName should be Accessapproval",
+          "Accessapproval",
           sample.regionTag().apiShortName(),
-          "Accessapproval");
-      assertEquals("ApiVersion should be V1", sample.regionTag().apiVersion(), "V1");
+          "ApiShortName should be Accessapproval");
+      assertEquals("V1", sample.regionTag().apiVersion(), "ApiVersion should be V1");
     }
 
     protoPack = "google.cloud.vision.v1p1beta1";
@@ -136,8 +144,8 @@ class ComposerTest {
     assertFalse(composedSamples.isEmpty());
 
     for (Sample sample : composedSamples) {
-      assertEquals("ApiShortName should be Vision", sample.regionTag().apiShortName(), "Vision");
-      assertEquals("ApiVersion should be V1P1Beta1", sample.regionTag().apiVersion(), "V1P1Beta1");
+      assertEquals("Vision", sample.regionTag().apiShortName(), "ApiShortName should be Vision");
+      assertEquals("V1P1Beta1", sample.regionTag().apiVersion(), "ApiVersion should be V1P1Beta1");
     }
 
     protoPack = "google.cloud.vision";
@@ -149,9 +157,19 @@ class ComposerTest {
     assertFalse(composedSamples.isEmpty());
 
     for (Sample sample : composedSamples) {
-      assertEquals("ApiShortName should be Vision", sample.regionTag().apiShortName(), "Vision");
-      assertEquals("ApiVersion should be empty", sample.regionTag().apiVersion(), "");
+      assertEquals("Vision", sample.regionTag().apiShortName(), "ApiShortName should be Vision");
+      assertTrue(sample.regionTag().apiVersion().isEmpty(), "ApiVersion should be empty");
     }
+  }
+
+  @Test
+  void testEmptyGapicContext_doesNotThrow() {
+    assertTrue(Composer.composeServiceClasses(GapicContext.EMPTY).isEmpty());
+  }
+
+  @Test
+  void testComposePackageInfo_emptyGapicContext_returnsNull() {
+    assertNull(Composer.composePackageInfo(GapicContext.EMPTY));
   }
 
   private List<GapicClass> getTestClassListFromService(Service testService) {
