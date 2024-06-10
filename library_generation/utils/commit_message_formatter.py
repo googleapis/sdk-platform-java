@@ -15,6 +15,15 @@ import re
 from git import Commit
 
 from library_generation.model.config_change import ConfigChange, ChangeType
+from library_generation.model.generation_config import (
+    GAPIC_GENERATOR_VERSION,
+    LIBRARIES_BOM_VERSION,
+)
+
+PARAM_TO_COMMIT_MESSAGE = {
+    GAPIC_GENERATOR_VERSION: "fix(deps): update the Java code generator (gapic-generator-java) to",
+    LIBRARIES_BOM_VERSION: "chore: update the libraries_bom version to",
+}
 
 
 def format_commit_message(commits: dict[Commit, str], is_monorepo: bool) -> list[str]:
@@ -62,14 +71,10 @@ def format_repo_level_change(config_change: ConfigChange) -> list[str]:
     for repo_level_change in config_change.change_to_libraries.get(
         ChangeType.REPO_LEVEL_CHANGE, []
     ):
-        messages.extend(
-            __wrap_nested_commit(
-                [
-                    f"chore: update repo-level parameter {repo_level_change.changed_param} to "
-                    f"{repo_level_change.current_value}"
-                ]
-            )
-        )
+        message = f"chore: update repo-level parameter {repo_level_change.changed_param} to {repo_level_change.current_value}"
+        if repo_level_change.changed_param in PARAM_TO_COMMIT_MESSAGE:
+            message = f"{PARAM_TO_COMMIT_MESSAGE.get(repo_level_change.changed_param)} {repo_level_change.current_value}"
+        messages.extend(__wrap_nested_commit([message]))
     return messages
 
 
