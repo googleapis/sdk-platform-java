@@ -142,9 +142,6 @@ class GeneratePrDescriptionTest(unittest.TestCase):
                         LibraryChange(
                             changed_param="libraries_bom_version", current_value="2.3.4"
                         ),
-                        LibraryChange(
-                            changed_param="protoc_version", current_value="3.4.5"
-                        ),
                     ],
                     ChangeType.GOOGLEAPIS_COMMIT: [],
                 },
@@ -158,7 +155,6 @@ class GeneratePrDescriptionTest(unittest.TestCase):
                     googleapis_commitish=documentai_commit_sha,
                     libraries_bom_version="2.3.4",
                     libraries=[library],
-                    protoc_version="3.4.5",
                 ),
             ),
             description_path=cwd,

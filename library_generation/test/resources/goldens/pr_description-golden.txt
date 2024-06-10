@@ -8,9 +8,6 @@ BEGIN_NESTED_COMMIT
 chore: update repo-level parameter libraries_bom_version to 2.3.4
 END_NESTED_COMMIT
 BEGIN_NESTED_COMMIT
-chore: update repo-level parameter protoc_version to 3.4.5
-END_NESTED_COMMIT
-BEGIN_NESTED_COMMIT
 feat: Make Layout Parser generally available in V1
 
 PiperOrigin-RevId: 638924855
