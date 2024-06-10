@@ -55,6 +55,8 @@ import java.util.Map;
 @BetaApi
 @InternalApi
 public class OpenTelemetryMetricsRecorder implements MetricsRecorder {
+
+  public static final String GAX_METER_NAME = "gax-java";
   private final DoubleHistogram attemptLatencyRecorder;
   private final DoubleHistogram operationLatencyRecorder;
   private final LongCounter operationCountRecorder;
@@ -76,7 +78,7 @@ public class OpenTelemetryMetricsRecorder implements MetricsRecorder {
   public OpenTelemetryMetricsRecorder(OpenTelemetry openTelemetry, String serviceName) {
     Meter meter =
         openTelemetry
-            .meterBuilder("gax-java")
+            .meterBuilder(GAX_METER_NAME)
             .setInstrumentationVersion(GaxProperties.getGaxVersion())
             .build();
     this.attemptLatencyRecorder =
