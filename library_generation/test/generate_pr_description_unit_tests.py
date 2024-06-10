@@ -16,7 +16,7 @@ import unittest
 from filecmp import cmp
 
 from library_generation.generate_pr_description import (
-    get_commit_messages,
+    get_repo_level_commit_messages,
     generate_pr_descriptions,
 )
 from library_generation.model.config_change import (
@@ -41,7 +41,7 @@ class GeneratePrDescriptionTest(unittest.TestCase):
         self.assertRaisesRegex(
             ValueError,
             "newer than",
-            get_commit_messages,
+            get_repo_level_commit_messages,
             "https://github.com/googleapis/googleapis.git",
             current_commit,
             baseline_commit,
@@ -57,7 +57,7 @@ class GeneratePrDescriptionTest(unittest.TestCase):
         baseline_commit = "36441693dddaf0ed73951ad3a15c215a332756aa"
         self.assertEqual(
             "",
-            get_commit_messages(
+            get_repo_level_commit_messages(
                 "https://github.com/googleapis/googleapis.git",
                 current_commit,
                 baseline_commit,

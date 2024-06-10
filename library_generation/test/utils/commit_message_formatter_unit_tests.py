@@ -186,13 +186,13 @@ class CommitMessageFormatterTest(unittest.TestCase):
         self.assertEqual(
             [
                 "BEGIN_NESTED_COMMIT",
-                "Update repo-level parameter gapic_generator_version to 1.2.3",
+                "chore: update repo-level parameter gapic_generator_version to 1.2.3",
                 "END_NESTED_COMMIT",
                 "BEGIN_NESTED_COMMIT",
-                "Update repo-level parameter libraries_bom_version to 2.3.4",
+                "chore: update repo-level parameter libraries_bom_version to 2.3.4",
                 "END_NESTED_COMMIT",
                 "BEGIN_NESTED_COMMIT",
-                "Update repo-level parameter protoc_version to 3.4.5",
+                "chore: update repo-level parameter protoc_version to 3.4.5",
                 "END_NESTED_COMMIT",
             ],
             format_repo_level_change(config_change),

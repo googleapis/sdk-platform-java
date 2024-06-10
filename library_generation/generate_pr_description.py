@@ -55,7 +55,7 @@ def generate_pr_descriptions(
     """
     repo_level_message = format_repo_level_change(config_change)
     paths = config_change.current_config.get_proto_path_to_library_name()
-    description = get_commit_messages(
+    description = get_repo_level_commit_messages(
         repo_url=repo_url,
         current_commit_sha=config_change.current_config.googleapis_commitish,
         baseline_commit_sha=config_change.baseline_config.googleapis_commitish,
@@ -74,7 +74,7 @@ def generate_pr_descriptions(
         f.write(description)
 
 
-def get_commit_messages(
+def get_repo_level_commit_messages(
     repo_url: str,
     current_commit_sha: str,
     baseline_commit_sha: str,
