@@ -34,7 +34,7 @@ jobs:
           -f .cloudbuild/library_generation/library_generation.Dockerfile \
           -t gcr.io/cloud-devrel-public-resources/java-library-generation:latest \
           .
-    - name: Install gapic-generator-java-pom-parent
+    - name: Install all modules
       shell: bash
       run: |
         mvn -V -B -ntp clean install -DskipTests
