@@ -21,6 +21,8 @@ REPO_LEVEL_PARAMETER = "Repo level parameter"
 LIBRARY_LEVEL_PARAMETER = "Library level parameter"
 GAPIC_LEVEL_PARAMETER = "GAPIC level parameter"
 COMMON_PROTOS_LIBRARY_NAME = "common-protos"
+GAPIC_GENERATOR_VERSION = "gapic_generator_version"
+LIBRARIES_BOM_VERSION = "libraries_bom_version"
 
 
 class GenerationConfig:
@@ -144,14 +146,14 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
 
     parsed_config = GenerationConfig(
         gapic_generator_version=__required(
-            config, "gapic_generator_version", REPO_LEVEL_PARAMETER
+            config, GAPIC_GENERATOR_VERSION, REPO_LEVEL_PARAMETER
         ),
         googleapis_commitish=__required(
             config, "googleapis_commitish", REPO_LEVEL_PARAMETER
         ),
         grpc_version=__optional(config, "grpc_version", None),
         protoc_version=__optional(config, "protoc_version", None),
-        libraries_bom_version=__optional(config, "libraries_bom_version", None),
+        libraries_bom_version=__optional(config, LIBRARIES_BOM_VERSION, None),
         libraries=parsed_libraries,
     )
 
