@@ -49,7 +49,9 @@ class GeneratePrDescriptionTest(unittest.TestCase):
             True,
         )
 
-    def test_get_commit_messages_current_and_baseline_are_returns_empty_message(self):
+    def test_get_commit_messages_with_same_current_and_baseline_returns_empty_message(
+        self,
+    ):
         # committed on April 1st, 2024
         current_commit = "36441693dddaf0ed73951ad3a15c215a332756aa"
         baseline_commit = "36441693dddaf0ed73951ad3a15c215a332756aa"
@@ -74,16 +76,16 @@ class GeneratePrDescriptionTest(unittest.TestCase):
             # two commit sha.
             libraries=[],
         )
-        path = os.path.join(os.getcwd(), "no_config_change")
+        pr_description_path = os.path.join(os.getcwd(), "no_config_change")
         generate_pr_descriptions(
             config_change=ConfigChange(
                 change_to_libraries={},
                 baseline_config=config,
                 current_config=config,
             ),
-            description_path=path,
+            description_path=pr_description_path,
         )
-        self.assertFalse(os.path.isfile(f"{path}/pr_description.txt"))
+        self.assertFalse(os.path.isfile(f"{pr_description_path}/pr_description.txt"))
 
     def test_generate_pr_description_does_not_create_pr_description_without_qualified_commit(
         self,
@@ -92,7 +94,7 @@ class GeneratePrDescriptionTest(unittest.TestCase):
         old_commit_sha = "30717c0b0c9966906880703208a4c820411565c4"
         # committed on May 23rd, 2024
         new_commit_sha = "eeed69d446a90eb4a4a2d1762c49d637075390c1"
-        path = os.path.join(os.getcwd(), "no_qualified_commit")
+        pr_description_path = os.path.join(os.getcwd(), "no_qualified_commit")
         generate_pr_descriptions(
             config_change=ConfigChange(
                 change_to_libraries={},
@@ -111,9 +113,9 @@ class GeneratePrDescriptionTest(unittest.TestCase):
                     libraries=[],
                 ),
             ),
-            description_path=path,
+            description_path=pr_description_path,
         )
-        self.assertFalse(os.path.isfile(f"{path}/pr_description.txt"))
+        self.assertFalse(os.path.isfile(f"{pr_description_path}/pr_description.txt"))
 
     def test_generate_pr_description_with_combined_message(
         self,
