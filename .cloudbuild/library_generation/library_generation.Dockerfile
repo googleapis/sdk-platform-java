@@ -91,3 +91,4 @@ RUN chmod -R a+rx /home/.nvm
 
 WORKDIR /workspace
 ENTRYPOINT [ "python", "/src/cli/entry_point.py", "generate" ]
+
