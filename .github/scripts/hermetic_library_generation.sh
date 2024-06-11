@@ -2,10 +2,10 @@
 set -e
 # This script should be run at the root of the repository.
 # This script is used to, when a pull request changes the generation
-# configuration (generation_config.yaml by default):
+# configuration (generation_config.yaml by default) or Dockerfile:
 # 1. Find whether the last commit in this pull request contains changes to
-# the generation configuration and exit early if it doesn't have such a change
-# since the generation result would be the same.
+# the generation configuration and Dockerfile and exit early if it doesn't have
+# such a change since the generation result would be the same.
 # 2. Compare generation configurations in the current branch (with which the
 # pull request associated) and target branch (into which the pull request is
 # merged);
