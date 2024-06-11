@@ -19,6 +19,7 @@ package com.google.cloud.logging.v2.samples;
 // [START logging_v2_generated_ConfigServiceV2_GetCmekSettings_sync]
 import com.google.cloud.logging.v2.ConfigClient;
 import com.google.logging.v2.CmekSettings;
+import com.google.logging.v2.CmekSettingsName;
 import com.google.logging.v2.GetCmekSettingsRequest;
 
 public class SyncGetCmekSettings {
@@ -35,7 +36,9 @@ public class SyncGetCmekSettings {
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
     try (ConfigClient configClient = ConfigClient.create()) {
       GetCmekSettingsRequest request =
-          GetCmekSettingsRequest.newBuilder().setName("name3373707").build();
+          GetCmekSettingsRequest.newBuilder()
+              .setName(CmekSettingsName.ofProjectName("[PROJECT]").toString())
+              .build();
       CmekSettings response = configClient.getCmekSettings(request);
     }
   }

@@ -15,7 +15,7 @@
 package com.google.api.generator.gapic.composer.defaultvalue;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -39,6 +39,7 @@ import com.google.showcase.v1beta1.MessagingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
@@ -778,8 +779,10 @@ class DefaultValueComposerTest {
     Message message = messageTypes.get("com.google.showcase.v1beta1.ConnectRequest");
     // The config field has no resource reference
     Field configField = message.fieldMap().get("config");
-    assertNull(
-        DefaultValueComposer.getMatchingResource(configField, typeStringsToResourceNames, null));
+    List<ResourceName> matchingResources =
+        DefaultValueComposer.getMatchingResources(
+            configField, typeStringsToResourceNames, null, ImmutableMap.of());
+    Assertions.assertTrue(matchingResources.isEmpty());
   }
 
   @Test
@@ -795,8 +798,10 @@ class DefaultValueComposerTest {
     Message message = messageTypes.get("com.google.showcase.v1beta1.GetBlurbRequest");
     // The name field has a resource reference to `showcase.googleapis.com/Blurb`
     Field nameField = message.fieldMap().get("name");
-    assertNull(
-        DefaultValueComposer.getMatchingResource(nameField, typeStringsToResourceNames, null));
+    List<ResourceName> matchingResources =
+        DefaultValueComposer.getMatchingResources(
+            nameField, typeStringsToResourceNames, null, ImmutableMap.of());
+    Assertions.assertTrue(matchingResources.isEmpty());
   }
 
   @Test
@@ -813,9 +818,10 @@ class DefaultValueComposerTest {
     Message message = messageTypes.get("com.google.showcase.v1beta1.GetBlurbRequest");
     Field nameField = message.fieldMap().get("name");
     ResourceName expected = typeStringsToResourceNames.get("showcase.googleapis.com/Blurb");
-    Assertions.assertEquals(
-        expected,
-        DefaultValueComposer.getMatchingResource(nameField, typeStringsToResourceNames, null));
+    List<ResourceName> matchingResources =
+        DefaultValueComposer.getMatchingResources(
+            nameField, typeStringsToResourceNames, null, ImmutableMap.of());
+    Assertions.assertTrue(matchingResources.contains(expected));
   }
 
   @Test
@@ -838,9 +844,10 @@ class DefaultValueComposerTest {
      descriptor.
     */
     ResourceName expected = typeStringsToResourceNames.get("showcase.googleapis.com/Room");
-    Assertions.assertEquals(
-        expected,
-        DefaultValueComposer.getMatchingResource(nameField, typeStringsToResourceNames, null));
+    List<ResourceName> matchingResources =
+        DefaultValueComposer.getMatchingResources(
+            nameField, typeStringsToResourceNames, null, ImmutableMap.of());
+    Assertions.assertTrue(matchingResources.contains(expected));
   }
 
   @Test
@@ -871,6 +878,12 @@ class DefaultValueComposerTest {
             .setHttpVerb(HttpVerb.GET)
             .setPattern("/v1beta1/{parent=rooms/*}/blurbs")
             .setAdditionalPatterns(ImmutableList.of("/v1beta1/{parent=users/*/profile}/blurbs"))
+            .setPathParameters(
+                ImmutableSet.of(
+                    HttpBindings.HttpBinding.builder()
+                        .setName("parent")
+                        .setValuePattern("rooms/*")
+                        .build()))
             .setIsAsteriskBody(true)
             .build();
     // The request's parent field is a `reference_resource.child_type`. It will use the configured
@@ -878,10 +891,13 @@ class DefaultValueComposerTest {
     // matches to the Room resource. It will also check the additional bindings which has
     // `{parent=users/*/profile}`, but the default binding was able to match first.
     ResourceName expected = typeStringsToResourceNames.get("showcase.googleapis.com/Room");
-    Assertions.assertEquals(
-        expected,
-        DefaultValueComposer.getMatchingResource(
-            parentField, typeStringsToResourceNames, httpBindings));
+    List<ResourceName> matchingResources =
+        DefaultValueComposer.getMatchingResources(
+            parentField,
+            typeStringsToResourceNames,
+            httpBindings,
+            ImmutableMap.of("parent", "rooms/*"));
+    Assertions.assertTrue(matchingResources.contains(expected));
   }
 
   @Test
@@ -906,9 +922,13 @@ class DefaultValueComposerTest {
                         .build()))
             .setIsAsteriskBody(true)
             .build();
-    assertNull(
-        DefaultValueComposer.getMatchingResource(
-            nameField, typeStringsToResourceNames, httpBindings));
+    List<ResourceName> matchingResources =
+        DefaultValueComposer.getMatchingResources(
+            nameField,
+            typeStringsToResourceNames,
+            httpBindings,
+            httpBindings.getPathParametersValuePatterns());
+    assertTrue(matchingResources.isEmpty());
   }
 
   @Test
@@ -934,14 +954,23 @@ class DefaultValueComposerTest {
             .setHttpVerb(HttpVerb.GET)
             .setPattern("/v1beta1/{name=users/*/profile/blurbs/*}")
             .setAdditionalPatterns(ImmutableList.of())
+            .setPathParameters(
+                ImmutableSet.of(
+                    HttpBindings.HttpBinding.builder()
+                        .setName("name")
+                        .setValuePattern("users/*/profile/blurbs/*")
+                        .build()))
             .setIsAsteriskBody(true)
             .build();
 
     // Matches with `users/{user}/profile/blurbs/{blurb}`
     ResourceName expected = typeStringsToResourceNames.get("showcase.googleapis.com/Blurb");
-    Assertions.assertEquals(
-        expected,
-        DefaultValueComposer.getMatchingResource(
-            nameField, typeStringsToResourceNames, httpBindings));
+    List<ResourceName> matchingResources =
+        DefaultValueComposer.getMatchingResources(
+            nameField,
+            typeStringsToResourceNames,
+            httpBindings,
+            httpBindings.getPathParametersValuePatterns());
+    Assertions.assertTrue(matchingResources.contains(expected));
   }
 }

@@ -2971,7 +2971,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *           .setResource(ProjectName.of("[PROJECT]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
@@ -3003,7 +3003,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *           .setResource(ProjectName.of("[PROJECT]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
@@ -3033,7 +3033,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *           .setResource(ProjectName.of("[PROJECT]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   Policy response = subscriptionAdminClient.getIamPolicy(request);
@@ -3063,7 +3063,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *           .setResource(ProjectName.of("[PROJECT]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future = subscriptionAdminClient.getIamPolicyCallable().futureCall(request);
@@ -3096,7 +3096,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *           .setResource(ProjectName.of("[PROJECT]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   TestIamPermissionsResponse response = subscriptionAdminClient.testIamPermissions(request);
@@ -3130,7 +3130,7 @@ public class SubscriptionAdminClient implements BackgroundResource {
    * try (SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *           .setResource(ProjectName.of("[PROJECT]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   ApiFuture<TestIamPermissionsResponse> future =

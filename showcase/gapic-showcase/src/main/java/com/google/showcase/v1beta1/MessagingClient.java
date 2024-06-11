@@ -1441,7 +1441,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   CreateBlurbRequest request =
    *       CreateBlurbRequest.newBuilder()
-   *           .setParent(RoomName.of("[ROOM]").toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setBlurb(Blurb.newBuilder().build())
    *           .build();
    *   Blurb response = messagingClient.createBlurb(request);
@@ -1471,7 +1471,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   CreateBlurbRequest request =
    *       CreateBlurbRequest.newBuilder()
-   *           .setParent(RoomName.of("[ROOM]").toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setBlurb(Blurb.newBuilder().build())
    *           .build();
    *   ApiFuture<Blurb> future = messagingClient.createBlurbCallable().futureCall(request);
@@ -1860,7 +1860,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   ListBlurbsRequest request =
    *       ListBlurbsRequest.newBuilder()
-   *           .setParent(RoomName.of("[ROOM]").toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -1892,7 +1892,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   ListBlurbsRequest request =
    *       ListBlurbsRequest.newBuilder()
-   *           .setParent(RoomName.of("[ROOM]").toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -1923,7 +1923,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   ListBlurbsRequest request =
    *       ListBlurbsRequest.newBuilder()
-   *           .setParent(RoomName.of("[ROOM]").toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -2072,7 +2072,7 @@ public class MessagingClient implements BackgroundResource {
    *   SearchBlurbsRequest request =
    *       SearchBlurbsRequest.newBuilder()
    *           .setQuery("query107944136")
-   *           .setParent(RoomName.of("[ROOM]").toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -2106,7 +2106,7 @@ public class MessagingClient implements BackgroundResource {
    *   SearchBlurbsRequest request =
    *       SearchBlurbsRequest.newBuilder()
    *           .setQuery("query107944136")
-   *           .setParent(RoomName.of("[ROOM]").toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -2140,7 +2140,7 @@ public class MessagingClient implements BackgroundResource {
    *   SearchBlurbsRequest request =
    *       SearchBlurbsRequest.newBuilder()
    *           .setQuery("query107944136")
-   *           .setParent(RoomName.of("[ROOM]").toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
    *           .build();
@@ -2170,7 +2170,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   StreamBlurbsRequest request =
    *       StreamBlurbsRequest.newBuilder()
-   *           .setName(RoomName.of("[ROOM]").toString())
+   *           .setName(ProfileName.of("[USER]").toString())
    *           .setExpireTime(Timestamp.newBuilder().build())
    *           .build();
    *   ServerStream<StreamBlurbsResponse> stream =
@@ -2221,7 +2221,7 @@ public class MessagingClient implements BackgroundResource {
    *       messagingClient.sendBlurbs().clientStreamingCall(responseObserver);
    *   CreateBlurbRequest request =
    *       CreateBlurbRequest.newBuilder()
-   *           .setParent(RoomName.of("[ROOM]").toString())
+   *           .setParent(ProfileName.of("[USER]").toString())
    *           .setBlurb(Blurb.newBuilder().build())
    *           .build();
    *   requestObserver.onNext(request);

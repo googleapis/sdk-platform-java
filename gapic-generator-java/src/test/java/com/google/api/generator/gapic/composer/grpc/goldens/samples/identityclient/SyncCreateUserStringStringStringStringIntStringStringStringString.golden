@@ -16,31 +16,45 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START goldensample_generated_Identity_CreateUser_async]
-import com.google.api.core.ApiFuture;
-import com.google.showcase.v1beta1.CreateUserRequest;
+// [START goldensample_generated_Identity_CreateUser_StringStringStringStringIntStringStringStringString_sync]
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.User;
 
-public class AsyncCreateUser {
+public class SyncCreateUserStringStringStringStringIntStringStringStringString {
 
   public static void main(String[] args) throws Exception {
-    asyncCreateUser();
+    syncCreateUserStringStringStringStringIntStringStringStringString();
   }
 
-  public static void asyncCreateUser() throws Exception {
+  public static void syncCreateUserStringStringStringStringIntStringStringStringString()
+      throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
     try (IdentityClient identityClient = IdentityClient.create()) {
-      CreateUserRequest request =
-          CreateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
-      ApiFuture<User> future = identityClient.createUserCallable().futureCall(request);
-      // Do something.
-      User response = future.get();
+      String displayName = "displayName1714148973";
+      String email = "email96619420";
+      String hobbyName = "hobbyName882586493";
+      String songName = "songName1535136064";
+      int weeklyFrequency = 1572999966;
+      String companyName = "companyName-508582744";
+      String title = "title110371416";
+      String subject = "subject-1867885268";
+      String artistName = "artistName629723762";
+      User response =
+          identityClient.createUser(
+              displayName,
+              email,
+              hobbyName,
+              songName,
+              weeklyFrequency,
+              companyName,
+              title,
+              subject,
+              artistName);
     }
   }
 }
-// [END goldensample_generated_Identity_CreateUser_async]
+// [END goldensample_generated_Identity_CreateUser_StringStringStringStringIntStringStringStringString_sync]

@@ -1695,7 +1695,7 @@ public class SubscriptionAdminClientTest {
 
     SetIamPolicyRequest request =
         SetIamPolicyRequest.newBuilder()
-            .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+            .setResource(ProjectName.of("[PROJECT]").toString())
             .setPolicy(Policy.newBuilder().build())
             .setUpdateMask(FieldMask.newBuilder().build())
             .build();
@@ -1724,7 +1724,7 @@ public class SubscriptionAdminClientTest {
     try {
       SetIamPolicyRequest request =
           SetIamPolicyRequest.newBuilder()
-              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+              .setResource(ProjectName.of("[PROJECT]").toString())
               .setPolicy(Policy.newBuilder().build())
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
@@ -1748,7 +1748,7 @@ public class SubscriptionAdminClientTest {
 
     GetIamPolicyRequest request =
         GetIamPolicyRequest.newBuilder()
-            .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+            .setResource(ProjectName.of("[PROJECT]").toString())
             .setOptions(GetPolicyOptions.newBuilder().build())
             .build();
 
@@ -1775,7 +1775,7 @@ public class SubscriptionAdminClientTest {
     try {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+              .setResource(ProjectName.of("[PROJECT]").toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
@@ -1793,7 +1793,7 @@ public class SubscriptionAdminClientTest {
 
     TestIamPermissionsRequest request =
         TestIamPermissionsRequest.newBuilder()
-            .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+            .setResource(ProjectName.of("[PROJECT]").toString())
             .addAllPermissions(new ArrayList<String>())
             .build();
 
@@ -1820,7 +1820,7 @@ public class SubscriptionAdminClientTest {
     try {
       TestIamPermissionsRequest request =
           TestIamPermissionsRequest.newBuilder()
-              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+              .setResource(ProjectName.of("[PROJECT]").toString())
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);

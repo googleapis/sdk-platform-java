@@ -54,7 +54,6 @@ import com.google.pubsub.v1.ProjectName;
 import com.google.pubsub.v1.RollbackSchemaRequest;
 import com.google.pubsub.v1.Schema;
 import com.google.pubsub.v1.SchemaName;
-import com.google.pubsub.v1.SnapshotName;
 import com.google.pubsub.v1.ValidateMessageRequest;
 import com.google.pubsub.v1.ValidateMessageResponse;
 import com.google.pubsub.v1.ValidateSchemaRequest;
@@ -938,7 +937,7 @@ public class SchemaServiceClientTest {
 
     SetIamPolicyRequest request =
         SetIamPolicyRequest.newBuilder()
-            .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+            .setResource(ProjectName.of("[PROJECT]").toString())
             .setPolicy(Policy.newBuilder().build())
             .setUpdateMask(FieldMask.newBuilder().build())
             .build();
@@ -967,7 +966,7 @@ public class SchemaServiceClientTest {
     try {
       SetIamPolicyRequest request =
           SetIamPolicyRequest.newBuilder()
-              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+              .setResource(ProjectName.of("[PROJECT]").toString())
               .setPolicy(Policy.newBuilder().build())
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
@@ -991,7 +990,7 @@ public class SchemaServiceClientTest {
 
     GetIamPolicyRequest request =
         GetIamPolicyRequest.newBuilder()
-            .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+            .setResource(ProjectName.of("[PROJECT]").toString())
             .setOptions(GetPolicyOptions.newBuilder().build())
             .build();
 
@@ -1018,7 +1017,7 @@ public class SchemaServiceClientTest {
     try {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+              .setResource(ProjectName.of("[PROJECT]").toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
@@ -1036,7 +1035,7 @@ public class SchemaServiceClientTest {
 
     TestIamPermissionsRequest request =
         TestIamPermissionsRequest.newBuilder()
-            .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+            .setResource(ProjectName.of("[PROJECT]").toString())
             .addAllPermissions(new ArrayList<String>())
             .build();
 
@@ -1063,7 +1062,7 @@ public class SchemaServiceClientTest {
     try {
       TestIamPermissionsRequest request =
           TestIamPermissionsRequest.newBuilder()
-              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+              .setResource(ProjectName.of("[PROJECT]").toString())
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);

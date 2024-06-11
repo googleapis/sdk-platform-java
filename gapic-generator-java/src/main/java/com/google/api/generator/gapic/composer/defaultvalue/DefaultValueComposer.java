@@ -258,15 +258,6 @@ public class DefaultValueComposer {
     return parentResources;
   }
 
-  private static Optional<ResourceName> findParentResource(
-      ResourceName childResource, List<ResourceName> resourceNames) {
-    List<ResourceName> resources = findParentResources(childResource, resourceNames);
-    if (!resources.isEmpty()) {
-      return Optional.of(resources.get(0));
-    }
-    return Optional.empty();
-  }
-
   @VisibleForTesting
   static Expr createResourceHelperValue(
       ResourceName resourceName,
@@ -276,7 +267,10 @@ public class DefaultValueComposer {
       boolean allowAnonResourceNameClass,
       HttpBindings bindings) {
     if (isChildType) {
-      resourceName = findParentResource(resourceName, resnames).orElse(resourceName);
+      List<ResourceName> parentResources = findParentResources(resourceName, resnames);
+      if (!parentResources.isEmpty()) {
+        resourceName = parentResources.get(0);
+      }
     }
 
     if (resourceName.isOnlyWildcard()) {
@@ -389,13 +383,14 @@ public class DefaultValueComposer {
         setterMethodNamePattern = field.isMap() ? "putAll%s" : "addAll%s";
       }
       Expr defaultExpr = null;
-      ResourceName matchingResource = getMatchingResource(field, resourceNames, bindings);
-      if (matchingResource != null) {
+      List<ResourceName> matchingResources =
+          getMatchingResources(field, resourceNames, bindings, valuePatterns);
+      if (!matchingResources.isEmpty()) {
         // isChildType is set to false as the matchingResource value already accounts
         // for the possible child resource (accounted for in `getMatchingResource()`).
         defaultExpr =
             createResourceHelperValue(
-                matchingResource,
+                matchingResources.get(0),
                 false,
                 new ArrayList<>(resourceNames.values()),
                 message.name(),
@@ -463,68 +458,76 @@ public class DefaultValueComposer {
    * value using {@link #createValue(Field, boolean, Map, Map, Map, HttpBindings)}. Additionally,
    * there are references to createResourceHelperValue being used elsewhere (client header samples,
    * sample code gen) which is a much larger effort to change.
+   *
+   * <p>Rationale for matching the Resource's pattern with HttpBindings: If the field is used in the
+   * path, check that the field's resource reference matches the RPC's HttpBindings. There is an
+   * edge case where an RPC's HttpBindings defined in the proto may not match a message. This is
+   * possible for Mixin RPCs if service teams configures a custom HttpBindings in the service yaml
+   * file. For example, the GetIamPolicyRequest's resource field has a resource reference to match
+   * anything (`*`). This normally works because the GetIamPolicy RPC will take in any resource
+   * (HttpBindings is defined with `{resource=**}`). But if the custom path is expected to take in a
+   * resource with a more specific path (i.e. `{resource=service/*}), it won't work unless the
+   * resource has a `service/*` pattern. This logic will try to match a resource that has the
+   * pattern `service/*`.
    */
-  static ResourceName getMatchingResource(
-      Field field, Map<String, ResourceName> resourceNames, HttpBindings bindings) {
+  static List<ResourceName> getMatchingResources(
+      Field field,
+      Map<String, ResourceName> resourceNames,
+      HttpBindings bindings,
+      Map<String, String> valuePatterns) {
     if (!field.hasResourceReference()) {
-      return null;
+      return ImmutableList.of();
     }
     String resourceTypeString = field.resourceReference().resourceTypeString();
     if (!resourceNames.containsKey(resourceTypeString)) {
-      return null;
+      return ImmutableList.of();
     }
-    List<ResourceName> matchedResources = ImmutableList.of(resourceNames.get(resourceTypeString));
-    // Use the parent resource if the field is a `child_type`. This is for certain RPCs like `List`
-    // and `Create` which have a resource reference to the parent collection.
-    if (field.resourceReference().isChildType()) {
-      // A resource may have multiple parents. Check the possibility for each parent resource
-      List<ResourceName> parentResources =
-          findParentResources(matchedResources.get(0), new ArrayList<>(resourceNames.values()));
-      if (!parentResources.isEmpty()) {
-        matchedResources = parentResources;
-      }
-    }
-
-    // Rationale for the logic below:
-    // If the field is used in the path, check that the field's resource reference matches the RPC's
-    // HttpBindings. There is an edge case where an RPC's HttpBindings defined in the proto may not
-    // match a message. This is possible for Mixin RPCs if service teams configures a custom
-    // HttpBindings in the service yaml file. For example, the GetIamPolicyRequest's resource field
-    // has a resource reference to match anything (`*`). This normally works because the
-    // GetIamPolicy RPC will take in any resource (HttpBindings is defined with `{resource=**}`).
-    // But if the custom path is expected to take in a resource with a more specific path (i.e.
-    // `{resource=service/*}), it won't work unless the resource has a `service/*` pattern. This
-    // logic will try to match a resource that has the pattern `service/*`.
+    ResourceName resourceReference = resourceNames.get(resourceTypeString);
 
     // Resource reference (google.api.resource_reference) is a string type with a field name of
     // `parent` or `name`. It won't have anything nested in the bindings (i.e. `{name.field=*}`).
     // This check is needed as a message can contain fields with valid resource references that
-    // aren't used in the path. If the field isn't used in the path, simply return the matched
-    // resource.
-    boolean isFieldUsedInPath =
-        bindings != null && bindings.getPathParametersValuePatterns().containsKey(field.name());
-    if (isFieldUsedInPath) {
-      for (ResourceName resourceName : matchedResources) {
-        // If the resource is matched as a wildcard `*`, the field's resource_reference is a
-        // wildcard. Attempt to match with a known resource.
-        if (resourceName.isOnlyWildcard()) {
-          // Attempt to find *any* resource that matches the HttpBindings
-          return resourceNames.values().stream()
-              .filter(x -> !x.isOnlyWildcard() && x.getMatchingPattern(bindings) != null)
-              .findFirst()
-              .orElse(null);
-        }
+    // aren't used in the path. Additionally, this flag only impacts HttpJson callables as gRPC
+    // does not need to match the request the callable's URL. This method is used to generate
+    // default values for gRPC callables as well but gRPC's valuePatterns map will be empty and
+    // the logic will be skipped.
+    boolean isFieldUsedInPath = bindings != null && valuePatterns.containsKey(field.name());
 
-        // If resource matches the HttpBindings, use the resource
-        if (resourceName.getMatchingPattern(bindings) != null) {
-          return resourceName;
-        }
+    // Holds the list of known resources (excluding the wildcard resource).
+    List<ResourceName> possibleResources =
+        resourceNames.values().stream()
+            .filter(x -> !x.isOnlyWildcard())
+            .collect(Collectors.toList());
+
+    if (resourceReference.isOnlyWildcard()) {
+      if (isFieldUsedInPath) {
+        // Only use resources whose pattern match the HttpBindings
+        return possibleResources.stream()
+            .filter(x -> x.getMatchingPattern(bindings) != null)
+            .collect(Collectors.toList());
       }
-      // Unable to match the possible resources with the HttpBindings
-      return null;
+      // Can with any possible known resource
+      return possibleResources;
     }
-    // If the field is not used path, then resource reference is just the one matched
-    return matchedResources.get(0);
+
+    // Narrow down the list of possibleResources
+    if (field.resourceReference().isChildType()) {
+      // Use the parent resource(s) if the field is a `child_type`. This is for certain RPCs like
+      // `List` and `Create` which have a resource reference to the parent collection(s). A resource
+      // may have multiple parents, so we must check the possibility for each parent resource.
+      possibleResources =
+          ImmutableList.copyOf(
+              findParentResources(resourceReference, new ArrayList<>(resourceNames.values())));
+    } else {
+      possibleResources = ImmutableList.of(resourceReference);
+    }
+
+    if (isFieldUsedInPath) {
+      return possibleResources.stream()
+          .filter(x -> x.getMatchingPattern(bindings) != null)
+          .collect(Collectors.toList());
+    }
+    return possibleResources;
   }
 
   public static Expr createSimpleOperationBuilderValue(String name, VariableExpr responseExpr) {

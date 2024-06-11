@@ -19,7 +19,7 @@ package com.google.showcase.v1beta1.samples;
 // [START goldensample_generated_Messaging_SearchBlurbs_LRO_async]
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.showcase.v1beta1.MessagingClient;
-import com.google.showcase.v1beta1.RoomName;
+import com.google.showcase.v1beta1.ProfileName;
 import com.google.showcase.v1beta1.SearchBlurbsMetadata;
 import com.google.showcase.v1beta1.SearchBlurbsRequest;
 import com.google.showcase.v1beta1.SearchBlurbsResponse;
@@ -40,7 +40,7 @@ public class AsyncSearchBlurbsLRO {
       SearchBlurbsRequest request =
           SearchBlurbsRequest.newBuilder()
               .setQuery("query107944136")
-              .setParent(RoomName.of("[ROOM]").toString())
+              .setParent(ProfileName.of("[USER]").toString())
               .setPageSize(883849137)
               .setPageToken("pageToken873572522")
               .build();

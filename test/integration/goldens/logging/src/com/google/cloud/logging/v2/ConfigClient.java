@@ -3650,7 +3650,9 @@ public class ConfigClient implements BackgroundResource {
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   GetCmekSettingsRequest request =
-   *       GetCmekSettingsRequest.newBuilder().setName("name3373707").build();
+   *       GetCmekSettingsRequest.newBuilder()
+   *           .setName(CmekSettingsName.ofProjectName("[PROJECT]").toString())
+   *           .build();
    *   CmekSettings response = configClient.getCmekSettings(request);
    * }
    * }</pre>
@@ -3683,7 +3685,9 @@ public class ConfigClient implements BackgroundResource {
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (ConfigClient configClient = ConfigClient.create()) {
    *   GetCmekSettingsRequest request =
-   *       GetCmekSettingsRequest.newBuilder().setName("name3373707").build();
+   *       GetCmekSettingsRequest.newBuilder()
+   *           .setName(CmekSettingsName.ofProjectName("[PROJECT]").toString())
+   *           .build();
    *   ApiFuture<CmekSettings> future = configClient.getCmekSettingsCallable().futureCall(request);
    *   // Do something.
    *   CmekSettings response = future.get();
@@ -3884,7 +3888,10 @@ public class ConfigClient implements BackgroundResource {
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   GetSettingsRequest request = GetSettingsRequest.newBuilder().setName("name3373707").build();
+   *   GetSettingsRequest request =
+   *       GetSettingsRequest.newBuilder()
+   *           .setName(SettingsName.ofProjectName("[PROJECT]").toString())
+   *           .build();
    *   Settings response = configClient.getSettings(request);
    * }
    * }</pre>
@@ -3917,7 +3924,10 @@ public class ConfigClient implements BackgroundResource {
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   GetSettingsRequest request = GetSettingsRequest.newBuilder().setName("name3373707").build();
+   *   GetSettingsRequest request =
+   *       GetSettingsRequest.newBuilder()
+   *           .setName(SettingsName.ofProjectName("[PROJECT]").toString())
+   *           .build();
    *   ApiFuture<Settings> future = configClient.getSettingsCallable().futureCall(request);
    *   // Do something.
    *   Settings response = future.get();

@@ -39,16 +39,16 @@ service Identity {
   // Creates a user.
   rpc CreateUser(CreateUserRequest) returns (User) {
     option (google.api.http) = {
-      post: "/v1beta1/{parent=users/*}"
+      post: "/v1beta1/users"
       body: "*"
     };
     option (google.api.method_signature) =
-        "parent,user.display_name,user.email";
+        "user.display_name,user.email";
     option (google.api.method_signature) =
-        "parent,user.display_name,user.email,user.age,user.nickname,user.enable_notifications,user.height_feet";
+        "user.display_name,user.email,user.age,user.nickname,user.enable_notifications,user.height_feet";
     // Test nested method arguments and ensure that order doesn't matter.
     option (google.api.method_signature) =
-        "parent,user.display_name,user.email,user.hobby.hobby_name,user.song.song_name,user.hobby.weekly_frequency,user.song.song_artist.recording_company.company_name,user.hobby.instruction_manual.title,user.hobby.instruction_manual.subject,user.song.song_artist.artist_name";
+        "user.display_name,user.email,user.hobby.hobby_name,user.song.song_name,user.hobby.weekly_frequency,user.song.song_artist.recording_company.company_name,user.hobby.instruction_manual.title,user.hobby.instruction_manual.subject,user.song.song_artist.artist_name";
   }
 
   // Retrieves the User with the given uri.
@@ -178,12 +178,8 @@ message RecordingCompany {
 // The request message for the google.showcase.v1beta1.Identity\CreateUser
 // method.
 message CreateUserRequest {
-  string parent = 1 [
-    (google.api.resource_reference).child_type = "showcase.googleapis.com/User",
-    (google.api.field_behavior) = REQUIRED
-  ];
   // The user to create.
-  User user = 2 [(google.api.field_behavior) = REQUIRED];
+  User user = 1;
 }
 
 // The request message for the google.showcase.v1beta1.Identity\GetUser
