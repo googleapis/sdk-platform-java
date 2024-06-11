@@ -17,6 +17,7 @@ set -e
 # 1. git
 # 2. gh
 # 3. docker
+# 4. mvn
 
 # The parameters of this script is:
 # 1. target_branch, the branch into which the pull request is merged.
@@ -89,6 +90,14 @@ fi
 git show "${target_branch}":"${generation_config}" > "${baseline_generation_config}"
 config_diff=$(diff "${generation_config}" "${baseline_generation_config}" || true)
 
+# install generator locally since we're using a SNAPSHOT version.
+mvn -V -B -ntp clean install -DskipTests
+
+# build image locally since we want to include latest change.
+docker build \
+  -f .cloudbuild/library_generation/library_generation.Dockerfile \
+  -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
+  .
 # run hermetic code generation docker image.
 docker run \
   --rm \
