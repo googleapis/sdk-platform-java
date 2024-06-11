@@ -53,6 +53,9 @@ public class Composer {
   }
 
   public static GapicPackageInfo composePackageInfo(GapicContext context) {
+    if (!context.containsServices()) {
+      return null;
+    }
     return addApacheLicense(ClientLibraryPackageInfoComposer.generatePackageInfo(context));
   }
 

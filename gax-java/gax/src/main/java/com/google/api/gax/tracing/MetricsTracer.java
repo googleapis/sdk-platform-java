@@ -53,7 +53,7 @@ import org.threeten.bp.Duration;
 @BetaApi
 @InternalApi
 public class MetricsTracer implements ApiTracer {
-  public static final String METHOD_NAME_ATTRIBUTE = "method_name";
+  public static final String METHOD_ATTRIBUTE = "method";
   public static final String LANGUAGE_ATTRIBUTE = "language";
   public static final String STATUS_ATTRIBUTE = "status";
   public static final String DEFAULT_LANGUAGE = "Java";
@@ -61,12 +61,13 @@ public class MetricsTracer implements ApiTracer {
       "Operation has already been completed";
   private Stopwatch attemptTimer;
   private final Stopwatch operationTimer = Stopwatch.createStarted();
+  // These are RPC specific attributes and pertain to a specific API Trace
   private final Map<String, String> attributes = new HashMap<>();
   private final MetricsRecorder metricsRecorder;
   private final AtomicBoolean operationFinished;
 
   public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {
-    this.attributes.put(METHOD_NAME_ATTRIBUTE, methodName.toString());
+    this.attributes.put(METHOD_ATTRIBUTE, methodName.toString());
     this.attributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
     this.metricsRecorder = metricsRecorder;
     this.operationFinished = new AtomicBoolean();
