@@ -29,29 +29,29 @@
  */
 package com.google.api.gax.batching;
 
-// import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
 public class BatchingSettingsTest {
 
-  //  private final BatchingSettings.Builder SETTINGS_BUILDER = BatchingSettings.newBuilder();
+  private static final BatchingSettings.Builder SETTINGS_BUILDER = BatchingSettings.newBuilder();
 
   @Test
   public void testDelayThreshold() {
-    // We are temporarily using a "manual" test to confirm the coverage of this function
     final long millis = 123;
-    java.time.Duration jtd = java.time.Duration.ofMillis(millis);
-    org.threeten.bp.Duration ttd = org.threeten.bp.Duration.ofMillis(millis);
-    BatchingSettings jtSettings =
-        BatchingSettings.newBuilder().setDelayThresholdDuration(jtd).build();
-    BatchingSettings ttSettings = BatchingSettings.newBuilder().setDelayThreshold(ttd).build();
+    final long millis2 = 345;
+    java.time.Duration jtd1 = java.time.Duration.ofMillis(millis);
+    org.threeten.bp.Duration ttd1 = org.threeten.bp.Duration.ofMillis(millis);
+    java.time.Duration jtd2 = java.time.Duration.ofMillis(millis2);
+    org.threeten.bp.Duration ttd2 = org.threeten.bp.Duration.ofMillis(millis2);
+    BatchingSettings jtSettings = SETTINGS_BUILDER.setDelayThresholdDuration(jtd1).build();
+    BatchingSettings ttSettings = SETTINGS_BUILDER.setDelayThreshold(ttd2).build();
 
-    assertEquals(jtd, jtSettings.getDelayThresholdDuration());
-    assertEquals(ttd, jtSettings.getDelayThreshold());
-    assertEquals(jtd, ttSettings.getDelayThresholdDuration());
-    assertEquals(ttd, ttSettings.getDelayThreshold());
+    assertEquals(jtd1, jtSettings.getDelayThresholdDuration());
+    assertEquals(ttd1, jtSettings.getDelayThreshold());
+    assertEquals(jtd2, ttSettings.getDelayThresholdDuration());
+    assertEquals(ttd2, ttSettings.getDelayThreshold());
 
     //    testDurationMethod(
     //        123l,
