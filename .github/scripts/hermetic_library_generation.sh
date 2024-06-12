@@ -2,10 +2,10 @@
 set -e
 # This script should be run at the root of the repository.
 # This script is used to, when a pull request changes the generation
-# configuration (generation_config.yaml by default):
+# configuration (generation_config.yaml by default) or Dockerfile:
 # 1. Find whether the last commit in this pull request contains changes to
-# the generation configuration and exit early if it doesn't have such a change
-# since the generation result would be the same.
+# the generation configuration and Dockerfile and exit early if it doesn't have
+# such a change since the generation result would be the same.
 # 2. Compare generation configurations in the current branch (with which the
 # pull request associated) and target branch (into which the pull request is
 # merged);
@@ -17,6 +17,7 @@ set -e
 # 1. git
 # 2. gh
 # 3. docker
+# 4. mvn
 
 # The parameters of this script is:
 # 1. target_branch, the branch into which the pull request is merged.
@@ -73,6 +74,7 @@ fi
 
 workspace_name="/workspace"
 baseline_generation_config="baseline_generation_config.yaml"
+docker_file="library_generation.Dockerfile"
 message="chore: generate libraries at $(date)"
 
 git checkout "${target_branch}"
@@ -80,14 +82,22 @@ git checkout "${current_branch}"
 # if the last commit doesn't contain changes to generation configuration,
 # do not generate again as the result will be the same.
 change_of_last_commit="$(git diff-tree --no-commit-id --name-only HEAD~1..HEAD -r)"
-if [[ ! ("${change_of_last_commit}" == *"${generation_config}"*) ]]; then
-    echo "The last commit doesn't contain any changes to the generation_config.yaml, skipping the whole generation process." || true
+if [[ ! ("${change_of_last_commit}" == *"${generation_config}"* || "${change_of_last_commit}" == *"${docker_file}"*) ]]; then
+    echo "The last commit doesn't contain any changes to the generation_config.yaml or Dockerfile, skipping the whole generation process." || true
     exit 0
 fi
 # copy generation configuration from target branch to current branch.
 git show "${target_branch}":"${generation_config}" > "${baseline_generation_config}"
 config_diff=$(diff "${generation_config}" "${baseline_generation_config}" || true)
 
+# install generator locally since we're using a SNAPSHOT version.
+mvn -V -B -ntp clean install -DskipTests
+
+# build image locally since we want to include latest change.
+docker build \
+  -f .cloudbuild/library_generation/library_generation.Dockerfile \
+  -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
+  .
 # run hermetic code generation docker image.
 docker run \
   --rm \
@@ -103,7 +113,7 @@ rm -rdf output googleapis "${baseline_generation_config}"
 git add --all -- ':!pr_description.txt'
 changed_files=$(git diff --cached --name-only)
 if [[ "${changed_files}" == "" ]]; then
-    echo "There is no generated code change with the generation config change ${config_diff}."
+    echo "There is no generated code change with the generation config and Dockerfile change ${config_diff}."
     echo "Skip committing to the pull request."
     exit 0
 fi
