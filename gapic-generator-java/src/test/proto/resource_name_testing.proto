@@ -110,7 +110,6 @@ message Resource {
 }
 
 message GetResourceRequest {
-  // The name of the book to retrieve.
   // Format: parentResources/{parentResource}/resources/{resource}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -120,7 +119,6 @@ message GetResourceRequest {
 }
 
 message ListResourcesRequest {
-  // The parent, which owns this collection of books.
   // Format: parentResources/{parentResource}
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -140,8 +138,7 @@ message ListResourcesResponse {
 }
 
 message NoMatchResourceRequest {
-  // The name of the book to retrieve.
-  // Format: publishers/{publisher}/books/{book}
+  // Format: parentResources/{parentResource}/resources/{resource}
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
     (google.api.resource_reference) = {
