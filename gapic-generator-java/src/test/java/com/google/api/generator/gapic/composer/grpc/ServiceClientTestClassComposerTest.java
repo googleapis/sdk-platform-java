@@ -20,6 +20,7 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.protoloader.GrpcTestProtoLoader;
 import java.util.stream.Stream;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -36,7 +37,8 @@ class ServiceClientTestClassComposerTest {
         Arguments.of("TestingClientTest", GrpcTestProtoLoader.instance().parseShowcaseTesting(), 0),
         Arguments.of(
             "SubscriberClientTest", GrpcTestProtoLoader.instance().parsePubSubPublisher(), 1),
-        Arguments.of("LoggingClientTest", GrpcTestProtoLoader.instance().parseLogging(), 0));
+        Arguments.of("LoggingClientTest", GrpcTestProtoLoader.instance().parseLogging(), 0),
+        Arguments.of("ResourceNameTest", GrpcTestProtoLoader.instance().parseResourceName(), 0));
   }
 
   @ParameterizedTest

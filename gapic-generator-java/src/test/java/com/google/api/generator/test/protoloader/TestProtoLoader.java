@@ -39,6 +39,7 @@ import com.google.logging.v2.LoggingProto;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.pubsub.v1.PubsubProto;
+import com.google.resource.name.test.ResourceNameTestOuterClass;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.IdentityOuterClass;
 import com.google.showcase.v1beta1.MessagingOuterClass;
@@ -47,6 +48,7 @@ import com.google.testdata.v1.DeprecatedServiceOuterClass;
 import com.google.testgapic.v1beta1.NestedMessageProto;
 import com.google.types.testing.TypesTestingProto;
 import google.cloud.CommonResources;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -455,6 +457,42 @@ public class TestProtoLoader {
         .setHelperResourceNames(outputResourceNames)
         .setTransport(transport)
         .build();
+  }
+
+  public GapicContext parseResourceName() {
+    FileDescriptor serviceFileDescriptor = ResourceNameTestOuterClass.getDescriptor();
+    ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
+    assertEquals(serviceDescriptor.getName(), "ResourceName");
+
+    List<FileDescriptor> protoFiles = Arrays.asList(serviceFileDescriptor);
+
+    Map<String, ResourceName> resourceNames = new HashMap<>();
+    Map<String, Message> messageTypes = new HashMap<>();
+    for (FileDescriptor fileDescriptor : protoFiles) {
+      resourceNames.putAll(Parser.parseResourceNames(fileDescriptor));
+      messageTypes.putAll(Parser.parseMessages(fileDescriptor));
+    }
+
+    // Additional resource names.
+    FileDescriptor commonResourcesFileDescriptor = CommonResources.getDescriptor();
+    resourceNames.putAll(Parser.parseResourceNames(commonResourcesFileDescriptor));
+
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+            Parser.parseService(
+                    serviceFileDescriptor,
+                    messageTypes,
+                    resourceNames,
+                    Optional.empty(),
+                    outputResourceNames);
+
+    return GapicContext.builder()
+            .setMessages(messageTypes)
+            .setResourceNames(resourceNames)
+            .setServices(services)
+            .setHelperResourceNames(outputResourceNames)
+            .setTransport(transport)
+            .build();
   }
 
   public String getTestFilesDirectory() {
