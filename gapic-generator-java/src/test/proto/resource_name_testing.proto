@@ -30,8 +30,10 @@ service ResourceName {
   // for "show").
   option (google.api.default_host) = "localhost:7469";
 
-  // RPC to test that the resource's pattern matches the HttpBinding
-  // Expectation is that gRPC and HttpJson match with the Resource resource
+  // RPC to test that the resource's pattern matches the HttpBinding.
+  // Expectation is that gRPC and HttpJson match with the Resource resource.
+  // For gRPC, matching the bindings is not required, so it will use the direct
+  // resource reference as it is known.
   rpc GetResource(GetResourceRequest) returns (Resource) {
     option (google.api.http) = {
       get: "/v1/{name=parentResources/*/resources/*}"
@@ -40,7 +42,9 @@ service ResourceName {
   }
 
   // RPC to test that the resource's parent pattern matches the HttpBinding
-  // Expectation is that gRPC and HttpJson match with the ParentResource resource
+  // Expectation is that gRPC and HttpJson match with the ParentResource resource as
+  // the request's parent field is child_type and ParentResource is the parent to
+  // Resource
   rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
     option (google.api.http) = {
       get: "/v1/{parent=parentResources/*}/resources"
@@ -49,8 +53,10 @@ service ResourceName {
   }
 
   // RPC to test that the resource's pattern matches the HttpBinding
-  // Expectation is that gRPC and HttpJson match with the Resource resource
-  // Only one test method is generated since there is no method signature
+  // Expectation is that gRPC and HttpJson match with the Resource resource.
+  // For gRPC, matching the bindings is not required, so it will use the direct
+  // resource reference as it is known. Only one test method is generated since
+  // there is no method signature.
   rpc GetResourceNoMethodSignature(GetResourceRequest) returns (Resource) {
     option (google.api.http) = {
       get: "/v1/{name=parentResources/*/resources/*}"
@@ -58,8 +64,9 @@ service ResourceName {
   }
 
   // RPC to test that the resource's parent pattern matches the HttpBinding
-  // Expectation is that gRPC and HttpJson match with the ParentResource resource
-  // Only one test method is generated since there is no method signature
+  // Expectation is that gRPC and HttpJson match with the ParentResource resource  as
+  // the request's parent field is child_type and ParentResource is the parent to
+  // Resource. Only one test method is generated since there is no method signature
   rpc ListResourcesNoMethodSignature(ListResourcesRequest) returns (ListResourcesResponse) {
     option (google.api.http) = {
       get: "/v1/{parent=parentResources/*}"
@@ -67,8 +74,8 @@ service ResourceName {
   }
 
   // RPC to test that the resource's pattern does not match
-  // Expectation is that both gRPC matches with the Resource resource and HttpJson
-  // generates a string value that matches the bindings
+  // Expectation is that both gRPC matches with the Resource resource (as matching with bindings is
+  // not needed for gRPC) and HttpJson generates a string value that matches the bindings
   rpc NoMatchResource(NoMatchResourceRequest) returns (NoMatchResourceResponse) {
     option (google.api.http) = {
       get: "/v1/{name=does/*/not/*/match}/resource"
@@ -76,21 +83,22 @@ service ResourceName {
   }
 
   // RPC to test that the resource's pattern, but no HttpBindings
-  // Expectation is that gRPC matches with the Resource resource, but HttpJson does not
-  // generate a test as there are no HttpBindings
+  // Expectation is that gRPC matches with the Resource resource (as there is a direct resource
+  // reference), but HttpJson does not generate a test as there are no HttpBindings
   rpc NoBindings(NoMatchResourceRequest) returns (NoMatchResourceResponse);
 
   // RPC to test that the a wildcard resource reference will match with any known resource
-  // Expectation is that both gRPC and HttpJson match with any known resource
+  // as long as the bindings are not more restrictive. Expectation is that both gRPC and HttpJson
+  // match with any known resource as the bindings are (**)
   rpc WildcardResourceReference(WildcardResourceRequest) returns (WildcardResourceResponse) {
     option (google.api.http) = {
       get: "/v1/{name=**}/resource"
     };
   }
 
-  // RPC to test that the a wildcard resource reference will match with any known resource
-  // Expectation is that both gRPC matches with any known resource and HttpJson matches with
-  // the Resource resource
+  // RPC to test that the a wildcard resource reference will match with any known resource.
+  // Expectation is that both gRPC matches with any known resource (as matching with bindings is not
+  // needed for gRPC) and HttpJson matches with the Resource resource
   rpc WildcardResourceReferenceStrictBindings(WildcardResourceRequest) returns (WildcardResourceResponse) {
     option (google.api.http) = {
       get: "/v1/{name=parentResources/*/resources/*}"
