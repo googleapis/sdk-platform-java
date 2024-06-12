@@ -48,7 +48,8 @@ class ServiceClientTestClassComposerTest {
   void generateResourceNameClasses() {
     GapicContext context = RestTestProtoLoader.instance().parseResourceName();
     Service resourceNameService = context.services().get(0);
-    GapicClass clazz = ServiceClientTestClassComposer.instance().generate(context, resourceNameService);
+    GapicClass clazz =
+        ServiceClientTestClassComposer.instance().generate(context, resourceNameService);
 
     String goldenFileName = "HttpJsonResourceNameTest.golden";
     JavaWriterVisitor visitor = new JavaWriterVisitor();

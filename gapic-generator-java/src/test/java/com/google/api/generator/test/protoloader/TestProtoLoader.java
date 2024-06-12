@@ -48,7 +48,6 @@ import com.google.testdata.v1.DeprecatedServiceOuterClass;
 import com.google.testgapic.v1beta1.NestedMessageProto;
 import com.google.types.testing.TypesTestingProto;
 import google.cloud.CommonResources;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -479,20 +478,20 @@ public class TestProtoLoader {
 
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-            Parser.parseService(
-                    serviceFileDescriptor,
-                    messageTypes,
-                    resourceNames,
-                    Optional.empty(),
-                    outputResourceNames);
+        Parser.parseService(
+            serviceFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
 
     return GapicContext.builder()
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setServices(services)
-            .setHelperResourceNames(outputResourceNames)
-            .setTransport(transport)
-            .build();
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
   }
 
   public String getTestFilesDirectory() {
