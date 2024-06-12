@@ -29,14 +29,14 @@
  */
 package com.google.api.gax.batching;
 
-//import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
+// import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
 public class BatchingSettingsTest {
 
-//  private final BatchingSettings.Builder SETTINGS_BUILDER = BatchingSettings.newBuilder();
+  //  private final BatchingSettings.Builder SETTINGS_BUILDER = BatchingSettings.newBuilder();
 
   @Test
   public void testDelayThreshold() {
@@ -44,7 +44,8 @@ public class BatchingSettingsTest {
     final long millis = 123;
     java.time.Duration jtd = java.time.Duration.ofMillis(millis);
     org.threeten.bp.Duration ttd = org.threeten.bp.Duration.ofMillis(millis);
-    BatchingSettings jtSettings = BatchingSettings.newBuilder().setDelayThresholdDuration(jtd).build();
+    BatchingSettings jtSettings =
+        BatchingSettings.newBuilder().setDelayThresholdDuration(jtd).build();
     BatchingSettings ttSettings = BatchingSettings.newBuilder().setDelayThreshold(ttd).build();
 
     assertEquals(jtd, jtSettings.getDelayThresholdDuration());
