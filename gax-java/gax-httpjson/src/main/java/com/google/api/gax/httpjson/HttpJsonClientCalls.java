@@ -60,7 +60,7 @@ class HttpJsonClientCalls {
       if (callOptions.getTimeout() == null
           || httpJsonContext
                   .getTimeoutDuration()
-                  .compareTo(java.time.Duration.ofMillis(callOptions.getTimeout().toMillis()))
+                  .compareTo(java.time.Duration.ofMillis(callOptions.getTimeoutDuration().toMillis()))
               < 0) {
         callOptions =
             callOptions
