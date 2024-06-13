@@ -18,6 +18,7 @@ from pathlib import Path
 from library_generation.utils.proto_path_utils import (
     find_versioned_proto_path,
     remove_version_from,
+    find_version_in_proto_path,
 )
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -48,3 +49,11 @@ class ProtoPathsUtilsTest(unittest.TestCase):
     def test_remove_version_from_returns_self(self):
         proto_path = "google/cloud/aiplatform"
         self.assertEqual("google/cloud/aiplatform", remove_version_from(proto_path))
+
+    def test_find_version_proto_path_returns_version(self):
+        proto_path = "google/cloud/aiplatform/v1beta"
+        self.assertEqual("v1beta", find_version_in_proto_path(proto_path))
+
+    def test_find_version_proto_path_returns_none(self):
+        proto_path = "google/cloud/aiplatform"
+        self.assertIsNone(find_version_in_proto_path(proto_path))
