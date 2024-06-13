@@ -57,10 +57,11 @@ class HttpJsonClientCalls {
       // inside the HttpJsonCallOptions
       // Note: There is manual conversion between threetenbp's Duration and java.util.Duration
       // This is temporary here as we plan to migrate to java.util.Duration
-      if (callOptions.getTimeout() == null
+      if (callOptions.getTimeoutDuration() == null
           || httpJsonContext
                   .getTimeoutDuration()
-                  .compareTo(java.time.Duration.ofMillis(callOptions.getTimeoutDuration().toMillis()))
+                  .compareTo(
+                      java.time.Duration.ofMillis(callOptions.getTimeoutDuration().toMillis()))
               < 0) {
         callOptions =
             callOptions
