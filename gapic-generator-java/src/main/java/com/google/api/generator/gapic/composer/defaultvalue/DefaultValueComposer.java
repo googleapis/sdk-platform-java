@@ -470,6 +470,7 @@ public class DefaultValueComposer {
    * resource has a `service/*` pattern. This logic will try to match a resource that has the
    * pattern `service/*`.
    */
+  @VisibleForTesting
   static List<ResourceName> getMatchingResources(
       Field field,
       Map<String, ResourceName> resourceNames,
