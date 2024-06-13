@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.batching;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 
 import org.junit.jupiter.api.Test;
 
@@ -39,25 +39,11 @@ public class BatchingSettingsTest {
 
   @Test
   public void testDelayThreshold() {
-    final long millis = 123;
-    final long millis2 = 345;
-    java.time.Duration jtd1 = java.time.Duration.ofMillis(millis);
-    org.threeten.bp.Duration ttd1 = org.threeten.bp.Duration.ofMillis(millis);
-    java.time.Duration jtd2 = java.time.Duration.ofMillis(millis2);
-    org.threeten.bp.Duration ttd2 = org.threeten.bp.Duration.ofMillis(millis2);
-    BatchingSettings jtSettings = SETTINGS_BUILDER.setDelayThresholdDuration(jtd1).build();
-    BatchingSettings ttSettings = SETTINGS_BUILDER.setDelayThreshold(ttd2).build();
-
-    assertEquals(jtd1, jtSettings.getDelayThresholdDuration());
-    assertEquals(ttd1, jtSettings.getDelayThreshold());
-    assertEquals(jtd2, ttSettings.getDelayThresholdDuration());
-    assertEquals(ttd2, ttSettings.getDelayThreshold());
-
-    //    testDurationMethod(
-    //        123l,
-    //        jt -> SETTINGS_BUILDER.setDelayThresholdDuration(jt).build(),
-    //        tt -> SETTINGS_BUILDER.setDelayThreshold(tt).build(),
-    //        o -> o.getDelayThresholdDuration(),
-    //        o -> o.getDelayThreshold());
+    testDurationMethod(
+        123l,
+        jt -> SETTINGS_BUILDER.setDelayThresholdDuration(jt).build(),
+        tt -> SETTINGS_BUILDER.setDelayThreshold(tt).build(),
+        o -> o.getDelayThresholdDuration(),
+        o -> o.getDelayThreshold());
   }
 }
