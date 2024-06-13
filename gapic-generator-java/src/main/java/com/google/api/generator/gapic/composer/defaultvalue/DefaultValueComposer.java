@@ -496,7 +496,7 @@ public class DefaultValueComposer {
     // Holds the list of known resources (excluding the wildcard resource).
     List<ResourceName> possibleResources =
         resourceNames.values().stream()
-            .filter(x -> !x.isOnlyWildcard())
+            .filter(resourceName -> !resourceName.isOnlyWildcard())
             .collect(Collectors.toList());
 
     if (resourceReference.isOnlyWildcard()) {
