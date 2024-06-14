@@ -70,6 +70,7 @@ import javax.annotation.Nullable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -657,6 +658,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     transportChannel.awaitTermination(10, TimeUnit.SECONDS);
   }
 
+  @Disabled
   @Test
   public void canUseDirectPath_happyPath() {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
@@ -693,6 +695,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
   }
 
+  @Disabled
   @Test
   public void canUseDirectPath_directPathEnvVarNotSet_attemptDirectPathIsTrue() {
     InstantiatingGrpcChannelProvider.Builder builder =

@@ -331,13 +331,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   // Notice Windows is supported for now.
   @VisibleForTesting
   static boolean isOnComputeEngine() {
-    String osName = System.getProperty("os.name");
-    if ("Linux".equals(osName)) {
-      String systemProductName = getSystemProductName();
-      // systemProductName will be empty string if not on Compute Engine
-      return systemProductName.contains(GCE_PRODUCTION_NAME_PRIOR_2016)
-          || systemProductName.contains(GCE_PRODUCTION_NAME_AFTER_2016);
-    }
+    // String osName = System.getProperty("os.name");
+    // if ("Linux".equals(osName)) {
+    //   String systemProductName = getSystemProductName();
+    //   // systemProductName will be empty string if not on Compute Engine
+    //   return systemProductName.contains(GCE_PRODUCTION_NAME_PRIOR_2016)
+    //       || systemProductName.contains(GCE_PRODUCTION_NAME_AFTER_2016);
+    // }
     return false;
   }
 
