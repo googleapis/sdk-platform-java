@@ -25,10 +25,10 @@ jobs:
       - run: mvn -version
       - name: Install
         run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -T 1C
-      - name: Create issue if previous step fails
-        if: ${{ failure() }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Create issue if previous step fails
+      #   if: ${{ failure() }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # run: |
         #   gh issue create \
         #     --title "Nightly build for Java ${{ matrix.java }} on ${{ matrix.os }} failed." \
