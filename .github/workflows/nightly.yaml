@@ -29,10 +29,10 @@ jobs:
         if: ${{ failure() }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh issue create \
-            --title "Nightly build for Java ${{ matrix.java }} on ${{ matrix.os }} failed." \
-            --body "The build has failed : https://github.com/googleapis/gapic-generator-java/actions/runs/${GITHUB_RUN_ID}"
+        # run: |
+        #   gh issue create \
+        #     --title "Nightly build for Java ${{ matrix.java }} on ${{ matrix.os }} failed." \
+        #     --body "The build has failed : https://github.com/googleapis/gapic-generator-java/actions/runs/${GITHUB_RUN_ID}"
   nightly-java8: # Compile with JDK 11. Run tests with JDK 8.
     strategy:
       fail-fast: false
