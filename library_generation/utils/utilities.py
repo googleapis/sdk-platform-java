@@ -274,6 +274,8 @@ def generate_postprocessing_prerequisite_files(
         repo_metadata["rpc_documentation"] = library.rpc_documentation
     if library.extra_versioned_modules:
         repo_metadata["extra_versioned_modules"] = library.extra_versioned_modules
+    if library.recommended_package:
+        repo_metadata["recommended_package"] = library.recommended_package
 
     # generate .repo-meta.json
     json_file = ".repo-metadata.json"

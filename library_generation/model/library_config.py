@@ -48,6 +48,7 @@ class LibraryConfig:
         cloud_api: Optional[bool] = True,
         requires_billing: Optional[bool] = True,
         extra_versioned_modules: Optional[str] = None,
+        recommended_package: Optional[str] = None,
     ):
         self.api_shortname = api_shortname
         self.api_description = api_description
@@ -72,6 +73,7 @@ class LibraryConfig:
         self.cloud_api = cloud_api
         self.requires_billing = requires_billing
         self.extra_versioned_modules = extra_versioned_modules
+        self.recommended_package = recommended_package
 
     def get_library_name(self) -> str:
         """
