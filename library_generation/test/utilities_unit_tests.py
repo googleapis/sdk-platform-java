@@ -40,8 +40,8 @@ library_1 = LibraryConfig(
     library_name="bare-metal-solution",
     rest_documentation="https://cloud.google.com/bare-metal/docs/reference/rest",
     rpc_documentation="https://cloud.google.com/bare-metal/docs/reference/rpc",
-    recommended_package='com.google.example',
-    min_java_version=8
+    recommended_package="com.google.example",
+    min_java_version=8,
 )
 library_2 = LibraryConfig(
     api_shortname="secretmanager",
@@ -187,7 +187,9 @@ class UtilitiesTest(unittest.TestCase):
         file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
         )
-        self.__remove_postprocessing_prerequisite_files(path=library_path, is_monorepo=False)
+        self.__remove_postprocessing_prerequisite_files(
+            path=library_path, is_monorepo=False
+        )
 
     def test_generate_postprocessing_prerequisite_files_monorepo_success(self):
         library_path = self.__setup_postprocessing_prerequisite_files(combination=2)
@@ -321,7 +323,9 @@ class UtilitiesTest(unittest.TestCase):
         )
 
     @staticmethod
-    def __remove_postprocessing_prerequisite_files(path: str, is_monorepo: bool = True) -> None:
+    def __remove_postprocessing_prerequisite_files(
+        path: str, is_monorepo: bool = True
+    ) -> None:
         os.remove(f"{path}/.repo-metadata.json")
         os.remove(f"{path}/owlbot.py")
         if is_monorepo:
