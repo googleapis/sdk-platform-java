@@ -26,5 +26,7 @@ deep-copy-regex:
     dest: "/owl-bot-staging/java-iam/$1/grpc-google-iam-$1/src"
   - source: "/google/iam/(v.*)/.*-java/proto-google-.*/src"
     dest: "/owl-bot-staging/java-iam/$1/proto-google-iam-$1/src"
+  - source: "/google/iam/(v.*)/logging/.*-java/proto-google-.*/src"
+    dest: "/owl-bot-staging/java-iam/$1/proto-google-iam-$1/src"
 
 api-name: iam
