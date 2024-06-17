@@ -276,6 +276,8 @@ def generate_postprocessing_prerequisite_files(
         repo_metadata["extra_versioned_modules"] = library.extra_versioned_modules
     if library.recommended_package:
         repo_metadata["recommended_package"] = library.recommended_package
+    if library.min_java_version:
+        repo_metadata["min_java_version"] = library.min_java_version
 
     # generate .repo-meta.json
     json_file = ".repo-metadata.json"
