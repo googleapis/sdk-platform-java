@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import re
-from typing import Optional
 
 
 def remove_version_from(proto_path: str) -> str:
@@ -46,11 +45,3 @@ def find_versioned_proto_path(proto_path: str) -> str:
             idx = proto_path.find(version)
             return proto_path[:idx] + version
     return proto_path
-
-
-def find_version_in_proto_path(proto_path: str) -> Optional[str]:
-    version_regex = re.compile(r"^v[1-9].*")
-    for directory in proto_path.split("/"):
-        if version_regex.search(directory):
-            return directory
-    return None
