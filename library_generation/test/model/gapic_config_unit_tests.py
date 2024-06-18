@@ -14,53 +14,109 @@
 import unittest
 
 from library_generation.model.gapic_config import GapicConfig
-from library_generation.model.library_config import LibraryConfig
 
 
-class LibraryConfigTest(unittest.TestCase):
-    def test_get_library_returns_library_name(self):
-        library = LibraryConfig(
-            api_shortname="secret",
-            name_pretty="",
-            product_documentation="",
-            api_description="",
-            gapic_configs=list(),
-            library_name="secretmanager",
-        )
-        self.assertEqual("secretmanager", library.get_library_name())
+class GapicConfigTest(unittest.TestCase):
+    def test_get_version_returns_none(self):
+        self.assertIsNone(GapicConfig(proto_path="example/dir1/dir2").get_version())
 
-    def test_get_library_returns_api_shortname(self):
-        library = LibraryConfig(
-            api_shortname="secret",
-            name_pretty="",
-            product_documentation="",
-            api_description="",
-            gapic_configs=list(),
-        )
-        self.assertEqual("secret", library.get_library_name())
-
-    def test_get_sorted_gapic_configs_returns_correct_order(self):
-        v1beta1 = GapicConfig(proto_path="google/spanner/v1beta1")
-        v1 = GapicConfig(proto_path="google/spanner/v1")
-        v1alpha1 = GapicConfig(proto_path="google/spanner/v1alpha")
-        v2 = GapicConfig(proto_path="google/spanner/v2")
-        admin_v2 = GapicConfig(proto_path="google/spanner/admin/v2")
-        non_versioned = GapicConfig(proto_path="google/spanner/type")
-        library = LibraryConfig(
-            api_shortname="secret",
-            name_pretty="",
-            product_documentation="",
-            api_description="",
-            gapic_configs=[v1alpha1, v1, v2, admin_v2, non_versioned, v1beta1],
+    def test_get_version_returns_non_stable_version(self):
+        self.assertEqual(
+            "v2p2beta1",
+            GapicConfig(proto_path="example/dir1/dir2/v2p2beta1").get_version(),
         )
         self.assertEqual(
-            [
-                v2,
-                v1,
-                admin_v2,
-                v1beta1,
-                v1alpha1,
-                non_versioned,
-            ],
-            library.get_sorted_gapic_configs(),
+            "v2beta1",
+            GapicConfig(proto_path="example/dir1/dir2/v2beta1").get_version(),
+        )
+
+    def test_get_version_returns_stable_version(self):
+        self.assertEqual(
+            "v20",
+            GapicConfig(proto_path="example/dir1/dir2/v20").get_version(),
+        )
+
+    def test_is_stable_with_no_version_returns_false(self):
+        self.assertFalse(
+            GapicConfig(proto_path="example/dir1/dir2/non_version").is_stable(),
+        )
+
+    def test_is_stable_with_non_stable_version_returns_false(self):
+        self.assertFalse(
+            GapicConfig(proto_path="example/dir1/dir2/v20alpha").is_stable(),
+        )
+        self.assertFalse(
+            GapicConfig(proto_path="example/dir1/dir2/v20beta2").is_stable(),
+        )
+
+    def test_is_stable_with_stable_version_returns_true(self):
+        self.assertTrue(
+            GapicConfig(proto_path="example/dir1/dir2/v30").is_stable(),
+        )
+
+    def test_compare_configs_without_a_version(self):
+        config_len_3 = GapicConfig(proto_path="example/dir1/dir2")
+        config_len_4 = GapicConfig(proto_path="example/dir1/dir2/dir3")
+        self.assertLess(
+            config_len_3,
+            config_len_4,
+            "config_len_3 should be smaller since it has a lower depth.",
+        )
+
+    def test_compare_configs_only_one_has_a_stable_version(self):
+        versioned_config = GapicConfig(proto_path="example/dir1/dir2/dir3/dir4/v1")
+        non_versioned_config = GapicConfig(proto_path="example/dir1/dir2/dir3")
+        self.assertLess(
+            versioned_config,
+            non_versioned_config,
+            "versioned_config should be smaller since it has a version.",
+        )
+
+    def test_compare_configs_only_one_has_a_non_stable_version(self):
+        non_stable_versioned_config = GapicConfig(
+            proto_path="example/dir1/dir2/dir3/dir4/v1beta"
+        )
+        non_versioned_config = GapicConfig(proto_path="example/dir1/dir2/dir3")
+        self.assertLess(
+            non_stable_versioned_config,
+            non_versioned_config,
+            "non_stable_versioned_config should be smaller since it has a version.",
+        )
+
+    def test_compare_configs_one_has_non_stable_and_one_has_stable_version(self):
+        stable_versioned_config = GapicConfig(
+            proto_path="example/dir1/dir2/dir3/dir4/v1"
+        )
+        non_stable_versioned_config = GapicConfig(proto_path="example/dir1/dir2/v2beta")
+        self.assertLess(
+            stable_versioned_config,
+            non_stable_versioned_config,
+            "stable_versioned_config should be smaller since it has a stable version.",
+        )
+
+    def test_compare_configs_two_have_non_stable_version(self):
+        v3p2beta = GapicConfig(proto_path="example/dir1/dir2/dir3/dir4/v3p2beta")
+        v2p4beta = GapicConfig(proto_path="example/dir1/dir2/v2p4beta")
+        self.assertLess(
+            v3p2beta,
+            v2p4beta,
+            "v3p2beta should be smaller since it has a higher version.",
+        )
+
+    def test_compare_configs_two_have_stable_version_different_depth(self):
+        v3 = GapicConfig(proto_path="example/dir1/dir2/v3")
+        v4 = GapicConfig(proto_path="example/dir1/dir2/dir3/dir4/v4")
+        self.assertLess(
+            v3,
+            v4,
+            "v3 should be smaller since it has lower depth",
+        )
+
+    def test_compare_configs_two_have_stable_version_same_depth(self):
+        v4 = GapicConfig(proto_path="example/dir1/dir2/v4")
+        v3 = GapicConfig(proto_path="example/dir1/dir2/v3")
+        self.assertLess(
+            v4,
+            v3,
+            "v4 should be smaller since it has a higher version",
         )
