@@ -141,6 +141,8 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
             extra_versioned_modules=__optional(
                 library, "extra_versioned_modules", None
             ),
+            recommended_package=__optional(library, "recommended_package", None),
+            min_java_version=__optional(library, "min_java_version", None),
         )
         parsed_libraries.append(new_library)
 

@@ -15,5 +15,7 @@
   "requires_billing": true,
   "rest_documentation": "https://cloud.google.com/bare-metal/docs/reference/rest",
   "rpc_documentation": "https://cloud.google.com/bare-metal/docs/reference/rpc",
-  "extra_versioned_modules": "test-module"
+  "extra_versioned_modules": "test-module",
+  "recommended_package": "com.google.example",
+  "min_java_version": 8
 }

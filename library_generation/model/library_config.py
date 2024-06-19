@@ -48,6 +48,8 @@ class LibraryConfig:
         cloud_api: Optional[bool] = True,
         requires_billing: Optional[bool] = True,
         extra_versioned_modules: Optional[str] = None,
+        recommended_package: Optional[str] = None,
+        min_java_version: Optional[int] = None,
     ):
         self.api_shortname = api_shortname
         self.api_description = api_description
@@ -72,6 +74,8 @@ class LibraryConfig:
         self.cloud_api = cloud_api
         self.requires_billing = requires_billing
         self.extra_versioned_modules = extra_versioned_modules
+        self.recommended_package = recommended_package
+        self.min_java_version = min_java_version
 
     def get_library_name(self) -> str:
         """
@@ -105,6 +109,8 @@ class LibraryConfig:
             and self.cloud_api == other.cloud_api
             and self.requires_billing == other.requires_billing
             and self.extra_versioned_modules == other.extra_versioned_modules
+            and self.recommended_package == other.recommended_package
+            and self.min_java_version == other.min_java_version
         )
 
     def __hash__(self):
@@ -134,6 +140,8 @@ class LibraryConfig:
                     self.cloud_api,
                     self.requires_billing,
                     self.extra_versioned_modules,
+                    self.recommended_package,
+                    self.min_java_version,
                 ]
                 + [config.proto_path for config in self.gapic_configs]
             ).encode("utf-8")

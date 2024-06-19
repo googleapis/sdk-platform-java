@@ -40,6 +40,8 @@ library_1 = LibraryConfig(
     library_name="bare-metal-solution",
     rest_documentation="https://cloud.google.com/bare-metal/docs/reference/rest",
     rpc_documentation="https://cloud.google.com/bare-metal/docs/reference/rpc",
+    recommended_package="com.google.example",
+    min_java_version=8,
 )
 library_2 = LibraryConfig(
     api_shortname="secretmanager",
@@ -167,8 +169,8 @@ class UtilitiesTest(unittest.TestCase):
         # print() appends a `\n` each time it's called
         self.assertEqual(test_input + "\n", result)
 
-    def test_generate_prerequisite_files_non_monorepo_success(self):
-        library_path = self.__setup_prerequisite_files(
+    def test_generate_postprocessing_prerequisite_files_non_monorepo_success(self):
+        library_path = self.__setup_postprocessing_prerequisite_files(
             combination=1, library_type="GAPIC_COMBO"
         )
 
@@ -185,10 +187,12 @@ class UtilitiesTest(unittest.TestCase):
         file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
         )
-        self.__remove_prerequisite_files(path=library_path, is_monorepo=False)
+        self.__remove_postprocessing_prerequisite_files(
+            path=library_path, is_monorepo=False
+        )
 
-    def test_generate_prerequisite_files_monorepo_success(self):
-        library_path = self.__setup_prerequisite_files(combination=2)
+    def test_generate_postprocessing_prerequisite_files_monorepo_success(self):
+        library_path = self.__setup_postprocessing_prerequisite_files(combination=2)
 
         file_comparator.compare_files(
             f"{library_path}/.repo-metadata.json",
@@ -201,10 +205,10 @@ class UtilitiesTest(unittest.TestCase):
         file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
         )
-        self.__remove_prerequisite_files(path=library_path)
+        self.__remove_postprocessing_prerequisite_files(path=library_path)
 
-    def test_generate_prerequisite_files_proto_only_repo_success(self):
-        library_path = self.__setup_prerequisite_files(
+    def test_generate_postprocessing_prerequisite_files_proto_only_repo_success(self):
+        library_path = self.__setup_postprocessing_prerequisite_files(
             combination=3, library_type="OTHER"
         )
 
@@ -219,7 +223,7 @@ class UtilitiesTest(unittest.TestCase):
         file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
         )
-        self.__remove_prerequisite_files(path=library_path)
+        self.__remove_postprocessing_prerequisite_files(path=library_path)
 
     def test_prepare_repo_monorepo_success(self):
         gen_config = self.__get_a_gen_config(2)
@@ -256,7 +260,7 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual(["misc"], library_path)
         shutil.rmtree(repo_config.output_folder)
 
-    def __setup_prerequisite_files(
+    def __setup_postprocessing_prerequisite_files(
         self,
         combination: int,
         library_type: str = "GAPIC_AUTO",
@@ -273,7 +277,7 @@ class UtilitiesTest(unittest.TestCase):
         config = self.__get_a_gen_config(combination, library_type=library_type)
         proto_path = "google/cloud/baremetalsolution/v2"
         transport = "grpc"
-        util.generate_prerequisite_files(
+        util.generate_postprocessing_prerequisite_files(
             config=config,
             library=library,
             proto_path=proto_path,
@@ -319,7 +323,9 @@ class UtilitiesTest(unittest.TestCase):
         )
 
     @staticmethod
-    def __remove_prerequisite_files(path: str, is_monorepo: bool = True) -> None:
+    def __remove_postprocessing_prerequisite_files(
+        path: str, is_monorepo: bool = True
+    ) -> None:
         os.remove(f"{path}/.repo-metadata.json")
         os.remove(f"{path}/owlbot.py")
         if is_monorepo:
