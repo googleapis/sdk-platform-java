@@ -14,7 +14,7 @@
 # limitations under the License.
 from hashlib import sha1
 
-from typing import List, Optional
+from typing import Optional
 from library_generation.model.gapic_config import GapicConfig
 
 
@@ -29,7 +29,7 @@ class LibraryConfig:
         api_description: str,
         name_pretty: str,
         product_documentation: str,
-        gapic_configs: List[GapicConfig],
+        gapic_configs: list[GapicConfig],
         library_type: Optional[str] = None,
         release_level: Optional[str] = None,
         api_id: Optional[str] = None,
@@ -83,6 +83,9 @@ class LibraryConfig:
         :return: the library name
         """
         return self.library_name if self.library_name else self.api_shortname
+
+    def get_sorted_gapic_configs(self) -> list[GapicConfig]:
+        return sorted(self.gapic_configs)
 
     def __eq__(self, other):
         return (
