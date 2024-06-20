@@ -143,7 +143,7 @@ folder_name=$(extract_folder_name "${destination_path}")
 pushd "${output_folder}"
 find_depth=""
 case "${proto_path}" in
-  "google/api" | "google/cloud" | "google/iam/v1" | "google/rpc")
+  "google/api" | "google/cloud" | "google/rpc")
     find_depth="-maxdepth 1"
     ;;
 esac
@@ -272,14 +272,6 @@ case "${proto_path}" in
     ;;
   "google/devtools/containeranalysis/v1beta1"*)
     proto_files="${proto_files} google/devtools/containeranalysis/v1beta1/cvss/cvss.proto"
-    ;;
-  "google/iam/v1")
-    # these protos are excluded from //google/iam/v1:google-iam-v1-java
-    prefix="google/iam/v1"
-    protos="${prefix}/options.proto ${prefix}/policy.proto"
-    for removed_proto in ${protos}; do
-      proto_files="${proto_files//${removed_proto}/}"
-    done
     ;;
 esac
 # copy proto files to proto-*/src/main/proto
