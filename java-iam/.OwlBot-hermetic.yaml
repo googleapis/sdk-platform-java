@@ -17,10 +17,6 @@ deep-remove-regex:
   - "/java-iam/grpc-google-.*/src"
   - "/java-iam/proto-google-.*/src"
 
-deep-preserve-regex:
-  - "/java-iam/proto-google-iam-v1/src/main/java/com/google/iam/v1/logging"
-  - "/java-iam/proto-google-iam-v1/src/main/proto/google/iam/v1"
-
 deep-copy-regex:
   - source: "/google/iam/(v.*)/.*-java/grpc-google-.*/src"
     dest: "/owl-bot-staging/java-iam/$1/grpc-google-iam-$1/src"
