@@ -7,7 +7,7 @@ libraries:
 - api_shortname: common-protos
   name_pretty: Common Protos
   product_documentation: https://github.com/googleapis/api-common-protos
-  api_description: Protobuf classes for Google's common protos.
+  api_description: Protobuf classes for Google's common protos..
   release_level: stable
   client_documentation: https://cloud.google.com/java/docs/reference/proto-google-common-protos/latest/history
   distribution_name: com.google.api.grpc:proto-google-common-protos
@@ -30,7 +30,7 @@ libraries:
 - api_shortname: iam
   name_pretty: IAM
   product_documentation: https://cloud.google.com/iam
-  api_description: Manages access control for Google Cloud Platform resources
+  api_description: Manages access control for Google Cloud Platform resources.
   release_level: stable
   client_documentation: https://cloud.google.com/java/docs/reference/proto-google-iam-v1/latest/overview
   distribution_name: com.google.api.grpc:proto-google-iam-v1
