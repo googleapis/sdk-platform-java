@@ -228,6 +228,7 @@ class ConfigChangeTest(unittest.TestCase):
         )
         # one commit between latest_commit and baseline_commit which only
         # changed BUILD.bazel.
+        # this commit changed `rest_numeric_enums`.
         self.assertTrue(len(config_change.get_qualified_commits()) == 1)
 
     def test_get_qualified_commits_build_only_commit_returns_empty_list(self):
@@ -250,6 +251,7 @@ class ConfigChangeTest(unittest.TestCase):
         )
         # one commit between latest_commit and baseline_commit which only
         # changed BUILD.bazel.
+        # this commit didn't change fields used in library generation.
         self.assertTrue(len(config_change.get_qualified_commits()) == 0)
 
     @staticmethod
