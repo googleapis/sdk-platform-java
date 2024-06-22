@@ -208,6 +208,28 @@ class ConfigChangeTest(unittest.TestCase):
             qualified_commits[2].commit.hexsha,
         )
 
+    def test_get_qualified_commits_build_only_commit_returns_a_commit(self):
+        baseline_commit = "45694d2bad602c52170096072d325aa644d550e5"
+        latest_commit = "758f0d1217d9c7fe398aa5efb1057ce4b6409e55"
+        config_change = ConfigChange(
+            change_to_libraries={},
+            baseline_config=ConfigChangeTest.__get_a_gen_config(
+                googleapis_commitish=baseline_commit
+            ),
+            current_config=ConfigChangeTest.__get_a_gen_config(
+                googleapis_commitish=latest_commit,
+                libraries=[
+                    ConfigChangeTest.__get_a_library_config(
+                        library_name="container",
+                        gapic_configs=[GapicConfig(proto_path="google/container/v1")],
+                    )
+                ],
+            ),
+        )
+        # one commit between latest_commit and baseline_commit which only
+        # changed BUILD.bazel.
+        self.assertTrue(len(config_change.get_qualified_commits()) == 1)
+
     def test_get_qualified_commits_build_only_commit_returns_empty_list(self):
         baseline_commit = "bdda0174f68a738518ec311e05e6fd9bbe19cd78"
         latest_commit = "c9a5050ef225b0011603e1109cf53ab1de0a8e53"
