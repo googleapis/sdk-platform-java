@@ -72,6 +72,20 @@ class GapicInputs:
         self.service_yaml = service_yaml
         self.include_samples = include_samples
 
+    def __eq__(self, other):
+        if not isinstance(other, GapicInputs):
+            return False
+        return (
+            self.proto_only == other.proto_only
+            and self.additional_protos == other.additional_protos
+            and self.transport == other.transport
+            and self.rest_numeric_enum == other.rest_numeric_enum
+            and self.gapic_yaml == other.gapic_yaml
+            and self.service_config == other.service_config
+            and self.service_yaml == other.service_yaml
+            and self.include_samples == other.include_samples
+        )
+
 
 def parse(
     build_path: Path, versioned_path: str, build_file_name: str = "BUILD.bazel"
@@ -86,16 +100,19 @@ def parse(
     """
     with open(f"{build_path}/{build_file_name}") as build:
         content = build.read()
+    return parse_build_str(build_str=content, versioned_path=versioned_path)
 
+
+def parse_build_str(build_str: str, versioned_path: str) -> GapicInputs:
     proto_library_target = re.compile(
         proto_library_pattern, re.DOTALL | re.VERBOSE
-    ).findall(content)
+    ).findall(build_str)
     additional_protos = ""
     if len(proto_library_target) > 0:
         additional_protos = __parse_additional_protos(proto_library_target[0])
-    gapic_target = re.compile(gapic_pattern, re.DOTALL | re.VERBOSE).findall(content)
+    gapic_target = re.compile(gapic_pattern, re.DOTALL | re.VERBOSE).findall(build_str)
     assembly_target = re.compile(assembly_pattern, re.DOTALL | re.VERBOSE).findall(
-        content
+        build_str
     )
     include_samples = "false"
     if len(assembly_target) > 0:
