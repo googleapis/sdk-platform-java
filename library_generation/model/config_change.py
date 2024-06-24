@@ -150,13 +150,14 @@ class ConfigChange:
         for file in commit.stats.files.keys():
             versioned_proto_path = find_versioned_proto_path(file)
             if versioned_proto_path in proto_paths:
-                # determine a commit that only contains `BUILD.bazel`
-                # separately.
+                # Skip a commit if the only changed file is `BUILD.bazel`
+                # and the change doesn't contain fields used in library
+                # generation, e.g., transport, rest_numeric_enum.
                 if (
                     file.endswith("BUILD.bazel")
                     and file_change_num == 1
                     and (
-                        not ConfigChange.__qualified_build_change(
+                        not ConfigChange.__is_qualified_build_change(
                             commit=commit, build_file_path=file
                         )
                     )
@@ -172,10 +173,15 @@ class ConfigChange:
         return QualifiedCommit(commit=commit, libraries=libraries)
 
     @staticmethod
-    def __qualified_build_change(commit: Commit, build_file_path: str) -> bool:
+    def __is_qualified_build_change(commit: Commit, build_file_path: str) -> bool:
         """
         Checks if the given commit containing a BUILD.bazel change is a
         qualified commit.
+
+        The commit is a qualified commit if the
+        :class:`library_generation.model.gapic_inputs.GapicInputs` objects
+        parsed from the commit and its parent are different, since there are
+        changes in fields that used in library generation.
 
         :param commit: a GitHub commit object.
         :param build_file_path: the path of the BUILD.bazel
@@ -192,8 +198,4 @@ class ConfigChange:
         parent_build = str((parent_commit.tree / build_file_path).data_stream.read())
         inputs = parse_build_str(build, versioned_proto_path)
         parent_inputs = parse_build_str(parent_build, versioned_proto_path)
-        # If the GapicInputs objects parsed from BUILD.bazel (on the given
-        # commit and its parent) are different, there are changes in fields
-        # that used in library generation, then the given commit is a
-        # qualified commit.
         return inputs != parent_inputs
