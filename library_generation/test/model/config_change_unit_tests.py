@@ -254,6 +254,32 @@ class ConfigChangeTest(unittest.TestCase):
         # this commit didn't change fields used in library generation.
         self.assertTrue(len(config_change.get_qualified_commits()) == 0)
 
+    def test_get_qualified_commits_new_client_commit_returns_a_commit(self):
+        baseline_commit = "d007ca1b3cc820651530d44d5388533047ae1414"
+        latest_commit = "05d889e7dfe087fc2ddc9de9579f01d4e1c2f35e"
+        config_change = ConfigChange(
+            change_to_libraries={},
+            baseline_config=ConfigChangeTest.__get_a_gen_config(
+                googleapis_commitish=baseline_commit
+            ),
+            current_config=ConfigChangeTest.__get_a_gen_config(
+                googleapis_commitish=latest_commit,
+                libraries=[
+                    ConfigChangeTest.__get_a_library_config(
+                        library_name="cloudcontrolspartner",
+                        gapic_configs=[
+                            GapicConfig(
+                                proto_path="google/cloud/cloudcontrolspartner/v1"
+                            )
+                        ],
+                    )
+                ],
+            ),
+        )
+        # one commit between latest_commit and baseline_commit which added
+        # google/cloud/cloudcontrolspartner/v1.
+        self.assertTrue(len(config_change.get_qualified_commits()) == 1)
+
     @staticmethod
     def __get_a_gen_config(
         googleapis_commitish="", libraries: list[LibraryConfig] = None

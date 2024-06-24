@@ -179,14 +179,13 @@ class ConfigChange:
         parent_commit = commit.parents[0]
         # If BUILD.bazel doesn't exist in the parent commit, i.e., it is added
         # in the current commit, `parent_commit.tree / build_file_path` will
-        # raise KeyError and the function should return early because the
-        # library is already generated through a new client generation request.
+        # raise KeyError and the function should return early.
         try:
             parent_build = str(
                 (parent_commit.tree / build_file_path).data_stream.read()
             )
         except KeyError:
-            return False
+            return True
         inputs = parse_build_str(build, versioned_proto_path)
         parent_inputs = parse_build_str(parent_build, versioned_proto_path)
         # If the GapicInputs objects parsed from BUILD.bazel (on the given
