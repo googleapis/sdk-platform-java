@@ -146,12 +146,19 @@ class ConfigChange:
         :return: qualified commits.
         """
         libraries = set()
+        file_change_num = len(commit.stats.files.keys())
         for file in commit.stats.files.keys():
             versioned_proto_path = find_versioned_proto_path(file)
             if versioned_proto_path in proto_paths:
-                if file.endswith("BUILD.bazel") and (
-                    not ConfigChange.__qualified_build_change(
-                        commit=commit, build_file_path=file
+                # determine a commit that only contains `BUILD.bazel`
+                # separately.
+                if (
+                    file.endswith("BUILD.bazel")
+                    and file_change_num == 1
+                    and (
+                        not ConfigChange.__qualified_build_change(
+                            commit=commit, build_file_path=file
+                        )
                     )
                 ):
                     continue
@@ -179,13 +186,10 @@ class ConfigChange:
         parent_commit = commit.parents[0]
         # If BUILD.bazel doesn't exist in the parent commit, i.e., it is added
         # in the current commit, `parent_commit.tree / build_file_path` will
-        # raise KeyError and the function should return early.
-        try:
-            parent_build = str(
-                (parent_commit.tree / build_file_path).data_stream.read()
-            )
-        except KeyError:
-            return True
+        # raise KeyError.
+        # However, there's unlikely that a BUILD.bazel is the only file that
+        # added in a commit.
+        parent_build = str((parent_commit.tree / build_file_path).data_stream.read())
         inputs = parse_build_str(build, versioned_proto_path)
         parent_inputs = parse_build_str(parent_build, versioned_proto_path)
         # If the GapicInputs objects parsed from BUILD.bazel (on the given
