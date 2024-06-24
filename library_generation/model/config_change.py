@@ -79,6 +79,7 @@ class ConfigChange:
         Returns a unique, sorted list of library name of changed libraries.
         None if there is a repository level change, which means all libraries
         in the current_config will be generated.
+
         :return: library names of change libraries.
         """
         if ChangeType.REPO_LEVEL_CHANGE in self.change_to_libraries:
@@ -176,7 +177,16 @@ class ConfigChange:
         versioned_proto_path = find_versioned_proto_path(build_file_path)
         build = str((commit.tree / build_file_path).data_stream.read())
         parent_commit = commit.parents[0]
-        parent_build = str((parent_commit.tree / build_file_path).data_stream.read())
+        # If BUILD.bazel doesn't exist in the parent commit, i.e., it is added
+        # in the current commit, `parent_commit.tree / build_file_path` will
+        # raise KeyError and the function should return early because the
+        # library is already generated through a new client generation request.
+        try:
+            parent_build = str(
+                (parent_commit.tree / build_file_path).data_stream.read()
+            )
+        except KeyError:
+            return False
         inputs = parse_build_str(build, versioned_proto_path)
         parent_inputs = parse_build_str(parent_build, versioned_proto_path)
         # If the GapicInputs objects parsed from BUILD.bazel (on the given
