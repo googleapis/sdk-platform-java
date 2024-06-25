@@ -23,6 +23,9 @@ from library_generation.model.library_config import LibraryConfig
 from library_generation.utils.utilities import sh_util
 from library_generation.utils.proto_path_utils import find_versioned_proto_path
 
+INSERTIONS = "insertions"
+LINES = "lines"
+
 
 class ChangeType(Enum):
     GOOGLEAPIS_COMMIT = 1
@@ -146,16 +149,16 @@ class ConfigChange:
         :return: qualified commits.
         """
         libraries = set()
-        file_change_num = len(commit.stats.files.keys())
-        for file in commit.stats.files.keys():
+        for file, changes in commit.stats.files.items():
             versioned_proto_path = find_versioned_proto_path(file)
             if versioned_proto_path in proto_paths:
-                # Skip a commit if the only changed file is `BUILD.bazel`
-                # and the change doesn't contain fields used in library
-                # generation, e.g., transport, rest_numeric_enum.
                 if (
                     file.endswith("BUILD.bazel")
-                    and file_change_num == 1
+                    # Qualify a commit if the commit only added BUILD.bazel
+                    # because it's very unlikely that a commit added BUILD.bazel
+                    # without adding proto files. Therefore, the commit is
+                    # qualified duo to the proto change eventually.
+                    and (not ConfigChange.__is_added(changes))
                     and (
                         not ConfigChange.__is_qualified_build_change(
                             commit=commit, build_file_path=file
@@ -171,6 +174,10 @@ class ConfigChange:
         if len(libraries) == 0:
             return None
         return QualifiedCommit(commit=commit, libraries=libraries)
+
+    @staticmethod
+    def __is_added(changes: dict[str, int]) -> bool:
+        return changes[INSERTIONS] == changes[LINES]
 
     @staticmethod
     def __is_qualified_build_change(commit: Commit, build_file_path: str) -> bool:
@@ -190,11 +197,6 @@ class ConfigChange:
         versioned_proto_path = find_versioned_proto_path(build_file_path)
         build = str((commit.tree / build_file_path).data_stream.read())
         parent_commit = commit.parents[0]
-        # If BUILD.bazel doesn't exist in the parent commit, i.e., it is added
-        # in the current commit, `parent_commit.tree / build_file_path` will
-        # raise KeyError.
-        # However, there's unlikely that a BUILD.bazel is the only file that
-        # added in a commit.
         parent_build = str((parent_commit.tree / build_file_path).data_stream.read())
         inputs = parse_build_str(build, versioned_proto_path)
         parent_inputs = parse_build_str(parent_build, versioned_proto_path)
