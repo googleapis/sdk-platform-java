@@ -1,5 +1,37 @@
 # Changelog
 
+## [2.42.0](https://github.com/googleapis/sdk-platform-java/compare/v2.41.0...v2.42.0) (2024-06-25)
+
+
+### Features
+
+* Allow Adding Client Level Attributes to MetricsTracerFactory ([#2614](https://github.com/googleapis/sdk-platform-java/issues/2614)) ([f122c6f](https://github.com/googleapis/sdk-platform-java/commit/f122c6f3beebd005a257fe687cf018baf7673b63))
+* gapic-generator-java to perform a no-op when no services are detected ([#2460](https://github.com/googleapis/sdk-platform-java/issues/2460)) ([c0b5646](https://github.com/googleapis/sdk-platform-java/commit/c0b56462a1550c3720a3e5d0b11dcc1a21add7ef))
+* Make Layout Parser generally available in V1 ([e508ae6](https://github.com/googleapis/sdk-platform-java/commit/e508ae69e13455ba2f5c325e0c33d9ff2704e3b1))
+* populate `.repo-metadata.json` from highest version ([#2890](https://github.com/googleapis/sdk-platform-java/issues/2890)) ([f587541](https://github.com/googleapis/sdk-platform-java/commit/f58754178d16e5054326d78d1d372efe1408fa5e))
+* push SNAPSHOT versions of the hermetic build docker image ([#2888](https://github.com/googleapis/sdk-platform-java/issues/2888)) ([81df866](https://github.com/googleapis/sdk-platform-java/commit/81df8660f85785ac7f8ff07ba7686caa0bfd583d))
+
+
+### Bug Fixes
+
+* **deps:** update the Java code generator (gapic-generator-java) to 1.2.3 ([e508ae6](https://github.com/googleapis/sdk-platform-java/commit/e508ae69e13455ba2f5c325e0c33d9ff2704e3b1))
+* Expose Gax meter name ([#2865](https://github.com/googleapis/sdk-platform-java/issues/2865)) ([6c5d6ce](https://github.com/googleapis/sdk-platform-java/commit/6c5d6cee7d5034dfc20c43a520d6321689299f21))
+* Move the logic of getting systemProductName from static block to static method ([#2874](https://github.com/googleapis/sdk-platform-java/issues/2874)) ([536f1eb](https://github.com/googleapis/sdk-platform-java/commit/536f1eb6658b44794e9dbba7d9536ecfade84cc3))
+* Update default Otel Attribute from method_name to method ([#2833](https://github.com/googleapis/sdk-platform-java/issues/2833)) ([af10a9e](https://github.com/googleapis/sdk-platform-java/commit/af10a9ef26a5fd9f24fc5341d144b8ee00ff3d00))
+
+
+### Dependencies
+
+* update dependency com.google.auto.value:auto-value to v1.11.0 ([#2842](https://github.com/googleapis/sdk-platform-java/issues/2842)) ([dd27fdf](https://github.com/googleapis/sdk-platform-java/commit/dd27fdf03ed756799212ba34a99568b234e13a2a))
+* update dependency com.google.auto.value:auto-value-annotations to v1.11.0 ([#2843](https://github.com/googleapis/sdk-platform-java/issues/2843)) ([bf8e67f](https://github.com/googleapis/sdk-platform-java/commit/bf8e67f3f4c582b7584b6811eb2ae6cb46f8c90e))
+* update dependency com.google.cloud:grpc-gcp to v1.6.1 ([#2943](https://github.com/googleapis/sdk-platform-java/issues/2943)) ([9f16b40](https://github.com/googleapis/sdk-platform-java/commit/9f16b403807a97d8e620aeb5feb74dc4e14367e1))
+* update dependency org.checkerframework:checker-qual to v3.44.0 ([#2848](https://github.com/googleapis/sdk-platform-java/issues/2848)) ([7a99c50](https://github.com/googleapis/sdk-platform-java/commit/7a99c508695e342e10e011dea9bbab371df61ac4))
+* update dependency org.easymock:easymock to v5.3.0 ([#2871](https://github.com/googleapis/sdk-platform-java/issues/2871)) ([c243f7d](https://github.com/googleapis/sdk-platform-java/commit/c243f7dbea5441620364cd51f1829f2690628661))
+* update google api dependencies ([#2846](https://github.com/googleapis/sdk-platform-java/issues/2846)) ([b5ef698](https://github.com/googleapis/sdk-platform-java/commit/b5ef6983f8474c8444caf650116fb34b2e602636))
+* update googleapis/java-cloud-bom digest to 17cc5ec ([#2882](https://github.com/googleapis/sdk-platform-java/issues/2882)) ([d6abd8e](https://github.com/googleapis/sdk-platform-java/commit/d6abd8e0aa37de42038c47e262020a7dd9090907))
+* update netty dependencies to v4.1.111.final ([#2877](https://github.com/googleapis/sdk-platform-java/issues/2877)) ([b5f10b9](https://github.com/googleapis/sdk-platform-java/commit/b5f10b94a16e065aba5d5abe6c0348be87ecf01b))
+* update opentelemetry-java monorepo to v1.39.0 ([#2863](https://github.com/googleapis/sdk-platform-java/issues/2863)) ([9d1f3a8](https://github.com/googleapis/sdk-platform-java/commit/9d1f3a8cd7478df6068b9171c8dc8eb65dc70313))
+
 ## [2.41.0](https://github.com/googleapis/sdk-platform-java/compare/v2.40.1...v2.41.0) (2024-05-31)
 
 
