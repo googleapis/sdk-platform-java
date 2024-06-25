@@ -208,7 +208,9 @@ class ConfigChangeTest(unittest.TestCase):
             qualified_commits[2].commit.hexsha,
         )
 
-    def test_get_qualified_commits_build_only_commit_returns_a_commit(self):
+    def test_get_qualified_commits_rest_numeric_enum_change_returns_a_qualified_commit(
+        self,
+    ):
         baseline_commit = "45694d2bad602c52170096072d325aa644d550e5"
         latest_commit = "758f0d1217d9c7fe398aa5efb1057ce4b6409e55"
         config_change = ConfigChange(
@@ -231,7 +233,9 @@ class ConfigChangeTest(unittest.TestCase):
         # this commit changed `rest_numeric_enums`.
         self.assertTrue(len(config_change.get_qualified_commits()) == 1)
 
-    def test_get_qualified_commits_build_only_commit_returns_empty_list(self):
+    def test_get_qualified_commits_irrelevant_build_field_change_returns_empty_list(
+        self,
+    ):
         baseline_commit = "bdda0174f68a738518ec311e05e6fd9bbe19cd78"
         latest_commit = "c9a5050ef225b0011603e1109cf53ab1de0a8e53"
         config_change = ConfigChange(
@@ -254,7 +258,7 @@ class ConfigChangeTest(unittest.TestCase):
         # this commit didn't change fields used in library generation.
         self.assertTrue(len(config_change.get_qualified_commits()) == 0)
 
-    def test_get_qualified_commits_new_client_commit_returns_a_commit(self):
+    def test_get_qualified_commits_add_build_file_returns_a_qualified_commit(self):
         baseline_commit = "d007ca1b3cc820651530d44d5388533047ae1414"
         latest_commit = "05d889e7dfe087fc2ddc9de9579f01d4e1c2f35e"
         config_change = ConfigChange(
