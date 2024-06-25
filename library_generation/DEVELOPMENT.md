@@ -1,5 +1,5 @@
 > [!IMPORTANT]
-> All examples assume you are inside the `library_generation` folder
+> All examples assume you are inside the `library_generation` folder.
 
 
 # Linting
@@ -121,7 +121,7 @@ This is convenient in order to avoid installing the dependencies manually.
 
 > [!IMPORTANT]
 > From now, the examples assume you are in the root of your sdk-platform-java
-> folder
+> folder.
 
 ## Build the docker image
 ```bash
