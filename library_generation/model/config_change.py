@@ -149,11 +149,11 @@ class ConfigChange:
         :return: qualified commits.
         """
         libraries = set()
-        for file, changes in commit.stats.files.items():
-            versioned_proto_path = find_versioned_proto_path(file)
+        for file_path, changes in commit.stats.files.items():
+            versioned_proto_path = find_versioned_proto_path(file_path)
             if versioned_proto_path in proto_paths:
                 if (
-                    file.endswith("BUILD.bazel")
+                    file_path.endswith("BUILD.bazel")
                     # Qualify a commit if the commit only added BUILD.bazel
                     # because it's very unlikely that a commit added BUILD.bazel
                     # without adding proto files. Therefore, the commit is
@@ -161,7 +161,7 @@ class ConfigChange:
                     and (not ConfigChange.__is_added(changes))
                     and (
                         not ConfigChange.__is_qualified_build_change(
-                            commit=commit, build_file_path=file
+                            commit=commit, build_file_path=file_path
                         )
                     )
                 ):
