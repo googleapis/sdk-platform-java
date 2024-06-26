@@ -16,10 +16,15 @@ import shutil
 from enum import Enum
 from typing import Optional
 from git import Commit, Repo
+
+from library_generation.model.gapic_inputs import parse_build_str
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from library_generation.utils.utilities import sh_util
 from library_generation.utils.proto_path_utils import find_versioned_proto_path
+
+INSERTIONS = "insertions"
+LINES = "lines"
 
 
 class ChangeType(Enum):
@@ -77,6 +82,7 @@ class ConfigChange:
         Returns a unique, sorted list of library name of changed libraries.
         None if there is a repository level change, which means all libraries
         in the current_config will be generated.
+
         :return: library names of change libraries.
         """
         if ChangeType.REPO_LEVEL_CHANGE in self.change_to_libraries:
@@ -143,11 +149,23 @@ class ConfigChange:
         :return: qualified commits.
         """
         libraries = set()
-        for file in commit.stats.files.keys():
-            if file.endswith("BUILD.bazel"):
-                continue
-            versioned_proto_path = find_versioned_proto_path(file)
+        for file_path, changes in commit.stats.files.items():
+            versioned_proto_path = find_versioned_proto_path(file_path)
             if versioned_proto_path in proto_paths:
+                if (
+                    file_path.endswith("BUILD.bazel")
+                    # Qualify a commit if the commit only added BUILD.bazel
+                    # because it's very unlikely that a commit added BUILD.bazel
+                    # without adding proto files. Therefore, the commit is
+                    # qualified duo to the proto change eventually.
+                    and (not ConfigChange.__is_added(changes))
+                    and (
+                        not ConfigChange.__is_qualified_build_change(
+                            commit=commit, build_file_path=file_path
+                        )
+                    )
+                ):
+                    continue
                 # Even though a commit usually only changes one
                 # library, we don't want to miss generating a
                 # library because the commit may change multiple
@@ -156,3 +174,30 @@ class ConfigChange:
         if len(libraries) == 0:
             return None
         return QualifiedCommit(commit=commit, libraries=libraries)
+
+    @staticmethod
+    def __is_added(changes: dict[str, int]) -> bool:
+        return changes[INSERTIONS] == changes[LINES]
+
+    @staticmethod
+    def __is_qualified_build_change(commit: Commit, build_file_path: str) -> bool:
+        """
+        Checks if the given commit containing a BUILD.bazel change is a
+        qualified commit.
+
+        The commit is a qualified commit if the
+        :class:`library_generation.model.gapic_inputs.GapicInputs` objects
+        parsed from the commit and its parent are different, since there are
+        changes in fields that used in library generation.
+
+        :param commit: a GitHub commit object.
+        :param build_file_path: the path of the BUILD.bazel
+        :return: True if the commit is a qualified commit; False otherwise.
+        """
+        versioned_proto_path = find_versioned_proto_path(build_file_path)
+        build = str((commit.tree / build_file_path).data_stream.read())
+        parent_commit = commit.parents[0]
+        parent_build = str((parent_commit.tree / build_file_path).data_stream.read())
+        inputs = parse_build_str(build, versioned_proto_path)
+        parent_inputs = parse_build_str(parent_build, versioned_proto_path)
+        return inputs != parent_inputs
