@@ -27,17 +27,6 @@ jobs:
       with:
         fetch-depth: 0
         token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
-    - name: Build image
-      shell: bash
-      run: |
-        docker build \
-          -f .cloudbuild/library_generation/library_generation.Dockerfile \
-          -t gcr.io/cloud-devrel-public-resources/java-library-generation:latest \
-          .
-    - name: Install gapic-generator-java-pom-parent
-      shell: bash
-      run: |
-        mvn clean install -pl gapic-generator-java-pom-parent
     - name: Generate changed libraries
       shell: bash
       run: |

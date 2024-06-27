@@ -55,7 +55,7 @@ import javax.annotation.Nullable;
 @BetaApi
 @InternalApi
 public class MetricsTracer implements ApiTracer {
-  public static final String METHOD_NAME_ATTRIBUTE = "method_name";
+  public static final String METHOD_ATTRIBUTE = "method";
   public static final String LANGUAGE_ATTRIBUTE = "language";
   public static final String STATUS_ATTRIBUTE = "status";
   public static final String DEFAULT_LANGUAGE = "Java";
@@ -69,7 +69,7 @@ public class MetricsTracer implements ApiTracer {
   private final AtomicBoolean operationFinished;
 
   public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {
-    this.attributes.put(METHOD_NAME_ATTRIBUTE, methodName.toString());
+    this.attributes.put(METHOD_ATTRIBUTE, methodName.toString());
     this.attributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
     this.metricsRecorder = metricsRecorder;
     this.operationFinished = new AtomicBoolean();

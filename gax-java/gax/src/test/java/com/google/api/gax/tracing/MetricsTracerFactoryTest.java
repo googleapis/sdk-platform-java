@@ -74,7 +74,7 @@ class MetricsTracerFactoryTest {
         (MetricsTracer) metricsTracerFactory.newTracer(parent, spanName, OperationType.Unary);
     Map<String, String> attributes = metricsTracer.getAttributes();
     Truth.assertThat(attributes.size()).isEqualTo(DEFAULT_ATTRIBUTES_COUNT);
-    Truth.assertThat(attributes.get(MetricsTracer.METHOD_NAME_ATTRIBUTE))
+    Truth.assertThat(attributes.get(MetricsTracer.METHOD_ATTRIBUTE))
         .isEqualTo("testService.testMethod");
     Truth.assertThat(attributes.get(MetricsTracer.LANGUAGE_ATTRIBUTE))
         .isEqualTo(MetricsTracer.DEFAULT_LANGUAGE);

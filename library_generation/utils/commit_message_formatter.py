@@ -12,12 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import re
-from typing import List
-from typing import Dict
 from git import Commit
 
+from library_generation.model.config_change import ConfigChange, ChangeType
+from library_generation.model.generation_config import (
+    GAPIC_GENERATOR_VERSION,
+    LIBRARIES_BOM_VERSION,
+)
 
-def format_commit_message(commits: Dict[Commit, str], is_monorepo: bool) -> List[str]:
+PARAM_TO_COMMIT_MESSAGE = {
+    GAPIC_GENERATOR_VERSION: "fix(deps): update the Java code generator (gapic-generator-java) to",
+    LIBRARIES_BOM_VERSION: "chore: update the libraries_bom version to",
+}
+
+
+def format_commit_message(commits: dict[Commit, str], is_monorepo: bool) -> list[str]:
     """
     Format commit messages. Add library_name to conventional commit messages if
     is_monorepo is True; otherwise no op.
@@ -47,11 +56,29 @@ def format_commit_message(commits: Dict[Commit, str], is_monorepo: bool) -> List
                 messages.append(formatted_message)
             else:
                 messages.append(message_line)
-        all_commits.extend(wrap_nested_commit(commit, messages))
+        all_commits.extend(wrap_googleapis_commit(commit, messages))
     return all_commits
 
 
-def wrap_nested_commit(commit: Commit, messages: List[str]) -> List[str]:
+def format_repo_level_change(config_change: ConfigChange) -> list[str]:
+    """
+    Format commit messages regarding repo-level changes.
+
+    :param config_change:
+    :return: commit messages regarding repo-level changes.
+    """
+    messages = []
+    for repo_level_change in config_change.change_to_libraries.get(
+        ChangeType.REPO_LEVEL_CHANGE, []
+    ):
+        message = f"chore: update repo-level parameter {repo_level_change.changed_param} to {repo_level_change.current_value}"
+        if repo_level_change.changed_param in PARAM_TO_COMMIT_MESSAGE:
+            message = f"{PARAM_TO_COMMIT_MESSAGE.get(repo_level_change.changed_param)} {repo_level_change.current_value}"
+        messages.extend(__wrap_nested_commit([message]))
+    return messages
+
+
+def wrap_googleapis_commit(commit: Commit, messages: list[str]) -> list[str]:
     """
     Wrap message between `BEGIN_NESTED_COMMIT` and `BEGIN_NESTED_COMMIT`.
 
@@ -59,14 +86,11 @@ def wrap_nested_commit(commit: Commit, messages: List[str]) -> List[str]:
     :param messages: a (multi-line) commit message, one line per item.
     :return: wrapped messages.
     """
-    result = ["BEGIN_NESTED_COMMIT"]
-    result.extend(messages)
-    result.append(f"Source Link: {commit_link(commit)}")
-    result.append("END_NESTED_COMMIT")
-    return result
+    messages.append(f"Source Link: {commit_link(commit)}")
+    return __wrap_nested_commit(messages)
 
 
-def wrap_override_commit(messages: List[str]) -> List[str]:
+def wrap_override_commit(messages: list[str]) -> list[str]:
     """
     Wrap message between `BEGIN_COMMIT_OVERRIDE` and `END_COMMIT_OVERRIDE`.
 
@@ -88,3 +112,16 @@ def commit_link(commit: Commit) -> str:
     """
     short_sha = commit.hexsha[:7]
     return f"[googleapis/googleapis@{short_sha}](https://github.com/googleapis/googleapis/commit/{commit.hexsha})"
+
+
+def __wrap_nested_commit(messages: list[str]) -> list[str]:
+    """
+    Wrap message between `BEGIN_NESTED_COMMIT` and `BEGIN_NESTED_COMMIT`.
+
+    :param messages: a (multi-line) commit message, one line per item.
+    :return: wrapped messages.
+    """
+    result = ["BEGIN_NESTED_COMMIT"]
+    result.extend(messages)
+    result.append("END_NESTED_COMMIT")
+    return result

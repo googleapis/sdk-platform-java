@@ -183,7 +183,7 @@ def pull_api_definition(
         )
 
 
-def generate_prerequisite_files(
+def generate_postprocessing_prerequisite_files(
     config: GenerationConfig,
     library: LibraryConfig,
     proto_path: str,
@@ -192,14 +192,13 @@ def generate_prerequisite_files(
     language: str = "java",
 ) -> None:
     """
-    Generate prerequisite files for a library.
-
-    Note that the version, if any, in the proto_path will be removed.
+    Generates the postprocessing prerequisite files for a library.
 
     :param config: a GenerationConfig object representing a parsed configuration
     yaml
     :param library: the library configuration
-    :param proto_path: the proto path
+    :param proto_path: the path from the root of googleapis to the location of the service
+    protos. If the path contains a version, it will be removed
     :param transport: transport supported by the library
     :param library_path: the path to which the generated file goes
     :param language: programming language of the library
@@ -275,6 +274,10 @@ def generate_prerequisite_files(
         repo_metadata["rpc_documentation"] = library.rpc_documentation
     if library.extra_versioned_modules:
         repo_metadata["extra_versioned_modules"] = library.extra_versioned_modules
+    if library.recommended_package:
+        repo_metadata["recommended_package"] = library.recommended_package
+    if library.min_java_version:
+        repo_metadata["min_java_version"] = library.min_java_version
 
     # generate .repo-meta.json
     json_file = ".repo-metadata.json"

@@ -65,11 +65,11 @@ class MetricsTracerTest {
 
   private ImmutableMap<String, String> getAttributes(Code statusCode) {
     return ImmutableMap.of(
-        "status",
+        MetricsTracer.STATUS_ATTRIBUTE,
         statusCode.toString(),
-        "method_name",
+        MetricsTracer.METHOD_ATTRIBUTE,
         DEFAULT_METHOD_NAME,
-        "language",
+        MetricsTracer.LANGUAGE_ATTRIBUTE,
         MetricsTracer.DEFAULT_LANGUAGE);
   }
 

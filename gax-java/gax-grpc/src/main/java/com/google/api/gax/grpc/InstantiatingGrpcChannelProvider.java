@@ -86,19 +86,7 @@ import javax.net.ssl.KeyManagerFactory;
  */
 public final class InstantiatingGrpcChannelProvider implements TransportChannelProvider {
 
-  static String systemProductName;
-
-  static {
-    try {
-      systemProductName =
-          Files.asCharSource(new File("/sys/class/dmi/id/product_name"), StandardCharsets.UTF_8)
-              .readFirstLine();
-    } catch (IOException e) {
-      // If not on Compute Engine, FileNotFoundException will be thrown. Use empty string
-      // as it won't match with the GCE_PRODUCTION_NAME constants
-      systemProductName = "";
-    }
-  }
+  private static String systemProductName;
 
   @VisibleForTesting
   static final Logger LOG = Logger.getLogger(InstantiatingGrpcChannelProvider.class.getName());
@@ -348,11 +336,27 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   static boolean isOnComputeEngine() {
     String osName = System.getProperty("os.name");
     if ("Linux".equals(osName)) {
+      String systemProductName = getSystemProductName();
       // systemProductName will be empty string if not on Compute Engine
       return systemProductName.contains(GCE_PRODUCTION_NAME_PRIOR_2016)
           || systemProductName.contains(GCE_PRODUCTION_NAME_AFTER_2016);
     }
     return false;
+  }
+
+  private static String getSystemProductName() {
+    // The static field systemProductName should only be set in tests
+    if (systemProductName != null) {
+      return systemProductName;
+    }
+    try {
+      return Files.asCharSource(new File("/sys/class/dmi/id/product_name"), StandardCharsets.UTF_8)
+          .readFirstLine();
+    } catch (IOException e) {
+      // If not on Compute Engine, FileNotFoundException will be thrown. Use empty string
+      // as it won't match with the GCE_PRODUCTION_NAME constants
+      return "";
+    }
   }
 
   // Universe Domain configuration is currently only supported in the GDU

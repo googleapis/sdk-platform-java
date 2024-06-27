@@ -66,14 +66,14 @@ def generate_composed_library(
     base_arguments = __construct_tooling_arg(config=config)
     owlbot_cli_source_folder = util.sh_util("mktemp -d")
     os.makedirs(f"{library_path}", exist_ok=True)
-    for gapic in library.gapic_configs:
+    for gapic in library.get_sorted_gapic_configs():
         build_file_folder = Path(f"{output_folder}/{gapic.proto_path}").resolve()
         print(f"build_file_folder: {build_file_folder}")
         gapic_inputs = parse_build_file(build_file_folder, gapic.proto_path)
-        # generate prerequisite files (.repo-metadata.json, .OwlBot-hermetic.yaml,
+        # generate postprocessing prerequisite files (.repo-metadata.json, .OwlBot-hermetic.yaml,
         # owlbot.py) here because transport is parsed from BUILD.bazel,
         # which lives in a versioned proto_path.
-        util.generate_prerequisite_files(
+        util.generate_postprocessing_prerequisite_files(
             config=config,
             library=library,
             proto_path=util.remove_version_from(gapic.proto_path),
