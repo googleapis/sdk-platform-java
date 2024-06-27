@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -29,37 +29,21 @@
  */
 package com.google.api.gax.batching;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 
-import com.google.common.base.Stopwatch;
-import java.util.Objects;
+import org.junit.jupiter.api.Test;
 
-/**
- * Blocks the current thread to poll the given assertion every 10ms until it's successful or the
- * timeout is exceeded. Expected usage:
- *
- * <pre>{@code
- * assertByPolling(java.time.Duration.ofSeconds(2), () -> assertThat(...));
- * }</pre>
- */
-class AssertByPolling {
+public class BatchingSettingsTest {
 
-  public static void assertByPolling(java.time.Duration timeout, Runnable assertion)
-      throws InterruptedException {
-    Objects.requireNonNull(timeout, "Timeout must not be null");
-    Stopwatch stopwatch = Stopwatch.createStarted();
-    while (true) {
-      try {
-        assertion.run();
-        return; // Success
+  private static final BatchingSettings.Builder SETTINGS_BUILDER = BatchingSettings.newBuilder();
 
-      } catch (AssertionError err) {
-        if (stopwatch.elapsed(MILLISECONDS) < timeout.toMillis()) {
-          MILLISECONDS.sleep(10);
-        } else {
-          throw new AssertionError("Timeout waiting for successful assertion.", err);
-        }
-      }
-    }
+  @Test
+  public void testDelayThreshold() {
+    testDurationMethod(
+        123l,
+        jt -> SETTINGS_BUILDER.setDelayThresholdDuration(jt).build(),
+        tt -> SETTINGS_BUILDER.setDelayThreshold(tt).build(),
+        o -> o.getDelayThresholdDuration(),
+        o -> o.getDelayThreshold());
   }
 }

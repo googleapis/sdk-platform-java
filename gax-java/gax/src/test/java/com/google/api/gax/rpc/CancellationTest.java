@@ -51,7 +51,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class CancellationTest {
 
@@ -60,24 +59,24 @@ class CancellationTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(Duration.ofMillis(2L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(2L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(Duration.ofMillis(2L))
-          .setInitialRpcTimeout(Duration.ofMillis(2L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(2L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(Duration.ofMillis(2L))
-          .setTotalTimeout(Duration.ofMillis(20L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(20L))
           .build();
 
   private static final RetrySettings SLOW_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(Duration.ofMillis(3000L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(3000L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(Duration.ofMillis(3000L))
-          .setInitialRpcTimeout(Duration.ofMillis(3000L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(3000L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(3000L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(Duration.ofMillis(3000L))
-          .setTotalTimeout(Duration.ofMillis(3000L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(3000L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(3000L))
           .build();
 
   private FakeApiClock fakeClock;

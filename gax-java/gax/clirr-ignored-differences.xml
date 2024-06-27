@@ -19,6 +19,58 @@
     <method>*setWaitTimeout*</method>
     <to>com.google.api.gax.rpc.ServerStreamingCallSettings$Builder</to>
   </difference>
+  <difference>
+    <differenceType>7014</differenceType>
+    <className>com/google/api/gax/*/*</className>
+    <method>org.threeten.bp.Duration *(*)</method>
+  </difference>
+  <difference>
+    <differenceType>7014</differenceType>
+    <className>com/google/api/gax/*/*</className>
+    <method>* *(org.threeten.bp.Duration)</method>
+  </difference>
+  <difference>
+    <differenceType>7013</differenceType>
+    <className>com/google/api/gax/*/*</className>
+    <method>java.time.Duration *Duration(*)</method>
+  </difference>
+  <difference>
+    <differenceType>7013</differenceType>
+    <className>com/google/api/gax/*/*</className>
+    <method>* set*Duration(*)</method>
+  </difference>
+  <difference>
+    <!-- We produced an internal change of method definition-->
+    <differenceType>7005</differenceType>
+    <className>com/google/api/gax/retrying/DirectRetryingExecutor</className>
+    <method>* sleep(*org.threeten.bp.Duration*)</method>
+    <to>*</to>
+  </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/*/*</className>
+    <method>* get*Duration()</method>
+  </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/*/*</className>
+    <method>* *(java.time.Duration)</method>
+  </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/tracing/*</className>
+    <method>* attemptFailedDuration(java.lang.Throwable, java.time.Duration)</method>
+  </difference>
+  <difference>
+    <differenceType>7002</differenceType>
+    <className>com/google/api/gax/*/*</className>
+    <method>*org.threeten.bp.Duration *()</method>
+  </difference>
+  <difference>
+    <differenceType>7002</differenceType>
+    <className>com/google/api/gax/grpc/InstantiatingGrpcChannelProvider$Builder</className>
+    <method>* *</method>
+  </difference>
   <!-- Add a default Endpoint Getter -->
   <difference>
     <differenceType>7012</differenceType>

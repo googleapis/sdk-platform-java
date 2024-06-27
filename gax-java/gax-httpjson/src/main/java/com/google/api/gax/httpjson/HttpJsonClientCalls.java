@@ -34,7 +34,6 @@ import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.threeten.bp.Duration;
 
 /**
  * {@code HttpJsonClientCalls} creates a new {@code HttpJsonClientCall} from the given call context.
@@ -52,21 +51,23 @@ class HttpJsonClientCalls {
     // Use the context's timeout instead of calculating a future deadline with the System clock.
     // The timeout value is calculated from TimedAttemptSettings which accounts for the
     // TotalTimeout value set in the RetrySettings.
-    if (httpJsonContext.getTimeout() != null) {
+    if (httpJsonContext.getTimeoutDuration() != null) {
       HttpJsonCallOptions callOptions = httpJsonContext.getCallOptions();
       // HttpJsonChannel expects the HttpJsonCallOptions and we store the timeout duration
       // inside the HttpJsonCallOptions
       // Note: There is manual conversion between threetenbp's Duration and java.util.Duration
       // This is temporary here as we plan to migrate to java.util.Duration
-      if (callOptions.getTimeout() == null
+      if (callOptions.getTimeoutDuration() == null
           || httpJsonContext
-                  .getTimeout()
-                  .compareTo(Duration.ofMillis(callOptions.getTimeout().toMillis()))
+                  .getTimeoutDuration()
+                  .compareTo(
+                      java.time.Duration.ofMillis(callOptions.getTimeoutDuration().toMillis()))
               < 0) {
         callOptions =
             callOptions
                 .toBuilder()
-                .setTimeout(java.time.Duration.ofMillis(httpJsonContext.getTimeout().toMillis()))
+                .setTimeoutDuration(
+                    java.time.Duration.ofMillis(httpJsonContext.getTimeoutDuration().toMillis()))
                 .build();
       }
       httpJsonContext = httpJsonContext.withCallOptions(callOptions);

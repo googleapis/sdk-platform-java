@@ -71,35 +71,36 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class OperationCallableImplTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(Duration.ofMillis(2L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(2L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(Duration.ofMillis(2L))
-          .setInitialRpcTimeout(Duration.ofMillis(2L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(2L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(Duration.ofMillis(2L))
-          .setTotalTimeout(Duration.ofMillis(10L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(10L))
           .build();
 
   private static final RetrySettings FAST_RECHECKING_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(Duration.ofMillis(1L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(1L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(Duration.ofMillis(1L))
-          .setInitialRpcTimeout(
-              Duration.ZERO) // supposed to be ignored, but are not actually, so we set to zero
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1L))
+          .setInitialRpcTimeoutDuration(
+              java.time.Duration
+                  .ZERO) // supposed to be ignored, but are not actually, so we set to zero
           .setMaxAttempts(0)
           .setJittered(false)
           .setRpcTimeoutMultiplier(
               1) // supposed to be ignored, but are not actually, so we set to one
-          .setMaxRpcTimeout(
-              Duration.ZERO) // supposed to be ignored, but are not actually, so we set to zero
-          .setTotalTimeout(Duration.ofMillis(5L))
+          .setMaxRpcTimeoutDuration(
+              java.time.Duration
+                  .ZERO) // supposed to be ignored, but are not actually, so we set to zero
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(5L))
           .build();
 
   private FakeChannel initialChannel;
@@ -481,10 +482,10 @@ class OperationCallableImplTest {
                 // for LRO polling. They are not actually ignored in code, so they changing them
                 // here has an actual affect. This test verifies that they work as such, but in
                 // practice generated clients set the RPC timeouts to 0 to be ignored.
-                .setInitialRpcTimeout(Duration.ofMillis(100))
-                .setMaxRpcTimeout(Duration.ofSeconds(1))
+                .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(100))
+                .setMaxRpcTimeoutDuration(java.time.Duration.ofSeconds(1))
                 .setRpcTimeoutMultiplier(2)
-                .setTotalTimeout(Duration.ofSeconds(5L))
+                .setTotalTimeoutDuration(java.time.Duration.ofSeconds(5L))
                 .build(),
             clock);
     callSettings = callSettings.toBuilder().setPollingAlgorithm(pollingAlgorithm).build();
@@ -518,14 +519,17 @@ class OperationCallableImplTest {
 
     callable.futureCall(2, FakeCallContext.createDefault()).get(10, TimeUnit.SECONDS);
 
-    List<Duration> actualTimeouts = Lists.newArrayList();
+    List<java.time.Duration> actualTimeouts = Lists.newArrayList();
 
     for (ApiCallContext callContext : callContextCaptor.getAllValues()) {
-      actualTimeouts.add(callContext.getTimeout());
+      actualTimeouts.add(callContext.getTimeoutDuration());
     }
 
-    List<Duration> expectedTimeouts =
-        Lists.newArrayList(Duration.ofMillis(100), Duration.ofMillis(200), Duration.ofMillis(400));
+    List<java.time.Duration> expectedTimeouts =
+        Lists.newArrayList(
+            java.time.Duration.ofMillis(100),
+            java.time.Duration.ofMillis(200),
+            java.time.Duration.ofMillis(400));
     assertThat(actualTimeouts).isEqualTo(expectedTimeouts);
   }
 
@@ -555,11 +559,13 @@ class OperationCallableImplTest {
         FakeCallableFactory.createOperationCallable(
             initialCallable, callSettings, initialContext, longRunningClient);
 
-    ApiCallContext callContext = FakeCallContext.createDefault().withTimeout(Duration.ofMillis(10));
+    ApiCallContext callContext =
+        FakeCallContext.createDefault().withTimeoutDuration(java.time.Duration.ofMillis(10));
 
     callable.futureCall(2, callContext).get(10, TimeUnit.SECONDS);
 
-    assertThat(callContextCaptor.getValue().getTimeout()).isEqualTo(Duration.ofMillis(10));
+    assertThat(callContextCaptor.getValue().getTimeoutDuration())
+        .isEqualTo(java.time.Duration.ofMillis(10));
   }
 
   @Test
@@ -584,7 +590,7 @@ class OperationCallableImplTest {
         OperationTimedPollAlgorithm.create(
             FAST_RECHECKING_SETTINGS
                 .toBuilder()
-                .setTotalTimeout(Duration.ofMillis(iterationsCount))
+                .setTotalTimeoutDuration(java.time.Duration.ofMillis(iterationsCount))
                 .build(),
             clock);
     callSettings = callSettings.toBuilder().setPollingAlgorithm(pollingAlgorithm).build();
@@ -692,7 +698,10 @@ class OperationCallableImplTest {
 
     pollingAlgorithm =
         OperationTimedPollAlgorithm.create(
-            FAST_RECHECKING_SETTINGS.toBuilder().setTotalTimeout(Duration.ofMillis(1000L)).build(),
+            FAST_RECHECKING_SETTINGS
+                .toBuilder()
+                .setTotalTimeoutDuration(java.time.Duration.ofMillis(1000L))
+                .build(),
             clock);
     callSettings = callSettings.toBuilder().setPollingAlgorithm(pollingAlgorithm).build();
 
@@ -1162,8 +1171,8 @@ class OperationCallableImplTest {
       public ApiFuture<OperationSnapshot> futureCall(RequestT request, ApiCallContext context) {
         FakeCallContext fakeCallContext = (FakeCallContext) context;
         if (fakeCallContext != null
-            && fakeCallContext.getTimeout() != null
-            && fakeCallContext.getTimeout().isZero()) {
+            && fakeCallContext.getTimeoutDuration() != null
+            && fakeCallContext.getTimeoutDuration().isZero()) {
           throw new DeadlineExceededException(
               "Invalid timeout of 0 s",
               null,

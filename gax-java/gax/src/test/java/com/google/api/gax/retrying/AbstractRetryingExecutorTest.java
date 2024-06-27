@@ -62,7 +62,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.threeten.bp.Duration;
 
 @ExtendWith(MockitoExtension.class)
 public abstract class AbstractRetryingExecutorTest {
@@ -80,7 +79,7 @@ public abstract class AbstractRetryingExecutorTest {
   protected abstract RetryAlgorithm<String> getAlgorithm(
       RetrySettings retrySettings, int apocalypseCountDown, RuntimeException apocalypseException);
 
-  protected <T> void busyWaitForInitialResult(RetryingFuture<T> future, Duration timeout)
+  protected <T> void busyWaitForInitialResult(RetryingFuture<T> future, java.time.Duration timeout)
       throws TimeoutException {
     Stopwatch watch = Stopwatch.createStarted();
     while (future.peekAttemptResult() == null) {
@@ -137,7 +136,8 @@ public abstract class AbstractRetryingExecutorTest {
     assertEquals(5, future.getAttemptSettings().getAttemptCount());
 
     verify(tracer, times(6)).attemptStarted(eq("request"), anyInt());
-    verify(tracer, times(5)).attemptFailed(any(Throwable.class), any(Duration.class));
+    verify(tracer, times(5))
+        .attemptFailedDuration(any(Throwable.class), any(java.time.Duration.class));
     verify(tracer, times(1)).attemptSucceeded();
     verifyNoMoreInteractions(tracer);
   }
@@ -190,7 +190,8 @@ public abstract class AbstractRetryingExecutorTest {
     assertEquals(5, future.getAttemptSettings().getAttemptCount());
 
     verify(tracer, times(6)).attemptStarted(eq("request"), anyInt());
-    verify(tracer, times(5)).attemptFailed(any(Throwable.class), any(Duration.class));
+    verify(tracer, times(5))
+        .attemptFailedDuration(any(Throwable.class), any(java.time.Duration.class));
     verify(tracer, times(1)).attemptFailedRetriesExhausted(any(Throwable.class));
     verifyNoMoreInteractions(tracer);
   }
@@ -202,8 +203,8 @@ public abstract class AbstractRetryingExecutorTest {
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(Integer.MAX_VALUE))
-            .setMaxRetryDelay(Duration.ofMillis(Integer.MAX_VALUE))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .build();
     boolean useContextRetrySettings = retryingContext.getRetrySettings() != null;
     RetryingExecutorWithContext<String> executor =
@@ -242,9 +243,9 @@ public abstract class AbstractRetryingExecutorTest {
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(1_000L))
-            .setMaxRetryDelay(Duration.ofMillis(1_000L))
-            .setTotalTimeout(Duration.ofMillis(10_000L))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(1_000L))
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1_000L))
+            .setTotalTimeoutDuration(java.time.Duration.ofMillis(10_000L))
             .build();
     RetryingExecutorWithContext<String> executor =
         getExecutor(getAlgorithm(retrySettings, 0, null));
@@ -282,7 +283,8 @@ public abstract class AbstractRetryingExecutorTest {
 
     verify(tracer, times(5)).attemptStarted(eq("request"), anyInt());
     // Pre-apocalypse failures
-    verify(tracer, times(4)).attemptFailed(any(Throwable.class), any(Duration.class));
+    verify(tracer, times(4))
+        .attemptFailedDuration(any(Throwable.class), any(java.time.Duration.class));
     // Apocalypse failure
     verify(tracer, times(1)).attemptFailedRetriesExhausted(any(CancellationException.class));
     verifyNoMoreInteractions(tracer);
@@ -308,7 +310,8 @@ public abstract class AbstractRetryingExecutorTest {
 
     verify(tracer, times(5)).attemptStarted(eq("request"), anyInt());
     // Pre-apocalypse failures
-    verify(tracer, times(4)).attemptFailed(any(Throwable.class), any(Duration.class));
+    verify(tracer, times(4))
+        .attemptFailedDuration(any(Throwable.class), any(java.time.Duration.class));
     // Apocalypse failure
     verify(tracer, times(1)).attemptPermanentFailure(any(RuntimeException.class));
     verifyNoMoreInteractions(tracer);
@@ -321,8 +324,8 @@ public abstract class AbstractRetryingExecutorTest {
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(Integer.MAX_VALUE))
-            .setMaxRetryDelay(Duration.ofMillis(Integer.MAX_VALUE))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .build();
     boolean useContextRetrySettings = retryingContext.getRetrySettings() != null;
 

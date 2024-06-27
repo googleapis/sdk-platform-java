@@ -30,6 +30,7 @@
 package com.google.api.gax.retrying;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 
 import com.google.api.gax.tracing.ApiTracer;
 import java.lang.reflect.Field;
@@ -41,7 +42,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class BasicRetryingFutureTest {
   private Level logLevel;
@@ -65,6 +65,9 @@ class BasicRetryingFutureTest {
     RetryingContext retryingContext = mock(RetryingContext.class);
     ApiTracer tracer = mock(ApiTracer.class);
     TimedAttemptSettings timedAttemptSettings = mock(TimedAttemptSettings.class);
+    java.time.Duration testDuration = java.time.Duration.ofMillis(123);
+    Mockito.when(timedAttemptSettings.getRandomizedRetryDelayDuration()).thenReturn(testDuration);
+    Mockito.when(timedAttemptSettings.getRetryDelayDuration()).thenReturn(testDuration);
 
     Mockito.when(retryingContext.getTracer()).thenReturn(tracer);
 
@@ -93,7 +96,12 @@ class BasicRetryingFutureTest {
     future.handleAttempt(null, null);
 
     Mockito.verify(tracer)
-        .attemptFailed(ArgumentMatchers.<Throwable>any(), ArgumentMatchers.<Duration>any());
+        .attemptFailedDuration(ArgumentMatchers.isNull(), ArgumentMatchers.eq(testDuration));
+    Mockito.verify(timedAttemptSettings, times(1)).getRetryDelayDuration();
+
+    Mockito.verify(tracer)
+        .attemptFailedDuration(
+            ArgumentMatchers.<Throwable>any(), ArgumentMatchers.<java.time.Duration>any());
     Mockito.verifyNoMoreInteractions(tracer);
   }
 

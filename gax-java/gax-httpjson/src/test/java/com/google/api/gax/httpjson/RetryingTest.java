@@ -64,7 +64,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class RetryingTest {
 
@@ -103,13 +102,13 @@ class RetryingTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(Duration.ofMillis(2L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(2L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(Duration.ofMillis(2L))
-          .setInitialRpcTimeout(Duration.ofMillis(2L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(2L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(Duration.ofMillis(2L))
-          .setTotalTimeout(Duration.ofMillis(10L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(10L))
           .build();
 
   @BeforeEach
@@ -173,8 +172,8 @@ class RetryingTest {
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(Integer.MAX_VALUE))
-            .setMaxRetryDelay(Duration.ofMillis(Integer.MAX_VALUE))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .build();
     UnaryCallSettings<Integer, Integer> callSettings = createSettings(retryable, retrySettings);
     UnaryCallable<Integer, Integer> callable =

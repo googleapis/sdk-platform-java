@@ -52,7 +52,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class HttpJsonClientInterceptorTest {
 
@@ -191,7 +190,7 @@ class HttpJsonClientInterceptorTest {
     HttpJsonCallContext callContext =
         HttpJsonCallContext.createDefault()
             .withChannel(channel)
-            .withTimeout(Duration.ofSeconds(30))
+            .withTimeoutDuration(java.time.Duration.ofSeconds(30))
             .withEndpointContext(endpointContext);
 
     Field request;

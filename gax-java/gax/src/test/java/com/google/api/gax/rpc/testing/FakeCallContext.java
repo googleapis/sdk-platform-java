@@ -29,6 +29,9 @@
  */
 package com.google.api.gax.rpc.testing;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.core.InternalApi;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
@@ -49,15 +52,14 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 @InternalApi("for testing")
 public class FakeCallContext implements ApiCallContext {
   private final Credentials credentials;
   private final FakeChannel channel;
-  private final Duration timeout;
-  private final Duration streamWaitTimeout;
-  private final Duration streamIdleTimeout;
+  private final java.time.Duration timeout;
+  private final java.time.Duration streamWaitTimeout;
+  private final java.time.Duration streamIdleTimeout;
   private final ImmutableMap<String, List<String>> extraHeaders;
   private final ApiCallContextOptions options;
   private final ApiTracer tracer;
@@ -68,9 +70,9 @@ public class FakeCallContext implements ApiCallContext {
   private FakeCallContext(
       Credentials credentials,
       FakeChannel channel,
-      Duration timeout,
-      Duration streamWaitTimeout,
-      Duration streamIdleTimeout,
+      java.time.Duration timeout,
+      java.time.Duration streamWaitTimeout,
+      java.time.Duration streamIdleTimeout,
       ImmutableMap<String, List<String>> extraHeaders,
       ApiCallContextOptions options,
       ApiTracer tracer,
@@ -144,17 +146,17 @@ public class FakeCallContext implements ApiCallContext {
       newCallCredentials = credentials;
     }
 
-    Duration newTimeout = fakeCallContext.timeout;
+    java.time.Duration newTimeout = fakeCallContext.timeout;
     if (newTimeout == null) {
       newTimeout = timeout;
     }
 
-    Duration newStreamWaitTimeout = fakeCallContext.streamWaitTimeout;
+    java.time.Duration newStreamWaitTimeout = fakeCallContext.streamWaitTimeout;
     if (newStreamWaitTimeout == null) {
       newStreamWaitTimeout = streamWaitTimeout;
     }
 
-    Duration newStreamIdleTimeout = fakeCallContext.streamIdleTimeout;
+    java.time.Duration newStreamIdleTimeout = fakeCallContext.streamIdleTimeout;
     if (newStreamIdleTimeout == null) {
       newStreamIdleTimeout = streamIdleTimeout;
     }
@@ -240,19 +242,31 @@ public class FakeCallContext implements ApiCallContext {
   }
 
   @Override
-  public Duration getTimeout() {
+  public java.time.Duration getTimeoutDuration() {
     return timeout;
   }
 
-  @Nullable
   @Override
-  public Duration getStreamWaitTimeout() {
-    return streamWaitTimeout;
+  public ApiCallContext withStreamWaitTimeout(
+      @Nullable org.threeten.bp.Duration streamWaitTimeout) {
+    return withStreamWaitTimeoutDuration(toJavaTimeDuration(streamWaitTimeout));
   }
 
   @Nullable
   @Override
-  public Duration getStreamIdleTimeout() {
+  public java.time.Duration getStreamWaitTimeoutDuration() {
+    return streamWaitTimeout;
+  }
+
+  @Override
+  public ApiCallContext withStreamIdleTimeout(
+      @Nullable org.threeten.bp.Duration streamIdleTimeout) {
+    return withStreamIdleTimeoutDuration(toJavaTimeDuration(streamIdleTimeout));
+  }
+
+  @Nullable
+  @Override
+  public java.time.Duration getStreamIdleTimeoutDuration() {
     return streamIdleTimeout;
   }
 
@@ -300,6 +314,11 @@ public class FakeCallContext implements ApiCallContext {
         endpointContext);
   }
 
+  @Override
+  public FakeCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout) {
+    return withTimeoutDuration(toJavaTimeDuration(timeout));
+  }
+
   public FakeCallContext withChannel(FakeChannel channel) {
     return new FakeCallContext(
         this.credentials,
@@ -316,7 +335,7 @@ public class FakeCallContext implements ApiCallContext {
   }
 
   @Override
-  public FakeCallContext withTimeout(Duration timeout) {
+  public FakeCallContext withTimeoutDuration(java.time.Duration timeout) {
     // Default RetrySettings use 0 for RPC timeout. Treat that as disabled timeouts.
     if (timeout != null && (timeout.isZero() || timeout.isNegative())) {
       timeout = null;
@@ -341,8 +360,15 @@ public class FakeCallContext implements ApiCallContext {
         this.endpointContext);
   }
 
+  @Nullable
   @Override
-  public ApiCallContext withStreamWaitTimeout(@Nullable Duration streamWaitTimeout) {
+  public org.threeten.bp.Duration getTimeout() {
+    return toThreetenDuration(getTimeoutDuration());
+  }
+
+  @Override
+  public ApiCallContext withStreamWaitTimeoutDuration(
+      @Nullable java.time.Duration streamWaitTimeout) {
     return new FakeCallContext(
         this.credentials,
         this.channel,
@@ -357,8 +383,15 @@ public class FakeCallContext implements ApiCallContext {
         this.endpointContext);
   }
 
+  @Nullable
   @Override
-  public ApiCallContext withStreamIdleTimeout(@Nullable Duration streamIdleTimeout) {
+  public org.threeten.bp.Duration getStreamWaitTimeout() {
+    return toThreetenDuration(getStreamWaitTimeoutDuration());
+  }
+
+  @Override
+  public ApiCallContext withStreamIdleTimeoutDuration(
+      @Nullable java.time.Duration streamIdleTimeout) {
     Preconditions.checkNotNull(streamIdleTimeout);
     return new FakeCallContext(
         this.credentials,
@@ -372,6 +405,12 @@ public class FakeCallContext implements ApiCallContext {
         this.retrySettings,
         this.retryableCodes,
         this.endpointContext);
+  }
+
+  @Nullable
+  @Override
+  public org.threeten.bp.Duration getStreamIdleTimeout() {
+    return toThreetenDuration(getStreamIdleTimeoutDuration());
   }
 
   @Override

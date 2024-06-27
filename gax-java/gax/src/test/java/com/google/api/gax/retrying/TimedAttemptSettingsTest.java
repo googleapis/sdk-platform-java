@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,39 +27,49 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.gax.batching;
+package com.google.api.gax.retrying;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 
-import com.google.common.base.Stopwatch;
-import java.util.Objects;
+import org.junit.jupiter.api.Test;
 
-/**
- * Blocks the current thread to poll the given assertion every 10ms until it's successful or the
- * timeout is exceeded. Expected usage:
- *
- * <pre>{@code
- * assertByPolling(java.time.Duration.ofSeconds(2), () -> assertThat(...));
- * }</pre>
- */
-class AssertByPolling {
+public class TimedAttemptSettingsTest {
 
-  public static void assertByPolling(java.time.Duration timeout, Runnable assertion)
-      throws InterruptedException {
-    Objects.requireNonNull(timeout, "Timeout must not be null");
-    Stopwatch stopwatch = Stopwatch.createStarted();
-    while (true) {
-      try {
-        assertion.run();
-        return; // Success
+  private static final TimedAttemptSettings.Builder SETTINGS_BUILDER =
+      TimedAttemptSettings.newBuilder()
+          .setGlobalSettings(RetrySettings.newBuilder().build())
+          .setRpcTimeoutDuration(java.time.Duration.ofMillis(5000l))
+          .setRandomizedRetryDelayDuration(java.time.Duration.ofMillis(5000l))
+          .setAttemptCount(123)
+          .setFirstAttemptStartTimeNanos(123l);
 
-      } catch (AssertionError err) {
-        if (stopwatch.elapsed(MILLISECONDS) < timeout.toMillis()) {
-          MILLISECONDS.sleep(10);
-        } else {
-          throw new AssertionError("Timeout waiting for successful assertion.", err);
-        }
-      }
-    }
+  @Test
+  public void testRetryDelay() {
+    testDurationMethod(
+        123l,
+        jt -> SETTINGS_BUILDER.setRetryDelayDuration(jt).build(),
+        tt -> SETTINGS_BUILDER.setRetryDelay(tt).build(),
+        o -> o.getRetryDelayDuration(),
+        o -> o.getRetryDelay());
+  }
+
+  @Test
+  public void testRandomizedRetryDelay() {
+    testDurationMethod(
+        123l,
+        jt -> SETTINGS_BUILDER.setRandomizedRetryDelayDuration(jt).build(),
+        tt -> SETTINGS_BUILDER.setRandomizedRetryDelay(tt).build(),
+        o -> o.getRandomizedRetryDelayDuration(),
+        o -> o.getRandomizedRetryDelay());
+  }
+
+  @Test
+  public void testRpcTimeout() {
+    testDurationMethod(
+        123l,
+        jt -> SETTINGS_BUILDER.setRpcTimeoutDuration(jt).build(),
+        tt -> SETTINGS_BUILDER.setRpcTimeout(tt).build(),
+        o -> o.getRpcTimeoutDuration(),
+        o -> o.getRpcTimeout());
   }
 }

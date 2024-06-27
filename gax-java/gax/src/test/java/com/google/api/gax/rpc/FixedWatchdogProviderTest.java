@@ -30,12 +30,12 @@
 package com.google.api.gax.rpc;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiClock;
 import java.util.concurrent.ScheduledExecutorService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class FixedWatchdogProviderTest {
   @Test
@@ -47,9 +47,9 @@ class FixedWatchdogProviderTest {
   @Test
   void testSameInstance() {
     Watchdog watchdog =
-        Watchdog.create(
+        Watchdog.createDuration(
             Mockito.mock(ApiClock.class),
-            Duration.ZERO,
+            java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));
 
     WatchdogProvider provider = FixedWatchdogProvider.create(watchdog);
@@ -59,9 +59,9 @@ class FixedWatchdogProviderTest {
   @Test
   void testNoModifications() {
     Watchdog watchdog =
-        Watchdog.create(
+        Watchdog.createDuration(
             Mockito.mock(ApiClock.class),
-            Duration.ZERO,
+            java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));
     WatchdogProvider provider = FixedWatchdogProvider.create(watchdog);
 
@@ -72,7 +72,7 @@ class FixedWatchdogProviderTest {
 
     Throwable actualError = null;
     try {
-      provider.withCheckInterval(Duration.ofSeconds(10));
+      provider.withCheckIntervalDuration(java.time.Duration.ofSeconds(10));
     } catch (Throwable t) {
       actualError = t;
     }
@@ -93,5 +93,19 @@ class FixedWatchdogProviderTest {
       actualError = t;
     }
     assertThat(actualError).isInstanceOf(UnsupportedOperationException.class);
+  }
+
+  @Test
+  public void testWithCheckInterval_backportMethodsBehaveTheSame() {
+    assertThrows(
+        UnsupportedOperationException.class,
+        () ->
+            FixedWatchdogProvider.create(null)
+                .withCheckIntervalDuration(java.time.Duration.ofMillis(123l)));
+    assertThrows(
+        UnsupportedOperationException.class,
+        () ->
+            FixedWatchdogProvider.create(null)
+                .withCheckInterval(org.threeten.bp.Duration.ofMillis(123l)));
   }
 }

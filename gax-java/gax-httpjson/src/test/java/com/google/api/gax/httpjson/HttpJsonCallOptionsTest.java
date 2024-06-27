@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,39 +27,35 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.gax.batching;
+package com.google.api.gax.httpjson;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
+import static com.google.api.gax.util.TimeConversionTestUtils.testInstantMethod;
 
-import com.google.common.base.Stopwatch;
-import java.util.Objects;
+import org.junit.jupiter.api.Test;
 
-/**
- * Blocks the current thread to poll the given assertion every 10ms until it's successful or the
- * timeout is exceeded. Expected usage:
- *
- * <pre>{@code
- * assertByPolling(java.time.Duration.ofSeconds(2), () -> assertThat(...));
- * }</pre>
- */
-class AssertByPolling {
+public class HttpJsonCallOptionsTest {
+  private final HttpJsonCallOptions.Builder OPTIONS_BUILDER = HttpJsonCallOptions.newBuilder();
 
-  public static void assertByPolling(java.time.Duration timeout, Runnable assertion)
-      throws InterruptedException {
-    Objects.requireNonNull(timeout, "Timeout must not be null");
-    Stopwatch stopwatch = Stopwatch.createStarted();
-    while (true) {
-      try {
-        assertion.run();
-        return; // Success
+  @Test
+  public void testDeadline() {
+    final long millis = 3;
+    testInstantMethod(
+        millis,
+        jt -> OPTIONS_BUILDER.setDeadlineInstant(jt),
+        tt -> OPTIONS_BUILDER.setDeadline(tt),
+        c -> c.build().getDeadlineInstant(),
+        c -> c.build().getDeadline());
+  }
 
-      } catch (AssertionError err) {
-        if (stopwatch.elapsed(MILLISECONDS) < timeout.toMillis()) {
-          MILLISECONDS.sleep(10);
-        } else {
-          throw new AssertionError("Timeout waiting for successful assertion.", err);
-        }
-      }
-    }
+  @Test
+  public void testTimeout() {
+    final long millis = 3;
+    testDurationMethod(
+        millis,
+        jt -> OPTIONS_BUILDER.setTimeoutDuration(jt),
+        tt -> OPTIONS_BUILDER.setTimeout(tt),
+        c -> c.build().getTimeoutDuration(),
+        c -> c.build().getTimeout());
   }
 }

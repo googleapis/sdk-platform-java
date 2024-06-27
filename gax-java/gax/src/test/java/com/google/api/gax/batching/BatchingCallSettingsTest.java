@@ -39,7 +39,6 @@ import com.google.common.collect.ImmutableSet;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
-import org.threeten.bp.Duration;
 
 class BatchingCallSettingsTest {
 
@@ -47,7 +46,7 @@ class BatchingCallSettingsTest {
       BatchingSettings.newBuilder()
           .setElementCountThreshold(10L)
           .setRequestByteThreshold(20L)
-          .setDelayThreshold(Duration.ofMillis(5))
+          .setDelayThresholdDuration(java.time.Duration.ofMillis(5))
           .setFlowControlSettings(
               FlowControlSettings.newBuilder()
                   .setMaxOutstandingElementCount(100L)
@@ -88,7 +87,7 @@ class BatchingCallSettingsTest {
     BatchingCallSettings.Builder<Integer, Integer, LabeledIntList, List<Integer>> builder =
         BatchingCallSettings.newBuilder(SQUARER_BATCHING_DESC_V2);
     RetrySettings retrySettings =
-        RetrySettings.newBuilder().setTotalTimeout(Duration.ofMinutes(1)).build();
+        RetrySettings.newBuilder().setTotalTimeoutDuration(java.time.Duration.ofMinutes(1)).build();
     builder
         .setBatchingSettings(BATCHING_SETTINGS)
         .setRetryableCodes(StatusCode.Code.UNAVAILABLE, StatusCode.Code.UNAUTHENTICATED)

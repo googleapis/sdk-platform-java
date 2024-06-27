@@ -52,7 +52,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.threeten.bp.Duration;
 
 @ExtendWith(MockitoExtension.class)
 class TracedCallableTest {
@@ -96,7 +95,7 @@ class TracedCallableTest {
     // Verify that callables configured to not retry have the appropriate tracer interactions.
     UnaryCallSettings<Object, Object> callSettings =
         UnaryCallSettings.newUnaryCallSettingsBuilder()
-            .setSimpleTimeoutNoRetries(Duration.ofMillis(5L))
+            .setSimpleTimeoutNoRetriesDuration(java.time.Duration.ofMillis(5L))
             .build();
     UnaryCallable<String, String> callable = setupTracedUnaryCallable(callSettings);
     innerResult.set("No, my refrigerator is not running!");

@@ -29,10 +29,12 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.core.ApiClock;
+import com.google.api.core.ObsoleteApi;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
-import org.threeten.bp.Duration;
 
 public interface WatchdogProvider {
   boolean needsClock();
@@ -41,7 +43,15 @@ public interface WatchdogProvider {
 
   boolean needsCheckInterval();
 
-  WatchdogProvider withCheckInterval(Duration checkInterval);
+  /**
+   * This method is obsolete. Use {@link #withCheckIntervalDuration(java.time.Duration)} instead.
+   */
+  @ObsoleteApi("Use withCheckIntervalDuration(java.time.Duration) instead")
+  WatchdogProvider withCheckInterval(org.threeten.bp.Duration checkInterval);
+
+  default WatchdogProvider withCheckIntervalDuration(java.time.Duration checkInterval) {
+    return withCheckInterval(toThreetenDuration(checkInterval));
+  }
 
   boolean needsExecutor();
 

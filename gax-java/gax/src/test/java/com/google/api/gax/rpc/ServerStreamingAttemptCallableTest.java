@@ -51,15 +51,14 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class ServerStreamingAttemptCallableTest {
   private MockServerStreamingCallable<String, String> innerCallable;
   private AccumulatingObserver observer;
   private FakeRetryingFuture fakeRetryingFuture;
   private StreamResumptionStrategy<String, String> resumptionStrategy;
-  private static Duration totalTimeout = Duration.ofHours(1);
-  private static final Duration attemptTimeout = Duration.ofMinutes(1);
+  private static java.time.Duration totalTimeout = java.time.Duration.ofHours(1);
+  private static final java.time.Duration attemptTimeout = java.time.Duration.ofMinutes(1);
   private FakeCallContext mockedCallContext;
 
   @BeforeEach
@@ -89,17 +88,19 @@ class ServerStreamingAttemptCallableTest {
   void testUserProvidedContextTimeout() {
     // Mock up the ApiCallContext as if the user provided a timeout and streamWaitTimeout.
     Mockito.doReturn(BaseApiTracer.getInstance()).when(mockedCallContext).getTracer();
-    Mockito.doReturn(Duration.ofHours(5)).when(mockedCallContext).getTimeout();
-    Mockito.doReturn(Duration.ofHours(5)).when(mockedCallContext).getStreamWaitTimeout();
+    Mockito.doReturn(java.time.Duration.ofHours(5)).when(mockedCallContext).getTimeoutDuration();
+    Mockito.doReturn(java.time.Duration.ofHours(5))
+        .when(mockedCallContext)
+        .getStreamWaitTimeoutDuration();
 
     ServerStreamingAttemptCallable<String, String> callable = createCallable(mockedCallContext);
     callable.start();
 
     // Ensure that the callable did not overwrite the user provided timeouts
-    Mockito.verify(mockedCallContext, Mockito.times(1)).getTimeout();
-    Mockito.verify(mockedCallContext, Mockito.never()).withTimeout(totalTimeout);
+    Mockito.verify(mockedCallContext, Mockito.times(1)).getTimeoutDuration();
+    Mockito.verify(mockedCallContext, Mockito.never()).withTimeoutDuration(totalTimeout);
     Mockito.verify(mockedCallContext, Mockito.never())
-        .withStreamWaitTimeout(Mockito.any(Duration.class));
+        .withStreamWaitTimeoutDuration(Mockito.any(java.time.Duration.class));
 
     // Should notify outer observer
     Truth.assertThat(observer.controller).isNotNull();
@@ -123,20 +124,20 @@ class ServerStreamingAttemptCallableTest {
   void testNoUserProvidedContextTimeout() {
     // Mock up the ApiCallContext as if the user did not provide custom timeouts.
     Mockito.doReturn(BaseApiTracer.getInstance()).when(mockedCallContext).getTracer();
-    Mockito.doReturn(null).when(mockedCallContext).getTimeout();
-    Mockito.doReturn(null).when(mockedCallContext).getStreamWaitTimeout();
-    Mockito.doReturn(mockedCallContext).when(mockedCallContext).withTimeout(attemptTimeout);
+    Mockito.doReturn(null).when(mockedCallContext).getTimeoutDuration();
+    Mockito.doReturn(null).when(mockedCallContext).getStreamWaitTimeoutDuration();
+    Mockito.doReturn(mockedCallContext).when(mockedCallContext).withTimeoutDuration(attemptTimeout);
     Mockito.doReturn(mockedCallContext)
         .when(mockedCallContext)
-        .withStreamWaitTimeout(Mockito.any(Duration.class));
+        .withStreamWaitTimeoutDuration(Mockito.any(java.time.Duration.class));
 
     ServerStreamingAttemptCallable<String, String> callable = createCallable(mockedCallContext);
     callable.start();
 
     // Ensure that the callable configured the timeouts via the Settings in the
     // absence of user-defined timeouts.
-    Mockito.verify(mockedCallContext, Mockito.times(1)).getTimeout();
-    Mockito.verify(mockedCallContext, Mockito.times(1)).withTimeout(attemptTimeout);
+    Mockito.verify(mockedCallContext, Mockito.times(1)).getTimeoutDuration();
+    Mockito.verify(mockedCallContext, Mockito.times(1)).withTimeoutDuration(attemptTimeout);
 
     // Should notify outer observer
     Truth.assertThat(observer.controller).isNotNull();
@@ -470,13 +471,14 @@ class ServerStreamingAttemptCallableTest {
       this.attemptCallable = attemptCallable;
       attemptSettings =
           TimedAttemptSettings.newBuilder()
-              .setGlobalSettings(RetrySettings.newBuilder().setTotalTimeout(totalTimeout).build())
+              .setGlobalSettings(
+                  RetrySettings.newBuilder().setTotalTimeoutDuration(totalTimeout).build())
               .setFirstAttemptStartTimeNanos(0)
               .setAttemptCount(0)
               .setOverallAttemptCount(0)
-              .setRandomizedRetryDelay(Duration.ofMillis(1))
-              .setRetryDelay(Duration.ofMillis(1))
-              .setRpcTimeout(Duration.ofMinutes(1))
+              .setRandomizedRetryDelayDuration(java.time.Duration.ofMillis(1))
+              .setRetryDelayDuration(java.time.Duration.ofMillis(1))
+              .setRpcTimeoutDuration(java.time.Duration.ofMinutes(1))
               .build();
     }
 

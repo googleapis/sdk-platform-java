@@ -32,18 +32,27 @@ package com.google.api.gax.batching;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.google.api.core.ApiFutures;
 import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
+import com.google.common.collect.ImmutableList;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import org.junit.jupiter.api.Test;
-import org.threeten.bp.Duration;
 
 class ThresholdBatcherTest {
 
@@ -124,6 +133,7 @@ class ThresholdBatcherTest {
   }
 
   private static class SimpleBatchMerger implements BatchMerger<SimpleBatch> {
+
     @Override
     public void merge(SimpleBatch batch, SimpleBatch newBatch) {
       batch.merge(newBatch);
@@ -135,10 +145,26 @@ class ThresholdBatcherTest {
     return ThresholdBatcher.<SimpleBatch>newBuilder()
         .setThresholds(BatchingThresholds.<SimpleBatch>create(100))
         .setExecutor(EXECUTOR)
-        .setMaxDelay(Duration.ofMillis(10000))
+        .setMaxDelayDuration(java.time.Duration.ofMillis(10000))
         .setReceiver(receiver)
         .setFlowController(ThresholdBatcherTest.<SimpleBatch>getDisabledBatchingFlowController())
         .setBatchMerger(new SimpleBatchMerger());
+  }
+
+  private static SimpleEntry<ThresholdBatcher.Builder, ScheduledExecutorService>
+      createSimpleBatcherBuilderWithMockExecutor(long customThreshold) {
+    AccumulatingBatchReceiver<SimpleBatch> receiver =
+        new AccumulatingBatchReceiver<>(ApiFutures.<Void>immediateFuture(null));
+    ScheduledExecutorService executor = mock(ScheduledThreadPoolExecutor.class);
+    when(executor.schedule((Runnable) any(), anyLong(), any()))
+        .thenReturn(mock(ScheduledFuture.class));
+    BatchingThreshold<SimpleBatch> threshold = new NumericThreshold<>(customThreshold, e -> 1);
+
+    ThresholdBatcher.Builder builder =
+        createSimpleBatcherBuidler(receiver)
+            .setExecutor(executor)
+            .setThresholds(ImmutableList.of(threshold));
+    return new SimpleEntry<>(builder, executor);
   }
 
   @Test
@@ -195,7 +221,9 @@ class ThresholdBatcherTest {
     AccumulatingBatchReceiver<SimpleBatch> receiver =
         new AccumulatingBatchReceiver<>(ApiFutures.<Void>immediateFuture(null));
     ThresholdBatcher<SimpleBatch> batcher =
-        createSimpleBatcherBuidler(receiver).setMaxDelay(Duration.ofMillis(100)).build();
+        createSimpleBatcherBuidler(receiver)
+            .setMaxDelayDuration(java.time.Duration.ofMillis(100))
+            .build();
 
     batcher.add(SimpleBatch.fromInteger(3));
     batcher.add(SimpleBatch.fromInteger(5));
@@ -223,7 +251,7 @@ class ThresholdBatcherTest {
             ThresholdBatcher.<SimpleBatch>newBuilder()
                 .setThresholds(BatchingThresholds.<SimpleBatch>create(100))
                 .setExecutor(EXECUTOR)
-                .setMaxDelay(Duration.ofMillis(10000))
+                .setMaxDelayDuration(java.time.Duration.ofMillis(10000))
                 .setReceiver(
                     new AccumulatingBatchReceiver<SimpleBatch>(
                         ApiFutures.<Void>immediateFuture(null)))
@@ -352,5 +380,29 @@ class ThresholdBatcherTest {
         .isEqualTo(trackedFlowController.getElementsReleased());
     assertThat(trackedFlowController.getBytesReserved())
         .isEqualTo(trackedFlowController.getBytesReleased());
+  }
+
+  @Test
+  public void testMaxDelay() throws FlowControlException {
+
+    final long MILLIS = 123l;
+    final SimpleBatch TEST_BATCH = SimpleBatch.fromInteger(1);
+    java.time.Duration javaTimeDuration = java.time.Duration.ofMillis(MILLIS);
+    org.threeten.bp.Duration threetenDuration = org.threeten.bp.Duration.ofMillis(MILLIS);
+
+    SimpleEntry<ThresholdBatcher.Builder, ScheduledExecutorService> container =
+        createSimpleBatcherBuilderWithMockExecutor(1000l);
+    ThresholdBatcher.Builder builder = container.getKey();
+    ScheduledExecutorService executor = container.getValue();
+
+    builder.setMaxDelayDuration(javaTimeDuration).build().add(TEST_BATCH);
+    verify(executor, times(1)).schedule((Runnable) any(), eq(MILLIS), any());
+
+    container = createSimpleBatcherBuilderWithMockExecutor(1000l);
+    builder = container.getKey();
+    executor = container.getValue();
+
+    builder.setMaxDelay(threetenDuration).build().add(TEST_BATCH);
+    verify(executor, times(1)).schedule((Runnable) any(), eq(MILLIS), any());
   }
 }

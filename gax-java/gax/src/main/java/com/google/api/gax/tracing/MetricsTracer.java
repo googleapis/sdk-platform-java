@@ -30,8 +30,11 @@
 
 package com.google.api.gax.tracing;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.common.annotations.VisibleForTesting;
@@ -42,7 +45,6 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * This class computes generic metrics that can be observed in the lifecycle of an RPC operation.
@@ -172,10 +174,20 @@ public class MetricsTracer implements ApiTracer {
    *     key.
    */
   @Override
-  public void attemptFailed(Throwable error, Duration delay) {
+  public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
     attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
     metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordAttemptCount(1, attributes);
+  }
+
+  /**
+   * This method is obsolete. Use {@link #attemptFailedDuration(Throwable, java.time.Duration)}
+   * instead.
+   */
+  @Override
+  @ObsoleteApi("Use attemptFailedDuration(Throwable, java.time.Duration) instead")
+  public void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {
+    attemptFailedDuration(error, toJavaTimeDuration(delay));
   }
 
   /**

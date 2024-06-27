@@ -30,7 +30,7 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
-import org.threeten.bp.Duration;
+import com.google.api.core.ObsoleteApi;
 
 /**
  * A base implementation of {@link ApiTracer} that does nothing. With the deprecation of Java 7
@@ -104,7 +104,17 @@ public class BaseApiTracer implements ApiTracer {
   }
 
   @Override
-  public void attemptFailed(Throwable error, Duration delay) {
+  public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
+    // noop
+  }
+
+  /**
+   * This method is obsolete. Use {@link #attemptFailedDuration(Throwable, java.time.Duration)}
+   * instead.
+   */
+  @Override
+  @ObsoleteApi("Use attemptFailed(Throwable, java.time.Duration) instead")
+  public void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {
     // noop
   }
 

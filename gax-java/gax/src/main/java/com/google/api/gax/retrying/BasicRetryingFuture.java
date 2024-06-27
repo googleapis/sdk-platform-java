@@ -183,11 +183,12 @@ class BasicRetryingFuture<ResponseT> extends AbstractFuture<ResponseT>
                           ? callable.getClass().getEnclosingMethod().getName()
                           : ""),
                   "attemptCount: " + attemptSettings.getAttemptCount(),
-                  "delay: " + attemptSettings.getRetryDelay(),
+                  "delay: " + attemptSettings.getRetryDelayDuration(),
                   "retriableException: " + throwable
                 });
           }
-          tracer.attemptFailed(throwable, nextAttemptSettings.getRandomizedRetryDelay());
+          tracer.attemptFailedDuration(
+              throwable, nextAttemptSettings.getRandomizedRetryDelayDuration());
           attemptSettings = nextAttemptSettings;
           setAttemptResult(throwable, response, true);
           // a new attempt will be (must be) scheduled by an external executor

@@ -48,15 +48,14 @@ import java.util.concurrent.TimeoutException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class WatchdogTest {
   private static final ScheduledExecutorService EXECUTOR = Executors.newScheduledThreadPool(1);
 
   private FakeApiClock clock;
-  private final Duration checkInterval = Duration.ofMillis(1000);
-  private Duration waitTime = Duration.ofSeconds(10);
-  private Duration idleTime = Duration.ofMinutes(5);
+  private final java.time.Duration checkInterval = java.time.Duration.ofMillis(1000);
+  private java.time.Duration waitTime = java.time.Duration.ofSeconds(10);
+  private java.time.Duration idleTime = java.time.Duration.ofMinutes(5);
 
   private Watchdog watchdog;
   private MockServerStreamingCallable<String, String> callable;
@@ -66,11 +65,11 @@ class WatchdogTest {
   @BeforeEach
   void setUp() {
     clock = new FakeApiClock(0);
-    watchdog = Watchdog.create(clock, checkInterval, EXECUTOR);
+    watchdog = Watchdog.createDuration(clock, checkInterval, EXECUTOR);
 
     callable = new MockServerStreamingCallable<>();
     innerObserver = new AccumulatingObserver<>();
-    callable.call("request", watchdog.watch(innerObserver, waitTime, idleTime));
+    callable.call("request", watchdog.watchDuration(innerObserver, waitTime, idleTime));
     call = callable.popLastCall();
   }
 
@@ -130,7 +129,7 @@ class WatchdogTest {
   void testTimedOutBeforeStart() throws InterruptedException {
     MockServerStreamingCallable<String, String> callable1 = new MockServerStreamingCallable<>();
     AccumulatingObserver<String> downstreamObserver1 = new AccumulatingObserver<>();
-    ResponseObserver observer = watchdog.watch(downstreamObserver1, waitTime, idleTime);
+    ResponseObserver observer = watchdog.watchDuration(downstreamObserver1, waitTime, idleTime);
     clock.incrementNanoTime(idleTime.toNanos() + 1);
     // This should not remove callable1 from watched list
     watchdog.run();
@@ -157,7 +156,8 @@ class WatchdogTest {
         new MockServerStreamingCallable<>();
     AutoFlowControlObserver<String> downstreamObserver = new AutoFlowControlObserver<>();
 
-    autoFlowControlCallable.call("request", watchdog.watch(downstreamObserver, waitTime, idleTime));
+    autoFlowControlCallable.call(
+        "request", watchdog.watchDuration(downstreamObserver, waitTime, idleTime));
     MockServerStreamingCall<String, String> call1 = autoFlowControlCallable.popLastCall();
 
     clock.incrementNanoTime(idleTime.toNanos() + 1);
@@ -180,13 +180,13 @@ class WatchdogTest {
   void testMultiple() throws Exception {
     // Start stream1
     AccumulatingObserver<String> downstreamObserver1 = new AccumulatingObserver<>();
-    callable.call("request", watchdog.watch(downstreamObserver1, waitTime, idleTime));
+    callable.call("request", watchdog.watchDuration(downstreamObserver1, waitTime, idleTime));
     MockServerStreamingCall<String, String> call1 = callable.popLastCall();
     downstreamObserver1.controller.get().request(1);
 
     // Start stream2
     AccumulatingObserver<String> downstreamObserver2 = new AccumulatingObserver<>();
-    callable.call("req2", watchdog.watch(downstreamObserver2, waitTime, idleTime));
+    callable.call("req2", watchdog.watchDuration(downstreamObserver2, waitTime, idleTime));
     MockServerStreamingCall<String, String> call2 = callable.popLastCall();
     downstreamObserver2.controller.get().request(1);
 
@@ -219,7 +219,7 @@ class WatchdogTest {
   void testWatchdogBeingClosed() {
     ScheduledFuture future = Mockito.mock(ScheduledFuture.class);
     ScheduledExecutorService mockExecutor = getMockExecutorService(future);
-    Watchdog underTest = Watchdog.create(clock, checkInterval, mockExecutor);
+    Watchdog underTest = Watchdog.createDuration(clock, checkInterval, mockExecutor);
     assertThat(underTest).isInstanceOf(BackgroundResource.class);
 
     underTest.close();
@@ -241,7 +241,7 @@ class WatchdogTest {
     TimeUnit timeUnit = TimeUnit.MILLISECONDS;
     ScheduledFuture future = Mockito.mock(ScheduledFuture.class);
     ScheduledExecutorService mockExecutor = getMockExecutorService(future);
-    Watchdog watchdog = Watchdog.create(clock, checkInterval, mockExecutor);
+    Watchdog watchdog = Watchdog.createDuration(clock, checkInterval, mockExecutor);
     watchdog.shutdown();
 
     boolean actual = watchdog.awaitTermination(duration, timeUnit);
@@ -256,7 +256,7 @@ class WatchdogTest {
     ScheduledFuture future = Mockito.mock(ScheduledFuture.class);
     Mockito.doThrow(new TimeoutException()).when(future).get(duration, timeUnit);
     ScheduledExecutorService mockExecutor = getMockExecutorService(future);
-    Watchdog watchdog = Watchdog.create(clock, checkInterval, mockExecutor);
+    Watchdog watchdog = Watchdog.createDuration(clock, checkInterval, mockExecutor);
 
     boolean actual = watchdog.awaitTermination(duration, timeUnit);
 
@@ -270,7 +270,7 @@ class WatchdogTest {
     ScheduledFuture future = Mockito.mock(ScheduledFuture.class);
     Mockito.doThrow(new CancellationException()).when(future).get(duration, timeUnit);
     ScheduledExecutorService mockExecutor = getMockExecutorService(future);
-    Watchdog watchdog = Watchdog.create(clock, checkInterval, mockExecutor);
+    Watchdog watchdog = Watchdog.createDuration(clock, checkInterval, mockExecutor);
 
     boolean actual = watchdog.awaitTermination(duration, timeUnit);
 
@@ -287,7 +287,7 @@ class WatchdogTest {
         .when(future)
         .get(duration, timeUnit);
     ScheduledExecutorService mockExecutor = getMockExecutorService(future);
-    Watchdog watchdog = Watchdog.create(clock, checkInterval, mockExecutor);
+    Watchdog watchdog = Watchdog.createDuration(clock, checkInterval, mockExecutor);
 
     boolean actual = watchdog.awaitTermination(duration, timeUnit);
 

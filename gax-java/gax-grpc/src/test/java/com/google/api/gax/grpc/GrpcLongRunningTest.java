@@ -69,21 +69,20 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class GrpcLongRunningTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(Duration.ofMillis(1L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(1L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(Duration.ofMillis(1L))
-          .setInitialRpcTimeout(Duration.ofMillis(1L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(1L))
           .setMaxAttempts(0)
           .setJittered(false)
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(Duration.ofMillis(1L))
-          .setTotalTimeout(Duration.ofMillis(5L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(1L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(5L))
           .build();
 
   private ManagedChannel channel;
