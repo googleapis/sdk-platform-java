@@ -33,7 +33,7 @@ import com.google.api.core.ApiClock;
 import com.google.api.core.InternalApi;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.threeten.bp.Duration;
 
 /**

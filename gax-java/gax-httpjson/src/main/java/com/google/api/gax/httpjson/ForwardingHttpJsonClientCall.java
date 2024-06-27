@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.httpjson;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A {@link HttpJsonClientCall} which forwards all of its methods to another {@link

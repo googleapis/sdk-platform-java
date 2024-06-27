@@ -34,7 +34,7 @@ import com.google.api.core.InternalApi;
 import com.google.common.base.Preconditions;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.threeten.bp.Duration;
 
 /**

@@ -33,7 +33,7 @@ import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;
 import java.time.Duration;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.threeten.bp.Instant;
 
 /** Options for an http-json call, including deadline and credentials. */
