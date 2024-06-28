@@ -36,7 +36,7 @@
     <checker-qual.version>3.44.0</checker-qual.version>
     <perfmark-api.version>0.27.0</perfmark-api.version>
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
-    <google.cloud.opentelemetry.version>0.29.0</google.cloud.opentelemetry.version>
+    <google.cloud.opentelemetry.version>0.30.0</google.cloud.opentelemetry.version>
     <opentelemetry-grpc-instrumentation.version>2.1.0-alpha</opentelemetry-grpc-instrumentation.version>
     <flogger.version>0.8</flogger.version>
     <arrow.version>15.0.2</arrow.version>
