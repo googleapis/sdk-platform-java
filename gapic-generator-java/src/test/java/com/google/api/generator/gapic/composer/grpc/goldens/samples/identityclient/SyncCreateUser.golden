@@ -20,7 +20,6 @@ package com.google.showcase.v1beta1.samples;
 import com.google.showcase.v1beta1.CreateUserRequest;
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.User;
-import com.google.showcase.v1beta1.UserName;
 
 public class SyncCreateUser {
 
@@ -36,10 +35,7 @@ public class SyncCreateUser {
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
     try (IdentityClient identityClient = IdentityClient.create()) {
       CreateUserRequest request =
-          CreateUserRequest.newBuilder()
-              .setParent(UserName.of("[USER]").toString())
-              .setUser(User.newBuilder().build())
-              .build();
+          CreateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
       User response = identityClient.createUser(request);
     }
   }

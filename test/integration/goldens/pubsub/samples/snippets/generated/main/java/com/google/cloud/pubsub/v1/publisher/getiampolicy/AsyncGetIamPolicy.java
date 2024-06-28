@@ -22,7 +22,7 @@ import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.GetPolicyOptions;
 import com.google.iam.v1.Policy;
-import com.google.pubsub.v1.SnapshotName;
+import com.google.pubsub.v1.ProjectName;
 
 public class AsyncGetIamPolicy {
 
@@ -39,7 +39,7 @@ public class AsyncGetIamPolicy {
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+              .setResource(ProjectName.of("[PROJECT]").toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       ApiFuture<Policy> future = topicAdminClient.getIamPolicyCallable().futureCall(request);

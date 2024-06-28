@@ -37,7 +37,7 @@ public class SyncGetIamPolicy {
     try (IAMPolicyClient iAMPolicyClient = IAMPolicyClient.create()) {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource("GetIamPolicyRequest-1527610370".toString())
+              .setResource("resource-341064690")
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       Policy response = iAMPolicyClient.getIamPolicy(request);

@@ -91,7 +91,7 @@ public class IAMPolicyClientTest {
 
     SetIamPolicyRequest request =
         SetIamPolicyRequest.newBuilder()
-            .setResource("SetIamPolicyRequest1223629066".toString())
+            .setResource("resource-341064690")
             .setPolicy(Policy.newBuilder().build())
             .setUpdateMask(FieldMask.newBuilder().build())
             .build();
@@ -120,7 +120,7 @@ public class IAMPolicyClientTest {
     try {
       SetIamPolicyRequest request =
           SetIamPolicyRequest.newBuilder()
-              .setResource("SetIamPolicyRequest1223629066".toString())
+              .setResource("resource-341064690")
               .setPolicy(Policy.newBuilder().build())
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
@@ -144,7 +144,7 @@ public class IAMPolicyClientTest {
 
     GetIamPolicyRequest request =
         GetIamPolicyRequest.newBuilder()
-            .setResource("GetIamPolicyRequest-1527610370".toString())
+            .setResource("resource-341064690")
             .setOptions(GetPolicyOptions.newBuilder().build())
             .build();
 
@@ -171,7 +171,7 @@ public class IAMPolicyClientTest {
     try {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource("GetIamPolicyRequest-1527610370".toString())
+              .setResource("resource-341064690")
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
@@ -189,7 +189,7 @@ public class IAMPolicyClientTest {
 
     TestIamPermissionsRequest request =
         TestIamPermissionsRequest.newBuilder()
-            .setResource("TestIamPermissionsRequest942398222".toString())
+            .setResource("resource-341064690")
             .addAllPermissions(new ArrayList<String>())
             .build();
 
@@ -216,7 +216,7 @@ public class IAMPolicyClientTest {
     try {
       TestIamPermissionsRequest request =
           TestIamPermissionsRequest.newBuilder()
-              .setResource("TestIamPermissionsRequest942398222".toString())
+              .setResource("resource-341064690")
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);

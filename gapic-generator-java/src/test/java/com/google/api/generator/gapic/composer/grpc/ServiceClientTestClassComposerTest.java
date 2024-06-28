@@ -36,7 +36,8 @@ class ServiceClientTestClassComposerTest {
         Arguments.of("TestingClientTest", GrpcTestProtoLoader.instance().parseShowcaseTesting(), 0),
         Arguments.of(
             "SubscriberClientTest", GrpcTestProtoLoader.instance().parsePubSubPublisher(), 1),
-        Arguments.of("LoggingClientTest", GrpcTestProtoLoader.instance().parseLogging(), 0));
+        Arguments.of("LoggingClientTest", GrpcTestProtoLoader.instance().parseLogging(), 0),
+        Arguments.of("ResourceNameTest", GrpcTestProtoLoader.instance().parseResourceName(), 0));
   }
 
   @ParameterizedTest

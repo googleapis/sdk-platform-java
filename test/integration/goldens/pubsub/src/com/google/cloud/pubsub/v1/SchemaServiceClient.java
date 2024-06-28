@@ -1675,7 +1675,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *           .setResource(ProjectName.of("[PROJECT]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
@@ -1707,7 +1707,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *           .setResource(ProjectName.of("[PROJECT]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
@@ -1737,7 +1737,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *           .setResource(ProjectName.of("[PROJECT]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   Policy response = schemaServiceClient.getIamPolicy(request);
@@ -1767,7 +1767,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *           .setResource(ProjectName.of("[PROJECT]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future = schemaServiceClient.getIamPolicyCallable().futureCall(request);
@@ -1800,7 +1800,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *           .setResource(ProjectName.of("[PROJECT]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   TestIamPermissionsResponse response = schemaServiceClient.testIamPermissions(request);
@@ -1834,7 +1834,7 @@ public class SchemaServiceClient implements BackgroundResource {
    * try (SchemaServiceClient schemaServiceClient = SchemaServiceClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+   *           .setResource(ProjectName.of("[PROJECT]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   ApiFuture<TestIamPermissionsResponse> future =

@@ -394,12 +394,15 @@ public abstract class AbstractServiceClientTestClassComposer implements ClassCom
               firstRepeatedField.isMap());
     } else {
       if (messageTypes.containsKey(methodOutputType.reference().fullName())) {
+        // The response message is created with null bindings. HttpBindings are used to match with
+        // the request message as parts of the request are used to form the URL. The response simply
+        // returns the values defined in the proto file.
         expectedResponseValExpr =
             DefaultValueComposer.createSimpleMessageBuilderValue(
                 messageTypes.get(methodOutputType.reference().fullName()),
                 resourceNames,
                 messageTypes,
-                method.httpBindings());
+                null);
       } else {
         // Wrap this in a field so we don't have to split the helper into lots of different methods,
         // or duplicate it for VariableExpr.

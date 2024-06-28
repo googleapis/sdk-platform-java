@@ -27,6 +27,7 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
 
 class ServiceClientTestClassComposerTest {
+
   @Test
   void generateServiceClasses() {
     GapicContext context = RestTestProtoLoader.instance().parseCompliance();
@@ -40,6 +41,21 @@ class ServiceClientTestClassComposerTest {
         this.getClass(), "ComplianceClientTest.golden", visitor.write());
     Path goldenFilePath =
         Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "ComplianceClientTest.golden");
+    assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  void generateResourceNameClasses() {
+    GapicContext context = RestTestProtoLoader.instance().parseResourceName();
+    Service resourceNameService = context.services().get(0);
+    GapicClass clazz =
+        ServiceClientTestClassComposer.instance().generate(context, resourceNameService);
+
+    String goldenFileName = "HttpJsonResourceNameTest.golden";
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    GoldenFileWriter.saveCodegenToFile(this.getClass(), goldenFileName, visitor.write());
+    Path goldenFilePath = Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), goldenFileName);
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

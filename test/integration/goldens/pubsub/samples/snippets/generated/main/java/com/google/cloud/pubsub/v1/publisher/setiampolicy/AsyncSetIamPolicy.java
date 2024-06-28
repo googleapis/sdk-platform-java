@@ -22,7 +22,7 @@ import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.protobuf.FieldMask;
-import com.google.pubsub.v1.SnapshotName;
+import com.google.pubsub.v1.ProjectName;
 
 public class AsyncSetIamPolicy {
 
@@ -39,7 +39,7 @@ public class AsyncSetIamPolicy {
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
       SetIamPolicyRequest request =
           SetIamPolicyRequest.newBuilder()
-              .setResource(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
+              .setResource(ProjectName.of("[PROJECT]").toString())
               .setPolicy(Policy.newBuilder().build())
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();

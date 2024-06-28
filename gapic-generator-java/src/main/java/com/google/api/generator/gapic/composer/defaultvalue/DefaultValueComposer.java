@@ -42,6 +42,7 @@ import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.api.generator.gapic.utils.ResourceReferenceUtils;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Any;
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class DefaultValueComposer {
           createResourceHelperValue(
               resourceName,
               methodArg.field().resourceReference().isChildType(),
-              resourceNames.values().stream().collect(Collectors.toList()),
+              new ArrayList<>(resourceNames.values()),
               methodArg.field().name(),
               bindings);
 
@@ -236,8 +237,9 @@ public class DefaultValueComposer {
         resourceName, isChildType, resnames, fieldOrMessageName, true, bindings);
   }
 
-  private static Optional<ResourceName> findParentResource(
+  private static List<ResourceName> findParentResources(
       ResourceName childResource, List<ResourceName> resourceNames) {
+    List<ResourceName> parentResources = new ArrayList<>();
     Map<String, ResourceName> patternToResourceName = new HashMap<>();
 
     for (ResourceName resourceName : resourceNames) {
@@ -249,11 +251,11 @@ public class DefaultValueComposer {
     for (String childPattern : childResource.patterns()) {
       Optional<String> parentPattern = ResourceReferenceUtils.parseParentPattern(childPattern);
       if (parentPattern.isPresent() && patternToResourceName.containsKey(parentPattern.get())) {
-        return Optional.of(patternToResourceName.get(parentPattern.get()));
+        parentResources.add(patternToResourceName.get(parentPattern.get()));
       }
     }
 
-    return Optional.empty();
+    return parentResources;
   }
 
   @VisibleForTesting
@@ -264,9 +266,11 @@ public class DefaultValueComposer {
       String fieldOrMessageName,
       boolean allowAnonResourceNameClass,
       HttpBindings bindings) {
-
     if (isChildType) {
-      resourceName = findParentResource(resourceName, resnames).orElse(resourceName);
+      List<ResourceName> parentResources = findParentResources(resourceName, resnames);
+      if (!parentResources.isEmpty()) {
+        resourceName = parentResources.get(0);
+      }
     }
 
     if (resourceName.isOnlyWildcard()) {
@@ -379,13 +383,16 @@ public class DefaultValueComposer {
         setterMethodNamePattern = field.isMap() ? "putAll%s" : "addAll%s";
       }
       Expr defaultExpr = null;
-      if (field.hasResourceReference()
-          && resourceNames.get(field.resourceReference().resourceTypeString()) != null) {
+      List<ResourceName> matchingResources =
+          getMatchingResources(field, resourceNames, bindings, valuePatterns);
+      if (!matchingResources.isEmpty()) {
+        // isChildType is set to false as the matchingResource value already accounts
+        // for the possible child resource (accounted for in `getMatchingResource()`).
         defaultExpr =
             createResourceHelperValue(
-                resourceNames.get(field.resourceReference().resourceTypeString()),
-                field.resourceReference().isChildType(),
-                resourceNames.values().stream().collect(Collectors.toList()),
+                matchingResources.get(0),
+                false,
+                new ArrayList<>(resourceNames.values()),
                 message.name(),
                 /* allowAnonResourceNameClass = */ false,
                 bindings);
@@ -440,6 +447,88 @@ public class DefaultValueComposer {
         .setMethodName("build")
         .setReturnType(message.type())
         .build();
+  }
+
+  /**
+   * The logic inside here is similar to {@link #createResourceHelperValue(ResourceName, boolean,
+   * List, String, boolean, HttpBindings)} . The reason this is duplicated and extracted out here is
+   * so that the resource reference validity check (this method) can occur prior to the attempt to
+   * try and generate the default value for the configured resource reference. This allows a
+   * fallback option where if this check fails, then the generator can attempt to generate a default
+   * value using {@link #createValue(Field, boolean, Map, Map, Map, HttpBindings)}. Additionally,
+   * there are references to createResourceHelperValue being used elsewhere (client header samples,
+   * sample code gen) which is a much larger effort to change.
+   *
+   * <p>Rationale for matching the Resource's pattern with HttpBindings: If the field is used in the
+   * path, check that the field's resource reference matches the RPC's HttpBindings. There is an
+   * edge case where an RPC's HttpBindings defined in the proto may not match a message. This is
+   * possible for Mixin RPCs if service teams configures a custom HttpBindings in the service yaml
+   * file. For example, the GetIamPolicyRequest's resource field has a resource reference to match
+   * anything (`*`). This normally works because the GetIamPolicy RPC will take in any resource
+   * (HttpBindings is defined with `{resource=**}`). But if the custom path is expected to take in a
+   * resource with a more specific path (i.e. `{resource=service/*}), it won't work unless the
+   * resource has a `service/*` pattern. This logic will try to match a resource that has the
+   * pattern `service/*`.
+   */
+  @VisibleForTesting
+  static List<ResourceName> getMatchingResources(
+      Field field,
+      Map<String, ResourceName> resourceNames,
+      HttpBindings bindings,
+      Map<String, String> valuePatterns) {
+    if (!field.hasResourceReference()) {
+      return ImmutableList.of();
+    }
+    String resourceTypeString = field.resourceReference().resourceTypeString();
+    if (!resourceNames.containsKey(resourceTypeString)) {
+      return ImmutableList.of();
+    }
+    ResourceName resourceReference = resourceNames.get(resourceTypeString);
+
+    // Resource reference (google.api.resource_reference) is a string type with a field name of
+    // `parent` or `name`. It won't have anything nested in the bindings (i.e. `{name.field=*}`).
+    // This check is needed as a message can contain fields with valid resource references that
+    // aren't used in the path. Additionally, this flag only impacts HttpJson callables as gRPC
+    // does not need to match the request the callable's URL. This method is used to generate
+    // default values for gRPC callables as well but gRPC's valuePatterns map will be empty and
+    // the logic will be skipped.
+    boolean isFieldUsedInPath = bindings != null && valuePatterns.containsKey(field.name());
+
+    // Holds the list of known resources (excluding the wildcard resource).
+    List<ResourceName> possibleResources =
+        resourceNames.values().stream()
+            .filter(resourceName -> !resourceName.isOnlyWildcard())
+            .collect(Collectors.toList());
+
+    if (resourceReference.isOnlyWildcard()) {
+      if (isFieldUsedInPath) {
+        // Only use resources whose pattern match the HttpBindings
+        return possibleResources.stream()
+            .filter(x -> x.getMatchingPattern(bindings) != null)
+            .collect(Collectors.toList());
+      }
+      // Can with any possible known resource
+      return possibleResources;
+    }
+
+    // Narrow down the list of possibleResources
+    if (field.resourceReference().isChildType()) {
+      // Use the parent resource(s) if the field is a `child_type`. This is for certain RPCs like
+      // `List` and `Create` which have a resource reference to the parent collection(s). A resource
+      // may have multiple parents, so we must check the possibility for each parent resource.
+      possibleResources =
+          ImmutableList.copyOf(
+              findParentResources(resourceReference, new ArrayList<>(resourceNames.values())));
+    } else {
+      possibleResources = ImmutableList.of(resourceReference);
+    }
+
+    if (isFieldUsedInPath) {
+      return possibleResources.stream()
+          .filter(x -> x.getMatchingPattern(bindings) != null)
+          .collect(Collectors.toList());
+    }
+    return possibleResources;
   }
 
   public static Expr createSimpleOperationBuilderValue(String name, VariableExpr responseExpr) {
