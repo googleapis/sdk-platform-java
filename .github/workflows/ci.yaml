@@ -327,7 +327,7 @@ jobs:
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: Validate gapic-generator-java-bom
-      uses: googleapis/java-cloud-bom/tests/validate-bom@17cc5ecf3730d0671f233c0879dc654337b38cba
+      uses: googleapis/java-cloud-bom/tests/validate-bom@ca673e6a744f56672361ad6842ad3928c54c2eb3
       with:
         bom-path: gapic-generator-java-bom/pom.xml
 
