@@ -14,6 +14,12 @@
     <version>2.50.1-SNAPSHOT</version><!-- {x-version-update:gax:current} -->
   </parent>
 
+  <properties>
+    <!-- Use argLine property for Java 8+: https://www.devll.org/blog/2020/java/jacoco-argline.html -->
+    <!-- @{argLine} doesn't seem to expand properly for Java8 -->
+    <argLine>-Djava.util.logging.SimpleFormatter.format="%1$tY %1$tl:%1$tM:%1$tS.%1$tL %2$s %4$s: %5$s%6$s%n"</argLine>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>com.google.api</groupId>
@@ -103,7 +109,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-          <argLine>@{argLine} -Djava.util.logging.SimpleFormatter.format="%1$tY %1$tl:%1$tM:%1$tS.%1$tL %2$s %4$s: %5$s%6$s%n"</argLine>
           <!-- These tests require an Env Var to be set. Use -PenvVarTest to ONLY run these tests -->
           <test>!EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet+endpointContextBuild_multipleUniverseDomainConfigurations_clientSettingsHasPriority</test>
         </configuration>
