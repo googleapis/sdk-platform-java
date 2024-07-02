@@ -89,7 +89,6 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @BeforeEach
   public void setup() throws IOException {
-    System.setProperty("os.name", "Linux");
     computeEngineCredentials = Mockito.mock(ComputeEngineCredentials.class);
   }
 
@@ -692,6 +691,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_happyPath() {
+    System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
             envProvider.getenv(
@@ -728,6 +728,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_directPathEnvVarNotSet_attemptDirectPathIsTrue() {
+    System.setProperty("os.name", "Linux");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
