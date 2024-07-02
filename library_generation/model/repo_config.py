@@ -53,6 +53,9 @@ class RepoConfig:
         with open(version_file) as f:
             for line in f.readlines():
                 sections = line.split(":")
+                # skip comments and whitespace.
+                if len(sections) != 3:
+                    continue
                 artifact_id = sections[0]
                 released_version = sections[1]
                 if artifact_id.startswith(GRPC_PREFIX) or artifact_id.startswith(
