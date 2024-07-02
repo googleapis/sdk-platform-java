@@ -86,7 +86,7 @@ import javax.net.ssl.KeyManagerFactory;
  */
 public final class InstantiatingGrpcChannelProvider implements TransportChannelProvider {
 
-  private static String systemProductName;
+  private volatile String systemProductName;
 
   @VisibleForTesting
   static final Logger LOG = Logger.getLogger(InstantiatingGrpcChannelProvider.class.getName());
@@ -333,10 +333,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   // DirectPath should only be used on Compute Engine.
   // Notice Windows is supported for now.
   @VisibleForTesting
-  static boolean isOnComputeEngine() {
+  boolean isOnComputeEngine() {
     String osName = System.getProperty("os.name");
     if ("Linux".equals(osName)) {
-      String systemProductName = getSystemProductName();
+      System.out.println("Getting the system product name");
+      systemProductName = getSystemProductName();
+      Preconditions.checkNotNull(systemProductName);
+      System.out.println("The value is: " + systemProductName);
       // systemProductName will be empty string if not on Compute Engine
       return systemProductName.contains(GCE_PRODUCTION_NAME_PRIOR_2016)
           || systemProductName.contains(GCE_PRODUCTION_NAME_AFTER_2016);
@@ -344,9 +347,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return false;
   }
 
-  private static String getSystemProductName() {
+  private String getSystemProductName() {
     // The static field systemProductName should only be set in tests
     if (systemProductName != null) {
+      System.out.println("There was a value already stored: " + systemProductName);
       return systemProductName;
     }
     try {

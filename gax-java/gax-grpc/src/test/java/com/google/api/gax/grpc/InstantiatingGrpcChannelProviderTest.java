@@ -322,8 +322,10 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .withHeaders(Collections.<String, String>emptyMap())
             .withEndpoint("localhost:8080");
 
+    InstantiatingGrpcChannelProvider grpcChannelProvider = (InstantiatingGrpcChannelProvider) provider;
+
     assertThat(provider.needsCredentials()).isTrue();
-    if (InstantiatingGrpcChannelProvider.isOnComputeEngine()) {
+    if (grpcChannelProvider.isOnComputeEngine()) {
       provider = provider.withCredentials(ComputeEngineCredentials.create());
     } else {
       provider = provider.withCredentials(CloudShellCredentials.create(3000));
@@ -671,9 +673,11 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setEndpoint(DEFAULT_ENDPOINT)
             .build();
 
+    InstantiatingGrpcChannelProvider grpcChannelProvider = (InstantiatingGrpcChannelProvider) provider;
+
     TransportChannel transportChannel = provider.getTransportChannel();
 
-    if (!InstantiatingGrpcChannelProvider.isOnComputeEngine()) {
+    if (!grpcChannelProvider.isOnComputeEngine()) {
       assertThat(logHandler.getAllMessages())
           .contains(
               "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
