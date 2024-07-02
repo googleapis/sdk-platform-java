@@ -96,8 +96,7 @@
       "matchPackagePatterns": [
         "^com.google.guava:"
       ],
-      "versioning": "docker",
-      "enabled": false
+      "versioning": "docker"
     },
     {
       "matchPackagePatterns": [
@@ -163,8 +162,7 @@
       "matchPackagePatterns": [
         "^io.grpc"
       ],
-      "groupName": "gRPC dependencies",
-      "enabled": false
+      "groupName": "gRPC dependencies"
     },
     {
       "matchPackagePatterns": [
