@@ -1,5 +1,5 @@
 gapic_generator_version: 2.41.1-SNAPSHOT # {x-version-update:gapic-generator-java:current}
-googleapis_commitish: 57c6d743ae623f179b0e72fcdd1d6a50ae7d71b3
+googleapis_commitish: d550e5a1a5c3d27b0bf47fbb33ba6614b69339ee
 # the libraries are ordered with respect to library name, which is
 # java-{library.library_name} or java-{library.api-shortname} when
 # library.library_name is not defined.
