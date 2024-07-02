@@ -75,7 +75,7 @@ If you are using Maven, add this to your pom.xml file:
   <version>{{ metadata['library_version'] }}</version>
   {% else -%}
   <version>{{ metadata['latest_version'] }}</version>
-  {% endif %}
+  {% endif -%}
 </dependency>
 {% endif -%}
 ```
@@ -97,17 +97,17 @@ If you are using Gradle without BOM, add this to your dependencies:
 implementation '{{ group_id }}:{{ artifact_id }}:{{ metadata['library_version'] }}'
 {% else -%}
 implementation '{{ group_id }}:{{ artifact_id }}:{{ metadata['latest_version'] }}'
-{% endif %}
+{% endif -%}
 ```
 
 If you are using SBT, add this to your dependencies:
 
 ```Scala
-{% if 'library_version' in metadata %}
+{% if 'library_version' in metadata -%}
 libraryDependencies += "{{ group_id }}" % "{{ artifact_id }}" % "{{ metadata['library_version'] }}"
-{% else %}
+{% else -%}
 libraryDependencies += "{{ group_id }}" % "{{ artifact_id }}" % "{{ metadata['latest_version'] }}"
-{% endif %}
+{% endif -%}
 ```
 <!-- {x-version-update-end} -->
 
@@ -280,7 +280,7 @@ Java is a registered trademark of Oracle and/or its affiliates.
 [maven-version-link]: https://central.sonatype.com/artifact/{{ group_id }}/{{ artifact_id }}/{{ metadata['library_version'] }}
 {% else -%}
 [maven-version-link]: https://central.sonatype.com/artifact/{{ group_id }}/{{ artifact_id }}/{{ metadata['latest_version'] }}
-{% endif %}
+{% endif -%}
 [authentication]: https://github.com/googleapis/google-cloud-java#authentication
 [auth-scopes]: https://developers.google.com/identity/protocols/oauth2/scopes
 [predefined-iam-roles]: https://cloud.google.com/iam/docs/understanding-roles#predefined_roles
