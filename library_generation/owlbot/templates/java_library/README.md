@@ -71,7 +71,11 @@ If you are using Maven, add this to your pom.xml file:
 <dependency>
   <groupId>{{ group_id }}</groupId>
   <artifactId>{{ artifact_id }}</artifactId>
+  {% if 'library_version' in metadata %}
+  <version>{{ metadata['library_version'] }}</version>
+  {% else %}
   <version>{{ metadata['latest_version'] }}</version>
+  {% endif %}
 </dependency>
 {% endif -%}
 ```
@@ -89,13 +93,21 @@ implementation '{{ group_id }}:{{ artifact_id }}'
 If you are using Gradle without BOM, add this to your dependencies:
 
 ```Groovy
+{% if 'library_version' in metadata %}
+implementation '{{ group_id }}:{{ artifact_id }}:{{ metadata['library_version'] }}'
+{% else %}
 implementation '{{ group_id }}:{{ artifact_id }}:{{ metadata['latest_version'] }}'
+{% endif %}
 ```
 
 If you are using SBT, add this to your dependencies:
 
 ```Scala
+{% if 'library_version' in metadata %}
+libraryDependencies += "{{ group_id }}" % "{{ artifact_id }}" % "{{ metadata['library_version'] }}"
+{% else %}
 libraryDependencies += "{{ group_id }}" % "{{ artifact_id }}" % "{{ metadata['latest_version'] }}"
+{% endif %}
 ```
 <!-- {x-version-update-end} -->
 
@@ -264,7 +276,11 @@ Java is a registered trademark of Oracle and/or its affiliates.
 [kokoro-badge-link-5]: http://storage.googleapis.com/cloud-devrel-public/java/badges/{{ repo_short }}/java11.html
 [stability-image]: https://img.shields.io/badge/stability-{% if metadata['repo']['release_level'] == 'stable' %}stable-green{% elif metadata['repo']['release_level'] == 'preview' %}preview-yellow{% else %}unknown-red{% endif %}
 [maven-version-image]: https://img.shields.io/maven-central/v/{{ group_id }}/{{ artifact_id }}.svg
+{% if 'library_version' in metadata %}
+[maven-version-link]: https://central.sonatype.com/artifact/{{ group_id }}/{{ artifact_id }}/{{ metadata['library_version'] }}
+{% else %}
 [maven-version-link]: https://central.sonatype.com/artifact/{{ group_id }}/{{ artifact_id }}/{{ metadata['latest_version'] }}
+{% endif %}
 [authentication]: https://github.com/googleapis/google-cloud-java#authentication
 [auth-scopes]: https://developers.google.com/identity/protocols/oauth2/scopes
 [predefined-iam-roles]: https://cloud.google.com/iam/docs/understanding-roles#predefined_roles

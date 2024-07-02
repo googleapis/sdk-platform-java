@@ -183,6 +183,25 @@ def pull_api_definition(
         )
 
 
+def get_distribution_name(library: LibraryConfig) -> tuple[str, str]:
+    """
+    Determines the full Maven coordinate and a shortened name for a library.
+
+    :param library: the library configuration
+    :return: A tuple containing: the full Maven coordinate in the format
+    "groupId:artifactId"; a shortened version of the artifact ID.
+    """
+    cloud_prefix = "cloud-" if library.cloud_api else ""
+    library_name = library.get_library_name()
+    distribution_name = (
+        library.distribution_name
+        if library.distribution_name
+        else f"{library.group_id}:google-{cloud_prefix}{library_name}"
+    )
+    distribution_name_short = re.split(r"[:/]", distribution_name)[-1]
+    return distribution_name, distribution_name_short
+
+
 def generate_postprocessing_prerequisite_files(
     config: GenerationConfig,
     library: LibraryConfig,
@@ -204,14 +223,8 @@ def generate_postprocessing_prerequisite_files(
     :param language: programming language of the library
     :return: None
     """
-    cloud_prefix = "cloud-" if library.cloud_api else ""
+    distribution_name, distribution_name_short = get_distribution_name(library)
     library_name = library.get_library_name()
-    distribution_name = (
-        library.distribution_name
-        if library.distribution_name
-        else f"{library.group_id}:google-{cloud_prefix}{library_name}"
-    )
-    distribution_name_short = re.split(r"[:/]", distribution_name)[-1]
     if config.contains_common_protos():
         repo = SDK_PLATFORM_JAVA
     elif config.is_monorepo():

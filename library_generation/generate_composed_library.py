@@ -36,6 +36,7 @@ from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.gapic_inputs import GapicInputs
 from library_generation.model.library_config import LibraryConfig
 from library_generation.model.gapic_inputs import parse as parse_build_file
+from library_generation.model.repo_config import RepoConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -44,8 +45,7 @@ def generate_composed_library(
     config: GenerationConfig,
     library_path: str,
     library: LibraryConfig,
-    output_folder: str,
-    versions_file: str,
+    repo_config: RepoConfig,
 ) -> None:
     """
     Generate libraries composed of more than one service or service version
@@ -55,10 +55,10 @@ def generate_composed_library(
     :param library_path: the path to which the generated file goes
     :param library: a LibraryConfig object contained inside config, passed here
     for convenience and to prevent all libraries to be processed
-    :param output_folder: the folder to where tools go
-    :param versions_file: the file containing version of libraries
+    :param repo_config:
     :return None
     """
+    output_folder = repo_config.output_folder
     util.pull_api_definition(
         config=config, library=library, output_folder=output_folder
     )
@@ -102,16 +102,19 @@ def generate_composed_library(
             cwd=output_folder,
         )
 
+    _, artifact_id = util.get_distribution_name(library=library)
+    library_version = repo_config.library_versions.get(artifact_id, None)
     # call postprocess library
     util.run_process_and_print_output(
         [
             f"{script_dir}/postprocess_library.sh",
             f"{library_path}",
             "",
-            versions_file,
+            repo_config.versions_file,
             owlbot_cli_source_folder,
             str(config.is_monorepo()).lower(),
             config.libraries_bom_version,
+            library_version,
         ],
         "Library postprocessing",
     )

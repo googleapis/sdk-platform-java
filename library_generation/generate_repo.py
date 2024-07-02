@@ -44,14 +44,13 @@ def generate_from_yaml(
         gen_config=config, library_config=target_libraries, repo_path=repository_path
     )
 
-    for library_path, library in repo_config.libraries.items():
+    for library_path, library in repo_config.get_libraries().items():
         print(f"generating library {library.get_library_name()}")
         generate_composed_library(
             config=config,
             library_path=library_path,
             library=library,
-            output_folder=repo_config.output_folder,
-            versions_file=repo_config.versions_file,
+            repo_config=repo_config,
         )
 
     if not config.is_monorepo() or config.contains_common_protos():

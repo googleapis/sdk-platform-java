@@ -12,8 +12,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import Dict
 from library_generation.model.library_config import LibraryConfig
+
+
+GRPC_PREFIX = "grpc-"
+PROTO_PREFIX = "proto-"
 
 
 class RepoConfig:
@@ -24,7 +27,7 @@ class RepoConfig:
     def __init__(
         self,
         output_folder: str,
-        libraries: Dict[str, LibraryConfig],
+        libraries: dict[str, LibraryConfig],
         versions_file: str,
     ):
         """
@@ -36,3 +39,25 @@ class RepoConfig:
         self.output_folder = output_folder
         self.libraries = libraries
         self.versions_file = versions_file
+        self.library_versions = RepoConfig.__parse_version_from(self.versions_file)
+
+    def get_libraries(self) -> dict[str, LibraryConfig]:
+        return self.libraries
+
+    def get_library_versions(self):
+        return self.library_versions
+
+    @staticmethod
+    def __parse_version_from(version_file: str) -> dict[str, str]:
+        library_versions = dict()
+        with open(version_file) as f:
+            for line in f.readlines():
+                sections = line.split(":")
+                artifact_id = sections[0]
+                released_version = sections[1]
+                if artifact_id.startswith(GRPC_PREFIX) or artifact_id.startswith(
+                    PROTO_PREFIX
+                ):
+                    continue
+                library_versions[artifact_id] = released_version
+        return library_versions
