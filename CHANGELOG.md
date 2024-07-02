@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.43.0](https://github.com/googleapis/sdk-platform-java/compare/v2.42.0...v2.43.0) (2024-07-02)
+
+
+### Features
+
+* Introduce java.time to Gax-Java ([#1872](https://github.com/googleapis/sdk-platform-java/issues/1872)) ([308aeaf](https://github.com/googleapis/sdk-platform-java/commit/308aeafc9f04795d2e1df8206c84689b11c4323a))
+* parse `BUILD.bzel` to determine whether a commit that only changed `BUILD.bazel` is a qualified commit ([#2937](https://github.com/googleapis/sdk-platform-java/issues/2937)) ([502f801](https://github.com/googleapis/sdk-platform-java/commit/502f80101dec191befb660a1aba6d0c354758c18))
+
+
+### Bug Fixes
+
+* restore hermetic build image publication ([#2952](https://github.com/googleapis/sdk-platform-java/issues/2952)) ([97a6d67](https://github.com/googleapis/sdk-platform-java/commit/97a6d678569b7d8768ff83fe5370d8966a06ca95))
+
 ## [2.42.0](https://github.com/googleapis/sdk-platform-java/compare/v2.41.0...v2.42.0) (2024-06-25)
 
 
