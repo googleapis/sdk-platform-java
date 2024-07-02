@@ -75,7 +75,7 @@ If you are using Maven, add this to your pom.xml file:
   <version>{{ metadata['library_version'] }}</version>
   {% else -%}
   <version>{{ metadata['latest_version'] }}</version>
-  {% endif -%}
+  {%- endif %}
 </dependency>
 {% endif -%}
 ```
