@@ -322,7 +322,8 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .withHeaders(Collections.<String, String>emptyMap())
             .withEndpoint("localhost:8080");
 
-    InstantiatingGrpcChannelProvider grpcChannelProvider = (InstantiatingGrpcChannelProvider) provider;
+    InstantiatingGrpcChannelProvider grpcChannelProvider =
+        (InstantiatingGrpcChannelProvider) provider;
 
     assertThat(provider.needsCredentials()).isTrue();
     if (grpcChannelProvider.isOnComputeEngine()) {
@@ -673,7 +674,8 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setEndpoint(DEFAULT_ENDPOINT)
             .build();
 
-    InstantiatingGrpcChannelProvider grpcChannelProvider = (InstantiatingGrpcChannelProvider) provider;
+    InstantiatingGrpcChannelProvider grpcChannelProvider =
+        (InstantiatingGrpcChannelProvider) provider;
 
     TransportChannel transportChannel = provider.getTransportChannel();
 
