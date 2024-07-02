@@ -71,10 +71,11 @@ If you are using Maven, add this to your pom.xml file:
 <dependency>
   <groupId>{{ group_id }}</groupId>
   <artifactId>{{ artifact_id }}</artifactId>
-  {% if 'library_version' in metadata -%}
+  {%- if 'library_version' in metadata -%}
   <version>{{ metadata['library_version'] }}</version>
-  {% else -%}
-  <version>{{ metadata['latest_version'] }}</version>{% endif %}
+  {%- else -%}
+  <version>{{ metadata['latest_version'] }}</version>
+  {% endif %}
 </dependency>
 {% endif -%}
 ```
