@@ -65,6 +65,19 @@ class LibraryConfigTest(unittest.TestCase):
             library.get_sorted_gapic_configs(),
         )
 
+    def test_init_invalid_distribution_name_raise_value_error(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "fake-distribution-name is not a valid distribution name.",
+            LibraryConfig,
+            api_shortname="baremetalsolution",
+            name_pretty="Bare Metal Solution",
+            product_documentation="https://cloud.google.com/bare-metal/docs",
+            api_description="example api description",
+            gapic_configs=list(),
+            distribution_name="fake-distribution-name",
+        )
+
     def test_get_distribution_name_cloud_api(self):
         library = LibraryConfig(
             api_shortname="baremetalsolution",

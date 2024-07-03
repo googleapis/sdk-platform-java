@@ -12,11 +12,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import re
 from hashlib import sha1
-
 from typing import Optional
 from library_generation.model.gapic_config import GapicConfig
+
+
+MAVEN_COORDINATE_SEPARATOR = ":"
 
 
 class LibraryConfig:
@@ -88,24 +89,33 @@ class LibraryConfig:
     def get_sorted_gapic_configs(self) -> list[GapicConfig]:
         return sorted(self.gapic_configs)
 
-    def get_maven_coordinate(self):
+    def get_maven_coordinate(self) -> str:
         """
         Returns the Maven coordinate (group_id:artifact_id) of the library
         """
         return self.distribution_name
 
-    def get_artifact_id(self):
+    def get_artifact_id(self) -> str:
         """
         Returns the artifact ID of the library
         """
-        return re.split(r"[:/]", self.distribution_name)[-1]
+        return self.get_maven_coordinate().split(MAVEN_COORDINATE_SEPARATOR)[-1]
 
     def __get_distribution_name(self, distribution_name: Optional[str]) -> str:
+        LibraryConfig.__check_distribution_name(distribution_name)
         if distribution_name:
             return distribution_name
         cloud_prefix = "cloud-" if self.cloud_api else ""
         library_name = self.get_library_name()
         return f"{self.group_id}:google-{cloud_prefix}{library_name}"
+
+    @staticmethod
+    def __check_distribution_name(distribution_name: str) -> None:
+        if not distribution_name:
+            return
+        sections = distribution_name.split(MAVEN_COORDINATE_SEPARATOR)
+        if len(sections) != 2:
+            raise ValueError(f"{distribution_name} is not a valid distribution name.")
 
     def __eq__(self, other):
         return (

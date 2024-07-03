@@ -41,7 +41,7 @@ class RepoConfig:
         self.output_folder = output_folder
         self.libraries = libraries
         self.versions_file = versions_file
-        self.library_versions = RepoConfig.__parse_version_from(self.versions_file)
+        self.library_versions = self.__parse_versions()
 
     def get_libraries(self) -> dict[str, LibraryConfig]:
         return self.libraries
@@ -56,10 +56,9 @@ class RepoConfig:
         """
         return self.library_versions.get(artifact_id, NEW_CLIENT_VERSION)
 
-    @staticmethod
-    def __parse_version_from(version_file: str) -> dict[str, str]:
+    def __parse_versions(self) -> dict[str, str]:
         library_versions = dict()
-        with open(version_file) as f:
+        with open(self.versions_file) as f:
             for line in f.readlines():
                 sections = line.split(":")
                 # skip comments and whitespace.
