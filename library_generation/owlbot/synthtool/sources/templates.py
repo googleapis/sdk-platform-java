@@ -16,9 +16,9 @@ from typing import Union, List
 from pathlib import Path
 
 import jinja2
+import tempfile
 import re
 
-from synthtool import tmp
 
 PathOrStr = Union[str, Path]
 
@@ -58,7 +58,7 @@ class Templates:
     def __init__(self, location: PathOrStr) -> None:
         self.env = _make_env(location)
         self.source_path = Path(location)
-        self.dir = tmp.tmpdir()
+        self.dir = Path(tempfile.mkdtemp())
 
     def render(self, template_name: str, subdir: PathOrStr = ".", **kwargs) -> Path:
         return _render_to_path(self.env, template_name, self.dir / subdir, kwargs)
@@ -67,7 +67,7 @@ class Templates:
 class TemplateGroup:
     def __init__(self, location: PathOrStr, excludes: List[str] = []) -> None:
         self.env = _make_env(location)
-        self.dir = tmp.tmpdir()
+        self.dir = Path(tempfile.mkdtemp())
         self.excludes = excludes
 
     def render(self, subdir: PathOrStr = ".", **kwargs) -> Path:
