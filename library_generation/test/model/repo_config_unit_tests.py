@@ -45,6 +45,11 @@ class RepoConfigTest(unittest.TestCase):
             "0.118.0",
             repo_config.get_library_version("gax-httpjson"),
         )
+
+    def test_get_library_versions_with_new_library(self):
+        repo_config = RepoConfig(
+            output_folder="test", libraries=dict(), versions_file=versions_file
+        )
         self.assertEqual(
             "0.0.0",
             repo_config.get_library_version("example-artifact"),
