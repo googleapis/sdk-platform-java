@@ -239,65 +239,6 @@ def _common_generation(
     format_code(f"proto-google-{cloud_prefix}{destination_name}-{version}/src")
 
 
-def gapic_library(
-    service: str,
-    version: str,
-    config_pattern: str = "/google/cloud/{service}/artman_{service}_{version}.yaml",
-    package_pattern: str = "com.google.cloud.{service}.{version}",
-    gapic: gcp.GAPICGenerator = None,
-    destination_name: str = None,
-    diregapic: bool = False,
-    preserve_gapic: bool = False,
-    **kwargs,
-) -> Path:
-    """Generate a Java library using the gapic-generator via artman via Docker.
-
-    Generates code into a temp directory, fixes missing header fields, and
-    copies into the expected locations.
-
-    Args:
-        service (str): Name of the service.
-        version (str): Service API version.
-        config_pattern (str, optional): Path template to artman config YAML
-            file. Defaults to "/google/cloud/{service}/artman_{service}_{version}.yaml"
-        package_pattern (str, optional): Package name template for fixing file
-            headers. Defaults to "com.google.cloud.{service}.{version}".
-        gapic (GAPICGenerator, optional): Generator instance.
-        destination_name (str, optional): Override the service name for the
-            destination of the output code. Defaults to the service name.
-        preserve_gapic (bool, optional): Whether to preserve the gapic directory
-            prefix. Default False.
-        **kwargs: Additional options for gapic.java_library()
-
-    Returns:
-        The path to the temp directory containing the generated client.
-    """
-    if gapic is None:
-        gapic = gcp.GAPICGenerator()
-
-    library = gapic.java_library(
-        service=service,
-        version=version,
-        config_path=config_pattern.format(service=service, version=version),
-        artman_output_name="",
-        include_samples=True,
-        diregapic=diregapic,
-        **kwargs,
-    )
-
-    _common_generation(
-        service=service,
-        version=version,
-        library=library,
-        package_pattern=package_pattern,
-        destination_name=destination_name,
-        diregapic=diregapic,
-        preserve_gapic=preserve_gapic,
-    )
-
-    return library
-
-
 def _merge_release_please(destination_text: str):
     config = yaml.safe_load(destination_text)
     if "handleGHRelease" in config:
@@ -406,7 +347,7 @@ def common_templates(
         )
     )
 
-    templates = gcp.CommonTemplates(template_path=template_path).java_library(**kwargs)
+    templates = gcp.common.CommonTemplates(template_path=template_path).java_library(**kwargs)
 
     # skip README generation on Kokoro (autosynth)
     if os.environ.get("KOKORO_ROOT") is not None:
