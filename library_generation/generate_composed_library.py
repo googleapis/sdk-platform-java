@@ -104,7 +104,11 @@ def generate_composed_library(
         )
 
     _, artifact_id = util.get_distribution_name(library=library)
-    library_version = repo_config.library_versions.get(artifact_id, NEW_CLIENT_VERSION)
+    # The artifact id is not in the mapping if this library is a new client.
+    # In this case, use `0.0.0` as the version.
+    library_version = repo_config.get_library_versions().get(
+        artifact_id, NEW_CLIENT_VERSION
+    )
     # call postprocess library
     util.run_process_and_print_output(
         [

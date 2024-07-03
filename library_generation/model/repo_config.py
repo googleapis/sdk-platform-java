@@ -44,7 +44,10 @@ class RepoConfig:
     def get_libraries(self) -> dict[str, LibraryConfig]:
         return self.libraries
 
-    def get_library_versions(self):
+    def get_library_versions(self) -> dict[str, str]:
+        """
+        Returns a mapping from Maven artifact ID to version.
+        """
         return self.library_versions
 
     @staticmethod
