@@ -26,12 +26,26 @@ class RepoConfigTest(unittest.TestCase):
             output_folder="test", libraries=dict(), versions_file=versions_file
         )
         self.assertEqual(
-            {
-                "gapic-generator-java": "2.25.0",
-                "api-common": "2.16.0",
-                "gax": "2.33.0",
-                "gax-grpc": "2.34.0",
-                "gax-httpjson": "0.118.0",
-            },
-            repo_config.get_library_versions(),
+            "2.25.0",
+            repo_config.get_library_version("gapic-generator-java"),
+        )
+        self.assertEqual(
+            "2.16.0",
+            repo_config.get_library_version("api-common"),
+        )
+        self.assertEqual(
+            "2.33.0",
+            repo_config.get_library_version("gax"),
+        )
+        self.assertEqual(
+            "2.34.0",
+            repo_config.get_library_version("gax-grpc"),
+        )
+        self.assertEqual(
+            "0.118.0",
+            repo_config.get_library_version("gax-httpjson"),
+        )
+        self.assertEqual(
+            "0.0.0",
+            repo_config.get_library_version("example-artifact"),
         )

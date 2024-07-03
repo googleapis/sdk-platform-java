@@ -39,7 +39,6 @@ from library_generation.model.gapic_inputs import parse as parse_build_file
 from library_generation.model.repo_config import RepoConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
-NEW_CLIENT_VERSION = "0.0.0"
 
 
 def generate_composed_library(
@@ -104,11 +103,7 @@ def generate_composed_library(
         )
 
     _, artifact_id = util.get_distribution_name(library=library)
-    # The artifact id is not in the mapping if this library is a new client.
-    # In this case, use `0.0.0` as the version.
-    library_version = repo_config.get_library_versions().get(
-        artifact_id, NEW_CLIENT_VERSION
-    )
+    library_version = repo_config.get_library_version(artifact_id=artifact_id)
     # call postprocess library
     util.run_process_and_print_output(
         [

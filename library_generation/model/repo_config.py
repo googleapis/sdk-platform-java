@@ -17,6 +17,7 @@ from library_generation.model.library_config import LibraryConfig
 
 GRPC_PREFIX = "grpc-"
 PROTO_PREFIX = "proto-"
+NEW_CLIENT_VERSION = "0.0.0"
 
 
 class RepoConfig:
@@ -32,6 +33,7 @@ class RepoConfig:
     ):
         """
         Init a RepoConfig object
+
         :param output_folder: the path to which the generated repo goes
         :param libraries: a mapping from library_path to LibraryConfig object
         :param versions_file: the path of versions.txt used in post-processing
@@ -44,11 +46,15 @@ class RepoConfig:
     def get_libraries(self) -> dict[str, LibraryConfig]:
         return self.libraries
 
-    def get_library_versions(self) -> dict[str, str]:
+    def get_library_version(self, artifact_id: str) -> str:
         """
-        Returns a mapping from Maven artifact ID to version.
+        Returns the version of a given artifact ID.
+        If the artifact ID is not managed, i.e., a new client, returns `0.0.0`.
+
+        :param artifact_id: the Maven artifact ID.
+        :return: the version of the artifact.
         """
-        return self.library_versions
+        return self.library_versions.get(artifact_id, NEW_CLIENT_VERSION)
 
     @staticmethod
     def __parse_version_from(version_file: str) -> dict[str, str]:
