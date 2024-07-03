@@ -27,7 +27,7 @@ from pathlib import Path
 from typing import Any, Optional, Dict, Iterable, List
 from datetime import date
 
-logger = logging.getLogger(name)
+logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 

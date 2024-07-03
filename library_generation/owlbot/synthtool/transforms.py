@@ -25,7 +25,7 @@ from synthtool import _tracked_paths
 PathOrStr = Union[str, Path]
 ListOfPathsOrStrs = Iterable[Union[str, Path]]
 
-logger = logging.getLogger(name)
+logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 class MissingSourceError(Exception):

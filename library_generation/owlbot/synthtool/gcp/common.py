@@ -26,7 +26,7 @@ from synthtool import shell, _tracked_paths
 from synthtool.gcp import partials
 from synthtool.sources import templates
 
-logger = logging.getLogger(name)
+logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 
