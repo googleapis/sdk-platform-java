@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import re
 from hashlib import sha1
 
 from typing import Optional
@@ -64,7 +65,6 @@ class LibraryConfig:
         self.excluded_dependencies = excluded_dependencies
         self.excluded_poms = excluded_poms
         self.client_documentation = client_documentation
-        self.distribution_name = distribution_name
         self.googleapis_commitish = googleapis_commitish
         self.group_id = group_id
         self.issue_tracker = issue_tracker
@@ -76,6 +76,7 @@ class LibraryConfig:
         self.extra_versioned_modules = extra_versioned_modules
         self.recommended_package = recommended_package
         self.min_java_version = min_java_version
+        self.distribution_name = self.__get_distribution_name(distribution_name)
 
     def get_library_name(self) -> str:
         """
@@ -86,6 +87,25 @@ class LibraryConfig:
 
     def get_sorted_gapic_configs(self) -> list[GapicConfig]:
         return sorted(self.gapic_configs)
+
+    def get_maven_coordinate(self):
+        """
+        Returns the Maven coordinate (group_id:artifact_id) of the library
+        """
+        return self.distribution_name
+
+    def get_artifact_id(self):
+        """
+        Returns the artifact ID of the library
+        """
+        return re.split(r"[:/]", self.distribution_name)[-1]
+
+    def __get_distribution_name(self, distribution_name: Optional[str]) -> str:
+        if distribution_name:
+            return distribution_name
+        cloud_prefix = "cloud-" if self.cloud_api else ""
+        library_name = self.get_library_name()
+        return f"{self.group_id}:google-{cloud_prefix}{library_name}"
 
     def __eq__(self, other):
         return (

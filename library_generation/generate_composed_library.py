@@ -102,8 +102,9 @@ def generate_composed_library(
             cwd=output_folder,
         )
 
-    _, artifact_id = util.get_distribution_name(library=library)
-    library_version = repo_config.get_library_version(artifact_id=artifact_id)
+    library_version = repo_config.get_library_version(
+        artifact_id=library.get_artifact_id()
+    )
     # call postprocess library
     util.run_process_and_print_output(
         [

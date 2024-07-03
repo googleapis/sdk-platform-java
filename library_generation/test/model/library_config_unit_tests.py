@@ -64,3 +64,46 @@ class LibraryConfigTest(unittest.TestCase):
             ],
             library.get_sorted_gapic_configs(),
         )
+
+    def test_get_distribution_name_cloud_api(self):
+        library = LibraryConfig(
+            api_shortname="baremetalsolution",
+            name_pretty="Bare Metal Solution",
+            product_documentation="https://cloud.google.com/bare-metal/docs",
+            api_description="example api description",
+            gapic_configs=list(),
+        )
+        self.assertEqual(
+            "com.google.cloud:google-cloud-baremetalsolution",
+            library.get_maven_coordinate(),
+        )
+        self.assertEqual("google-cloud-baremetalsolution", library.get_artifact_id())
+
+    def test_get_distribution_name_non_cloud_api(self):
+        library = LibraryConfig(
+            api_shortname="baremetalsolution",
+            name_pretty="Bare Metal Solution",
+            product_documentation="https://cloud.google.com/bare-metal/docs",
+            api_description="example api description",
+            gapic_configs=list(),
+            cloud_api=False,
+            group_id="com.example",
+        )
+        self.assertEqual(
+            "com.example:google-baremetalsolution", library.get_maven_coordinate()
+        )
+        self.assertEqual("google-baremetalsolution", library.get_artifact_id())
+
+    def test_get_distribution_name_with_distribution_name(self):
+        library = LibraryConfig(
+            api_shortname="baremetalsolution",
+            name_pretty="Bare Metal Solution",
+            product_documentation="https://cloud.google.com/bare-metal/docs",
+            api_description="example api description",
+            gapic_configs=list(),
+            distribution_name="com.example:baremetalsolution",
+        )
+        self.assertEqual(
+            "com.example:baremetalsolution", library.get_maven_coordinate()
+        )
+        self.assertEqual("baremetalsolution", library.get_artifact_id())
