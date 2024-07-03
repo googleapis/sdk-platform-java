@@ -15,6 +15,7 @@
 import json
 import os
 import re
+import sys
 import shutil
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -23,24 +24,19 @@ import jinja2
 from synthtool import shell, _tracked_paths
 from synthtool.gcp import partials
 from synthtool.log import logger
-from synthtool.sources import git, templates
+from synthtool.sources import templates
 
-TEMPLATES_URL: str = git.make_repo_clone_url("googleapis/synthtool")
 DEFAULT_TEMPLATES_PATH = "synthtool/gcp/templates"
 LOCAL_TEMPLATES: Optional[str] = os.environ.get("SYNTHTOOL_TEMPLATES")
 
 
 class CommonTemplates:
     def __init__(self, template_path: Optional[Path] = None):
-        if template_path:
-            self._template_root = template_path
-        elif LOCAL_TEMPLATES:
-            logger.debug(f"Using local templates at {LOCAL_TEMPLATES}")
-            self._template_root = Path(LOCAL_TEMPLATES)
-        else:
-            templates_git = git.clone(TEMPLATES_URL)
-            self._template_root = templates_git / DEFAULT_TEMPLATES_PATH
-
+        if LOCAL_TEMPLATES is None:
+          logger.error("env var SYNTHTOOL_TEMPLATES must be set")
+          sys.exit(1)
+        logger.debug(f"Using local templates at {LOCAL_TEMPLATES}")
+        self._template_root = Path(LOCAL_TEMPLATES)
         self._templates = templates.Templates(self._template_root)
         self.excludes = []  # type: List[str]
 
