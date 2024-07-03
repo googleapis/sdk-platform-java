@@ -43,8 +43,13 @@ RUN ln -s $(which python3.11) /usr/local/bin/python
 RUN ln -s $(which python3.11) /usr/local/bin/python3
 RUN python -m pip install --upgrade pip
 
-# install scripts as a python package
+# install main scripts as a python package
 WORKDIR /src
+RUN python -m pip install -r requirements.txt
+RUN python -m pip install .
+
+# install java-only synthtool scripts as a python package
+WORKDIR /src/owlbot/synthtool
 RUN python -m pip install -r requirements.txt
 RUN python -m pip install .
 
