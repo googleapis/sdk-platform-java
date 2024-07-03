@@ -21,7 +21,6 @@ import yaml
 import synthtool as s
 import synthtool.gcp as gcp
 import logging
-from synthtool import cache, shell
 from synthtool.gcp import common, partials, samples, snippets
 from pathlib import Path
 from typing import Any, Optional, Dict, Iterable, List

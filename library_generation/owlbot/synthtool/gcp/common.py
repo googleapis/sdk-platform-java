@@ -22,7 +22,7 @@ from typing import Dict, List, Optional
 import jinja2
 import logging
 
-from synthtool import shell, _tracked_paths
+from synthtool import _tracked_paths
 from synthtool.gcp import partials
 from synthtool.sources import templates
 
