@@ -79,4 +79,3 @@ class TemplateGroup:
                 print(f"Skipping: {template_name}")
 
         return self.dir
-

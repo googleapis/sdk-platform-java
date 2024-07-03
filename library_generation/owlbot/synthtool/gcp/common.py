@@ -45,8 +45,8 @@ _DEFAULT_PARTIAL_FILES = [
 class CommonTemplates:
     def __init__(self, template_path: Optional[Path] = None):
         if LOCAL_TEMPLATES is None:
-          logger.error("env var SYNTHTOOL_TEMPLATES must be set")
-          sys.exit(1)
+            logger.error("env var SYNTHTOOL_TEMPLATES must be set")
+            sys.exit(1)
         logger.debug(f"Using local templates at {LOCAL_TEMPLATES}")
         self._template_root = Path(LOCAL_TEMPLATES)
         self._templates = templates.Templates(self._template_root)
@@ -150,6 +150,7 @@ def _get_default_branch_name(repository_name: str) -> str:
     # This default should be switched to "main" once we've migrated
     # the majority of our repositories:
     return os.getenv("DEFAULT_BRANCH", "master")
+
 
 def load_partials(files: List[str] = []) -> Dict:
     """

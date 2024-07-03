@@ -28,6 +28,7 @@ ListOfPathsOrStrs = Iterable[Union[str, Path]]
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
+
 class MissingSourceError(Exception):
     pass
 
