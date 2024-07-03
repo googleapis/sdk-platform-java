@@ -69,6 +69,8 @@ METADATA = "metadata"
 LIBRARIES_BOM_VERSION = "libraries_bom_version"
 LIBRARIES_BOM_VERSION_ENV_KEY = "SYNTHTOOL_LIBRARIES_BOM_VERSION"
 HEADER_REGEX = re.compile("\\* Copyright \\d{4} Google LLC")
+LIBRARY_VERSION = "library_version"
+LIBRARY_VERSION_ENV_KEY = "SYNTHTOOL_LIBRARY_VERSION"
 
 
 def _file_has_header(path: Path) -> bool:
@@ -325,6 +327,7 @@ def common_templates(
         kwargs[METADATA][LIBRARIES_BOM_VERSION] = os.getenv(
             LIBRARIES_BOM_VERSION_ENV_KEY
         )
+    kwargs[METADATA][LIBRARY_VERSION] = os.getenv(LIBRARY_VERSION_ENV_KEY)
     # Special libraries that are not GAPIC_AUTO but in the monorepo
     special_libs_in_monorepo = [
         "java-translate",
