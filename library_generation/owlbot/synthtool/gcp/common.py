@@ -17,13 +17,13 @@ import os
 import re
 import sys
 import shutil
+import yaml
 from pathlib import Path
 from typing import Dict, List, Optional
 import jinja2
 import logging
 
 from synthtool import _tracked_paths
-from synthtool.gcp import partials
 from synthtool.sources import templates
 
 logger = logging.getLogger()
@@ -32,6 +32,14 @@ logger.setLevel(logging.DEBUG)
 
 DEFAULT_TEMPLATES_PATH = "synthtool/gcp/templates"
 LOCAL_TEMPLATES: Optional[str] = os.environ.get("SYNTHTOOL_TEMPLATES")
+
+# Originally brought from gcp/partials.py.
+# These are the default locations to look up
+_DEFAULT_PARTIAL_FILES = [
+    ".readme-partials.yml",
+    ".readme-partials.yaml",
+    ".integration-partials.yaml",
+]
 
 
 class CommonTemplates:
@@ -80,7 +88,7 @@ class CommonTemplates:
         """
         loads additional meta information from .repo-metadata.json.
         """
-        metadata["partials"] = partials.load_partials()
+        metadata["partials"] = load_partials()
 
         # Loads repo metadata information from the default location if it
         # hasn't already been set. Some callers may have already loaded repo
@@ -142,3 +150,25 @@ def _get_default_branch_name(repository_name: str) -> str:
     # This default should be switched to "main" once we've migrated
     # the majority of our repositories:
     return os.getenv("DEFAULT_BRANCH", "master")
+
+def load_partials(files: List[str] = []) -> Dict:
+    """
+    hand-crafted artisanal markdown can be provided in a .readme-partials.yml.
+    The following fields are currently supported:
+
+    body: custom body to include in the usage section of the document.
+    samples_body: an optional body to place below the table of contents
+        in samples/README.md.
+    introduction: a more thorough introduction than metadata["description"].
+    title: provide markdown to use as a custom title.
+    deprecation_warning: a warning to indicate that the library has been
+        deprecated and a pointer to an alternate option
+    """
+    result: Dict[str, Dict] = {}
+    cwd_path = Path(os.getcwd())
+    for file in files + _DEFAULT_PARTIAL_FILES:
+        partials_file = cwd_path / file
+        if os.path.exists(partials_file):
+            with open(partials_file) as f:
+                result.update(yaml.load(f, Loader=yaml.SafeLoader))
+    return result
