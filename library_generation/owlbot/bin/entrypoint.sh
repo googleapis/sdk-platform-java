@@ -34,7 +34,6 @@ is_monorepo=$3
 libraries_bom_version=$4
 library_version=$5
 
-
 if [[ "${is_monorepo}" == "true" ]]; then
   mv owl-bot-staging/* temp
   rm -rd owl-bot-staging/

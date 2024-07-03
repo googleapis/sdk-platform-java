@@ -1,6 +1,6 @@
 {% set group_id = metadata['repo']['distribution_name'].split(':')|first -%}
 {% set artifact_id = metadata['repo']['distribution_name'].split(':')|last -%}
-{% set version = metadata.get('library_version', metadata['latest_version']) -%}
+{% set version = metadata['library_version'] -%}
 {% set repo_short = metadata['repo']['repo'].split('/')|last -%}
 
 # Google {{ metadata['repo']['name_pretty'] }} Client for Java
