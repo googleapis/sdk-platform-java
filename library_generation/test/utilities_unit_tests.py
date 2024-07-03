@@ -27,6 +27,7 @@ from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from library_generation.test.test_utils import FileComparator
 from library_generation.test.test_utils import cleanup
+from library_generation.utils.utilities import get_distribution_name
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
@@ -259,6 +260,47 @@ class UtilitiesTest(unittest.TestCase):
         library_path = sorted([Path(key).name for key in repo_config.libraries])
         self.assertEqual(["misc"], library_path)
         shutil.rmtree(repo_config.output_folder)
+
+    def test_get_distribution_name_cloud_api(self):
+        library = LibraryConfig(
+            api_shortname="baremetalsolution",
+            name_pretty="Bare Metal Solution",
+            product_documentation="https://cloud.google.com/bare-metal/docs",
+            api_description="example api description",
+            gapic_configs=list(),
+        )
+        distribution_name, distribution_name_short = get_distribution_name(library)
+        self.assertEqual(
+            "com.google.cloud:google-cloud-baremetalsolution", distribution_name
+        )
+        self.assertEqual("google-cloud-baremetalsolution", distribution_name_short)
+
+    def test_get_distribution_name_non_cloud_api(self):
+        library = LibraryConfig(
+            api_shortname="baremetalsolution",
+            name_pretty="Bare Metal Solution",
+            product_documentation="https://cloud.google.com/bare-metal/docs",
+            api_description="example api description",
+            gapic_configs=list(),
+            cloud_api=False,
+            group_id="com.example",
+        )
+        distribution_name, distribution_name_short = get_distribution_name(library)
+        self.assertEqual("com.example:google-baremetalsolution", distribution_name)
+        self.assertEqual("google-baremetalsolution", distribution_name_short)
+
+    def test_get_distribution_name_with_distribution_name(self):
+        library = LibraryConfig(
+            api_shortname="baremetalsolution",
+            name_pretty="Bare Metal Solution",
+            product_documentation="https://cloud.google.com/bare-metal/docs",
+            api_description="example api description",
+            gapic_configs=list(),
+            distribution_name="com.example:baremetalsolution",
+        )
+        distribution_name, distribution_name_short = get_distribution_name(library)
+        self.assertEqual("com.example:baremetalsolution", distribution_name)
+        self.assertEqual("baremetalsolution", distribution_name_short)
 
     def __setup_postprocessing_prerequisite_files(
         self,
