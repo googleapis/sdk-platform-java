@@ -18,9 +18,7 @@ from pathlib import Path
 import jinja2
 import re
 
-from synthtool import log
 from synthtool import tmp
-
 
 PathOrStr = Union[str, Path]
 

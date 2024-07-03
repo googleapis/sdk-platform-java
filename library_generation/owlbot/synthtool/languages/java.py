@@ -20,12 +20,16 @@ import requests
 import yaml
 import synthtool as s
 import synthtool.gcp as gcp
+import logging
 from synthtool import cache, shell
 from synthtool.gcp import common, partials, samples, snippets
-from synthtool.log import logger
 from pathlib import Path
 from typing import Any, Optional, Dict, Iterable, List
 from datetime import date
+
+logger = logging.getLogger(name)
+logger.setLevel(logging.DEBUG)
+
 
 JAR_DOWNLOAD_URL = "https://github.com/google/google-java-format/releases/download/google-java-format-{version}/google-java-format-{version}-all-deps.jar"
 DEFAULT_FORMAT_VERSION = "1.7"

@@ -20,11 +20,15 @@ import shutil
 from pathlib import Path
 from typing import Dict, List, Optional
 import jinja2
+import logging
 
 from synthtool import shell, _tracked_paths
 from synthtool.gcp import partials
-from synthtool.log import logger
 from synthtool.sources import templates
+
+logger = logging.getLogger(name)
+logger.setLevel(logging.DEBUG)
+
 
 DEFAULT_TEMPLATES_PATH = "synthtool/gcp/templates"
 LOCAL_TEMPLATES: Optional[str] = os.environ.get("SYNTHTOOL_TEMPLATES")

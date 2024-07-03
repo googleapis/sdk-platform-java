@@ -18,14 +18,16 @@ from typing import Callable, Iterable, Union, List, Optional
 import os
 import re
 import sys
+import logging
 
 from synthtool import _tracked_paths
-from synthtool.log import logger
 from synthtool import metadata
 
 PathOrStr = Union[str, Path]
 ListOfPathsOrStrs = Iterable[Union[str, Path]]
 
+logger = logging.getLogger(name)
+logger.setLevel(logging.DEBUG)
 
 class MissingSourceError(Exception):
     pass
