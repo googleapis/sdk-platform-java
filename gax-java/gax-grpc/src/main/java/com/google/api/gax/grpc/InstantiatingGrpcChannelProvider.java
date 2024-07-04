@@ -92,7 +92,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   static final Logger LOG = Logger.getLogger(InstantiatingGrpcChannelProvider.class.getName());
 
   static final String DIRECT_PATH_ENV_DISABLE_DIRECT_PATH = "GOOGLE_CLOUD_DISABLE_DIRECT_PATH";
-  private static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
+
+  @VisibleForTesting
+  static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
+
   static final long DIRECT_PATH_KEEP_ALIVE_TIME_SECONDS = 3600;
   static final long DIRECT_PATH_KEEP_ALIVE_TIMEOUT_SECONDS = 20;
   static final String GCE_PRODUCTION_NAME_PRIOR_2016 = "Google";
@@ -273,32 +276,36 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return false;
   }
 
+  private boolean isDirectPathXdsEnabledViaBuilderOption() {
+    return Boolean.TRUE.equals(attemptDirectPathXds);
+  }
+
+  private boolean isDirectPathXdsEnabledViaEnv() {
+    String directPathXdsEnv = envProvider.getenv(DIRECT_PATH_ENV_ENABLE_XDS);
+    return Boolean.parseBoolean(directPathXdsEnv);
+  }
+
   @InternalApi
   public boolean isDirectPathXdsEnabled() {
     // Method 1: Enable DirectPath xDS by option.
-    if (Boolean.TRUE.equals(attemptDirectPathXds)) {
+    if (isDirectPathXdsEnabledViaBuilderOption()) {
       return true;
     }
     // Method 2: Enable DirectPath xDS by env.
-    String directPathXdsEnv = envProvider.getenv(DIRECT_PATH_ENV_ENABLE_XDS);
-    boolean isDirectPathXdsEnv = Boolean.parseBoolean(directPathXdsEnv);
-    if (isDirectPathXdsEnv) {
-      return true;
-    }
-    return false;
+    return isDirectPathXdsEnabledViaEnv();
   }
 
   // This method should be called once per client initialization, hence can not be called in the
   // builder or createSingleChannel, only in getTransportChannel which creates the first channel
   // for a client.
   private void logDirectPathMisconfig() {
-    if (isDirectPathXdsEnabled()) {
-      // Case 1: does not enable DirectPath
-      if (!isDirectPathEnabled()) {
-        LOG.log(
-            Level.WARNING,
-            "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
-                + " attemptDirectPathXds option.");
+    final String onlyOneDirectPathEnabledMessage =
+        "DirectPath is misconfigured. Please set both the "
+            + "attemptDirectPath and the attemptDirectPathXds options.";
+    if (isDirectPathEnabled()) {
+      // Case 1: does not enable DirectPath xDS
+      if (!isDirectPathXdsEnabled()) {
+        LOG.log(Level.WARNING, onlyOneDirectPathEnabledMessage);
       } else {
         // Case 2: credential is not correctly set
         if (!isCredentialDirectPathCompatible()) {
@@ -315,6 +322,15 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
               "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
         }
       }
+    } else if (isDirectPathXdsEnabledViaBuilderOption()) {
+      LOG.log(Level.WARNING, onlyOneDirectPathEnabledMessage);
+    } else if (isDirectPathXdsEnabledViaEnv()) {
+      LOG.log(
+          Level.WARNING,
+          "Env var "
+              + DIRECT_PATH_ENV_ENABLE_XDS
+              + " was found. If this is intended for "
+              + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
     }
   }
 

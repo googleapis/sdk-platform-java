@@ -30,6 +30,7 @@ jobs:
         # Set the Env Var for this step only
         env:
           GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
+          GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS: true
       - run: bazelisk version
       - name: Install Maven modules
         run: |

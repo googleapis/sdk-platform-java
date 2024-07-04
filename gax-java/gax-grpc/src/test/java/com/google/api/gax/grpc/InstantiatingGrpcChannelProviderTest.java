@@ -594,28 +594,65 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     return channelProvider.createMtlsChannelCredentials();
   }
 
+  private InstantiatingGrpcChannelProvider.Builder
+      createChannelProviderBuilderForDirectPathLogTests() {
+    return InstantiatingGrpcChannelProvider.newBuilder()
+        .setHeaderProvider(Mockito.mock(HeaderProvider.class))
+        .setExecutor(Mockito.mock(Executor.class))
+        .setEndpoint("localhost:8080");
+  }
+
+  private void createAndCloseTransportChannel(InstantiatingGrpcChannelProvider provider)
+      throws Exception {
+    TransportChannel transportChannel = provider.getTransportChannel();
+    transportChannel.close();
+    transportChannel.awaitTermination(10, TimeUnit.SECONDS);
+  }
+
   @Test
-  void testLogDirectPathMisconfigAttrempDirectPathNotSet() throws Exception {
+  void
+      testLogDirectPathMisconfig_AttemptDirectPathNotSetAndAttemptDirectPathXdsSetViaBuilder_warns()
+          throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder()
-            .setAttemptDirectPathXds()
-            .setHeaderProvider(Mockito.mock(HeaderProvider.class))
-            .setExecutor(Mockito.mock(Executor.class))
-            .setEndpoint("localhost:8080")
-            .build();
-
-    TransportChannel transportChannel = provider.getTransportChannel();
-
+        createChannelProviderBuilderForDirectPathLogTests().setAttemptDirectPathXds().build();
+    createAndCloseTransportChannel(provider);
     assertThat(logHandler.getAllMessages())
         .contains(
-            "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
-                + " attemptDirectPathXds option.");
+            "DirectPath is misconfigured. Please set both the attemptDirectPath and the attemptDirectPathXds options.");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
 
-    transportChannel.close();
-    transportChannel.awaitTermination(10, TimeUnit.SECONDS);
+  @Test
+  void testLogDirectPathMisconfig_AttemptDirectPathNotSetAndAttemptDirectPathXdsSetViaEnv_warns()
+      throws Exception {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+
+    InstantiatingGrpcChannelProvider provider =
+        createChannelProviderBuilderForDirectPathLogTests().build();
+    createAndCloseTransportChannel(provider);
+    assertThat(logHandler.getAllMessages())
+        .contains(
+            "Env var GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS was found. If this is intended for this client, please note "
+                + "that this is a misconfiguration and set the attemptDirectPath option as well.");
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
+
+  @Test
+  void testLogDirectPathMisconfig_AttemptDirectPathSetAndAttemptDirectPathXdsNotSet_warns()
+      throws Exception {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider provider =
+        createChannelProviderBuilderForDirectPathLogTests().setAttemptDirectPath(true).build();
+    createAndCloseTransportChannel(provider);
+    assertThat(logHandler.getAllMessages())
+        .contains(
+            "DirectPath is misconfigured. Please set both the attemptDirectPath and the "
+                + "attemptDirectPathXds options.");
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
   }
 
   @Test
