@@ -17,3 +17,9 @@ typing==3.7.4.3
 parameterized==0.9.0 # used in parameterized test
 colorlog==6.8.2
 watchdog==4.0.1
+nox==2024.4.15
+requests==2.32.3
+setuptools==65.5.1
+jinja2==3.1.4
+deprecation==2.1.0
+protobuf==3.20.2
