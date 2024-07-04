@@ -245,15 +245,17 @@ def _common_generation(
 
 
 def _merge_release_please(destination_text: str):
+    handle_gh_release_key="handleGHRelease"
+    branches_key="branches"
     config = yaml.safe_load(destination_text)
-    if "handleGHRelease" in config:
+    if handle_gh_release_key in config:
         return destination_text
 
-    config["handleGHRelease"] = True
+    config[handle_gh_release_key] = True
 
-    if "branches" in config:
-        for branch in config["branches"]:
-            branch["handleGHRelease"] = True
+    if branches_key in config:
+        for branch in config[branches_key]:
+            branch[handle_gh_release_key] = True
     return yaml.dump(config)
 
 
