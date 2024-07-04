@@ -19,7 +19,6 @@ import sys
 from synthtool.transforms import (
     move,
     replace,
-    dont_overwrite,
     get_staging_dirs,
     remove_staging_dirs,
 )
@@ -30,7 +29,6 @@ __all__ = [
     "copy",
     "move",
     "replace",
-    "dont_overwrite",
     "get_staging_dirs",
     "remove_staging_dirs",
 ]
