@@ -12,7 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from hashlib import sha1
+from hashlib import sha256
 
 from typing import Optional
 from library_generation.model.gapic_config import GapicConfig
@@ -117,7 +117,7 @@ class LibraryConfig:
         )
 
     def __hash__(self):
-        m = sha1()
+        m = sha256()
         m.update(
             str(
                 [
