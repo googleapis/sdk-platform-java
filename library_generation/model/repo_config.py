@@ -61,7 +61,7 @@ class RepoConfig:
         with open(self.versions_file) as f:
             for line in f.readlines():
                 sections = line.split(":")
-                # skip comments and whitespace.
+                # skip comments and empty lines.
                 if len(sections) != 3:
                     continue
                 artifact_id = sections[0]
