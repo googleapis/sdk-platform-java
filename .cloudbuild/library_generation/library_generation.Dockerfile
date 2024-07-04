@@ -48,11 +48,6 @@ WORKDIR /src
 RUN python -m pip install -r requirements.txt
 RUN python -m pip install .
 
-# install java-only synthtool scripts as a python package
-WORKDIR /src/owlbot/synthtool
-RUN python -m pip install -r requirements.txt
-RUN python -m pip install .
-
 # Install nvm with node and npm
 ENV NODE_VERSION 20.12.0
 WORKDIR /home
