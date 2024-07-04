@@ -201,44 +201,47 @@ def _common_generation(
 
     cloud_prefix = "cloud-" if cloud_api else ""
     package_name = package_pattern.format(service=service, version=version)
+    proto_library_name=f"proto-google-{cloud_prefix}{service}-{version}"
+    grpc_library_name=f"grpc-google-{cloud_prefix}{service}-{version}"
+    gapic_library_name=f"gapic-google-{cloud_prefix}{service}-{version}"
     fix_proto_headers(
-        library / f"proto-google-{cloud_prefix}{service}-{version}{suffix}"
+        library / f'{proto_library_name}{suffix}'
     )
     fix_grpc_headers(
-        library / f"grpc-google-{cloud_prefix}{service}-{version}{suffix}", package_name
+        library / f'{grpc_library_name}{suffix}', package_name
     )
 
     if preserve_gapic:
         s.copy(
-            [library / f"gapic-google-{cloud_prefix}{service}-{version}{suffix}/src"],
-            f"gapic-google-{cloud_prefix}{destination_name}-{version}/src",
+            [library / f"{gapic_library_name}{suffix}/src"],
+            f"{gapic_library_name}/src",
             required=True,
         )
     else:
         s.copy(
-            [library / f"gapic-google-{cloud_prefix}{service}-{version}{suffix}/src"],
+            [library / f"{gapic_library_name}{suffix}/src"],
             f"google-{cloud_prefix}{destination_name}/src",
             required=True,
         )
 
     s.copy(
-        [library / f"grpc-google-{cloud_prefix}{service}-{version}{suffix}/src"],
-        f"grpc-google-{cloud_prefix}{destination_name}-{version}/src",
+        [library / f"{grpc_library_name}{suffix}/src"],
+        f"{grpc_library_name}/src",
         # For REST-only clients, like java-compute, gRPC artifact does not exist
         required=(not diregapic),
     )
     s.copy(
-        [library / f"proto-google-{cloud_prefix}{service}-{version}{suffix}/src"],
-        f"proto-google-{cloud_prefix}{destination_name}-{version}/src",
+        [library / f"{proto_library_name}{suffix}/src"],
+        f"{proto_library_name}/src",
         required=True,
     )
 
     if preserve_gapic:
-        format_code(f"gapic-google-{cloud_prefix}{destination_name}-{version}/src")
+        format_code(f"{gapic_library_name}/src")
     else:
         format_code(f"google-{cloud_prefix}{destination_name}/src")
-    format_code(f"grpc-google-{cloud_prefix}{destination_name}-{version}/src")
-    format_code(f"proto-google-{cloud_prefix}{destination_name}-{version}/src")
+    format_code(f"{grpc_library_name}/src")
+    format_code(f"{proto_library_name}/src")
 
 
 def _merge_release_please(destination_text: str):
