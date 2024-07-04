@@ -19,6 +19,8 @@
 # different logic
 # 6 - libraries_bom_version: used by our implementation of owlbot to render the
 # readme
+# 7 - library_version: used by our implementation of owlbot to render the
+# readme
 set -exo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
 
@@ -28,6 +30,7 @@ versions_file=$3
 owlbot_cli_source_folder=$4
 is_monorepo=$5
 libraries_bom_version=$6
+library_version=$7
 owlbot_yaml_file_name=".OwlBot-hermetic.yaml"
 
 source "${scripts_root}"/utils/utilities.sh
@@ -102,6 +105,7 @@ bash "${scripts_root}/owlbot/bin/entrypoint.sh" \
   "${scripts_root}" \
   "${versions_file}" \
   "${is_monorepo}" \
-  "${libraries_bom_version}"
+  "${libraries_bom_version}" \
+  "${library_version}"
 
 popd # postprocessing_target
