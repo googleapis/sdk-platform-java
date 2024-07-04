@@ -63,11 +63,6 @@ class CommonTemplates:
 
         t = templates.TemplateGroup(self._template_root / directory, self.excludes)
 
-        if "repository" in kwargs["metadata"] and "repo" in kwargs["metadata"]:
-            kwargs["metadata"]["repo"]["default_branch"] = _get_default_branch_name(
-                kwargs["metadata"]["repository"]
-            )
-
         result = t.render(**kwargs)
         _tracked_paths.add(result)
 
@@ -133,23 +128,6 @@ def _load_repo_metadata(
         with open(metadata_file) as f:
             return json.load(f)
     return {}
-
-
-def _get_default_branch_name(repository_name: str) -> str:
-    """Read the default branch name from the environment.
-
-    First checks environment variable DEFAULT_BRANCH_PATH.  If found, it
-    reads the contents of the file at DEFAULT_BRANCH_PATH and returns it.
-
-    Then checks environment varabile DEFAULT_BRANCH, and returns it if found.
-    """
-    default_branch_path = os.getenv("DEFAULT_BRANCH_PATH")
-    if default_branch_path:
-        return Path(default_branch_path).read_text().strip()
-
-    # This default should be switched to "main" once we've migrated
-    # the majority of our repositories:
-    return os.getenv("DEFAULT_BRANCH", "master")
 
 
 def load_partials(files: List[str] = []) -> Dict:
