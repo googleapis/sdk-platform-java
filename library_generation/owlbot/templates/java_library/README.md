@@ -1,5 +1,6 @@
 {% set group_id = metadata['repo']['distribution_name'].split(':')|first -%}
 {% set artifact_id = metadata['repo']['distribution_name'].split(':')|last -%}
+{% set version = metadata['library_version'] -%}
 {% set repo_short = metadata['repo']['repo'].split('/')|last -%}
 
 # Google {{ metadata['repo']['name_pretty'] }} Client for Java
@@ -71,7 +72,7 @@ If you are using Maven, add this to your pom.xml file:
 <dependency>
   <groupId>{{ group_id }}</groupId>
   <artifactId>{{ artifact_id }}</artifactId>
-  <version>{{ metadata['latest_version'] }}</version>
+  <version>{{ version }}</version>
 </dependency>
 {% endif -%}
 ```
@@ -80,7 +81,7 @@ If you are using Maven, add this to your pom.xml file:
 If you are using Gradle 5.x or later, add this to your dependencies:
 
 ```Groovy
-implementation platform('com.google.cloud:libraries-bom:{{metadata['latest_bom_version']}}')
+implementation platform('com.google.cloud:libraries-bom:{{metadata['libraries_bom_version']}}')
 
 implementation '{{ group_id }}:{{ artifact_id }}'
 ```
@@ -89,13 +90,13 @@ implementation '{{ group_id }}:{{ artifact_id }}'
 If you are using Gradle without BOM, add this to your dependencies:
 
 ```Groovy
-implementation '{{ group_id }}:{{ artifact_id }}:{{ metadata['latest_version'] }}'
+implementation '{{ group_id }}:{{ artifact_id }}:{{ version }}'
 ```
 
 If you are using SBT, add this to your dependencies:
 
 ```Scala
-libraryDependencies += "{{ group_id }}" % "{{ artifact_id }}" % "{{ metadata['latest_version'] }}"
+libraryDependencies += "{{ group_id }}" % "{{ artifact_id }}" % "{{ version }}"
 ```
 <!-- {x-version-update-end} -->
 
@@ -264,7 +265,7 @@ Java is a registered trademark of Oracle and/or its affiliates.
 [kokoro-badge-link-5]: http://storage.googleapis.com/cloud-devrel-public/java/badges/{{ repo_short }}/java11.html
 [stability-image]: https://img.shields.io/badge/stability-{% if metadata['repo']['release_level'] == 'stable' %}stable-green{% elif metadata['repo']['release_level'] == 'preview' %}preview-yellow{% else %}unknown-red{% endif %}
 [maven-version-image]: https://img.shields.io/maven-central/v/{{ group_id }}/{{ artifact_id }}.svg
-[maven-version-link]: https://central.sonatype.com/artifact/{{ group_id }}/{{ artifact_id }}/{{ metadata['latest_version'] }}
+[maven-version-link]: https://central.sonatype.com/artifact/{{ group_id }}/{{ artifact_id }}/{{ version }}
 [authentication]: https://github.com/googleapis/google-cloud-java#authentication
 [auth-scopes]: https://developers.google.com/identity/protocols/oauth2/scopes
 [predefined-iam-roles]: https://cloud.google.com/iam/docs/understanding-roles#predefined_roles

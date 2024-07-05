@@ -13,9 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from hashlib import sha256
-
 from typing import Optional
 from library_generation.model.gapic_config import GapicConfig
+
+
+MAVEN_COORDINATE_SEPARATOR = ":"
 
 
 class LibraryConfig:
@@ -64,7 +66,6 @@ class LibraryConfig:
         self.excluded_dependencies = excluded_dependencies
         self.excluded_poms = excluded_poms
         self.client_documentation = client_documentation
-        self.distribution_name = distribution_name
         self.googleapis_commitish = googleapis_commitish
         self.group_id = group_id
         self.issue_tracker = issue_tracker
@@ -76,6 +77,7 @@ class LibraryConfig:
         self.extra_versioned_modules = extra_versioned_modules
         self.recommended_package = recommended_package
         self.min_java_version = min_java_version
+        self.distribution_name = self.__get_distribution_name(distribution_name)
 
     def get_library_name(self) -> str:
         """
@@ -86,6 +88,34 @@ class LibraryConfig:
 
     def get_sorted_gapic_configs(self) -> list[GapicConfig]:
         return sorted(self.gapic_configs)
+
+    def get_maven_coordinate(self) -> str:
+        """
+        Returns the Maven coordinate (group_id:artifact_id) of the library
+        """
+        return self.distribution_name
+
+    def get_artifact_id(self) -> str:
+        """
+        Returns the artifact ID of the library
+        """
+        return self.get_maven_coordinate().split(MAVEN_COORDINATE_SEPARATOR)[-1]
+
+    def __get_distribution_name(self, distribution_name: Optional[str]) -> str:
+        LibraryConfig.__check_distribution_name(distribution_name)
+        if distribution_name:
+            return distribution_name
+        cloud_prefix = "cloud-" if self.cloud_api else ""
+        library_name = self.get_library_name()
+        return f"{self.group_id}:google-{cloud_prefix}{library_name}"
+
+    @staticmethod
+    def __check_distribution_name(distribution_name: str) -> None:
+        if not distribution_name:
+            return
+        sections = distribution_name.split(MAVEN_COORDINATE_SEPARATOR)
+        if len(sections) != 2:
+            raise ValueError(f"{distribution_name} is not a valid distribution name.")
 
     def __eq__(self, other):
         return (
