@@ -201,15 +201,11 @@ def _common_generation(
 
     cloud_prefix = "cloud-" if cloud_api else ""
     package_name = package_pattern.format(service=service, version=version)
-    proto_library_name=f"proto-google-{cloud_prefix}{service}-{version}"
-    grpc_library_name=f"grpc-google-{cloud_prefix}{service}-{version}"
-    gapic_library_name=f"gapic-google-{cloud_prefix}{service}-{version}"
-    fix_proto_headers(
-        library / f'{proto_library_name}{suffix}'
-    )
-    fix_grpc_headers(
-        library / f'{grpc_library_name}{suffix}', package_name
-    )
+    proto_library_name = f"proto-google-{cloud_prefix}{service}-{version}"
+    grpc_library_name = f"grpc-google-{cloud_prefix}{service}-{version}"
+    gapic_library_name = f"gapic-google-{cloud_prefix}{service}-{version}"
+    fix_proto_headers(library / f"{proto_library_name}{suffix}")
+    fix_grpc_headers(library / f"{grpc_library_name}{suffix}", package_name)
 
     if preserve_gapic:
         s.copy(
@@ -245,8 +241,8 @@ def _common_generation(
 
 
 def _merge_release_please(destination_text: str):
-    handle_gh_release_key="handleGHRelease"
-    branches_key="branches"
+    handle_gh_release_key = "handleGHRelease"
+    branches_key = "branches"
     config = yaml.safe_load(destination_text)
     if handle_gh_release_key in config:
         return destination_text
