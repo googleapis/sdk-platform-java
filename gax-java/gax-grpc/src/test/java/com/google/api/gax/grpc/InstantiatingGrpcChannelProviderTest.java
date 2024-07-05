@@ -89,7 +89,6 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @BeforeEach
   public void setup() throws IOException {
-    System.setProperty("os.name", "Linux");
     computeEngineCredentials = Mockito.mock(ComputeEngineCredentials.class);
   }
 
@@ -686,6 +685,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_happyPath() {
+    System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
             envProvider.getenv(
@@ -704,6 +704,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_directPathEnvVarDisabled() {
+    System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
             envProvider.getenv(
@@ -722,6 +723,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_directPathEnvVarNotSet_attemptDirectPathIsTrue() {
+    System.setProperty("os.name", "Linux");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
@@ -734,6 +736,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_directPathEnvVarNotSet_attemptDirectPathIsFalse() {
+    System.setProperty("os.name", "Linux");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(false)
@@ -746,6 +749,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_nonComputeCredentials() {
+    System.setProperty("os.name", "Linux");
     Credentials credentials = Mockito.mock(Credentials.class);
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
@@ -784,6 +788,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_isNotOnComputeEngine_invalidSystemProductName() {
+    System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
             envProvider.getenv(
@@ -802,6 +807,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_isNotOnComputeEngine_unableToGetSystemProductName() {
+    System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
             envProvider.getenv(
@@ -819,6 +825,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_nonGDUUniverseDomain() {
+    System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
             envProvider.getenv(
