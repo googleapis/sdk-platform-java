@@ -38,6 +38,7 @@
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
     <google.cloud.opentelemetry.version>0.29.0</google.cloud.opentelemetry.version>
     <opentelemetry-grpc-instrumentation.version>2.1.0-alpha</opentelemetry-grpc-instrumentation.version>
+    <opentelemetry-semconv.version>1.26.0-alpha</opentelemetry-semconv.version>
     <flogger.version>0.8</flogger.version>
     <arrow.version>15.0.2</arrow.version>
   </properties>
@@ -135,6 +136,11 @@
         <groupId>io.opentelemetry.instrumentation</groupId>
         <artifactId>opentelemetry-grpc-1.6</artifactId>
         <version>${opentelemetry-grpc-instrumentation.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-semconv</artifactId>
+        <version>${opentelemetry-semconv.version}</version>
       </dependency>
 
       <!-- TODO: replace with opencensus-bom when available -->
