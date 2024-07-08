@@ -189,6 +189,7 @@ class BasicRetryingFuture<ResponseT> extends AbstractFuture<ResponseT>
           }
           tracer.attemptFailedDuration(
               throwable, nextAttemptSettings.getRandomizedRetryDelayDuration());
+          tracer.attemptFailed(throwable, nextAttemptSettings.getRandomizedRetryDelay());
           attemptSettings = nextAttemptSettings;
           setAttemptResult(throwable, response, true);
           // a new attempt will be (must be) scheduled by an external executor
