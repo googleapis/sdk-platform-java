@@ -187,6 +187,7 @@ class BasicRetryingFuture<ResponseT> extends AbstractFuture<ResponseT>
                   "retriableException: " + throwable
                 });
           }
+          tracer.attemptFailed(throwable, nextAttemptSettings.getRandomizedRetryDelay());
           tracer.attemptFailedDuration(
               throwable, nextAttemptSettings.getRandomizedRetryDelayDuration());
           attemptSettings = nextAttemptSettings;
