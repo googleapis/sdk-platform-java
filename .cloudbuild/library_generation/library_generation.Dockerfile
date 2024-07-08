@@ -17,7 +17,6 @@ FROM gcr.io/cloud-devrel-public-resources/python
 
 SHELL [ "/bin/bash", "-c" ]
 
-ARG SYNTHTOOL_COMMITTISH=696c4bff721f5541cd75fdc97d413f8f39d2a2c1
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
 ARG PROTOC_VERSION=25.3
 ENV HOME=/home
@@ -44,18 +43,10 @@ RUN ln -s $(which python3.11) /usr/local/bin/python
 RUN ln -s $(which python3.11) /usr/local/bin/python3
 RUN python -m pip install --upgrade pip
 
-# install scripts as a python package
+# install main scripts as a python package
 WORKDIR /src
 RUN python -m pip install -r requirements.txt
 RUN python -m pip install .
-
-# install synthtool
-WORKDIR /tools
-RUN git clone https://github.com/googleapis/synthtool
-WORKDIR /tools/synthtool
-RUN git checkout "${SYNTHTOOL_COMMITTISH}"
-RUN python3 -m pip install --no-deps -e .
-RUN python3 -m pip install -r requirements.in
 
 # Install nvm with node and npm
 ENV NODE_VERSION 20.12.0
