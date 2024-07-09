@@ -120,11 +120,15 @@ public interface ApiTracer {
   /**
    * Adds an annotation that the attempt failed, but another attempt will be made after the delay.
    *
+   * <p>Defaults to do the same as {@link #attemptFailed(Throwable, org.threeten.bp.Duration)}. This
+   * is because customers may have older/legacy code that directly implements {@link
+   * #attemptFailed(Throwable, org.threeten.bp.Duration)} and their overridden logic should be
+   * invoked in gax.
+   *
    * @param error the transient error that caused the attempt to fail.
    * @param delay the amount of time to wait before the next attempt will start.
    */
   default void attemptFailedDuration(Throwable error, java.time.Duration delay) {
-    // defaults to do the same as attemptFailed(Throwable, org.threeten.bp.Duration)
     attemptFailed(error, toThreetenDuration(delay));
   };
 
