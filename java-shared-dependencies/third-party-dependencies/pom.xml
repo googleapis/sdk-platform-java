@@ -24,7 +24,7 @@
     <site.installationModule>${project.artifactId}</site.installationModule>
 
     <threeten-extra.version>1.8.0</threeten-extra.version>
-    <animal-sniffer.version>1.23</animal-sniffer.version>
+    <animal-sniffer.version>1.24</animal-sniffer.version>
     <opencensus.version>0.31.1</opencensus.version>
     <findbugs.version>3.0.2</findbugs.version>
     <jackson.version>2.17.1</jackson.version>
@@ -36,7 +36,7 @@
     <checker-qual.version>3.44.0</checker-qual.version>
     <perfmark-api.version>0.27.0</perfmark-api.version>
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
-    <google.cloud.opentelemetry.version>0.29.0</google.cloud.opentelemetry.version>
+    <google.cloud.opentelemetry.version>0.30.0</google.cloud.opentelemetry.version>
     <opentelemetry-grpc-instrumentation.version>2.1.0-alpha</opentelemetry-grpc-instrumentation.version>
     <flogger.version>0.8</flogger.version>
     <arrow.version>15.0.2</arrow.version>
