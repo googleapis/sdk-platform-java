@@ -29,8 +29,6 @@
  */
 package com.google.api.gax.tracing;
 
-import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
-
 import com.google.api.core.InternalApi;
 import com.google.api.core.ObsoleteApi;
 
@@ -108,7 +106,7 @@ public class BaseApiTracer implements ApiTracer {
   @Override
   public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
     // noop via attemptFailed(Throwable error, org.threeten.Duration)
-    attemptFailed(error, toThreetenDuration(delay));
+    //    attemptFailed(error, toThreetenDuration(delay));
   }
 
   /**

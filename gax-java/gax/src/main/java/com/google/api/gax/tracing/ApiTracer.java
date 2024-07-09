@@ -121,7 +121,10 @@ public interface ApiTracer {
    * @param error the transient error that caused the attempt to fail.
    * @param delay the amount of time to wait before the next attempt will start.
    */
-  default void attemptFailedDuration(Throwable error, java.time.Duration delay) {};
+  default void attemptFailedDuration(Throwable error, java.time.Duration delay) {
+    // defaults to do the same as attemptFailed(Throwable, org.threeten.bp.Duration)
+    //    attemptFailed(error, toThreetenDuration(delay));
+  };
 
   /**
    * Adds an annotation that the attempt failed and that no further attempts will be made because
