@@ -40,6 +40,8 @@
     <opentelemetry-grpc-instrumentation.version>2.1.0-alpha</opentelemetry-grpc-instrumentation.version>
     <flogger.version>0.8</flogger.version>
     <arrow.version>15.0.2</arrow.version>
+    <dev.cel.version>0.5.2</dev.cel.version>
+    <com.google.crypto.tink.version>1.14.0</com.google.crypto.tink.version>
   </properties>
 
   <dependencyManagement>
@@ -204,6 +206,16 @@
         <version>${junit.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>dev.cel</groupId>
+        <artifactId>cel</artifactId>
+        <version>${dev.cel.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.crypto.tink</groupId>
+        <artifactId>tink</artifactId>
+        <version>${com.google.crypto.tink.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
