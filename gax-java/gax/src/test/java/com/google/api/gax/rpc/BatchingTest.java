@@ -52,7 +52,6 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.threeten.bp.Duration;
 
 class BatchingTest {
 
@@ -79,7 +78,7 @@ class BatchingTest {
   void batching() throws Exception {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(2L)
             .build();
     BatchingCallSettings<LabeledIntList, List<Integer>> batchingCallSettings =
@@ -99,7 +98,7 @@ class BatchingTest {
   void batchingWithFlowControl() throws Exception {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(4L)
             .setRequestByteThreshold(null)
             .setFlowControlSettings(
@@ -177,7 +176,7 @@ class BatchingTest {
   void batchingWithBlockingCallThreshold() throws Exception {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(2L)
             .build();
     BatchingCallSettings<LabeledIntList, List<Integer>> batchingCallSettings =
@@ -206,7 +205,7 @@ class BatchingTest {
   void batchingException() throws Exception {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(2L)
             .build();
     BatchingCallSettings<LabeledIntList, List<Integer>> batchingCallSettings =

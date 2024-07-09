@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -46,6 +47,7 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.core.FixedExecutorProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.rpc.testing.FakeChannel;
 import com.google.api.gax.rpc.testing.FakeClientSettings;
 import com.google.api.gax.rpc.testing.FakeStubSettings;
@@ -66,7 +68,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class ClientContextTest {
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com";
@@ -281,17 +282,17 @@ class ClientContextTest {
     Credentials credentials = Mockito.mock(Credentials.class);
     ApiClock clock = Mockito.mock(ApiClock.class);
     Watchdog watchdog =
-        Watchdog.create(
+        Watchdog.createDuration(
             Mockito.mock(ApiClock.class),
-            Duration.ZERO,
+            java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));
-    Duration watchdogCheckInterval = Duration.ofSeconds(11);
+    java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(11);
 
     builder.setExecutorProvider(executorProvider);
     builder.setTransportChannelProvider(transportProvider);
     builder.setCredentialsProvider(FixedCredentialsProvider.create(credentials));
     builder.setWatchdogProvider(FixedWatchdogProvider.create(watchdog));
-    builder.setWatchdogCheckInterval(watchdogCheckInterval);
+    builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
     builder.setClock(clock);
 
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
@@ -318,7 +319,7 @@ class ClientContextTest {
     Truth.assertThat(clientContext.getCredentials()).isSameInstanceAs(credentials);
     Truth.assertThat(clientContext.getClock()).isSameInstanceAs(clock);
     Truth.assertThat(clientContext.getStreamWatchdog()).isSameInstanceAs(watchdog);
-    Truth.assertThat(clientContext.getStreamWatchdogCheckInterval())
+    Truth.assertThat(clientContext.getStreamWatchdogCheckIntervalDuration())
         .isEqualTo(watchdogCheckInterval);
 
     Truth.assertThat(clientContext.getHeaders()).isEqualTo(ImmutableMap.of("k1", "v1"));
@@ -360,13 +361,13 @@ class ClientContextTest {
     builder.setExecutorProvider(new FakeExecutorProvider(executor, true));
     builder.setTransportChannelProvider(transportProvider);
 
-    Duration watchdogCheckInterval = Duration.ofSeconds(11);
+    java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(11);
     builder.setWatchdogProvider(
         InstantiatingWatchdogProvider.create()
             .withClock(clock)
-            .withCheckInterval(watchdogCheckInterval)
+            .withCheckIntervalDuration(watchdogCheckInterval)
             .withExecutor(executor));
-    builder.setWatchdogCheckInterval(watchdogCheckInterval);
+    builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
 
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of("k1", "v1"));
@@ -1060,5 +1061,17 @@ class ClientContextTest {
     ClientSettings clientSettings = clientSettingsBuilder.build();
     ClientContext clientContext = ClientContext.create(clientSettings);
     assertThat(clientContext.getUniverseDomain()).isEqualTo(universeDomain);
+  }
+
+  @Test
+  public void testStreamWatchdogInterval_backportMethodsBehaveCorrectly() {
+    final ClientContext.Builder builder =
+        ClientContext.newBuilder().setDefaultCallContext(FakeCallContext.createDefault());
+    testDurationMethod(
+        123L,
+        jt -> builder.setStreamWatchdogCheckIntervalDuration(jt).build(),
+        tt -> builder.setStreamWatchdogCheckInterval(tt).build(),
+        ct -> ct.getStreamWatchdogCheckIntervalDuration(),
+        ct -> ct.getStreamWatchdogCheckInterval());
   }
 }

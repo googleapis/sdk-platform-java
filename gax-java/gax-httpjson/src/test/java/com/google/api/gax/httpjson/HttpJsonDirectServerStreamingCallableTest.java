@@ -66,7 +66,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class HttpJsonDirectServerStreamingCallableTest {
   private static final Color DEFAULT_REQUEST = Color.newBuilder().setRed(0.5f).build();
@@ -88,10 +87,10 @@ class HttpJsonDirectServerStreamingCallableTest {
 
   @BeforeEach
   void initialize() throws IOException {
-    initialize(Duration.ofSeconds(30));
+    initialize(java.time.Duration.ofSeconds(30));
   }
 
-  void initialize(Duration timeout) throws IOException {
+  void initialize(java.time.Duration timeout) throws IOException {
     this.methodServerStreamingRecognize =
         ApiMethodDescriptor.<Color, Money>newBuilder()
             .setFullMethodName("google.cloud.v1.Fake/ServerStreamingRecognize")
@@ -147,7 +146,7 @@ class HttpJsonDirectServerStreamingCallableTest {
             .setTransportChannel(HttpJsonTransportChannel.create(channel))
             .setDefaultCallContext(
                 HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
-                    .withTimeout(timeout)
+                    .withTimeoutDuration(timeout)
                     .withEndpointContext(endpointContext))
             .build();
 
@@ -332,7 +331,7 @@ class HttpJsonDirectServerStreamingCallableTest {
   @Test
   void testDeadlineExceededServerStreaming() throws InterruptedException, IOException {
     // set a low timeout to trigger deadline-exceeded sooner
-    initialize(Duration.ofSeconds(1));
+    initialize(java.time.Duration.ofSeconds(1));
 
     mockService.addResponse(
         new Money[] {DEFAULT_RESPONSE, DEFAULTER_RESPONSE}, java.time.Duration.ofSeconds(30));

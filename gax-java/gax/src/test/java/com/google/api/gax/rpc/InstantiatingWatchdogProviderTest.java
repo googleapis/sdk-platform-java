@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.core.ApiClock;
@@ -39,13 +40,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.threeten.bp.Duration;
 
 @ExtendWith(MockitoExtension.class)
 class InstantiatingWatchdogProviderTest {
   @Mock private ScheduledExecutorService executor;
   @Mock private ApiClock clock;
-  private Duration checkInterval = Duration.ofSeconds(11);
+  private java.time.Duration checkInterval = java.time.Duration.ofSeconds(11);
 
   @Test
   void happyPath() {
@@ -58,7 +58,7 @@ class InstantiatingWatchdogProviderTest {
     provider = provider.withClock(clock);
 
     assertThat(provider.needsCheckInterval()).isTrue();
-    provider = provider.withCheckInterval(checkInterval);
+    provider = provider.withCheckIntervalDuration(checkInterval);
 
     assertThat(provider.shouldAutoClose()).isTrue();
 
@@ -71,7 +71,9 @@ class InstantiatingWatchdogProviderTest {
   @Test
   void requiresExecutor() {
     WatchdogProvider provider =
-        InstantiatingWatchdogProvider.create().withCheckInterval(checkInterval).withClock(clock);
+        InstantiatingWatchdogProvider.create()
+            .withCheckIntervalDuration(checkInterval)
+            .withClock(clock);
 
     Throwable actualError = null;
     try {
@@ -101,7 +103,7 @@ class InstantiatingWatchdogProviderTest {
     WatchdogProvider provider =
         InstantiatingWatchdogProvider.create()
             .withExecutor(executor)
-            .withCheckInterval(checkInterval);
+            .withCheckIntervalDuration(checkInterval);
 
     Throwable actualError = null;
     try {
@@ -110,5 +112,18 @@ class InstantiatingWatchdogProviderTest {
       actualError = t;
     }
     assertThat(actualError).isInstanceOf(IllegalStateException.class);
+  }
+
+  @Test
+  public void testCheckInterval_backportMethodsBehaveCorrectly() {
+    final InstantiatingWatchdogProvider baseProvider =
+        (InstantiatingWatchdogProvider)
+            InstantiatingWatchdogProvider.create().withClock(clock).withExecutor(executor);
+    testDurationMethod(
+        123l,
+        jt -> baseProvider.withCheckIntervalDuration(jt),
+        tt -> baseProvider.withCheckInterval(tt),
+        wp -> wp.getWatchdog().getScheduleIntervalDuration(),
+        wp -> wp.getWatchdog().getScheduleInterval());
   }
 }

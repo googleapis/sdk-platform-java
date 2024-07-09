@@ -53,7 +53,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
   private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
@@ -95,7 +94,7 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
       RetrySettings retrySettings =
           FAST_RETRY_SETTINGS
               .toBuilder()
-              .setTotalTimeout(Duration.ofMillis(1000L))
+              .setTotalTimeoutDuration(java.time.Duration.ofMillis(1000L))
               .setMaxAttempts(maxRetries)
               .build();
 
@@ -146,7 +145,7 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
       RetrySettings retrySettings =
           FAST_RETRY_SETTINGS
               .toBuilder()
-              .setTotalTimeout(Duration.ofMillis(1000L))
+              .setTotalTimeoutDuration(java.time.Duration.ofMillis(1000L))
               .setMaxAttempts(maxRetries)
               .build();
 
@@ -202,7 +201,7 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
       RetrySettings retrySettings =
           FAST_RETRY_SETTINGS
               .toBuilder()
-              .setTotalTimeout(Duration.ofMillis(1000L))
+              .setTotalTimeoutDuration(java.time.Duration.ofMillis(1000L))
               .setMaxAttempts(maxRetries)
               .build();
 
@@ -262,10 +261,10 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
             // once) but does not complete before it is cancelled. Assuming no computation time,
             // it would take 25 + 100 + 400 + 1000 = 1525ms for the future to complete, which should
             // be more than enough time to cancel the future.
-            .setInitialRetryDelay(Duration.ofMillis(25L))
-            .setMaxRetryDelay(Duration.ofMillis(1000L))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(25L))
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1000L))
             .setRetryDelayMultiplier(4.0)
-            .setTotalTimeout(Duration.ofMillis(60000L))
+            .setTotalTimeoutDuration(java.time.Duration.ofMillis(60000L))
             // Set this test to not use jitter as the randomized retry delay (RRD) may introduce
             // flaky results. For example, if every RRD value is calculated to be a small value
             // (i.e. 2ms), four retries would result a "SUCCESS" result after 8ms, far below
@@ -314,9 +313,9 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
       RetrySettings retrySettings =
           FAST_RETRY_SETTINGS
               .toBuilder()
-              .setInitialRetryDelay(Duration.ofMillis(1_000L))
-              .setMaxRetryDelay(Duration.ofMillis(1_000L))
-              .setTotalTimeout(Duration.ofMillis(10_0000L))
+              .setInitialRetryDelayDuration(java.time.Duration.ofMillis(1_000L))
+              .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1_000L))
+              .setTotalTimeoutDuration(java.time.Duration.ofMillis(10_0000L))
               .build();
       RetryingExecutorWithContext<String> executor =
           getRetryingExecutor(getAlgorithm(retrySettings, 0, null), localExecutor);

@@ -38,7 +38,6 @@ import com.google.common.truth.Truth;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class BatchingCallSettingsTest {
 
@@ -82,11 +81,11 @@ class BatchingCallSettingsTest {
     Set<StatusCode.Code> retryCodes = Sets.newHashSet(Code.UNAVAILABLE);
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(5))
-            .setMaxRetryDelay(Duration.ofSeconds(1))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelayDuration(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(Duration.ofMillis(100))
-            .setMaxRpcTimeout(Duration.ofMillis(200))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)
@@ -126,11 +125,11 @@ class BatchingCallSettingsTest {
     Set<StatusCode.Code> retryCodes = Sets.newHashSet(Code.UNAVAILABLE);
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(5))
-            .setMaxRetryDelay(Duration.ofSeconds(1))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelayDuration(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(Duration.ofMillis(100))
-            .setMaxRpcTimeout(Duration.ofMillis(200))
+            .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)

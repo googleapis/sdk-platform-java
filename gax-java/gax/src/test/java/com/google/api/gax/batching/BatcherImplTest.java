@@ -34,6 +34,10 @@ import static com.google.api.gax.rpc.testing.FakeBatchableApi.callLabeledIntSqua
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.google.api.core.ApiFuture;
@@ -78,7 +82,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class BatcherImplTest {
 
@@ -93,7 +96,7 @@ class BatcherImplTest {
       BatchingSettings.newBuilder()
           .setElementCountThreshold(1000L)
           .setRequestByteThreshold(1000L)
-          .setDelayThreshold(Duration.ofSeconds(1000))
+          .setDelayThresholdDuration(java.time.Duration.ofSeconds(1000))
           .build();
 
   @AfterEach
@@ -130,6 +133,20 @@ class BatcherImplTest {
   @Test
   void testSendOutstanding() {
     final AtomicInteger callableCounter = new AtomicInteger();
+    ScheduledExecutorService mockExecutor = mock(ScheduledExecutorService.class);
+    BatchingSettings mockBatchingSettings = mock(BatchingSettings.class);
+    java.time.Duration mockDelayThresholdDuration = java.time.Duration.ofSeconds(1000L);
+    when(mockBatchingSettings.getDelayThresholdDuration()).thenReturn(mockDelayThresholdDuration);
+    when(mockBatchingSettings.getRequestByteThreshold()).thenReturn(1000L);
+    when(mockBatchingSettings.getElementCountThreshold()).thenReturn(1000L);
+    when(mockBatchingSettings.getFlowControlSettings())
+        .thenReturn(batchingSettings.getFlowControlSettings());
+    when(mockExecutor.scheduleWithFixedDelay(
+            any(Runnable.class),
+            eq(mockDelayThresholdDuration.toMillis()),
+            eq(mockDelayThresholdDuration.toMillis()),
+            any(TimeUnit.class)))
+        .thenReturn(mock(ScheduledFuture.class));
 
     underTest =
         new BatcherImpl<>(
@@ -143,8 +160,8 @@ class BatcherImplTest {
               }
             },
             labeledIntList,
-            batchingSettings,
-            EXECUTOR);
+            mockBatchingSettings,
+            mockExecutor);
 
     // Empty Batcher
     underTest.sendOutstanding();
@@ -155,6 +172,12 @@ class BatcherImplTest {
     underTest.add(4);
     underTest.sendOutstanding();
     assertThat(callableCounter.get()).isEqualTo(1);
+    verify(mockExecutor)
+        .scheduleWithFixedDelay(
+            any(Runnable.class),
+            eq(mockDelayThresholdDuration.toMillis()),
+            eq(mockDelayThresholdDuration.toMillis()),
+            any(TimeUnit.class));
   }
 
   /** Element results are resolved after batch is closed. */
@@ -364,7 +387,7 @@ class BatcherImplTest {
         BatchingSettings.newBuilder()
             .setElementCountThreshold(null)
             .setRequestByteThreshold(null)
-            .setDelayThreshold(null)
+            .setDelayThresholdDuration(null)
             .build();
     underTest = createDefaultBatcherImpl(settings, null);
     Future<Integer> result = underTest.add(2);
@@ -376,7 +399,10 @@ class BatcherImplTest {
   @Test
   void testWhenDelayThresholdExceeds() throws Exception {
     BatchingSettings settings =
-        batchingSettings.toBuilder().setDelayThreshold(Duration.ofMillis(100)).build();
+        batchingSettings
+            .toBuilder()
+            .setDelayThresholdDuration(java.time.Duration.ofMillis(100))
+            .build();
     underTest = createDefaultBatcherImpl(settings, null);
     Future<Integer> result = underTest.add(6);
     assertThat(result.isDone()).isFalse();
@@ -408,7 +434,10 @@ class BatcherImplTest {
           }
         };
     BatchingSettings settings =
-        batchingSettings.toBuilder().setDelayThreshold(Duration.ofMillis(50)).build();
+        batchingSettings
+            .toBuilder()
+            .setDelayThresholdDuration(java.time.Duration.ofMillis(50))
+            .build();
 
     try (final BatcherImpl<Integer, Integer, LabeledIntList, List<Integer>> batcherTest =
         new BatcherImpl<>(SQUARER_BATCHING_DESC_V2, callable, labeledIntList, settings, EXECUTOR)) {
@@ -446,7 +475,10 @@ class BatcherImplTest {
   void testPushCurrentBatchRunnable() throws Exception {
     long DELAY_TIME = 50L;
     BatchingSettings settings =
-        batchingSettings.toBuilder().setDelayThreshold(Duration.ofMillis(DELAY_TIME)).build();
+        batchingSettings
+            .toBuilder()
+            .setDelayThresholdDuration(java.time.Duration.ofMillis(DELAY_TIME))
+            .build();
     BatcherImpl<Integer, Integer, LabeledIntList, List<Integer>> batcher =
         createDefaultBatcherImpl(settings, null);
 
@@ -824,7 +856,7 @@ class BatcherImplTest {
                 .build());
     ExecutorService executor = Executors.newFixedThreadPool(2);
 
-    ApiCallContext callContext = Mockito.mock(ApiCallContext.class);
+    ApiCallContext callContext = mock(ApiCallContext.class);
     ArgumentCaptor<ApiCallContext.Key<Long>> key =
         ArgumentCaptor.forClass(ApiCallContext.Key.class);
     ArgumentCaptor<Long> value = ArgumentCaptor.forClass(Long.class);
@@ -998,7 +1030,7 @@ class BatcherImplTest {
     Object prototype = new Object();
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(100L)
             .setRequestByteThreshold(100L)
             .setFlowControlSettings(FlowControlSettings.getDefaultInstance())

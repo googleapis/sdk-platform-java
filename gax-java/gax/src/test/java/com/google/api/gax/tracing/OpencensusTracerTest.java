@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.tracing;
 
+import static com.google.api.gax.tracing.MetricsTestUtils.reportFailedAttempt;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.verify;
@@ -56,7 +57,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.threeten.bp.Duration;
 
 @ExtendWith(MockitoExtension.class)
 class OpencensusTracerTest {
@@ -73,13 +73,22 @@ class OpencensusTracerTest {
   }
 
   @Test
-  void testUnarySuccessExample() {
+  void testUnarySuccessExample_javaTime() {
+    testUnarySuccessExample(java.time.Duration.ofMillis(5));
+  }
+
+  @Test
+  public void testUnarySuccessExample_threeten() {
+    testUnarySuccessExample(org.threeten.bp.Duration.ofMillis(5));
+  }
+
+  public void testUnarySuccessExample(Object attemptFailedValue) {
     tracer.attemptStarted(0);
     tracer.connectionSelected("1");
     ApiException error0 =
         new DeadlineExceededException(
             "deadline exceeded", null, new FakeStatusCode(Code.DEADLINE_EXCEEDED), true);
-    tracer.attemptFailed(error0, Duration.ofMillis(5));
+    reportFailedAttempt(tracer, error0, attemptFailedValue);
 
     tracer.attemptStarted(1);
     tracer.connectionSelected("2");
@@ -125,12 +134,21 @@ class OpencensusTracerTest {
   }
 
   @Test
-  void testLongRunningExample() {
+  void testLongRunningExample_javaTime() {
+    testLongRunningExample(java.time.Duration.ofMillis(5));
+  }
+
+  @Test
+  public void testLongRunningExample_threeten() {
+    testLongRunningExample(org.threeten.bp.Duration.ofMillis(5));
+  }
+
+  public void testLongRunningExample(Object attemptFailedValue) {
     tracer = new OpencensusTracer(internalTracer, span, OperationType.LongRunning);
 
     // Initial poll of the initial rpc
     tracer.attemptStarted(0);
-    tracer.attemptFailed(null, Duration.ofMillis(5));
+    reportFailedAttempt(tracer, null, attemptFailedValue);
 
     // Initial rpc finished
     tracer.lroStartSucceeded();
@@ -249,12 +267,21 @@ class OpencensusTracerTest {
   }
 
   @Test
-  void testResponseCount() {
+  void testResponseCount_javaTime() {
+    testResponseCount(java.time.Duration.ofMillis(5));
+  }
+
+  @Test
+  public void testResponseCount_threeten() {
+    testResponseCount(java.time.Duration.ofMillis(5));
+  }
+
+  public void testResponseCount(Object attemptFailedValue) {
     // Initial attempt got 2 messages, then failed
     tracer.attemptStarted(0);
     tracer.responseReceived();
     tracer.responseReceived();
-    tracer.attemptFailed(new RuntimeException(), Duration.ofMillis(1));
+    reportFailedAttempt(tracer, new RuntimeException(), attemptFailedValue);
 
     // Next attempt got 1 message, then successfully finished the attempt and the logical operation.
     tracer.attemptStarted(1);
@@ -277,12 +304,21 @@ class OpencensusTracerTest {
   }
 
   @Test
-  void testRequestCount() {
+  void testRequestCount_javaTime() {
+    testRequestCount(java.time.Duration.ofMillis(2));
+  }
+
+  @Test
+  public void testRequestCount_threeten() {
+    testRequestCount(org.threeten.bp.Duration.ofMillis(2));
+  }
+
+  public void testRequestCount(Object attemptFailedValue) {
     // Initial attempt sent 2 messages, then failed
     tracer.attemptStarted(0);
     tracer.requestSent();
     tracer.requestSent();
-    tracer.attemptFailed(new RuntimeException(), Duration.ofMillis(1));
+    reportFailedAttempt(tracer, new RuntimeException(), attemptFailedValue);
 
     // Next attempt sent 1 message, then successfully finished the attempt and the logical
     // operation.
@@ -306,9 +342,18 @@ class OpencensusTracerTest {
   }
 
   @Test
-  void testAttemptNumber() {
+  void testAttemptNumber_javaTime() {
+    testAttemptNumber(java.time.Duration.ofMillis(5));
+  }
+
+  @Test
+  public void testAttemptNumber_threeten() {
+    testAttemptNumber(org.threeten.bp.Duration.ofMillis(5));
+  }
+
+  public void testAttemptNumber(Object attemptFailedValue) {
     tracer.attemptStarted(0);
-    tracer.attemptFailed(new RuntimeException(), Duration.ofMillis(1));
+    reportFailedAttempt(tracer, new RuntimeException(), attemptFailedValue);
     tracer.attemptStarted(1);
     tracer.attemptSucceeded();
     tracer.operationSucceeded();
@@ -330,10 +375,11 @@ class OpencensusTracerTest {
   @Test
   void testStatusCode() {
     tracer.attemptStarted(0);
-    tracer.attemptFailed(
+    reportFailedAttempt(
+        tracer,
         new DeadlineExceededException(
             "deadline exceeded", null, new FakeStatusCode(Code.DEADLINE_EXCEEDED), true),
-        Duration.ofMillis(1));
+        java.time.Duration.ofMillis(1));
 
     tracer.attemptStarted(1);
     ApiException permanentError =

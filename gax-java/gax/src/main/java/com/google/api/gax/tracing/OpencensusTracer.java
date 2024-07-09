@@ -29,8 +29,11 @@
  */
 package com.google.api.gax.tracing;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StatusCode.Code;
@@ -47,7 +50,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.annotation.Nonnull;
-import org.threeten.bp.Duration;
 
 /**
  * Implementation of {@link ApiTracer} that uses OpenCensus.
@@ -342,7 +344,7 @@ public class OpencensusTracer extends BaseApiTracer {
 
   /** {@inheritDoc} */
   @Override
-  public void attemptFailed(Throwable error, Duration delay) {
+  public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
     Map<String, AttributeValue> attributes = baseAttemptAttributes();
     attributes.put("delay ms", AttributeValue.longAttributeValue(delay.toMillis()));
     populateError(attributes, error);
@@ -355,6 +357,16 @@ public class OpencensusTracer extends BaseApiTracer {
       span.addAnnotation("Attempt failed, scheduling next attempt", attributes);
     }
     lastConnectionId = null;
+  }
+
+  /**
+   * This method is obsolete. Use {@link #attemptFailedDuration(Throwable, java.time.Duration)}
+   * instead.
+   */
+  @Override
+  @ObsoleteApi("Use attemptFailedDuration(Throwable, java.time.Duration) instead")
+  public void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {
+    attemptFailedDuration(error, toJavaTimeDuration(delay));
   }
 
   /** {@inheritDoc} */

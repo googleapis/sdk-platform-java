@@ -62,7 +62,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class GrpcClientCallsTest {
 
@@ -195,10 +194,11 @@ class GrpcClientCallsTest {
     Mockito.when(mockChannel.newCall(Mockito.eq(descriptor), capturedCallOptions.capture()))
         .thenReturn(mockClientCall);
 
-    Duration timeout = Duration.ofSeconds(10);
+    java.time.Duration timeout = java.time.Duration.ofSeconds(10);
     Deadline minExpectedDeadline = Deadline.after(timeout.getSeconds(), TimeUnit.SECONDS);
 
-    GrpcCallContext context = defaultCallContext.withChannel(mockChannel).withTimeout(timeout);
+    GrpcCallContext context =
+        defaultCallContext.withChannel(mockChannel).withTimeoutDuration(timeout);
 
     GrpcClientCalls.newCall(descriptor, context).start(mockListener, new Metadata());
 
@@ -227,13 +227,13 @@ class GrpcClientCallsTest {
 
     // Configure a timeout that occurs after the grpc deadline
     Deadline priorDeadline = Deadline.after(5, TimeUnit.SECONDS);
-    Duration timeout = Duration.ofSeconds(10);
+    java.time.Duration timeout = java.time.Duration.ofSeconds(10);
 
     GrpcCallContext context =
         defaultCallContext
             .withChannel(mockChannel)
             .withCallOptions(CallOptions.DEFAULT.withDeadline(priorDeadline))
-            .withTimeout(timeout);
+            .withTimeoutDuration(timeout);
 
     GrpcClientCalls.newCall(descriptor, context).start(mockListener, new Metadata());
 
@@ -259,7 +259,7 @@ class GrpcClientCallsTest {
         .thenReturn(mockClientCall);
 
     // Configure a timeout that occurs before the grpc deadline
-    Duration timeout = Duration.ofSeconds(5);
+    java.time.Duration timeout = java.time.Duration.ofSeconds(5);
     Deadline subsequentDeadline = Deadline.after(10, TimeUnit.SECONDS);
     Deadline minExpectedDeadline = Deadline.after(timeout.getSeconds(), TimeUnit.SECONDS);
 
@@ -267,7 +267,7 @@ class GrpcClientCallsTest {
         defaultCallContext
             .withChannel(mockChannel)
             .withCallOptions(CallOptions.DEFAULT.withDeadline(subsequentDeadline))
-            .withTimeout(timeout);
+            .withTimeoutDuration(timeout);
 
     GrpcClientCalls.newCall(descriptor, context).start(mockListener, new Metadata());
 

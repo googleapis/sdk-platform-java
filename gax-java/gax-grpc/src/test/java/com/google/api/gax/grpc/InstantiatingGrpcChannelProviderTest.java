@@ -30,6 +30,7 @@
 package com.google.api.gax.grpc;
 
 import static com.google.api.gax.grpc.InstantiatingGrpcChannelProvider.GCE_PRODUCTION_NAME_AFTER_2016;
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,6 +55,7 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.alts.ComputeEngineChannelBuilder;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -63,6 +65,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.stream.Collectors;
@@ -73,7 +76,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelTest {
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com:443";
@@ -87,7 +89,6 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @BeforeEach
   public void setup() throws IOException {
-    System.setProperty("os.name", "Linux");
     computeEngineCredentials = Mockito.mock(ComputeEngineCredentials.class);
   }
 
@@ -124,20 +125,45 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   void testKeepAlive() {
-    Duration keepaliveTime = Duration.ofSeconds(1);
-    Duration keepaliveTimeout = Duration.ofSeconds(2);
-    boolean keepaliveWithoutCalls = true;
-
-    InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder()
-            .setKeepAliveTime(keepaliveTime)
-            .setKeepAliveTimeout(keepaliveTimeout)
-            .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
-            .build();
-
-    assertEquals(provider.getKeepAliveTime(), keepaliveTime);
-    assertEquals(provider.getKeepAliveTimeout(), keepaliveTimeout);
-    assertEquals(provider.getKeepAliveWithoutCalls(), keepaliveWithoutCalls);
+    final long millis = 15;
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder();
+    Function<Duration, InstantiatingGrpcChannelProvider> javaTimeProviderSupplier =
+        jt ->
+            builder
+                .setKeepAliveTimeDuration(jt)
+                .setKeepAliveTimeoutDuration(jt)
+                .setKeepAliveWithoutCalls(Boolean.TRUE)
+                .build();
+    Function<org.threeten.bp.Duration, InstantiatingGrpcChannelProvider> threetenProviderSupplier =
+        tt ->
+            builder
+                .setKeepAliveTime(tt)
+                .setKeepAliveTimeout(tt)
+                .setKeepAliveWithoutCalls(Boolean.TRUE)
+                .build();
+    testDurationMethod(
+        millis,
+        javaTimeProviderSupplier,
+        threetenProviderSupplier,
+        c -> c.getKeepAliveTimeDuration(),
+        c -> c.getKeepAliveTime());
+    testDurationMethod(
+        millis,
+        javaTimeProviderSupplier,
+        threetenProviderSupplier,
+        c -> c.getKeepAliveTimeoutDuration(),
+        c -> c.getKeepAliveTimeout());
+    assertEquals(
+        Boolean.TRUE,
+        javaTimeProviderSupplier
+            .apply(java.time.Duration.ofMillis(millis))
+            .getKeepAliveWithoutCalls());
+    assertEquals(
+        Boolean.TRUE,
+        threetenProviderSupplier
+            .apply(org.threeten.bp.Duration.ofMillis(millis))
+            .getKeepAliveWithoutCalls());
   }
 
   @Test
@@ -186,8 +212,8 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   void testToBuilder() {
-    Duration keepaliveTime = Duration.ofSeconds(1);
-    Duration keepaliveTimeout = Duration.ofSeconds(2);
+    java.time.Duration keepaliveTime = java.time.Duration.ofSeconds(1);
+    java.time.Duration keepaliveTimeout = java.time.Duration.ofSeconds(2);
     ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator =
         builder -> {
           throw new UnsupportedOperationException();
@@ -200,9 +226,9 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setEndpoint("fake.endpoint:443")
             .setMaxInboundMessageSize(12345678)
             .setMaxInboundMetadataSize(4096)
-            .setKeepAliveTime(keepaliveTime)
-            .setKeepAliveTimeout(keepaliveTimeout)
-            .setKeepAliveWithoutCalls(true)
+            .setKeepAliveTimeDuration(keepaliveTime)
+            .setKeepAliveTimeoutDuration(keepaliveTimeout)
+            .setKeepAliveWithoutCalls(Boolean.TRUE)
             .setChannelConfigurator(channelConfigurator)
             .setChannelsPerCpu(2.5)
             .setDirectPathServiceConfig(directPathServiceConfig)
@@ -213,8 +239,8 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     assertThat(builder.getEndpoint()).isEqualTo("fake.endpoint:443");
     assertThat(builder.getMaxInboundMessageSize()).isEqualTo(12345678);
     assertThat(builder.getMaxInboundMetadataSize()).isEqualTo(4096);
-    assertThat(builder.getKeepAliveTime()).isEqualTo(keepaliveTime);
-    assertThat(builder.getKeepAliveTimeout()).isEqualTo(keepaliveTimeout);
+    assertThat(builder.getKeepAliveTimeDuration()).isEqualTo(keepaliveTime);
+    assertThat(builder.getKeepAliveTimeoutDuration()).isEqualTo(keepaliveTimeout);
     assertThat(builder.getChannelConfigurator()).isEqualTo(channelConfigurator);
     assertThat(builder.getPoolSize()).isEqualTo(5);
     assertThat(builder.build().directPathServiceConfig).isEqualTo(directPathServiceConfig);
@@ -659,6 +685,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_happyPath() {
+    System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
             envProvider.getenv(
@@ -677,6 +704,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_directPathEnvVarDisabled() {
+    System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
             envProvider.getenv(
@@ -695,6 +723,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_directPathEnvVarNotSet_attemptDirectPathIsTrue() {
+    System.setProperty("os.name", "Linux");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
@@ -707,6 +736,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_directPathEnvVarNotSet_attemptDirectPathIsFalse() {
+    System.setProperty("os.name", "Linux");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(false)
@@ -719,6 +749,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_nonComputeCredentials() {
+    System.setProperty("os.name", "Linux");
     Credentials credentials = Mockito.mock(Credentials.class);
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
@@ -757,6 +788,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_isNotOnComputeEngine_invalidSystemProductName() {
+    System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
             envProvider.getenv(
@@ -775,6 +807,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_isNotOnComputeEngine_unableToGetSystemProductName() {
+    System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
             envProvider.getenv(
@@ -792,6 +825,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void canUseDirectPath_nonGDUUniverseDomain() {
+    System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
             envProvider.getenv(
@@ -810,6 +844,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   private static class FakeLogHandler extends Handler {
+
     List<LogRecord> records = new ArrayList<>();
 
     @Override

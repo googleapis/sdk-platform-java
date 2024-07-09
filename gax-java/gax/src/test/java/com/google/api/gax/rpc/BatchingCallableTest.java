@@ -45,7 +45,6 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.threeten.bp.Duration;
 
 class BatchingCallableTest {
   private ScheduledExecutorService batchingExecutor;
@@ -65,7 +64,7 @@ class BatchingCallableTest {
 
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(10))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(10))
             .setElementCountThreshold(2L)
             .setRequestByteThreshold(1000L)
             .build();

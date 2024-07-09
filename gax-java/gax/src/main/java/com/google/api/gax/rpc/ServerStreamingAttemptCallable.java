@@ -208,10 +208,11 @@ final class ServerStreamingAttemptCallable<RequestT, ResponseT> implements Calla
 
     ApiCallContext attemptContext = context;
 
-    if (!outerRetryingFuture.getAttemptSettings().getRpcTimeout().isZero()
-        && attemptContext.getTimeout() == null) {
+    if (!outerRetryingFuture.getAttemptSettings().getRpcTimeoutDuration().isZero()
+        && attemptContext.getTimeoutDuration() == null) {
       attemptContext =
-          attemptContext.withTimeout(outerRetryingFuture.getAttemptSettings().getRpcTimeout());
+          attemptContext.withTimeoutDuration(
+              outerRetryingFuture.getAttemptSettings().getRpcTimeoutDuration());
     }
 
     attemptContext

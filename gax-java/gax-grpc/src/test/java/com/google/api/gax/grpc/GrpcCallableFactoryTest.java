@@ -59,7 +59,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class GrpcCallableFactoryTest {
   private InProcessServer<FakeServiceImpl> inprocessServer;
@@ -103,7 +102,7 @@ class GrpcCallableFactoryTest {
         ServerStreamingCallSettings.<Color, Money>newBuilder()
             .setRetrySettings(
                 RetrySettings.newBuilder()
-                    .setTotalTimeout(Duration.ofSeconds(1))
+                    .setTotalTimeoutDuration(java.time.Duration.ofSeconds(1))
                     .setMaxAttempts(1)
                     .build())
             .build();
@@ -128,7 +127,7 @@ class GrpcCallableFactoryTest {
             .setRetryableCodes(Code.INVALID_ARGUMENT)
             .setRetrySettings(
                 RetrySettings.newBuilder()
-                    .setTotalTimeout(Duration.ofSeconds(1))
+                    .setTotalTimeoutDuration(java.time.Duration.ofSeconds(1))
                     .setMaxAttempts(1)
                     .build())
             .build();

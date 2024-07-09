@@ -115,7 +115,7 @@ public class ScheduledRetryingExecutor<ResponseT>
       ListenableFuture<ResponseT> attemptFuture =
           scheduler.schedule(
               retryingFuture.getCallable(),
-              retryingFuture.getAttemptSettings().getRandomizedRetryDelay().toMillis(),
+              retryingFuture.getAttemptSettings().getRandomizedRetryDelayDuration().toMillis(),
               TimeUnit.MILLISECONDS);
       return new ListenableFutureToApiFuture<>(attemptFuture);
     } catch (RejectedExecutionException e) {

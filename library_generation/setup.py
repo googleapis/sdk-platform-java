@@ -9,6 +9,7 @@ setup(
     version="0.1",
     package_dir={
         "library_generation": ".",
+        "synthtool": "owlbot/synthtool",
     },
     package_data={
         "library_generation": [
@@ -25,5 +26,6 @@ setup(
             "owlbot/templates/poms/*.j2",
             "owlbot/templates/java_library/**/*",
         ],
+        "synthtool": ["owlbot/synthtool/**/*"],
     },
 )

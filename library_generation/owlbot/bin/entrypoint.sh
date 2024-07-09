@@ -22,6 +22,7 @@
 # both to README and pom.xml files
 # 3: is_monorepo: whether we are postprocessing a monorepo
 # 4: libraries_bom_version: used to render the readme
+# 5: library_version: used to render the readme
 
 # The scripts assumes the CWD is the folder where postprocessing is going to be
 # applied
@@ -31,7 +32,7 @@ scripts_root=$1
 versions_file=$2
 is_monorepo=$3
 libraries_bom_version=$4
-
+library_version=$5
 
 if [[ "${is_monorepo}" == "true" ]]; then
   mv owl-bot-staging/* temp
@@ -48,10 +49,12 @@ then
   # synthtool library considering the way owlbot.py files are written
   export SYNTHTOOL_TEMPLATES="${scripts_root}/owlbot/templates"
   export SYNTHTOOL_LIBRARIES_BOM_VERSION="${libraries_bom_version}"
+  export SYNTHTOOL_LIBRARY_VERSION="${library_version}"
   # defaults to run owlbot.py
   python3 owlbot.py
   unset SYNTHTOOL_TEMPLATES
   unset SYNTHTOOL_LIBRARIES_BOM_VERSION
+  unset SYNTHTOOL_LIBRARY_VERSION
 fi
 echo "...done"
 
