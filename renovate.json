@@ -155,8 +155,7 @@
         "^com.google.protobuf",
 		"^protocolbuffers/protobuf"
       ],
-      "groupName": "Protobuf dependencies",
-      "enabled": false
+      "groupName": "Protobuf dependencies"
     },
     {
       "matchPackagePatterns": [
