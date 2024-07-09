@@ -103,12 +103,6 @@ public class BaseApiTracer implements ApiTracer {
     // noop
   }
 
-  @Override
-  public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
-    // noop via attemptFailed(Throwable error, org.threeten.Duration)
-    //    attemptFailed(error, toThreetenDuration(delay));
-  }
-
   /**
    * This method is obsolete. Use {@link #attemptFailedDuration(Throwable, java.time.Duration)}
    * instead.
