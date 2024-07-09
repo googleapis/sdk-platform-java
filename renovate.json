@@ -6,6 +6,7 @@
   "ignoreDeps": [
     "rules_pkg"
   ],
+  "ignorePaths": ["^library_generation/requirements\\.txt$"],
   "customManagers": [
     {
       "customType": "regex",
