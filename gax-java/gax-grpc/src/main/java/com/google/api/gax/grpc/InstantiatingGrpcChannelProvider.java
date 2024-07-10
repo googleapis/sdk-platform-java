@@ -299,15 +299,26 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   // builder or createSingleChannel, only in getTransportChannel which creates the first channel
   // for a client.
   private void logDirectPathMisconfig() {
-    final String onlyOneDirectPathEnabledMessage =
-        "DirectPath is misconfigured. Please set both the "
-            + "attemptDirectPath and the attemptDirectPathXds options.";
-    if (isDirectPathEnabled()) {
-      // Case 1: does not enable DirectPath xDS
-      if (!isDirectPathXdsEnabled()) {
-        LOG.log(Level.WARNING, onlyOneDirectPathEnabledMessage);
+    if (isDirectPathXdsEnabled()) {
+      // Case 1: Direct Path is only enabled via XDS env var. We will _warn_ the user that this is a
+      // misconfig if they
+      // intended to set the env var.
+      if (!isDirectPathEnabled() && isDirectPathXdsEnabledViaEnv()) {
+        LOG.log(
+            Level.WARNING,
+            "Env var "
+                + DIRECT_PATH_ENV_ENABLE_XDS
+                + " was found. If this is intended for "
+                + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
+      }
+      // Case 2: Direct Path TD must be set along with xDS. Here we warn the user about this.
+      else if (!isDirectPathEnabled()) {
+        LOG.log(
+            Level.WARNING,
+            "DirectPath is misconfigured. Please set both the "
+                + "attemptDirectPath and the attemptDirectPathXds options.");
       } else {
-        // Case 2: credential is not correctly set
+        // Case 3: credential is not correctly set
         if (!isCredentialDirectPathCompatible()) {
           LOG.log(
               Level.WARNING,
@@ -315,22 +326,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
                   + ComputeEngineCredentials.class.getName()
                   + " .");
         }
-        // Case 3: not running on GCE
+        // Case 4: not running on GCE
         if (!isOnComputeEngine()) {
           LOG.log(
               Level.WARNING,
               "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
         }
       }
-    } else if (isDirectPathXdsEnabledViaBuilderOption()) {
-      LOG.log(Level.WARNING, onlyOneDirectPathEnabledMessage);
-    } else if (isDirectPathXdsEnabledViaEnv()) {
-      LOG.log(
-          Level.WARNING,
-          "Env var "
-              + DIRECT_PATH_ENV_ENABLE_XDS
-              + " was found. If this is intended for "
-              + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
     }
   }
 

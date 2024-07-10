@@ -641,21 +641,6 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
-  void testLogDirectPathMisconfig_AttemptDirectPathSetAndAttemptDirectPathXdsNotSet_warns()
-      throws Exception {
-    FakeLogHandler logHandler = new FakeLogHandler();
-    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
-    InstantiatingGrpcChannelProvider provider =
-        createChannelProviderBuilderForDirectPathLogTests().setAttemptDirectPath(true).build();
-    createAndCloseTransportChannel(provider);
-    assertThat(logHandler.getAllMessages())
-        .contains(
-            "DirectPath is misconfigured. Please set both the attemptDirectPath and the "
-                + "attemptDirectPathXds options.");
-    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
-  }
-
-  @Test
   void testLogDirectPathMisconfig_shouldNotLogInTheBuilder() {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
