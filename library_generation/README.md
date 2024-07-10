@@ -93,7 +93,7 @@ They are shared by library level parameters.
 
 | Name                    | Required | Notes                                        |
 |:------------------------|:--------:|:---------------------------------------------|
-| gapic_generator_version |   Yes    |                                              |
+| gapic_generator_version |    No    | set through env variable if not specified    |
 | protoc_version          |    No    | inferred from the generator if not specified |
 | grpc_version            |    No    | inferred from the generator if not specified |
 | googleapis-commitish    |   Yes    |                                              |
