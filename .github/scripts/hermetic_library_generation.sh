@@ -91,6 +91,7 @@ git show "${target_branch}":"${generation_config}" > "${baseline_generation_conf
 config_diff=$(diff "${generation_config}" "${baseline_generation_config}" || true)
 
 generator_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
+echo "Local generator version: ${generator_version}"
 
 # install generator locally since we're using a SNAPSHOT version.
 mvn -V -B -ntp clean install -DskipTests
