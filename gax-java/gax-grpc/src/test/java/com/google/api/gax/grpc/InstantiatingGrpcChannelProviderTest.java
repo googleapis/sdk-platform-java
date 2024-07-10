@@ -620,7 +620,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     createAndCloseTransportChannel(provider);
     assertThat(logHandler.getAllMessages())
         .contains(
-            "DirectPath is misconfigured. Please set both the attemptDirectPath and the attemptDirectPathXds options.");
+            "DirectPath is misconfigured. Please set the attemptDirectPath option along with the attemptDirectPathXds option.");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
   }
 
