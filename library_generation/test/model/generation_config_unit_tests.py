@@ -47,11 +47,11 @@ common_protos_library = LibraryConfig(
 class GenerationConfigTest(unittest.TestCase):
     def test_generation_config_default_value(self):
         config = GenerationConfig(
-            gapic_generator_version="",
             googleapis_commitish="",
             libraries=[],
         )
         self.assertEqual("", config.libraries_bom_version)
+        self.assertIsNone(config.gapic_generator_version)
 
     def test_from_yaml_succeeds(self):
         config = from_yaml(f"{test_config_dir}/generation_config.yaml")
@@ -158,14 +158,6 @@ class GenerationConfigTest(unittest.TestCase):
                     library_name="secretmanager",
                 ),
             ],
-        )
-
-    def test_from_yaml_without_gapic_generator_version_raise_exception(self):
-        self.assertRaisesRegex(
-            ValueError,
-            "Repo level parameter, gapic_generator_version",
-            from_yaml,
-            f"{test_config_dir}/config_without_generator.yaml",
         )
 
     def test_from_yaml_without_googleapis_commitish_raise_exception(self):

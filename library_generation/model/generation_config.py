@@ -32,18 +32,18 @@ class GenerationConfig:
 
     def __init__(
         self,
-        gapic_generator_version: str,
         googleapis_commitish: str,
         libraries: list[LibraryConfig],
+        gapic_generator_version: Optional[str] = None,
         libraries_bom_version: Optional[str] = None,
         grpc_version: Optional[str] = None,
         protoc_version: Optional[str] = None,
     ):
-        self.gapic_generator_version = gapic_generator_version
         self.googleapis_commitish = googleapis_commitish
         self.libraries_bom_version = (
             libraries_bom_version if libraries_bom_version else ""
         )
+        self.gapic_generator_version = gapic_generator_version
         self.libraries = libraries
         self.grpc_version = grpc_version
         self.protoc_version = protoc_version
@@ -147,12 +147,10 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         parsed_libraries.append(new_library)
 
     parsed_config = GenerationConfig(
-        gapic_generator_version=__required(
-            config, GAPIC_GENERATOR_VERSION, REPO_LEVEL_PARAMETER
-        ),
         googleapis_commitish=__required(
             config, "googleapis_commitish", REPO_LEVEL_PARAMETER
         ),
+        gapic_generator_version=__optional(config, GAPIC_GENERATOR_VERSION, None),
         grpc_version=__optional(config, "grpc_version", None),
         protoc_version=__optional(config, "protoc_version", None),
         libraries_bom_version=__optional(config, LIBRARIES_BOM_VERSION, None),
