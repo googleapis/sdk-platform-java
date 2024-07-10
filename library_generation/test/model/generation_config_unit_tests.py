@@ -47,11 +47,29 @@ common_protos_library = LibraryConfig(
 class GenerationConfigTest(unittest.TestCase):
     def test_generation_config_default_value(self):
         config = GenerationConfig(
+            gapic_generator_version="",
             googleapis_commitish="",
             libraries=[],
         )
         self.assertEqual("", config.libraries_bom_version)
-        self.assertIsNone(config.gapic_generator_version)
+
+    def test_generation_config_with_generator_version_env_raise_exception(self):
+        self.assertRaisesRegex(
+            ValueError,
+            "Environment variable generator_version is not set",
+            GenerationConfig,
+            googleapis_commitish="",
+            libraries=[],
+        )
+
+    def test_generation_config_set_generator_version_from_env(self):
+        os.environ["generator_version"] = "1.2.3"
+        config = GenerationConfig(
+            googleapis_commitish="",
+            libraries=[],
+        )
+        self.assertEqual("1.2.3", config.gapic_generator_version)
+        os.environ.pop("generator_version")
 
     def test_from_yaml_succeeds(self):
         config = from_yaml(f"{test_config_dir}/generation_config.yaml")
