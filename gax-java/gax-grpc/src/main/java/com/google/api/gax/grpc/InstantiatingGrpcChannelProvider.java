@@ -315,8 +315,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       else if (!isDirectPathEnabled()) {
         LOG.log(
             Level.WARNING,
-            "DirectPath is misconfigured. Please set both the "
-                + "attemptDirectPath and the attemptDirectPathXds options.");
+            "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
+                + " attemptDirectPathXds option.");
       } else {
         // Case 3: credential is not correctly set
         if (!isCredentialDirectPathCompatible()) {
