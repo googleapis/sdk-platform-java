@@ -28,10 +28,21 @@ get_grpc_version_failed_with_invalid_generator_version_test() {
   assertEquals 1 $((res))
 }
 
+get_grpc_version_succeed_docker_env_var_test() {
+  local version_with_docker
+  local version_without_docker
+  export DOCKER_GRPC_VERSION="9.9.9"
+  # get_grpc_version should prioritize DOCKER_GRPC_VERSION
+  version_with_docker=$(get_grpc_version "2.24.0")
+  assertEquals "${DOCKER_GRPC_VERSION}" "${version_with_docker}"
+  unset DOCKER_GRPC_VERSION
+}
+
 get_protoc_version_succeed_docker_env_var_test() {
   local version_with_docker
   local version_without_docker
   export DOCKER_PROTOC_VERSION="9.9.9"
+  # get_protoc_version should prioritize DOCKER_PROTOC_VERSION
   version_with_docker=$(get_protoc_version "2.24.0")
   assertEquals "${DOCKER_PROTOC_VERSION}" "${version_with_docker}"
   unset DOCKER_PROTOC_VERSION
@@ -162,6 +173,8 @@ download_tools_succeed_with_baked_protoc() {
 
   local test_ggj_version="2.40.0"
   local test_grpc_version="1.64.0"
+  # we expect download_tools to decide to use DOCKER_PROTOC_LOCATION because
+  # the protoc version we want to download is the same as DOCKER_PROTOC_VERSION
   download_tools "${test_ggj_version}" "99.99" "${test_grpc_version}" "linux-x86_64"
   assertEquals "${protoc_bin_folder}" "${protoc_path}"
 
@@ -169,6 +182,31 @@ download_tools_succeed_with_baked_protoc() {
   unset DOCKER_PROTOC_LOCATION
   unset DOCKER_PROTOC_VERSION
   unset output_folder
+  unset protoc_path
+}
+
+download_tools_succeed_with_baked_grpc() {
+  # This test has the same structure as
+  # download_tools_succeed_with_baked_protoc, but meant to test grpc.
+  local test_dir=$(mktemp -d)
+  pushd "${test_dir}"
+  export DOCKER_GRPC_LOCATION=$(mktemp -d)
+  export DOCKER_GRPC_VERSION="99.99"
+  export output_folder=$(get_output_folder)
+  mkdir "${output_folder}"
+
+  local test_ggj_version="2.40.0"
+  local test_protoc_version="1.64.0"
+  # we expect download_tools to decide to use DOCKER_GRPC_LOCATION because
+  # the protoc version we want to download is the same as DOCKER_GRPC_VERSION
+  download_tools "${test_ggj_version}" "${test_protoc_version}" "99.99" "linux-x86_64"
+  assertEquals "${DOCKER_GRPC_LOCATION}" "${grpc_path}"
+
+  rm -rdf "${output_folder}"
+  unset DOCKER_GRPC_LOCATION
+  unset DOCKER_GRPC_VERSION
+  unset output_folder
+  unset grpc_path
 }
 
 download_grpc_plugin_succeed_with_valid_version_linux_test() {
@@ -293,6 +331,7 @@ test_list=(
   extract_folder_name_test
   get_grpc_version_succeed_with_valid_generator_version_test
   get_grpc_version_failed_with_invalid_generator_version_test
+  get_grpc_version_succeed_docker_env_var_test
   get_protoc_version_succeed_docker_env_var_test
   get_protoc_version_succeed_with_valid_generator_version_test
   get_protoc_version_failed_with_invalid_generator_version_test
@@ -307,6 +346,7 @@ test_list=(
   download_protoc_failed_with_invalid_version_linux_test
   download_protoc_failed_with_invalid_arch_test
   download_tools_succeed_with_baked_protoc
+  download_tools_succeed_with_baked_grpc
   download_grpc_plugin_succeed_with_valid_version_linux_test
   download_grpc_plugin_succeed_with_valid_version_macos_test
   download_grpc_plugin_failed_with_invalid_version_linux_test

@@ -105,6 +105,11 @@ download_gapic_generator_pom_parent() {
 get_grpc_version() {
   local gapic_generator_version=$1
   local grpc_version
+  if [[ -n "${DOCKER_GRPC_VERSION}" ]]; then
+    >&2 echo "Using grpc version baked into the container: ${DOCKER_GRPC_VERSION}"
+    echo "${DOCKER_GRPC_VERSION}"
+    return
+  fi
   pushd "${output_folder}" > /dev/null
   # get grpc version from gapic-generator-java-pom-parent/pom.xml
   download_gapic_generator_pom_parent "${gapic_generator_version}"
@@ -147,7 +152,15 @@ download_tools() {
     export protoc_path=$(download_protoc "${protoc_version}" "${os_architecture}")
   fi
 
-  download_grpc_plugin "${grpc_version}" "${os_architecture}"
+  # similar case with grpc
+  if [[ "${DOCKER_GRPC_VERSION}" == "${grpc_version}" ]]; then
+    # if the specified protoc_version matches the one baked in the docker
+    # container, we just point grpc_path to its location.
+    export grpc_path="${DOCKER_GRPC_LOCATION}"
+  else
+    export grpc_path=$(download_grpc_plugin "${grpc_version}" "${os_architecture}")
+  fi
+
   popd
 }
 
@@ -198,13 +211,15 @@ download_protoc() {
 download_grpc_plugin() {
   local grpc_version=$1
   local os_architecture=$2
-  if [ ! -f "protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" ]; then
+  grpc_filename="protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe"
+  if [ ! -f "${grpc_filename}" ]; then
     # download protoc-gen-grpc-java plugin from Google maven central mirror.
     download_from \
-    "https://maven-central.storage-download.googleapis.com/maven2/io/grpc/protoc-gen-grpc-java/${grpc_version}/protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
-    "protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe"
-    chmod +x "protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe"
+    "https://maven-central.storage-download.googleapis.com/maven2/io/grpc/protoc-gen-grpc-java/${grpc_version}/${grpc_filename}" \
+    "${grpc_filename}"
+    chmod +x "${grpc_filename}"
   fi
+  echo "$(pwd)/${grpc_filename}"
 }
 
 download_from() {
@@ -282,7 +297,7 @@ get_proto_path_from_preprocessed_sources() {
   pushd "${sources}" > /dev/null
   local proto_library=$(find . -maxdepth 1 -type d -name 'proto-*' | sed 's/\.\///')
   local found_libraries=$(echo "${proto_library}" | wc -l)
-  if [ -z ${proto_library} ]; then
+  if [[ -z ${proto_library} ]]; then
     echo "no proto libraries found in the supplied sources path"
     exit 1
   elif [ ${found_libraries} -gt 1 ]; then
