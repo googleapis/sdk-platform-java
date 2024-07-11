@@ -22,6 +22,7 @@ import static com.google.showcase.v1beta1.IdentityClient.ListUsersPagedResponse;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
@@ -309,6 +310,8 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
   }
 
   /** Returns the default service endpoint. */
+  @ObsoleteApi(
+      "See https://github.com/googleapis/sdk-platform-java/issues/2346 for more information")
   public static String getDefaultEndpoint() {
     return "localhost:7469";
   }

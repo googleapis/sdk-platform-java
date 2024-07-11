@@ -21,6 +21,7 @@ import static com.google.cloud.pubsub.v1.SchemaServiceClient.ListSchemasPagedRes
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
@@ -342,6 +343,8 @@ public class SchemaServiceStubSettings extends StubSettings<SchemaServiceStubSet
   }
 
   /** Returns the default service endpoint. */
+  @ObsoleteApi(
+      "See https://github.com/googleapis/sdk-platform-java/issues/2346 for more information")
   public static String getDefaultEndpoint() {
     return "pubsub.googleapis.com:443";
   }

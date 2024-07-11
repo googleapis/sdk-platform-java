@@ -23,6 +23,7 @@ import static com.google.storage.v2.StorageClient.ListObjectsPagedResponse;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
@@ -600,6 +601,8 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
   }
 
   /** Returns the default service endpoint. */
+  @ObsoleteApi(
+      "See https://github.com/googleapis/sdk-platform-java/issues/2346 for more information")
   public static String getDefaultEndpoint() {
     return "storage.googleapis.com:443";
   }
