@@ -174,7 +174,10 @@ download_tools_succeed_with_baked_protoc() {
   local test_ggj_version="2.40.0"
   local test_grpc_version="1.64.0"
   # we expect download_tools to decide to use DOCKER_PROTOC_LOCATION because
-  # the protoc version we want to download is the same as DOCKER_PROTOC_VERSION
+  # the protoc version we want to download is the same as DOCKER_PROTOC_VERSION.
+  # Note that `protoc_bin_folder` is just the expected formatted value that
+  # download_tools will format using DOCKER_PROTOC_VERSION (via
+  # download_protoc).
   download_tools "${test_ggj_version}" "99.99" "${test_grpc_version}" "linux-x86_64"
   assertEquals "${protoc_bin_folder}" "${protoc_path}"
 
@@ -187,7 +190,7 @@ download_tools_succeed_with_baked_protoc() {
 
 download_tools_succeed_with_baked_grpc() {
   # This test has the same structure as
-  # download_tools_succeed_with_baked_protoc, but meant to test grpc.
+  # download_tools_succeed_with_baked_protoc, but meant for the grpc plugin.
   local test_dir=$(mktemp -d)
   pushd "${test_dir}"
   export DOCKER_GRPC_LOCATION=$(mktemp -d)

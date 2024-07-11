@@ -102,6 +102,10 @@ download_gapic_generator_pom_parent() {
   download_generator_artifact "${gapic_generator_version}" "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" "gapic-generator-java-pom-parent"
 }
 
+# This function returns the version of the grpc plugin to generate the libraries. If
+# DOCKER_GRPC_VERSION is set, this will be the version. Otherwise, it will be
+# computed from the gapic-generator-pom-parent artifact at the specified
+# gapic_generator_version.
 get_grpc_version() {
   local gapic_generator_version=$1
   local grpc_version
@@ -118,6 +122,10 @@ get_grpc_version() {
   echo "${grpc_version}"
 }
 
+# This function returns the version of protoc to generate the libraries. If
+# DOCKER_PROTOC_VERSION is set, this will be the version. Otherwise, it will be
+# computed from the gapic-generator-pom-parent artifact at the specified
+# gapic_generator_version.
 get_protoc_version() {
   local gapic_generator_version=$1
   local protoc_version
@@ -134,6 +142,16 @@ get_protoc_version() {
   echo "${protoc_version}"
 }
 
+# Given the versions of the gapic generator, protoc and the protoc-grpc plugin,
+# this function will download each one of the tools and create the environment
+# variables "protoc_path" and "grpc_path" which are expected upstream. Note that
+# if the specified versions of protoc and grpc match DOCKER_PROTOC_VERSION and
+# DOCKER_GRPC_VERSION respectively, this function will instead set "protoc_path"
+# and "grpc_path" to DOCKER_PROTOC_PATH and DOCKER_GRPC_PATH respectively (no
+# download), since the docker image will have downloaded these tools beforehand.
+# For the case of gapic-generator-java, no env var will be exported for the
+# upstream flow, but instead it will be assigned a default filename that will be
+# referenced by the file `library_generation/gapic-generator-java-wrapper`.
 download_tools() {
   local gapic_generator_version=$1
   local protoc_version=$2
