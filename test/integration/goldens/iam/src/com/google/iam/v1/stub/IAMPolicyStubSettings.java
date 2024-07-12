@@ -131,8 +131,7 @@ public class IAMPolicyStubSettings extends StubSettings<IAMPolicyStubSettings> {
   }
 
   /** Returns the default service endpoint. */
-  @ObsoleteApi(
-      "See https://github.com/googleapis/sdk-platform-java/issues/2346 for more information")
+  @ObsoleteApi("Use getEndpoint() instead")
   public static String getDefaultEndpoint() {
     return "iam-meta-api.googleapis.com:443";
   }

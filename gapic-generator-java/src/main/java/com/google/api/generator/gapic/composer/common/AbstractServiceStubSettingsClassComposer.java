@@ -1195,8 +1195,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 ImmutableList.of(
                     AnnotationNode.builder()
                         .setType(FIXED_TYPESTORE.get(ObsoleteApi.class.getSimpleName()))
-                        .setDescription(
-                            "See https://github.com/googleapis/sdk-platform-java/issues/2346 for more information")
+                        .setDescription("Use getEndpoint() instead")
                         .build()))
             .build());
 

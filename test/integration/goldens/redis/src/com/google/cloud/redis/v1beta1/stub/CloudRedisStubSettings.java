@@ -336,8 +336,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
   }
 
   /** Returns the default service endpoint. */
-  @ObsoleteApi(
-      "See https://github.com/googleapis/sdk-platform-java/issues/2346 for more information")
+  @ObsoleteApi("Use getEndpoint() instead")
   public static String getDefaultEndpoint() {
     return "redis.googleapis.com:443";
   }
