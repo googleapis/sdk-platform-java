@@ -287,12 +287,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   @InternalApi
   public boolean isDirectPathXdsEnabled() {
-    // Method 1: Enable DirectPath xDS by option.
-    if (isDirectPathXdsEnabledViaBuilderOption()) {
-      return true;
-    }
-    // Method 2: Enable DirectPath xDS by env.
-    return isDirectPathXdsEnabledViaEnv();
+    return isDirectPathXdsEnabledViaEnv() || isDirectPathXdsEnabledViaBuilderOption();
   }
 
   // This method should be called once per client initialization, hence can not be called in the
@@ -300,23 +295,26 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   // for a client.
   private void logDirectPathMisconfig() {
     if (isDirectPathXdsEnabled()) {
-      // Case 1: Direct Path is only enabled via XDS env var. We will _warn_ the user that this is a
-      // misconfig if they
-      // intended to set the env var.
-      if (!isDirectPathEnabled() && isDirectPathXdsEnabledViaEnv()) {
-        LOG.log(
-            Level.WARNING,
-            "Env var "
-                + DIRECT_PATH_ENV_ENABLE_XDS
-                + " was found. If this is intended for "
-                + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
-      }
-      // Case 2: Direct Path TD must be set along with xDS. Here we warn the user about this.
-      else if (!isDirectPathEnabled()) {
-        LOG.log(
-            Level.WARNING,
-            "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
-                + " attemptDirectPathXds option.");
+      if (!isDirectPathEnabled()) {
+        // Case 1: Direct Path is only enabled via XDS env var. We will _warn_ the user that this is
+        // a
+        // misconfiguration if they intended to set the env var.
+        if (isDirectPathXdsEnabledViaEnv()) {
+          LOG.log(
+              Level.WARNING,
+              "Env var "
+                  + DIRECT_PATH_ENV_ENABLE_XDS
+                  + " was found. If this is intended for "
+                  + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
+        }
+        // Case 2: Direct Path TD must be set along with xDS. Here we warn the user about this.
+        else if (isDirectPathXdsEnabledViaBuilderOption()) {
+          LOG.log(
+              Level.WARNING,
+              "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
+                  + " attemptDirectPathXds option.");
+        } else {
+        } // impossible
       } else {
         // Case 3: credential is not correctly set
         if (!isCredentialDirectPathCompatible()) {
