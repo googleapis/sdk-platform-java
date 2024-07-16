@@ -58,6 +58,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -117,6 +118,17 @@ class ParserTest {
         echoResponseMessage, messageTypes.get("com.google.showcase.v1beta1." + echoResponseName));
   }
 
+  // @Test
+  // void test() {
+  //   FileDescriptor bookshopFileDescriptor = BookshopProto.getDescriptor();
+  //   Map<String, Message> messageTypes = Parser.parseMessages(bookshopFileDescriptor);
+  //   messageTypes.keySet().stream()
+  //       .map(
+  //           x -> {
+  //             System.out.println("keys: " + x);
+  //           })
+  //       .collect(Collectors.toList());
+  // }
   @Test
   void parseMessages_fieldNameConflicts() {
     FileDescriptor bookshopFileDescriptor = BookshopProto.getDescriptor();
@@ -690,6 +702,23 @@ class ParserTest {
             bookshopFileDescriptor, messageTypes, resourceNames, Optional.empty(), new HashSet<>());
     com.google.api.generator.gapic.model.Service parsedBookshopService = services.get(0);
     assertNull(parsedBookshopService.apiVersion());
+  }
+
+
+  @Test
+  void parseServiceWithNoMethodsTest() {
+    FileDescriptor fileDescriptor = com.google.api.service.without.methods.test.ServiceWithNoMethodsOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            fileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            new HashSet<>());
+    assertEquals(1, services.size());
+    assertEquals("EchoWithMethods", services.get(0).overriddenName());
   }
 
   private void assertMethodArgumentEquals(

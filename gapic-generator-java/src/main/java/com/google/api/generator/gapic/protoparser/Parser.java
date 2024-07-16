@@ -435,6 +435,25 @@ public class Parser {
       Transport transport) {
 
     return fileDescriptor.getServices().stream()
+        .filter(
+            s -> {
+              String pakkage = TypeParser.getPackage(fileDescriptor);
+              List<Method> methods = parseMethods(
+                  s,
+                  pakkage,
+                  messageTypes,
+                  resourceNames,
+                  serviceConfigOpt,
+                  serviceYamlProtoOpt,
+                  outputArgResourceNames,
+                  transport);
+              if (methods.isEmpty()) {
+                LOGGER.warning(String.format("No rpc methods specified in %s, generation will be skipped.", s.getName()));
+                // Service.builder()
+              }
+              return !methods.isEmpty();
+            }
+        )
         .map(
             s -> {
               // Workaround for a missing default_host and oauth_scopes annotation from a service
@@ -495,6 +514,19 @@ public class Parser {
                 overriddenServiceName =
                     languageSettings.getJavaServiceName(fileDescriptor.getPackage(), s.getName());
               }
+              List<Method> methods = parseMethods(
+                  s,
+                  pakkage,
+                  messageTypes,
+                  resourceNames,
+                  serviceConfigOpt,
+                  serviceYamlProtoOpt,
+                  outputArgResourceNames,
+                  transport);
+              if (methods.isEmpty()) {
+                LOGGER.warning("No methods in this service.");
+                // Service.builder()
+              }
               return serviceBuilder
                   .setName(serviceName)
                   .setOverriddenName(overriddenServiceName)
@@ -505,15 +537,7 @@ public class Parser {
                   .setProtoPakkage(fileDescriptor.getPackage())
                   .setIsDeprecated(isDeprecated)
                   .setMethods(
-                      parseMethods(
-                          s,
-                          pakkage,
-                          messageTypes,
-                          resourceNames,
-                          serviceConfigOpt,
-                          serviceYamlProtoOpt,
-                          outputArgResourceNames,
-                          transport))
+                      methods)
                   .build();
             })
         .collect(Collectors.toList());
