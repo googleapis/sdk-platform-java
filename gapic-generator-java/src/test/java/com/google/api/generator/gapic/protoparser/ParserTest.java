@@ -58,7 +58,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -704,19 +703,15 @@ class ParserTest {
     assertNull(parsedBookshopService.apiVersion());
   }
 
-
   @Test
   void parseServiceWithNoMethodsTest() {
-    FileDescriptor fileDescriptor = com.google.api.service.without.methods.test.ServiceWithNoMethodsOuterClass.getDescriptor();
+    FileDescriptor fileDescriptor =
+        com.google.api.service.without.methods.test.ServiceWithNoMethodsOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
     List<com.google.api.generator.gapic.model.Service> services =
         Parser.parseService(
-            fileDescriptor,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            new HashSet<>());
+            fileDescriptor, messageTypes, resourceNames, Optional.empty(), new HashSet<>());
     assertEquals(1, services.size());
     assertEquals("EchoWithMethods", services.get(0).overriddenName());
   }
