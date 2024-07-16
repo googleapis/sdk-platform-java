@@ -117,17 +117,6 @@ class ParserTest {
         echoResponseMessage, messageTypes.get("com.google.showcase.v1beta1." + echoResponseName));
   }
 
-  // @Test
-  // void test() {
-  //   FileDescriptor bookshopFileDescriptor = BookshopProto.getDescriptor();
-  //   Map<String, Message> messageTypes = Parser.parseMessages(bookshopFileDescriptor);
-  //   messageTypes.keySet().stream()
-  //       .map(
-  //           x -> {
-  //             System.out.println("keys: " + x);
-  //           })
-  //       .collect(Collectors.toList());
-  // }
   @Test
   void parseMessages_fieldNameConflicts() {
     FileDescriptor bookshopFileDescriptor = BookshopProto.getDescriptor();
