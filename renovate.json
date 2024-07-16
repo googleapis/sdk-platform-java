@@ -6,6 +6,7 @@
   "ignoreDeps": [
     "rules_pkg"
   ],
+  "ignorePaths": ["^library_generation/requirements\\.txt$"],
   "customManagers": [
     {
       "customType": "regex",
@@ -96,8 +97,7 @@
       "matchPackagePatterns": [
         "^com.google.guava:"
       ],
-      "versioning": "docker",
-      "enabled": false
+      "versioning": "docker"
     },
     {
       "matchPackagePatterns": [
@@ -156,15 +156,13 @@
         "^com.google.protobuf",
 		"^protocolbuffers/protobuf"
       ],
-      "groupName": "Protobuf dependencies",
-      "enabled": false
+      "groupName": "Protobuf dependencies"
     },
     {
       "matchPackagePatterns": [
         "^io.grpc"
       ],
-      "groupName": "gRPC dependencies",
-      "enabled": false
+      "groupName": "gRPC dependencies"
     },
     {
       "matchPackagePatterns": [
