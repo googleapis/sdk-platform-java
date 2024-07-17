@@ -297,8 +297,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     if (isDirectPathXdsEnabled()) {
       if (!isDirectPathEnabled()) {
         // Case 1: Direct Path is only enabled via XDS env var. We will _warn_ the user that this is
-        // a
-        // misconfiguration if they intended to set the env var.
+        // a misconfiguration if they intended to set the env var.
         if (isDirectPathXdsEnabledViaEnv()) {
           LOG.log(
               Level.WARNING,
@@ -314,7 +313,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
               "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
                   + " attemptDirectPathXds option.");
         } else {
-        } // impossible
+        } // impossible - added this `else` for readability.
       } else {
         // Case 3: credential is not correctly set
         if (!isCredentialDirectPathCompatible()) {
