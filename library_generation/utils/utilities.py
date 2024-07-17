@@ -18,6 +18,7 @@ import os
 import shutil
 from pathlib import Path
 from library_generation.model.generation_config import GenerationConfig
+from library_generation.model.gapic_inputs import GapicInputs
 from library_generation.model.library_config import LibraryConfig
 from typing import List
 from library_generation.model.repo_config import RepoConfig
@@ -186,7 +187,7 @@ def generate_postprocessing_prerequisite_files(
     config: GenerationConfig,
     library: LibraryConfig,
     proto_path: str,
-    transport: str,
+    gapic_inputs: GapicInputs,
     library_path: str,
     language: str = "java",
 ) -> None:
@@ -198,11 +199,12 @@ def generate_postprocessing_prerequisite_files(
     :param library: the library configuration
     :param proto_path: the path from the root of googleapis to the location of the service
     protos. If the path contains a version, it will be removed
-    :param transport: transport supported by the library
+    :param gapic_inputs: gapic_inputs obtained from the library's BUILD.bazel
     :param library_path: the path to which the generated file goes
     :param language: programming language of the library
     :return: None
     """
+    transport = gapic_inputs.transport if library.transport is None else library.transport
     library_name = library.get_library_name()
     artifact_id = library.get_artifact_id()
     if config.contains_common_protos():
@@ -224,7 +226,7 @@ def generate_postprocessing_prerequisite_files(
     # is one of grpc, http and both,
     if transport == "grpc":
         converted_transport = "grpc"
-    elif transport == "rest":
+    elif transport in ["rest", "http"]: # http can also be specified via generation_config.yaml
         converted_transport = "http"
     else:
         converted_transport = "both"

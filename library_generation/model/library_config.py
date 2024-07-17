@@ -52,6 +52,7 @@ class LibraryConfig:
         extra_versioned_modules: Optional[str] = None,
         recommended_package: Optional[str] = None,
         min_java_version: Optional[int] = None,
+        transport: Optional[str] = None,
     ):
         self.api_shortname = api_shortname
         self.api_description = api_description
@@ -78,6 +79,7 @@ class LibraryConfig:
         self.recommended_package = recommended_package
         self.min_java_version = min_java_version
         self.distribution_name = self.__get_distribution_name(distribution_name)
+        self.transport = transport
 
     def get_library_name(self) -> str:
         """
@@ -144,6 +146,7 @@ class LibraryConfig:
             and self.extra_versioned_modules == other.extra_versioned_modules
             and self.recommended_package == other.recommended_package
             and self.min_java_version == other.min_java_version
+            and self.transport == other.transport
         )
 
     def __hash__(self):
@@ -175,6 +178,7 @@ class LibraryConfig:
                     self.extra_versioned_modules,
                     self.recommended_package,
                     self.min_java_version,
+                    self.transport,
                 ]
                 + [config.proto_path for config in self.gapic_configs]
             ).encode("utf-8")
