@@ -237,12 +237,16 @@ class UtilitiesTest(unittest.TestCase):
     def test_generate_postprocessing_prerequisite_files__custom_transport_set_in_config__success(
         self,
     ):
+        """
+        This test generates files for `test_library_with_custom_transport`, which
+        has an explicit value for transport declared (http). This is expected to
+        override the value obtained in BUILD.bazel via gapic_inputs.parse(). For
+        testing purposes, we test with a default GapicInputs object, whose transport
+        is set to "grpc".
+        """
         library_path = self.__setup_postprocessing_prerequisite_files(
             combination=2, library=test_library_with_custom_transport
         )
-
-        with open(f"{library_path}/.repo-metadata.json", "r") as f:
-            print(f.read())
 
         file_comparator.compare_files(
             f"{library_path}/.repo-metadata.json",
