@@ -59,12 +59,12 @@ common_protos = LibraryConfig(
     gapic_configs=list(),
 )
 test_library_with_custom_transport = LibraryConfig(
-  api_shortname="secretmanager",
-  name_pretty="Secret Management",
-  product_documentation="https://cloud.google.com/solutions/secrets-management/",
-  api_description="allows you to encrypt, store, manage, and audit infrastructure and application-level secrets.",
-  gapic_configs=list(),
-  transport="http",
+    api_shortname="secretmanager",
+    name_pretty="Secret Management",
+    product_documentation="https://cloud.google.com/solutions/secrets-management/",
+    api_description="allows you to encrypt, store, manage, and audit infrastructure and application-level secrets.",
+    gapic_configs=list(),
+    transport="http",
 )
 
 
@@ -234,11 +234,15 @@ class UtilitiesTest(unittest.TestCase):
         )
         self.__remove_postprocessing_prerequisite_files(path=library_path)
 
-    def test_generate_postprocessing_prerequisite_files__custom_transport_set_in_config__success(self):
-        library_path = self.__setup_postprocessing_prerequisite_files(combination=2, library=test_library_with_custom_transport)
+    def test_generate_postprocessing_prerequisite_files__custom_transport_set_in_config__success(
+        self,
+    ):
+        library_path = self.__setup_postprocessing_prerequisite_files(
+            combination=2, library=test_library_with_custom_transport
+        )
 
-        with open(f"{library_path}/.repo-metadata.json", 'r') as f:
-          print(f.read())
+        with open(f"{library_path}/.repo-metadata.json", "r") as f:
+            print(f.read())
 
         file_comparator.compare_files(
             f"{library_path}/.repo-metadata.json",
@@ -301,7 +305,7 @@ class UtilitiesTest(unittest.TestCase):
             config=config,
             library=library,
             proto_path=proto_path,
-            gapic_inputs=GapicInputs(), # defaults to transport=grpc
+            gapic_inputs=GapicInputs(),  # defaults to transport=grpc
             library_path=library_path,
         )
         return library_path

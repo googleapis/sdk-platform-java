@@ -204,7 +204,9 @@ def generate_postprocessing_prerequisite_files(
     :param language: programming language of the library
     :return: None
     """
-    transport = gapic_inputs.transport if library.transport is None else library.transport
+    transport = (
+        gapic_inputs.transport if library.transport is None else library.transport
+    )
     library_name = library.get_library_name()
     artifact_id = library.get_artifact_id()
     if config.contains_common_protos():
@@ -226,7 +228,10 @@ def generate_postprocessing_prerequisite_files(
     # is one of grpc, http and both,
     if transport == "grpc":
         converted_transport = "grpc"
-    elif transport in ["rest", "http"]: # http can also be specified via generation_config.yaml
+    elif transport in [
+        "rest",
+        "http",
+    ]:  # http can also be specified via generation_config.yaml
         converted_transport = "http"
     else:
         converted_transport = "both"
