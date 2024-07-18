@@ -228,10 +228,7 @@ def generate_postprocessing_prerequisite_files(
     # is one of grpc, http and both,
     if transport == "grpc":
         converted_transport = "grpc"
-    elif transport in [
-        "rest",
-        "http",
-    ]:  # http can also be specified via generation_config.yaml
+    elif transport == "rest":
         converted_transport = "http"
     else:
         converted_transport = "both"
