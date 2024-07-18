@@ -56,7 +56,6 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "pr
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS")
-load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS")
 
 _gapic_generator_java_version = "2.42.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
 
@@ -65,7 +64,6 @@ maven_install(
         "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
     ] + PROTOBUF_MAVEN_ARTIFACTS + IO_GRPC_GRPC_JAVA_ARTIFACTS,
     fail_on_missing_checksum = False,
-    override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
     repositories = [
         "m2Local",
         "https://repo.maven.apache.org/maven2/",
