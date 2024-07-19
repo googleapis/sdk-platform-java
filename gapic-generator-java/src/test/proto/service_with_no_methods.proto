@@ -36,7 +36,7 @@ option (google.api.resource_definition) = {
 };
 // This proto is used to test scenarios where a service does not have any rpc methods
 
-// This service is used to test when roc methods are specified.
+// This service is used as control group when it is not empty.
 service EchoWithMethods {
   // This service is meant to only run locally on the port 7469 (keypad digits
   // for "show").
