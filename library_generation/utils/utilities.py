@@ -198,7 +198,7 @@ def generate_postprocessing_prerequisite_files(
     :param library: the library configuration
     :param proto_path: the path from the root of googleapis to the location of the service
     protos. If the path contains a version, it will be removed
-    :param transport: the transport of the library
+    :param transport: transport supported by the library
     :param library_path: the path to which the generated file goes
     :param language: programming language of the library
     :return: None
