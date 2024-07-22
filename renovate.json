@@ -44,6 +44,18 @@
     {
       "customType": "regex",
       "fileMatch": [
+		"^\\.cloudbuild/library_generation/library_generation\\.Dockerfile$"
+      ],
+      "matchStrings": [
+        "ARG GRPC_VERSION=[\"']?(?<currentValue>.+?)[\"']?\\s+"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "grpc/grpc",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "^gax-java/dependencies\\.properties$"
       ],
       "matchStrings": [
