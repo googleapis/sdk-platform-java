@@ -64,7 +64,7 @@ test_library_with_custom_transport = LibraryConfig(
     product_documentation="https://cloud.google.com/solutions/secrets-management/",
     api_description="allows you to encrypt, store, manage, and audit infrastructure and application-level secrets.",
     gapic_configs=list(),
-    transport="http",
+    transport="rest",
 )
 
 
@@ -305,11 +305,13 @@ class UtilitiesTest(unittest.TestCase):
         library.library_type = library_type
         config = self.__get_a_gen_config(combination, library_type=library_type)
         proto_path = "google/cloud/baremetalsolution/v2"
+        gapic_inputs = GapicInputs()  # defaults to transport=grpc
+        transport = library.get_transport(gapic_inputs)
         util.generate_postprocessing_prerequisite_files(
             config=config,
             library=library,
             proto_path=proto_path,
-            gapic_inputs=GapicInputs(),  # defaults to transport=grpc
+            transport=transport,
             library_path=library_path,
         )
         return library_path

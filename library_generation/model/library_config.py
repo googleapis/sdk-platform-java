@@ -15,6 +15,7 @@
 from hashlib import sha256
 from typing import Optional
 from library_generation.model.gapic_config import GapicConfig
+from library_generation.model.gapic_inputs import GapicInputs
 
 
 MAVEN_COORDINATE_SEPARATOR = ":"
@@ -102,6 +103,13 @@ class LibraryConfig:
         Returns the artifact ID of the library
         """
         return self.get_maven_coordinate().split(MAVEN_COORDINATE_SEPARATOR)[-1]
+
+    def get_transport(self, gapic_inputs: GapicInputs) -> str:
+        """
+        Returns the transport of the library. If directly set in library config, return it.
+        Otherwise, return the transport inferred from gapic_inputs
+        """
+        return self.transport if self.transport is not None else gapic_inputs.transport
 
     def __get_distribution_name(self, distribution_name: Optional[str]) -> str:
         LibraryConfig.__check_distribution_name(distribution_name)
