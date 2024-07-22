@@ -72,13 +72,16 @@ def generate_composed_library(
         gapic_inputs = parse_build_file(build_file_folder, gapic.proto_path)
         # generate postprocessing prerequisite files (.repo-metadata.json, .OwlBot-hermetic.yaml,
         # owlbot.py) here because transport is parsed from BUILD.bazel,
-        # which lives in a versioned proto_path.
+        # which lives in a versioned proto_path. The value of transport will be
+        # overriden by the config object if specified. Note that this override
+        # does not affect library generation but instead used only for
+        # generating postprocessing files such as README.
         util.generate_postprocessing_prerequisite_files(
             config=config,
             library=library,
             proto_path=util.remove_version_from(gapic.proto_path),
-            transport=gapic_inputs.transport,
             library_path=library_path,
+            transport=library.get_transport(gapic_inputs),
         )
         temp_destination_path = f"java-{gapic.proto_path.replace('/','-')}"
         effective_arguments = __construct_effective_arg(
