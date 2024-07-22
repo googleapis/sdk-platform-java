@@ -172,7 +172,7 @@ download_tools() {
 
   # similar case with grpc
   if [[ "${DOCKER_GRPC_VERSION}" == "${grpc_version}" ]]; then
-    # if the specified protoc_version matches the one baked in the docker
+    # if the specified grpc_version matches the one baked in the docker
     # container, we just point grpc_path to its location.
     export grpc_path="${DOCKER_GRPC_LOCATION}"
   else
