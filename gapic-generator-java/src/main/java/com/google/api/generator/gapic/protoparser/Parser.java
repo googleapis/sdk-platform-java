@@ -441,7 +441,7 @@ public class Parser {
               if (methodsList.isEmpty()) {
                 LOGGER.warning(
                     String.format(
-                        "No rpc methods specified in %s, generation will be skipped.",
+                        "Service %s has no RPC methods and will not be generated",
                         serviceDescriptor.getName()));
               }
               return !methodsList.isEmpty();
