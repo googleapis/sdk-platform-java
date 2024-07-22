@@ -107,7 +107,9 @@ class LibraryConfig:
     def get_transport(self, gapic_inputs: GapicInputs) -> str:
         """
         Returns the transport of the library. If directly set in library config, return it.
-        Otherwise, return the transport inferred from gapic_inputs
+        Otherwise, return the transport inferred from gapic_inputs. This value is only
+        used for postprocessing - the generation still infers the transport from BUILD
+        files.
         """
         return self.transport if self.transport is not None else gapic_inputs.transport
 
