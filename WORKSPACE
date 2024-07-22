@@ -66,11 +66,16 @@ maven_install(
     ] + PROTOBUF_MAVEN_ARTIFACTS + IO_GRPC_GRPC_JAVA_ARTIFACTS,
     fail_on_missing_checksum = False,
     override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
+    generate_compat_repositories = True,
     repositories = [
         "m2Local",
         "https://repo.maven.apache.org/maven2/",
     ],
 )
+
+load("@maven//:compat.bzl", "compat_repositories")
+
+compat_repositories()
 
 protobuf_deps()
 
