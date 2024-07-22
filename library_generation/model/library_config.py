@@ -80,7 +80,7 @@ class LibraryConfig:
         self.recommended_package = recommended_package
         self.min_java_version = min_java_version
         self.distribution_name = self.__get_distribution_name(distribution_name)
-        self.transport = transport
+        self.transport = self.__validate_transport(transport)
 
     def get_library_name(self) -> str:
         """
@@ -118,6 +118,13 @@ class LibraryConfig:
         cloud_prefix = "cloud-" if self.cloud_api else ""
         library_name = self.get_library_name()
         return f"{self.group_id}:google-{cloud_prefix}{library_name}"
+
+    def __validate_transport(self, transport: str):
+        if transport not in [None, "grpc", "rest", "both"]:
+            raise ValueError(
+                "allowed values for library.transport: grpc, rest, both and None"
+            )
+        return transport
 
     @staticmethod
     def __check_distribution_name(distribution_name: str) -> None:

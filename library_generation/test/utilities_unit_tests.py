@@ -254,6 +254,20 @@ class UtilitiesTest(unittest.TestCase):
         )
         self.__remove_postprocessing_prerequisite_files(path=library_path)
 
+    def test_create__library_invalid_transport__fails(
+        self,
+    ):
+
+        with self.assertRaises(ValueError):
+            test_library_with_invalid_transport = LibraryConfig(
+                api_shortname="secretmanager",
+                name_pretty="Secret Management",
+                product_documentation="https://cloud.google.com/solutions/secrets-management/",
+                api_description="allows you to encrypt, store, manage, and audit infrastructure and application-level secrets.",
+                gapic_configs=list(),
+                transport="http",
+            )
+
     def test_prepare_repo_monorepo_success(self):
         gen_config = self.__get_a_gen_config(2)
         repo_config = util.prepare_repo(
