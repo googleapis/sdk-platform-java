@@ -89,7 +89,25 @@ public final class SettingsSampleComposer {
             .setExprReferenceExpr(retrySettingsArgExpr)
             .setMethodName("toBuilder")
             .build();
-    MethodInvocationExpr ofSecondMethodInvocationExpr =
+    MethodInvocationExpr ofOneSecondMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(Duration.class)))
+            .setMethodName("ofSeconds")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.INT).setValue("1").build()))
+            .build();
+    MethodInvocationExpr ofFiveSecondsMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(Duration.class)))
+            .setMethodName("ofSeconds")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.INT).setValue("5").build()))
+            .build();
+    MethodInvocationExpr ofThirtySecondsMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
                 TypeNode.withReference(ConcreteReference.withClazz(Duration.class)))
@@ -98,11 +116,85 @@ public final class SettingsSampleComposer {
                 ValueExpr.withValue(
                     PrimitiveValue.builder().setType(TypeNode.INT).setValue("30").build()))
             .build();
+    MethodInvocationExpr ofSixtySecondsMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(Duration.class)))
+            .setMethodName("ofSeconds")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.INT).setValue("60").build()))
+            .build();
+    MethodInvocationExpr ofThreeHundredSecondsMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(Duration.class)))
+            .setMethodName("ofSeconds")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.INT).setValue("300").build()))
+            .build();
+    retrySettingsArgExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(retrySettingsArgExpr)
+            .setMethodName("setInitialRetryDelayDuration")
+            .setArguments(ofOneSecondMethodInvocationExpr)
+            .build();
+    retrySettingsArgExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(retrySettingsArgExpr)
+            .setMethodName("setInitialRpcTimeoutDuration")
+            .setArguments(ofFiveSecondsMethodInvocationExpr)
+            .build();
+    retrySettingsArgExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(retrySettingsArgExpr)
+            .setMethodName("setMaxAttempts")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.INT).setValue("5").build()))
+            .build();
+    retrySettingsArgExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(retrySettingsArgExpr)
+            .setMethodName("setMaxRetryDelayDuration")
+            .setArguments(ofThirtySecondsMethodInvocationExpr)
+            .build();
+    retrySettingsArgExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(retrySettingsArgExpr)
+            .setMethodName("setMaxRpcTimeoutDuration")
+            .setArguments(ofSixtySecondsMethodInvocationExpr)
+            .build();
+    double retryDelayMultiplier = 1.3;
+    retrySettingsArgExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(retrySettingsArgExpr)
+            .setMethodName("setRetryDelayMultiplier")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder()
+                        .setType(TypeNode.DOUBLE)
+                        .setValue(String.format("%.1f", retryDelayMultiplier))
+                        .build()))
+            .build();
+    double rpcTimeoutMultiplier = 1.5;
+    retrySettingsArgExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(retrySettingsArgExpr)
+            .setMethodName("setRpcTimeoutMultiplier")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder()
+                        .setType(TypeNode.DOUBLE)
+                        .setValue(String.format("%.1f", rpcTimeoutMultiplier))
+                        .build()))
+            .build();
     retrySettingsArgExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(retrySettingsArgExpr)
             .setMethodName("setTotalTimeout")
-            .setArguments(ofSecondMethodInvocationExpr)
+            .setArguments(ofThreeHundredSecondsMethodInvocationExpr)
             .build();
     retrySettingsArgExpr =
         MethodInvocationExpr.builder()
