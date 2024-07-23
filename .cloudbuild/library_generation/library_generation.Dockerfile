@@ -18,7 +18,7 @@ FROM gcr.io/cloud-devrel-public-resources/python
 SHELL [ "/bin/bash", "-c" ]
 
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
-ARG PROTOC_VERSION=25.3
+ARG PROTOC_VERSION=27.2
 ENV HOME=/home
 
 # install OS tools
