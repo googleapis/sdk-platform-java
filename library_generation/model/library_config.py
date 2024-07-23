@@ -15,6 +15,7 @@
 from hashlib import sha256
 from typing import Optional
 from library_generation.model.gapic_config import GapicConfig
+from library_generation.model.gapic_inputs import GapicInputs
 
 
 MAVEN_COORDINATE_SEPARATOR = ":"
@@ -52,6 +53,7 @@ class LibraryConfig:
         extra_versioned_modules: Optional[str] = None,
         recommended_package: Optional[str] = None,
         min_java_version: Optional[int] = None,
+        transport: Optional[str] = None,
     ):
         self.api_shortname = api_shortname
         self.api_description = api_description
@@ -78,6 +80,7 @@ class LibraryConfig:
         self.recommended_package = recommended_package
         self.min_java_version = min_java_version
         self.distribution_name = self.__get_distribution_name(distribution_name)
+        self.transport = self.__validate_transport(transport)
 
     def get_library_name(self) -> str:
         """
@@ -101,6 +104,15 @@ class LibraryConfig:
         """
         return self.get_maven_coordinate().split(MAVEN_COORDINATE_SEPARATOR)[-1]
 
+    def get_transport(self, gapic_inputs: GapicInputs) -> str:
+        """
+        Returns the transport of the library. If directly set in library config, return it.
+        Otherwise, return the transport inferred from gapic_inputs. This value is only
+        used for postprocessing - the generation still infers the transport from BUILD
+        files.
+        """
+        return self.transport if self.transport is not None else gapic_inputs.transport
+
     def __get_distribution_name(self, distribution_name: Optional[str]) -> str:
         LibraryConfig.__check_distribution_name(distribution_name)
         if distribution_name:
@@ -108,6 +120,13 @@ class LibraryConfig:
         cloud_prefix = "cloud-" if self.cloud_api else ""
         library_name = self.get_library_name()
         return f"{self.group_id}:google-{cloud_prefix}{library_name}"
+
+    def __validate_transport(self, transport: str):
+        if transport not in [None, "grpc", "rest", "both"]:
+            raise ValueError(
+                "allowed values for library.transport: grpc, rest, both and None"
+            )
+        return transport
 
     @staticmethod
     def __check_distribution_name(distribution_name: str) -> None:
@@ -144,6 +163,7 @@ class LibraryConfig:
             and self.extra_versioned_modules == other.extra_versioned_modules
             and self.recommended_package == other.recommended_package
             and self.min_java_version == other.min_java_version
+            and self.transport == other.transport
         )
 
     def __hash__(self):
@@ -175,6 +195,7 @@ class LibraryConfig:
                     self.extra_versioned_modules,
                     self.recommended_package,
                     self.min_java_version,
+                    self.transport,
                 ]
                 + [config.proto_path for config in self.gapic_configs]
             ).encode("utf-8")

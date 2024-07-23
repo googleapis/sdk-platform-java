@@ -163,6 +163,7 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
             ),
             recommended_package=__optional(library, "recommended_package", None),
             min_java_version=__optional(library, "min_java_version", None),
+            transport=__optional(library, "transport", None),
         )
         parsed_libraries.append(new_library)
 

@@ -21,6 +21,7 @@ import static com.google.showcase.v1beta1.SequenceServiceClient.ListLocationsPag
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
@@ -274,6 +275,7 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
   }
 
   /** Returns the default service endpoint. */
+  @ObsoleteApi("Use getEndpoint() instead")
   public static String getDefaultEndpoint() {
     return "localhost:7469";
   }

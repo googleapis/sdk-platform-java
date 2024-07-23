@@ -18,6 +18,7 @@ import com.google.api.MonitoredResourceDescriptor;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.batching.BatchingSettings;
 import com.google.api.gax.batching.FlowControlSettings;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
@@ -1190,6 +1191,12 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnType(returnType)
             .setName("getDefaultEndpoint")
             .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue(service.defaultHost())))
+            .setAnnotations(
+                ImmutableList.of(
+                    AnnotationNode.builder()
+                        .setType(FIXED_TYPESTORE.get(ObsoleteApi.class.getSimpleName()))
+                        .setDescription("Use getEndpoint() instead")
+                        .build()))
             .build());
 
     // Create the getDefaultMtlsEndpoint method.
@@ -2068,6 +2075,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             List.class,
             Lists.class,
             MonitoredResourceDescriptor.class,
+            ObsoleteApi.class,
             Operation.class,
             OperationCallSettings.class,
             OperationSnapshot.class,

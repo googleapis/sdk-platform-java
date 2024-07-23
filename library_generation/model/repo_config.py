@@ -57,6 +57,12 @@ class RepoConfig:
         return self.library_versions.get(artifact_id, NEW_CLIENT_VERSION)
 
     def __parse_versions(self) -> dict[str, str]:
+        """
+        For a given versions.txt file (defined in self.versions_file)
+        creates a map of artifact-id to its version
+
+        :return: a map "artifact-id -> version"
+        """
         library_versions = dict()
         with open(self.versions_file) as f:
             for line in f.readlines():
