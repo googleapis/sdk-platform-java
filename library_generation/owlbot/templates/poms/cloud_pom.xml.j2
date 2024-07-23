@@ -39,10 +39,12 @@
       <groupId>com.google.protobuf</groupId>
       <artifactId>protobuf-java</artifactId>
     </dependency>
+{%- if repo in ['java-storage', 'java-spanner'] %}
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-common-protos</artifactId>
     </dependency>
+{%- endif %}
 {% for module in proto_modules %}
     <dependency>
       <groupId>{{module.group_id}}</groupId>
@@ -72,16 +74,30 @@
       <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-iam-v1</artifactId>
     </dependency>
+{%- if repo not in ['java-storage', 'java-spanner'] %}
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-google-iam-v1</artifactId>
     </dependency>
+{%- endif %}
     <dependency>
       <groupId>org.threeten</groupId>
       <artifactId>threetenbp</artifactId>
     </dependency>
 
     <!-- Test dependencies -->
+{%- if repo not in ['java-storage', 'java-spanner'] %}
+    <dependency>
+      <groupId>com.google.api.grpc</groupId>
+      <artifactId>proto-google-common-protos</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.api.grpc</groupId>
+      <artifactId>grpc-google-iam-v1</artifactId>
+      <scope>test</scope>
+    </dependency>
+{%- endif %}
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
