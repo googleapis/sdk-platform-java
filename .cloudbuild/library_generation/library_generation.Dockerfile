@@ -12,10 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# install gapic-generator-java in a separate layer so we don't overload the image
+# with the transferred source code and jars
+FROM gcr.io/cloud-devrel-public-resources/java21 AS ggj-build
+
+WORKDIR /sdk-platform-java
+COPY . .
+# {x-version-update-start:gapic-generator-java:current}
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.42.1-SNAPSHOT" 
+
+RUN mvn install -DskipTests -Dclirr.skip -Dcheckstyle.skip
+RUN ls "/root/.m2/repository/com/google/api/gapic-generator-java/" 
+RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" .
+
 # build from the root of this repo:
 FROM gcr.io/cloud-devrel-public-resources/python
 
 SHELL [ "/bin/bash", "-c" ]
+
 
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
 ARG PROTOC_VERSION=25.3
@@ -47,7 +61,16 @@ RUN source /src/utils/utilities.sh \
 ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java-${GRPC_VERSION}-${OS_ARCHITECTURE}.exe"
 ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 
-# use python 3.11 (the base image has several python versions; here we define the default one)
+
+# we transfer gapic-generator-java from the previous stage.
+# here we redeclare this env var since they are not preserved between stages
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.42.1-SNAPSHOT" 
+# {x-version-update-end:gapic-generator-java:current}
+ENV DOCKER_GAPIC_GENERATOR_LOCATION="/gapic-generator-java/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar"
+COPY --from=ggj-build "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" "${DOCKER_GAPIC_GENERATOR_LOCATION}"
+RUN chmod 755 "${DOCKER_GAPIC_GENERATOR_LOCATION}"
+
+#  use python 3.11 (the base image has several python versions; here we define the default one)
 RUN rm $(which python3)
 RUN ln -s $(which python3.11) /usr/local/bin/python
 RUN ln -s $(which python3.11) /usr/local/bin/python3

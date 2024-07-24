@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -eo pipefail
+set -x
 utilities_script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 
 # Utility functions used in `generate_library.sh` and showcase generation.
@@ -158,7 +159,6 @@ download_tools() {
   local grpc_version=$3
   local os_architecture=$4
   pushd "${output_folder}"
-  download_generator_artifact "${gapic_generator_version}" "gapic-generator-java-${gapic_generator_version}.jar"
 
   # the variable protoc_path is used in generate_library.sh. It is explicitly
   # exported to make clear that it is used outside this utilities file.
@@ -177,6 +177,18 @@ download_tools() {
     export grpc_path="${DOCKER_GRPC_LOCATION}"
   else
     export grpc_path=$(download_grpc_plugin "${grpc_version}" "${os_architecture}")
+  fi
+
+  # similar case with gapic-generator-java
+  if [[ "${DOCKER_GAPIC_GENERATOR_VERSION}" == "${gapic_generator_version}" ]]; then
+    # if the specified gapic_generator_version matches the one baked in the docker
+    # container, we copy the generator jar into the output folder so it can be
+    # picked up by gapic-generator-java-wrapper
+    cp "${DOCKER_GAPIC_GENERATOR_LOCATION}" "${output_folder}"
+  else
+    download_generator_artifact \
+      "${gapic_generator_version}" \
+      "gapic-generator-java-${gapic_generator_version}.jar"
   fi
 
   popd

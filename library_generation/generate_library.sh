@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -eo pipefail
+set -x
 
 # parse input parameters
 while [[ $# -gt 0 ]]; do
@@ -16,8 +17,6 @@ case $key in
     ;;
   --gapic_generator_version)
     gapic_generator_version="$2"
-    # export this variable so that it can be used in gapic-generator-java-wrapper.sh
-    export gapic_generator_version
     shift
     ;;
   --protoc_version)
@@ -77,9 +76,16 @@ script_dir=$(dirname "$(readlink -f "$0")")
 source "${script_dir}"/utils/utilities.sh
 output_folder="$(get_output_folder)"
 
-if [ -z "${gapic_generator_version}" ]; then
-  echo 'missing required argument --gapic_generator_version'
-  exit 1
+if [[ -z "${gapic_generator_version}" ]] ; then
+  if [[ -n "${DOCKER_GAPIC_GENERATOR_VERSION}" ]]; then
+    # we fall back to the docker env var so it's handled downstream in
+    # utilities.sh. This will make the jar embedded in the image to be
+    # transferred to output_folder
+    gapic_generator_version="${DOCKER_GAPIC_GENERATOR_VERSION}"
+  else
+    echo 'missing required argument --gapic_generator_version'
+    exit 1
+  fi
 fi
 
 if [ -z "${protoc_version}" ]; then
@@ -125,6 +131,9 @@ fi
 if [ -z "${os_architecture}" ]; then
   os_architecture=$(detect_os_architecture)
 fi
+
+# export this variable so that it can be used in gapic-generator-java-wrapper.sh
+export gapic_generator_version
 
 temp_destination_path="${output_folder}/temp_preprocessed"
 mkdir -p "${output_folder}/${destination_path}"
