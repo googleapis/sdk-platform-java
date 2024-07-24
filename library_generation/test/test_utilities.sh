@@ -41,6 +41,19 @@ assertEquals() {
   __test_failed "${ut}"
 }
 
+assertContains() {
+  local expected_substring=$1
+  local test_string=$2
+
+  if grep -q "$substring" <<< "$test_string"; then
+    __test_succeed
+    return
+  fi
+
+  echo "Error: expected test string to contain '${expected_substring}'. Test string was '${test_string}' instead."
+  __test_failed "${ut}"
+}
+
 assertFileOrDirectoryExists() {
   local expected_file=$1
   if [ -d "${expected_file}" ]|| [ -f "${expected_file}" ]; then

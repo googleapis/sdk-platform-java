@@ -184,6 +184,7 @@ download_tools() {
     # if the specified gapic_generator_version matches the one baked in the docker
     # container, we copy the generator jar into the output folder so it can be
     # picked up by gapic-generator-java-wrapper
+    >&2 echo "Using gapic-generator-java version baked into the container: ${DOCKER_GAPIC_GENERATOR_VERSION}"
     cp "${DOCKER_GAPIC_GENERATOR_LOCATION}" "${output_folder}"
   else
     download_generator_artifact \

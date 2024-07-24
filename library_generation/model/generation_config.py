@@ -147,9 +147,7 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         parsed_libraries.append(new_library)
 
     parsed_config = GenerationConfig(
-        gapic_generator_version=__optional(
-            config, GAPIC_GENERATOR_VERSION, None
-        ),
+        gapic_generator_version=__optional(config, GAPIC_GENERATOR_VERSION, None),
         googleapis_commitish=__required(
             config, "googleapis_commitish", REPO_LEVEL_PARAMETER
         ),

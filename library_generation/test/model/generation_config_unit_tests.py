@@ -160,14 +160,6 @@ class GenerationConfigTest(unittest.TestCase):
             ],
         )
 
-    def test_from_yaml_without_gapic_generator_version_raise_exception(self):
-        self.assertRaisesRegex(
-            ValueError,
-            "Repo level parameter, gapic_generator_version",
-            from_yaml,
-            f"{test_config_dir}/config_without_generator.yaml",
-        )
-
     def test_from_yaml_without_googleapis_commitish_raise_exception(self):
         self.assertRaisesRegex(
             ValueError,

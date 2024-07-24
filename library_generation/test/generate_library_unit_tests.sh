@@ -212,6 +212,34 @@ download_tools_succeed_with_baked_grpc() {
   unset grpc_path
 }
 
+download_tools_succeed_with_baked_generator() {
+  # This test has the same structure as
+  # download_tools_succeed_with_baked_protoc, but meant for
+  # gapic-generator-java.
+  local test_dir=$(mktemp -d)
+  pushd "${test_dir}"
+  generator_folder=$(mktemp -d)
+  touch "${generator_folder}/gapic-generator-java.fakejar"
+  export DOCKER_GAPIC_GENERATOR_LOCATION="${generator_folder}/gapic-generator-java.fakejar"
+  export DOCKER_GAPIC_GENERATOR_VERSION="99.99"
+  export output_folder=$(get_output_folder)
+  mkdir "${output_folder}"
+
+  local test_protoc_version="1.64.0"
+  local test_grpc_version="1.64.0"
+  # we expect download_tools to decide to use DOCKER_GAPIC_GENERATOR_LOCATION because
+  # the protoc version we want to download is the same as DOCKER_GRPC_VERSION
+  log=$(download_tools "99.99" "${test_protoc_version}" "${test_grpc_version}" "linux-x86_64" 2>&1 1>/dev/null)
+
+  assertContains "Using gapic-generator-java version baked into the container: 99.99" "${log}"
+
+  rm -rdf "${output_folder}"
+  unset DOCKER_GRPC_LOCATION
+  unset DOCKER_GRPC_VERSION
+  unset output_folder
+  unset grpc_path
+}
+
 download_grpc_plugin_succeed_with_valid_version_linux_test() {
   download_grpc_plugin "1.55.1" "linux-x86_64"
   assertFileOrDirectoryExists "protoc-gen-grpc-java-1.55.1-linux-x86_64.exe"
@@ -350,6 +378,7 @@ test_list=(
   download_protoc_failed_with_invalid_arch_test
   download_tools_succeed_with_baked_protoc
   download_tools_succeed_with_baked_grpc
+  download_tools_succeed_with_baked_generator
   download_grpc_plugin_succeed_with_valid_version_linux_test
   download_grpc_plugin_succeed_with_valid_version_macos_test
   download_grpc_plugin_failed_with_invalid_version_linux_test
