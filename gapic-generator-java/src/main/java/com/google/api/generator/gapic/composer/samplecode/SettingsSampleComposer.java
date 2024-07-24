@@ -193,7 +193,7 @@ public final class SettingsSampleComposer {
     retrySettingsArgExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(retrySettingsArgExpr)
-            .setMethodName("setTotalTimeout")
+            .setMethodName("setTotalTimeoutDuration")
             .setArguments(ofThreeHundredSecondsMethodInvocationExpr)
             .build();
     retrySettingsArgExpr =

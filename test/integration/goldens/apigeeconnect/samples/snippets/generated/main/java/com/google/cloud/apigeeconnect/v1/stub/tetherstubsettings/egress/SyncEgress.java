@@ -47,7 +47,7 @@ public class SyncEgress {
                 .setMaxRpcTimeoutDuration(Duration.ofSeconds(60))
                 .setRetryDelayMultiplier(1.3)
                 .setRpcTimeoutMultiplier(1.5)
-                .setTotalTimeout(Duration.ofSeconds(300))
+                .setTotalTimeoutDuration(Duration.ofSeconds(300))
                 .build());
     TetherStubSettings tetherSettings = tetherSettingsBuilder.build();
   }

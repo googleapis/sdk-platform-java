@@ -68,7 +68,7 @@ class SettingsSampleComposerTest {
             "            .setMaxRpcTimeoutDuration(Duration.ofSeconds(60))\n",
             "            .setRetryDelayMultiplier(1.3)\n",
             "            .setRpcTimeoutMultiplier(1.5)\n",
-            "            .setTotalTimeout(Duration.ofSeconds(300))\n",
+            "            .setTotalTimeoutDuration(Duration.ofSeconds(300))\n",
             "            .build());\n",
             "EchoSettings echoSettings = echoSettingsBuilder.build();");
     assertEquals(results.get(), expected);
@@ -103,7 +103,7 @@ class SettingsSampleComposerTest {
             "            .setMaxRpcTimeoutDuration(Duration.ofSeconds(60))\n",
             "            .setRetryDelayMultiplier(1.3)\n",
             "            .setRpcTimeoutMultiplier(1.5)\n",
-            "            .setTotalTimeout(Duration.ofSeconds(300))\n",
+            "            .setTotalTimeoutDuration(Duration.ofSeconds(300))\n",
             "            .build());\n",
             "EchoStubSettings echoSettings = echoSettingsBuilder.build();");
     assertEquals(results.get(), expected);
