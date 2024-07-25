@@ -55,18 +55,17 @@ rules_jvm_external_setup()
 load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-maven_install(
-    artifacts = PROTOBUF_MAVEN_ARTIFACTS,
-    repositories = ["https://repo.maven.apache.org/maven2/"],
-)
+load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS")
+load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS")
 
 _gapic_generator_java_version = "2.42.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
 
 maven_install(
     artifacts = [
         "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
-    ],
+    ] + PROTOBUF_MAVEN_ARTIFACTS + IO_GRPC_GRPC_JAVA_ARTIFACTS,
     fail_on_missing_checksum = False,
+    override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
     repositories = [
         "m2Local",
         "https://repo.maven.apache.org/maven2/",
@@ -97,6 +96,10 @@ switched_rules_by_language(
 load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
 
 grpc_java_repositories()
+
+load("@envoy_api//bazel:repositories.bzl", "api_dependencies")
+
+api_dependencies()
 
 _disco_to_proto3_converter_commit = "ce8d8732120cdfb5bf4847c3238b5be8acde87e3"
 

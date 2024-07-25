@@ -435,6 +435,17 @@ public class Parser {
       Transport transport) {
 
     return fileDescriptor.getServices().stream()
+        .filter(
+            serviceDescriptor -> {
+              List<MethodDescriptor> methodsList = serviceDescriptor.getMethods();
+              if (methodsList.isEmpty()) {
+                LOGGER.warning(
+                    String.format(
+                        "Service %s has no RPC methods and will not be generated",
+                        serviceDescriptor.getName()));
+              }
+              return !methodsList.isEmpty();
+            })
         .map(
             s -> {
               // Workaround for a missing default_host and oauth_scopes annotation from a service
