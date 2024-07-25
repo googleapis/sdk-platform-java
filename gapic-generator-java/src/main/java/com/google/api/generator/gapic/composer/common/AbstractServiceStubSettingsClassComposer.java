@@ -423,9 +423,14 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     .findFirst()
                     .orElse(service.methods().get(0)));
     Optional<String> methodNameOpt = methodOpt.map(Method::name);
+    Optional<Boolean> isSampleMethodLRO =
+        methodOpt.isPresent() ? Optional.of(methodOpt.get().hasLro()) : Optional.of(false);
     Optional<Sample> sampleCode =
         SettingsSampleComposer.composeSettingsSample(
-            methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
+            methodNameOpt,
+            ClassNames.getServiceSettingsClassName(service),
+            classType,
+            isSampleMethodLRO);
 
     Optional<String> docSampleCode = Optional.empty();
     if (sampleCode.isPresent()) {

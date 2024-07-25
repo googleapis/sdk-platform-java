@@ -145,9 +145,14 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                     .orElse(service.methods().get(0)));
     Optional<String> methodNameOpt =
         methodOpt.isPresent() ? Optional.of(methodOpt.get().name()) : Optional.empty();
+    Optional<Boolean> isSampleMethodLRO =
+        methodOpt.isPresent() ? Optional.of(methodOpt.get().hasLro()) : Optional.of(false);
     Optional<Sample> sampleCode =
         SettingsSampleComposer.composeSettingsSample(
-            methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
+            methodNameOpt,
+            ClassNames.getServiceSettingsClassName(service),
+            classType,
+            isSampleMethodLRO);
 
     Optional<String> docSampleCode = Optional.empty();
     if (sampleCode.isPresent()) {

@@ -37,7 +37,10 @@ import java.util.stream.Collectors;
 public final class SettingsSampleComposer {
 
   public static Optional<Sample> composeSettingsSample(
-      Optional<String> methodNameOpt, String settingsClassName, TypeNode classType) {
+      Optional<String> methodNameOpt,
+      String settingsClassName,
+      TypeNode classType,
+      Optional<Boolean> isSampleMethodLRO) {
     if (!methodNameOpt.isPresent()) {
       return Optional.empty();
     }
@@ -89,6 +92,24 @@ public final class SettingsSampleComposer {
             .setExprReferenceExpr(retrySettingsArgExpr)
             .setMethodName("toBuilder")
             .build();
+    MethodInvocationExpr ofFiveThousandMillisMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(Duration.class)))
+            .setMethodName("ofMillis")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.INT).setValue("5000").build()))
+            .build();
+    MethodInvocationExpr ofTwentyFourHoursMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(Duration.class)))
+            .setMethodName("ofHours")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.INT).setValue("24").build()))
+            .build();
     MethodInvocationExpr ofOneSecondMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
@@ -134,68 +155,102 @@ public final class SettingsSampleComposer {
                 ValueExpr.withValue(
                     PrimitiveValue.builder().setType(TypeNode.INT).setValue("300").build()))
             .build();
-    retrySettingsArgExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(retrySettingsArgExpr)
-            .setMethodName("setInitialRetryDelayDuration")
-            .setArguments(ofOneSecondMethodInvocationExpr)
-            .build();
-    retrySettingsArgExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(retrySettingsArgExpr)
-            .setMethodName("setInitialRpcTimeoutDuration")
-            .setArguments(ofFiveSecondsMethodInvocationExpr)
-            .build();
-    retrySettingsArgExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(retrySettingsArgExpr)
-            .setMethodName("setMaxAttempts")
-            .setArguments(
-                ValueExpr.withValue(
-                    PrimitiveValue.builder().setType(TypeNode.INT).setValue("5").build()))
-            .build();
-    retrySettingsArgExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(retrySettingsArgExpr)
-            .setMethodName("setMaxRetryDelayDuration")
-            .setArguments(ofThirtySecondsMethodInvocationExpr)
-            .build();
-    retrySettingsArgExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(retrySettingsArgExpr)
-            .setMethodName("setMaxRpcTimeoutDuration")
-            .setArguments(ofSixtySecondsMethodInvocationExpr)
-            .build();
-    double retryDelayMultiplier = 1.3;
-    retrySettingsArgExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(retrySettingsArgExpr)
-            .setMethodName("setRetryDelayMultiplier")
-            .setArguments(
-                ValueExpr.withValue(
-                    PrimitiveValue.builder()
-                        .setType(TypeNode.DOUBLE)
-                        .setValue(String.format("%.1f", retryDelayMultiplier))
-                        .build()))
-            .build();
-    double rpcTimeoutMultiplier = 1.5;
-    retrySettingsArgExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(retrySettingsArgExpr)
-            .setMethodName("setRpcTimeoutMultiplier")
-            .setArguments(
-                ValueExpr.withValue(
-                    PrimitiveValue.builder()
-                        .setType(TypeNode.DOUBLE)
-                        .setValue(String.format("%.1f", rpcTimeoutMultiplier))
-                        .build()))
-            .build();
-    retrySettingsArgExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(retrySettingsArgExpr)
-            .setMethodName("setTotalTimeoutDuration")
-            .setArguments(ofThreeHundredSecondsMethodInvocationExpr)
-            .build();
+    // For LRO methods, use a different set of RetrySettings defaults.
+    if (isSampleMethodLRO.get()) {
+      retrySettingsArgExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(retrySettingsArgExpr)
+              .setMethodName("setInitialRetryDelayDuration")
+              .setArguments(ofFiveThousandMillisMethodInvocationExpr)
+              .build();
+      double retryDelayMultiplier = 1.5;
+      retrySettingsArgExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(retrySettingsArgExpr)
+              .setMethodName("setRetryDelayMultiplier")
+              .setArguments(
+                  ValueExpr.withValue(
+                      PrimitiveValue.builder()
+                          .setType(TypeNode.DOUBLE)
+                          .setValue(String.format("%.1f", retryDelayMultiplier))
+                          .build()))
+              .build();
+      retrySettingsArgExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(retrySettingsArgExpr)
+              .setMethodName("setMaxRetryDelay")
+              .setArguments(ofFiveThousandMillisMethodInvocationExpr)
+              .build();
+      retrySettingsArgExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(retrySettingsArgExpr)
+              .setMethodName("setTotalTimeoutDuration")
+              .setArguments(ofTwentyFourHoursMethodInvocationExpr)
+              .build();
+    } else {
+      retrySettingsArgExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(retrySettingsArgExpr)
+              .setMethodName("setInitialRetryDelayDuration")
+              .setArguments(ofOneSecondMethodInvocationExpr)
+              .build();
+      retrySettingsArgExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(retrySettingsArgExpr)
+              .setMethodName("setInitialRpcTimeoutDuration")
+              .setArguments(ofFiveSecondsMethodInvocationExpr)
+              .build();
+      retrySettingsArgExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(retrySettingsArgExpr)
+              .setMethodName("setMaxAttempts")
+              .setArguments(
+                  ValueExpr.withValue(
+                      PrimitiveValue.builder().setType(TypeNode.INT).setValue("5").build()))
+              .build();
+      retrySettingsArgExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(retrySettingsArgExpr)
+              .setMethodName("setMaxRetryDelayDuration")
+              .setArguments(ofThirtySecondsMethodInvocationExpr)
+              .build();
+      retrySettingsArgExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(retrySettingsArgExpr)
+              .setMethodName("setMaxRpcTimeoutDuration")
+              .setArguments(ofSixtySecondsMethodInvocationExpr)
+              .build();
+      double retryDelayMultiplier = 1.3;
+      retrySettingsArgExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(retrySettingsArgExpr)
+              .setMethodName("setRetryDelayMultiplier")
+              .setArguments(
+                  ValueExpr.withValue(
+                      PrimitiveValue.builder()
+                          .setType(TypeNode.DOUBLE)
+                          .setValue(String.format("%.1f", retryDelayMultiplier))
+                          .build()))
+              .build();
+      double rpcTimeoutMultiplier = 1.5;
+      retrySettingsArgExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(retrySettingsArgExpr)
+              .setMethodName("setRpcTimeoutMultiplier")
+              .setArguments(
+                  ValueExpr.withValue(
+                      PrimitiveValue.builder()
+                          .setType(TypeNode.DOUBLE)
+                          .setValue(String.format("%.1f", rpcTimeoutMultiplier))
+                          .build()))
+              .build();
+      retrySettingsArgExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(retrySettingsArgExpr)
+              .setMethodName("setTotalTimeoutDuration")
+              .setArguments(ofThreeHundredSecondsMethodInvocationExpr)
+              .build();
+    }
     retrySettingsArgExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(retrySettingsArgExpr)

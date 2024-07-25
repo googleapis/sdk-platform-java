@@ -35,7 +35,7 @@ class SettingsSampleComposerTest {
     Optional<String> results =
         writeSample(
             SettingsSampleComposer.composeSettingsSample(
-                Optional.empty(), "EchoSettings", classType));
+                Optional.empty(), "EchoSettings", classType, Optional.of(false)));
     assertEquals(results, Optional.empty());
   }
 
@@ -50,7 +50,7 @@ class SettingsSampleComposerTest {
     Optional<String> results =
         writeSample(
             SettingsSampleComposer.composeSettingsSample(
-                Optional.of("Echo"), "EchoSettings", classType));
+                Optional.of("Echo"), "EchoSettings", classType, Optional.of(false)));
     String expected =
         LineFormatter.lines(
             "EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();\n",
@@ -85,7 +85,7 @@ class SettingsSampleComposerTest {
     Optional<String> results =
         writeSample(
             SettingsSampleComposer.composeSettingsSample(
-                Optional.of("Echo"), "EchoSettings", classType));
+                Optional.of("Echo"), "EchoSettings", classType, Optional.of(false)));
     String expected =
         LineFormatter.lines(
             "EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();\n",
@@ -104,6 +104,68 @@ class SettingsSampleComposerTest {
             "            .setRetryDelayMultiplier(1.3)\n",
             "            .setRpcTimeoutMultiplier(1.5)\n",
             "            .setTotalTimeoutDuration(Duration.ofSeconds(300))\n",
+            "            .build());\n",
+            "EchoStubSettings echoSettings = echoSettingsBuilder.build();");
+    assertEquals(results.get(), expected);
+  }
+
+  @Test
+  void composeSettingsSample_serviceSettingsClass_LROMethod() {
+    TypeNode classType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoSettings")
+                .setPakkage("com.google.showcase.v1beta1")
+                .build());
+    Optional<String> results =
+        writeSample(
+            SettingsSampleComposer.composeSettingsSample(
+                Optional.of("Echo"), "EchoSettings", classType, Optional.of(true)));
+    String expected =
+        LineFormatter.lines(
+            "EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();\n",
+            "echoSettingsBuilder\n",
+            "    .echoSettings()\n",
+            "    .setRetrySettings(\n",
+            "        echoSettingsBuilder\n",
+            "            .echoSettings()\n",
+            "            .getRetrySettings()\n",
+            "            .toBuilder()\n",
+            "            .setInitialRetryDelayDuration(Duration.ofMillis(5000))\n",
+            "            .setRetryDelayMultiplier(1.5)\n",
+            "            .setMaxRetryDelay(Duration.ofMillis(5000))\n",
+            "            .setTotalTimeoutDuration(Duration.ofHours(24))\n",
+            "            .build());\n",
+            "EchoSettings echoSettings = echoSettingsBuilder.build();");
+    assertEquals(results.get(), expected);
+  }
+
+  @Test
+  void composeSettingsSample_serviceStubClass_LROMethod() {
+    TypeNode classType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoStubSettings")
+                .setPakkage("com.google.showcase.v1beta1")
+                .build());
+    Optional<String> results =
+        writeSample(
+            SettingsSampleComposer.composeSettingsSample(
+                Optional.of("Echo"), "EchoSettings", classType, Optional.of(true)));
+    String expected =
+        LineFormatter.lines(
+            "EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();\n",
+            "echoSettingsBuilder\n",
+            "    .echoSettings()\n",
+            "    .setRetrySettings(\n",
+            "        echoSettingsBuilder\n",
+            "            .echoSettings()\n",
+            "            .getRetrySettings()\n",
+            "            .toBuilder()\n",
+            "            .setInitialRetryDelayDuration(Duration.ofMillis(5000))\n",
+            "            .setRetryDelayMultiplier(1.5)\n",
+            "            .setMaxRetryDelay(Duration.ofMillis(5000))\n",
+            "            .setTotalTimeoutDuration(Duration.ofHours(24))\n",
             "            .build());\n",
             "EchoStubSettings echoSettings = echoSettingsBuilder.build();");
     assertEquals(results.get(), expected);
