@@ -109,13 +109,13 @@ def update_cloud_pom(
 
     # as of July 2024, we have two dependencies that should be declared as
     # test-scoped: grpc-google-common-protos and grpc-google-iam-v1. Only in
-    # java-storage and java-spanner we keep them as they are
+    # java-storage, java-spanner and java-dataproc we keep them as they are
     TEST_SCOPED_DEPENDENCIES = ["grpc-google-common-protos", "grpc-google-iam-v1"]
     print(
         'converting old dependencies "grpc-google-common-protos" and "grpc-google-iam-v1" to test-scoped'
     )
     for d in dependencies:
-        if repo_metadata["repo_short"] in ["java-spanner", "java-storage"]:
+        if repo_metadata["repo_short"] in ["java-spanner", "java-storage", "java-dataproc"]:
             print(
                 f"skipping test-scoped-dependency fix for special case repo: {repo_metadata['repo_short']}"
             )
