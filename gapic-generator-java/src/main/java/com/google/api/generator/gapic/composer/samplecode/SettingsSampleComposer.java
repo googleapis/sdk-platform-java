@@ -156,7 +156,11 @@ public final class SettingsSampleComposer {
                     PrimitiveValue.builder().setType(TypeNode.INT).setValue("300").build()))
             .build();
     // For LRO methods, use a different set of RetrySettings defaults.
-    if (isSampleMethodLRO.get()) {
+    boolean useLRODefaults = false;
+    if(isSampleMethodLRO.isPresent()){
+      useLRODefaults = isSampleMethodLRO.get();
+    }
+    if (useLRODefaults) {
       retrySettingsArgExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(retrySettingsArgExpr)
