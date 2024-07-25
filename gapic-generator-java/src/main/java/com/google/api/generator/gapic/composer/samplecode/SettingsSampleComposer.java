@@ -157,7 +157,7 @@ public final class SettingsSampleComposer {
             .build();
     // For LRO methods, use a different set of RetrySettings defaults.
     boolean useLRODefaults = false;
-    if(isSampleMethodLRO.isPresent()){
+    if (isSampleMethodLRO.isPresent()) {
       useLRODefaults = isSampleMethodLRO.get();
     }
     if (useLRODefaults) {
