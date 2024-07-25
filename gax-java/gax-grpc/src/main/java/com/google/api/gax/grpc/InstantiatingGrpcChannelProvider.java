@@ -296,6 +296,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private void logDirectPathMisconfig() {
     if (isDirectPathXdsEnabled()) {
       if (!isDirectPathEnabled()) {
+        // Only two cases are possible: Direct path xDS enabled via env var or via builder.
         // Case 1: Direct Path is only enabled via XDS env var. We will _warn_ the user that this is
         // a misconfiguration if they intended to set the env var.
         if (isDirectPathXdsEnabledViaEnv()) {
@@ -306,13 +307,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
                   + " was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
                   + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
         }
-        // Case 2: Direct Path TD must be set along with xDS. Here we warn the user about this.
+        // Case 2: Direct Path xDS was enabled via Builder. Direct Path TD (via gRPCLB) must be set
+        // along with xDS.
+        // Here we warn the user about this.
         else if (isDirectPathXdsEnabledViaBuilderOption()) {
           LOG.log(
               Level.WARNING,
               "DirectPath is misconfigured. The DirectPath XDS option was set, but the attemptDirectPath option was not. Please set both the attemptDirectPath and attemptDirectPathXds options.");
-        } else {
-        } // impossible - added this `else` for readability.
+        }
       } else {
         // Case 3: credential is not correctly set
         if (!isCredentialDirectPathCompatible()) {
