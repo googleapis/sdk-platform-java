@@ -310,8 +310,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         else if (isDirectPathXdsEnabledViaBuilderOption()) {
           LOG.log(
               Level.WARNING,
-              "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
-                  + " attemptDirectPathXds option.");
+              "DirectPath is misconfigured. The DirectPath XDS option was set, but the attemptDirectPath option was not. Please set both the attemptDirectPath and attemptDirectPathXds options.");
         } else {
         } // impossible - added this `else` for readability.
       } else {
