@@ -107,7 +107,7 @@ docker run \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):${workspace_name}" \
   -v "$HOME"/.m2:/home/.m2 \
-  -e generator_version="${generator_version}" \
+  -e GENERATOR_VERSION="${generator_version}" \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
   --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
   --current-generation-config-path="${workspace_name}/${generation_config}"

@@ -25,7 +25,7 @@ GAPIC_LEVEL_PARAMETER = "GAPIC level parameter"
 COMMON_PROTOS_LIBRARY_NAME = "common-protos"
 GAPIC_GENERATOR_VERSION = "gapic_generator_version"
 LIBRARIES_BOM_VERSION = "libraries_bom_version"
-GENERATOR_VERSION_ENV_KEY = "generator_version"
+GENERATOR_VERSION_ENV_KEY = "GENERATOR_VERSION"
 
 
 class GenerationConfig:
