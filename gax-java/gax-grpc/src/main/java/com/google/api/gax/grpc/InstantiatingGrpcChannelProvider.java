@@ -303,7 +303,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
               Level.WARNING,
               "Env var "
                   + DIRECT_PATH_ENV_ENABLE_XDS
-                  + " was found. If this is intended for "
+                  + " was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
                   + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
         }
         // Case 2: Direct Path TD must be set along with xDS. Here we warn the user about this.
