@@ -308,7 +308,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
                   + " was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
                   + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
         }
-        // Case 2: Direct Path xDS was enabled via Builder. Direct Path Traffic Director must be set (enabled with `setAttemptDirectPath(true)`) along with xDS.
+        // Case 2: Direct Path xDS was enabled via Builder. Direct Path Traffic Director must be set
+        // (enabled with `setAttemptDirectPath(true)`) along with xDS.
         // Here we warn the user about this.
         else if (isDirectPathXdsEnabledViaBuilderOption()) {
           LOG.log(
