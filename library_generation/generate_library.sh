@@ -183,13 +183,15 @@ case "${proto_path}" in
     ;;
 esac
 # download gapic-generator-java, protobuf and grpc plugin.
+# the download_tools function will create the environment variables "protoc_path"
+# and "grpc_path", to be used in the protoc calls below.
 download_tools "${gapic_generator_version}" "${protoc_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
 if [[ ! "${transport}" == "rest" ]]; then
   # do not need to generate grpc-* if the transport is `rest`.
-  "${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
+  "${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=${grpc_path}" \
   "--rpc-plugin_out=:${temp_destination_path}/java_grpc.jar" \
   ${proto_files} # Do not quote because this variable should not be treated as one long string.
   # unzip java_grpc.jar to grpc-*/src/main/java

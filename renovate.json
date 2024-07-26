@@ -32,7 +32,7 @@
     {
       "customType": "regex",
       "fileMatch": [
-		"^\\.cloudbuild/library_generation/library_generation\\.Dockerfile$"
+               "^\\.cloudbuild/library_generation/library_generation\\.Dockerfile$"
       ],
       "matchStrings": [
         "ARG PROTOC_VERSION=[\"']?(?<currentValue>.+?)[\"']?\\s+"
@@ -55,10 +55,12 @@
     {
       "customType": "regex",
       "fileMatch": [
-        "^gax-java/dependencies\\.properties$"
+        "^gax-java/dependencies\\.properties$",
+        "^\\.cloudbuild/library_generation/library_generation\\.Dockerfile$"
       ],
       "matchStrings": [
-        "version\\.io_grpc=(?<currentValue>.+?)\\n"
+        "version\\.io_grpc=(?<currentValue>.+?)\\n",
+        "ARG GRPC_VERSION=[\"']?(?<currentValue>.+?)[\"']?\\s+"
       ],
       "depNameTemplate": "io.grpc:grpc-core",
       "datasourceTemplate": "maven"
