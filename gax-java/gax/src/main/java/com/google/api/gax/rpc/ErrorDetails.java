@@ -126,6 +126,15 @@ public abstract class ErrorDetails {
     return unpack(LocalizedMessage.class);
   }
 
+  /**
+   * Attempt to unpack a non-default error message type {@code T}. The first occurrence of a {@code
+   * T} is returned, null otherwise.
+   */
+  @Nullable
+  public <T extends Message> T getMessage(Class<T> messageClass) {
+    return unpack(messageClass);
+  }
+
   /** This is a list of raw/unparsed error messages that returns from server. */
   @Nullable
   abstract List<Any> getRawErrorMessages();
