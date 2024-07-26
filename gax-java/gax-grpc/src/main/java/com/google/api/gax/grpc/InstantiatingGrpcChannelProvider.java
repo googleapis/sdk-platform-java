@@ -285,6 +285,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return Boolean.parseBoolean(directPathXdsEnv);
   }
 
+  /**
+   * This method tells if Direct Path xDS was enabled. There are two ways of enabling it: via
+   * environment variable (by setting GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS=true) or when building
+   * this channel provider (via the {@link Builder#setAttemptDirectPathXds()} method).
+   *
+   * @return true if Direct Path xDS was either enabled via env var or via builder option
+   */
   @InternalApi
   public boolean isDirectPathXdsEnabled() {
     return isDirectPathXdsEnabledViaEnv() || isDirectPathXdsEnabledViaBuilderOption();
