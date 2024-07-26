@@ -296,8 +296,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private void logDirectPathMisconfig() {
     if (isDirectPathXdsEnabled()) {
       if (!isDirectPathEnabled()) {
-        // Only two cases are possible: Direct path xDS enabled via env var or via builder.
-        // Case 1: Direct Path is only enabled via XDS env var. We will _warn_ the user that this is
+        // This misconfiguration occurs when Direct Path xDS is enabled, but Direct Path is not
+        // Direct Path xDS can be enabled two ways: via environment variable or via builder.
+        // Case 1: Direct Path is only enabled via xDS env var. We will _warn_ the user that this is
         // a misconfiguration if they intended to set the env var.
         if (isDirectPathXdsEnabledViaEnv()) {
           LOG.log(
