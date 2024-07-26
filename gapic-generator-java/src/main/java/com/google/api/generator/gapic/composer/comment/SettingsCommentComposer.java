@@ -41,6 +41,9 @@ public class SettingsCommentComposer {
   private static final String CLASS_HEADER_SAMPLE_CODE_PATTERN =
       "For example, to set the [RetrySettings](https://cloud.google.com/java/docs/reference/gax/latest/com.google.api.gax.retrying.RetrySettings) of %s:";
 
+  private static final String CLASS_HEADER_LRO_SAMPLE_CODE_PATTERN =
+      "To configure the RetrySettings of a Long Running Operation method, create an OperationTimedPollAlgorithm object and update the RPC's polling algorithm. For example, to configure the RetrySettings for %s:";
+
   private static final String CLASS_HEADER_SAMPLE_CODE_SUFFIX =
       "Please refer to the [Client Side Retry Guide](https://github.com/googleapis/google-cloud-java/blob/main/docs/client_retries.md) for additional support in setting retries.";
 
@@ -142,6 +145,8 @@ public class SettingsCommentComposer {
       boolean isDeprecated,
       Optional<String> methodNameOpt,
       Optional<String> sampleCodeOpt,
+      Optional<String> lroMethodNameOpt,
+      Optional<String> lroSampleCodeOpt,
       TypeNode classType) {
     // Split default address and port.
     int colonIndex = defaultHost.indexOf(COLON);
@@ -175,6 +180,16 @@ public class SettingsCommentComposer {
                       JavaStyle.toLowerCamelCase(methodNameOpt.get())))
               .addSampleCode(sampleCodeOpt.get())
               .addComment(CLASS_HEADER_SAMPLE_CODE_SUFFIX);
+    }
+
+    if (lroMethodNameOpt.isPresent() && lroSampleCodeOpt.isPresent()) {
+      javaDocCommentBuilder =
+          javaDocCommentBuilder
+              .addParagraph(
+                  String.format(
+                      CLASS_HEADER_LRO_SAMPLE_CODE_PATTERN,
+                      JavaStyle.toLowerCamelCase(lroMethodNameOpt.get())))
+              .addSampleCode(lroSampleCodeOpt.get());
     }
 
     if (isDeprecated) {

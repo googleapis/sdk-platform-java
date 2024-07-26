@@ -35,7 +35,7 @@ class SettingsSampleComposerTest {
     Optional<String> results =
         writeSample(
             SettingsSampleComposer.composeSettingsSample(
-                Optional.empty(), "EchoSettings", classType, Optional.of(false)));
+                Optional.empty(), "EchoSettings", classType));
     assertEquals(results, Optional.empty());
   }
 
@@ -50,7 +50,7 @@ class SettingsSampleComposerTest {
     Optional<String> results =
         writeSample(
             SettingsSampleComposer.composeSettingsSample(
-                Optional.of("Echo"), "EchoSettings", classType, Optional.of(false)));
+                Optional.of("Echo"), "EchoSettings", classType));
     String expected =
         LineFormatter.lines(
             "EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();\n",
@@ -85,7 +85,7 @@ class SettingsSampleComposerTest {
     Optional<String> results =
         writeSample(
             SettingsSampleComposer.composeSettingsSample(
-                Optional.of("Echo"), "EchoSettings", classType, Optional.of(false)));
+                Optional.of("Echo"), "EchoSettings", classType));
     String expected =
         LineFormatter.lines(
             "EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();\n",
@@ -110,64 +110,62 @@ class SettingsSampleComposerTest {
   }
 
   @Test
-  void composeSettingsSample_serviceSettingsClass_LROMethod() {
+  void composeSettingsSample_serviceSettingsClass_LroMethod() {
     TypeNode classType =
         TypeNode.withReference(
             VaporReference.builder()
-                .setName("EchoSettings")
+                .setName("WaitSettings")
                 .setPakkage("com.google.showcase.v1beta1")
                 .build());
     Optional<String> results =
         writeSample(
-            SettingsSampleComposer.composeSettingsSample(
-                Optional.of("Echo"), "EchoSettings", classType, Optional.of(true)));
+            SettingsSampleComposer.composeLroSettingsSample(
+                Optional.of("Wait"), "WaitSettings", classType));
     String expected =
         LineFormatter.lines(
-            "EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();\n",
-            "echoSettingsBuilder\n",
-            "    .echoSettings()\n",
-            "    .setRetrySettings(\n",
-            "        echoSettingsBuilder\n",
-            "            .echoSettings()\n",
-            "            .getRetrySettings()\n",
-            "            .toBuilder()\n",
-            "            .setInitialRetryDelayDuration(Duration.ofMillis(5000))\n",
+            "WaitSettings.Builder waitSettingsBuilder = WaitSettings.newBuilder();\n",
+            "TimedRetryAlgorithm timedRetryAlgorithm =\n",
+            "    OperationalTimedPollAlgorithm.create(\n",
+            "        RetrySettings.newBuilder()\n",
+            "            .setInitialRetryDelayDuration(Duration.ofMillis(500))\n",
             "            .setRetryDelayMultiplier(1.5)\n",
             "            .setMaxRetryDelay(Duration.ofMillis(5000))\n",
             "            .setTotalTimeoutDuration(Duration.ofHours(24))\n",
             "            .build());\n",
-            "EchoSettings echoSettings = echoSettingsBuilder.build();");
-    assertEquals(results.get(), expected);
+            "waitSettingsBuilder\n",
+            "    .createClusterOperationSettings()\n",
+            "    .setPollingAlgorithm(timedRetryAlgorithm)\n",
+            "    .build();");
+    assertEquals(expected, results.get());
   }
 
   @Test
-  void composeSettingsSample_serviceStubClass_LROMethod() {
+  void composeSettingsSample_serviceStubClass_LroMethod() {
     TypeNode classType =
         TypeNode.withReference(
             VaporReference.builder()
-                .setName("EchoStubSettings")
+                .setName("WaitStubSettings")
                 .setPakkage("com.google.showcase.v1beta1")
                 .build());
     Optional<String> results =
         writeSample(
-            SettingsSampleComposer.composeSettingsSample(
-                Optional.of("Echo"), "EchoSettings", classType, Optional.of(true)));
+            SettingsSampleComposer.composeLroSettingsSample(
+                Optional.of("Wait"), "WaitSettings", classType));
     String expected =
         LineFormatter.lines(
-            "EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();\n",
-            "echoSettingsBuilder\n",
-            "    .echoSettings()\n",
-            "    .setRetrySettings(\n",
-            "        echoSettingsBuilder\n",
-            "            .echoSettings()\n",
-            "            .getRetrySettings()\n",
-            "            .toBuilder()\n",
-            "            .setInitialRetryDelayDuration(Duration.ofMillis(5000))\n",
+            "WaitStubSettings.Builder waitSettingsBuilder = WaitStubSettings.newBuilder();\n",
+            "TimedRetryAlgorithm timedRetryAlgorithm =\n",
+            "    OperationalTimedPollAlgorithm.create(\n",
+            "        RetrySettings.newBuilder()\n",
+            "            .setInitialRetryDelayDuration(Duration.ofMillis(500))\n",
             "            .setRetryDelayMultiplier(1.5)\n",
             "            .setMaxRetryDelay(Duration.ofMillis(5000))\n",
             "            .setTotalTimeoutDuration(Duration.ofHours(24))\n",
             "            .build());\n",
-            "EchoStubSettings echoSettings = echoSettingsBuilder.build();");
+            "waitSettingsBuilder\n",
+            "    .createClusterOperationSettings()\n",
+            "    .setPollingAlgorithm(timedRetryAlgorithm)\n",
+            "    .build();");
     assertEquals(results.get(), expected);
   }
 
