@@ -475,12 +475,12 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return callableClassMembers;
   }
 
-  private static VariableExpr getCallableExpr(Method protoMethod, String callableName) {
+  private VariableExpr getCallableExpr(Method protoMethod, String callableName) {
     return VariableExpr.withVariable(
         Variable.builder().setName(callableName).setType(getCallableType(protoMethod)).build());
   }
 
-  private static VariableExpr getPagedCallableExpr(
+  private VariableExpr getPagedCallableExpr(
       TypeStore typeStore, Method protoMethod, String callableName) {
     return VariableExpr.withVariable(
         Variable.builder()
@@ -1013,69 +1013,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
         .setValueExpr(initExpr)
         .build();
   }
-
-  //  private Expr createCallableInitExpr(
-  //      GapicContext context,
-  //      Service service,
-  //      String callableVarName,
-  //      VariableExpr callableVarExpr,
-  //      VariableExpr callableFactoryVarExpr,
-  //      VariableExpr settingsVarExpr,
-  //      VariableExpr clientContextVarExpr,
-  //      VariableExpr operationsStubClassVarExpr,
-  //      Expr thisExpr,
-  //      Map<String, VariableExpr> javaStyleMethodNameToTransportSettingsVarExprs,
-  //      boolean isOperation) {
-  //    List<Expr> creatorMethodArgVarExprs;
-  //    Expr transportSettingsVarExpr =
-  //        javaStyleMethodNameToTransportSettingsVarExprs.get(callableVarName);
-  //    Preconditions.checkNotNull(
-  //        transportSettingsVarExpr,
-  //        String.format("No transport settings variable found for method name %s",
-  // callableVarName));
-  //    if (isOperation) {
-  //      creatorMethodArgVarExprs =
-  //          Arrays.asList(
-  //              transportSettingsVarExpr,
-  //              MethodInvocationExpr.builder()
-  //                  .setExprReferenceExpr(settingsVarExpr)
-  //                  .setMethodName(String.format("%sOperationSettings", callableVarName))
-  //                  .build(),
-  //              clientContextVarExpr,
-  //              operationsStubClassVarExpr);
-  //    } else {
-  //      creatorMethodArgVarExprs =
-  //          Arrays.asList(
-  //              transportSettingsVarExpr,
-  //              MethodInvocationExpr.builder()
-  //                  .setExprReferenceExpr(settingsVarExpr)
-  //                  .setMethodName(String.format("%sSettings", callableVarName))
-  //                  .build(),
-  //              clientContextVarExpr);
-  //    }
-  //
-  //    String methodName = JavaStyle.toUpperCamelCase(callableVarName);
-  //    Optional<String> callableCreatorMethodName =
-  //        getCallableCreatorMethodName(context, service, callableVarExpr.type(), methodName);
-  //
-  //    Expr initExpr;
-  //    if (callableCreatorMethodName.isPresent()) {
-  //      initExpr =
-  //          MethodInvocationExpr.builder()
-  //              .setExprReferenceExpr(callableFactoryVarExpr)
-  //              .setMethodName(callableCreatorMethodName.get())
-  //              .setArguments(creatorMethodArgVarExprs)
-  //              .setReturnType(callableVarExpr.type())
-  //              .build();
-  //    } else {
-  //      initExpr = ValueExpr.createNullExpr();
-  //    }
-  //
-  //    return AssignmentExpr.builder()
-  //        .setVariableExpr(callableVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
-  //        .setValueExpr(initExpr)
-  //        .build();
-  //  }
 
   protected Optional<String> getCallableCreatorMethodName(
       GapicContext context,
