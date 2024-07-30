@@ -39,12 +39,10 @@
       <groupId>com.google.protobuf</groupId>
       <artifactId>protobuf-java</artifactId>
     </dependency>
-{%- if repo in ['java-storage', 'java-spanner', 'java-dataproc'] %}
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-common-protos</artifactId>
     </dependency>
-{%- endif %}
 {% for module in proto_modules %}
     <dependency>
       <groupId>{{module.group_id}}</groupId>
@@ -68,13 +66,13 @@
     </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>
-      <artifactId>grpc-google-common-protos</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-iam-v1</artifactId>
     </dependency>
 {%- if repo in ['java-storage', 'java-spanner', 'java-dataproc'] %}
+    <dependency>
+      <groupId>com.google.api.grpc</groupId>
+      <artifactId>grpc-google-common-protos</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-google-iam-v1</artifactId>
@@ -89,7 +87,7 @@
 {%- if repo not in ['java-storage', 'java-spanner','java-dataproc'] %}
     <dependency>
       <groupId>com.google.api.grpc</groupId>
-      <artifactId>proto-google-common-protos</artifactId>
+      <artifactId>grpc-google-common-protos</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
