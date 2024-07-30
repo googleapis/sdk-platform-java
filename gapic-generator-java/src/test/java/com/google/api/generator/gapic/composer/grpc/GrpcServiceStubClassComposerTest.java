@@ -20,7 +20,6 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.protoloader.GrpcTestProtoLoader;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.Arguments;
 
 class GrpcServiceStubClassComposerTest {
   @Test

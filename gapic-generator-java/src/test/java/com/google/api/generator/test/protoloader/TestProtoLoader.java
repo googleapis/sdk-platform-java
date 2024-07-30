@@ -479,12 +479,12 @@ public class TestProtoLoader {
 
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-            Parser.parseService(
-                    serviceFileDescriptor,
-                    messageTypes,
-                    resourceNames,
-                    Optional.empty(),
-                    outputResourceNames);
+        Parser.parseService(
+            serviceFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
 
     String jsonFilename = "naming_grpc_service_config.json.json";
     Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
@@ -493,13 +493,13 @@ public class TestProtoLoader {
     GapicServiceConfig config = configOpt.get();
 
     return GapicContext.builder()
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setServices(services)
-            .setServiceConfig(config)
-            .setHelperResourceNames(outputResourceNames)
-            .setTransport(transport)
-            .build();
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setServiceConfig(config)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
   }
 
   public String getTestFilesDirectory() {
