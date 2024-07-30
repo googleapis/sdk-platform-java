@@ -20,6 +20,7 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.protoloader.GrpcTestProtoLoader;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.provider.Arguments;
 
 class GrpcServiceStubClassComposerTest {
   @Test
@@ -90,6 +91,15 @@ class GrpcServiceStubClassComposerTest {
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
 
     Assert.assertGoldenClass(this.getClass(), clazz, "GrpcAutoPopulateFieldStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
+  }
+
+  @Test
+  void generateGrpcServiceStubClass_namingField() {
+    GapicContext context = GrpcTestProtoLoader.instance().parseNaming();
+    Service service = context.services().get(0);
+    GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
+    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcNamingStub.golden");
     Assert.assertEmptySamples(clazz.samples());
   }
 }

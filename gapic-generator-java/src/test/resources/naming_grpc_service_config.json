@@ -1,0 +1,20 @@
+{
+  "methodConfig": [
+    {
+    {
+      "service": "google.test.naming",
+      "method": "GetApiOperation"
+    }
+  ],
+  "retryPolicy": {
+    "maxAttempts": 5,
+    "initialBackoff": "0.5s",
+    "maxBackoff": "30s",
+    "backoffMultiplier": 2,
+    "retryableStatusCodes": [
+      "UNAVAILABLE"
+    ]
+  }
+}
+]
+}
