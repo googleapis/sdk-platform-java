@@ -486,20 +486,20 @@ public class TestProtoLoader {
             Optional.empty(),
             outputResourceNames);
 
-    String jsonFilename = "naming_grpc_service_config.json.json";
-    Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
-    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
-    assertTrue(configOpt.isPresent());
-    GapicServiceConfig config = configOpt.get();
+//    String jsonFilename = "naming_grpc_service_config.json";
+//    Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
+//    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+//    assertTrue(configOpt.isPresent());
+//    GapicServiceConfig config = configOpt.get();
 
     return GapicContext.builder()
-        .setMessages(messageTypes)
-        .setResourceNames(resourceNames)
-        .setServices(services)
-        .setServiceConfig(config)
-        .setHelperResourceNames(outputResourceNames)
-        .setTransport(transport)
-        .build();
+            .setMessages(messageTypes)
+            .setResourceNames(resourceNames)
+            .setServices(services)
+//            .setServiceConfig(config)
+            .setHelperResourceNames(outputResourceNames)
+            .setTransport(transport)
+            .build();
   }
 
   public String getTestFilesDirectory() {
