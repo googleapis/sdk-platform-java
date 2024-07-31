@@ -25,7 +25,7 @@ GAPIC_LEVEL_PARAMETER = "GAPIC level parameter"
 COMMON_PROTOS_LIBRARY_NAME = "common-protos"
 GAPIC_GENERATOR_VERSION = "gapic_generator_version"
 LIBRARIES_BOM_VERSION = "libraries_bom_version"
-GENERATOR_VERSION_ENV_KEY = "GENERATOR_VERSION"
+GENERATOR_VERSION_ENV_KEY = "DOCKER_GAPIC_GENERATOR_VERSION"
 
 
 class GenerationConfig:
@@ -90,9 +90,11 @@ class GenerationConfig:
         gapic_generator_version = os.getenv(GENERATOR_VERSION_ENV_KEY)
         if not gapic_generator_version:
             raise ValueError(
-                f"Environment variable {GENERATOR_VERSION_ENV_KEY}"
-                f" is not set when the generator version is not"
-                f" specified in the generation config."
+                f"gapic_generator_version was not specified in the "
+                f"configuration yaml and the fall-back env var "
+                f"{GENERATOR_VERSION_ENV_KEY} was not found. At "
+                f"least one of them must be set to proceed with the "
+                f"generation."
             )
         return gapic_generator_version
 

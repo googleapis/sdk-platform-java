@@ -56,20 +56,20 @@ class GenerationConfigTest(unittest.TestCase):
     def test_generation_config_with_generator_version_env_raise_exception(self):
         self.assertRaisesRegex(
             ValueError,
-            "Environment variable GENERATOR_VERSION is not set",
+            "the fall-back env var DOCKER_GAPIC_GENERATOR_VERSION was not found",
             GenerationConfig,
             googleapis_commitish="",
             libraries=[],
         )
 
     def test_generation_config_set_generator_version_from_env(self):
-        os.environ["GENERATOR_VERSION"] = "1.2.3"
+        os.environ["DOCKER_GAPIC_GENERATOR_VERSION"] = "1.2.3"
         config = GenerationConfig(
             googleapis_commitish="",
             libraries=[],
         )
         self.assertEqual("1.2.3", config.gapic_generator_version)
-        os.environ.pop("GENERATOR_VERSION")
+        os.environ.pop("DOCKER_GAPIC_GENERATOR_VERSION")
 
     def test_from_yaml_succeeds(self):
         config = from_yaml(f"{test_config_dir}/generation_config.yaml")

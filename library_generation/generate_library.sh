@@ -76,15 +76,8 @@ source "${script_dir}"/utils/utilities.sh
 output_folder="$(get_output_folder)"
 
 if [[ -z "${gapic_generator_version}" ]] ; then
-  if [[ -n "${DOCKER_GAPIC_GENERATOR_VERSION}" ]]; then
-    # we fall back to the docker env var so it's handled downstream in
-    # utilities.sh. This will make the jar embedded in the image to be
-    # transferred to output_folder
-    gapic_generator_version="${DOCKER_GAPIC_GENERATOR_VERSION}"
-  else
-    echo 'missing required argument --gapic_generator_version'
-    exit 1
-  fi
+  echo 'missing required argument --gapic_generator_version'
+  exit 1
 fi
 
 if [ -z "${protoc_version}" ]; then
