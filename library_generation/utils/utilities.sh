@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -eo pipefail
-set -x
 utilities_script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 
 # Utility functions used in `generate_library.sh` and showcase generation.
