@@ -23,6 +23,7 @@ import contextlib
 from pathlib import Path
 from library_generation.utils import utilities as util
 from library_generation.model.gapic_config import GapicConfig
+from library_generation.model.gapic_inputs import GapicInputs
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from library_generation.test.test_utils import FileComparator
@@ -56,6 +57,14 @@ common_protos = LibraryConfig(
     product_documentation="",
     api_description="example description",
     gapic_configs=list(),
+)
+test_library_with_custom_transport = LibraryConfig(
+    api_shortname="secretmanager",
+    name_pretty="Secret Management",
+    product_documentation="https://cloud.google.com/solutions/secrets-management/",
+    api_description="allows you to encrypt, store, manage, and audit infrastructure and application-level secrets.",
+    gapic_configs=list(),
+    transport="rest",
 )
 
 
@@ -225,6 +234,40 @@ class UtilitiesTest(unittest.TestCase):
         )
         self.__remove_postprocessing_prerequisite_files(path=library_path)
 
+    def test_generate_postprocessing_prerequisite_files__custom_transport_set_in_config__success(
+        self,
+    ):
+        """
+        This test generates files for `test_library_with_custom_transport`, which
+        has an explicit value for transport declared (http). This is expected to
+        override the value obtained in BUILD.bazel via gapic_inputs.parse(). For
+        testing purposes, we test with a default GapicInputs object, whose transport
+        is set to "grpc".
+        """
+        library_path = self.__setup_postprocessing_prerequisite_files(
+            combination=2, library=test_library_with_custom_transport
+        )
+
+        file_comparator.compare_files(
+            f"{library_path}/.repo-metadata.json",
+            f"{library_path}/.repo-metadata-custom-transport-golden.json",
+        )
+        self.__remove_postprocessing_prerequisite_files(path=library_path)
+
+    def test_create__library_invalid_transport__fails(
+        self,
+    ):
+
+        with self.assertRaises(ValueError):
+            test_library_with_invalid_transport = LibraryConfig(
+                api_shortname="secretmanager",
+                name_pretty="Secret Management",
+                product_documentation="https://cloud.google.com/solutions/secrets-management/",
+                api_description="allows you to encrypt, store, manage, and audit infrastructure and application-level secrets.",
+                gapic_configs=list(),
+                transport="http",
+            )
+
     def test_prepare_repo_monorepo_success(self):
         gen_config = self.__get_a_gen_config(2)
         repo_config = util.prepare_repo(
@@ -276,7 +319,8 @@ class UtilitiesTest(unittest.TestCase):
         library.library_type = library_type
         config = self.__get_a_gen_config(combination, library_type=library_type)
         proto_path = "google/cloud/baremetalsolution/v2"
-        transport = "grpc"
+        gapic_inputs = GapicInputs()  # defaults to transport=grpc
+        transport = library.get_transport(gapic_inputs)
         util.generate_postprocessing_prerequisite_files(
             config=config,
             library=library,

@@ -30,6 +30,7 @@ jobs:
         # Set the Env Var for this step only
         env:
           GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
+          GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS: true
       - run: bazelisk version
       - name: Install Maven modules
         run: |
@@ -80,6 +81,7 @@ jobs:
         # Set the Env Var for this step only
         env:
           GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
+          GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS: true
       - run: bazelisk version
       - name: Install Maven modules
         run: |
@@ -130,6 +132,7 @@ jobs:
         # Set the Env Var for this step only
         env:
           GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
+          GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS: true
 
   build-java8-gapic-generator-java:
     name: "build(8) for gapic-generator-java"
@@ -211,7 +214,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        java: [ 11, 17 ]
+        java: [ 11, 17, 21 ]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
