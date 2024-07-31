@@ -19,10 +19,10 @@ FROM gcr.io/cloud-devrel-public-resources/java21 AS ggj-build
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.42.1-SNAPSHOT" 
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.43.1-SNAPSHOT" 
 
 RUN mvn install -DskipTests -Dclirr.skip -Dcheckstyle.skip
-RUN ls "/root/.m2/repository/com/google/api/gapic-generator-java/" 
+RUN ls "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}" 
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" .
 
 # build from the root of this repo:
@@ -64,7 +64,7 @@ ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 
 # we transfer gapic-generator-java from the previous stage.
 # here we redeclare this env var since they are not preserved between stages
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.42.1-SNAPSHOT" 
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.43.1-SNAPSHOT" 
 # {x-version-update-end:gapic-generator-java:current}
 ENV DOCKER_GAPIC_GENERATOR_LOCATION="/gapic-generator-java/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar"
 COPY --from=ggj-build "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" "${DOCKER_GAPIC_GENERATOR_LOCATION}"
