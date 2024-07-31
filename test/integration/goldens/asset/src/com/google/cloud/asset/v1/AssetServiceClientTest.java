@@ -111,7 +111,7 @@ public class AssetServiceClientTest {
 
     ExportAssetsRequest request =
         ExportAssetsRequest.newBuilder()
-            .setParent(FolderName.of("[FOLDER]").toString())
+            .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
             .setReadTime(Timestamp.newBuilder().build())
             .addAllAssetTypes(new ArrayList<String>())
             .setContentType(ContentType.forNumber(0))
@@ -147,7 +147,7 @@ public class AssetServiceClientTest {
     try {
       ExportAssetsRequest request =
           ExportAssetsRequest.newBuilder()
-              .setParent(FolderName.of("[FOLDER]").toString())
+              .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
               .setReadTime(Timestamp.newBuilder().build())
               .addAllAssetTypes(new ArrayList<String>())
               .setContentType(ContentType.forNumber(0))
@@ -261,7 +261,7 @@ public class AssetServiceClientTest {
 
     BatchGetAssetsHistoryRequest request =
         BatchGetAssetsHistoryRequest.newBuilder()
-            .setParent(FolderName.of("[FOLDER]").toString())
+            .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
             .addAllAssetNames(new ArrayList<String>())
             .setContentType(ContentType.forNumber(0))
             .setReadTimeWindow(TimeWindow.newBuilder().build())
@@ -296,7 +296,7 @@ public class AssetServiceClientTest {
     try {
       BatchGetAssetsHistoryRequest request =
           BatchGetAssetsHistoryRequest.newBuilder()
-              .setParent(FolderName.of("[FOLDER]").toString())
+              .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
               .addAllAssetNames(new ArrayList<String>())
               .setContentType(ContentType.forNumber(0))
               .setReadTimeWindow(TimeWindow.newBuilder().build())
@@ -856,7 +856,7 @@ public class AssetServiceClientTest {
 
     QueryAssetsRequest request =
         QueryAssetsRequest.newBuilder()
-            .setParent(FolderName.of("[FOLDER]").toString())
+            .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
             .setPageSize(883849137)
             .setPageToken("pageToken873572522")
             .setTimeout(Duration.newBuilder().build())
@@ -893,7 +893,7 @@ public class AssetServiceClientTest {
     try {
       QueryAssetsRequest request =
           QueryAssetsRequest.newBuilder()
-              .setParent(FolderName.of("[FOLDER]").toString())
+              .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
               .setPageSize(883849137)
               .setPageToken("pageToken873572522")
               .setTimeout(Duration.newBuilder().build())
@@ -1510,7 +1510,7 @@ public class AssetServiceClientTest {
 
     BatchGetEffectiveIamPoliciesRequest request =
         BatchGetEffectiveIamPoliciesRequest.newBuilder()
-            .setScope(FolderName.of("[FOLDER]").toString())
+            .setScope(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
             .addAllNames(new ArrayList<String>())
             .build();
 
@@ -1539,7 +1539,7 @@ public class AssetServiceClientTest {
     try {
       BatchGetEffectiveIamPoliciesRequest request =
           BatchGetEffectiveIamPoliciesRequest.newBuilder()
-              .setScope(FolderName.of("[FOLDER]").toString())
+              .setScope(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
               .addAllNames(new ArrayList<String>())
               .build();
       client.batchGetEffectiveIamPolicies(request);

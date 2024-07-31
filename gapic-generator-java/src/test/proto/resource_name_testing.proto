@@ -1,0 +1,171 @@
+// Copyright 2024 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+import "google/api/client.proto";
+import "google/api/resource.proto";
+import "google/api/field_behavior.proto";
+import "google/api/annotations.proto";
+
+package google.resource.name.test;
+
+option java_package = "com.google.resource.name.test";
+option java_multiple_files = true;
+option java_outer_classname = "ResourceNameTestOuterClass";
+
+service ResourceName {
+  // This service is meant to only run locally on the port 7469 (keypad digits
+  // for "show").
+  option (google.api.default_host) = "localhost:7469";
+
+  // RPC to test that the resource's pattern matches the HttpBinding.
+  // Expectation is that gRPC and HttpJson match with the Resource resource.
+  // For gRPC, matching the bindings is not required, so it will use the direct
+  // resource reference as it is known.
+  rpc GetResource(GetResourceRequest) returns (Resource) {
+    option (google.api.http) = {
+      get: "/v1/{name=parentResources/*/resources/*}"
+    };
+    option (google.api.method_signature) = "name";
+  }
+
+  // RPC to test that the resource's parent pattern matches the HttpBinding
+  // Expectation is that gRPC and HttpJson match with the ParentResource resource as
+  // the request's parent field is child_type and ParentResource is the parent to
+  // Resource
+  rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
+    option (google.api.http) = {
+      get: "/v1/{parent=parentResources/*}/resources"
+    };
+    option (google.api.method_signature) = "parent";
+  }
+
+  // RPC to test that the resource's pattern matches the HttpBinding
+  // Expectation is that gRPC and HttpJson match with the Resource resource.
+  // For gRPC, matching the bindings is not required, so it will use the direct
+  // resource reference as it is known. Only one test method is generated since
+  // there is no method signature.
+  rpc GetResourceNoMethodSignature(GetResourceRequest) returns (Resource) {
+    option (google.api.http) = {
+      get: "/v1/{name=parentResources/*/resources/*}"
+    };
+  }
+
+  // RPC to test that the resource's parent pattern matches the HttpBinding
+  // Expectation is that gRPC and HttpJson match with the ParentResource resource  as
+  // the request's parent field is child_type and ParentResource is the parent to
+  // Resource. Only one test method is generated since there is no method signature
+  rpc ListResourcesNoMethodSignature(ListResourcesRequest) returns (ListResourcesResponse) {
+    option (google.api.http) = {
+      get: "/v1/{parent=parentResources/*}"
+    };
+  }
+
+  // RPC to test that the resource's pattern does not match
+  // Expectation is that both gRPC matches with the Resource resource (as matching with bindings is
+  // not needed for gRPC) and HttpJson generates a string value that matches the bindings
+  rpc NoMatchResource(NoMatchResourceRequest) returns (NoMatchResourceResponse) {
+    option (google.api.http) = {
+      get: "/v1/{name=does/*/not/*/match}/resource"
+    };
+  }
+
+  // RPC to test that the resource's pattern, but no HttpBindings
+  // Expectation is that gRPC matches with the Resource resource (as there is a direct resource
+  // reference), but HttpJson does not generate a test as there are no HttpBindings
+  rpc NoBindings(NoMatchResourceRequest) returns (NoMatchResourceResponse);
+
+  // RPC to test that the a wildcard resource reference will match with any known resource
+  // as long as the bindings are not more restrictive. Expectation is that both gRPC and HttpJson
+  // match with any known resource as the bindings are (**)
+  rpc WildcardResourceReference(WildcardResourceRequest) returns (WildcardResourceResponse) {
+    option (google.api.http) = {
+      get: "/v1/{name=**}/resource"
+    };
+  }
+
+  // RPC to test that the a wildcard resource reference will match with any known resource.
+  // Expectation is that both gRPC matches with any known resource (as matching with bindings is not
+  // needed for gRPC) and HttpJson matches with the Resource resource
+  rpc WildcardResourceReferenceStrictBindings(WildcardResourceRequest) returns (WildcardResourceResponse) {
+    option (google.api.http) = {
+      get: "/v1/{name=parentResources/*/resources/*}"
+    };
+  }
+}
+
+message Resource {
+  option (google.api.resource) = {
+    type: "library.googleapis.com/Resource"
+    pattern: "parentResources/{parentResource}/resources/{resource}"
+  };
+
+  // The resource name of the resource.
+  // Format: parentResources/{parentResource}/resources/{resource}
+  string name = 1 [(google.api.field_behavior) = IDENTIFIER];
+}
+
+message GetResourceRequest {
+  // Format: parentResources/{parentResource}/resources/{resource}
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "library.googleapis.com/Resource"
+    }];
+}
+
+message ListResourcesRequest {
+  // Format: parentResources/{parentResource}
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      child_type: "library.googleapis.com/Resource"
+    }];
+
+  int32 page_size = 2;
+
+  string page_token = 3;
+}
+
+message ListResourcesResponse {
+  repeated Resource resources = 1;
+
+  string next_page_token = 2;
+}
+
+message NoMatchResourceRequest {
+  // Format: parentResources/{parentResource}/resources/{resource}
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "library.googleapis.com/Resource"
+    }];
+}
+
+message NoMatchResourceResponse {
+  string response = 1;
+}
+
+message WildcardResourceRequest {
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "*"
+    }];
+}
+
+message WildcardResourceResponse {
+  string response = 1;
+}

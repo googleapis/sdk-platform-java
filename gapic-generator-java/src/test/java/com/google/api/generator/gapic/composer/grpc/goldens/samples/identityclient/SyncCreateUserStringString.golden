@@ -14,36 +14,29 @@
  * limitations under the License.
  */
 
-package com.google.cloud.pubsub.v1.samples;
+package com.google.showcase.v1beta1.samples;
 
-// [START pubsub_v1_generated_Publisher_SetIamPolicy_sync]
-import com.google.cloud.pubsub.v1.TopicAdminClient;
-import com.google.iam.v1.Policy;
-import com.google.iam.v1.SetIamPolicyRequest;
-import com.google.protobuf.FieldMask;
-import com.google.pubsub.v1.ProjectName;
+// [START goldensample_generated_Identity_CreateUser_StringString_sync]
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.User;
 
-public class SyncSetIamPolicy {
+public class SyncCreateUserStringString {
 
   public static void main(String[] args) throws Exception {
-    syncSetIamPolicy();
+    syncCreateUserStringString();
   }
 
-  public static void syncSetIamPolicy() throws Exception {
+  public static void syncCreateUserStringString() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
-      SetIamPolicyRequest request =
-          SetIamPolicyRequest.newBuilder()
-              .setResource(ProjectName.of("[PROJECT]").toString())
-              .setPolicy(Policy.newBuilder().build())
-              .setUpdateMask(FieldMask.newBuilder().build())
-              .build();
-      Policy response = topicAdminClient.setIamPolicy(request);
+    try (IdentityClient identityClient = IdentityClient.create()) {
+      String displayName = "displayName1714148973";
+      String email = "email96619420";
+      User response = identityClient.createUser(displayName, email);
     }
   }
 }
-// [END pubsub_v1_generated_Publisher_SetIamPolicy_sync]
+// [END goldensample_generated_Identity_CreateUser_StringString_sync]

@@ -30,10 +30,9 @@ import javax.annotation.Generated;
  * // - It may require specifying regional endpoints when creating the service client as shown in
  * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
  * try (IdentityClient identityClient = IdentityClient.create()) {
- *   String parent = UserName.of("[USER]").toString();
  *   String displayName = "displayName1714148973";
  *   String email = "email96619420";
- *   User response = identityClient.createUser(parent, displayName, email);
+ *   User response = identityClient.createUser(displayName, email);
  * }
  * }</pre>
  *
@@ -57,9 +56,9 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *           <li><p> createUser(String parent, String displayName, String email)
- *           <li><p> createUser(String parent, String displayName, String email, int age, String nickname, boolean enableNotifications, double heightFeet)
- *           <li><p> createUser(String parent, String displayName, String email, String hobbyName, String songName, int weeklyFrequency, String companyName, String title, String subject, String artistName)
+ *           <li><p> createUser(String displayName, String email)
+ *           <li><p> createUser(String displayName, String email, int age, String nickname, boolean enableNotifications, double heightFeet)
+ *           <li><p> createUser(String displayName, String email, String hobbyName, String songName, int weeklyFrequency, String companyName, String title, String subject, String artistName)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -235,22 +234,19 @@ public class IdentityClient implements BackgroundResource {
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String parent = UserName.of("[USER]").toString();
    *   String displayName = "displayName1714148973";
    *   String email = "email96619420";
-   *   User response = identityClient.createUser(parent, displayName, email);
+   *   User response = identityClient.createUser(displayName, email);
    * }
    * }</pre>
    *
-   * @param parent
    * @param displayName
    * @param email
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final User createUser(String parent, String displayName, String email) {
+  public final User createUser(String displayName, String email) {
     CreateUserRequest request =
         CreateUserRequest.newBuilder()
-            .setParent(parent)
             .setUser(User.newBuilder().setDisplayName(displayName).setEmail(email).build())
             .build();
     return createUser(request);
@@ -267,7 +263,6 @@ public class IdentityClient implements BackgroundResource {
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String parent = UserName.of("[USER]").toString();
    *   String displayName = "displayName1714148973";
    *   String email = "email96619420";
    *   int age = 96511;
@@ -276,11 +271,10 @@ public class IdentityClient implements BackgroundResource {
    *   double heightFeet = -1032737338;
    *   User response =
    *       identityClient.createUser(
-   *           parent, displayName, email, age, nickname, enableNotifications, heightFeet);
+   *           displayName, email, age, nickname, enableNotifications, heightFeet);
    * }
    * }</pre>
    *
-   * @param parent
    * @param displayName
    * @param email
    * @param age
@@ -290,7 +284,6 @@ public class IdentityClient implements BackgroundResource {
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final User createUser(
-      String parent,
       String displayName,
       String email,
       int age,
@@ -299,7 +292,6 @@ public class IdentityClient implements BackgroundResource {
       double heightFeet) {
     CreateUserRequest request =
         CreateUserRequest.newBuilder()
-            .setParent(parent)
             .setUser(
                 User.newBuilder()
                     .setDisplayName(displayName)
@@ -324,7 +316,6 @@ public class IdentityClient implements BackgroundResource {
    * // - It may require specifying regional endpoints when creating the service client as shown in
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String parent = UserName.of("[USER]").toString();
    *   String displayName = "displayName1714148973";
    *   String email = "email96619420";
    *   String hobbyName = "hobbyName882586493";
@@ -336,7 +327,6 @@ public class IdentityClient implements BackgroundResource {
    *   String artistName = "artistName629723762";
    *   User response =
    *       identityClient.createUser(
-   *           parent,
    *           displayName,
    *           email,
    *           hobbyName,
@@ -349,7 +339,6 @@ public class IdentityClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param parent
    * @param displayName
    * @param email
    * @param hobbyName
@@ -362,7 +351,6 @@ public class IdentityClient implements BackgroundResource {
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final User createUser(
-      String parent,
       String displayName,
       String email,
       String hobbyName,
@@ -374,7 +362,6 @@ public class IdentityClient implements BackgroundResource {
       String artistName) {
     CreateUserRequest request =
         CreateUserRequest.newBuilder()
-            .setParent(parent)
             .setUser(
                 User.newBuilder()
                     .setDisplayName(displayName)
@@ -415,10 +402,7 @@ public class IdentityClient implements BackgroundResource {
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   CreateUserRequest request =
-   *       CreateUserRequest.newBuilder()
-   *           .setParent(UserName.of("[USER]").toString())
-   *           .setUser(User.newBuilder().build())
-   *           .build();
+   *       CreateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
    *   User response = identityClient.createUser(request);
    * }
    * }</pre>
@@ -442,10 +426,7 @@ public class IdentityClient implements BackgroundResource {
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   CreateUserRequest request =
-   *       CreateUserRequest.newBuilder()
-   *           .setParent(UserName.of("[USER]").toString())
-   *           .setUser(User.newBuilder().build())
-   *           .build();
+   *       CreateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
    *   ApiFuture<User> future = identityClient.createUserCallable().futureCall(request);
    *   // Do something.
    *   User response = future.get();
