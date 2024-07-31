@@ -105,13 +105,9 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   private static final String PAGED_CALLABLE_CLASS_MEMBER_PATTERN = "%sPagedCallable";
 
   private static final String BACKGROUND_RESOURCES_MEMBER_NAME = "backgroundResources";
-  private static final String CALLABLE_NAME = "Callable";
   private static final String CALLABLE_FACTORY_MEMBER_NAME = "callableFactory";
   protected static final String CALLABLE_CLASS_MEMBER_PATTERN = "%sCallable";
   private static final String OPERATION_CALLABLE_CLASS_MEMBER_PATTERN = "%sOperationCallable";
-  private static final String OPERATION_CALLABLE_NAME = "OperationCallable";
-  // private static final String OPERATIONS_STUB_MEMBER_NAME = "operationsStub";
-  protected static final String PAGED_CALLABLE_NAME = "PagedCallable";
 
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 

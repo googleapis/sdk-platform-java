@@ -487,12 +487,12 @@ public class TestProtoLoader {
             outputResourceNames);
 
     return GapicContext.builder()
-            .setMessages(messageTypes)
-            .setResourceNames(resourceNames)
-            .setServices(services)
-            .setHelperResourceNames(outputResourceNames)
-            .setTransport(transport)
-            .build();
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
   }
 
   public String getTestFilesDirectory() {
