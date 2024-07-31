@@ -231,7 +231,23 @@ download_tools_succeed_with_baked_generator() {
   # the protoc version we want to download is the same as DOCKER_GRPC_VERSION
   log=$(download_tools "99.99" "${test_protoc_version}" "${test_grpc_version}" "linux-x86_64" 2>&1 1>/dev/null)
 
-  assertContains "Using gapic-generator-java version baked into the container: 99.99" "${log}"
+  # the assertion functions are designed to be called only once per function.
+  # Here we do two manual tests that are then coverged into a single
+  # pseudo-boolean
+  has_expected_log="false"
+  has_expected_file="false"
+  is_output_correct="false"
+  if grep -q "Using gapic-generator-java version baked into the container: 99.99" <<< "${log}"; then
+    has_expected_log="true"
+  fi
+  if [[ -f "${output_folder}/gapic-generator-java.fakejar" ]]; then
+    has_expected_file="true"
+  fi
+  if [[ "${has_expected_log}" == "true" ]] && [[ "${has_expected_file}" == "true" ]]; then
+    is_output_correct="true"
+  fi
+
+  assertEquals "true" "${is_output_correct}"
 
   rm -rdf "${output_folder}"
   unset DOCKER_GRPC_LOCATION
