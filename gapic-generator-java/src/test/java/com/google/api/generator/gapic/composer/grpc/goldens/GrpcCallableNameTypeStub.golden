@@ -1,4 +1,4 @@
-package com.google.test.naming.stub;
+package com.google.test.callablenamingtype.stub;
 
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
@@ -8,8 +8,8 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.longrunning.stub.GrpcOperationsStub;
-import com.google.test.naming.ApiOperation;
-import com.google.test.naming.GetApiOperationRequest;
+import com.google.test.callablenamingtype.ApiOperation;
+import com.google.test.callablenamingtype.GetApiOperationRequest;
 import io.grpc.MethodDescriptor;
 import io.grpc.protobuf.ProtoUtils;
 import java.io.IOException;
@@ -19,17 +19,17 @@ import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
- * gRPC stub implementation for the NamingService service API.
+ * gRPC stub implementation for the CallableNameTypeService service API.
  *
  * <p>This class is for advanced usage and reflects the underlying API directly.
  */
 @Generated("by gapic-generator-java")
-public class GrpcNamingServiceStub extends NamingServiceStub {
+public class GrpcCallableNameTypeServiceStub extends CallableNameTypeServiceStub {
   private static final MethodDescriptor<GetApiOperationRequest, ApiOperation>
       getApiOperationMethodDescriptor =
           MethodDescriptor.<GetApiOperationRequest, ApiOperation>newBuilder()
               .setType(MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName("google.test.naming.NamingService/GetApiOperation")
+              .setFullMethodName("google.test.naming.CallableNameTypeService/GetApiOperation")
               .setRequestMarshaller(
                   ProtoUtils.marshaller(GetApiOperationRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ApiOperation.getDefaultInstance()))
@@ -39,7 +39,7 @@ public class GrpcNamingServiceStub extends NamingServiceStub {
       apiPagedMethodDescriptor =
           MethodDescriptor.<GetApiOperationRequest, ApiOperation>newBuilder()
               .setType(MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName("google.test.naming.NamingService/ApiPaged")
+              .setFullMethodName("google.test.naming.CallableNameTypeService/ApiPaged")
               .setRequestMarshaller(
                   ProtoUtils.marshaller(GetApiOperationRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ApiOperation.getDefaultInstance()))
@@ -52,38 +52,41 @@ public class GrpcNamingServiceStub extends NamingServiceStub {
   private final GrpcOperationsStub operationsStub;
   private final GrpcStubCallableFactory callableFactory;
 
-  public static final GrpcNamingServiceStub create(NamingServiceStubSettings settings)
+  public static final GrpcCallableNameTypeServiceStub create(
+      CallableNameTypeServiceStubSettings settings) throws IOException {
+    return new GrpcCallableNameTypeServiceStub(settings, ClientContext.create(settings));
+  }
+
+  public static final GrpcCallableNameTypeServiceStub create(ClientContext clientContext)
       throws IOException {
-    return new GrpcNamingServiceStub(settings, ClientContext.create(settings));
+    return new GrpcCallableNameTypeServiceStub(
+        CallableNameTypeServiceStubSettings.newBuilder().build(), clientContext);
   }
 
-  public static final GrpcNamingServiceStub create(ClientContext clientContext) throws IOException {
-    return new GrpcNamingServiceStub(NamingServiceStubSettings.newBuilder().build(), clientContext);
-  }
-
-  public static final GrpcNamingServiceStub create(
+  public static final GrpcCallableNameTypeServiceStub create(
       ClientContext clientContext, GrpcStubCallableFactory callableFactory) throws IOException {
-    return new GrpcNamingServiceStub(
-        NamingServiceStubSettings.newBuilder().build(), clientContext, callableFactory);
+    return new GrpcCallableNameTypeServiceStub(
+        CallableNameTypeServiceStubSettings.newBuilder().build(), clientContext, callableFactory);
   }
 
   /**
-   * Constructs an instance of GrpcNamingServiceStub, using the given settings. This is protected so
-   * that it is easy to make a subclass, but otherwise, the static factory methods should be
-   * preferred.
+   * Constructs an instance of GrpcCallableNameTypeServiceStub, using the given settings. This is
+   * protected so that it is easy to make a subclass, but otherwise, the static factory methods
+   * should be preferred.
    */
-  protected GrpcNamingServiceStub(NamingServiceStubSettings settings, ClientContext clientContext)
+  protected GrpcCallableNameTypeServiceStub(
+      CallableNameTypeServiceStubSettings settings, ClientContext clientContext)
       throws IOException {
-    this(settings, clientContext, new GrpcNamingServiceCallableFactory());
+    this(settings, clientContext, new GrpcCallableNameTypeServiceCallableFactory());
   }
 
   /**
-   * Constructs an instance of GrpcNamingServiceStub, using the given settings. This is protected so
-   * that it is easy to make a subclass, but otherwise, the static factory methods should be
-   * preferred.
+   * Constructs an instance of GrpcCallableNameTypeServiceStub, using the given settings. This is
+   * protected so that it is easy to make a subclass, but otherwise, the static factory methods
+   * should be preferred.
    */
-  protected GrpcNamingServiceStub(
-      NamingServiceStubSettings settings,
+  protected GrpcCallableNameTypeServiceStub(
+      CallableNameTypeServiceStubSettings settings,
       ClientContext clientContext,
       GrpcStubCallableFactory callableFactory)
       throws IOException {

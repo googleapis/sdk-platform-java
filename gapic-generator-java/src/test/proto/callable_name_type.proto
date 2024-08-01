@@ -22,18 +22,19 @@ import "google/api/resource.proto";
 
 package google.test.naming;
 
-option java_package = "com.google.test.naming";
+option java_package = "com.google.test.callablenamingtype";
 option java_multiple_files = true;
 
-// This service exercises scenarios where certain keywords/ field names
-// may generate strange output. This testing proto should be a running list
-// of weird names that have caused issues in the past.
-service NamingService {
+// This service exercises two scenarios where the RPC name previously would attempt
+// to generate the incorrect type of RPC:
+// 1. Unary RPCs that ended with `Operation` would be assumed to be an LRO
+// 2. Unary (non-paged) RPCs that ended `Paged` would be assumed to be Paged
+service CallableNameTypeService {
 
   option (google.api.default_host) = "localhost:7469";
 
-  // This should be able to generate properly. The generator should not parse this
-  // RPC as an LRO and should not generate an operation callable for this
+  // The generator should not parse this RPC as an LRO and should not generate
+  // an operation callable for this
   rpc GetApiOperation(GetApiOperationRequest) returns (ApiOperation) {
     option (google.api.http) = {
       get: "/v1/{name=apiOperations/*}"
@@ -41,7 +42,7 @@ service NamingService {
     option (google.api.method_signature) = "name";
   }
 
-  // The generator should not parse this as a Paged callabe and should not
+  // The generator should not parse this as a Paged callable and should not
   // generate a paged callable for this
   rpc ApiPaged(GetApiOperationRequest) returns (ApiOperation) {
     option (google.api.http) = {

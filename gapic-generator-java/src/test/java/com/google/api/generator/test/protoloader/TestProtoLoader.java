@@ -43,7 +43,7 @@ import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.IdentityOuterClass;
 import com.google.showcase.v1beta1.MessagingOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
-import com.google.test.naming.Naming;
+import com.google.test.callablenamingtype.CallableNameType;
 import com.google.testdata.v1.DeprecatedServiceOuterClass;
 import com.google.testgapic.v1beta1.NestedMessageProto;
 import com.google.types.testing.TypesTestingProto;
@@ -459,10 +459,10 @@ public class TestProtoLoader {
         .build();
   }
 
-  public GapicContext parseNaming() {
-    FileDescriptor serviceFileDescriptor = Naming.getDescriptor();
+  public GapicContext parseCallabeNameType() {
+    FileDescriptor serviceFileDescriptor = CallableNameType.getDescriptor();
     ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
-    assertEquals(serviceDescriptor.getName(), "NamingService");
+    assertEquals(serviceDescriptor.getName(), "CallableNameTypeService");
 
     List<FileDescriptor> protoFiles = Collections.singletonList(serviceFileDescriptor);
 

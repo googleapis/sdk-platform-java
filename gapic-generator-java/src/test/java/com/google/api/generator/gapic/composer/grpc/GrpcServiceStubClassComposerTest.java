@@ -94,11 +94,11 @@ class GrpcServiceStubClassComposerTest {
   }
 
   @Test
-  void generateGrpcServiceStubClass_namingField() {
-    GapicContext context = GrpcTestProtoLoader.instance().parseNaming();
+  void generateGrpcServiceStubClass_callableNameType() {
+    GapicContext context = GrpcTestProtoLoader.instance().parseCallabeNameType();
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
-    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcNamingStub.golden");
+    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcCallableNameTypeStub.golden");
     Assert.assertEmptySamples(clazz.samples());
   }
 }
