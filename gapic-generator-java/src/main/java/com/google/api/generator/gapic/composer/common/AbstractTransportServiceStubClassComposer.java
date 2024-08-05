@@ -105,13 +105,9 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   private static final String PAGED_CALLABLE_CLASS_MEMBER_PATTERN = "%sPagedCallable";
 
   private static final String BACKGROUND_RESOURCES_MEMBER_NAME = "backgroundResources";
-  private static final String CALLABLE_NAME = "Callable";
   private static final String CALLABLE_FACTORY_MEMBER_NAME = "callableFactory";
   protected static final String CALLABLE_CLASS_MEMBER_PATTERN = "%sCallable";
   private static final String OPERATION_CALLABLE_CLASS_MEMBER_PATTERN = "%sOperationCallable";
-  private static final String OPERATION_CALLABLE_NAME = "OperationCallable";
-  // private static final String OPERATIONS_STUB_MEMBER_NAME = "operationsStub";
-  protected static final String PAGED_CALLABLE_NAME = "PagedCallable";
 
   protected static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
@@ -460,57 +456,61 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       }
       String javaStyleProtoMethodName = JavaStyle.toLowerCamelCase(protoMethod.name());
       String callableName = String.format(CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName);
-      callableClassMembers.put(
-          callableName,
-          VariableExpr.withVariable(
-              Variable.builder()
-                  .setName(callableName)
-                  .setType(getCallableType(protoMethod))
-                  .build()));
+      callableClassMembers.put(callableName, getCallableExpr(protoMethod, callableName));
       if (protoMethod.hasLro()) {
         callableName =
             String.format(OPERATION_CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName);
-        callableClassMembers.put(
-            callableName,
-            VariableExpr.withVariable(
-                Variable.builder()
-                    .setName(callableName)
-                    .setType(
-                        TypeNode.withReference(
-                            ConcreteReference.builder()
-                                .setClazz(OperationCallable.class)
-                                .setGenerics(
-                                    Arrays.asList(
-                                        protoMethod.inputType().reference(),
-                                        protoMethod.lro().responseType().reference(),
-                                        protoMethod.lro().metadataType().reference()))
-                                .build()))
-                    .build()));
+        callableClassMembers.put(callableName, getOperationCallableExpr(protoMethod, callableName));
       }
       if (protoMethod.isPaged()) {
         callableName = String.format(PAGED_CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName);
         callableClassMembers.put(
-            callableName,
-            VariableExpr.withVariable(
-                Variable.builder()
-                    .setName(callableName)
-                    .setType(
-                        TypeNode.withReference(
-                            getCallableType(protoMethod)
-                                .reference()
-                                .copyAndSetGenerics(
-                                    Arrays.asList(
-                                        protoMethod.inputType().reference(),
-                                        typeStore
-                                            .get(
-                                                String.format(
-                                                    PAGED_RESPONSE_TYPE_NAME_PATTERN,
-                                                    protoMethod.name()))
-                                            .reference()))))
-                    .build()));
+            callableName, getPagedCallableExpr(typeStore, protoMethod, callableName));
       }
     }
     return callableClassMembers;
+  }
+
+  private VariableExpr getCallableExpr(Method protoMethod, String callableName) {
+    return VariableExpr.withVariable(
+        Variable.builder().setName(callableName).setType(getCallableType(protoMethod)).build());
+  }
+
+  private VariableExpr getPagedCallableExpr(
+      TypeStore typeStore, Method protoMethod, String callableName) {
+    return VariableExpr.withVariable(
+        Variable.builder()
+            .setName(callableName)
+            .setType(
+                TypeNode.withReference(
+                    getCallableType(protoMethod)
+                        .reference()
+                        .copyAndSetGenerics(
+                            Arrays.asList(
+                                protoMethod.inputType().reference(),
+                                typeStore
+                                    .get(
+                                        String.format(
+                                            PAGED_RESPONSE_TYPE_NAME_PATTERN, protoMethod.name()))
+                                    .reference()))))
+            .build());
+  }
+
+  private VariableExpr getOperationCallableExpr(Method protoMethod, String callableName) {
+    return VariableExpr.withVariable(
+        Variable.builder()
+            .setName(callableName)
+            .setType(
+                TypeNode.withReference(
+                    ConcreteReference.builder()
+                        .setClazz(OperationCallable.class)
+                        .setGenerics(
+                            Arrays.asList(
+                                protoMethod.inputType().reference(),
+                                protoMethod.lro().responseType().reference(),
+                                protoMethod.lro().metadataType().reference()))
+                        .build()))
+            .build());
   }
 
   protected List<AnnotationNode> createClassAnnotations(Service service) {
@@ -547,7 +547,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             service,
             typeStore,
             classMemberVarExprs,
-            callableClassMemberVarExprs,
             protoMethodNameToDescriptorVarExprs,
             classStatements));
     javaMethods.addAll(
@@ -646,7 +645,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       Service service,
       TypeStore typeStore,
       Map<String, VariableExpr> classMemberVarExprs,
-      Map<String, VariableExpr> callableClassMemberVarExprs,
       Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
       List<Statement> classStatements) {
     TypeNode stubSettingsType =
@@ -786,22 +784,33 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     secondCtorStatements.add(EMPTY_LINE_STATEMENT);
 
     // Initialize <method>Callable variables.
-    secondCtorExprs.addAll(
-        callableClassMemberVarExprs.entrySet().stream()
-            .map(
-                e ->
-                    createCallableInitExpr(
-                        context,
-                        service,
-                        e.getKey(),
-                        e.getValue(),
-                        callableFactoryVarExpr,
-                        settingsVarExpr,
-                        clientContextVarExpr,
-                        operationsStubClassVarExpr,
-                        thisExpr,
-                        javaStyleMethodNameToTransportSettingsVarExprs))
-            .collect(Collectors.toList()));
+    // The logic inside createCallableInitExprs() is very similar to createCallableClassMembers().
+    // It is mostly duplicated because `createCallableClassMembers` returns a heuristic to
+    // determine the RPC type. The RPCs are mapped by name and the types are determined by the
+    // generated name and was problematic for certain RPC names. For example, the GetApiOperation
+    // RPC name would have a mapping of GetApiOperationCallable, and the `createCallableInitExprs`
+    // method would attempt to generate LRO code because of the `OperationCallable` suffix.
+    // Instead, we now pass the method object which is the SoT for the type of the method and not
+    // based on heuristics/ suffix.
+    for (Method method : service.methods()) {
+      // Do not generate callables for non supported RPCs (i.e. Bidi-Streaming and Client Streaming
+      // for HttpJson)
+      if (!method.isSupportedByTransport(getTransportContext().transport())) {
+        continue;
+      }
+      secondCtorExprs.addAll(
+          createCallableInitExprs(
+              context,
+              service,
+              method,
+              typeStore,
+              callableFactoryVarExpr,
+              settingsVarExpr,
+              clientContextVarExpr,
+              operationsStubClassVarExpr,
+              thisExpr,
+              javaStyleMethodNameToTransportSettingsVarExprs));
+    }
     secondCtorStatements.addAll(
         secondCtorExprs.stream().map(ExprStatement::withExpr).collect(Collectors.toList()));
     secondCtorExprs.clear();
@@ -871,67 +880,116 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return null;
   }
 
-  private Expr createCallableInitExpr(
+  // Can return multiple Exprs for a single RPC. Each of the Exprs will initialize a callable
+  // in the constructor. The possible combinations are Normal (Unary, Streaming, Batching) and
+  // either Operation or Paged (if needed). It is not possible to have three callable Exprs
+  // returned because LROs are not paged, so it will either be an additional LRO or paged callable.
+  private List<Expr> createCallableInitExprs(
       GapicContext context,
       Service service,
-      String callableVarName,
-      VariableExpr callableVarExpr,
+      Method method,
+      TypeStore typeStore,
       VariableExpr callableFactoryVarExpr,
       VariableExpr settingsVarExpr,
       VariableExpr clientContextVarExpr,
       VariableExpr operationsStubClassVarExpr,
       Expr thisExpr,
       Map<String, VariableExpr> javaStyleMethodNameToTransportSettingsVarExprs) {
-    boolean isOperation = callableVarName.endsWith(OPERATION_CALLABLE_NAME);
-    boolean isPaged = callableVarName.endsWith(PAGED_CALLABLE_NAME);
-    int sublength;
-    if (isOperation) {
-      sublength = OPERATION_CALLABLE_NAME.length();
-    } else if (isPaged) {
-      sublength = PAGED_CALLABLE_NAME.length();
-    } else {
-      sublength = CALLABLE_NAME.length();
-    }
-    String javaStyleMethodName = callableVarName.substring(0, callableVarName.length() - sublength);
-    List<Expr> creatorMethodArgVarExprs;
+    List<Expr> callableInitExprs = new ArrayList<>();
+    String javaStyleProtoMethodName = JavaStyle.toLowerCamelCase(method.name());
+
     Expr transportSettingsVarExpr =
-        javaStyleMethodNameToTransportSettingsVarExprs.get(javaStyleMethodName);
-    if (transportSettingsVarExpr == null && isOperation) {
-      // Try again, in case the name detection above was inaccurate.
-      isOperation = false;
-      sublength = CALLABLE_NAME.length();
-      javaStyleMethodName = callableVarName.substring(0, callableVarName.length() - sublength);
-      transportSettingsVarExpr =
-          javaStyleMethodNameToTransportSettingsVarExprs.get(javaStyleMethodName);
-    }
+        javaStyleMethodNameToTransportSettingsVarExprs.get(javaStyleProtoMethodName);
     Preconditions.checkNotNull(
         transportSettingsVarExpr,
         String.format(
-            "No transport settings variable found for method name %s", javaStyleMethodName));
-    if (isOperation) {
+            "No transport settings variable found for method name %s", javaStyleProtoMethodName));
+
+    // Build the normal callable which will be generated for every RPC
+    VariableExpr callableVarExpr =
+        getCallableExpr(
+            method, String.format(CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName));
+    List<Expr> creatorMethodArgVarExprs =
+        Arrays.asList(
+            transportSettingsVarExpr,
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(settingsVarExpr)
+                .setMethodName(String.format("%sSettings", javaStyleProtoMethodName))
+                .build(),
+            clientContextVarExpr);
+    AssignmentExpr callableExpr =
+        buildCallableTransportExpr(
+            context,
+            service,
+            callableFactoryVarExpr,
+            thisExpr,
+            javaStyleProtoMethodName,
+            callableVarExpr,
+            creatorMethodArgVarExprs);
+    callableInitExprs.add(callableExpr);
+
+    // Build an additional paged callable if the RPC is paged. The creatorMethodArgVarExprs is the
+    // same as the normal callable
+    if (method.isPaged()) {
+      callableVarExpr =
+          getPagedCallableExpr(
+              typeStore,
+              method,
+              String.format(PAGED_CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName));
+      callableExpr =
+          buildCallableTransportExpr(
+              context,
+              service,
+              callableFactoryVarExpr,
+              thisExpr,
+              javaStyleProtoMethodName,
+              callableVarExpr,
+              creatorMethodArgVarExprs);
+      callableInitExprs.add(callableExpr);
+    }
+
+    // Build an additional operation callable if the RPC is an LRO. Rebuild the
+    // creatorMethodArgVarExprs as LROs have a special OperationSettings
+    if (method.hasLro()) {
+      callableVarExpr =
+          getOperationCallableExpr(
+              method,
+              String.format(OPERATION_CALLABLE_CLASS_MEMBER_PATTERN, javaStyleProtoMethodName));
       creatorMethodArgVarExprs =
           Arrays.asList(
               transportSettingsVarExpr,
               MethodInvocationExpr.builder()
                   .setExprReferenceExpr(settingsVarExpr)
-                  .setMethodName(String.format("%sOperationSettings", javaStyleMethodName))
+                  .setMethodName(String.format("%sOperationSettings", javaStyleProtoMethodName))
                   .build(),
               clientContextVarExpr,
               operationsStubClassVarExpr);
-    } else {
-      creatorMethodArgVarExprs =
-          Arrays.asList(
-              transportSettingsVarExpr,
-              MethodInvocationExpr.builder()
-                  .setExprReferenceExpr(settingsVarExpr)
-                  .setMethodName(String.format("%sSettings", javaStyleMethodName))
-                  .build(),
-              clientContextVarExpr);
+      callableExpr =
+          buildCallableTransportExpr(
+              context,
+              service,
+              callableFactoryVarExpr,
+              thisExpr,
+              javaStyleProtoMethodName,
+              callableVarExpr,
+              creatorMethodArgVarExprs);
+      callableInitExprs.add(callableExpr);
     }
 
-    String methodName = JavaStyle.toUpperCamelCase(javaStyleMethodName);
+    return callableInitExprs;
+  }
+
+  private AssignmentExpr buildCallableTransportExpr(
+      GapicContext context,
+      Service service,
+      VariableExpr callableFactoryVarExpr,
+      Expr thisExpr,
+      String methodName,
+      VariableExpr callableVarExpr,
+      List<Expr> creatorMethodArgVarExprs) {
     Optional<String> callableCreatorMethodName =
-        getCallableCreatorMethodName(context, service, callableVarExpr.type(), methodName);
+        getCallableCreatorMethodName(
+            context, service, callableVarExpr.type(), JavaStyle.toUpperCamelCase(methodName));
 
     Expr initExpr;
     if (callableCreatorMethodName.isPresent()) {
