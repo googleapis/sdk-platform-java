@@ -60,6 +60,6 @@ import java.lang.annotation.Target;
 })
 @Documented
 public @interface ObsoleteApi {
-  /** Context information such as reasons and alternatives.*/
+  /** Context information such as reasons and alternatives. */
   String value();
 }
