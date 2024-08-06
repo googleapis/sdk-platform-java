@@ -148,11 +148,29 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
     Optional<Sample> sampleCode =
         SettingsSampleComposer.composeSettingsSample(
             methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
-
     Optional<String> docSampleCode = Optional.empty();
     if (sampleCode.isPresent()) {
       samples.add(sampleCode.get());
       docSampleCode = Optional.of(SampleCodeWriter.writeInlineSample(sampleCode.get().body()));
+    }
+    // Create a sample for a LRO method using LRO-specific RetrySettings, if one exists in the
+    // service.
+    Optional<Method> lroMethodOpt =
+        service.methods().isEmpty()
+            ? Optional.empty()
+            : service.methods().stream()
+                .filter(m -> m.stream() == Stream.NONE && m.hasLro())
+                .findFirst();
+    Optional<String> lroMethodNameOpt =
+        lroMethodOpt.isPresent() ? Optional.of(lroMethodOpt.get().name()) : Optional.empty();
+    Optional<Sample> lroSampleCode =
+        SettingsSampleComposer.composeLroSettingsSample(
+            lroMethodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
+    Optional<String> lroDocSampleCode = Optional.empty();
+    if (lroSampleCode.isPresent()) {
+      samples.add(lroSampleCode.get());
+      lroDocSampleCode =
+          Optional.of(SampleCodeWriter.writeInlineSample(lroSampleCode.get().body()));
     }
 
     return SettingsCommentComposer.createClassHeaderComments(
@@ -161,6 +179,8 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
         service.isDeprecated(),
         methodNameOpt,
         docSampleCode,
+        lroMethodNameOpt,
+        lroDocSampleCode,
         classType);
   }
 
