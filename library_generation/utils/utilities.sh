@@ -149,9 +149,14 @@ get_protoc_version() {
 # DOCKER_GRPC_VERSION respectively, this function will instead set "protoc_path"
 # and "grpc_path" to DOCKER_PROTOC_PATH and DOCKER_GRPC_PATH respectively (no
 # download), since the docker image will have downloaded these tools beforehand.
+#
 # For the case of gapic-generator-java, no env var will be exported for the
 # upstream flow, but instead it will be assigned a default filename that will be
-# referenced by the file `library_generation/gapic-generator-java-wrapper`.
+# referenced by the file `library_generation/gapic-generator-java-wrapper`. Note
+# that the wrapped jar can be either downloaded from Maven or be obtained from
+# the docker container. If the generator version matches
+# DOCKER_GAPIC_GENERATOR_VERSION, then the baked jar will be transferred into
+# the output folder so the wrapper can pick it up.
 download_tools() {
   local gapic_generator_version=$1
   local protoc_version=$2
