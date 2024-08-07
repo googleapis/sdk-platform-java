@@ -23,7 +23,7 @@ REPO_LEVEL_PARAMETER = "Repo level parameter"
 LIBRARY_LEVEL_PARAMETER = "Library level parameter"
 GAPIC_LEVEL_PARAMETER = "GAPIC level parameter"
 COMMON_PROTOS_LIBRARY_NAME = "common-protos"
-GAPIC_GENERATOR_VERSION = "gapic_generator_version"
+GAPIC_GENERATOR_VERSION_CONFIG_KEY = "gapic_generator_version"
 LIBRARIES_BOM_VERSION = "libraries_bom_version"
 GENERATOR_VERSION_ENV_KEY = "DOCKER_GAPIC_GENERATOR_VERSION"
 
@@ -173,7 +173,7 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         googleapis_commitish=__required(
             config, "googleapis_commitish", REPO_LEVEL_PARAMETER
         ),
-        gapic_generator_version=__optional(config, GAPIC_GENERATOR_VERSION, None),
+        gapic_generator_version=__optional(config, GAPIC_GENERATOR_VERSION_CONFIG_KEY, None),
         grpc_version=__optional(config, "grpc_version", None),
         protoc_version=__optional(config, "protoc_version", None),
         libraries_bom_version=__optional(config, LIBRARIES_BOM_VERSION, None),
