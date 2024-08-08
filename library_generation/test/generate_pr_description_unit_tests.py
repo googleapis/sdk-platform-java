@@ -27,12 +27,13 @@ from library_generation.model.config_change import (
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
+from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources", "goldens")
 
 
-class GeneratePrDescriptionTest(unittest.TestCase):
+class GeneratePrDescriptionTest(SimulatedDockerEnvironmentTest):
     def test_get_commit_messages_current_is_older_raise_exception(self):
         # committed on April 1st, 2024
         current_commit = "36441693dddaf0ed73951ad3a15c215a332756aa"
