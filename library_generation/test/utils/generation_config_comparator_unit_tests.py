@@ -18,9 +18,11 @@ from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from library_generation.utils.generation_config_comparator import ChangeType
 from library_generation.utils.generation_config_comparator import compare_config
+from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
 
 
-class GenerationConfigComparatorTest(unittest.TestCase):
+
+class GenerationConfigComparatorTest(SimulatedDockerEnvironmentTest):
     def setUp(self) -> None:
         self.baseline_library = LibraryConfig(
             api_shortname="existing_library",

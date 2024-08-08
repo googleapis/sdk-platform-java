@@ -27,13 +27,10 @@ from library_generation.utils.commit_message_formatter import (
 )
 from library_generation.utils.commit_message_formatter import wrap_googleapis_commit
 from library_generation.utils.commit_message_formatter import wrap_override_commit
-
-gen_config = GenerationConfig(
-    googleapis_commitish="123abc", libraries=[]
-)
+from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
 
 
-class CommitMessageFormatterTest(unittest.TestCase):
+class CommitMessageFormatterTest(SimulatedDockerEnvironmentTest):
     def test_format_commit_message_should_add_library_name_for_conventional_commit(
         self,
     ):
@@ -166,6 +163,10 @@ class CommitMessageFormatterTest(unittest.TestCase):
             )
 
     def test_format_repo_level_change_success(self):
+
+        gen_config = GenerationConfig(
+          googleapis_commitish="123abc", libraries=[]
+        )
         config_change = ConfigChange(
             change_to_libraries={
                 ChangeType.REPO_LEVEL_CHANGE: [
@@ -182,9 +183,6 @@ class CommitMessageFormatterTest(unittest.TestCase):
         )
         self.assertEqual(
             [
-                "BEGIN_NESTED_COMMIT",
-                "fix(deps): update the Java code generator (gapic-generator-java) to 1.2.3",
-                "END_NESTED_COMMIT",
                 "BEGIN_NESTED_COMMIT",
                 "chore: update the libraries_bom version to 2.3.4",
                 "END_NESTED_COMMIT",
