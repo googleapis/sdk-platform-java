@@ -14,6 +14,8 @@
 import unittest
 from difflib import unified_diff
 from pathlib import Path
+import os
+from unittest.mock import patch
 
 from typing import List
 
@@ -38,3 +40,19 @@ def cleanup(files: List[str]):
             path.unlink()
         elif path.is_dir():
             path.rmdir()
+
+class SimulatedDockerEnvironmentTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.env_patcher = patch.dict(os.environ, {
+            "DOCKER_GAPIC_GENERATOR_VERSION": "test-version",
+            "DOCKER_GAPIC_GENERATOR_LOCATION": "test-location",
+        })
+        cls.env_patcher.start()
+
+        super().setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        cls.env_patcher.stop()
