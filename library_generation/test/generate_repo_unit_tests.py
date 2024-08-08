@@ -17,9 +17,10 @@ import unittest
 from library_generation.generate_repo import get_target_libraries
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
+from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
 
 
-class GenerateRepoTest(unittest.TestCase):
+class GenerateRepoTest(SimulatedDockerEnvironmentTest):
     def test_get_target_library_returns_selected_libraries(self):
         one_library = GenerateRepoTest.__get_an_empty_library_config()
         one_library.api_shortname = "one_library"
