@@ -4,13 +4,14 @@ from pathlib import Path
 
 from parameterized import parameterized
 from library_generation.model.gapic_inputs import parse
+from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "..", "resources")
 build_file = Path(os.path.join(resources_dir, "misc")).resolve()
 
 
-class UtilitiesTest(unittest.TestCase):
+class UtilitiesTest(SimulatedDockerEnvironmentTest):
     @parameterized.expand(
         [
             ("BUILD_no_additional_protos.bazel", " "),

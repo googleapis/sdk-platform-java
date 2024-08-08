@@ -16,6 +16,8 @@ import unittest
 from pathlib import Path
 from library_generation.model.generation_config import from_yaml, GenerationConfig
 from library_generation.model.library_config import LibraryConfig
+from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
+from unittest.mock import patch
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "..", "resources")
@@ -44,7 +46,7 @@ common_protos_library = LibraryConfig(
 )
 
 
-class GenerationConfigTest(unittest.TestCase):
+class GenerationConfigTest(SimulatedDockerEnvironmentTest):
     def test_generation_config_default_value(self):
         config = GenerationConfig(
             googleapis_commitish="",
@@ -52,27 +54,35 @@ class GenerationConfigTest(unittest.TestCase):
         )
         self.assertEqual("", config.libraries_bom_version)
 
+    @patch.dict(os.environ, {}, clear=True)
     def test_generation_config_with_generator_version_env_raise_exception(self):
         self.assertRaisesRegex(
             ValueError,
-            "the fall-back env var DOCKER_GAPIC_GENERATOR_VERSION was not found",
+            "env var DOCKER_GAPIC_GENERATOR_VERSION was not found",
             GenerationConfig,
             googleapis_commitish="",
             libraries=[],
         )
 
+    @patch.dict(os.environ, {
+      "DOCKER_GAPIC_GENERATOR_VERSION": "1.2.3",
+      "DOCKER_GAPIC_GENERATOR_LOCATION": "test-location",
+    })
     def test_generation_config_set_generator_version_from_env(self):
-        os.environ["DOCKER_GAPIC_GENERATOR_VERSION"] = "1.2.3"
         config = GenerationConfig(
             googleapis_commitish="",
             libraries=[],
         )
         self.assertEqual("1.2.3", config.gapic_generator_version)
-        os.environ.pop("DOCKER_GAPIC_GENERATOR_VERSION")
+        pass
 
+    @patch.dict(os.environ, {
+      "DOCKER_GAPIC_GENERATOR_VERSION": "1.2.3-env",
+      "DOCKER_GAPIC_GENERATOR_LOCATION": "test-location",
+    })
     def test_from_yaml_succeeds(self):
         config = from_yaml(f"{test_config_dir}/generation_config.yaml")
-        self.assertEqual("2.34.0", config.gapic_generator_version)
+        self.assertEqual("1.2.3-env", config.gapic_generator_version)
         self.assertEqual(25.2, config.protoc_version)
         self.assertEqual(
             "1a45bf7393b52407188c82e63101db7dc9c72026", config.googleapis_commitish
