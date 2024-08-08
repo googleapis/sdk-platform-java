@@ -28,6 +28,7 @@ from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from library_generation.test.test_utils import FileComparator
 from library_generation.test.test_utils import cleanup
+from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
@@ -68,7 +69,7 @@ test_library_with_custom_transport = LibraryConfig(
 )
 
 
-class UtilitiesTest(unittest.TestCase):
+class UtilitiesTest(SimulatedDockerEnvironmentTest):
     """
     Unit tests for utilities.py
     """
