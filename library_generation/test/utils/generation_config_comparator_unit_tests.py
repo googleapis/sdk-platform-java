@@ -37,14 +37,12 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             gapic_configs=[],
         )
         self.baseline_config = GenerationConfig(
-            gapic_generator_version="",
             googleapis_commitish="",
             grpc_version="",
             protoc_version="",
             libraries=[self.baseline_library],
         )
         self.current_config = GenerationConfig(
-            gapic_generator_version="",
             googleapis_commitish="",
             grpc_version="",
             protoc_version="",
@@ -70,20 +68,6 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             current_config=self.current_config,
         )
         self.assertEqual({ChangeType.GOOGLEAPIS_COMMIT: []}, result.change_to_libraries)
-
-    def test_compare_config_generator_update(self):
-        self.baseline_config.gapic_generator_version = "1.2.3"
-        self.current_config.gapic_generator_version = "1.2.4"
-        result = compare_config(
-            baseline_config=self.baseline_config,
-            current_config=self.current_config,
-        )
-        self.assertTrue(
-            len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 1
-        )
-        config_change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
-        self.assertEqual("gapic_generator_version", config_change.changed_param)
-        self.assertEqual("1.2.4", config_change.current_value)
 
     def test_compare_config_libraries_bom_update(self):
         self.baseline_config.libraries_bom_version = "26.36.0"

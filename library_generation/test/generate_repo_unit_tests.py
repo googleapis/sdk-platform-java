@@ -43,7 +43,6 @@ class GenerateRepoTest(unittest.TestCase):
     @staticmethod
     def __get_an_empty_generation_config() -> GenerationConfig:
         return GenerationConfig(
-            gapic_generator_version="",
             googleapis_commitish="",
             libraries=[],
         )

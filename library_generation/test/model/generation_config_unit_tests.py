@@ -47,7 +47,6 @@ common_protos_library = LibraryConfig(
 class GenerationConfigTest(unittest.TestCase):
     def test_generation_config_default_value(self):
         config = GenerationConfig(
-            gapic_generator_version="",
             googleapis_commitish="",
             libraries=[],
         )
@@ -122,7 +121,6 @@ class GenerationConfigTest(unittest.TestCase):
 
     def test_is_monorepo_with_one_library_returns_false(self):
         config = GenerationConfig(
-            gapic_generator_version="",
             googleapis_commitish="",
             libraries=[library_1],
         )
@@ -130,7 +128,6 @@ class GenerationConfigTest(unittest.TestCase):
 
     def test_is_monorepo_with_two_libraries_returns_true(self):
         config = GenerationConfig(
-            gapic_generator_version="",
             googleapis_commitish="",
             libraries=[library_1, library_2],
         )
@@ -138,7 +135,6 @@ class GenerationConfigTest(unittest.TestCase):
 
     def test_contains_common_protos_with_common_protos_returns_true(self):
         config = GenerationConfig(
-            gapic_generator_version="",
             googleapis_commitish="",
             libraries=[library_1, library_2, common_protos_library],
         )
@@ -146,7 +142,6 @@ class GenerationConfigTest(unittest.TestCase):
 
     def test_contains_common_protos_without_common_protos_returns_false(self):
         config = GenerationConfig(
-            gapic_generator_version="",
             googleapis_commitish="",
             libraries=[library_1, library_2],
         )
@@ -157,7 +152,6 @@ class GenerationConfigTest(unittest.TestCase):
             ValueError,
             "the same library name",
             GenerationConfig,
-            gapic_generator_version="",
             googleapis_commitish="",
             libraries=[
                 LibraryConfig(

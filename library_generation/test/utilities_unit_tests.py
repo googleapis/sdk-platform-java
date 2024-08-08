@@ -361,7 +361,6 @@ class UtilitiesTest(unittest.TestCase):
                 library.extra_versioned_modules = None
 
         return GenerationConfig(
-            gapic_generator_version="",
             googleapis_commitish="",
             libraries=libraries,
         )

@@ -291,7 +291,6 @@ class ConfigChangeTest(unittest.TestCase):
         if libraries is None:
             libraries = []
         return GenerationConfig(
-            gapic_generator_version="",
             googleapis_commitish=googleapis_commitish,
             grpc_version="",
             protoc_version="",

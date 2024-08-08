@@ -26,6 +26,7 @@ COMMON_PROTOS_LIBRARY_NAME = "common-protos"
 GAPIC_GENERATOR_VERSION_CONFIG_KEY = "gapic_generator_version"
 LIBRARIES_BOM_VERSION = "libraries_bom_version"
 GENERATOR_VERSION_ENV_KEY = "DOCKER_GAPIC_GENERATOR_VERSION"
+GENERATOR_LOCATION_ENV_KEY = "DOCKER_GAPIC_GENERATOR_LOCATION"
 
 
 class GenerationConfig:
@@ -37,7 +38,6 @@ class GenerationConfig:
         self,
         googleapis_commitish: str,
         libraries: list[LibraryConfig],
-        gapic_generator_version: Optional[str] = None,
         libraries_bom_version: Optional[str] = None,
         grpc_version: Optional[str] = None,
         protoc_version: Optional[str] = None,
@@ -46,9 +46,7 @@ class GenerationConfig:
         self.libraries_bom_version = (
             libraries_bom_version if libraries_bom_version else ""
         )
-        self.gapic_generator_version = GenerationConfig.__set_generator_version(
-            gapic_generator_version
-        )
+        self.gapic_generator_version = GenerationConfig.__get_generator_version()
         self.libraries = libraries
         self.grpc_version = grpc_version
         self.protoc_version = protoc_version
@@ -82,19 +80,17 @@ class GenerationConfig:
         return self.__contains_common_protos
 
     @staticmethod
-    def __set_generator_version(gapic_generator_version: Optional[str]) -> str:
-        if gapic_generator_version is not None:
-            return gapic_generator_version
-        # if the generator version is not set through generation config,
-        # get it from environment variable.
+    def __get_generator_version() -> str:
         gapic_generator_version = os.getenv(GENERATOR_VERSION_ENV_KEY)
         if not gapic_generator_version:
             raise ValueError(
-                f"gapic_generator_version was not specified in the "
-                f"configuration yaml and the fall-back env var "
-                f"{GENERATOR_VERSION_ENV_KEY} was not found. At "
-                f"least one of them must be set to proceed with the "
-                f"generation."
+                f"The env var {GENERATOR_VERSION_ENV_KEY} was not found."
+                f"This variable is required to decide which generator to run"
+            )
+        if not os.getenv(GENERATOR_LOCATION_ENV_KEY):
+            raise ValueError(
+                f"The env var {GENERATOR_LOCATION_ENV_KEY} was not found."
+                f"This variable is required to determine the generator jar location"
             )
         return gapic_generator_version
 
@@ -173,7 +169,6 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         googleapis_commitish=__required(
             config, "googleapis_commitish", REPO_LEVEL_PARAMETER
         ),
-        gapic_generator_version=__optional(config, GAPIC_GENERATOR_VERSION_CONFIG_KEY, None),
         grpc_version=__optional(config, "grpc_version", None),
         protoc_version=__optional(config, "protoc_version", None),
         libraries_bom_version=__optional(config, LIBRARIES_BOM_VERSION, None),

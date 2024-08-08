@@ -29,7 +29,7 @@ from library_generation.utils.commit_message_formatter import wrap_googleapis_co
 from library_generation.utils.commit_message_formatter import wrap_override_commit
 
 gen_config = GenerationConfig(
-    gapic_generator_version="1.2.3", googleapis_commitish="123abc", libraries=[]
+    googleapis_commitish="123abc", libraries=[]
 )
 
 
@@ -169,9 +169,6 @@ class CommitMessageFormatterTest(unittest.TestCase):
         config_change = ConfigChange(
             change_to_libraries={
                 ChangeType.REPO_LEVEL_CHANGE: [
-                    LibraryChange(
-                        changed_param="gapic_generator_version", current_value="1.2.3"
-                    ),
                     LibraryChange(
                         changed_param="libraries_bom_version", current_value="2.3.4"
                     ),
