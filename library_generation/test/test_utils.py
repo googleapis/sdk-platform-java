@@ -41,13 +41,17 @@ def cleanup(files: List[str]):
         elif path.is_dir():
             path.rmdir()
 
+
 class SimulatedDockerEnvironmentTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.env_patcher = patch.dict(os.environ, {
-            "DOCKER_GAPIC_GENERATOR_VERSION": "test-version",
-            "DOCKER_GAPIC_GENERATOR_LOCATION": "test-location",
-        })
+        cls.env_patcher = patch.dict(
+            os.environ,
+            {
+                "DOCKER_GAPIC_GENERATOR_VERSION": "test-version",
+                "DOCKER_GAPIC_GENERATOR_LOCATION": "test-location",
+            },
+        )
         cls.env_patcher.start()
 
         super().setUpClass()

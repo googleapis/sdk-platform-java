@@ -64,10 +64,13 @@ class GenerationConfigTest(SimulatedDockerEnvironmentTest):
             libraries=[],
         )
 
-    @patch.dict(os.environ, {
-      "DOCKER_GAPIC_GENERATOR_VERSION": "1.2.3",
-      "DOCKER_GAPIC_GENERATOR_LOCATION": "test-location",
-    })
+    @patch.dict(
+        os.environ,
+        {
+            "DOCKER_GAPIC_GENERATOR_VERSION": "1.2.3",
+            "DOCKER_GAPIC_GENERATOR_LOCATION": "test-location",
+        },
+    )
     def test_generation_config_set_generator_version_from_env(self):
         config = GenerationConfig(
             googleapis_commitish="",
@@ -76,10 +79,13 @@ class GenerationConfigTest(SimulatedDockerEnvironmentTest):
         self.assertEqual("1.2.3", config.gapic_generator_version)
         pass
 
-    @patch.dict(os.environ, {
-      "DOCKER_GAPIC_GENERATOR_VERSION": "1.2.3-env",
-      "DOCKER_GAPIC_GENERATOR_LOCATION": "test-location",
-    })
+    @patch.dict(
+        os.environ,
+        {
+            "DOCKER_GAPIC_GENERATOR_VERSION": "1.2.3-env",
+            "DOCKER_GAPIC_GENERATOR_LOCATION": "test-location",
+        },
+    )
     def test_from_yaml_succeeds(self):
         config = from_yaml(f"{test_config_dir}/generation_config.yaml")
         self.assertEqual("1.2.3-env", config.gapic_generator_version)

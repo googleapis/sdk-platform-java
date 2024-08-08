@@ -21,7 +21,6 @@ from library_generation.utils.generation_config_comparator import compare_config
 from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
 
 
-
 class GenerationConfigComparatorTest(SimulatedDockerEnvironmentTest):
     def setUp(self) -> None:
         self.baseline_library = LibraryConfig(

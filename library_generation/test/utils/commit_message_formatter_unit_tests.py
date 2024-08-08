@@ -164,9 +164,7 @@ class CommitMessageFormatterTest(SimulatedDockerEnvironmentTest):
 
     def test_format_repo_level_change_success(self):
 
-        gen_config = GenerationConfig(
-          googleapis_commitish="123abc", libraries=[]
-        )
+        gen_config = GenerationConfig(googleapis_commitish="123abc", libraries=[])
         config_change = ConfigChange(
             change_to_libraries={
                 ChangeType.REPO_LEVEL_CHANGE: [
