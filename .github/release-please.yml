@@ -4,3 +4,12 @@ handleGHRelease: true
 primaryBranch: main
 manifest: true
 extraFiles: ["WORKSPACE", ".cloudbuild/graalvm/cloudbuild.yaml", ".cloudbuild/graalvm/cloudbuild-test-a.yaml", ".cloudbuild/graalvm/cloudbuild-test-b.yaml", ".cloudbuild/library_generation/cloudbuild-library-generation-release.yaml", "generation_config.yaml"]
+branches:
+  - branch: 2.23.x
+    releaseType: java-backport
+    manifest: true
+    handleGHRelease: true
+  - branch: 2.40.x
+    releaseType: java-backport
+    manifest: true
+    handleGHRelease: true

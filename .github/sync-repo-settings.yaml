@@ -1,3 +1,74 @@
 rebaseMergeAllowed: true
 squashMergeAllowed: true
 mergeCommitAllowed: false
+branchProtectionRules:
+  - pattern: main
+    isAdminEnforced: true
+    requiredApprovingReviewCount: 1
+    requiresCodeOwnerReviews: true
+    requiresStrictStatusChecks: false
+    requiredStatusCheckContexts:
+      - build (8) except for gapic-generator-java
+      - build (8) for gapic-generator-java
+      - build (11)
+      - build (17)
+      - showcase (11)
+      - showcase (17)
+      - compatibility
+      - cla/google
+      - lint
+      - graalvm-presubmit-sdk-platform-java-a (cloud-devrel-kokoro-resources)
+      - graalvm-presubmit-sdk-platform-java-b (cloud-devrel-kokoro-resources)
+      - library-generation-integration-tests
+      - library-generation-lint-shell
+      - library-generation-lint-python
+      - should-run-library-generation-tests
+  - pattern: 2.23.x
+    isAdminEnforced: true
+    requiredApprovingReviewCount: 1
+    requiresCodeOwnerReviews: true
+    requiresStrictStatusChecks: false
+    requiredStatusCheckContexts:
+      - build (8) except for gapic-generator-java
+      - build (8) for gapic-generator-java
+      - build (11)
+      - build (17)
+      - showcase (11)
+      - showcase (17)
+      - compatibility
+      - cla/google
+      - lint
+      - graalvm-presubmit-sdk-platform-java-a (cloud-devrel-kokoro-resources)
+      - graalvm-presubmit-sdk-platform-java-b (cloud-devrel-kokoro-resources)
+      - library-generation-integration-tests
+      - library-generation-lint-shell
+      - library-generation-lint-python
+      - should-run-library-generation-tests
+  - pattern: 2.40.x
+    isAdminEnforced: true
+    requiredApprovingReviewCount: 1
+    requiresCodeOwnerReviews: true
+    requiresStrictStatusChecks: false
+    requiredStatusCheckContexts:
+      - build (8) except for gapic-generator-java
+      - build (8) for gapic-generator-java
+      - build (11)
+      - build (17)
+      - showcase (11)
+      - showcase (17)
+      - compatibility
+      - cla/google
+      - lint
+      - graalvm-presubmit-sdk-platform-java-a (cloud-devrel-kokoro-resources)
+      - graalvm-presubmit-sdk-platform-java-b (cloud-devrel-kokoro-resources)
+      - library-generation-integration-tests
+      - library-generation-lint-shell
+      - library-generation-lint-python
+      - should-run-library-generation-tests
+permissionRules:
+  - team: yoshi-admins
+    permission: admin
+  - team: yoshi-java-admins
+    permission: admin
+  - team: yoshi-java
+    permission: push
