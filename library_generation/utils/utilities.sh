@@ -153,15 +153,12 @@ get_protoc_version() {
 # For the case of gapic-generator-java, no env var will be exported for the
 # upstream flow, but instead it will be assigned a default filename that will be
 # referenced by the file `library_generation/gapic-generator-java-wrapper`. Note
-# that the wrapped jar can be either downloaded from Maven or be obtained from
-# the docker container. If the generator version matches
-# DOCKER_GAPIC_GENERATOR_VERSION, then the baked jar will be transferred into
-# the output folder so the wrapper can pick it up.
+# that we assume an env var DOCKER_GAPIC_GENERATOR_LOCATION to point to the jar
+# so we can copy it to our output folder
 download_tools() {
-  local gapic_generator_version=$1
-  local protoc_version=$2
-  local grpc_version=$3
-  local os_architecture=$4
+  local protoc_version=$1
+  local grpc_version=$2
+  local os_architecture=$3
   pushd "${output_folder}"
 
   # the variable protoc_path is used in generate_library.sh. It is explicitly
@@ -183,19 +180,18 @@ download_tools() {
     export grpc_path=$(download_grpc_plugin "${grpc_version}" "${os_architecture}")
   fi
 
-  # similar case with gapic-generator-java
-  if [[ "${DOCKER_GAPIC_GENERATOR_VERSION}" == "${gapic_generator_version}" ]]; then
-    # if the specified gapic_generator_version matches the one baked in the docker
-    # container, we copy the generator jar into the output folder so it can be
-    # picked up by gapic-generator-java-wrapper
-    >&2 echo "Using gapic-generator-java version baked into the container: ${DOCKER_GAPIC_GENERATOR_VERSION}"
-    cp "${DOCKER_GAPIC_GENERATOR_LOCATION}" "${output_folder}"
+  # prepare gapic-generator-java
+  # We will assume the generator location environment variable will point to the
+  # location of the generator JAR and then we will simply copy it. Although
+  # these env vars are already validated upstream in the python scripts, we
+  # still validate them here for testing purposes
+  if [[ -z "${DOCKER_GAPIC_GENERATOR_LOCATION}" ]]; then
+    >&2 echo "Env var DOCKER_GAPIC_GENERATOR_LOCATION must be set and pointing to the generator jar"
+    exit 1
   else
-    download_generator_artifact \
-      "${gapic_generator_version}" \
-      "gapic-generator-java-${gapic_generator_version}.jar"
+    >&2 echo "Using gapic-generator-java version baked into the container"
+    cp "${DOCKER_GAPIC_GENERATOR_LOCATION}" "${output_folder}"
   fi
-
   popd
 }
 

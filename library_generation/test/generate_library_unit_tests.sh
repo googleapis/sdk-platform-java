@@ -167,23 +167,26 @@ download_tools_succeed_with_baked_protoc() {
   export DOCKER_PROTOC_LOCATION=$(mktemp -d)
   export DOCKER_PROTOC_VERSION="99.99"
   export output_folder=$(get_output_folder)
+  generator_folder=$(mktemp -d)
+  touch "${generator_folder}/gapic-generator-java.fakejar"
+  export DOCKER_GAPIC_GENERATOR_LOCATION="${generator_folder}/gapic-generator-java.fakejar"
   mkdir "${output_folder}"
   local protoc_bin_folder="${DOCKER_PROTOC_LOCATION}/protoc-99.99/bin"
   mkdir -p "${protoc_bin_folder}"
 
-  local test_ggj_version="2.40.0"
   local test_grpc_version="1.64.0"
   # we expect download_tools to decide to use DOCKER_PROTOC_LOCATION because
   # the protoc version we want to download is the same as DOCKER_PROTOC_VERSION.
   # Note that `protoc_bin_folder` is just the expected formatted value that
   # download_tools will format using DOCKER_PROTOC_VERSION (via
   # download_protoc).
-  download_tools "${test_ggj_version}" "99.99" "${test_grpc_version}" "linux-x86_64"
+  download_tools "99.99" "${test_grpc_version}" "linux-x86_64"
   assertEquals "${protoc_bin_folder}" "${protoc_path}"
 
   rm -rdf "${output_folder}"
   unset DOCKER_PROTOC_LOCATION
   unset DOCKER_PROTOC_VERSION
+  unset DOCKER_GAPIC_GENERATOR_LOCATION
   unset output_folder
   unset protoc_path
 }
@@ -195,19 +198,22 @@ download_tools_succeed_with_baked_grpc() {
   pushd "${test_dir}"
   export DOCKER_GRPC_LOCATION=$(mktemp -d)
   export DOCKER_GRPC_VERSION="99.99"
+  generator_folder=$(mktemp -d)
+  touch "${generator_folder}/gapic-generator-java.fakejar"
+  export DOCKER_GAPIC_GENERATOR_LOCATION="${generator_folder}/gapic-generator-java.fakejar"
   export output_folder=$(get_output_folder)
   mkdir "${output_folder}"
 
-  local test_ggj_version="2.40.0"
   local test_protoc_version="1.64.0"
   # we expect download_tools to decide to use DOCKER_GRPC_LOCATION because
   # the protoc version we want to download is the same as DOCKER_GRPC_VERSION
-  download_tools "${test_ggj_version}" "${test_protoc_version}" "99.99" "linux-x86_64"
+  download_tools "${test_protoc_version}" "99.99" "linux-x86_64"
   assertEquals "${DOCKER_GRPC_LOCATION}" "${grpc_path}"
 
   rm -rdf "${output_folder}"
   unset DOCKER_GRPC_LOCATION
   unset DOCKER_GRPC_VERSION
+  unset DOCKER_GAPIC_GENERATOR_LOCATION
   unset output_folder
   unset grpc_path
 }
@@ -221,7 +227,6 @@ download_tools_succeed_with_baked_generator() {
   generator_folder=$(mktemp -d)
   touch "${generator_folder}/gapic-generator-java.fakejar"
   export DOCKER_GAPIC_GENERATOR_LOCATION="${generator_folder}/gapic-generator-java.fakejar"
-  export DOCKER_GAPIC_GENERATOR_VERSION="99.99"
   export output_folder=$(get_output_folder)
   mkdir "${output_folder}"
 
@@ -229,7 +234,7 @@ download_tools_succeed_with_baked_generator() {
   local test_grpc_version="1.64.0"
   # we expect download_tools to decide to use DOCKER_GAPIC_GENERATOR_LOCATION because
   # the protoc version we want to download is the same as DOCKER_GRPC_VERSION
-  log=$(download_tools "99.99" "${test_protoc_version}" "${test_grpc_version}" "linux-x86_64" 2>&1 1>/dev/null)
+  log=$(download_tools "${test_protoc_version}" "${test_grpc_version}" "linux-x86_64" 2>&1 1>/dev/null)
 
   # the assertion functions are designed to be called only once per function.
   # Here we do two manual tests that are then coverged into a single
@@ -237,7 +242,7 @@ download_tools_succeed_with_baked_generator() {
   has_expected_log="false"
   has_expected_file="false"
   is_output_correct="false"
-  if grep -q "Using gapic-generator-java version baked into the container: 99.99" <<< "${log}"; then
+  if grep -q "Using gapic-generator-java version baked into the container" <<< "${log}"; then
     has_expected_log="true"
   fi
   if [[ -f "${output_folder}/gapic-generator-java.fakejar" ]]; then
@@ -251,7 +256,7 @@ download_tools_succeed_with_baked_generator() {
 
   rm -rdf "${output_folder}"
   unset DOCKER_GRPC_LOCATION
-  unset DOCKER_GRPC_VERSION
+  unset DOCKER_GAPIC_GENERATOR_LOCATION
   unset output_folder
   unset grpc_path
 }
