@@ -37,6 +37,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.TypeRegistry;
 import com.google.protobuf.util.JsonFormat;
 import com.google.protobuf.util.JsonFormat.Printer;
+import com.google.rpc.ErrorInfo;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -54,7 +55,8 @@ public class ProtoRestSerializer<RequestT extends Message> {
   private final TypeRegistry registry;
 
   private ProtoRestSerializer(TypeRegistry registry) {
-    this.registry = registry;
+    // this.registry = registry;
+    this.registry = TypeRegistry.newBuilder().add(ErrorInfo.getDescriptor()).build();
   }
 
   /** Creates a new instance of ProtoRestSerializer. */
