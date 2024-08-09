@@ -23,8 +23,6 @@ scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
 cd "${scriptDir}/../.." # cd to the root of this repo
 source "$scriptDir/common.sh"
 
-setup_maven_mirror
-
 install_repo_modules
 GAPIC_GENERATOR_VERSION=$(parse_pom_version "gapic-generator-java-bom")
 echo "Install complete. gapic-generator-java-bom = $GAPIC_GENERATOR_VERSION"
