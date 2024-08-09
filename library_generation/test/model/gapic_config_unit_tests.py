@@ -14,9 +14,10 @@
 import unittest
 
 from library_generation.model.gapic_config import GapicConfig
+from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
 
 
-class GapicConfigTest(unittest.TestCase):
+class GapicConfigTest(SimulatedDockerEnvironmentTest):
     def test_get_version_returns_none(self):
         self.assertIsNone(GapicConfig(proto_path="example/dir1/dir2").get_version())
 

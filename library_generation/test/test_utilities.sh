@@ -27,7 +27,7 @@ __test_failed() {
 }
 
 
-############# Functions used in test execution #############
+############# Functions used in test execution. They can only be called once per test #############
 
 assertEquals() {
   local expected=$1

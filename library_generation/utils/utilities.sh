@@ -97,49 +97,34 @@ remove_grpc_version() {
   sed -i.bak 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {}  \; -exec rm {}.bak \;
 }
 
-download_gapic_generator_pom_parent() {
-  local gapic_generator_version=$1
-  download_generator_artifact "${gapic_generator_version}" "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" "gapic-generator-java-pom-parent"
-}
-
 # This function returns the version of the grpc plugin to generate the libraries. If
-# DOCKER_GRPC_VERSION is set, this will be the version. Otherwise, it will be
-# computed from the gapic-generator-pom-parent artifact at the specified
-# gapic_generator_version.
+# DOCKER_GRPC_VERSION is set, this will be the version. Otherwise, the script
+# will exit since this is a necessary env var
 get_grpc_version() {
-  local gapic_generator_version=$1
   local grpc_version
   if [[ -n "${DOCKER_GRPC_VERSION}" ]]; then
     >&2 echo "Using grpc version baked into the container: ${DOCKER_GRPC_VERSION}"
     echo "${DOCKER_GRPC_VERSION}"
     return
+  else
+    >&2 echo "Cannot infer grpc version because DOCKER_GRPC_VERSION is not set"
+    exit 1
   fi
-  pushd "${output_folder}" > /dev/null
-  # get grpc version from gapic-generator-java-pom-parent/pom.xml
-  download_gapic_generator_pom_parent "${gapic_generator_version}"
-  grpc_version=$(grep grpc.version "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" | sed 's/<grpc\.version>\(.*\)<\/grpc\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-  popd > /dev/null
-  echo "${grpc_version}"
 }
 
 # This function returns the version of protoc to generate the libraries. If
-# DOCKER_PROTOC_VERSION is set, this will be the version. Otherwise, it will be
-# computed from the gapic-generator-pom-parent artifact at the specified
-# gapic_generator_version.
+# DOCKER_PROTOC_VERSION is set, this will be the version. Otherwise, the script
+# will exit since this is a necessary env var
 get_protoc_version() {
-  local gapic_generator_version=$1
   local protoc_version
   if [[ -n "${DOCKER_PROTOC_VERSION}" ]]; then
     >&2 echo "Using protoc version baked into the container: ${DOCKER_PROTOC_VERSION}"
     echo "${DOCKER_PROTOC_VERSION}"
     return
+  else
+    >&2 echo "Cannot infer protoc version because DOCKER_GRPC_VERSION is not set"
+    exit 1
   fi
-  pushd "${output_folder}" > /dev/null
-  # get protobuf version from gapic-generator-java-pom-parent/pom.xml
-  download_gapic_generator_pom_parent "${gapic_generator_version}"
-  protoc_version=$(grep protobuf.version "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" | sed 's/<protobuf\.version>\(.*\)<\/protobuf\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | cut -d "." -f2-)
-  popd > /dev/null
-  echo "${protoc_version}"
 }
 
 # Given the versions of the gapic generator, protoc and the protoc-grpc plugin,
@@ -149,16 +134,17 @@ get_protoc_version() {
 # DOCKER_GRPC_VERSION respectively, this function will instead set "protoc_path"
 # and "grpc_path" to DOCKER_PROTOC_PATH and DOCKER_GRPC_PATH respectively (no
 # download), since the docker image will have downloaded these tools beforehand.
+#
 # For the case of gapic-generator-java, no env var will be exported for the
 # upstream flow, but instead it will be assigned a default filename that will be
-# referenced by the file `library_generation/gapic-generator-java-wrapper`.
+# referenced by the file `library_generation/gapic-generator-java-wrapper`. Note
+# that we assume an env var DOCKER_GAPIC_GENERATOR_LOCATION to point to the jar
+# so we can copy it to our output folder
 download_tools() {
-  local gapic_generator_version=$1
-  local protoc_version=$2
-  local grpc_version=$3
-  local os_architecture=$4
+  local protoc_version=$1
+  local grpc_version=$2
+  local os_architecture=$3
   pushd "${output_folder}"
-  download_generator_artifact "${gapic_generator_version}" "gapic-generator-java-${gapic_generator_version}.jar"
 
   # the variable protoc_path is used in generate_library.sh. It is explicitly
   # exported to make clear that it is used outside this utilities file.
@@ -179,30 +165,19 @@ download_tools() {
     export grpc_path=$(download_grpc_plugin "${grpc_version}" "${os_architecture}")
   fi
 
-  popd
-}
-
-download_generator_artifact() {
-  local gapic_generator_version=$1
-  local artifact=$2
-  local project=${3:-"gapic-generator-java"}
-  if [ ! -f "${artifact}" ]; then
-    # first, try to fetch the generator locally
-    local local_fetch_successful
-    local_fetch_successful=$(copy_from "$HOME/.m2/repository/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
-      "${artifact}")
-    if [[ "${local_fetch_successful}" == "false" ]];then 
-      # download gapic-generator-java artifact from Google maven central mirror if not
-      # found locally
-      >&2 echo "${artifact} not found locally. Attempting a download from Maven Central"
-      download_from \
-      "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
-      "${artifact}"
-      >&2 echo "${artifact} found and downloaded from Maven Central"
-    else
-      >&2 echo "${artifact} found copied from local repository (~/.m2)"
-    fi
+  # prepare gapic-generator-java
+  # We will assume the generator location environment variable will point to the
+  # location of the generator JAR and then we will simply copy it. Although
+  # these env vars are already validated upstream in the python scripts, we
+  # still validate them here for testing purposes
+  if [[ -z "${DOCKER_GAPIC_GENERATOR_LOCATION}" ]]; then
+    >&2 echo "Env var DOCKER_GAPIC_GENERATOR_LOCATION must be set and pointing to the generator jar"
+    exit 1
+  else
+    >&2 echo "Using gapic-generator-java version baked into the container"
+    cp "${DOCKER_GAPIC_GENERATOR_LOCATION}" "${output_folder}"
   fi
+  popd
 }
 
 download_protoc() {

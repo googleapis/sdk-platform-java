@@ -1,4 +1,3 @@
-gapic_generator_version: 2.34.0
 libraries:
   - GAPICs:
     - random_key:

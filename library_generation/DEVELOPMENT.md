@@ -53,28 +53,6 @@ run them directly. This section explains how to run the entrypoint script
 In order to run the generation scripts directly, there are a few tools we
 need to install beforehand.
 
-### Install synthtool
-
-It requires python 3.x to be installed.
-You will need to specify a committish of the synthtool repo in order to have
-your generation results matching exactly what the docker image would produce.
-You can achieve this by inspecting `SYNTHTOOL_COMMITISH` in
-`.cloudbuild/library_generation/library_generation.Dockerfile`.
-
-```bash
-# obtained from .cloudbuild/library_generation/library_generation.Dockerfile
-export SYNTHTOOL_COMMITTISH=6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
-```
-
-```bash
-git clone https://github.com/googleapis/synthtool
-cd synthtool
-git checkout "${SYNTHTOOL_COMMITTISH}"
-python -m pip install --require-hashes -r requirements.txt
-python -m pip install --no-deps -e .
-python -m synthtool --version
-```
-
 ### Install the owl-bot CLI
 
 Requires node.js to be installed.
@@ -92,6 +70,18 @@ owl-bot copy-code --version
 
 The key step is `npm link`, which will make the command available in you current
 shell session.
+
+### Create the gapic-generator-java jar
+
+Run `cd sdk-platform-java && mvn install -DskipTests -Dclirr.skip
+-Dcheckstyle.skip`. This will generate a jar located in
+`~/.m2/repository/com/google/api/gapic-generator-java/{version}/gapic-generator-java-{version}.jar`
+
+Then `export` an environment variable
+`DOCKER_GAPIC_GENERATOR_VERSION=${version}` and
+`DOCKER_GAPIC_GENERATOR_LOCATION=path/to/generated/jar`
+
+These two env vars are necessary to simulate the docker image environment.
 
 ## Running the script
 The entrypoint script (`library_generation/cli/entry_point.py`) allows you to
