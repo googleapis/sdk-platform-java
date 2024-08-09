@@ -34,8 +34,8 @@ git clone "https://github.com/GoogleCloudPlatform/spring-cloud-gcp.git" --depth=
 update_all_poms_dependency "spring-cloud-gcp" "gapic-generator-java-bom" "${GAPIC_GENERATOR_VERSION}"
 
 # Install spring-cloud-gcp modules
-pushd spring-cloud-gcp
-./mvnw \
+pushd spring-cloud-gcp/spring-cloud-generator
+../mvnw \
   -U \
   --batch-mode \
   --no-transfer-progress \
@@ -44,7 +44,7 @@ pushd spring-cloud-gcp
   --define maven.test.skip=true \
   --define maven.javadoc.skip=true \
   install
-pushd spring-cloud-generator
+
 
 # Generate showcase autoconfig
 bash scripts/generate-showcase.sh
@@ -52,6 +52,5 @@ pushd showcase/showcase-spring-starter
 mvn verify
 popd # showcase/showcase-spring-starter
 
-popd # spring-cloud-generator
-popd # spring-cloud-gcp
+popd # spring-cloud-gcp/spring-cloud-generator
 popd # gapic-generator-java/target
