@@ -58,37 +58,14 @@ class GenerationConfigTest(SimulatedDockerEnvironmentTest):
     def test_generation_config_with_generator_version_env_raise_exception(self):
         self.assertRaisesRegex(
             ValueError,
-            "env var DOCKER_GAPIC_GENERATOR_VERSION was not found",
+            "env var DOCKER_GAPIC_GENERATOR_LOCATION was not found",
             GenerationConfig,
             googleapis_commitish="",
             libraries=[],
         )
 
-    @patch.dict(
-        os.environ,
-        {
-            "DOCKER_GAPIC_GENERATOR_VERSION": "1.2.3",
-            "DOCKER_GAPIC_GENERATOR_LOCATION": "test-location",
-        },
-    )
-    def test_generation_config_set_generator_version_from_env(self):
-        config = GenerationConfig(
-            googleapis_commitish="",
-            libraries=[],
-        )
-        self.assertEqual("1.2.3", config.gapic_generator_version)
-        pass
-
-    @patch.dict(
-        os.environ,
-        {
-            "DOCKER_GAPIC_GENERATOR_VERSION": "1.2.3-env",
-            "DOCKER_GAPIC_GENERATOR_LOCATION": "test-location",
-        },
-    )
     def test_from_yaml_succeeds(self):
         config = from_yaml(f"{test_config_dir}/generation_config.yaml")
-        self.assertEqual("1.2.3-env", config.gapic_generator_version)
         self.assertEqual(25.2, config.protoc_version)
         self.assertEqual(
             "1a45bf7393b52407188c82e63101db7dc9c72026", config.googleapis_commitish

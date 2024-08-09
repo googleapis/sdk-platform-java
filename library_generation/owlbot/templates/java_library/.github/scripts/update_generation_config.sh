@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 # This script should be run at the root of the repository.
-# This script is used to update googleapis_commitish, gapic_generator_version,
+# This script is used to update googleapis_commitish 
 # and libraries_bom_version in generation configuration at the time of running
 # and create a pull request.
 
@@ -93,10 +93,6 @@ latest_commit=$(git rev-parse HEAD)
 popd
 rm -rf tmp-googleapis
 update_config "googleapis_commitish" "${latest_commit}" "${generation_config}"
-
-# update gapic-generator-java version to the latest
-latest_version=$(get_latest_released_version "com.google.api" "gapic-generator-java")
-update_config "gapic_generator_version" "${latest_version}" "${generation_config}"
 
 # update libraries-bom version to the latest
 latest_version=$(get_latest_released_version "com.google.cloud" "libraries-bom")

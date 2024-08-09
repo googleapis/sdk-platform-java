@@ -15,13 +15,9 @@ import re
 from git import Commit
 
 from library_generation.model.config_change import ConfigChange, ChangeType
-from library_generation.model.generation_config import (
-    GAPIC_GENERATOR_VERSION_CONFIG_KEY,
-    LIBRARIES_BOM_VERSION,
-)
+from library_generation.model.generation_config import LIBRARIES_BOM_VERSION
 
 PARAM_TO_COMMIT_MESSAGE = {
-    GAPIC_GENERATOR_VERSION_CONFIG_KEY: "fix(deps): update the Java code generator (gapic-generator-java) to",
     LIBRARIES_BOM_VERSION: "chore: update the libraries_bom version to",
 }
 

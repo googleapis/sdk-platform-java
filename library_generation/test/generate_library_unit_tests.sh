@@ -15,17 +15,13 @@ extract_folder_name_test() {
   assertEquals "google-cloud-aiplatform-v1-java" "${folder_name}"
 }
 
-get_grpc_version_succeed_with_valid_generator_version_test() {
-  local actual_version
-  actual_version=$(get_grpc_version "2.24.0")
-  rm "gapic-generator-java-pom-parent-2.24.0.pom"
-  assertEquals "1.56.1" "${actual_version}"
-}
-
-get_grpc_version_failed_with_invalid_generator_version_test() {
-  local res=0
-  $(get_grpc_version "1.99.0") || res=$?
-  assertEquals 1 $((res))
+get_grpc_version_fails_with_no_env_var_test() {
+  # the absence of DOCKER_GRPC_VERSION will make this function to fail
+  exit_code=0
+  (
+    get_grpc_version
+  ) || exit_code=$?
+  assertEquals 1 "${exit_code}"
 }
 
 get_grpc_version_succeed_docker_env_var_test() {
@@ -33,7 +29,7 @@ get_grpc_version_succeed_docker_env_var_test() {
   local version_without_docker
   export DOCKER_GRPC_VERSION="9.9.9"
   # get_grpc_version should prioritize DOCKER_GRPC_VERSION
-  version_with_docker=$(get_grpc_version "2.24.0")
+  version_with_docker=$(get_grpc_version)
   assertEquals "${DOCKER_GRPC_VERSION}" "${version_with_docker}"
   unset DOCKER_GRPC_VERSION
 }
@@ -43,22 +39,18 @@ get_protoc_version_succeed_docker_env_var_test() {
   local version_without_docker
   export DOCKER_PROTOC_VERSION="9.9.9"
   # get_protoc_version should prioritize DOCKER_PROTOC_VERSION
-  version_with_docker=$(get_protoc_version "2.24.0")
+  version_with_docker=$(get_protoc_version)
   assertEquals "${DOCKER_PROTOC_VERSION}" "${version_with_docker}"
   unset DOCKER_PROTOC_VERSION
 }
 
-get_protoc_version_succeed_with_valid_generator_version_test() {
-  local actual_version
-  actual_version=$(get_protoc_version "2.24.0")
-  assertEquals "23.2" "${actual_version}"
-  rm "gapic-generator-java-pom-parent-2.24.0.pom"
-}
-
-get_protoc_version_failed_with_invalid_generator_version_test() {
-  local res=0
-  $(get_protoc_version "1.99.0") || res=$?
-  assertEquals 1 $((res))
+get_protoc_version_fails_with_no_env_var_test() {
+  # the absence of DOCKER_PROTOC_VERSION will make this function to fail
+  exit_code=0
+  (
+    get_protoc_version
+  ) || exit_code=$?
+  assertEquals 1 "${exit_code}"
 }
 
 get_gapic_opts_with_rest_test() {
@@ -106,28 +98,6 @@ remove_grpc_version_test() {
 
   assertEquals 0 $((res))
   rm "${destination_path}/QueryServiceGrpc.java"
-}
-
-download_generator_success_with_valid_version_test() {
-  local version="2.24.0"
-  local artifact="gapic-generator-java-${version}.jar"
-  download_generator_artifact "${version}" "${artifact}"
-  assertFileOrDirectoryExists "${artifact}"
-  rm "${artifact}"
-}
-
-download_generator_failed_with_invalid_version_test() {
-  # The download function will exit the shell
-  # if download failed. Test the exit code instead of
-  # downloaded file (there will be no downloaded file).
-  # Use $() to execute the function in subshell so that
-  # the other tests can continue executing in the current
-  # shell.
-  local res=0
-  local version="1.99.0"
-  local artifact="gapic-generator-java-${version}.jar"
-  $(download_generator_artifact "${version}" "${artifact}") || res=$?
-  assertEquals 1 $((res))
 }
 
 download_protoc_succeed_with_valid_version_linux_test() {
@@ -292,7 +262,6 @@ generate_library_failed_with_invalid_generator_version() {
   bash "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../"${destination}" \
-    --gapic_generator_version 1.99.0 \
     --protoc_version 23.2 \
     --grpc_version 1.55.1 \
     --transport grpc+rest \
@@ -309,7 +278,6 @@ generate_library_failed_with_invalid_protoc_version() {
   bash "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../"${destination}" \
-    --gapic_generator_version 2.24.0 \
     --protoc_version 22.99 \
     --grpc_version 1.55.1 \
     --transport grpc+rest \
@@ -326,7 +294,6 @@ generate_library_failed_with_invalid_grpc_version() {
   bash "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../output/"${destination}" \
-    --gapic_generator_version 2.24.0 \
     --grpc_version 0.99.0 \
     --transport grpc+rest \
     --rest_numeric_enums true || res=$?
@@ -381,18 +348,14 @@ get_proto_path_from_preprocessed_sources_multiple_proto_dirs_fails() {
 # One line per test.
 test_list=(
   extract_folder_name_test
-  get_grpc_version_succeed_with_valid_generator_version_test
-  get_grpc_version_failed_with_invalid_generator_version_test
+  get_grpc_version_fails_with_no_env_var_test
   get_grpc_version_succeed_docker_env_var_test
   get_protoc_version_succeed_docker_env_var_test
-  get_protoc_version_succeed_with_valid_generator_version_test
-  get_protoc_version_failed_with_invalid_generator_version_test
+  get_protoc_version_fails_with_no_env_var_test
   get_gapic_opts_with_rest_test
   get_gapic_opts_without_rest_test
   get_gapic_opts_with_non_default_test
   remove_grpc_version_test
-  download_generator_success_with_valid_version_test
-  download_generator_failed_with_invalid_version_test
   download_protoc_succeed_with_valid_version_linux_test
   download_protoc_succeed_with_valid_version_macos_test
   download_protoc_failed_with_invalid_version_linux_test
