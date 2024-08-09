@@ -16,6 +16,8 @@
 # In the given directory ($1),
 #   update the pom.xml's dependency on the given artifact ($2) to the given version ($3)
 # ex: update_dependency google-cloud-java/google-cloud-jar-parent google-cloud-shared-dependencies 1.2.3
+commonScriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
+
 function update_pom_dependency {
   pushd "$1" || exit 1
   xmllint --shell pom.xml &>/dev/null <<EOF
@@ -70,20 +72,41 @@ function parse_pom_version {
 # ex: find_last_release_version java-bigtable
 # ex: find_last_release_version java-storage 2.22.x
 function find_last_release_version {
+  repo=$1
   branch=${2-"main"} # Default to using main branch
-  curl -s -o "versions_$1.txt" "https://raw.githubusercontent.com/googleapis/$1/$branch/versions.txt"
+  org=${3-"googleapis"}
+  curl -s -o "versions_${repo}.txt" "https://raw.githubusercontent.com/${org}/${repo}/${branch}/versions.txt"
 
   # First check to see if there's an entry for the overall repo. Used for google-cloud-java.
-  primary_artifact=$(grep -E "^$1" "versions_$1.txt" | head -n 1)
-  if [ -z "$primary_artifact" ]; then
+  primary_artifact=$(grep -E "^${repo}" "versions_${repo}.txt" | head -n 1)
+  if [ -z "${primary_artifact}" ]; then
     # Otherwise, use the first google-cloud-* artifact's version.
     primary_artifact=$(grep -E "^google-cloud-" "versions_$1.txt" | head -n 1)
   fi
-  if [ -z "$primary_artifact" ]; then
+  if [ -z "${primary_artifact}" ]; then
     echo "Unable to identify primary artifact for $1"
     exit 1
   fi
 
   parts=($(echo "$primary_artifact" | tr ":" "\n"))
   echo "${parts[1]}"
+}
+
+# copies settings.xml from the root of sdk-platform-java into Maven's home
+# folder
+function setup_maven_mirror {
+  echo "Setup maven mirror"
+  mkdir -p "${HOME}/.m2"
+  cp "${commonScriptDir}/../../settings.xml" "${HOME}/.m2"
+}
+
+function install_repo_modules {
+  target_projects="$1"
+  projects_arg=""
+  if [ -n "${target_projects}" ]; then
+    projects_arg="--projects ${target_projects}"
+  fi
+  echo "Installing this repo's modules to local maven."
+  mvn -q -B -ntp install ${projects_arg} \
+    -Dcheckstyle.skip -Dfmt.skip -DskipTests -T 1C
 }
