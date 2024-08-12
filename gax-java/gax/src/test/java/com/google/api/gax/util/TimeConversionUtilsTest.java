@@ -69,4 +69,44 @@ public class TimeConversionUtilsTest {
         jtInstant.toEpochMilli(), TimeConversionUtils.toThreetenInstant(jtInstant).toEpochMilli());
     assertNull(TimeConversionUtils.toThreetenInstant(null));
   }
+
+  @Test
+  void testToThreeteenInstant_bigInput_doesNotOverflow() {
+    // defaults to MAX_SECONDS plus the max value of long for the nanos part
+    java.time.Instant jtInstant = java.time.Instant.MAX;
+    org.threeten.bp.Instant ttInstant = TimeConversionUtils.toThreetenInstant(jtInstant);
+    assertEquals(jtInstant.getEpochSecond(), ttInstant.getEpochSecond());
+    assertEquals(jtInstant.getNano(), ttInstant.getNano());
+  }
+
+  @Test
+  void testToJavaTimeInstant_bigInput_doesNotOverflow() {
+    // defaults to MAX_SECONDS plus the max value of long for the nanos part
+    org.threeten.bp.Instant ttInstant = org.threeten.bp.Instant.MAX;
+    java.time.Instant jtInstant = TimeConversionUtils.toJavaTimeInstant(ttInstant);
+    assertEquals(jtInstant.getEpochSecond(), ttInstant.getEpochSecond());
+    assertEquals(jtInstant.getNano(), ttInstant.getNano());
+  }
+
+  @Test
+  void testToThreeteenDuration_bigInput_doesNotOverflow() {
+    // we use the max long value for the seconds part and an arbitrary int for the nanos part, so we
+    // can confirm
+    // that both components are preserved
+    java.time.Duration jtDuration = java.time.Duration.ofSeconds(Long.MAX_VALUE, 123);
+    org.threeten.bp.Duration ttDuration = TimeConversionUtils.toThreetenDuration(jtDuration);
+    assertEquals(jtDuration.getSeconds(), ttDuration.getSeconds());
+    assertEquals(jtDuration.getNano(), ttDuration.getNano());
+  }
+
+  @Test
+  void testToJavaTimeDuration_bigInput_doesNotOverflow() {
+    // we use the max long value for the seconds part and an arbitrary int for the nanos part, so we
+    // can confirm
+    // that both components are preserved
+    org.threeten.bp.Duration ttDuration = org.threeten.bp.Duration.ofSeconds(Long.MAX_VALUE, 123);
+    java.time.Duration jtDuration = TimeConversionUtils.toJavaTimeDuration(ttDuration);
+    assertEquals(jtDuration.getSeconds(), ttDuration.getSeconds());
+    assertEquals(jtDuration.getNano(), ttDuration.getNano());
+  }
 }
