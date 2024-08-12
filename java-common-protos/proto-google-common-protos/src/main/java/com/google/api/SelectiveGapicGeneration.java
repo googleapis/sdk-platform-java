@@ -5,81 +5,77 @@
 package com.google.api;
 
 /**
- * <pre>
- * Settings for Go client libraries.
- * </pre>
- *
- * Protobuf type {@code google.api.GoSettings}
+ * Protobuf type {@code google.api.SelectiveGapicGeneration}
  */
-public final class GoSettings extends
+public final class SelectiveGapicGeneration extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:google.api.GoSettings)
-    GoSettingsOrBuilder {
+    // @@protoc_insertion_point(message_implements:google.api.SelectiveGapicGeneration)
+    SelectiveGapicGenerationOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use GoSettings.newBuilder() to construct.
-  private GoSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use SelectiveGapicGeneration.newBuilder() to construct.
+  private SelectiveGapicGeneration(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private GoSettings() {
+  private SelectiveGapicGeneration() {
+    methods_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(
       UnusedPrivateParameter unused) {
-    return new GoSettings();
+    return new SelectiveGapicGeneration();
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.google.api.ClientProto.internal_static_google_api_GoSettings_descriptor;
+    return com.google.api.ClientProto.internal_static_google_api_SelectiveGapicGeneration_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.google.api.ClientProto.internal_static_google_api_GoSettings_fieldAccessorTable
+    return com.google.api.ClientProto.internal_static_google_api_SelectiveGapicGeneration_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.GoSettings.class, com.google.api.GoSettings.Builder.class);
+            com.google.api.SelectiveGapicGeneration.class, com.google.api.SelectiveGapicGeneration.Builder.class);
   }
 
-  private int bitField0_;
-  public static final int COMMON_FIELD_NUMBER = 1;
-  private com.google.api.CommonLanguageSettings common_;
+  public static final int METHODS_FIELD_NUMBER = 1;
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringArrayList methods_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
-   * <pre>
-   * Some settings.
-   * </pre>
-   *
-   * <code>.google.api.CommonLanguageSettings common = 1;</code>
-   * @return Whether the common field is set.
+   * <code>repeated string methods = 1;</code>
+   * @return A list containing the methods.
    */
-  @java.lang.Override
-  public boolean hasCommon() {
-    return ((bitField0_ & 0x00000001) != 0);
+  public com.google.protobuf.ProtocolStringList
+      getMethodsList() {
+    return methods_;
   }
   /**
-   * <pre>
-   * Some settings.
-   * </pre>
-   *
-   * <code>.google.api.CommonLanguageSettings common = 1;</code>
-   * @return The common.
+   * <code>repeated string methods = 1;</code>
+   * @return The count of methods.
    */
-  @java.lang.Override
-  public com.google.api.CommonLanguageSettings getCommon() {
-    return common_ == null ? com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
+  public int getMethodsCount() {
+    return methods_.size();
   }
   /**
-   * <pre>
-   * Some settings.
-   * </pre>
-   *
-   * <code>.google.api.CommonLanguageSettings common = 1;</code>
+   * <code>repeated string methods = 1;</code>
+   * @param index The index of the element to return.
+   * @return The methods at the given index.
    */
-  @java.lang.Override
-  public com.google.api.CommonLanguageSettingsOrBuilder getCommonOrBuilder() {
-    return common_ == null ? com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
+  public java.lang.String getMethods(int index) {
+    return methods_.get(index);
+  }
+  /**
+   * <code>repeated string methods = 1;</code>
+   * @param index The index of the value to return.
+   * @return The bytes of the methods at the given index.
+   */
+  public com.google.protobuf.ByteString
+      getMethodsBytes(int index) {
+    return methods_.getByteString(index);
   }
 
   private byte memoizedIsInitialized = -1;
@@ -96,8 +92,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(1, getCommon());
+    for (int i = 0; i < methods_.size(); i++) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, methods_.getRaw(i));
     }
     getUnknownFields().writeTo(output);
   }
@@ -108,9 +104,13 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(1, getCommon());
+    {
+      int dataSize = 0;
+      for (int i = 0; i < methods_.size(); i++) {
+        dataSize += computeStringSizeNoTag(methods_.getRaw(i));
+      }
+      size += dataSize;
+      size += 1 * getMethodsList().size();
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -122,16 +122,13 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.GoSettings)) {
+    if (!(obj instanceof com.google.api.SelectiveGapicGeneration)) {
       return super.equals(obj);
     }
-    com.google.api.GoSettings other = (com.google.api.GoSettings) obj;
+    com.google.api.SelectiveGapicGeneration other = (com.google.api.SelectiveGapicGeneration) obj;
 
-    if (hasCommon() != other.hasCommon()) return false;
-    if (hasCommon()) {
-      if (!getCommon()
-          .equals(other.getCommon())) return false;
-    }
+    if (!getMethodsList()
+        .equals(other.getMethodsList())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -143,53 +140,53 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasCommon()) {
-      hash = (37 * hash) + COMMON_FIELD_NUMBER;
-      hash = (53 * hash) + getCommon().hashCode();
+    if (getMethodsCount() > 0) {
+      hash = (37 * hash) + METHODS_FIELD_NUMBER;
+      hash = (53 * hash) + getMethodsList().hashCode();
     }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static com.google.api.GoSettings parseFrom(
+  public static com.google.api.SelectiveGapicGeneration parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.GoSettings parseFrom(
+  public static com.google.api.SelectiveGapicGeneration parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.GoSettings parseFrom(
+  public static com.google.api.SelectiveGapicGeneration parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.GoSettings parseFrom(
+  public static com.google.api.SelectiveGapicGeneration parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.GoSettings parseFrom(byte[] data)
+  public static com.google.api.SelectiveGapicGeneration parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.GoSettings parseFrom(
+  public static com.google.api.SelectiveGapicGeneration parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.GoSettings parseFrom(java.io.InputStream input)
+  public static com.google.api.SelectiveGapicGeneration parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.GoSettings parseFrom(
+  public static com.google.api.SelectiveGapicGeneration parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -197,26 +194,26 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  public static com.google.api.GoSettings parseDelimitedFrom(java.io.InputStream input)
+  public static com.google.api.SelectiveGapicGeneration parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
 
-  public static com.google.api.GoSettings parseDelimitedFrom(
+  public static com.google.api.SelectiveGapicGeneration parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.GoSettings parseFrom(
+  public static com.google.api.SelectiveGapicGeneration parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.GoSettings parseFrom(
+  public static com.google.api.SelectiveGapicGeneration parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -229,7 +226,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.GoSettings prototype) {
+  public static Builder newBuilder(com.google.api.SelectiveGapicGeneration prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -245,71 +242,58 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * <pre>
-   * Settings for Go client libraries.
-   * </pre>
-   *
-   * Protobuf type {@code google.api.GoSettings}
+   * Protobuf type {@code google.api.SelectiveGapicGeneration}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:google.api.GoSettings)
-      com.google.api.GoSettingsOrBuilder {
+      // @@protoc_insertion_point(builder_implements:google.api.SelectiveGapicGeneration)
+      com.google.api.SelectiveGapicGenerationOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.google.api.ClientProto.internal_static_google_api_GoSettings_descriptor;
+      return com.google.api.ClientProto.internal_static_google_api_SelectiveGapicGeneration_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.google.api.ClientProto.internal_static_google_api_GoSettings_fieldAccessorTable
+      return com.google.api.ClientProto.internal_static_google_api_SelectiveGapicGeneration_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.GoSettings.class, com.google.api.GoSettings.Builder.class);
+              com.google.api.SelectiveGapicGeneration.class, com.google.api.SelectiveGapicGeneration.Builder.class);
     }
 
-    // Construct using com.google.api.GoSettings.newBuilder()
+    // Construct using com.google.api.SelectiveGapicGeneration.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
-      maybeForceBuilderInitialization();
-    }
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3
-              .alwaysUseFieldBuilders) {
-        getCommonFieldBuilder();
-      }
+
     }
     @java.lang.Override
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      common_ = null;
-      if (commonBuilder_ != null) {
-        commonBuilder_.dispose();
-        commonBuilder_ = null;
-      }
+      methods_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.google.api.ClientProto.internal_static_google_api_GoSettings_descriptor;
+      return com.google.api.ClientProto.internal_static_google_api_SelectiveGapicGeneration_descriptor;
     }
 
     @java.lang.Override
-    public com.google.api.GoSettings getDefaultInstanceForType() {
-      return com.google.api.GoSettings.getDefaultInstance();
+    public com.google.api.SelectiveGapicGeneration getDefaultInstanceForType() {
+      return com.google.api.SelectiveGapicGeneration.getDefaultInstance();
     }
 
     @java.lang.Override
-    public com.google.api.GoSettings build() {
-      com.google.api.GoSettings result = buildPartial();
+    public com.google.api.SelectiveGapicGeneration build() {
+      com.google.api.SelectiveGapicGeneration result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -317,23 +301,19 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public com.google.api.GoSettings buildPartial() {
-      com.google.api.GoSettings result = new com.google.api.GoSettings(this);
+    public com.google.api.SelectiveGapicGeneration buildPartial() {
+      com.google.api.SelectiveGapicGeneration result = new com.google.api.SelectiveGapicGeneration(this);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
     }
 
-    private void buildPartial0(com.google.api.GoSettings result) {
+    private void buildPartial0(com.google.api.SelectiveGapicGeneration result) {
       int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.common_ = commonBuilder_ == null
-            ? common_
-            : commonBuilder_.build();
-        to_bitField0_ |= 0x00000001;
+        methods_.makeImmutable();
+        result.methods_ = methods_;
       }
-      result.bitField0_ |= to_bitField0_;
     }
 
     @java.lang.Override
@@ -370,18 +350,25 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.GoSettings) {
-        return mergeFrom((com.google.api.GoSettings)other);
+      if (other instanceof com.google.api.SelectiveGapicGeneration) {
+        return mergeFrom((com.google.api.SelectiveGapicGeneration)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.GoSettings other) {
-      if (other == com.google.api.GoSettings.getDefaultInstance()) return this;
-      if (other.hasCommon()) {
-        mergeCommon(other.getCommon());
+    public Builder mergeFrom(com.google.api.SelectiveGapicGeneration other) {
+      if (other == com.google.api.SelectiveGapicGeneration.getDefaultInstance()) return this;
+      if (!other.methods_.isEmpty()) {
+        if (methods_.isEmpty()) {
+          methods_ = other.methods_;
+          bitField0_ |= 0x00000001;
+        } else {
+          ensureMethodsIsMutable();
+          methods_.addAll(other.methods_);
+        }
+        onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -410,10 +397,9 @@ private static final long serialVersionUID = 0L;
               done = true;
               break;
             case 10: {
-              input.readMessage(
-                  getCommonFieldBuilder().getBuilder(),
-                  extensionRegistry);
-              bitField0_ |= 0x00000001;
+              java.lang.String s = input.readStringRequireUtf8();
+              ensureMethodsIsMutable();
+              methods_.add(s);
               break;
             } // case 10
             default: {
@@ -433,161 +419,115 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private com.google.api.CommonLanguageSettings common_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.api.CommonLanguageSettings, com.google.api.CommonLanguageSettings.Builder, com.google.api.CommonLanguageSettingsOrBuilder> commonBuilder_;
-    /**
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     * @return Whether the common field is set.
-     */
-    public boolean hasCommon() {
-      return ((bitField0_ & 0x00000001) != 0);
+    private com.google.protobuf.LazyStringArrayList methods_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
+    private void ensureMethodsIsMutable() {
+      if (!methods_.isModifiable()) {
+        methods_ = new com.google.protobuf.LazyStringArrayList(methods_);
+      }
+      bitField0_ |= 0x00000001;
     }
     /**
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     * @return The common.
+     * <code>repeated string methods = 1;</code>
+     * @return A list containing the methods.
      */
-    public com.google.api.CommonLanguageSettings getCommon() {
-      if (commonBuilder_ == null) {
-        return common_ == null ? com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
-      } else {
-        return commonBuilder_.getMessage();
-      }
+    public com.google.protobuf.ProtocolStringList
+        getMethodsList() {
+      methods_.makeImmutable();
+      return methods_;
     }
     /**
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
+     * <code>repeated string methods = 1;</code>
+     * @return The count of methods.
      */
-    public Builder setCommon(com.google.api.CommonLanguageSettings value) {
-      if (commonBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        common_ = value;
-      } else {
-        commonBuilder_.setMessage(value);
-      }
+    public int getMethodsCount() {
+      return methods_.size();
+    }
+    /**
+     * <code>repeated string methods = 1;</code>
+     * @param index The index of the element to return.
+     * @return The methods at the given index.
+     */
+    public java.lang.String getMethods(int index) {
+      return methods_.get(index);
+    }
+    /**
+     * <code>repeated string methods = 1;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the methods at the given index.
+     */
+    public com.google.protobuf.ByteString
+        getMethodsBytes(int index) {
+      return methods_.getByteString(index);
+    }
+    /**
+     * <code>repeated string methods = 1;</code>
+     * @param index The index to set the value at.
+     * @param value The methods to set.
+     * @return This builder for chaining.
+     */
+    public Builder setMethods(
+        int index, java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      ensureMethodsIsMutable();
+      methods_.set(index, value);
       bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
     /**
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
+     * <code>repeated string methods = 1;</code>
+     * @param value The methods to add.
+     * @return This builder for chaining.
      */
-    public Builder setCommon(
-        com.google.api.CommonLanguageSettings.Builder builderForValue) {
-      if (commonBuilder_ == null) {
-        common_ = builderForValue.build();
-      } else {
-        commonBuilder_.setMessage(builderForValue.build());
-      }
+    public Builder addMethods(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      ensureMethodsIsMutable();
+      methods_.add(value);
       bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
     /**
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
+     * <code>repeated string methods = 1;</code>
+     * @param values The methods to add.
+     * @return This builder for chaining.
      */
-    public Builder mergeCommon(com.google.api.CommonLanguageSettings value) {
-      if (commonBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0) &&
-          common_ != null &&
-          common_ != com.google.api.CommonLanguageSettings.getDefaultInstance()) {
-          getCommonBuilder().mergeFrom(value);
-        } else {
-          common_ = value;
-        }
-      } else {
-        commonBuilder_.mergeFrom(value);
-      }
-      if (common_ != null) {
-        bitField0_ |= 0x00000001;
-        onChanged();
-      }
-      return this;
-    }
-    /**
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     */
-    public Builder clearCommon() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      common_ = null;
-      if (commonBuilder_ != null) {
-        commonBuilder_.dispose();
-        commonBuilder_ = null;
-      }
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
-     */
-    public com.google.api.CommonLanguageSettings.Builder getCommonBuilder() {
+    public Builder addAllMethods(
+        java.lang.Iterable<java.lang.String> values) {
+      ensureMethodsIsMutable();
+      com.google.protobuf.AbstractMessageLite.Builder.addAll(
+          values, methods_);
       bitField0_ |= 0x00000001;
       onChanged();
-      return getCommonFieldBuilder().getBuilder();
+      return this;
     }
     /**
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
+     * <code>repeated string methods = 1;</code>
+     * @return This builder for chaining.
      */
-    public com.google.api.CommonLanguageSettingsOrBuilder getCommonOrBuilder() {
-      if (commonBuilder_ != null) {
-        return commonBuilder_.getMessageOrBuilder();
-      } else {
-        return common_ == null ?
-            com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
-      }
+    public Builder clearMethods() {
+      methods_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
+      bitField0_ = (bitField0_ & ~0x00000001);;
+      onChanged();
+      return this;
     }
     /**
-     * <pre>
-     * Some settings.
-     * </pre>
-     *
-     * <code>.google.api.CommonLanguageSettings common = 1;</code>
+     * <code>repeated string methods = 1;</code>
+     * @param value The bytes of the methods to add.
+     * @return This builder for chaining.
      */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.api.CommonLanguageSettings, com.google.api.CommonLanguageSettings.Builder, com.google.api.CommonLanguageSettingsOrBuilder> 
-        getCommonFieldBuilder() {
-      if (commonBuilder_ == null) {
-        commonBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.CommonLanguageSettings, com.google.api.CommonLanguageSettings.Builder, com.google.api.CommonLanguageSettingsOrBuilder>(
-                getCommon(),
-                getParentForChildren(),
-                isClean());
-        common_ = null;
-      }
-      return commonBuilder_;
+    public Builder addMethodsBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      ensureMethodsIsMutable();
+      methods_.add(value);
+      bitField0_ |= 0x00000001;
+      onChanged();
+      return this;
     }
     @java.lang.Override
     public final Builder setUnknownFields(
@@ -602,23 +542,23 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:google.api.GoSettings)
+    // @@protoc_insertion_point(builder_scope:google.api.SelectiveGapicGeneration)
   }
 
-  // @@protoc_insertion_point(class_scope:google.api.GoSettings)
-  private static final com.google.api.GoSettings DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:google.api.SelectiveGapicGeneration)
+  private static final com.google.api.SelectiveGapicGeneration DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.GoSettings();
+    DEFAULT_INSTANCE = new com.google.api.SelectiveGapicGeneration();
   }
 
-  public static com.google.api.GoSettings getDefaultInstance() {
+  public static com.google.api.SelectiveGapicGeneration getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<GoSettings>
-      PARSER = new com.google.protobuf.AbstractParser<GoSettings>() {
+  private static final com.google.protobuf.Parser<SelectiveGapicGeneration>
+      PARSER = new com.google.protobuf.AbstractParser<SelectiveGapicGeneration>() {
     @java.lang.Override
-    public GoSettings parsePartialFrom(
+    public SelectiveGapicGeneration parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -637,17 +577,17 @@ private static final long serialVersionUID = 0L;
     }
   };
 
-  public static com.google.protobuf.Parser<GoSettings> parser() {
+  public static com.google.protobuf.Parser<SelectiveGapicGeneration> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<GoSettings> getParserForType() {
+  public com.google.protobuf.Parser<SelectiveGapicGeneration> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.api.GoSettings getDefaultInstanceForType() {
+  public com.google.api.SelectiveGapicGeneration getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

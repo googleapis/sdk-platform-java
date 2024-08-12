@@ -124,6 +124,23 @@ message CommonLanguageSettings {
 
   // The destination where API teams want this client library to be published.
   repeated ClientLibraryDestination destinations = 2;
+
+  // publishing:
+  //  # ...
+  //  go_settings:
+  //    common:
+  //      selective_gapic_generation:
+  //        methods:
+  //        - google.cloud.aiplatform.v1.PredictionService.Predict
+  //        - google.cloud.aiplatform.v1.JobService.CreateBatchPredictionJob
+  //        - google.cloud.aiplatform.v1.JobService.CreateCustomJob
+  //      destinations:
+  //       - PACKAGE_MANAGER
+  SelectiveGapicGeneration selective_gapic_generation = 4;
+}
+
+message SelectiveGapicGeneration {
+  repeated string methods = 1;
 }
 
 // Details about how and where to publish client libraries.
