@@ -1,0 +1,12 @@
+type: google.api.Service
+config_version: 3
+name: selective_api_generation_testing.googleapis.com
+title: Selective Generation Testing API
+
+publishing:
+  # ...
+  library_settings:
+    - python_settings:
+        common:
+          destinations:
+          - PACKAGE_MANAGER

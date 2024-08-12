@@ -39,6 +39,7 @@ import com.google.logging.v2.LoggingProto;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.pubsub.v1.PubsubProto;
+import com.google.selective.generate.v1beta1.SelectiveApiGenerationOuterClass;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.IdentityOuterClass;
 import com.google.showcase.v1beta1.MessagingOuterClass;
@@ -345,6 +346,41 @@ public class TestProtoLoader {
     List<Service> services =
         Parser.parseService(
             autopopulationFileDescriptor,
+            messageTypes,
+            resourceNames,
+            serviceYamlOpt,
+            outputResourceNames);
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
+  }
+
+  public GapicContext parseSelectiveGenerationTesting() {
+    FileDescriptor selectiveGenerationFileDescriptor =
+        SelectiveApiGenerationOuterClass.getDescriptor();
+    ServiceDescriptor selectiveGenerationServiceDescriptor =
+        selectiveGenerationFileDescriptor.getServices().get(0);
+    assertEquals(
+        selectiveGenerationServiceDescriptor.getName(), "EchoServiceShouldGeneratePartial");
+
+    String serviceYamlFilename = "selective_api_generation.yaml";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    assertTrue(serviceYamlOpt.isPresent());
+
+    Map<String, Message> messageTypes = Parser.parseMessages(selectiveGenerationFileDescriptor);
+    Map<String, ResourceName> resourceNames =
+        Parser.parseResourceNames(selectiveGenerationFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            selectiveGenerationFileDescriptor,
             messageTypes,
             resourceNames,
             serviceYamlOpt,

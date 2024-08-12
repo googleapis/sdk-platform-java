@@ -92,4 +92,14 @@ class GrpcServiceStubClassComposerTest {
     Assert.assertGoldenClass(this.getClass(), clazz, "GrpcAutoPopulateFieldStub.golden");
     Assert.assertEmptySamples(clazz.samples());
   }
+
+  @Test
+  void generateGrpcServiceStubClass_selectiveGeneration() {
+    GapicContext context = GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting();
+    Service service = context.services().get(0);
+    GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
+
+    Assert.assertGoldenClass(this.getClass(), clazz, "SelectiveGeneratedStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
+  }
 }

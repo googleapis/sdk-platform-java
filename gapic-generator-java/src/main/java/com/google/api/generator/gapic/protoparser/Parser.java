@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import com.google.api.ClientLibrarySettings;
 import com.google.api.ClientProto;
 import com.google.api.DocumentationRule;
 import com.google.api.FieldBehavior;
@@ -70,6 +71,7 @@ import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
+import com.google.protobuf.ProtocolStringList;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -425,6 +427,30 @@ public class Parser {
         Transport.GRPC);
   }
 
+  private static boolean shouldIncludeMethod(
+      MethodDescriptor method, Optional<com.google.api.Service> serviceYamlProtoOpt) {
+    // default to include all when no service yaml or no library setting section.
+    if (!serviceYamlProtoOpt.isPresent()
+        || serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsCount() == 0) {
+      return true;
+    }
+    List<ClientLibrarySettings> librarySettingsList =
+        serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsList();
+    // TODO: get(0) may not be reliable. may need to use package version. Need discussion.
+    ProtocolStringList includeMethodsList =
+        librarySettingsList
+            .get(0)
+            .getJavaSettings()
+            .getCommon()
+            .getSelectiveGapicGeneration()
+            .getMethodsList();
+    // default to include all when nothing specified.
+    if (includeMethodsList.isEmpty()) {
+      return true;
+    }
+    return includeMethodsList.contains(method.getFullName());
+  }
+
   public static List<Service> parseService(
       FileDescriptor fileDescriptor,
       Map<String, Message> messageTypes,
@@ -438,13 +464,20 @@ public class Parser {
         .filter(
             serviceDescriptor -> {
               List<MethodDescriptor> methodsList = serviceDescriptor.getMethods();
-              if (methodsList.isEmpty()) {
+              List<MethodDescriptor> methodListSelected =
+                  methodsList.stream()
+                      .filter(
+                          method -> {
+                            return shouldIncludeMethod(method, serviceYamlProtoOpt);
+                          })
+                      .collect(Collectors.toList());
+              if (methodListSelected.isEmpty()) {
                 LOGGER.warning(
                     String.format(
                         "Service %s has no RPC methods and will not be generated",
                         serviceDescriptor.getName()));
               }
-              return !methodsList.isEmpty();
+              return !methodListSelected.isEmpty();
             })
         .map(
             s -> {
@@ -723,6 +756,9 @@ public class Parser {
         parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
 
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
+      if (!shouldIncludeMethod(protoMethod, serviceYamlProtoOpt)) {
+        continue;
+      }
       // Parse the method.
       TypeNode inputType = TypeParser.parseType(protoMethod.getInputType());
       Method.Builder methodBuilder = Method.builder();

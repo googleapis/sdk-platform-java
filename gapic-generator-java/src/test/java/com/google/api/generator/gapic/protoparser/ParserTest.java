@@ -46,6 +46,7 @@ import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
+import com.google.selective.generate.v1beta1.SelectiveApiGenerationOuterClass;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
@@ -58,6 +59,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -703,6 +705,79 @@ class ParserTest {
             fileDescriptor, messageTypes, resourceNames, Optional.empty(), new HashSet<>());
     assertEquals(1, services.size());
     assertEquals("EchoWithMethods", services.get(0).overriddenName());
+  }
+
+  @Test
+  void selectiveGenerationTest() {
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+
+    String serviceYamlFilename = "selective_api_generation.yaml";
+    String testFilesDirectory = "src/test/resources/";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    Assert.assertTrue(serviceYamlOpt.isPresent());
+    // List<ClientLibrarySettings> librarySettingsList = serviceYamlOpt.get().getPublishing()
+    //     .getLibrarySettingsList();
+    // ProtocolStringList excludeMethodsList = librarySettingsList.get(0).getJavaSettings()
+    //     .getCommon().getSelectiveGapicGeneration().getMethodsList();
+
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
+    assertEquals(1, services.size());
+    assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
+    // ?
+    assertEquals(3, services.get(0).methods().size());
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateAllIfNoPublishingSectionInServiceYaml() {
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+
+    String serviceYamlFilename = "selective_api_generation_no_publishing.yaml";
+    String testFilesDirectory = "src/test/resources/";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    Assert.assertTrue(serviceYamlOpt.isPresent());
+
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
+    assertEquals(2, services.size());
+    assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
+    // ?
+    assertEquals(10, services.get(0).methods().size());
+    assertEquals("EchoServiceShouldGenerateNone", services.get(1).overriddenName());
+    assertEquals(10, services.get(1).methods().size());
+  }
+  @Test
+  void selectiveGenerationTest_shouldGenerateAllIfNoJavaSectionInServiceYaml() {
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+
+    String serviceYamlFilename = "selective_api_generation_no_java.yaml";
+    String testFilesDirectory = "src/test/resources/";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    Assert.assertTrue(serviceYamlOpt.isPresent());
+
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
+    assertEquals(2, services.size());
+    assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
+    // ?
+    assertEquals(10, services.get(0).methods().size());
+    assertEquals("EchoServiceShouldGenerateNone", services.get(1).overriddenName());
+    assertEquals(10, services.get(1).methods().size());
   }
 
   private void assertMethodArgumentEquals(
