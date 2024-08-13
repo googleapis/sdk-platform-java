@@ -101,8 +101,7 @@ public class TimeConversionUtilsTest {
   @Test
   void testToJavaTimeDuration_bigInput_doesNotOverflow() {
     // we use the max long value for the seconds part and an arbitrary int for the nanos part, so we
-    // can confirm
-    // that both components are preserved
+    // can confirm that both components are preserved
     org.threeten.bp.Duration ttDuration = org.threeten.bp.Duration.ofSeconds(Long.MAX_VALUE, 123);
     java.time.Duration jtDuration = TimeConversionUtils.toJavaTimeDuration(ttDuration);
     assertEquals(jtDuration.getSeconds(), ttDuration.getSeconds());
