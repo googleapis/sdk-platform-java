@@ -32,7 +32,7 @@ class LibraryConfig:
         api_description: str,
         name_pretty: str,
         product_documentation: str,
-        gapic_configs: list[GapicConfig],
+        gapic_configs: Optional[list[GapicConfig]] = None,
         library_type: Optional[str] = None,
         release_level: Optional[str] = None,
         api_id: Optional[str] = None,
@@ -59,7 +59,7 @@ class LibraryConfig:
         self.api_description = api_description
         self.name_pretty = name_pretty
         self.product_documentation = product_documentation
-        self.gapic_configs = gapic_configs
+        self.gapic_configs = LibraryConfig.__get_gapic_configs(gapic_configs)
         self.library_type = library_type if library_type else "GAPIC_AUTO"
         self.release_level = release_level if release_level else "preview"
         self.api_id = api_id
@@ -127,6 +127,14 @@ class LibraryConfig:
                 "allowed values for library.transport: grpc, rest, both and None"
             )
         return transport
+
+    @staticmethod
+    def __get_gapic_configs(
+        gapic_configs: Optional[list[GapicConfig]],
+    ) -> list[GapicConfig]:
+        if gapic_configs is None:
+            return []
+        return gapic_configs
 
     @staticmethod
     def __check_distribution_name(distribution_name: str) -> None:
