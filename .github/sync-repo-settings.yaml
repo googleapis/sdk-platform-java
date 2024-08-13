@@ -12,8 +12,11 @@ branchProtectionRules:
       - build (8) for gapic-generator-java
       - build (11)
       - build (17)
+      - build(21) except self-service clients
       - showcase (11)
       - showcase (17)
+      - showcase (21)
+      - showcase-native
       - compatibility
       - cla/google
       - lint
@@ -54,8 +57,10 @@ branchProtectionRules:
       - build (8) for gapic-generator-java
       - build (11)
       - build (17)
+      - build(21) except self-service clients
       - showcase (11)
       - showcase (17)
+      - showcase-native
       - compatibility
       - cla/google
       - lint
