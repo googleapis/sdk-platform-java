@@ -102,9 +102,18 @@ download_gapic_generator_pom_parent() {
   download_generator_artifact "${gapic_generator_version}" "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" "gapic-generator-java-pom-parent"
 }
 
+# This function returns the version of the grpc plugin to generate the libraries. If
+# DOCKER_GRPC_VERSION is set, this will be the version. Otherwise, it will be
+# computed from the gapic-generator-pom-parent artifact at the specified
+# gapic_generator_version.
 get_grpc_version() {
   local gapic_generator_version=$1
   local grpc_version
+  if [[ -n "${DOCKER_GRPC_VERSION}" ]]; then
+    >&2 echo "Using grpc version baked into the container: ${DOCKER_GRPC_VERSION}"
+    echo "${DOCKER_GRPC_VERSION}"
+    return
+  fi
   pushd "${output_folder}" > /dev/null
   # get grpc version from gapic-generator-java-pom-parent/pom.xml
   download_gapic_generator_pom_parent "${gapic_generator_version}"
@@ -113,6 +122,10 @@ get_grpc_version() {
   echo "${grpc_version}"
 }
 
+# This function returns the version of protoc to generate the libraries. If
+# DOCKER_PROTOC_VERSION is set, this will be the version. Otherwise, it will be
+# computed from the gapic-generator-pom-parent artifact at the specified
+# gapic_generator_version.
 get_protoc_version() {
   local gapic_generator_version=$1
   local protoc_version
@@ -129,6 +142,16 @@ get_protoc_version() {
   echo "${protoc_version}"
 }
 
+# Given the versions of the gapic generator, protoc and the protoc-grpc plugin,
+# this function will download each one of the tools and create the environment
+# variables "protoc_path" and "grpc_path" which are expected upstream. Note that
+# if the specified versions of protoc and grpc match DOCKER_PROTOC_VERSION and
+# DOCKER_GRPC_VERSION respectively, this function will instead set "protoc_path"
+# and "grpc_path" to DOCKER_PROTOC_PATH and DOCKER_GRPC_PATH respectively (no
+# download), since the docker image will have downloaded these tools beforehand.
+# For the case of gapic-generator-java, no env var will be exported for the
+# upstream flow, but instead it will be assigned a default filename that will be
+# referenced by the file `library_generation/gapic-generator-java-wrapper`.
 download_tools() {
   local gapic_generator_version=$1
   local protoc_version=$2
@@ -147,7 +170,15 @@ download_tools() {
     export protoc_path=$(download_protoc "${protoc_version}" "${os_architecture}")
   fi
 
-  download_grpc_plugin "${grpc_version}" "${os_architecture}"
+  # similar case with grpc
+  if [[ "${DOCKER_GRPC_VERSION}" == "${grpc_version}" ]]; then
+    # if the specified grpc_version matches the one baked in the docker
+    # container, we just point grpc_path to its location.
+    export grpc_path="${DOCKER_GRPC_LOCATION}"
+  else
+    export grpc_path=$(download_grpc_plugin "${grpc_version}" "${os_architecture}")
+  fi
+
   popd
 }
 
@@ -198,13 +229,15 @@ download_protoc() {
 download_grpc_plugin() {
   local grpc_version=$1
   local os_architecture=$2
-  if [ ! -f "protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" ]; then
+  grpc_filename="protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe"
+  if [ ! -f "${grpc_filename}" ]; then
     # download protoc-gen-grpc-java plugin from Google maven central mirror.
     download_from \
-    "https://maven-central.storage-download.googleapis.com/maven2/io/grpc/protoc-gen-grpc-java/${grpc_version}/protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
-    "protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe"
-    chmod +x "protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe"
+    "https://maven-central.storage-download.googleapis.com/maven2/io/grpc/protoc-gen-grpc-java/${grpc_version}/${grpc_filename}" \
+    "${grpc_filename}"
+    chmod +x "${grpc_filename}"
   fi
+  echo "$(pwd)/${grpc_filename}"
 }
 
 download_from() {
@@ -282,7 +315,7 @@ get_proto_path_from_preprocessed_sources() {
   pushd "${sources}" > /dev/null
   local proto_library=$(find . -maxdepth 1 -type d -name 'proto-*' | sed 's/\.\///')
   local found_libraries=$(echo "${proto_library}" | wc -l)
-  if [ -z ${proto_library} ]; then
+  if [[ -z ${proto_library} ]]; then
     echo "no proto libraries found in the supplied sources path"
     exit 1
   elif [ ${found_libraries} -gt 1 ]; then
