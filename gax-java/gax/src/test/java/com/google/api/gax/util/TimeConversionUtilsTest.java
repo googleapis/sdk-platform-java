@@ -37,6 +37,11 @@ import org.junit.jupiter.api.Test;
 
 public class TimeConversionUtilsTest {
 
+  // 0.999999999 seconds (1 second - 1 nano) - we need to subtract the nano or the Duration would
+  // overflow otherwise
+  final long MAX_DURATION_NANOS = 1 * 1000 * 1000 * 1000 - 1;
+
+  // Arbitrary durations/instants to confirm conversion works as expected
   final org.threeten.bp.Duration ttDuration = org.threeten.bp.Duration.ofMillis(123);
   final org.threeten.bp.Instant ttInstant = org.threeten.bp.Instant.ofEpochMilli(123);
   final java.time.Duration jtDuration = java.time.Duration.ofMillis(345);
@@ -93,7 +98,8 @@ public class TimeConversionUtilsTest {
     // we use the max long value for the seconds part and an arbitrary int for the nanos part, so we
     // can confirm
     // that both components are preserved
-    java.time.Duration jtDuration = java.time.Duration.ofSeconds(Long.MAX_VALUE, 123);
+    java.time.Duration jtDuration =
+        java.time.Duration.ofSeconds(Long.MAX_VALUE, MAX_DURATION_NANOS);
     org.threeten.bp.Duration ttDuration = TimeConversionUtils.toThreetenDuration(jtDuration);
     assertEquals(jtDuration.getSeconds(), ttDuration.getSeconds());
     assertEquals(jtDuration.getNano(), ttDuration.getNano());
@@ -104,7 +110,8 @@ public class TimeConversionUtilsTest {
     // we use the max long value for the seconds part and an arbitrary int for the nanos part, so we
     // can confirm
     // that both components are preserved
-    org.threeten.bp.Duration ttDuration = org.threeten.bp.Duration.ofSeconds(Long.MAX_VALUE, 123);
+    org.threeten.bp.Duration ttDuration =
+        org.threeten.bp.Duration.ofSeconds(Long.MAX_VALUE, MAX_DURATION_NANOS);
     java.time.Duration jtDuration = TimeConversionUtils.toJavaTimeDuration(ttDuration);
     assertEquals(jtDuration.getSeconds(), ttDuration.getSeconds());
     assertEquals(jtDuration.getNano(), ttDuration.getNano());
