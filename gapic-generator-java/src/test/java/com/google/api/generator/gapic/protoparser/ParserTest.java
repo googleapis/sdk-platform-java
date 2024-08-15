@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.protoparser;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -767,7 +768,9 @@ class ParserTest {
     Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
     Optional<com.google.api.Service> serviceYamlOpt =
         ServiceYamlParser.parse(serviceYamlPath.toString());
-    Assert.assertTrue(serviceYamlOpt.isPresent());
+    assertTrue(serviceYamlOpt.isPresent());
+    assertEquals(1, serviceYamlOpt.get().getPublishing().getLibrarySettingsCount());
+    assertNotNull( serviceYamlOpt.get().getPublishing().getLibrarySettings(0).getPythonSettings());
 
     List<com.google.api.generator.gapic.model.Service> services =
         Parser.parseService(

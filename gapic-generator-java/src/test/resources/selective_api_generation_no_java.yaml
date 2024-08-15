@@ -6,7 +6,8 @@ title: Selective Generation Testing API
 publishing:
   # ...
   library_settings:
-    - python_settings:
+    - version: com.google.selective.generate.v1beta1
+      python_settings:
         common:
           destinations:
           - PACKAGE_MANAGER

@@ -437,6 +437,8 @@ public class Parser {
     List<ClientLibrarySettings> librarySettingsList =
         serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsList();
     // TODO: get(0) may not be reliable. may need to use package version. Need discussion.
+    // maybe okay since it's cut per version. no harm in verifying.
+    // library settings version (required): http://google3/google/api/client.proto;l=29-32;rcl=651426419
     ProtocolStringList includeMethodsList =
         librarySettingsList
             .get(0)
@@ -448,6 +450,7 @@ public class Parser {
     if (includeMethodsList.isEmpty()) {
       return true;
     }
+    // may need to preprocess method name with override package name
     return includeMethodsList.contains(method.getFullName());
   }
 
@@ -531,6 +534,8 @@ public class Parser {
               String pakkage = TypeParser.getPackage(fileDescriptor);
               String originalJavaPackage = pakkage;
               // Override Java package with that specified in gapic.yaml.
+              // this override is deprecated and legacy support only
+              // see go/client-user-guide#configure-long-running-operation-polling-timeouts-optional
               if (serviceConfigOpt.isPresent()
                   && serviceConfigOpt.get().getLanguageSettingsOpt().isPresent()) {
                 GapicLanguageSettings languageSettings =
