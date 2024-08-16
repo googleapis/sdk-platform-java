@@ -91,6 +91,8 @@ service EchoServiceShouldGeneratePartial {
     option (google.api.method_signature) = "content";
   }
 
+  rpc Chat2(stream EchoRequest2) returns (stream EchoResponse);
+
   // This is similar to the Expand method but instead of returning a stream of
   // expanded words, this method returns a paged list of expanded words.
   rpc PagedExpand(PagedExpandRequest) returns (PagedExpandResponse) {
@@ -267,6 +269,20 @@ message Foobar {
   string info = 2;
 }
 
+message Foobarbaz {
+  option (google.api.resource) = {
+    type: "showcase.googleapis.com/Foobarbaz"
+    pattern: "projects/{project}/foobarsbaz/{foobarbaz}"
+    pattern: "projects/{project}/chocolate/variants/{variant}/foobars/{foobar}"
+    pattern: "foobars/{foobar}"
+    pattern: "bar_foos/{bar_foo}/foobars/{foobar}"
+    pattern: "*"
+  };
+
+  string name = 1;
+  string info = 2;
+}
+
 // The request message used for the Echo, Collect and Chat methods.
 // If content or opt are set in this message then the request will succeed.
 // If status is set in this message
@@ -297,6 +313,31 @@ message EchoRequest {
   Foobar foobar = 4;
 }
 
+message EchoRequest2 {
+  string name = 5 [
+    (google.api.resource_reference).type = "showcase.googleapis.com/Foobarbaz",
+    (google.api.field_behavior) = REQUIRED
+  ];
+
+  string parent = 6 [
+    (google.api.resource_reference).child_type =
+      "showcase.googleapis.com/AnythingGoes",
+    (google.api.field_behavior) = REQUIRED
+  ];
+
+  oneof response {
+    // The content to be echoed by the server.
+    string content = 1;
+
+    // The error to be thrown by the server.
+    google.rpc.Status error = 2;
+  }
+
+  // The severity to be echoed by the server.
+  Severity severity = 3;
+
+  Foobarbaz foobar = 4;
+}
 // The response message for the Echo methods.
 message EchoResponse {
   // The content specified in the request.

@@ -1,0 +1,421 @@
+package com.google.selective.generate.v1beta1;
+
+import com.google.api.pathtemplate.PathTemplate;
+import com.google.api.pathtemplate.ValidationException;
+import com.google.api.resourcenames.ResourceName;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import javax.annotation.Generated;
+
+// AUTO-GENERATED DOCUMENTATION AND CLASS.
+@Generated("by gapic-generator-java")
+public class FoobarbazName implements ResourceName {
+  private static final PathTemplate PROJECT_FOOBARBAZ =
+      PathTemplate.createWithoutUrlEncoding("projects/{project}/foobarsbaz/{foobarbaz}");
+  private static final PathTemplate PROJECT_VARIANT_FOOBAR =
+      PathTemplate.createWithoutUrlEncoding(
+          "projects/{project}/chocolate/variants/{variant}/foobars/{foobar}");
+  private static final PathTemplate FOOBAR =
+      PathTemplate.createWithoutUrlEncoding("foobars/{foobar}");
+  private static final PathTemplate BAR_FOO_FOOBAR =
+      PathTemplate.createWithoutUrlEncoding("bar_foos/{bar_foo}/foobars/{foobar}");
+  private volatile Map<String, String> fieldValuesMap;
+  private PathTemplate pathTemplate;
+  private String fixedValue;
+  private final String project;
+  private final String foobarbaz;
+  private final String variant;
+  private final String foobar;
+  private final String barFoo;
+
+  @Deprecated
+  protected FoobarbazName() {
+    project = null;
+    foobarbaz = null;
+    variant = null;
+    foobar = null;
+    barFoo = null;
+  }
+
+  private FoobarbazName(Builder builder) {
+    project = Preconditions.checkNotNull(builder.getProject());
+    foobarbaz = Preconditions.checkNotNull(builder.getFoobarbaz());
+    variant = null;
+    foobar = null;
+    barFoo = null;
+    pathTemplate = PROJECT_FOOBARBAZ;
+  }
+
+  private FoobarbazName(ProjectVariantFoobarBuilder builder) {
+    project = Preconditions.checkNotNull(builder.getProject());
+    variant = Preconditions.checkNotNull(builder.getVariant());
+    foobar = Preconditions.checkNotNull(builder.getFoobar());
+    foobarbaz = null;
+    barFoo = null;
+    pathTemplate = PROJECT_VARIANT_FOOBAR;
+  }
+
+  private FoobarbazName(FoobarBuilder builder) {
+    foobar = Preconditions.checkNotNull(builder.getFoobar());
+    project = null;
+    foobarbaz = null;
+    variant = null;
+    barFoo = null;
+    pathTemplate = FOOBAR;
+  }
+
+  private FoobarbazName(BarFooFoobarBuilder builder) {
+    barFoo = Preconditions.checkNotNull(builder.getBarFoo());
+    foobar = Preconditions.checkNotNull(builder.getFoobar());
+    project = null;
+    foobarbaz = null;
+    variant = null;
+    pathTemplate = BAR_FOO_FOOBAR;
+  }
+
+  public String getProject() {
+    return project;
+  }
+
+  public String getFoobarbaz() {
+    return foobarbaz;
+  }
+
+  public String getVariant() {
+    return variant;
+  }
+
+  public String getFoobar() {
+    return foobar;
+  }
+
+  public String getBarFoo() {
+    return barFoo;
+  }
+
+  public static Builder newBuilder() {
+    return new Builder();
+  }
+
+  public static Builder newProjectFoobarbazBuilder() {
+    return new Builder();
+  }
+
+  public static ProjectVariantFoobarBuilder newProjectVariantFoobarBuilder() {
+    return new ProjectVariantFoobarBuilder();
+  }
+
+  public static FoobarBuilder newFoobarBuilder() {
+    return new FoobarBuilder();
+  }
+
+  public static BarFooFoobarBuilder newBarFooFoobarBuilder() {
+    return new BarFooFoobarBuilder();
+  }
+
+  public Builder toBuilder() {
+    return new Builder(this);
+  }
+
+  public static FoobarbazName of(String project, String foobarbaz) {
+    return newBuilder().setProject(project).setFoobarbaz(foobarbaz).build();
+  }
+
+  public static FoobarbazName ofProjectFoobarbazName(String project, String foobarbaz) {
+    return newBuilder().setProject(project).setFoobarbaz(foobarbaz).build();
+  }
+
+  public static FoobarbazName ofProjectVariantFoobarName(
+      String project, String variant, String foobar) {
+    return newProjectVariantFoobarBuilder()
+        .setProject(project)
+        .setVariant(variant)
+        .setFoobar(foobar)
+        .build();
+  }
+
+  public static FoobarbazName ofFoobarName(String foobar) {
+    return newFoobarBuilder().setFoobar(foobar).build();
+  }
+
+  public static FoobarbazName ofBarFooFoobarName(String barFoo, String foobar) {
+    return newBarFooFoobarBuilder().setBarFoo(barFoo).setFoobar(foobar).build();
+  }
+
+  public static String format(String project, String foobarbaz) {
+    return newBuilder().setProject(project).setFoobarbaz(foobarbaz).build().toString();
+  }
+
+  public static String formatProjectFoobarbazName(String project, String foobarbaz) {
+    return newBuilder().setProject(project).setFoobarbaz(foobarbaz).build().toString();
+  }
+
+  public static String formatProjectVariantFoobarName(
+      String project, String variant, String foobar) {
+    return newProjectVariantFoobarBuilder()
+        .setProject(project)
+        .setVariant(variant)
+        .setFoobar(foobar)
+        .build()
+        .toString();
+  }
+
+  public static String formatFoobarName(String foobar) {
+    return newFoobarBuilder().setFoobar(foobar).build().toString();
+  }
+
+  public static String formatBarFooFoobarName(String barFoo, String foobar) {
+    return newBarFooFoobarBuilder().setBarFoo(barFoo).setFoobar(foobar).build().toString();
+  }
+
+  public static FoobarbazName parse(String formattedString) {
+    if (formattedString.isEmpty()) {
+      return null;
+    }
+    if (PROJECT_FOOBARBAZ.matches(formattedString)) {
+      Map<String, String> matchMap = PROJECT_FOOBARBAZ.match(formattedString);
+      return ofProjectFoobarbazName(matchMap.get("project"), matchMap.get("foobarbaz"));
+    } else if (PROJECT_VARIANT_FOOBAR.matches(formattedString)) {
+      Map<String, String> matchMap = PROJECT_VARIANT_FOOBAR.match(formattedString);
+      return ofProjectVariantFoobarName(
+          matchMap.get("project"), matchMap.get("variant"), matchMap.get("foobar"));
+    } else if (FOOBAR.matches(formattedString)) {
+      Map<String, String> matchMap = FOOBAR.match(formattedString);
+      return ofFoobarName(matchMap.get("foobar"));
+    } else if (BAR_FOO_FOOBAR.matches(formattedString)) {
+      Map<String, String> matchMap = BAR_FOO_FOOBAR.match(formattedString);
+      return ofBarFooFoobarName(matchMap.get("bar_foo"), matchMap.get("foobar"));
+    }
+    throw new ValidationException("FoobarbazName.parse: formattedString not in valid format");
+  }
+
+  public static List<FoobarbazName> parseList(List<String> formattedStrings) {
+    List<FoobarbazName> list = new ArrayList<>(formattedStrings.size());
+    for (String formattedString : formattedStrings) {
+      list.add(parse(formattedString));
+    }
+    return list;
+  }
+
+  public static List<String> toStringList(List<FoobarbazName> values) {
+    List<String> list = new ArrayList<>(values.size());
+    for (FoobarbazName value : values) {
+      if (value == null) {
+        list.add("");
+      } else {
+        list.add(value.toString());
+      }
+    }
+    return list;
+  }
+
+  public static boolean isParsableFrom(String formattedString) {
+    return PROJECT_FOOBARBAZ.matches(formattedString)
+        || PROJECT_VARIANT_FOOBAR.matches(formattedString)
+        || FOOBAR.matches(formattedString)
+        || BAR_FOO_FOOBAR.matches(formattedString);
+  }
+
+  @Override
+  public Map<String, String> getFieldValuesMap() {
+    if (fieldValuesMap == null) {
+      synchronized (this) {
+        if (fieldValuesMap == null) {
+          ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
+          if (project != null) {
+            fieldMapBuilder.put("project", project);
+          }
+          if (foobarbaz != null) {
+            fieldMapBuilder.put("foobarbaz", foobarbaz);
+          }
+          if (variant != null) {
+            fieldMapBuilder.put("variant", variant);
+          }
+          if (foobar != null) {
+            fieldMapBuilder.put("foobar", foobar);
+          }
+          if (barFoo != null) {
+            fieldMapBuilder.put("bar_foo", barFoo);
+          }
+          fieldValuesMap = fieldMapBuilder.build();
+        }
+      }
+    }
+    return fieldValuesMap;
+  }
+
+  public String getFieldValue(String fieldName) {
+    return getFieldValuesMap().get(fieldName);
+  }
+
+  @Override
+  public String toString() {
+    return fixedValue != null ? fixedValue : pathTemplate.instantiate(getFieldValuesMap());
+  }
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (o == this) {
+      return true;
+    }
+    if (o != null && getClass() == o.getClass()) {
+      FoobarbazName that = ((FoobarbazName) o);
+      return Objects.equals(this.project, that.project)
+          && Objects.equals(this.foobarbaz, that.foobarbaz)
+          && Objects.equals(this.variant, that.variant)
+          && Objects.equals(this.foobar, that.foobar)
+          && Objects.equals(this.barFoo, that.barFoo);
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    int h = 1;
+    h *= 1000003;
+    h ^= Objects.hashCode(fixedValue);
+    h *= 1000003;
+    h ^= Objects.hashCode(project);
+    h *= 1000003;
+    h ^= Objects.hashCode(foobarbaz);
+    h *= 1000003;
+    h ^= Objects.hashCode(variant);
+    h *= 1000003;
+    h ^= Objects.hashCode(foobar);
+    h *= 1000003;
+    h ^= Objects.hashCode(barFoo);
+    return h;
+  }
+
+  /** Builder for projects/{project}/foobarsbaz/{foobarbaz}. */
+  public static class Builder {
+    private String project;
+    private String foobarbaz;
+
+    protected Builder() {}
+
+    public String getProject() {
+      return project;
+    }
+
+    public String getFoobarbaz() {
+      return foobarbaz;
+    }
+
+    public Builder setProject(String project) {
+      this.project = project;
+      return this;
+    }
+
+    public Builder setFoobarbaz(String foobarbaz) {
+      this.foobarbaz = foobarbaz;
+      return this;
+    }
+
+    private Builder(FoobarbazName foobarbazName) {
+      Preconditions.checkArgument(
+          Objects.equals(foobarbazName.pathTemplate, PROJECT_FOOBARBAZ),
+          "toBuilder is only supported when FoobarbazName has the pattern of projects/{project}/foobarsbaz/{foobarbaz}");
+      this.project = foobarbazName.project;
+      this.foobarbaz = foobarbazName.foobarbaz;
+    }
+
+    public FoobarbazName build() {
+      return new FoobarbazName(this);
+    }
+  }
+
+  /** Builder for projects/{project}/chocolate/variants/{variant}/foobars/{foobar}. */
+  public static class ProjectVariantFoobarBuilder {
+    private String project;
+    private String variant;
+    private String foobar;
+
+    protected ProjectVariantFoobarBuilder() {}
+
+    public String getProject() {
+      return project;
+    }
+
+    public String getVariant() {
+      return variant;
+    }
+
+    public String getFoobar() {
+      return foobar;
+    }
+
+    public ProjectVariantFoobarBuilder setProject(String project) {
+      this.project = project;
+      return this;
+    }
+
+    public ProjectVariantFoobarBuilder setVariant(String variant) {
+      this.variant = variant;
+      return this;
+    }
+
+    public ProjectVariantFoobarBuilder setFoobar(String foobar) {
+      this.foobar = foobar;
+      return this;
+    }
+
+    public FoobarbazName build() {
+      return new FoobarbazName(this);
+    }
+  }
+
+  /** Builder for foobars/{foobar}. */
+  public static class FoobarBuilder {
+    private String foobar;
+
+    protected FoobarBuilder() {}
+
+    public String getFoobar() {
+      return foobar;
+    }
+
+    public FoobarBuilder setFoobar(String foobar) {
+      this.foobar = foobar;
+      return this;
+    }
+
+    public FoobarbazName build() {
+      return new FoobarbazName(this);
+    }
+  }
+
+  /** Builder for bar_foos/{bar_foo}/foobars/{foobar}. */
+  public static class BarFooFoobarBuilder {
+    private String barFoo;
+    private String foobar;
+
+    protected BarFooFoobarBuilder() {}
+
+    public String getBarFoo() {
+      return barFoo;
+    }
+
+    public String getFoobar() {
+      return foobar;
+    }
+
+    public BarFooFoobarBuilder setBarFoo(String barFoo) {
+      this.barFoo = barFoo;
+      return this;
+    }
+
+    public BarFooFoobarBuilder setFoobar(String foobar) {
+      this.foobar = foobar;
+      return this;
+    }
+
+    public FoobarbazName build() {
+      return new FoobarbazName(this);
+    }
+  }
+}

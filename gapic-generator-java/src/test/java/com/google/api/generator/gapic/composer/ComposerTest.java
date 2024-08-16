@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
@@ -170,6 +171,18 @@ class ComposerTest {
   @Test
   void testComposePackageInfo_emptyGapicContext_returnsNull() {
     assertNull(Composer.composePackageInfo(GapicContext.EMPTY));
+  }
+
+  @Test
+  void testComposeSelectively() {
+    GapicContext context = GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting();
+    List<GapicClass> resourceNameHelperClasses = Composer.generateResourceNameHelperClasses(context);
+    assertEquals(1, resourceNameHelperClasses.size());
+    for (GapicClass clazz: resourceNameHelperClasses) {
+      String className = clazz.classDefinition().classIdentifier().name();
+      Assert.assertGoldenClass(this.getClass(), clazz,
+          "SelectiveGenerated" + className + ".golden");
+    }
   }
 
   private List<GapicClass> getTestClassListFromService(Service testService) {

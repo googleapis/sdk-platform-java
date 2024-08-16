@@ -391,6 +391,7 @@ public class TestProtoLoader {
         .setResourceNames(resourceNames)
         .setServices(services)
         .setHelperResourceNames(outputResourceNames)
+        .setServiceYamlProto(serviceYamlOpt.orElse(null))
         .setTransport(transport)
         .build();
   }

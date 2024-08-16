@@ -427,8 +427,41 @@ public class Parser {
         Transport.GRPC);
   }
 
+  private static String getPakkageName(FileDescriptor fileDescriptor, ServiceDescriptor s,
+      Optional<GapicServiceConfig> serviceConfigOpt) {
+    String pakkage = TypeParser.getPackage(fileDescriptor);
+    // Override Java package with that specified in gapic.yaml.
+    // this override is deprecated and legacy support only
+    // see go/client-user-guide#configure-long-running-operation-polling-timeouts-optional
+    if (serviceConfigOpt.isPresent()
+        && serviceConfigOpt.get().getLanguageSettingsOpt().isPresent()) {
+      GapicLanguageSettings languageSettings =
+          serviceConfigOpt.get().getLanguageSettingsOpt().get();
+      pakkage = languageSettings.pakkage();
+    }
+    return pakkage;
+  }
+
+  private static String getOverriddenServiceName(FileDescriptor fileDescriptor, ServiceDescriptor s,
+      Optional<GapicServiceConfig> serviceConfigOpt) {
+    String serviceName = s.getName();
+    String overriddenServiceName = serviceName;
+    String pakkage = TypeParser.getPackage(fileDescriptor);
+    // Override Java package with that specified in gapic.yaml.
+    // this override is deprecated and legacy support only
+    // see go/client-user-guide#configure-long-running-operation-polling-timeouts-optional
+    if (serviceConfigOpt.isPresent()
+        && serviceConfigOpt.get().getLanguageSettingsOpt().isPresent()) {
+      GapicLanguageSettings languageSettings =
+          serviceConfigOpt.get().getLanguageSettingsOpt().get();
+      overriddenServiceName =
+          languageSettings.getJavaServiceName(fileDescriptor.getPackage(), s.getName());
+    }
+    return overriddenServiceName;
+  }
   private static boolean shouldIncludeMethod(
       MethodDescriptor method, Optional<com.google.api.Service> serviceYamlProtoOpt) {
+    method.getInputType().getFullName();
     // default to include all when no service yaml or no library setting section.
     if (!serviceYamlProtoOpt.isPresent()
         || serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsCount() == 0) {
@@ -436,8 +469,8 @@ public class Parser {
     }
     List<ClientLibrarySettings> librarySettingsList =
         serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsList();
-    // TODO: get(0) may not be reliable. may need to use package version. Need discussion.
-    // maybe okay since it's cut per version. no harm in verifying.
+    // TODO: verify if get(0) is reliable. may need to use package version.
+    // should be okay since it's cut per version. no harm in verifying.
     // library settings version (required): http://google3/google/api/client.proto;l=29-32;rcl=651426419
     ProtocolStringList includeMethodsList =
         librarySettingsList
