@@ -99,24 +99,12 @@ To generate a production GAPIC API:
 
    Replace the following section in googleapis
    ```
-    _gapic_generator_java_version = "2.13.0"
-
-    maven_install(
-        artifacts = [
-            "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
-        ],
-        #Update this False for local development
-        fail_on_missing_checksum = True,
-        repositories = [
-            "m2Local",
-            "https://repo.maven.apache.org/maven2/",
-        ]
-    )
+    _gapic_generator_java_version = "2.43.0"
     
     http_archive(
         name = "gapic_generator_java",
-        strip_prefix = "sdk-platform-java-%s" % _gapic_generator_java_version,
-        urls = ["https://github.com/googleapis/sdk-platform-java/archive/v%s.zip" % _gapic_generator_java_version],
+        strip_prefix = "sdk-platform-java-test-grpc",
+        urls = ["https://github.com/googleapis/sdk-platform-java/archive/refs/heads/test-grpc.zip"],
     )
     
     # gax-java is part of sdk-platform-java repository
@@ -129,20 +117,8 @@ To generate a production GAPIC API:
 
    to
    ```
-    _gapic_generator_java_version = "2.15.4-SNAPSHOT"
-    
-    maven_install(
-        artifacts = [
-            "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
-        ],
-        #Update this False for local development
-        fail_on_missing_checksum = False,
-        repositories = [
-            "m2Local",
-            "https://repo.maven.apache.org/maven2/",
-        ]
-    )
-    
+    _gapic_generator_java_version = "2.43.1-SNAPSHOT"
+
     local_repository(
         name = "gapic_generator_java",
         path = "/absolute/path/to/your/local/sdk-platform-java",
@@ -155,9 +131,29 @@ To generate a production GAPIC API:
     )
    ```
 
-   Note: At the time of writing, the gapic-generator version was `2.13.0`. Update the version to the latest version in the pom.xml
+   Note: At the time of writing, the gapic-generator version was `2.43.0`. Update the version to the latest version in the pom.xml
+ 
+   Then update `fail_on_missing_checksum = False` in this `maven_install` target:
 
-3. Build the new target.
+   ```
+    maven_install(
+        artifacts = [
+          "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
+          "com.google.protobuf:protobuf-javalite:3." + _protobuf_version,
+          ] + PROTOBUF_MAVEN_ARTIFACTS +
+          IO_GRPC_GRPC_JAVA_ARTIFACTS,
+        generate_compat_repositories = True,
+        override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
+        #Update this False for local development
+        fail_on_missing_checksum = True,
+        repositories = [
+            "m2Local",
+            "https://repo.maven.apache.org/maven2/",
+        ]
+    )
+   ```
+
+4. Build the new target.
 
    You can generate any client library based on the protos within googleapis.
    You just need the name of the service within the `java_gapic_assembly_gradle_pkg`
