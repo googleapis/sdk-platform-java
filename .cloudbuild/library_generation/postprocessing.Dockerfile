@@ -20,22 +20,18 @@ RUN apt-get update && apt-get install -y \
 	unzip openjdk-17-jdk rsync maven jq \
 	&& apt-get clean
 
-COPY library_generation/owlbot/bin /owlbot/bin
-COPY library_generation/owlbot/src /owlbot/src
-COPY library_generation/owlbot/templates /owlbot/templates
-COPY library_generation/owlbot/synthtool /owlbot/synthtool
-COPY library_generation/requirements.txt /owlbot
-###################### Install requirements.
-WORKDIR /owlbot
+COPY library_generation /src
+
 RUN rm $(which python3)
 RUN ln -s $(which python3.11) /usr/local/bin/python
 RUN ln -s $(which python3.11) /usr/local/bin/python3
 RUN python -m pip install --upgrade pip
-RUN python3 -m pip install --require-hashes -r requirements.txt
-
+# install requirements.
+WORKDIR /src
+RUN python -m pip install --require-hashes -r requirements.txt
+RUN python -m pip install .
 # allow users to access the script folders
-RUN chmod -R o+rx /owlbot
+RUN chmod -R o+rx /src
 
 WORKDIR /workspace
-
-CMD [ "/owlbot/bin/entrypoint.sh" ]
+ENTRYPOINT [ "/src/owlbot/bin/entrypoint.sh" ]
