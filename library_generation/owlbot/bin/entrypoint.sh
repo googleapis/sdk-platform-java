@@ -65,7 +65,7 @@ echo "...done"
 
 # write or restore clirr-ignored-differences.xml
 echo "Generating clirr-ignored-differences.xml..."
-${scripts_root}/owlbot/bin/write_clirr_ignore.sh "${scripts_root}"
+"${scripts_root}"/owlbot/bin/write_clirr_ignore.sh "${scripts_root}"
 echo "...done"
 
 # fix license headers
@@ -80,5 +80,5 @@ echo "...done"
 # when `docker run`ning with the -u flag because we may incur in users
 # not registered in the container's /etc/passwd file
 echo "Reformatting source..."
-mvn fmt:format -Duser.home="${HOME}" -V --batch-mode --no-transfer-progress
+"${scripts_root}"/owlbot/bin/format_source.sh "${scripts_root}"
 echo "...done"

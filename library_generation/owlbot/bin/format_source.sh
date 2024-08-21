@@ -39,14 +39,6 @@ do
   fi
 done
 
-# download the google-java-format tool
-if [ ! -f "${scripts_root}/owlbot/google-java-format.jar" ]; then
-  echo 'downloading google-java-format'
-  java_format_version=$(cat "${scripts_root}/configuration/java-format-version")
-  wget -O "${scripts_root}/owlbot/google-java-format.jar" https://repo1.maven.org/maven2/com/google/googlejavaformat/google-java-format/${java_format_version}/google-java-format-${java_format_version}-all-deps.jar
-
-fi
-
 # format the source
 cat $tmpfile | xargs java -jar "${scripts_root}/owlbot/google-java-format.jar" --replace
 
