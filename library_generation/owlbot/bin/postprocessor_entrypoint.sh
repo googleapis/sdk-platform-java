@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2023 Google LLC
+# Copyright 2024 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,37 +13,37 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This is the entrypoint script for java owlbot. This is not intended to be
-# called directly but rather be called from postproces_library.sh
-# For reference, the positional arguments are
-# 1: scripts_root: location of the root of the library_generation scripts. When
-# in a Docker container, this value should be /src/
-# 2: versions_file: points to a versions.txt containing versions to be applied
-# both to README and pom.xml files
-# 3: is_monorepo: whether we are postprocessing a monorepo
-# 4: libraries_bom_version: used to render the readme
-# 5: library_version: used to render the readme
+# This is the entrypoint script for post processor.
+# This script is used to post processing a non-GAPIC library.
+# This script should NOT be used to post processing a monorepo.
 
-# The scripts assumes the CWD is the folder where postprocessing is going to be
-# applied
+set -e
 
-set -ex
-scripts_root=$1
-versions_file=$2
-is_monorepo=$3
-libraries_bom_version=$4
-library_version=$5
+function get_library_version() {
+  versions_file=$1
+  artifact_id=$(jq -r '.distribution_name' .repo-metadata.json | cut -d ":" -f 2)
+  library_version=$(grep "${artifact_id}" "${versions_file}" | cut -d ":" -f 2)
+  echo "${library_version}"
+}
 
-if [[ "${is_monorepo}" == "true" ]]; then
-  mv owl-bot-staging/* temp
-  rm -rd owl-bot-staging/
-  mv temp owl-bot-staging
-fi
+function get_latest_libaries_bom_version() {
+  scripts_root=$1
+  save_as="${scripts_root}/owlbot/maven-metadata.xml"
+  url="https://repo1.maven.org/maven2/com/google/cloud/libraries-bom/maven-metadata.xml"
+  curl -LJ -o "${save_as}" --fail -m 30 --retry 2 "$url"
+  version=$(xmllint --xpath "//metadata/versioning/latest/text()" "${save_as}")
+  echo "${version}"
+}
 
-# templates as well as retrieving files from owl-bot-staging
-echo "Retrieving files from owl-bot-staging directory..."
+scripts_root=/src
+versions_file=versions.txt
+is_monorepo=false
+library_version=$(get_library_version "${versions_file}")
+libraries_bom_version=$(get_latest_libaries_bom_version "${scripts_root}")
+
 if [ -f "owlbot.py" ]
 then
+  echo "Running owlbot.py..."
   # we copy the templates to a temp folder because we need to do a special
   # modification regarding libraries_bom_version that can't be handled by the
   # synthtool library considering the way owlbot.py files are written
@@ -55,8 +55,8 @@ then
   unset SYNTHTOOL_TEMPLATES
   unset SYNTHTOOL_LIBRARIES_BOM_VERSION
   unset SYNTHTOOL_LIBRARY_VERSION
+  echo "...done"
 fi
-echo "...done"
 
 # write or restore pom.xml files
 echo "Generating missing pom.xml..."
@@ -73,12 +73,6 @@ echo "Fixing missing license headers..."
 python3 "${scripts_root}/owlbot/src/fix-license-headers.py"
 echo "...done"
 
-# Ensure formatting on all .java files in the repository.
-# Here we manually set the user.home system variable. Unfortunately, Maven
-# user.home inference involves the /etc/passwd file (confirmed empirically),
-# instead of the presumable $HOME env var, which may not work properly
-# when `docker run`ning with the -u flag because we may incur in users
-# not registered in the container's /etc/passwd file
 echo "Reformatting source..."
-mvn fmt:format -Duser.home="${HOME}" -V --batch-mode --no-transfer-progress
+"${scripts_root}"/owlbot/bin/format_source.sh "${scripts_root}"
 echo "...done"

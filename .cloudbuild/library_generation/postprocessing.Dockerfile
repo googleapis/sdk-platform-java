@@ -19,9 +19,9 @@ ENV HOME=/home
 ENV JAVA_FORMAT_VERSION=1.7
 
 # install OS tools
-RUN apt-get update && apt-get install -y \
-	unzip openjdk-17-jdk rsync maven jq \
-	&& apt-get clean
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk maven jq xmllint && \
+    apt-get clean
 
 COPY library_generation /src
 ADD https://repo1.maven.org/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar /src/owlbot/google-java-format.jar
@@ -42,4 +42,4 @@ RUN chmod -R o+rx /src
 RUN chmod -R a+rw /home
 
 WORKDIR /workspace
-ENTRYPOINT [ "/src/owlbot/bin/entrypoint.sh", "/src", "versions.txt", "false"]
+CMD [ "/src/owlbot/bin/postprocessor_entrypoint.sh" ]
