@@ -37,4 +37,4 @@ RUN python -m pip install .
 RUN chmod -R o+rx /src
 
 WORKDIR /workspace
-ENTRYPOINT [ "/src/owlbot/bin/entrypoint.sh", "/src" ]
+ENTRYPOINT [ "/src/owlbot/bin/entrypoint.sh", "/src" "versions.txt", "false"]
