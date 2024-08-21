@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.IdentifierNode;
+import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
@@ -174,7 +175,7 @@ class ComposerTest {
   }
 
   @Test
-  void testComposeSelectively() {
+  void testComposeSelectively_shouldComposeOnlyOneHelperResource() {
     GapicContext context = GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting();
     List<GapicClass> resourceNameHelperClasses = Composer.generateResourceNameHelperClasses(context);
     assertEquals(1, resourceNameHelperClasses.size());
@@ -182,6 +183,37 @@ class ComposerTest {
       String className = clazz.classDefinition().classIdentifier().name();
       Assert.assertGoldenClass(this.getClass(), clazz,
           "SelectiveGenerated" + className + ".golden");
+    }
+  }
+
+  @Test
+  void testComposeSelectively_serviceClientShouldOnlyContainSelectedMethods() {
+    GapicContext context = GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting();
+    List<GapicClass> serviceClasses = Composer.composeServiceClasses(context);
+    assertEquals(10, serviceClasses.size());
+    for (GapicClass clazz: serviceClasses) {
+      if (clazz
+          .classDefinition()
+          .classIdentifier()
+          .name()
+          .equals("EchoServiceShouldGeneratePartialClient")) {
+        assertEquals(25, clazz.classDefinition().methods().size());
+        for (MethodDefinition method : clazz.classDefinition().methods()) {
+          String methodName = method.methodIdentifier().name();
+          if (method.isConstructor()) {
+            continue;
+          }
+          assertTrue(
+              methodName.startsWith("echo")
+                  || methodName.startsWith("chat")
+                  || methodName.startsWith("create")
+                  || methodName.startsWith("get")
+                  || methodName.startsWith("close")
+                  || methodName.startsWith("shutdown")
+                  || methodName.startsWith("is")
+                  || methodName.startsWith("awaitTermination"));
+        }
+      }
     }
   }
 

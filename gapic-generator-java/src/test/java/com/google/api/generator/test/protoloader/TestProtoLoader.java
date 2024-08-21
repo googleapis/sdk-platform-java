@@ -386,12 +386,19 @@ public class TestProtoLoader {
             serviceYamlOpt,
             outputResourceNames);
 
+    String jsonFilename = "selective_api_generation_grpc_service_config.json";
+    Path jsonPath = Paths.get(testFilesDirectory, jsonFilename);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(configOpt.isPresent());
+    GapicServiceConfig config = configOpt.get();
     return GapicContext.builder()
         .setMessages(messageTypes)
         .setResourceNames(resourceNames)
         .setServices(services)
         .setHelperResourceNames(outputResourceNames)
         .setServiceYamlProto(serviceYamlOpt.orElse(null))
+        .setGapicMetadataEnabled(true)
+        .setServiceConfig(config)
         .setTransport(transport)
         .build();
   }

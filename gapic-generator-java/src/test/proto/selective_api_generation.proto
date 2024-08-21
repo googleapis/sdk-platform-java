@@ -91,7 +91,7 @@ service EchoServiceShouldGeneratePartial {
     option (google.api.method_signature) = "content";
   }
 
-  rpc Chat2(stream EchoRequest2) returns (stream EchoResponse);
+  rpc ShouldNotGenerateChat(stream EchoRequest2) returns (stream EchoResponse);
 
   // This is similar to the Expand method but instead of returning a stream of
   // expanded words, this method returns a paged list of expanded words.

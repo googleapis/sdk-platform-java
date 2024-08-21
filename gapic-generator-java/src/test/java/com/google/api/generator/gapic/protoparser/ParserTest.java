@@ -753,7 +753,7 @@ class ParserTest {
     assertEquals(2, services.size());
     assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
     // ?
-    assertEquals(10, services.get(0).methods().size());
+    assertEquals(11, services.get(0).methods().size());
     assertEquals("EchoServiceShouldGenerateNone", services.get(1).overriddenName());
     assertEquals(10, services.get(1).methods().size());
   }
@@ -778,7 +778,7 @@ class ParserTest {
     assertEquals(2, services.size());
     assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
     // ?
-    assertEquals(10, services.get(0).methods().size());
+    assertEquals(11, services.get(0).methods().size());
     assertEquals("EchoServiceShouldGenerateNone", services.get(1).overriddenName());
     assertEquals(10, services.get(1).methods().size());
   }
