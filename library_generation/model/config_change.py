@@ -58,7 +58,17 @@ class LibraryChange:
         self.library_name = library_name
 
 
-class NonMonorepoChange(LibraryChange):
+class NoOpLibraryChange(LibraryChange):
+    """
+    This is a general purpose LibraryChange that must be handled with a NO-OP when
+    generating the corresponding PR description (i.e. no data added in the pr description)
+    """
+
+    def __init__(self, changed_param: str, current_value: str, library_name: str = ""):
+        LibraryChange.__init__(self, changed_param, current_value, library_name)
+
+
+class NonMonorepoChange(NoOpLibraryChange):
     """
     This class represents a LibraryChange (REPO_LEVEL_CHANGE) for when we are
     deciding whether generate a library or not based on the is_monorepo property.
@@ -70,7 +80,7 @@ class NonMonorepoChange(LibraryChange):
     NON_MONOREPO_CHANGED_VALUE = "repo_generation_trigger"
 
     def __init__(self):
-        LibraryChange.__init__(
+        NoOpLibraryChange.__init__(
             self,
             NonMonorepoChange.NON_MONOREPO_CHANGED_PARAM,
             NonMonorepoChange.NON_MONOREPO_CHANGED_VALUE,
