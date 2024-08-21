@@ -16,7 +16,7 @@ import unittest
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
-from library_generation.model.config_change import NoOpLibraryChange
+from library_generation.model.config_change import NoOpConfigChange
 from library_generation.utils.generation_config_comparator import ChangeType
 from library_generation.utils.generation_config_comparator import compare_config
 
@@ -77,7 +77,7 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 1
         )
         change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
-        self.assertTrue(isinstance(change, NoOpLibraryChange))
+        self.assertTrue(isinstance(change, NoOpConfigChange))
 
     def test_compare_config_googleapis_update(self):
         self.baseline_config.googleapis_commitish = (

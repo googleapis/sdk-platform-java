@@ -23,6 +23,7 @@ from library_generation.model.config_change import (
     ConfigChange,
     ChangeType,
     LibraryChange,
+    NonMonorepoChange,
 )
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
@@ -66,7 +67,7 @@ class GeneratePrDescriptionTest(unittest.TestCase):
             ),
         )
 
-    def test_generate_pr_description_with_no_change_in_config(self):
+    def test_generate_pr_description_with_no_change_in_config__creates_no_file(self):
         commit_sha = "36441693dddaf0ed73951ad3a15c215a332756aa"
         config = GenerationConfig(
             gapic_generator_version="",
@@ -80,6 +81,29 @@ class GeneratePrDescriptionTest(unittest.TestCase):
         generate_pr_descriptions(
             config_change=ConfigChange(
                 change_to_libraries={},
+                baseline_config=config,
+                current_config=config,
+            ),
+            description_path=pr_description_path,
+        )
+        self.assertFalse(os.path.isfile(f"{pr_description_path}/pr_description.txt"))
+
+    def test_generate_pr_description_on_non_monorepo_without_changes__creates_no_file(
+        self,
+    ):
+        commit_sha = "36441693dddaf0ed73951ad3a15c215a332756aa"
+        config = GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish=commit_sha,
+            libraries_bom_version="",
+            libraries=[],
+        )
+        pr_description_path = os.path.join(os.getcwd(), "no_config_change")
+        change_to_libraries = dict()
+        change_to_libraries[ChangeType.REPO_LEVEL_CHANGE] = [NonMonorepoChange()]
+        generate_pr_descriptions(
+            config_change=ConfigChange(
+                change_to_libraries=change_to_libraries,
                 baseline_config=config,
                 current_config=config,
             ),
