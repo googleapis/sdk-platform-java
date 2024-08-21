@@ -15,6 +15,8 @@
 # build from the root of this repo:
 FROM gcr.io/cloud-devrel-public-resources/python
 
+ENV HOME=/home
+
 # install OS tools
 RUN apt-get update && apt-get install -y \
 	unzip openjdk-17-jdk rsync maven jq \
@@ -35,6 +37,7 @@ RUN python -m pip install --require-hashes -r requirements.txt
 RUN python -m pip install .
 # allow users to access the script folders
 RUN chmod -R o+rx /src
+RUN chmod -R a+rw /home
 
 WORKDIR /workspace
 ENTRYPOINT [ "/src/owlbot/bin/entrypoint.sh", "/src", "versions.txt", "false"]
