@@ -41,6 +41,6 @@ done
 
 # format the source
 # the jar file is downloaded through Dockerfile.
-cat $tmpfile | xargs java -jar "${scripts_root}/owlbot/google-java-format.jar" --replace
+cat $tmpfile | xargs java -jar "${scripts_root}/owlbot/downloaded/google-java-format.jar" --replace
 
 rm $tmpfile

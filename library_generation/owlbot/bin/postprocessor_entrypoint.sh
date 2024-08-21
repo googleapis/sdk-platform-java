@@ -28,7 +28,7 @@ function get_library_version() {
 
 function get_latest_libaries_bom_version() {
   scripts_root=$1
-  save_as="${scripts_root}/owlbot/maven-metadata.xml"
+  save_as="${scripts_root}/owlbot/downloaded/maven-metadata.xml"
   url="https://repo1.maven.org/maven2/com/google/cloud/libraries-bom/maven-metadata.xml"
   curl -LJ -o "${save_as}" --fail -m 30 --retry 2 "$url"
   version=$(xmllint --xpath "//metadata/versioning/latest/text()" "${save_as}")
