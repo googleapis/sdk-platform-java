@@ -21,6 +21,9 @@ RUN apt-get update && apt-get install -y \
 	&& apt-get clean
 
 COPY library_generation /src
+# remove workflows that are not used in non-GAPIC libraries.
+RUN rm /src/owlbot/templates/java_library/.github/workflows/update_generation_config.yaml
+RUN rm -rf /src/owlbot/templates/java_library/.github/scripts
 
 RUN rm $(which python3)
 RUN ln -s $(which python3.11) /usr/local/bin/python
