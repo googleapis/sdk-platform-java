@@ -16,6 +16,7 @@ import unittest
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
+from library_generation.model.config_change import NoOpLibraryChange
 from library_generation.utils.generation_config_comparator import ChangeType
 from library_generation.utils.generation_config_comparator import compare_config
 
@@ -59,6 +60,24 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             current_config=self.current_config,
         )
         self.assertTrue(len(result.change_to_libraries) == 0)
+
+    def test_compare_non_monorepo_configs__creates_default_change(self):
+        # we simulate a non-monorepo (1 library repo) and confirm
+        # that there is a no-op change registered in order to trigger
+        # the whole generation
+        self.baseline_config.libraries = [self.baseline_library]
+        self.current_config.libraries = [self.baseline_library]
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            current_config=self.current_config,
+        )
+        self.assertTrue(len(result.change_to_libraries) == 1)
+        self.assertTrue(ChangeType.REPO_LEVEL_CHANGE in result.change_to_libraries)
+        self.assertTrue(
+            len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 1
+        )
+        change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
+        self.assertTrue(isinstance(change, NoOpLibraryChange))
 
     def test_compare_config_googleapis_update(self):
         self.baseline_config.googleapis_commitish = (
