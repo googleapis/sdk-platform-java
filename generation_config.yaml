@@ -39,4 +39,3 @@ libraries:
   GAPICs:
   - proto_path: google/iam/v1
   - proto_path: google/iam/v2
-  - proto_path: google/iam/v2beta
