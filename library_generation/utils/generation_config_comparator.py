@@ -18,6 +18,7 @@ from typing import List
 from library_generation.model.config_change import ChangeType
 from library_generation.model.config_change import ConfigChange
 from library_generation.model.config_change import LibraryChange
+from library_generation.model.config_change import NonMonorepoChange
 from library_generation.model.config_change import HashLibrary
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
@@ -48,6 +49,12 @@ def compare_config(
     current_params = __convert_params_to_sorted_list(
         obj=current_config, excluded_params=excluded_params
     )
+
+    # If the configuration is not a monorepo config, then we will trigger the
+    # generation regardless of whether there are changes by adding a repo-level
+    # change
+    if not current_config.is_monorepo():
+        diff[ChangeType.REPO_LEVEL_CHANGE].append(NonMonorepoChange())
 
     for baseline_param, current_param in zip(baseline_params, current_params):
         if baseline_param == current_param:

@@ -58,6 +58,25 @@ class LibraryChange:
         self.library_name = library_name
 
 
+class NonMonorepoChange(LibraryChange):
+    """
+    This class represents a LibraryChange (REPO_LEVEL_CHANGE) for when we are
+    deciding whether generate a library or not based on the is_monorepo property.
+    In other words, this is the default change we will use to decide to always
+    generate the repo if it's not a monorepo.
+    """
+
+    NON_MONOREPO_CHANGED_PARAM = "non_monorepo_change"
+    NON_MONOREPO_CHANGED_VALUE = "repo_generation_trigger"
+
+    def __init__(self):
+        LibraryChange.__init__(
+            self,
+            NonMonorepoChange.NON_MONOREPO_CHANGED_PARAM,
+            NonMonorepoChange.NON_MONOREPO_CHANGED_VALUE,
+        )
+
+
 class QualifiedCommit:
     def __init__(self, commit: Commit, libraries: set[str]):
         self.commit = commit
