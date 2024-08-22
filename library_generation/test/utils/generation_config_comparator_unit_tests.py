@@ -16,42 +16,39 @@ import unittest
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
-from library_generation.model.config_change import NoOpConfigChange
 from library_generation.utils.generation_config_comparator import ChangeType
 from library_generation.utils.generation_config_comparator import compare_config
 
 
 class GenerationConfigComparatorTest(unittest.TestCase):
-
-    def __create_test_library_config(self, api_shortname: str):
-        return LibraryConfig(
-            api_shortname=api_shortname,
+    def setUp(self) -> None:
+        self.baseline_library = LibraryConfig(
+            api_shortname="existing_library",
             api_description="",
             name_pretty="",
             product_documentation="",
             gapic_configs=[],
         )
-
-    def setUp(self) -> None:
-        self.baseline_library = self.__create_test_library_config("existing_library")
-        self.current_library = self.__create_test_library_config("existing_library")
-        self.baseline_library_2 = self.__create_test_library_config(
-            "existing_library_2"
+        self.current_library = LibraryConfig(
+            api_shortname="existing_library",
+            api_description="",
+            name_pretty="",
+            product_documentation="",
+            gapic_configs=[],
         )
-        self.current_library_2 = self.__create_test_library_config("existing_library_2")
         self.baseline_config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
             grpc_version="",
             protoc_version="",
-            libraries=[self.baseline_library, self.baseline_library_2],
+            libraries=[self.baseline_library],
         )
         self.current_config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
             grpc_version="",
             protoc_version="",
-            libraries=[self.current_library, self.current_library_2],
+            libraries=[self.current_library],
         )
 
     def test_compare_config_not_change(self):
@@ -60,24 +57,6 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             current_config=self.current_config,
         )
         self.assertTrue(len(result.change_to_libraries) == 0)
-
-    def test_compare_non_monorepo_configs__creates_default_change(self):
-        # we simulate a non-monorepo (1 library repo) and confirm
-        # that there is a no-op change registered in order to trigger
-        # the whole generation
-        self.baseline_config.libraries = [self.baseline_library]
-        self.current_config.libraries = [self.baseline_library]
-        result = compare_config(
-            baseline_config=self.baseline_config,
-            current_config=self.current_config,
-        )
-        self.assertTrue(len(result.change_to_libraries) == 1)
-        self.assertTrue(ChangeType.REPO_LEVEL_CHANGE in result.change_to_libraries)
-        self.assertTrue(
-            len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 1
-        )
-        change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
-        self.assertTrue(isinstance(change, NoOpConfigChange))
 
     def test_compare_config_googleapis_update(self):
         self.baseline_config.googleapis_commitish = (
@@ -99,8 +78,8 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             current_config=self.current_config,
         )
-        self.assertEqual(
-            1, len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE])
+        self.assertTrue(
+            len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 1
         )
         config_change = result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE][0]
         self.assertEqual("gapic_generator_version", config_change.changed_param)
@@ -198,21 +177,16 @@ class GenerationConfigComparatorTest(unittest.TestCase):
     def test_compare_config_library_removal_does_not_have_repo_or_library_level_change(
         self,
     ):
-        # we simulate a change from 3 libraries to 2 to keep the monorepo behavior
-        self.baseline_config.libraries = [
-            self.current_library,
-            self.current_library_2,
-            self.__create_test_library_config("existing_library_3"),
-        ]
+        self.current_config.libraries = []
         result = compare_config(
             baseline_config=self.baseline_config,
             current_config=self.current_config,
         )
-        self.assertEqual(
-            0, len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE])
+        self.assertTrue(
+            len(result.change_to_libraries[ChangeType.REPO_LEVEL_CHANGE]) == 0
         )
-        self.assertEqual(
-            0, len(result.change_to_libraries[ChangeType.LIBRARY_LEVEL_CHANGE])
+        self.assertTrue(
+            len(result.change_to_libraries[ChangeType.LIBRARY_LEVEL_CHANGE]) == 0
         )
 
     def test_compare_config_api_shortname_update_without_library_name(self):
