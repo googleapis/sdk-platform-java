@@ -14,24 +14,38 @@
 
 timeout: 7200s # 2 hours
 substitutions:
-  _IMAGE_NAME: "gcr.io/cloud-devrel-public-resources/java-library-generation"
+  _IMAGE_PREFIX: "gcr.io/cloud-devrel-public-resources/"
+  _GENERATION_IMAGE_NAME: "java-library-generation"
+  _POSTPROCESSOR_IMAGE_NAME: "postprocessor"
   _GAPIC_GENERATOR_JAVA_VERSION: '2.44.1-SNAPSHOT' # {x-version-update:gapic-generator-java:current}
-  _SHA_IMAGE_ID: "${_IMAGE_NAME}:${COMMIT_SHA}"
-  _LATEST_IMAGE_ID: "${_IMAGE_NAME}:latest"
-  _VERSIONED_IMAGE_ID: "${_IMAGE_NAME}:${_GAPIC_GENERATOR_JAVA_VERSION}"
+  _SHA_IMAGE_ID: "${COMMIT_SHA}"
+  _LATEST_IMAGE_ID: "latest"
 steps:
   # Library generation build
   - name: gcr.io/cloud-builders/docker
     args: [
       "build",
-      "-t", "${_SHA_IMAGE_ID}",
-      "-t", "${_LATEST_IMAGE_ID}",
-      "-t", "${_VERSIONED_IMAGE_ID}",
+      "-t", "${_IMAGE_PREFIX}${_GENERATION_IMAGE_NAME}:${_SHA_IMAGE_ID}",
+      "-t", "${_IMAGE_PREFIX}${_GENERATION_IMAGE_NAME}:${_LATEST_IMAGE_ID}",
+      "-t", "${_IMAGE_PREFIX}${_GENERATION_IMAGE_NAME}:${_GAPIC_GENERATOR_JAVA_VERSION}",
       "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
     id: library-generation-build
     waitFor: ["-"]
+  # post processor build
+  - name: gcr.io/cloud-builders/docker
+    args: [
+      "build",
+      "-t", "${_IMAGE_PREFIX}${_POSTPROCESSOR_IMAGE_NAME}:${_SHA_IMAGE_ID}",
+      "-t", "${_IMAGE_PREFIX}${_POSTPROCESSOR_IMAGE_NAME}:${_LATEST_IMAGE_ID}",
+      "-t", "${_IMAGE_PREFIX}${_POSTPROCESSOR_IMAGE_NAME}:${_GAPIC_GENERATOR_JAVA_VERSION}",
+      "--file", ".cloudbuild/library_generation/postprocessor.Dockerfile", "." ]
+    id: post-processor-build
+    waitFor: [ "-" ]
 
 images:
-  - ${_SHA_IMAGE_ID}
-  - ${_LATEST_IMAGE_ID}
-  - ${_VERSIONED_IMAGE_ID}
+  - ${_IMAGE_PREFIX}${_GENERATION_IMAGE_NAME}:${_SHA_IMAGE_ID}
+  - ${_IMAGE_PREFIX}${_GENERATION_IMAGE_NAME}:${_LATEST_IMAGE_ID}
+  - ${_IMAGE_PREFIX}${_GENERATION_IMAGE_NAME}:${_GAPIC_GENERATOR_JAVA_VERSION}
+  - ${_IMAGE_PREFIX}${_POSTPROCESSOR_IMAGE_NAME}:${_SHA_IMAGE_ID}
+  - ${_IMAGE_PREFIX}${_POSTPROCESSOR_IMAGE_NAME}:${_LATEST_IMAGE_ID}
+  - ${_IMAGE_PREFIX}${_POSTPROCESSOR_IMAGE_NAME}:${_GAPIC_GENERATOR_JAVA_VERSION}
