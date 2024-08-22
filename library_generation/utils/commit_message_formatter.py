@@ -14,11 +14,7 @@
 import re
 from git import Commit
 
-from library_generation.model.config_change import (
-    ConfigChange,
-    ChangeType,
-    NoOpConfigChange,
-)
+from library_generation.model.config_change import ConfigChange, ChangeType
 from library_generation.model.generation_config import (
     GAPIC_GENERATOR_VERSION,
     LIBRARIES_BOM_VERSION,
@@ -75,12 +71,6 @@ def format_repo_level_change(config_change: ConfigChange) -> list[str]:
     for repo_level_change in config_change.change_to_libraries.get(
         ChangeType.REPO_LEVEL_CHANGE, []
     ):
-        # We include a special `NonMonorepoChange` to determine if the library
-        # should be automatically generated. Here we skip this one because it's
-        # just a workflow indicator to trigger the generation.
-        if isinstance(repo_level_change, NoOpConfigChange):
-            continue
-
         message = f"chore: update repo-level parameter {repo_level_change.changed_param} to {repo_level_change.current_value}"
         if repo_level_change.changed_param in PARAM_TO_COMMIT_MESSAGE:
             message = f"{PARAM_TO_COMMIT_MESSAGE.get(repo_level_change.changed_param)} {repo_level_change.current_value}"
