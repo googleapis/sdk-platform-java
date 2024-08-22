@@ -111,14 +111,13 @@ def generate(
         )
 
     current_generation_config_path = os.path.abspath(current_generation_config_path)
-    current_config=from_yaml(current_generation_config_path),
     repository_path = os.path.abspath(repository_path)
     if not baseline_generation_config_path:
         # Execute full generation based on current_generation_config if
         # baseline_generation_config is not specified.
         # Do not generate pull request description.
         generate_from_yaml(
-            config=current_config,
+            config=from_yaml(current_generation_config_path),
             repository_path=repository_path,
         )
         return
@@ -128,14 +127,16 @@ def generate(
     baseline_generation_config_path = os.path.abspath(baseline_generation_config_path)
     config_change = compare_config(
         baseline_config=from_yaml(baseline_generation_config_path),
-        current_config=current_config,
+        current_config=from_yaml(current_generation_config_path),
     )
+    # pass None if this is not a monorepo in order to trigger the full
+    # generation
+    target_library_names=config_change.get_changed_libraries() if config_change.current_config.is_monorepo() else None
+    print(f'target_library_names: {target_library_names}')
     generate_from_yaml(
         config=config_change.current_config,
         repository_path=repository_path,
-        # pass None if this is not a monorepo in order to trigger the full
-        # generation
-        target_library_names=config_change.get_changed_libraries() if not current_config.is_monorepo() else None,
+        target_library_names=target_library_names
     )
     generate_pr_descriptions(
         config_change=config_change,
