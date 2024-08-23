@@ -6,7 +6,7 @@ title: Selective Generation Testing API
 publishing:
   # ...
   library_settings:
-    - version: com.google.selective.generate.v1beta1
+    - version: google.selective.generate.v1beta1
       java_settings:
         common:
           selective_gapic_generation:

@@ -140,6 +140,7 @@ class ParserTest {
         Parser.parseMethods(
             echoService,
             ECHO_PACKAGE,
+            ECHO_PACKAGE,
             messageTypes,
             resourceNames,
             Optional.empty(),
@@ -202,6 +203,7 @@ class ParserTest {
     List<Method> methods =
         Parser.parseMethods(
             echoService,
+            ECHO_PACKAGE,
             ECHO_PACKAGE,
             messageTypes,
             resourceNames,
@@ -757,6 +759,7 @@ class ParserTest {
     assertEquals("EchoServiceShouldGenerateNone", services.get(1).overriddenName());
     assertEquals(10, services.get(1).methods().size());
   }
+
   @Test
   void selectiveGenerationTest_shouldGenerateAllIfNoJavaSectionInServiceYaml() {
     FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
@@ -770,7 +773,7 @@ class ParserTest {
         ServiceYamlParser.parse(serviceYamlPath.toString());
     assertTrue(serviceYamlOpt.isPresent());
     assertEquals(1, serviceYamlOpt.get().getPublishing().getLibrarySettingsCount());
-    assertNotNull( serviceYamlOpt.get().getPublishing().getLibrarySettings(0).getPythonSettings());
+    assertNotNull(serviceYamlOpt.get().getPublishing().getLibrarySettings(0).getPythonSettings());
 
     List<com.google.api.generator.gapic.model.Service> services =
         Parser.parseService(

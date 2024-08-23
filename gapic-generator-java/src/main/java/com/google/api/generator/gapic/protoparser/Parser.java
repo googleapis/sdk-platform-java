@@ -427,51 +427,24 @@ public class Parser {
         Transport.GRPC);
   }
 
-  private static String getPakkageName(FileDescriptor fileDescriptor, ServiceDescriptor s,
-      Optional<GapicServiceConfig> serviceConfigOpt) {
-    String pakkage = TypeParser.getPackage(fileDescriptor);
-    // Override Java package with that specified in gapic.yaml.
-    // this override is deprecated and legacy support only
-    // see go/client-user-guide#configure-long-running-operation-polling-timeouts-optional
-    if (serviceConfigOpt.isPresent()
-        && serviceConfigOpt.get().getLanguageSettingsOpt().isPresent()) {
-      GapicLanguageSettings languageSettings =
-          serviceConfigOpt.get().getLanguageSettingsOpt().get();
-      pakkage = languageSettings.pakkage();
-    }
-    return pakkage;
-  }
-
-  private static String getOverriddenServiceName(FileDescriptor fileDescriptor, ServiceDescriptor s,
-      Optional<GapicServiceConfig> serviceConfigOpt) {
-    String serviceName = s.getName();
-    String overriddenServiceName = serviceName;
-    String pakkage = TypeParser.getPackage(fileDescriptor);
-    // Override Java package with that specified in gapic.yaml.
-    // this override is deprecated and legacy support only
-    // see go/client-user-guide#configure-long-running-operation-polling-timeouts-optional
-    if (serviceConfigOpt.isPresent()
-        && serviceConfigOpt.get().getLanguageSettingsOpt().isPresent()) {
-      GapicLanguageSettings languageSettings =
-          serviceConfigOpt.get().getLanguageSettingsOpt().get();
-      overriddenServiceName =
-          languageSettings.getJavaServiceName(fileDescriptor.getPackage(), s.getName());
-    }
-    return overriddenServiceName;
-  }
-  private static boolean shouldIncludeMethod(
-      MethodDescriptor method, Optional<com.google.api.Service> serviceYamlProtoOpt) {
-    method.getInputType().getFullName();
-    // default to include all when no service yaml or no library setting section.
+  private static Optional<ProtocolStringList> getInclusionMethodListFromServiceYaml(
+      Optional<com.google.api.Service> serviceYamlProtoOpt, String protoPackage) {
     if (!serviceYamlProtoOpt.isPresent()
         || serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsCount() == 0) {
-      return true;
+      return Optional.empty();
     }
     List<ClientLibrarySettings> librarySettingsList =
         serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsList();
-    // TODO: verify if get(0) is reliable. may need to use package version.
-    // should be okay since it's cut per version. no harm in verifying.
-    // library settings version (required): http://google3/google/api/client.proto;l=29-32;rcl=651426419
+    // verify library_settings.version matches with proto package name
+    // This should be validated in upstream. Give warnings if not match.
+    if (!librarySettingsList.get(0).getVersion().isEmpty()
+        && !protoPackage.equals(librarySettingsList.get(0).getVersion())) {
+      LOGGER.warning(
+          "Service yaml config may be misconfigured. "
+              + "Version in publishing.library_settings does not match proto package."
+              + "Disregarding selective generation settings.");
+      return Optional.empty();
+    }
     ProtocolStringList includeMethodsList =
         librarySettingsList
             .get(0)
@@ -479,12 +452,20 @@ public class Parser {
             .getCommon()
             .getSelectiveGapicGeneration()
             .getMethodsList();
-    // default to include all when nothing specified.
-    if (includeMethodsList.isEmpty()) {
+    return Optional.of(includeMethodsList);
+  }
+
+  private static boolean shouldIncludeMethod(
+      MethodDescriptor method, Optional<ProtocolStringList> optionalIncludeMethodsList) {
+    // default to include all when no service yaml or no library setting section.
+    if (!optionalIncludeMethodsList.isPresent()) {
       return true;
     }
-    // may need to preprocess method name with override package name
-    return includeMethodsList.contains(method.getFullName());
+    // default to include all when nothing specified.
+    if (optionalIncludeMethodsList.get().isEmpty()) {
+      return true;
+    }
+    return optionalIncludeMethodsList.get().contains(method.getFullName());
   }
 
   public static List<Service> parseService(
@@ -495,7 +476,9 @@ public class Parser {
       Optional<GapicServiceConfig> serviceConfigOpt,
       Set<ResourceName> outputArgResourceNames,
       Transport transport) {
-
+    String protoPackage = fileDescriptor.getPackage();
+    Optional<ProtocolStringList> inclusionMethodListFromServiceYaml =
+        getInclusionMethodListFromServiceYaml(serviceYamlProtoOpt, protoPackage);
     return fileDescriptor.getServices().stream()
         .filter(
             serviceDescriptor -> {
@@ -504,7 +487,7 @@ public class Parser {
                   methodsList.stream()
                       .filter(
                           method -> {
-                            return shouldIncludeMethod(method, serviceYamlProtoOpt);
+                            return shouldIncludeMethod(method, inclusionMethodListFromServiceYaml);
                           })
                       .collect(Collectors.toList());
               if (methodListSelected.isEmpty()) {
@@ -589,6 +572,7 @@ public class Parser {
                   .setMethods(
                       parseMethods(
                           s,
+                          protoPackage,
                           pakkage,
                           messageTypes,
                           resourceNames,
@@ -780,6 +764,7 @@ public class Parser {
   @VisibleForTesting
   static List<Method> parseMethods(
       ServiceDescriptor serviceDescriptor,
+      String protoPackage,
       String servicePackage,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
@@ -792,9 +777,10 @@ public class Parser {
     // Parse the serviceYaml for autopopulated methods and fields once and put into a map
     Map<String, List<String>> autoPopulatedMethodsWithFields =
         parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
-
+    Optional<ProtocolStringList> inclusionMethodListFromServiceYaml =
+        getInclusionMethodListFromServiceYaml(serviceYamlProtoOpt, protoPackage);
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
-      if (!shouldIncludeMethod(protoMethod, serviceYamlProtoOpt)) {
+      if (!shouldIncludeMethod(protoMethod, inclusionMethodListFromServiceYaml)) {
         continue;
       }
       // Parse the method.

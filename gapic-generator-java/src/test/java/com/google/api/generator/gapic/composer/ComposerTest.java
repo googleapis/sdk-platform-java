@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
@@ -177,12 +176,13 @@ class ComposerTest {
   @Test
   void testComposeSelectively_shouldComposeOnlyOneHelperResource() {
     GapicContext context = GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting();
-    List<GapicClass> resourceNameHelperClasses = Composer.generateResourceNameHelperClasses(context);
+    List<GapicClass> resourceNameHelperClasses =
+        Composer.generateResourceNameHelperClasses(context);
     assertEquals(1, resourceNameHelperClasses.size());
-    for (GapicClass clazz: resourceNameHelperClasses) {
+    for (GapicClass clazz : resourceNameHelperClasses) {
       String className = clazz.classDefinition().classIdentifier().name();
-      Assert.assertGoldenClass(this.getClass(), clazz,
-          "SelectiveGenerated" + className + ".golden");
+      Assert.assertGoldenClass(
+          this.getClass(), clazz, "SelectiveGenerated" + className + ".golden");
     }
   }
 
@@ -191,7 +191,7 @@ class ComposerTest {
     GapicContext context = GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting();
     List<GapicClass> serviceClasses = Composer.composeServiceClasses(context);
     assertEquals(10, serviceClasses.size());
-    for (GapicClass clazz: serviceClasses) {
+    for (GapicClass clazz : serviceClasses) {
       if (clazz
           .classDefinition()
           .classIdentifier()
