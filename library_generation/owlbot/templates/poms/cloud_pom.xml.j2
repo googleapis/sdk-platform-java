@@ -68,7 +68,7 @@
       <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-iam-v1</artifactId>
     </dependency>
-{%- if repo in ['java-storage', 'java-spanner', 'java-dataproc'] %}
+{%- if not monorepo %}
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-google-common-protos</artifactId>
@@ -84,7 +84,7 @@
     </dependency>
 
     <!-- Test dependencies -->
-{%- if repo not in ['java-storage', 'java-spanner','java-dataproc'] %}
+{%- if monorepo %}
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-google-common-protos</artifactId>
