@@ -579,7 +579,7 @@ public class Parser {
                   .setMethods(
                       parseMethods(
                           s,
-                          protoPackage,
+                          inclusionMethodListFromServiceYaml,
                           pakkage,
                           messageTypes,
                           resourceNames,
@@ -771,7 +771,7 @@ public class Parser {
   @VisibleForTesting
   static List<Method> parseMethods(
       ServiceDescriptor serviceDescriptor,
-      String protoPackage,
+      Optional<List<String>> inclusionMethodListFromServiceYaml,
       String servicePackage,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
@@ -784,8 +784,6 @@ public class Parser {
     // Parse the serviceYaml for autopopulated methods and fields once and put into a map
     Map<String, List<String>> autoPopulatedMethodsWithFields =
         parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
-    Optional<List<String>> inclusionMethodListFromServiceYaml =
-        getInclusionMethodListFromServiceYaml(serviceYamlProtoOpt, protoPackage);
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
       if (!shouldIncludeMethodInGeneration(protoMethod, inclusionMethodListFromServiceYaml)) {
         continue;

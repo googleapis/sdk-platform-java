@@ -368,7 +368,7 @@ public class TestProtoLoader {
     assertEquals(
         selectiveGenerationServiceDescriptor.getName(), "EchoServiceShouldGeneratePartial");
 
-    String serviceYamlFilename = "selective_api_generation.yaml";
+    String serviceYamlFilename = "selective_api_generation_v1beta1.yaml";
     Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
     Optional<com.google.api.Service> serviceYamlOpt =
         ServiceYamlParser.parse(serviceYamlPath.toString());

@@ -139,7 +139,7 @@ class ParserTest {
     List<Method> methods =
         Parser.parseMethods(
             echoService,
-            ECHO_PACKAGE,
+            Optional.empty(),
             ECHO_PACKAGE,
             messageTypes,
             resourceNames,
@@ -203,7 +203,7 @@ class ParserTest {
     List<Method> methods =
         Parser.parseMethods(
             echoService,
-            ECHO_PACKAGE,
+            Optional.empty(),
             ECHO_PACKAGE,
             messageTypes,
             resourceNames,
@@ -716,7 +716,7 @@ class ParserTest {
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
 
-    String serviceYamlFilename = "selective_api_generation.yaml";
+    String serviceYamlFilename = "selective_api_generation_v1beta1.yaml";
     String testFilesDirectory = "src/test/resources/";
     Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
     Optional<com.google.api.Service> serviceYamlOpt =
@@ -737,7 +737,7 @@ class ParserTest {
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
 
-    String serviceYamlFilename = "selective_api_generation_no_publishing.yaml";
+    String serviceYamlFilename = "selective_api_generation_no_publishing_v1beta1.yaml";
     String testFilesDirectory = "src/test/resources/";
     Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
     Optional<com.google.api.Service> serviceYamlOpt =
@@ -761,7 +761,7 @@ class ParserTest {
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
 
-    String serviceYamlFilename = "selective_api_generation_no_java.yaml";
+    String serviceYamlFilename = "selective_api_generation_no_java_settings_v1beta1.yaml";
     String testFilesDirectory = "src/test/resources/";
     Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
     Optional<com.google.api.Service> serviceYamlOpt =

@@ -41,6 +41,10 @@ option (google.api.resource_definition) = {
 //  - A service with several rpcs, part of them should be generated
 //  - A service with several rpcs, non of them should be generated
 // This proto should be tested side-by-side with yaml file:
+//  - selective_api_generation_v1beta1.yaml
+//  - selective_api_generation_no_java_settings_v1beta1.yaml
+//  - selective_api_generation_no_publishing_v1beta1.yaml
+
 service EchoServiceShouldGeneratePartial {
   // This service is meant to only run locally on the port 7469 (keypad digits
   // for "show").
@@ -255,6 +259,7 @@ enum Severity {
   CRITICAL = 3;
 }
 
+// resource name used for message EchoRequest.
 message Foobar {
   option (google.api.resource) = {
     type: "showcase.googleapis.com/Foobar"
@@ -269,6 +274,7 @@ message Foobar {
   string info = 2;
 }
 
+// resource name used for message EchoRequest2.
 message Foobarbaz {
   option (google.api.resource) = {
     type: "showcase.googleapis.com/Foobarbaz"
@@ -313,6 +319,10 @@ message EchoRequest {
   Foobar foobar = 4;
 }
 
+// The request message used for ShouldNotGenerateChat method.
+// To demonstrate that if ShouldNotGenerateChat is not included in generation,
+// then the resource name Foobarbaz, which is only used by this method,
+// should also not be generated.
 message EchoRequest2 {
   string name = 5 [
     (google.api.resource_reference).type = "showcase.googleapis.com/Foobarbaz",
