@@ -71,7 +71,6 @@ import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
-import com.google.protobuf.ProtocolStringList;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -435,7 +434,7 @@ public class Parser {
         Transport.GRPC);
   }
 
-  private static Optional<ProtocolStringList> getInclusionMethodListFromServiceYaml(
+  private static Optional<List<String>> getInclusionMethodListFromServiceYaml(
       Optional<com.google.api.Service> serviceYamlProtoOpt, String protoPackage) {
     if (!serviceYamlProtoOpt.isPresent()
         || serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsCount() == 0) {
@@ -453,7 +452,7 @@ public class Parser {
               + "Disregarding selective generation settings.");
       return Optional.empty();
     }
-    ProtocolStringList includeMethodsList =
+    List<String> includeMethodsList =
         librarySettingsList
             .get(0)
             .getJavaSettings()
@@ -464,7 +463,7 @@ public class Parser {
   }
 
   private static boolean shouldIncludeMethodInGeneration(
-      MethodDescriptor method, Optional<ProtocolStringList> optionalIncludeMethodsList) {
+      MethodDescriptor method, Optional<List<String>> optionalIncludeMethodsList) {
     // default to include all when no service yaml or no library setting section.
     if (!optionalIncludeMethodsList.isPresent()) {
       return true;
@@ -485,7 +484,7 @@ public class Parser {
       Set<ResourceName> outputArgResourceNames,
       Transport transport) {
     String protoPackage = fileDescriptor.getPackage();
-    Optional<ProtocolStringList> inclusionMethodListFromServiceYaml =
+    Optional<List<String>> inclusionMethodListFromServiceYaml =
         getInclusionMethodListFromServiceYaml(serviceYamlProtoOpt, protoPackage);
     return fileDescriptor.getServices().stream()
         .filter(
@@ -785,7 +784,7 @@ public class Parser {
     // Parse the serviceYaml for autopopulated methods and fields once and put into a map
     Map<String, List<String>> autoPopulatedMethodsWithFields =
         parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
-    Optional<ProtocolStringList> inclusionMethodListFromServiceYaml =
+    Optional<List<String>> inclusionMethodListFromServiceYaml =
         getInclusionMethodListFromServiceYaml(serviceYamlProtoOpt, protoPackage);
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
       if (!shouldIncludeMethodInGeneration(protoMethod, inclusionMethodListFromServiceYaml)) {
