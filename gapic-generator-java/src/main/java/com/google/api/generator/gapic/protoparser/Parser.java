@@ -156,6 +156,14 @@ public class Parser {
     // Keep message and resource name parsing separate for cleaner logic.
     // While this takes an extra pass through the protobufs, the extra time is relatively trivial
     // and is worth the larger reduced maintenance cost.
+
+    // Note that if selective api generation is configured via service yaml, resource names
+    // and messages corresponding to RPC's methods excluded for generation are not removed.
+    // However, these resource names will not be composed.
+    // refer to ComposerTest.testComposeSelectively_shouldComposeOnlyOneHelperResource for
+    // verification.
+    // TODO: remove messages and resource names that's only used by excluded RPCs configured
+    // via selective api generation from parsed GapicContext.
     Map<String, Message> messages = parseMessages(request, outputResourceReferencesSeen);
 
     Map<String, ResourceName> resourceNames = parseResourceNames(request);
