@@ -711,7 +711,7 @@ class ParserTest {
   }
 
   @Test
-  void selectiveGenerationTest() {
+  void selectiveGenerationTest_shouldGenerateOnlySelectiveMethods() {
     FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
@@ -722,17 +722,12 @@ class ParserTest {
     Optional<com.google.api.Service> serviceYamlOpt =
         ServiceYamlParser.parse(serviceYamlPath.toString());
     Assert.assertTrue(serviceYamlOpt.isPresent());
-    // List<ClientLibrarySettings> librarySettingsList = serviceYamlOpt.get().getPublishing()
-    //     .getLibrarySettingsList();
-    // ProtocolStringList excludeMethodsList = librarySettingsList.get(0).getJavaSettings()
-    //     .getCommon().getSelectiveGapicGeneration().getMethodsList();
 
     List<com.google.api.generator.gapic.model.Service> services =
         Parser.parseService(
             fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
     assertEquals(1, services.size());
     assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
-    // ?
     assertEquals(3, services.get(0).methods().size());
   }
 
@@ -754,7 +749,7 @@ class ParserTest {
             fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
     assertEquals(2, services.size());
     assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
-    // ?
+
     assertEquals(11, services.get(0).methods().size());
     assertEquals("EchoServiceShouldGenerateNone", services.get(1).overriddenName());
     assertEquals(10, services.get(1).methods().size());
@@ -780,7 +775,7 @@ class ParserTest {
             fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
     assertEquals(2, services.size());
     assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
-    // ?
+
     assertEquals(11, services.get(0).methods().size());
     assertEquals("EchoServiceShouldGenerateNone", services.get(1).overriddenName());
     assertEquals(10, services.get(1).methods().size());
