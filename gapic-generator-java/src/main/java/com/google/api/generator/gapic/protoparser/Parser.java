@@ -463,7 +463,7 @@ public class Parser {
     return Optional.of(includeMethodsList);
   }
 
-  private static boolean shouldIncludeMethod(
+  private static boolean shouldIncludeMethodInGeneration(
       MethodDescriptor method, Optional<ProtocolStringList> optionalIncludeMethodsList) {
     // default to include all when no service yaml or no library setting section.
     if (!optionalIncludeMethodsList.isPresent()) {
@@ -495,7 +495,7 @@ public class Parser {
                   methodsList.stream()
                       .filter(
                           method -> {
-                            return shouldIncludeMethod(method, inclusionMethodListFromServiceYaml);
+                            return shouldIncludeMethodInGeneration(method, inclusionMethodListFromServiceYaml);
                           })
                       .collect(Collectors.toList());
               if (methodListSelected.isEmpty()) {
@@ -788,7 +788,7 @@ public class Parser {
     Optional<ProtocolStringList> inclusionMethodListFromServiceYaml =
         getInclusionMethodListFromServiceYaml(serviceYamlProtoOpt, protoPackage);
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
-      if (!shouldIncludeMethod(protoMethod, inclusionMethodListFromServiceYaml)) {
+      if (!shouldIncludeMethodInGeneration(protoMethod, inclusionMethodListFromServiceYaml)) {
         continue;
       }
       // Parse the method.
