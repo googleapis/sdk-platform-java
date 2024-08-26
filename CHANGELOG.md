@@ -1,5 +1,46 @@
 # Changelog
 
+## [2.44.0](https://github.com/googleapis/sdk-platform-java/compare/v2.43.0...v2.44.0) (2024-08-16)
+
+
+### Features
+
+* update ErrorDetails to allow unpacking arbitrary messages ([#3073](https://github.com/googleapis/sdk-platform-java/issues/3073)) ([6913db5](https://github.com/googleapis/sdk-platform-java/commit/6913db5c64e35ec8925c25a04ebd6d529895c4fe))
+
+
+### Bug Fixes
+
+* Generator callable generation is based on method type ([#3075](https://github.com/googleapis/sdk-platform-java/issues/3075)) ([c21a013](https://github.com/googleapis/sdk-platform-java/commit/c21a0139cccb9001951cab81f4c5ffe3ae51d7c5))
+* improve warnings for Direct Path xDS set via env ([#3019](https://github.com/googleapis/sdk-platform-java/issues/3019)) ([7a26115](https://github.com/googleapis/sdk-platform-java/commit/7a26115078d23e430e190c62556c014c440fcab2))
+
+
+### Dependencies
+
+* update dependency argcomplete to v3.5.0 ([#3099](https://github.com/googleapis/sdk-platform-java/issues/3099)) ([0654a28](https://github.com/googleapis/sdk-platform-java/commit/0654a289b745e153e4f41b02cbdc180e3ca9a231))
+* update dependency black to v24.8.0 ([#3082](https://github.com/googleapis/sdk-platform-java/issues/3082)) ([a864f62](https://github.com/googleapis/sdk-platform-java/commit/a864f622023e096f207cf6fe3321f92d1b9f4560))
+* update dependency com.google.crypto.tink:tink to v1.14.1 ([#3083](https://github.com/googleapis/sdk-platform-java/issues/3083)) ([c13b63e](https://github.com/googleapis/sdk-platform-java/commit/c13b63e1e4b391650eb6a0949d1fbc2319a28de6))
+* update dependency com.google.errorprone:error_prone_annotations to v2.30.0 ([#3100](https://github.com/googleapis/sdk-platform-java/issues/3100)) ([a10ef54](https://github.com/googleapis/sdk-platform-java/commit/a10ef54fcd86c321bf15acd4fe5fa96f9937d318))
+* update dependency com.google.errorprone:error_prone_annotations to v2.30.0 ([#3101](https://github.com/googleapis/sdk-platform-java/issues/3101)) ([9bff64f](https://github.com/googleapis/sdk-platform-java/commit/9bff64f416c3eb046cca30ff974a9e9c4b5cebd2))
+* update dependency lxml to v5.3.0 ([#3102](https://github.com/googleapis/sdk-platform-java/issues/3102)) ([4e145b1](https://github.com/googleapis/sdk-platform-java/commit/4e145b128b1b964346fc7c1c874d57d9eedc00d2))
+* update dependency org.apache.commons:commons-lang3 to v3.16.0 ([#3103](https://github.com/googleapis/sdk-platform-java/issues/3103)) ([95c9508](https://github.com/googleapis/sdk-platform-java/commit/95c9508bd9a20f82687c80def38e510fc539eec3))
+* update dependency org.checkerframework:checker-qual to v3.46.0 ([#3081](https://github.com/googleapis/sdk-platform-java/issues/3081)) ([2431920](https://github.com/googleapis/sdk-platform-java/commit/243192089386122c255a4296761775ec80a1fcd0))
+* update dependency org.easymock:easymock to v5.4.0 ([#3079](https://github.com/googleapis/sdk-platform-java/issues/3079)) ([182ae50](https://github.com/googleapis/sdk-platform-java/commit/182ae507f9323e5a5861b240e976a0127d1eea04))
+* update dependency pyyaml to v6.0.2 ([#3086](https://github.com/googleapis/sdk-platform-java/issues/3086)) ([f847e45](https://github.com/googleapis/sdk-platform-java/commit/f847e45c19d45be57d59e9d6887047d2c12b8267))
+* update dependency watchdog to v4.0.2 ([#3094](https://github.com/googleapis/sdk-platform-java/issues/3094)) ([f1c75a1](https://github.com/googleapis/sdk-platform-java/commit/f1c75a15f2462644a58e4a836db6c51cca4ba0a1))
+* update google api dependencies ([#3071](https://github.com/googleapis/sdk-platform-java/issues/3071)) ([c5abe90](https://github.com/googleapis/sdk-platform-java/commit/c5abe907ed063f86571634b2df67bca5a6334abf))
+* update google auth library dependencies to v1.24.1 ([#3109](https://github.com/googleapis/sdk-platform-java/issues/3109)) ([62acdd6](https://github.com/googleapis/sdk-platform-java/commit/62acdd6f1246c8bd95eec4a53f8cd1896e48ae53))
+* update googleapis/java-cloud-bom digest to a98202d ([#3097](https://github.com/googleapis/sdk-platform-java/issues/3097)) ([bb216ae](https://github.com/googleapis/sdk-platform-java/commit/bb216ae8834f5ea169ebfd9a790743680edec053))
+* update googleapis/java-cloud-bom digest to ad905cc ([#3080](https://github.com/googleapis/sdk-platform-java/issues/3080)) ([250b26c](https://github.com/googleapis/sdk-platform-java/commit/250b26c5af6f8c78eec94a4c3a42d3a72e06b1e5))
+* update grpc dependencies to v1.66.0 ([#3104](https://github.com/googleapis/sdk-platform-java/issues/3104)) ([b63b643](https://github.com/googleapis/sdk-platform-java/commit/b63b643b7f6067278406fe56c125f8497aec108f))
+* update opentelemetry-java monorepo to v1.41.0 ([#3105](https://github.com/googleapis/sdk-platform-java/issues/3105)) ([7364916](https://github.com/googleapis/sdk-platform-java/commit/7364916ec5f997d93c668c34e77eef8b9c77d9a5))
+* update protobuf to 3.25.4 ([#3113](https://github.com/googleapis/sdk-platform-java/issues/3113)) ([2b271fc](https://github.com/googleapis/sdk-platform-java/commit/2b271fcd7e5db7f1cab3c5210e8137288497f09f))
+* update slf4j monorepo to v2.0.16 ([#3098](https://github.com/googleapis/sdk-platform-java/issues/3098)) ([c13f932](https://github.com/googleapis/sdk-platform-java/commit/c13f93264a0fe6643b343fa7a72bd4a59856c3e1))
+
+
+### Documentation
+
+* Update the Javadoc of ObsoleteApi.java ([#3088](https://github.com/googleapis/sdk-platform-java/issues/3088)) ([0ef6619](https://github.com/googleapis/sdk-platform-java/commit/0ef66196744e21fc3b4e2553d817c0dea5efe127))
+
 ## [2.43.0](https://github.com/googleapis/sdk-platform-java/compare/v2.42.0...v2.43.0) (2024-07-25)
 
 
