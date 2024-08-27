@@ -13,6 +13,7 @@
 # limitations under the License.
 import unittest
 from difflib import unified_diff
+from filecmp import dircmp
 from pathlib import Path
 
 from typing import List
@@ -29,6 +30,28 @@ class FileComparator(unittest.TestCase):
         self.assertEqual(
             first=[], second=diff, msg="Unexpected file contents:\n" + "".join(diff)
         )
+
+    @classmethod
+    def recursive_diff_files(
+        cls,
+        dcmp: dircmp,
+        diff_files: list[str],
+        left_only: list[str],
+        right_only: list[str],
+        dirname: str = "",
+    ):
+        """
+        Recursively compares two subdirectories. The found differences are
+        passed to three expected list references.
+        """
+        append_dirname = lambda d: dirname + d
+        diff_files.extend(map(append_dirname, dcmp.diff_files))
+        left_only.extend(map(append_dirname, dcmp.left_only))
+        right_only.extend(map(append_dirname, dcmp.right_only))
+        for sub_dirname, sub_dcmp in dcmp.subdirs.items():
+            cls.recursive_diff_files(
+                sub_dcmp, diff_files, left_only, right_only, dirname + sub_dirname + "/"
+            )
 
 
 def cleanup(files: List[str]):

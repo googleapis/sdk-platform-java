@@ -14,15 +14,11 @@
 
 import json
 import os
-import re
 import sys
-import shutil
 import yaml
 from pathlib import Path
 from typing import Dict, List, Optional
-import jinja2
 import logging
-
 from synthtool import _tracked_paths
 from synthtool.sources import templates
 
@@ -31,7 +27,6 @@ logger.setLevel(logging.DEBUG)
 
 
 DEFAULT_TEMPLATES_PATH = "synthtool/gcp/templates"
-LOCAL_TEMPLATES: Optional[str] = os.environ.get("SYNTHTOOL_TEMPLATES")
 
 # Originally brought from gcp/partials.py.
 # These are the default locations to look up
@@ -44,11 +39,12 @@ _DEFAULT_PARTIAL_FILES = [
 
 class CommonTemplates:
     def __init__(self, template_path: Optional[Path] = None):
-        if LOCAL_TEMPLATES is None:
+        local_templates: Optional[str] = os.environ.get("SYNTHTOOL_TEMPLATES")
+        if local_templates is None:
             logger.error("env var SYNTHTOOL_TEMPLATES must be set")
             sys.exit(1)
-        logger.debug(f"Using local templates at {LOCAL_TEMPLATES}")
-        self._template_root = Path(LOCAL_TEMPLATES)
+        logger.debug(f"Using local templates at {local_templates}")
+        self._template_root = Path(local_templates)
         self._templates = templates.Templates(self._template_root)
         self.excludes = []  # type: List[str]
 

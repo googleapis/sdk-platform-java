@@ -11,14 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from typing import Union, List
 from pathlib import Path
-
 import jinja2
 import tempfile
-import re
-
 
 PathOrStr = Union[str, Path]
 

@@ -26,6 +26,7 @@ from pathlib import Path
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.generation_config import from_yaml
 from library_generation.test.compare_poms import compare_xml
+from library_generation.test.test_utils import FileComparator
 from library_generation.utils.utilities import sh_util as shell_call
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -102,7 +103,7 @@ class IntegrationTest(unittest.TestCase):
                 golden_only = []
                 generated_only = []
                 # compare source code
-                self.__recursive_diff_files(
+                FileComparator.recursive_diff_files(
                     compare_result, diff_files, golden_only, generated_only
                 )
 
@@ -281,25 +282,3 @@ class IntegrationTest(unittest.TestCase):
         res = [(key, value) for key, value in data.items()]
 
         return sorted(res, key=lambda x: x[0])
-
-    @classmethod
-    def __recursive_diff_files(
-        cls,
-        dcmp: dircmp,
-        diff_files: list[str],
-        left_only: list[str],
-        right_only: list[str],
-        dirname: str = "",
-    ):
-        """
-        Recursively compares two subdirectories. The found differences are
-        passed to three expected list references.
-        """
-        append_dirname = lambda d: dirname + d
-        diff_files.extend(map(append_dirname, dcmp.diff_files))
-        left_only.extend(map(append_dirname, dcmp.left_only))
-        right_only.extend(map(append_dirname, dcmp.right_only))
-        for sub_dirname, sub_dcmp in dcmp.subdirs.items():
-            cls.__recursive_diff_files(
-                sub_dcmp, diff_files, left_only, right_only, dirname + sub_dirname + "/"
-            )
