@@ -6,7 +6,7 @@
   <groupId>com.google.cloud</groupId>
   <artifactId>third-party-dependencies</artifactId>
   <packaging>pom</packaging>
-  <version>3.33.1-SNAPSHOT</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
+  <version>3.34.1-SNAPSHOT</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
   <name>Google Cloud Third-party Shared Dependencies</name>
   <description>
     Shared third-party dependencies for Google Cloud Java libraries.
@@ -15,7 +15,7 @@
   <parent>
     <groupId>com.google.api</groupId>
     <artifactId>gapic-generator-java-pom-parent</artifactId>
-    <version>2.43.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+    <version>2.44.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
     <relativePath>../../gapic-generator-java-pom-parent</relativePath>
   </parent>
 
@@ -28,12 +28,12 @@
     <opencensus.version>0.31.1</opencensus.version>
     <findbugs.version>3.0.2</findbugs.version>
     <jackson.version>2.17.2</jackson.version>
-    <errorprone.version>2.29.2</errorprone.version>
+    <errorprone.version>2.30.0</errorprone.version>
     <codec.version>1.17.1</codec.version>
     <httpcomponents.httpcore.version>4.4.16</httpcomponents.httpcore.version>
     <httpcomponents.httpclient.version>4.5.14</httpcomponents.httpclient.version>
     <!-- ensure checker-qual version matches what Guava uses -->
-    <checker-qual.version>3.45.0</checker-qual.version>
+    <checker-qual.version>3.46.0</checker-qual.version>
     <perfmark-api.version>0.27.0</perfmark-api.version>
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
     <google.cloud.opentelemetry.version>0.31.0</google.cloud.opentelemetry.version>
@@ -44,7 +44,7 @@
     <flogger.version>0.8</flogger.version>
     <arrow.version>15.0.2</arrow.version>
     <dev.cel.version>0.6.0</dev.cel.version>
-    <com.google.crypto.tink.version>1.14.0</com.google.crypto.tink.version>
+    <com.google.crypto.tink.version>1.14.1</com.google.crypto.tink.version>
   </properties>
 
   <dependencyManagement>
