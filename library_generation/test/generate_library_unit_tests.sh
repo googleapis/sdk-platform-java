@@ -5,7 +5,14 @@ set -xeo pipefail
 # Unit tests against ../utilities.sh
 script_dir=$(dirname "$(readlink -f "$0")")
 source "${script_dir}"/test_utilities.sh
-source "${script_dir}"/../utils/utilities.sh
+
+# we simulate a properly prepared environemnt (i.e. generator jar) in its
+# well-known location. Tests confirming the opposite case will make sure this
+# environment is restored
+readonly SIMULATED_HOME=$(mktemp -d)
+mkdir "${SIMULATED_HOME}/.library_generation"
+touch "${SIMULATED_HOME}/.library_generation/gapic-generator-java.jar"
+HOME="${SIMULATED_HOME}" source "${script_dir}"/../utils/utilities.sh
 
 # Unit tests
 extract_folder_name_test() {
@@ -132,14 +139,9 @@ download_tools_succeed_with_baked_protoc() {
   # the version passed to `download_protoc`, then we will not download protoc
   # but simply have the variable `protoc_path` pointing to DOCKER_PROTOC_LOCATION 
   # (which we manually created in this test)
-  local test_dir=$(mktemp -d)
-  pushd "${test_dir}"
   export DOCKER_PROTOC_LOCATION=$(mktemp -d)
   export DOCKER_PROTOC_VERSION="99.99"
   export output_folder=$(get_output_folder)
-  generator_folder=$(mktemp -d)
-  touch "${generator_folder}/gapic-generator-java.fakejar"
-  export DOCKER_GAPIC_GENERATOR_LOCATION="${generator_folder}/gapic-generator-java.fakejar"
   mkdir "${output_folder}"
   local protoc_bin_folder="${DOCKER_PROTOC_LOCATION}/protoc-99.99/bin"
   mkdir -p "${protoc_bin_folder}"
@@ -156,7 +158,6 @@ download_tools_succeed_with_baked_protoc() {
   rm -rdf "${output_folder}"
   unset DOCKER_PROTOC_LOCATION
   unset DOCKER_PROTOC_VERSION
-  unset DOCKER_GAPIC_GENERATOR_LOCATION
   unset output_folder
   unset protoc_path
 }
@@ -164,13 +165,8 @@ download_tools_succeed_with_baked_protoc() {
 download_tools_succeed_with_baked_grpc() {
   # This test has the same structure as
   # download_tools_succeed_with_baked_protoc, but meant for the grpc plugin.
-  local test_dir=$(mktemp -d)
-  pushd "${test_dir}"
   export DOCKER_GRPC_LOCATION=$(mktemp -d)
   export DOCKER_GRPC_VERSION="99.99"
-  generator_folder=$(mktemp -d)
-  touch "${generator_folder}/gapic-generator-java.fakejar"
-  export DOCKER_GAPIC_GENERATOR_LOCATION="${generator_folder}/gapic-generator-java.fakejar"
   export output_folder=$(get_output_folder)
   mkdir "${output_folder}"
 
@@ -183,50 +179,40 @@ download_tools_succeed_with_baked_grpc() {
   rm -rdf "${output_folder}"
   unset DOCKER_GRPC_LOCATION
   unset DOCKER_GRPC_VERSION
-  unset DOCKER_GAPIC_GENERATOR_LOCATION
   unset output_folder
   unset grpc_path
 }
 
-download_tools_succeed_with_baked_generator() {
+download_tools_fails_without_baked_generator() {
   # This test has the same structure as
   # download_tools_succeed_with_baked_protoc, but meant for
   # gapic-generator-java.
   local test_dir=$(mktemp -d)
   pushd "${test_dir}"
-  generator_folder=$(mktemp -d)
-  touch "${generator_folder}/gapic-generator-java.fakejar"
-  export DOCKER_GAPIC_GENERATOR_LOCATION="${generator_folder}/gapic-generator-java.fakejar"
   export output_folder=$(get_output_folder)
   mkdir "${output_folder}"
 
   local test_protoc_version="1.64.0"
   local test_grpc_version="1.64.0"
-  # we expect download_tools to decide to use DOCKER_GAPIC_GENERATOR_LOCATION because
-  # the protoc version we want to download is the same as DOCKER_GRPC_VERSION
-  log=$(download_tools "${test_protoc_version}" "${test_grpc_version}" "linux-x86_64" 2>&1 1>/dev/null)
+  local jar_location="${SIMULATED_HOME}/.library_generation/gapic-generator-java.jar"
+  # we expect the function to fail because the generator jar is not found in
+  # its well-known location. To achieve this, we temporarily remove the fake
+  # generator jar
+  rm "${jar_location}"
+  log=$(mktemp)
+  (
+    download_tools "${test_protoc_version}" "${test_grpc_version}" "linux-x86_64" > /dev/null 2>"${log}"
+  ) || echo '' # expected
 
-  # the assertion functions are designed to be called only once per function.
-  # Here we do two manual tests that are then coverged into a single
-  # pseudo-boolean
   has_expected_log="false"
-  has_expected_file="false"
-  is_output_correct="false"
-  if grep -q "Using gapic-generator-java version baked into the container" <<< "${log}"; then
+  if grep -q "Please configure your environment" < "${log}"; then
     has_expected_log="true"
   fi
-  if [[ -f "${output_folder}/gapic-generator-java.fakejar" ]]; then
-    has_expected_file="true"
-  fi
-  if [[ "${has_expected_log}" == "true" ]] && [[ "${has_expected_file}" == "true" ]]; then
-    is_output_correct="true"
-  fi
-
-  assertEquals "true" "${is_output_correct}"
+  assertEquals "true" "${has_expected_log}"
 
   rm -rdf "${output_folder}"
+  touch "${jar_location}"
   unset DOCKER_GRPC_LOCATION
-  unset DOCKER_GAPIC_GENERATOR_LOCATION
   unset output_folder
   unset grpc_path
 }
@@ -362,7 +348,7 @@ test_list=(
   download_protoc_failed_with_invalid_arch_test
   download_tools_succeed_with_baked_protoc
   download_tools_succeed_with_baked_grpc
-  download_tools_succeed_with_baked_generator
+  download_tools_fails_without_baked_generator
   download_grpc_plugin_succeed_with_valid_version_linux_test
   download_grpc_plugin_succeed_with_valid_version_macos_test
   download_grpc_plugin_failed_with_invalid_version_linux_test
