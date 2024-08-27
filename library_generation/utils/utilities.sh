@@ -2,6 +2,8 @@
 
 set -eo pipefail
 utilities_script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
+# The $HOME variable is always set in the OS env as per POSIX specification.
+GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
 
 # Utility functions used in `generate_library.sh` and showcase generation.
 extract_folder_name() {
@@ -165,17 +167,17 @@ download_tools() {
     export grpc_path=$(download_grpc_plugin "${grpc_version}" "${os_architecture}")
   fi
 
-  # prepare gapic-generator-java
-  # We will assume the generator location environment variable will point to the
-  # location of the generator JAR and then we will simply copy it. Although
-  # these env vars are already validated upstream in the python scripts, we
-  # still validate them here for testing purposes
-  if [[ -z "${DOCKER_GAPIC_GENERATOR_LOCATION}" ]]; then
-    >&2 echo "Env var DOCKER_GAPIC_GENERATOR_LOCATION must be set and pointing to the generator jar"
+  # Here we check whether the jar is stored in the expected location.
+  # The docker image will prepare the jar in this location. Developers must
+  # prepare their environment by creating
+  # $HOME/.library_generation/gapic_generator_java.jar
+  # This check is meant to ensure integrity of the downstream workflow. (i.e.
+  # ensure the generator wrapper succeeds)
+  if [[ ! -f "${GAPIC_GENERATOR_LOCATION}" ]]; then
+    >&2 echo "File ${GAPIC_GENERATOR_LOCATION} not found in the "
+    >&2 echo "filesystem. Please configure your environment and store the "
+    >&2 echo "generator jar in this location"
     exit 1
-  else
-    >&2 echo "Using gapic-generator-java version baked into the container"
-    cp "${DOCKER_GAPIC_GENERATOR_LOCATION}" "${output_folder}"
   fi
   popd
 }
@@ -376,3 +378,6 @@ download_googleapis_files_and_folders() {
   cp -r grafeas "${output_folder}"
 }
 
+get_gapic_generator_location() {
+  echo "${GAPIC_GENERATOR_LOCATION}"
+}

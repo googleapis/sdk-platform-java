@@ -54,16 +54,6 @@ class GenerationConfigTest(SimulatedDockerEnvironmentTest):
         )
         self.assertEqual("", config.libraries_bom_version)
 
-    @patch.dict(os.environ, {}, clear=True)
-    def test_generation_config_with_generator_version_env_raise_exception(self):
-        self.assertRaisesRegex(
-            ValueError,
-            "env var DOCKER_GAPIC_GENERATOR_LOCATION was not found",
-            GenerationConfig,
-            googleapis_commitish="",
-            libraries=[],
-        )
-
     def test_from_yaml_succeeds(self):
         config = from_yaml(f"{test_config_dir}/generation_config.yaml")
         self.assertEqual(25.2, config.protoc_version)

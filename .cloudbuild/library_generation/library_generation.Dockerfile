@@ -23,7 +23,6 @@ ENV DOCKER_GAPIC_GENERATOR_VERSION="2.43.1-SNAPSHOT"
 # {x-version-update-end:gapic-generator-java:current}
 
 RUN mvn install -DskipTests -Dclirr.skip -Dcheckstyle.skip
-RUN ls "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}" 
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
@@ -64,10 +63,12 @@ ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java-${GRPC_VERSION}-${OS_ARCHIT
 ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 
 
-# we transfer gapic-generator-java from the previous stage.
-ENV DOCKER_GAPIC_GENERATOR_LOCATION="/gapic-generator-java/gapic-generator-java.jar"
-COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${DOCKER_GAPIC_GENERATOR_LOCATION}"
-RUN chmod 755 "${DOCKER_GAPIC_GENERATOR_LOCATION}"
+# Here we transfer gapic-generator-java from the previous stage.
+# Note that the destination is a well-known location that will be assumed at runtime
+# We hard-code the location string to avoid making it configurable (via ARG) as
+# well as to avoid it making it overridable at runtime (via ENV).
+COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
+RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
 
 #  use python 3.11 (the base image has several python versions; here we define the default one)
 RUN rm $(which python3)

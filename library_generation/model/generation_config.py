@@ -24,8 +24,6 @@ LIBRARY_LEVEL_PARAMETER = "Library level parameter"
 GAPIC_LEVEL_PARAMETER = "GAPIC level parameter"
 COMMON_PROTOS_LIBRARY_NAME = "common-protos"
 LIBRARIES_BOM_VERSION = "libraries_bom_version"
-GENERATOR_VERSION_ENV_KEY = "DOCKER_GAPIC_GENERATOR_VERSION"
-GENERATOR_LOCATION_ENV_KEY = "DOCKER_GAPIC_GENERATOR_LOCATION"
 
 
 class GenerationConfig:
@@ -41,9 +39,6 @@ class GenerationConfig:
         grpc_version: Optional[str] = None,
         protoc_version: Optional[str] = None,
     ):
-        # we confirm the necessary env var pointing to the generator jar
-        # location is set
-        GenerationConfig.__validate_generator_env()
         self.googleapis_commitish = googleapis_commitish
         self.libraries_bom_version = (
             libraries_bom_version if libraries_bom_version else ""
@@ -79,14 +74,6 @@ class GenerationConfig:
                     self.__contains_common_protos = True
                     break
         return self.__contains_common_protos
-
-    @staticmethod
-    def __validate_generator_env() -> None:
-        if not os.getenv(GENERATOR_LOCATION_ENV_KEY):
-            raise ValueError(
-                f"The env var {GENERATOR_LOCATION_ENV_KEY} was not found."
-                f"This variable is required to determine the generator jar location"
-            )
 
     def __validate(self) -> None:
         seen_library_names = dict()
