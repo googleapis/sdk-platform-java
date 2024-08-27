@@ -43,6 +43,7 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
+import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GdchCredentials;
 import com.google.auto.value.AutoValue;
@@ -239,6 +240,10 @@ public abstract class ClientContext {
         transportChannel.getEmptyCallContext().withTransportChannel(transportChannel);
     if (credentials != null) {
       defaultCallContext = defaultCallContext.withCredentials(credentials);
+    }
+    //TODO: if we decided to add setApiKey method need to check and throw exception if apikey and credentials are provided
+    if (settings.getApiKey() != null) {
+        defaultCallContext = defaultCallContext.withCredentials(ApiKeyCredentials.create(settings.getApiKey()));
     }
     defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
 

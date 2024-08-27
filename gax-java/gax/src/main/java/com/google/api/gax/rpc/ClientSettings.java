@@ -107,6 +107,8 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getQuotaProjectId();
   }
 
+  public final String getApiKey() {return stubSettings.getApiKey();}
+
   @Nullable
   public final WatchdogProvider getWatchdogProvider() {
     return stubSettings.getStreamWatchdogProvider();
@@ -303,6 +305,15 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     /**
+     * Sets the API key. The API key will be passed to API call request via the x-goog-api-key
+     * header to authenticate the API call.
+     */
+    public B setApiKey(String apiKey) {
+      stubSettings.setApiKey(apiKey);
+      return self();
+    }
+
+    /**
      * Gets the ExecutorProvider that was previously set on this Builder. This ExecutorProvider is
      * to use for running asynchronous API call logic (such as retries and long-running operations),
      * and also to pass to the transport settings if an executor is needed for the transport and it
@@ -364,6 +375,8 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return stubSettings.getStreamWatchdogProvider();
     }
 
+    public String getApiKey() {return  stubSettings.getApiKey(); }
+
     /** This method is obsolete. Use {@link #getWatchdogCheckIntervalDuration()} instead */
     @Nullable
     @ObsoleteApi("Use getWatchdogCheckIntervalDuration() instead")
@@ -405,6 +418,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
           .add("watchdogProvider", getWatchdogProvider())
           .add("watchdogCheckInterval", getWatchdogCheckIntervalDuration())
           .add("gdchApiAudience", getGdchApiAudience())
+          .add("apiKey", getApiKey())
           .toString();
     }
   }
