@@ -88,18 +88,20 @@ def generate(
     The commit history, if generated, will be available in
     repository_path/pr_description.txt.
     """
-    generate_impl(
+    __generate_repo_and_pr_description_impl(
         baseline_generation_config_path, current_generation_config_path, repository_path
     )
 
 
-def generate_impl(
+def __generate_repo_and_pr_description_impl(
     baseline_generation_config_path: str,
     current_generation_config_path: str,
     repository_path: str,
 ):
     """
-    implementation method for generate()
+    Implementation method for generate().
+    The decoupling of generate and __generate_repo_and_pr_description_impl is
+    meant to allow testing of this implementation function.
     """
 
     default_generation_config_path = f"{os.getcwd()}/generation_config.yaml"
