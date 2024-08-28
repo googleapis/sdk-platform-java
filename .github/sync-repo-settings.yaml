@@ -71,9 +71,5 @@ branchProtectionRules:
       - library-generation-lint-python
       - should-run-library-generation-tests
 permissionRules:
-  - team: yoshi-admins
+  - team: cloud-java-team-teamsync
     permission: admin
-  - team: yoshi-java-admins
-    permission: admin
-  - team: yoshi-java
-    permission: push
