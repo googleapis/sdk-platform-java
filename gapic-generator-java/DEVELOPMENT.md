@@ -103,8 +103,8 @@ To generate a production GAPIC API:
     
     http_archive(
         name = "gapic_generator_java",
-        strip_prefix = "sdk-platform-java-test-grpc",
-        urls = ["https://github.com/googleapis/sdk-platform-java/archive/refs/heads/test-grpc.zip"],
+        strip_prefix = "sdk-platform-java-%s" % _gapic_generator_java_version,
+        urls = ["https://github.com/googleapis/sdk-platform-java/archive/v%s.zip" % _gapic_generator_java_version],
     )
     
     # gax-java is part of sdk-platform-java repository
