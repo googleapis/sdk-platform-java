@@ -152,7 +152,7 @@ To generate a production GAPIC API:
     )
    ```
 
-4. Build the new target.
+3. Build the new target.
 
    You can generate any client library based on the protos within googleapis.
    You just need the name of the service within the `java_gapic_assembly_gradle_pkg`
