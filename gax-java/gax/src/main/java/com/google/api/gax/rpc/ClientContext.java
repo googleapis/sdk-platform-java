@@ -238,12 +238,12 @@ public abstract class ClientContext {
 
     ApiCallContext defaultCallContext =
         transportChannel.getEmptyCallContext().withTransportChannel(transportChannel);
+
     if (credentials != null) {
       defaultCallContext = defaultCallContext.withCredentials(credentials);
     }
-    //TODO: if we decided to add setApiKey method need to check and throw exception if apikey and credentials are provided
     if (settings.getApiKey() != null) {
-        defaultCallContext = defaultCallContext.withCredentials(ApiKeyCredentials.create(settings.getApiKey()));
+      defaultCallContext = defaultCallContext.withCredentials(ApiKeyCredentials.create(settings.getApiKey()));
     }
     defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
 

@@ -31,6 +31,7 @@ package com.google.api.gax.rpc;
 
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.when;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.NanoClock;
@@ -56,6 +57,9 @@ import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -120,6 +124,7 @@ class ClientSettingsTest {
     Truth.assertThat(builder.getWatchdogCheckIntervalDuration())
         .isGreaterThan(java.time.Duration.ZERO);
     Truth.assertThat(builder.getQuotaProjectId()).isNull();
+    Truth.assertThat(builder.getApiKey()).isNull();
 
     FakeClientSettings settings = builder.build();
     Truth.assertThat(settings.getExecutorProvider())
@@ -150,6 +155,7 @@ class ClientSettingsTest {
     Truth.assertThat(settingsString).contains("watchdogProvider");
     Truth.assertThat(settingsString).contains("watchdogCheckInterval");
     Truth.assertThat(settingsString).contains(("quotaProjectId"));
+    Truth.assertThat(settingsString).contains(("apiKey"));
   }
 
   @Test
@@ -165,6 +171,7 @@ class ClientSettingsTest {
     WatchdogProvider watchdogProvider = Mockito.mock(WatchdogProvider.class);
     java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(13);
     String quotaProjectId = "test_quota_project_id";
+    String apiKey = "api_key";
 
     builder.setExecutorProvider(executorProvider);
     builder.setTransportChannelProvider(transportProvider);
@@ -175,6 +182,7 @@ class ClientSettingsTest {
     builder.setWatchdogProvider(watchdogProvider);
     builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
     builder.setQuotaProjectId(quotaProjectId);
+    builder.setApiKey(apiKey);
 
     // For backward compatibility, backgroundExecutorProvider is set to executorProvider
     Truth.assertThat(builder.getExecutorProvider()).isSameInstanceAs(executorProvider);
@@ -188,6 +196,7 @@ class ClientSettingsTest {
     Truth.assertThat(builder.getWatchdogCheckIntervalDuration())
         .isSameInstanceAs(watchdogCheckInterval);
     Truth.assertThat(builder.getQuotaProjectId()).isEqualTo(quotaProjectId);
+    Truth.assertThat(builder.getApiKey()).isEqualTo(apiKey);
 
     String builderString = builder.toString();
     Truth.assertThat(builderString).contains("executorProvider");
@@ -200,6 +209,7 @@ class ClientSettingsTest {
     Truth.assertThat(builderString).contains("watchdogProvider");
     Truth.assertThat(builderString).contains("watchdogCheckInterval");
     Truth.assertThat(builderString).contains("quotaProjectId");
+    Truth.assertThat(builderString).contains("apiKey");
   }
 
   @Test
@@ -262,6 +272,7 @@ class ClientSettingsTest {
     WatchdogProvider watchdogProvider = Mockito.mock(WatchdogProvider.class);
     java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(14);
     String quotaProjectId = "test_builder_from_settings_quotaProjectId";
+    String apiKey = "api_key";
 
     builder.setExecutorProvider(executorProvider);
     builder.setTransportChannelProvider(transportProvider);
@@ -272,6 +283,7 @@ class ClientSettingsTest {
     builder.setWatchdogProvider(watchdogProvider);
     builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
     builder.setQuotaProjectId(quotaProjectId);
+    builder.setApiKey(apiKey);
 
     FakeClientSettings settings = builder.build();
     FakeClientSettings.Builder newBuilder = new FakeClientSettings.Builder(settings);
@@ -288,6 +300,7 @@ class ClientSettingsTest {
     Truth.assertThat(newBuilder.getWatchdogCheckIntervalDuration())
         .isEqualTo(watchdogCheckInterval);
     Truth.assertThat(newBuilder.getQuotaProjectId()).isEqualTo(quotaProjectId);
+    Truth.assertThat(newBuilder.getApiKey()).isEqualTo(apiKey);
   }
 
   @Test
@@ -565,5 +578,37 @@ class ClientSettingsTest {
         tt -> createClientSettings.apply(() -> builder.setWatchdogCheckInterval(tt)),
         cs -> cs.getWatchdogCheckIntervalDuration(),
         cs -> cs.getWatchdogCheckInterval());
+  }
+
+  @Test
+  void testClientSettingsBuilder_throwsErrorIfApiKeyAndCredentialsAreProvided() throws Exception {
+    FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
+    CredentialsProvider credentialsProvider = Mockito.mock(CredentialsProvider.class);
+    when(credentialsProvider.getCredentials()).thenReturn( Mockito.mock(Credentials.class));
+    builder.setCredentialsProvider(credentialsProvider);
+    builder.setApiKey("api_key");
+
+    try {
+      builder.build();
+      fail("No exception raised");
+    } catch (IllegalArgumentException e) {
+      Assertions.assertTrue(e.getMessage().contains("You can not provide both ApiKey and Credentials for a client."));
+    }
+  }
+
+  @Test
+  void testEmptyApiKeyClientSettingsBuild_isTreatedAsNull() throws Exception {
+    FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
+    CredentialsProvider credentialsProvider = Mockito.mock(CredentialsProvider.class);
+    Credentials credentials = Mockito.mock(Credentials.class);
+    when(credentialsProvider.getCredentials()).thenReturn(credentials);
+    builder.setCredentialsProvider(credentialsProvider);
+    builder.setApiKey("");
+
+
+    FakeClientSettings fakeClientSettings = builder.build();
+
+    Assertions.assertEquals(fakeClientSettings.getCredentialsProvider().getCredentials(), credentials);
+    Assertions.assertNull(fakeClientSettings.getApiKey());
   }
 }

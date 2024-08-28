@@ -38,6 +38,7 @@ import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.common.base.MoreObjects;
 import java.io.IOException;
+import java.lang.IllegalArgumentException;
 import java.util.concurrent.Executor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -58,6 +59,9 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
   /** Constructs an instance of ClientSettings. */
   protected ClientSettings(Builder builder) throws IOException {
+    if (builder.stubSettings.getApiKey() != null && builder.stubSettings.getCredentialsProvider().getCredentials() != null) {
+      throw new IllegalArgumentException("You can not provide both ApiKey and Credentials for a client.");
+    }
     this.stubSettings = builder.stubSettings.build();
   }
 
@@ -107,12 +111,12 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getQuotaProjectId();
   }
 
-  public final String getApiKey() {return stubSettings.getApiKey();}
-
   @Nullable
   public final WatchdogProvider getWatchdogProvider() {
     return stubSettings.getStreamWatchdogProvider();
   }
+
+  public final String getApiKey() { return stubSettings.getApiKey(); }
 
   /** This method is obsolete. Use {@link #getWatchdogCheckIntervalDuration()} instead. */
   @Nonnull
@@ -131,6 +135,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getGdchApiAudience();
   }
 
+
   public String toString() {
     return MoreObjects.toStringHelper(this)
         .add("executorProvider", getExecutorProvider())
@@ -146,6 +151,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
         .add("watchdogProvider", getWatchdogProvider())
         .add("watchdogCheckInterval", getWatchdogCheckInterval())
         .add("gdchApiAudience", getGdchApiAudience())
+        .add("apiKey", getApiKey())
         .toString();
   }
 
@@ -305,8 +311,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     /**
-     * Sets the API key. The API key will be passed to API call request via the x-goog-api-key
-     * header to authenticate the API call.
+     * Sets the API key. The API key will get translated to an [ApiKeyCredentials] and stored in [CallContext].
      */
     public B setApiKey(String apiKey) {
       stubSettings.setApiKey(apiKey);
@@ -375,7 +380,8 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return stubSettings.getStreamWatchdogProvider();
     }
 
-    public String getApiKey() {return  stubSettings.getApiKey(); }
+    /** Gets the ApiKey that was previously set on this Builder. */
+    public String getApiKey() { return stubSettings.getApiKey(); }
 
     /** This method is obsolete. Use {@link #getWatchdogCheckIntervalDuration()} instead */
     @Nullable
