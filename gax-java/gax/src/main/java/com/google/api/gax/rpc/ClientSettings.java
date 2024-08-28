@@ -58,8 +58,10 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
   /** Constructs an instance of ClientSettings. */
   protected ClientSettings(Builder builder) throws IOException {
-    if (builder.stubSettings.getApiKey() != null && builder.stubSettings.getCredentialsProvider().getCredentials() != null) {
-      throw new IllegalArgumentException("You can not provide both ApiKey and Credentials for a client.");
+    if (builder.stubSettings.getApiKey() != null
+        && builder.stubSettings.getCredentialsProvider().getCredentials() != null) {
+      throw new IllegalArgumentException(
+          "You can not provide both ApiKey and Credentials for a client.");
     }
     this.stubSettings = builder.stubSettings.build();
   }
@@ -68,7 +70,9 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings;
   }
 
-  /** @deprecated Please use {@link #getBackgroundExecutorProvider()} */
+  /**
+   * @deprecated Please use {@link #getBackgroundExecutorProvider()}
+   */
   @Deprecated
   public final ExecutorProvider getExecutorProvider() {
     return stubSettings.getExecutorProvider();
@@ -115,7 +119,9 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getStreamWatchdogProvider();
   }
 
-  public final String getApiKey() { return stubSettings.getApiKey(); }
+  public final String getApiKey() {
+    return stubSettings.getApiKey();
+  }
 
   /** This method is obsolete. Use {@link #getWatchdogCheckIntervalDuration()} instead. */
   @Nonnull
@@ -133,7 +139,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
   public final String getGdchApiAudience() {
     return stubSettings.getGdchApiAudience();
   }
-
 
   public String toString() {
     return MoreObjects.toStringHelper(this)
@@ -310,7 +315,8 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     /**
-     * Sets the API key. The API key will get translated to an [ApiKeyCredentials] and stored in [CallContext].
+     * Sets the API key. The API key will get translated to an [ApiKeyCredentials] and stored in
+     * [CallContext].
      */
     public B setApiKey(String apiKey) {
       stubSettings.setApiKey(apiKey);
@@ -380,7 +386,9 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     /** Gets the ApiKey that was previously set on this Builder. */
-    public String getApiKey() { return stubSettings.getApiKey(); }
+    public String getApiKey() {
+      return stubSettings.getApiKey();
+    }
 
     /** This method is obsolete. Use {@link #getWatchdogCheckIntervalDuration()} instead */
     @Nullable

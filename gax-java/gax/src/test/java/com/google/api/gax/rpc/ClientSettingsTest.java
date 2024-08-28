@@ -582,7 +582,7 @@ class ClientSettingsTest {
   void testClientSettingsBuilder_throwsErrorIfApiKeyAndCredentialsAreProvided() throws Exception {
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
     CredentialsProvider credentialsProvider = Mockito.mock(CredentialsProvider.class);
-    when(credentialsProvider.getCredentials()).thenReturn( Mockito.mock(Credentials.class));
+    when(credentialsProvider.getCredentials()).thenReturn(Mockito.mock(Credentials.class));
     builder.setCredentialsProvider(credentialsProvider);
     builder.setApiKey("api_key");
 
@@ -590,7 +590,8 @@ class ClientSettingsTest {
       builder.build();
       fail("No exception raised");
     } catch (IllegalArgumentException e) {
-      Assertions.assertTrue(e.getMessage().contains("You can not provide both ApiKey and Credentials for a client."));
+      Assertions.assertTrue(
+          e.getMessage().contains("You can not provide both ApiKey and Credentials for a client."));
     }
   }
 
@@ -603,10 +604,10 @@ class ClientSettingsTest {
     builder.setCredentialsProvider(credentialsProvider);
     builder.setApiKey("");
 
-
     FakeClientSettings fakeClientSettings = builder.build();
 
-    Assertions.assertEquals(fakeClientSettings.getCredentialsProvider().getCredentials(), credentials);
+    Assertions.assertEquals(
+        fakeClientSettings.getCredentialsProvider().getCredentials(), credentials);
     Assertions.assertNull(fakeClientSettings.getApiKey());
   }
 }
