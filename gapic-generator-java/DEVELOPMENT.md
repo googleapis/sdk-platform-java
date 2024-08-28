@@ -139,7 +139,6 @@ To generate a production GAPIC API:
     maven_install(
         artifacts = [
           "com.google.api:gapic-generator-java:" + _gapic_generator_java_version,
-          "com.google.protobuf:protobuf-javalite:3." + _protobuf_version,
           ] + PROTOBUF_MAVEN_ARTIFACTS +
           IO_GRPC_GRPC_JAVA_ARTIFACTS,
         generate_compat_repositories = True,
