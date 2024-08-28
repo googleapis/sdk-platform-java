@@ -1080,13 +1080,8 @@ class ClientContextTest {
     InterceptingExecutor executor = new InterceptingExecutor(1);
     FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
     FakeTransportProvider transportProvider =
-            new FakeTransportProvider(
-                    transportChannel,
-                    executor,
-                    true,
-                    ImmutableMap.of(),
-                    null,
-                    DEFAULT_ENDPOINT);
+        new FakeTransportProvider(
+            transportChannel, executor, true, ImmutableMap.of(), null, DEFAULT_ENDPOINT);
     builder.setTransportChannelProvider(transportProvider);
 
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);

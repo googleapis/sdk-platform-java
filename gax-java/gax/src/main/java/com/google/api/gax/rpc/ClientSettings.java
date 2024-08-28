@@ -38,7 +38,6 @@ import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.common.base.MoreObjects;
 import java.io.IOException;
-import java.lang.IllegalArgumentException;
 import java.util.concurrent.Executor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

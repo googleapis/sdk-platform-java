@@ -132,7 +132,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
   }
 
-  /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
+  /**
+   * @deprecated Please use {@link #getBackgroundExecutorProvider()}.
+   */
   @Deprecated
   public final ExecutorProvider getExecutorProvider() {
     return deprecatedExecutorProviderSet ? backgroundExecutorProvider : null;
@@ -174,17 +176,23 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return "";
   }
 
-  /** @return the fully resolved universe domain used by the client */
+  /**
+   * @return the fully resolved universe domain used by the client
+   */
   public final String getUniverseDomain() {
     return endpointContext.resolvedUniverseDomain();
   }
 
-  /** @return the fully resolved endpoint used by the client */
+  /**
+   * @return the fully resolved endpoint used by the client
+   */
   public String getEndpoint() {
     return endpointContext.resolvedEndpoint();
   }
 
-  /** @return the newly created EndpointContext */
+  /**
+   * @return the newly created EndpointContext
+   */
   @InternalApi
   final EndpointContext getEndpointContext() {
     return endpointContext;
@@ -236,7 +244,10 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return gdchApiAudience;
   }
 
-  /** Gets the ApiKey that should be used for authentication. If an empty string was provided it will return null */
+  /**
+   * Gets the ApiKey that should be used for authentication. If an empty string was provided it will
+   * return null
+   */
   public final String getApiKey() {
     return (apiKey == null || apiKey.isEmpty()) ? null : apiKey;
   }
@@ -586,14 +597,17 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
 
     /**
-     * Sets the API key. The API key will get translated to an [ApiKeyCredentials] and stored in [CallContext].
+     * Sets the API key. The API key will get translated to an [ApiKeyCredentials] and stored in
+     * [CallContext].
      */
     public B setApiKey(String apiKey) {
       this.apiKey = apiKey;
       return self();
     }
 
-    /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
+    /**
+     * @deprecated Please use {@link #getBackgroundExecutorProvider()}.
+     */
     @Deprecated
     public ExecutorProvider getExecutorProvider() {
       return deprecatedExecutorProviderSet ? backgroundExecutorProvider : null;
@@ -635,7 +649,10 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return clock;
     }
 
-    /** Gets the ApiKey that was previously set on this Builder. If an empty string was provided it will return null */
+    /**
+     * Gets the ApiKey that was previously set on this Builder. If an empty string was provided it
+     * will return null
+     */
     public final String getApiKey() {
       return (apiKey == null || apiKey.isEmpty()) ? null : apiKey;
     }

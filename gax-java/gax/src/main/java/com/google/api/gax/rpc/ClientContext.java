@@ -243,7 +243,8 @@ public abstract class ClientContext {
       defaultCallContext = defaultCallContext.withCredentials(credentials);
     }
     if (settings.getApiKey() != null) {
-      defaultCallContext = defaultCallContext.withCredentials(ApiKeyCredentials.create(settings.getApiKey()));
+      defaultCallContext =
+          defaultCallContext.withCredentials(ApiKeyCredentials.create(settings.getApiKey()));
     }
     defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
 
