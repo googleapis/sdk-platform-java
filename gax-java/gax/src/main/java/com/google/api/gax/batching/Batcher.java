@@ -32,6 +32,8 @@ package com.google.api.gax.batching;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.api.gax.rpc.ApiCallContext;
+import javax.annotation.Nullable;
+import org.threeten.bp.Duration;
 
 /**
  * Represents a batching context where individual elements will be accumulated and flushed in a
@@ -78,11 +80,25 @@ public interface Batcher<ElementT, ElementResultT> extends AutoCloseable {
   void sendOutstanding();
 
   /**
-   * Closes this Batcher by preventing new elements from being added, and then flushing the existing
-   * elements.
+   * Cancels all outstanding batch RPCs.
+   */
+  void cancelOutstanding();
+
+  /**
+   * Closes this Batcher by preventing new elements from being added, then flushing the existing
+   * elements and waiting for all the outstanding work to be resolved.
    */
   @Override
   void close() throws InterruptedException;
+
+  /**
+   * Closes this Batcher by preventing new elements from being added, then flushing the existing
+   * elements and waiting for all the outstanding work to be resolved. If all of the outstanding
+   * work has not been resolved, then a {@link BatchingException} will be thrown with details of the
+   * remaining work. The batcher will remain in a closed state and will not allow additional
+   * elements to be added.
+   */
+  void close(@Nullable Duration timeout) throws InterruptedException;
 
   /**
    * Closes this Batcher by preventing new elements from being added, and then sending outstanding

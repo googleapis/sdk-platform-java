@@ -42,6 +42,7 @@ import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Stopwatch;
 import com.google.common.util.concurrent.Futures;
@@ -51,16 +52,20 @@ import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.StringJoiner;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import org.threeten.bp.Duration;
 
 /**
  * Queues up the elements until {@link #flush()} is called; once batching is over, returned future
@@ -86,7 +91,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
   private final BatcherReference currentBatcherReference;
 
   private Batch<ElementT, ElementResultT, RequestT, ResponseT> currentOpenBatch;
-  private final AtomicInteger numOfOutstandingBatches = new AtomicInteger(0);
+  private final ConcurrentMap<Batch<ElementT, ElementResultT, RequestT, ResponseT>, Boolean> outstandingBatches = new ConcurrentHashMap<>();
   private final Object flushLock = new Object();
   private final Object elementLock = new Object();
   private final Future<?> scheduledFuture;
@@ -297,8 +302,10 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     } catch (Exception ex) {
       batchResponse = ApiFutures.immediateFailedFuture(ex);
     }
+    accumulatedBatch.setOperation(batchResponse);
 
-    numOfOutstandingBatches.incrementAndGet();
+    outstandingBatches.put(accumulatedBatch, Boolean.TRUE);
+
     ApiFutures.addCallback(
         batchResponse,
         new ApiFutureCallback<ResponseT>() {
@@ -310,7 +317,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
                   accumulatedBatch.resource.getByteCount());
               accumulatedBatch.onBatchSuccess(response);
             } finally {
-              onBatchCompletion();
+              onBatchCompletion(accumulatedBatch);
             }
           }
 
@@ -322,18 +329,19 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
                   accumulatedBatch.resource.getByteCount());
               accumulatedBatch.onBatchFailure(throwable);
             } finally {
-              onBatchCompletion();
+              onBatchCompletion(accumulatedBatch);
             }
           }
         },
         directExecutor());
   }
 
-  private void onBatchCompletion() {
+  private void onBatchCompletion(Batch<ElementT, ElementResultT, RequestT, ResponseT> batch) {
     boolean shouldClose = false;
 
     synchronized (flushLock) {
-      if (numOfOutstandingBatches.decrementAndGet() == 0) {
+      outstandingBatches.remove(batch);
+      if (outstandingBatches.isEmpty()) {
         flushLock.notifyAll();
         shouldClose = closeFuture != null;
       }
@@ -349,10 +357,10 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
   }
 
   private void awaitAllOutstandingBatches() throws InterruptedException {
-    while (numOfOutstandingBatches.get() > 0) {
+    while (!outstandingBatches.isEmpty()) {
       synchronized (flushLock) {
         // Check again under lock to avoid racing with onBatchCompletion
-        if (numOfOutstandingBatches.get() == 0) {
+        if (outstandingBatches.isEmpty()) {
           break;
         }
         flushLock.wait();
@@ -360,11 +368,26 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     }
   }
 
+  @Override
+  public void cancelOutstanding() {
+    for (Batch<?,?,?,?> batch : outstandingBatches.keySet()) {
+      batch.cancel();
+    }
+  }
   /** {@inheritDoc} */
   @Override
   public void close() throws InterruptedException {
+    close(null);
+  }
+
+  @Override
+  public void close(@Nullable Duration timeout) throws InterruptedException {
     try {
-      closeAsync().get();
+      if (timeout != null) {
+        closeAsync().get(timeout.toMillis(), TimeUnit.MILLISECONDS);
+      } else {
+        closeAsync().get();
+      }
     } catch (ExecutionException e) {
       // Original stacktrace of a batching exception is not useful, so rethrow the error with
       // the caller stacktrace
@@ -374,6 +397,16 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
       } else {
         throw new IllegalStateException("unexpected error closing the batcher", e.getCause());
       }
+    } catch (TimeoutException e) {
+      StringJoiner batchesStr = new StringJoiner(",");
+      for (Batch<ElementT, ElementResultT, RequestT, ResponseT> batch : outstandingBatches.keySet()) {
+        batchesStr.add(batch.toString());
+      }
+      String msg = "Timed out trying to close batcher after " + timeout + ".";
+      msg += " Batch request prototype: " + prototype + ".";
+      msg += " Outstanding batches: " + batchesStr;
+
+      throw new BatchingException(msg);
     }
   }
 
@@ -393,7 +426,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
       // prevent admission of new elements
       closeFuture = SettableApiFuture.create();
       // check if we can close immediately
-      closeImmediately = numOfOutstandingBatches.get() == 0;
+      closeImmediately = outstandingBatches.isEmpty();
     }
 
     // Clean up accounting
@@ -435,6 +468,8 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     private long totalThrottledTimeMs = 0;
     private BatchResource resource;
 
+    private ApiFuture<ResponseT> operation;
+
     private Batch(
         RequestT prototype,
         BatchingDescriptor<ElementT, ElementResultT, RequestT, ResponseT> descriptor,
@@ -456,6 +491,18 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
       resource = resource.add(newResource);
       totalThrottledTimeMs += throttledTimeMs;
     }
+
+    void setOperation(@Nonnull ApiFuture<ResponseT> operation) {
+      Preconditions.checkNotNull(operation);
+      this.operation = operation;
+    }
+
+    void cancel() {
+      if (this.operation != null) {
+        this.operation.cancel(true);
+      }
+    }
+
 
     void onBatchSuccess(ResponseT response) {
       try {
@@ -479,6 +526,22 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
 
     boolean isEmpty() {
       return resource.getElementCount() == 0;
+    }
+
+    @Override
+    public String toString() {
+      StringJoiner elementsStr = new StringJoiner(",");
+      for (BatchEntry<ElementT, ElementResultT> entry : entries) {
+        elementsStr.add(
+            Optional.ofNullable(entry.getElement())
+                .map(Object::toString)
+                .orElse("null")
+        );
+      }
+      return MoreObjects.toStringHelper(this)
+          .add("operation", operation)
+          .add("elements", elementsStr)
+          .toString();
     }
   }
 
