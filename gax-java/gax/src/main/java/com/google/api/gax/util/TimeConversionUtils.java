@@ -35,27 +35,27 @@ public class TimeConversionUtils {
     if (source == null) {
       return null;
     }
-    return java.time.Duration.ofNanos(source.toNanos());
+    return java.time.Duration.ofSeconds(source.getSeconds(), source.getNano());
   }
 
   public static org.threeten.bp.Duration toThreetenDuration(java.time.Duration source) {
     if (source == null) {
       return null;
     }
-    return org.threeten.bp.Duration.ofNanos(source.toNanos());
+    return org.threeten.bp.Duration.ofSeconds(source.getSeconds(), source.getNano());
   }
 
   public static java.time.Instant toJavaTimeInstant(org.threeten.bp.Instant source) {
     if (source == null) {
       return null;
     }
-    return java.time.Instant.ofEpochMilli(source.toEpochMilli());
+    return java.time.Instant.ofEpochSecond(source.getEpochSecond(), source.getNano());
   }
 
   public static org.threeten.bp.Instant toThreetenInstant(java.time.Instant source) {
     if (source == null) {
       return null;
     }
-    return org.threeten.bp.Instant.ofEpochMilli(source.toEpochMilli());
+    return org.threeten.bp.Instant.ofEpochSecond(source.getEpochSecond(), source.getNano());
   }
 }
