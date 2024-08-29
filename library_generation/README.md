@@ -296,4 +296,3 @@ files one by one. The mapping is from
 [`synthtool/docker/owlbot/java`](https://github.com/googleapis/synthtool/tree/59fe44fde9866a26e7ee4e4450fd79f67f8cf599/docker/owlbot/java)
 to
 [`sdk-platform-java/library_generation/owlbot`](https://github.com/googleapis/sdk-platform-java/tree/move-java-owlbot/library_generation/owlbot)
-
