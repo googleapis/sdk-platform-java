@@ -274,7 +274,6 @@ class BasicRetryingFuture<ResponseT> extends AbstractFuture<ResponseT>
         .add("attemptResult", this.attemptResult)
         .add("attemptSettings", this.attemptSettings)
         .toString();
-
   }
 
   private class CompletionListener implements Runnable {
