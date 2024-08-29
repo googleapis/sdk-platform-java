@@ -75,7 +75,7 @@ jobs:
   library-generation-unit-tests:
     runs-on: ${{ matrix.os }}
     needs: should-run-library-generation-tests
-    if: needs.should-run-library-generation-tests.outputs.should_run == 'true'
+    if: ${{ always() }}
     strategy:
       matrix:
         java: [ 8 ]
