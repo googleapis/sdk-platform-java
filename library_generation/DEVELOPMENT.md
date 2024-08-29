@@ -77,11 +77,17 @@ Run `cd sdk-platform-java && mvn install -DskipTests -Dclirr.skip
 -Dcheckstyle.skip`. This will generate a jar located in
 `~/.m2/repository/com/google/api/gapic-generator-java/{version}/gapic-generator-java-{version}.jar`
 
-Then `export` an environment variable
-`DOCKER_GAPIC_GENERATOR_VERSION=${version}` and
-`DOCKER_GAPIC_GENERATOR_LOCATION=path/to/generated/jar`
+Then `mv` the jar into the well-known location of the jar. The
+generation scripts will assume the jar is there.
 
-These two env vars are necessary to simulate the docker image environment.
+```shell
+mv /path/to/jar "${HOME}/.library_generation/gapic-generator-java.jar"
+```
+
+Note that this relies on the `HOME` en var which is always
+defined as per
+[POSIX env var definition](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html).
+
 
 ## Running the script
 The entrypoint script (`library_generation/cli/entry_point.py`) allows you to
