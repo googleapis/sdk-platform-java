@@ -91,7 +91,8 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
   private final BatcherReference currentBatcherReference;
 
   private Batch<ElementT, ElementResultT, RequestT, ResponseT> currentOpenBatch;
-  private final ConcurrentMap<Batch<ElementT, ElementResultT, RequestT, ResponseT>, Boolean> outstandingBatches = new ConcurrentHashMap<>();
+  private final ConcurrentMap<Batch<ElementT, ElementResultT, RequestT, ResponseT>, Boolean>
+      outstandingBatches = new ConcurrentHashMap<>();
   private final Object flushLock = new Object();
   private final Object elementLock = new Object();
   private final Future<?> scheduledFuture;
@@ -370,7 +371,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
 
   @Override
   public void cancelOutstanding() {
-    for (Batch<?,?,?,?> batch : outstandingBatches.keySet()) {
+    for (Batch<?, ?, ?, ?> batch : outstandingBatches.keySet()) {
       batch.cancel();
     }
   }
@@ -399,7 +400,8 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
       }
     } catch (TimeoutException e) {
       StringJoiner batchesStr = new StringJoiner(",");
-      for (Batch<ElementT, ElementResultT, RequestT, ResponseT> batch : outstandingBatches.keySet()) {
+      for (Batch<ElementT, ElementResultT, RequestT, ResponseT> batch :
+          outstandingBatches.keySet()) {
         batchesStr.add(batch.toString());
       }
       String msg = "Timed out trying to close batcher after " + timeout + ".";
@@ -503,7 +505,6 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
       }
     }
 
-
     void onBatchSuccess(ResponseT response) {
       try {
         descriptor.splitResponse(response, entries);
@@ -533,10 +534,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
       StringJoiner elementsStr = new StringJoiner(",");
       for (BatchEntry<ElementT, ElementResultT> entry : entries) {
         elementsStr.add(
-            Optional.ofNullable(entry.getElement())
-                .map(Object::toString)
-                .orElse("null")
-        );
+            Optional.ofNullable(entry.getElement()).map(Object::toString).orElse("null"));
       }
       return MoreObjects.toStringHelper(this)
           .add("operation", operation)

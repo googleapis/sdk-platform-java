@@ -79,9 +79,7 @@ public interface Batcher<ElementT, ElementResultT> extends AutoCloseable {
    */
   void sendOutstanding();
 
-  /**
-   * Cancels all outstanding batch RPCs.
-   */
+  /** Cancels all outstanding batch RPCs. */
   void cancelOutstanding();
 
   /**
