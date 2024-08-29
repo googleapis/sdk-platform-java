@@ -2,8 +2,6 @@
 
 set -eo pipefail
 utilities_script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
-# The $HOME variable is always set in the OS env as per POSIX specification.
-GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
 
 # Utility functions used in `generate_library.sh` and showcase generation.
 extract_folder_name() {
@@ -99,34 +97,49 @@ remove_grpc_version() {
   sed -i.bak 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {}  \; -exec rm {}.bak \;
 }
 
+download_gapic_generator_pom_parent() {
+  local gapic_generator_version=$1
+  download_generator_artifact "${gapic_generator_version}" "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" "gapic-generator-java-pom-parent"
+}
+
 # This function returns the version of the grpc plugin to generate the libraries. If
-# DOCKER_GRPC_VERSION is set, this will be the version. Otherwise, the script
-# will exit since this is a necessary env var
+# DOCKER_GRPC_VERSION is set, this will be the version. Otherwise, it will be
+# computed from the gapic-generator-pom-parent artifact at the specified
+# gapic_generator_version.
 get_grpc_version() {
+  local gapic_generator_version=$1
   local grpc_version
   if [[ -n "${DOCKER_GRPC_VERSION}" ]]; then
     >&2 echo "Using grpc version baked into the container: ${DOCKER_GRPC_VERSION}"
     echo "${DOCKER_GRPC_VERSION}"
     return
-  else
-    >&2 echo "Cannot infer grpc version because DOCKER_GRPC_VERSION is not set"
-    exit 1
   fi
+  pushd "${output_folder}" > /dev/null
+  # get grpc version from gapic-generator-java-pom-parent/pom.xml
+  download_gapic_generator_pom_parent "${gapic_generator_version}"
+  grpc_version=$(grep grpc.version "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" | sed 's/<grpc\.version>\(.*\)<\/grpc\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+  popd > /dev/null
+  echo "${grpc_version}"
 }
 
 # This function returns the version of protoc to generate the libraries. If
-# DOCKER_PROTOC_VERSION is set, this will be the version. Otherwise, the script
-# will exit since this is a necessary env var
+# DOCKER_PROTOC_VERSION is set, this will be the version. Otherwise, it will be
+# computed from the gapic-generator-pom-parent artifact at the specified
+# gapic_generator_version.
 get_protoc_version() {
+  local gapic_generator_version=$1
   local protoc_version
   if [[ -n "${DOCKER_PROTOC_VERSION}" ]]; then
     >&2 echo "Using protoc version baked into the container: ${DOCKER_PROTOC_VERSION}"
     echo "${DOCKER_PROTOC_VERSION}"
     return
-  else
-    >&2 echo "Cannot infer protoc version because DOCKER_GRPC_VERSION is not set"
-    exit 1
   fi
+  pushd "${output_folder}" > /dev/null
+  # get protobuf version from gapic-generator-java-pom-parent/pom.xml
+  download_gapic_generator_pom_parent "${gapic_generator_version}"
+  protoc_version=$(grep protobuf.version "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" | sed 's/<protobuf\.version>\(.*\)<\/protobuf\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | cut -d "." -f2-)
+  popd > /dev/null
+  echo "${protoc_version}"
 }
 
 # Given the versions of the gapic generator, protoc and the protoc-grpc plugin,
@@ -180,6 +193,29 @@ download_tools() {
     exit 1
   fi
   popd
+}
+
+download_generator_artifact() {
+  local gapic_generator_version=$1
+  local artifact=$2
+  local project=${3:-"gapic-generator-java"}
+  if [ ! -f "${artifact}" ]; then
+    # first, try to fetch the generator locally
+    local local_fetch_successful
+    local_fetch_successful=$(copy_from "$HOME/.m2/repository/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
+      "${artifact}")
+    if [[ "${local_fetch_successful}" == "false" ]];then 
+      # download gapic-generator-java artifact from Google maven central mirror if not
+      # found locally
+      >&2 echo "${artifact} not found locally. Attempting a download from Maven Central"
+      download_from \
+      "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
+      "${artifact}"
+      >&2 echo "${artifact} found and downloaded from Maven Central"
+    else
+      >&2 echo "${artifact} found copied from local repository (~/.m2)"
+    fi
+  fi
 }
 
 download_protoc() {

@@ -131,6 +131,7 @@ def __construct_tooling_arg(config: GenerationConfig) -> List[str]:
     :return: arguments containing tooling versions
     """
     arguments = []
+    arguments += util.create_argument("gapic_generator_version", config)
     arguments += util.create_argument("grpc_version", config)
     arguments += util.create_argument("protoc_version", config)
 

@@ -14,6 +14,12 @@ case $key in
     destination_path="$2"
     shift
     ;;
+  --gapic_generator_version)
+    gapic_generator_version="$2"
+    # export this variable so that it can be used in gapic-generator-java-wrapper.sh
+    export gapic_generator_version
+    shift
+    ;;
   --protoc_version)
     protoc_version="$2"
     shift
@@ -71,12 +77,17 @@ script_dir=$(dirname "$(readlink -f "$0")")
 source "${script_dir}"/utils/utilities.sh
 output_folder="$(get_output_folder)"
 
+if [ -z "${gapic_generator_version}" ]; then
+  echo 'missing required argument --gapic_generator_version'
+  exit 1
+fi
+
 if [ -z "${protoc_version}" ]; then
-  protoc_version=$(get_protoc_version)
+  protoc_version=$(get_protoc_version "${gapic_generator_version}")
 fi
 
 if [ -z "${grpc_version}" ]; then
-  grpc_version=$(get_grpc_version)
+  grpc_version=$(get_grpc_version "${gapic_generator_version}")
 fi
 
 if [ -z "${proto_only}" ]; then
@@ -174,7 +185,7 @@ esac
 # download gapic-generator-java, protobuf and grpc plugin.
 # the download_tools function will create the environment variables "protoc_path"
 # and "grpc_path", to be used in the protoc calls below.
-download_tools "${protoc_version}" "${grpc_version}" "${os_architecture}"
+download_tools "${gapic_generator_version}" "${protoc_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
