@@ -23,7 +23,9 @@ REPO_LEVEL_PARAMETER = "Repo level parameter"
 LIBRARY_LEVEL_PARAMETER = "Library level parameter"
 GAPIC_LEVEL_PARAMETER = "GAPIC level parameter"
 COMMON_PROTOS_LIBRARY_NAME = "common-protos"
+GAPIC_GENERATOR_VERSION = "gapic_generator_version"
 LIBRARIES_BOM_VERSION = "libraries_bom_version"
+GENERATOR_VERSION_ENV_KEY = "GENERATOR_VERSION"
 
 
 class GenerationConfig:
@@ -35,6 +37,7 @@ class GenerationConfig:
         self,
         googleapis_commitish: str,
         libraries: list[LibraryConfig],
+        gapic_generator_version: Optional[str] = None,
         libraries_bom_version: Optional[str] = None,
         grpc_version: Optional[str] = None,
         protoc_version: Optional[str] = None,
@@ -42,6 +45,9 @@ class GenerationConfig:
         self.googleapis_commitish = googleapis_commitish
         self.libraries_bom_version = (
             libraries_bom_version if libraries_bom_version else ""
+        )
+        self.gapic_generator_version = GenerationConfig.__set_generator_version(
+            gapic_generator_version
         )
         self.libraries = libraries
         self.grpc_version = grpc_version
@@ -74,6 +80,21 @@ class GenerationConfig:
                     self.__contains_common_protos = True
                     break
         return self.__contains_common_protos
+
+    @staticmethod
+    def __set_generator_version(gapic_generator_version: Optional[str]) -> str:
+        if gapic_generator_version is not None:
+            return gapic_generator_version
+        # if the generator version is not set through generation config,
+        # get it from environment variable.
+        gapic_generator_version = os.getenv(GENERATOR_VERSION_ENV_KEY)
+        if not gapic_generator_version:
+            raise ValueError(
+                f"Environment variable {GENERATOR_VERSION_ENV_KEY}"
+                f" is not set when the generator version is not"
+                f" specified in the generation config."
+            )
+        return gapic_generator_version
 
     def __validate(self) -> None:
         seen_library_names = dict()
@@ -150,6 +171,7 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
         googleapis_commitish=__required(
             config, "googleapis_commitish", REPO_LEVEL_PARAMETER
         ),
+        gapic_generator_version=__optional(config, GAPIC_GENERATOR_VERSION, None),
         grpc_version=__optional(config, "grpc_version", None),
         protoc_version=__optional(config, "protoc_version", None),
         libraries_bom_version=__optional(config, LIBRARIES_BOM_VERSION, None),
