@@ -13,11 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+commonScriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
+
 # In the given directory ($1),
 #   update the pom.xml's dependency on the given artifact ($2) to the given version ($3)
 # ex: update_dependency google-cloud-java/google-cloud-jar-parent google-cloud-shared-dependencies 1.2.3
-commonScriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
-
 function update_pom_dependency {
   pushd "$1" || exit 1
   xmllint --shell pom.xml &>/dev/null <<EOF
