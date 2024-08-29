@@ -47,7 +47,7 @@ pushd spring-cloud-gcp/spring-cloud-generator
 
 
 # Generate showcase autoconfig
-bash scripts/generate-showcase.sh
+./scripts/generate-showcase.sh
 pushd showcase/showcase-spring-starter
 mvn verify
 popd # showcase/showcase-spring-starter
