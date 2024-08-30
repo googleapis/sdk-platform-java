@@ -105,4 +105,10 @@
     <className>com/google/api/gax/tracing/MetricsTracer</className>
     <field>*</field>
   </difference>
+  <!-- Ignore method additions to an InternalExtensionOnly interface-->
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com.google.api.gax.batching.Batcher</className>
+    <method>*</method>
+  </difference>
 </differences>
