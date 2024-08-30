@@ -192,26 +192,19 @@ class ComposerTest {
     List<GapicClass> serviceClasses = Composer.composeServiceClasses(context);
     assertEquals(10, serviceClasses.size());
     for (GapicClass clazz : serviceClasses) {
-      if (clazz
-          .classDefinition()
-          .classIdentifier()
-          .name()
-          .equals("EchoServiceShouldGeneratePartialClient")) {
-        assertEquals(25, clazz.classDefinition().methods().size());
-        for (MethodDefinition method : clazz.classDefinition().methods()) {
-          String methodName = method.methodIdentifier().name();
-          if (method.isConstructor()) {
-            continue;
-          }
-          // should not contain methods for rpc not in selective config
-          assertFalse(methodName.startsWith("expand"));
-          assertFalse(methodName.startsWith("collect"));
-          assertFalse(methodName.startsWith("pagedExpand"));
-          assertFalse(methodName.startsWith("simplePagedExpand"));
-          assertFalse(methodName.startsWith("wait"));
-          assertFalse(methodName.startsWith("block"));
-          assertFalse(methodName.startsWith("collideName"));
+      for (MethodDefinition method : clazz.classDefinition().methods()) {
+        String methodName = method.methodIdentifier().name();
+        if (method.isConstructor()) {
+          continue;
         }
+        // should not contain methods for rpc not in selective config
+        assertFalse(methodName.startsWith("expand"));
+        assertFalse(methodName.startsWith("collect"));
+        assertFalse(methodName.startsWith("pagedExpand"));
+        assertFalse(methodName.startsWith("simplePagedExpand"));
+        assertFalse(methodName.startsWith("wait"));
+        assertFalse(methodName.startsWith("block"));
+        assertFalse(methodName.startsWith("collideName"));
       }
     }
   }
