@@ -434,34 +434,6 @@ public class Parser {
         Transport.GRPC);
   }
 
-  private static Optional<List<String>> getInclusionMethodListFromServiceYaml(
-      Optional<com.google.api.Service> serviceYamlProtoOpt, String protoPackage) {
-    if (!serviceYamlProtoOpt.isPresent()
-        || serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsCount() == 0) {
-      return Optional.empty();
-    }
-    List<ClientLibrarySettings> librarySettingsList =
-        serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsList();
-    // verify library_settings.version matches with proto package name
-    // This should be validated in upstream. Give warnings if not match.
-    if (!librarySettingsList.get(0).getVersion().isEmpty()
-        && !protoPackage.equals(librarySettingsList.get(0).getVersion())) {
-      LOGGER.warning(
-          "Service yaml config may be misconfigured. "
-              + "Version in publishing.library_settings does not match proto package."
-              + "Disregarding selective generation settings.");
-      return Optional.empty();
-    }
-    List<String> includeMethodsList =
-        librarySettingsList
-            .get(0)
-            .getJavaSettings()
-            .getCommon()
-            .getSelectiveGapicGeneration()
-            .getMethodsList();
-    return Optional.of(includeMethodsList);
-  }
-
   private static boolean shouldIncludeMethodInGeneration(
       MethodDescriptor method,
       Optional<com.google.api.Service> serviceYamlProtoOpt,
