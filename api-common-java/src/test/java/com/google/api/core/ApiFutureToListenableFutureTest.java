@@ -33,9 +33,9 @@ import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class ApiFutureToListenableFutureTest {
+class ApiFutureToListenableFutureTest {
   @Test
-  public void testThatInnerToStringIsNotLost() {
+  void testThatInnerToStringIsNotLost() {
     String customInnerToString = "my-custom-inner-tostring";
     ApiFuture<String> apiFuture =
         new AbstractApiFuture<String>() {
