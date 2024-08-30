@@ -14,6 +14,13 @@ readonly perform_cleanup=$1
 cd "${SCRIPT_DIR}"
 mkdir -p "${SCRIPT_DIR}/output"
 
+get_version_from_pom() {
+  target_pom="$1"
+  key="$2"
+  # prints the result to stdout
+  grep -e "<${key}>" "${target_pom}" | cut -d'>' -f2 | cut -d'<' -f1
+}
+
 # clone gapic-showcase
 if [ ! -d schema ]; then
   if [ -d gapic-showcase ]; then
@@ -22,8 +29,10 @@ if [ ! -d schema ]; then
   # looks at sdk-platform-java/showcase/gapic-showcase/pom.xml to extract the
   # version of gapic-showcase
   # see https://github.com/googleapis/gapic-showcase/releases
-  showcase_version=$(grep -e '<gapic-showcase.version>' "${SCRIPT_DIR}/../gapic-showcase/pom.xml" | cut -d'>' -f2 | cut -d'<' -f1)
-    sparse_clone https://github.com/googleapis/gapic-showcase.git "schema/google/showcase/v1beta1" "v${showcase_version}"
+  showcase_version=$(get_version_from_pom \
+    "${SCRIPT_DIR}/../gapic-showcase/pom.xml" "gapic-showcase.version"
+  )
+  sparse_clone https://github.com/googleapis/gapic-showcase.git "schema/google/showcase/v1beta1" "v${showcase_version}"
   cd gapic-showcase
   mv schema ../output
   cd ..
@@ -39,6 +48,11 @@ if [ ! -d google ];then
 fi
 
 gapic_additional_protos="google/iam/v1/iam_policy.proto google/cloud/location/locations.proto"
+
+path_to_generator_parent_pom="${SCRIPT_DIR}/../../gapic-generator-java-pom-parent/pom.xml"
+protoc_version=$(get_version_from_pom "${path_to_generator_parent_pom}" "protobuf.version" \
+  | cut -d. -f2-)
+grpc_version=$(get_version_from_pom "${path_to_generator_parent_pom}" "grpc.version")
 rest_numeric_enums="false"
 transport="grpc+rest"
 gapic_yaml=""
@@ -49,6 +63,8 @@ rm -rdf output/showcase-output
 mkdir output/showcase-output
 set +e
 bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
+  --protoc_version "${protoc_version}" \
+  --grpc_version "${grpc_version}" \
   --proto_path "schema/google/showcase/v1beta1" \
   --destination_path "showcase-output" \
   --gapic_additional_protos "${gapic_additional_protos}" \
