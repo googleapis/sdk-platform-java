@@ -47,10 +47,12 @@ pushd spring-cloud-gcp/spring-cloud-generator
 
 
 # Generate showcase autoconfig
+pushd spring-cloud-gcp/spring-cloud-generator
 ./scripts/generate-showcase.sh
 pushd showcase/showcase-spring-starter
 mvn verify
 popd # showcase/showcase-spring-starter
 
 popd # spring-cloud-gcp/spring-cloud-generator
+popd # spring-cloud-gcp
 popd # gapic-generator-java/target
