@@ -15,13 +15,12 @@ import os
 import unittest
 
 from library_generation.model.repo_config import RepoConfig
-from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 versions_file = os.path.join(script_dir, "..", "resources", "misc", "versions.txt")
 
 
-class RepoConfigTest(SimulatedDockerEnvironmentTest):
+class RepoConfigTest(unittest.TestCase):
     def test_get_library_versions_with_existing_library(self):
         repo_config = RepoConfig(
             output_folder="test", libraries=dict(), versions_file=versions_file

@@ -18,10 +18,9 @@ from library_generation.cli.entry_point import generate, validate_generation_con
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 test_resource_dir = os.path.join(script_dir, "..", "resources", "test-config")
-from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
 
 
-class EntryPointTest(SimulatedDockerEnvironmentTest):
+class EntryPointTest(unittest.TestCase):
     def test_entry_point_without_config_raise_file_exception(self):
         os.chdir(script_dir)
         runner = CliRunner()

@@ -19,10 +19,9 @@ from library_generation.model.config_change import LibraryChange
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
-from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
 
 
-class ConfigChangeTest(SimulatedDockerEnvironmentTest):
+class ConfigChangeTest(unittest.TestCase):
     def test_get_changed_libraries_with_repo_level_change_returns_all_libraries_changed(
         self,
     ):
@@ -292,6 +291,7 @@ class ConfigChangeTest(SimulatedDockerEnvironmentTest):
         if libraries is None:
             libraries = []
         return GenerationConfig(
+            gapic_generator_version="",
             googleapis_commitish=googleapis_commitish,
             grpc_version="",
             protoc_version="",

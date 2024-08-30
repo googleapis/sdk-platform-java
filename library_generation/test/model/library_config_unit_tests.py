@@ -15,10 +15,9 @@ import unittest
 
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.library_config import LibraryConfig
-from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
 
 
-class LibraryConfigTest(SimulatedDockerEnvironmentTest):
+class LibraryConfigTest(unittest.TestCase):
     def test_get_library_returns_library_name(self):
         library = LibraryConfig(
             api_shortname="secret",
