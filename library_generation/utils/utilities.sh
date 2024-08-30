@@ -138,10 +138,9 @@ get_protoc_version() {
 # download), since the docker image will have downloaded these tools beforehand.
 #
 # For the case of gapic-generator-java, no env var will be exported for the
-# upstream flow, but instead it will be assigned a default filename that will be
-# referenced by the file `library_generation/gapic-generator-java-wrapper`. Note
-# that we assume an env var DOCKER_GAPIC_GENERATOR_LOCATION to point to the jar
-# so we can copy it to our output folder
+# upstream flow. Instead, the jar must be located in the well-known location
+# (${HOME}/.library_generation/gapic-generator-java.jar). More information in
+# `library_generation/DEVELOPMENT.md`
 download_tools() {
   local protoc_version=$1
   local grpc_version=$2
