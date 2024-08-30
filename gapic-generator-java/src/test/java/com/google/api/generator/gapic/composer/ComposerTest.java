@@ -203,15 +203,14 @@ class ComposerTest {
           if (method.isConstructor()) {
             continue;
           }
-          assertTrue(
-              methodName.startsWith("echo")
-                  || methodName.startsWith("chat")
-                  || methodName.startsWith("create")
-                  || methodName.startsWith("get")
-                  || methodName.startsWith("close")
-                  || methodName.startsWith("shutdown")
-                  || methodName.startsWith("is")
-                  || methodName.startsWith("awaitTermination"));
+          // should not contain methods for rpc not in selective config
+          assertFalse(methodName.startsWith("expand"));
+          assertFalse(methodName.startsWith("collect"));
+          assertFalse(methodName.startsWith("pagedExpand"));
+          assertFalse(methodName.startsWith("simplePagedExpand"));
+          assertFalse(methodName.startsWith("wait"));
+          assertFalse(methodName.startsWith("block"));
+          assertFalse(methodName.startsWith("collideName"));
         }
       }
     }
