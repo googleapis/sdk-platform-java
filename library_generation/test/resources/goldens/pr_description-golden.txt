@@ -2,6 +2,9 @@ This pull request is generated with proto changes between [googleapis/googleapis
 
 BEGIN_COMMIT_OVERRIDE
 BEGIN_NESTED_COMMIT
+fix(deps): update the Java code generator (gapic-generator-java) to 1.2.3
+END_NESTED_COMMIT
+BEGIN_NESTED_COMMIT
 chore: update the libraries_bom version to 2.3.4
 END_NESTED_COMMIT
 BEGIN_NESTED_COMMIT

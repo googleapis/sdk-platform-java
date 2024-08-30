@@ -27,13 +27,12 @@ from library_generation.model.config_change import (
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
-from library_generation.test.test_utils import SimulatedDockerEnvironmentTest
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources", "goldens")
 
 
-class GeneratePrDescriptionTest(SimulatedDockerEnvironmentTest):
+class GeneratePrDescriptionTest(unittest.TestCase):
     def test_get_commit_messages_current_is_older_raise_exception(self):
         # committed on April 1st, 2024
         current_commit = "36441693dddaf0ed73951ad3a15c215a332756aa"
@@ -70,6 +69,7 @@ class GeneratePrDescriptionTest(SimulatedDockerEnvironmentTest):
     def test_generate_pr_description_with_no_change_in_config(self):
         commit_sha = "36441693dddaf0ed73951ad3a15c215a332756aa"
         config = GenerationConfig(
+            gapic_generator_version="",
             googleapis_commitish=commit_sha,
             libraries_bom_version="",
             # use empty libraries to make sure no qualified commit between
@@ -99,12 +99,14 @@ class GeneratePrDescriptionTest(SimulatedDockerEnvironmentTest):
             config_change=ConfigChange(
                 change_to_libraries={},
                 baseline_config=GenerationConfig(
+                    gapic_generator_version="",
                     googleapis_commitish=old_commit_sha,
                     # use empty libraries to make sure no qualified commit between
                     # two commit sha.
                     libraries=[],
                 ),
                 current_config=GenerationConfig(
+                    gapic_generator_version="",
                     googleapis_commitish=new_commit_sha,
                     # use empty libraries to make sure no qualified commit between
                     # two commit sha.
@@ -134,16 +136,22 @@ class GeneratePrDescriptionTest(SimulatedDockerEnvironmentTest):
                 change_to_libraries={
                     ChangeType.REPO_LEVEL_CHANGE: [
                         LibraryChange(
+                            changed_param="gapic_generator_version",
+                            current_value="1.2.3",
+                        ),
+                        LibraryChange(
                             changed_param="libraries_bom_version", current_value="2.3.4"
                         ),
                     ],
                     ChangeType.GOOGLEAPIS_COMMIT: [],
                 },
                 baseline_config=GenerationConfig(
+                    gapic_generator_version="",
                     googleapis_commitish=baseline_commit_sha,
                     libraries=[library],
                 ),
                 current_config=GenerationConfig(
+                    gapic_generator_version="1.2.3",
                     googleapis_commitish=documentai_commit_sha,
                     libraries_bom_version="2.3.4",
                     libraries=[library],
