@@ -48,8 +48,8 @@ class SimulatedDockerEnvironmentTest(unittest.TestCase):
         cls.env_patcher = patch.dict(
             os.environ,
             {
-                "DOCKER_GAPIC_GENERATOR_VERSION": "test-version",
-                "DOCKER_GAPIC_GENERATOR_LOCATION": "test-location",
+                "GENERATOR_VERSION": "test-version",
+                "GENERATOR_LOCATION": "test-location",
             },
         )
         cls.env_patcher.start()
