@@ -6,8 +6,8 @@ set -xeo pipefail
 script_dir=$(dirname "$(readlink -f "$0")")
 source "${script_dir}"/test_utilities.sh
 
-# we simulate a properly prepared environemnt (i.e. generator jar) in its
-# well-known location. Tests confirming the opposite case will make sure this
+# we simulate a properly prepared environment (i.e. generator jar in its
+# well-known location). Tests confirming the opposite case will make sure this
 # environment is restored
 readonly SIMULATED_HOME=$(mktemp -d)
 mkdir "${SIMULATED_HOME}/.library_generation"
