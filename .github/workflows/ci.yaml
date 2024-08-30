@@ -239,6 +239,7 @@ jobs:
           # Here we prepare the jar in such location
           generator_version=$(grep "gapic-generator-java:" "../versions.txt" \
             | cut -d: -f3) # the 3rd field is the snapshot version
+          mkdir -p "${HOME}/.library_generation"
           cp \
             "${HOME}/.m2/repository/com/google/api/gapic-generator-java/${generator_version}/gapic-generator-java-${generator_version}.jar" \
             "${HOME}/.library_generation/gapic-generator-java.jar"
