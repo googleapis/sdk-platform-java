@@ -67,7 +67,8 @@ bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
   --service_config "${service_config}" \
   --service_yaml "${service_yaml}" \
   --include_samples "${include_samples}" \
-  --transport "${transport}" 
+  --transport "${transport}" \
+  --protoc_version "25.4"
 
 exit_code=$?
 if [ "${exit_code}" -ne 0 ]; then
