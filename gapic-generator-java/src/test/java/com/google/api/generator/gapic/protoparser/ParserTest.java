@@ -139,7 +139,7 @@ class ParserTest {
     List<Method> methods =
         Parser.parseMethods(
             echoService,
-            Optional.empty(),
+            ECHO_PACKAGE,
             ECHO_PACKAGE,
             messageTypes,
             resourceNames,
@@ -203,7 +203,7 @@ class ParserTest {
     List<Method> methods =
         Parser.parseMethods(
             echoService,
-            Optional.empty(),
+            ECHO_PACKAGE,
             ECHO_PACKAGE,
             messageTypes,
             resourceNames,

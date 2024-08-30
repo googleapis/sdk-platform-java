@@ -463,16 +463,36 @@ public class Parser {
   }
 
   private static boolean shouldIncludeMethodInGeneration(
-      MethodDescriptor method, Optional<List<String>> optionalIncludeMethodsList) {
+      MethodDescriptor method,
+      Optional<com.google.api.Service> serviceYamlProtoOpt,
+      String protoPackage) {
     // default to include all when no service yaml or no library setting section.
-    if (!optionalIncludeMethodsList.isPresent()) {
+    if (!serviceYamlProtoOpt.isPresent()
+        || serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsCount() == 0) {
       return true;
     }
-    // default to include all when nothing specified.
-    if (optionalIncludeMethodsList.get().isEmpty()) {
+    List<ClientLibrarySettings> librarySettingsList =
+        serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsList();
+    // Validate for logging purpose, this should be validated upstream.
+    // If library_settings.version does not match with proto package name
+    // Give warnings and disregard this config. default to include all.
+    if (!librarySettingsList.get(0).getVersion().isEmpty()
+        && !protoPackage.equals(librarySettingsList.get(0).getVersion())) {
+      LOGGER.warning(
+          "Service yaml config may be misconfigured. "
+              + "Version in publishing.library_settings does not match proto package."
+              + "Disregarding selective generation settings.");
       return true;
     }
-    return optionalIncludeMethodsList.get().contains(method.getFullName());
+    List<String> includeMethodsList =
+        librarySettingsList
+            .get(0)
+            .getJavaSettings()
+            .getCommon()
+            .getSelectiveGapicGeneration()
+            .getMethodsList();
+
+    return includeMethodsList.contains(method.getFullName());
   }
 
   public static List<Service> parseService(
@@ -484,8 +504,6 @@ public class Parser {
       Set<ResourceName> outputArgResourceNames,
       Transport transport) {
     String protoPackage = fileDescriptor.getPackage();
-    Optional<List<String>> inclusionMethodListFromServiceYaml =
-        getInclusionMethodListFromServiceYaml(serviceYamlProtoOpt, protoPackage);
     return fileDescriptor.getServices().stream()
         .filter(
             serviceDescriptor -> {
@@ -493,9 +511,9 @@ public class Parser {
               List<MethodDescriptor> methodListSelected =
                   methodsList.stream()
                       .filter(
-                          method -> {
-                            return shouldIncludeMethodInGeneration(method, inclusionMethodListFromServiceYaml);
-                          })
+                          method ->
+                              shouldIncludeMethodInGeneration(
+                                  method, serviceYamlProtoOpt, protoPackage))
                       .collect(Collectors.toList());
               if (methodListSelected.isEmpty()) {
                 LOGGER.warning(
@@ -579,7 +597,7 @@ public class Parser {
                   .setMethods(
                       parseMethods(
                           s,
-                          inclusionMethodListFromServiceYaml,
+                          protoPackage,
                           pakkage,
                           messageTypes,
                           resourceNames,
@@ -771,7 +789,7 @@ public class Parser {
   @VisibleForTesting
   static List<Method> parseMethods(
       ServiceDescriptor serviceDescriptor,
-      Optional<List<String>> inclusionMethodListFromServiceYaml,
+      String protoPackage,
       String servicePackage,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
@@ -785,7 +803,7 @@ public class Parser {
     Map<String, List<String>> autoPopulatedMethodsWithFields =
         parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
-      if (!shouldIncludeMethodInGeneration(protoMethod, inclusionMethodListFromServiceYaml)) {
+      if (!shouldIncludeMethodInGeneration(protoMethod, serviceYamlProtoOpt, protoPackage)) {
         continue;
       }
       // Parse the method.
