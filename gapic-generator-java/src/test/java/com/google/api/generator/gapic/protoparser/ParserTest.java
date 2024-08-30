@@ -711,6 +711,28 @@ class ParserTest {
   }
 
   @Test
+  void selectiveGenerationTest_shouldExcludeUnusedResourceNames() {
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+
+    String serviceYamlFilename = "selective_api_generation_v1beta1.yaml";
+    String testFilesDirectory = "src/test/resources/";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    Assert.assertTrue(serviceYamlOpt.isPresent());
+
+    Set<ResourceName> helperResourceNames = new HashSet<>();
+    Parser.parseService(
+        fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, helperResourceNames);
+    // resource Name Foobarbaz is not present
+    assertEquals(2, helperResourceNames.size());
+    assertEquals("foobar", ((ResourceName) helperResourceNames.toArray()[0]).variableName());
+    assertEquals("anythingGoes", ((ResourceName) helperResourceNames.toArray()[1]).variableName());
+  }
+
+  @Test
   void selectiveGenerationTest_shouldGenerateOnlySelectiveMethods() {
     FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);

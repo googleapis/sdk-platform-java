@@ -174,19 +174,6 @@ class ComposerTest {
   }
 
   @Test
-  void testComposeSelectively_shouldComposeOnlyOneHelperResource() {
-    GapicContext context = GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting();
-    List<GapicClass> resourceNameHelperClasses =
-        Composer.generateResourceNameHelperClasses(context);
-    assertEquals(1, resourceNameHelperClasses.size());
-    for (GapicClass clazz : resourceNameHelperClasses) {
-      String className = clazz.classDefinition().classIdentifier().name();
-      Assert.assertGoldenClass(
-          this.getClass(), clazz, "SelectiveGenerated" + className + ".golden");
-    }
-  }
-
-  @Test
   void testComposeSelectively_serviceClientShouldOnlyContainSelectedMethods() {
     GapicContext context = GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting();
     List<GapicClass> serviceClasses = Composer.composeServiceClasses(context);

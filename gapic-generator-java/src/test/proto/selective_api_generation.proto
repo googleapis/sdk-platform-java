@@ -95,7 +95,7 @@ service EchoServiceShouldGeneratePartial {
     option (google.api.method_signature) = "content";
   }
 
-  rpc ShouldNotGenerateChat(stream EchoRequest2) returns (stream EchoResponse);
+  rpc ShouldNotGenerateChat(stream EchoRequestWithFoobarbaz) returns (stream EchoResponse);
 
   // This is similar to the Expand method but instead of returning a stream of
   // expanded words, this method returns a paged list of expanded words.
@@ -323,7 +323,7 @@ message EchoRequest {
 // To demonstrate that if ShouldNotGenerateChat is not included in generation,
 // then the resource name Foobarbaz, which is only used by this method,
 // should also not be generated.
-message EchoRequest2 {
+message EchoRequestWithFoobarbaz {
   string name = 5 [
     (google.api.resource_reference).type = "showcase.googleapis.com/Foobarbaz",
     (google.api.field_behavior) = REQUIRED
