@@ -48,6 +48,32 @@ Although the scripts are designed to be run in a Docker container, you can also
 run them directly. This section explains how to run the entrypoint script
 (`library_generation/cli/entry_point.py`).
 
+## Assumptions made by the scripts
+### The Hermetic Build's well-known folder
+Located in `${HOME}/.library_generation`, this folder is assumed by the scripts
+to contain the generator JAR. Please note that this is a recent feature and only
+this jar is expected to be there. Soon enough, more binaries such as the gRPC
+and protoc plugins will also be stored here. Developers must make sure
+this folder is properly configured before running the scripts locally.
+Note that this relies on the `HOME` en var which is always
+defined as per
+[POSIX env var definition](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html).
+
+#### Put the gapic-generator-java jar in its well-known location
+
+Run `cd sdk-platform-java && mvn install -DskipTests -Dclirr.skip
+-Dcheckstyle.skip`. This will generate a jar located in
+`~/.m2/repository/com/google/api/gapic-generator-java/{version}/gapic-generator-java-{version}.jar`
+
+Then `mv` the jar into the well-known location of the jar. The
+generation scripts will assume the jar is there.
+
+```shell
+mv /path/to/jar "${HOME}/.library_generation/gapic-generator-java.jar"
+```
+
+
+
 ## Installing prerequisites
 
 In order to run the generation scripts directly, there are a few tools we
@@ -70,23 +96,6 @@ owl-bot copy-code --version
 
 The key step is `npm link`, which will make the command available in you current
 shell session.
-
-### Create the gapic-generator-java jar
-
-Run `cd sdk-platform-java && mvn install -DskipTests -Dclirr.skip
--Dcheckstyle.skip`. This will generate a jar located in
-`~/.m2/repository/com/google/api/gapic-generator-java/{version}/gapic-generator-java-{version}.jar`
-
-Then `mv` the jar into the well-known location of the jar. The
-generation scripts will assume the jar is there.
-
-```shell
-mv /path/to/jar "${HOME}/.library_generation/gapic-generator-java.jar"
-```
-
-Note that this relies on the `HOME` en var which is always
-defined as per
-[POSIX env var definition](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html).
 
 
 ## Running the script
