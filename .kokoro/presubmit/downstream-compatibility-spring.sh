@@ -35,7 +35,7 @@ update_all_poms_dependency "spring-cloud-gcp" "gapic-generator-java-bom" "${GAPI
 
 # Install spring-cloud-gcp modules
 pushd spring-cloud-gcp
-../mvnw \
+./mvnw \
   -U \
   --batch-mode \
   --no-transfer-progress \
