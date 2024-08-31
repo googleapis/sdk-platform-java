@@ -47,3 +47,20 @@ jobs:
         run: ./.kokoro/presubmit/common_test.sh
       - name: Perform downstream compatibility testing
         run: REPOS_UNDER_TEST="${{ matrix.repo }}" ./.kokoro/presubmit/downstream-compatibility.sh
+  downstream-compatibility-spring-generator:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+      - run: mvn -version
+      - name: Install xmllint
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install libxml2-utils
+      - name: Perform downstream compatibility testing
+        run: ./.kokoro/presubmit/downstream-compatibility-spring.sh

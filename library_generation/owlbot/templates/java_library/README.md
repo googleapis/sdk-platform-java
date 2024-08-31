@@ -57,6 +57,7 @@ If you are using Maven with [BOM][libraries-bom], add this to your pom.xml file:
     <groupId>{{ group_id }}</groupId>
     <artifactId>{{ artifact_id }}</artifactId>
   </dependency>
+</dependencies>
 ```
 
 If you are using Maven without the BOM, add this to your dependencies:
