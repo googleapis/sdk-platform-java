@@ -18,7 +18,7 @@ from click.testing import CliRunner
 from library_generation.cli.entry_point import (
     generate,
     validate_generation_config,
-    __generate_repo_and_pr_description_impl,
+    __generate_repo_and_pr_description_impl as generate_impl,
 )
 from library_generation.model.generation_config import from_yaml
 
@@ -101,7 +101,7 @@ class EntryPointTest(unittest.TestCase):
         self.assertFalse(from_yaml(config_path).is_monorepo())
         # we call the implementation method directly since click
         # does special handling when a method is annotated with @main.command()
-        __generate_repo_and_pr_description_impl(
+        generate_impl(
             baseline_generation_config_path=config_path,
             current_generation_config_path=config_path,
             repository_path=".",
@@ -130,7 +130,7 @@ class EntryPointTest(unittest.TestCase):
         self.assertFalse(from_yaml(baseline_config_path).is_monorepo())
         # we call the implementation method directly since click
         # does special handling when a method is annotated with @main.command()
-        __generate_repo_and_pr_description_impl(
+        generate_impl(
             baseline_generation_config_path=baseline_config_path,
             current_generation_config_path=current_config_path,
             repository_path=".",
