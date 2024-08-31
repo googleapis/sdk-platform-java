@@ -22,7 +22,6 @@ set -e
 # The parameters of this script is:
 # 1. target_branch, the branch into which the pull request is merged.
 # 2. current_branch, the branch with which the pull request is associated.
-# 3. image_tag, the tag of gcr.io/cloud-devrel-public-resources/java-library-generation.
 # 3. [optional] generation_config, the path to the generation configuration,
 # the default value is generation_config.yaml in the repository root.
 while [[ $# -gt 0 ]]; do
@@ -34,10 +33,6 @@ case "${key}" in
     ;;
   --current_branch)
     current_branch="$2"
-    shift
-    ;;
-  --image_tag)
-    image_tag="$2"
     shift
     ;;
   --generation_config)
@@ -62,16 +57,12 @@ if [ -z "${current_branch}" ]; then
   exit 1
 fi
 
-if [ -z "${image_tag}" ]; then
-  echo "missing required argument --image_tag"
-  exit 1
-fi
-
 if [ -z "${generation_config}" ]; then
   generation_config=generation_config.yaml
   echo "Use default generation config: ${generation_config}"
 fi
 
+image_tag=local
 workspace_name="/workspace"
 baseline_generation_config="baseline_generation_config.yaml"
 docker_file="library_generation.Dockerfile"
@@ -90,6 +81,9 @@ fi
 git show "${target_branch}":"${generation_config}" > "${baseline_generation_config}"
 config_diff=$(diff "${generation_config}" "${baseline_generation_config}" || true)
 
+generator_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
+echo "Local generator version: ${generator_version}"
+
 # install generator locally since we're using a SNAPSHOT version.
 mvn -V -B -ntp clean install -DskipTests
 
@@ -104,6 +98,7 @@ docker run \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):${workspace_name}" \
   -v "$HOME"/.m2:/home/.m2 \
+  -e GENERATOR_VERSION="${generator_version}" \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
   --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
   --current-generation-config-path="${workspace_name}/${generation_config}"

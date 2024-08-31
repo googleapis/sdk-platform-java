@@ -18,8 +18,10 @@ FROM gcr.io/cloud-devrel-public-resources/python
 SHELL [ "/bin/bash", "-c" ]
 
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
-ARG PROTOC_VERSION=25.3
+ARG PROTOC_VERSION=25.4
+ARG GRPC_VERSION=1.66.0
 ENV HOME=/home
+ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
 RUN apt-get update && apt-get install -y \
@@ -32,10 +34,18 @@ COPY library_generation /src
 # install protoc
 WORKDIR /protoc
 RUN source /src/utils/utilities.sh \
-	&& download_protoc "${PROTOC_VERSION}" "linux-x86_64"
+	&& download_protoc "${PROTOC_VERSION}" "${OS_ARCHITECTURE}"
 # we indicate protoc is available in the container via env vars
 ENV DOCKER_PROTOC_LOCATION=/protoc
 ENV DOCKER_PROTOC_VERSION="${PROTOC_VERSION}"
+
+# install grpc
+WORKDIR /grpc
+RUN source /src/utils/utilities.sh \
+	&& download_grpc_plugin "${GRPC_VERSION}" "${OS_ARCHITECTURE}"
+# similar to protoc, we indicate grpc is available in the container via env vars
+ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java-${GRPC_VERSION}-${OS_ARCHITECTURE}.exe"
+ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 
 # use python 3.11 (the base image has several python versions; here we define the default one)
 RUN rm $(which python3)

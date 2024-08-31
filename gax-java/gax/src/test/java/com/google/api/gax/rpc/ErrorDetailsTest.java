@@ -121,6 +121,9 @@ class ErrorDetailsTest {
   private static final LocalizedMessage LOCALIZED_MESSAGE =
       LocalizedMessage.newBuilder().setLocale("en").setMessage("nothing").build();
 
+  private static final Duration DURATION_MESSAGE =
+      Duration.newBuilder().setSeconds(12345).setNanos(54321).build();
+
   ErrorDetails errorDetails;
 
   @BeforeEach
@@ -136,7 +139,8 @@ class ErrorDetailsTest {
             Any.pack(REQUEST_INFO),
             Any.pack(RESOURCE_INFO),
             Any.pack(HELP),
-            Any.pack(LOCALIZED_MESSAGE));
+            Any.pack(LOCALIZED_MESSAGE),
+            Any.pack(DURATION_MESSAGE));
 
     errorDetails = ErrorDetails.builder().setRawErrorMessages(rawErrorMessages).build();
   }
@@ -227,5 +231,10 @@ class ErrorDetailsTest {
   @Test
   void localizedMessage_shouldUnpackLocalizedMessageProtoMessage() {
     Truth.assertThat(errorDetails.getHelp()).isEqualTo(HELP);
+  }
+
+  @Test
+  void getMessage_duration_shouldUnpackDurationProtoMessage() {
+    Truth.assertThat(errorDetails.getMessage(Duration.class)).isEqualTo(DURATION_MESSAGE);
   }
 }

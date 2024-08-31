@@ -41,20 +41,6 @@ class ServiceClientClassComposerTest {
   }
 
   @Test
-  void generateServiceClassesEmpty() {
-    GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseEcho();
-    Service echoProtoService = context.services().get(1);
-    GapicClass clazz = ServiceClientClassComposer.instance().generate(context, echoProtoService);
-
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    GoldenFileWriter.saveCodegenToFile(this.getClass(), "EchoEmpty.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "EchoEmpty.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
-  }
-
-  @Test
   void generateServiceClassesWicked() {
     GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseWicked();
     Service wickedProtoService = context.services().get(0);

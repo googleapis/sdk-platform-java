@@ -92,7 +92,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   static final Logger LOG = Logger.getLogger(InstantiatingGrpcChannelProvider.class.getName());
 
   static final String DIRECT_PATH_ENV_DISABLE_DIRECT_PATH = "GOOGLE_CLOUD_DISABLE_DIRECT_PATH";
-  private static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
+
+  @VisibleForTesting
+  static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
+
   static final long DIRECT_PATH_KEEP_ALIVE_TIME_SECONDS = 3600;
   static final long DIRECT_PATH_KEEP_ALIVE_TIMEOUT_SECONDS = 20;
   static final String GCE_PRODUCTION_NAME_PRIOR_2016 = "Google";
@@ -273,19 +276,25 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return false;
   }
 
+  private boolean isDirectPathXdsEnabledViaBuilderOption() {
+    return Boolean.TRUE.equals(attemptDirectPathXds);
+  }
+
+  private boolean isDirectPathXdsEnabledViaEnv() {
+    String directPathXdsEnv = envProvider.getenv(DIRECT_PATH_ENV_ENABLE_XDS);
+    return Boolean.parseBoolean(directPathXdsEnv);
+  }
+
+  /**
+   * This method tells if Direct Path xDS was enabled. There are two ways of enabling it: via
+   * environment variable (by setting GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS=true) or when building
+   * this channel provider (via the {@link Builder#setAttemptDirectPathXds()} method).
+   *
+   * @return true if Direct Path xDS was either enabled via env var or via builder option
+   */
   @InternalApi
   public boolean isDirectPathXdsEnabled() {
-    // Method 1: Enable DirectPath xDS by option.
-    if (Boolean.TRUE.equals(attemptDirectPathXds)) {
-      return true;
-    }
-    // Method 2: Enable DirectPath xDS by env.
-    String directPathXdsEnv = envProvider.getenv(DIRECT_PATH_ENV_ENABLE_XDS);
-    boolean isDirectPathXdsEnv = Boolean.parseBoolean(directPathXdsEnv);
-    if (isDirectPathXdsEnv) {
-      return true;
-    }
-    return false;
+    return isDirectPathXdsEnabledViaEnv() || isDirectPathXdsEnabledViaBuilderOption();
   }
 
   // This method should be called once per client initialization, hence can not be called in the
@@ -293,14 +302,29 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   // for a client.
   private void logDirectPathMisconfig() {
     if (isDirectPathXdsEnabled()) {
-      // Case 1: does not enable DirectPath
       if (!isDirectPathEnabled()) {
-        LOG.log(
-            Level.WARNING,
-            "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
-                + " attemptDirectPathXds option.");
+        // This misconfiguration occurs when Direct Path xDS is enabled, but Direct Path is not
+        // Direct Path xDS can be enabled two ways: via environment variable or via builder.
+        // Case 1: Direct Path is only enabled via xDS env var. We will _warn_ the user that this is
+        // a misconfiguration if they intended to set the env var.
+        if (isDirectPathXdsEnabledViaEnv()) {
+          LOG.log(
+              Level.WARNING,
+              "Env var "
+                  + DIRECT_PATH_ENV_ENABLE_XDS
+                  + " was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
+                  + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
+        }
+        // Case 2: Direct Path xDS was enabled via Builder. Direct Path Traffic Director must be set
+        // (enabled with `setAttemptDirectPath(true)`) along with xDS.
+        // Here we warn the user about this.
+        else if (isDirectPathXdsEnabledViaBuilderOption()) {
+          LOG.log(
+              Level.WARNING,
+              "DirectPath is misconfigured. The DirectPath XDS option was set, but the attemptDirectPath option was not. Please set both the attemptDirectPath and attemptDirectPathXds options.");
+        }
       } else {
-        // Case 2: credential is not correctly set
+        // Case 3: credential is not correctly set
         if (!isCredentialDirectPathCompatible()) {
           LOG.log(
               Level.WARNING,
@@ -308,7 +332,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
                   + ComputeEngineCredentials.class.getName()
                   + " .");
         }
-        // Case 3: not running on GCE
+        // Case 4: not running on GCE
         if (!isOnComputeEngine()) {
           LOG.log(
               Level.WARNING,
