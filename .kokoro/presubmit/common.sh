@@ -108,5 +108,5 @@ function install_repo_modules {
   fi
   echo "Installing this repo's modules to local maven."
   mvn -q -B -ntp install ${projects_arg} \
-    -Dcheckstyle.skip -Dclirr.skip -Dfmt.skip -DskipTests -T 1C
+    -Dcheckstyle.skip -Dfmt.skip -DskipTests -T 1C
 }
