@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, Google Inc.
+ * Copyright 2024, Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -29,35 +29,23 @@
  */
 package com.google.api.core;
 
-import com.google.common.truth.Truth;
-import com.google.common.util.concurrent.AbstractFuture;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.SettableFuture;
+import static com.google.common.truth.Truth.assertThat;
+
 import org.junit.jupiter.api.Test;
 
-class ListenableFutureToApiFutureTest {
-
+class ApiFutureToListenableFutureTest {
   @Test
-  void testGet() throws Exception {
-    SettableFuture<Integer> future = SettableFuture.create();
-    ListenableFutureToApiFuture<Integer> apiFuture = new ListenableFutureToApiFuture<>(future);
-    future.set(3);
-    Truth.assertThat(apiFuture.get()).isEqualTo(3);
-  }
-
-  @Test
-  void testToStringShowsUnderlyingFutureToString() {
-    String customInnerFutureDesc = "my-custom-toString-impl";
-    ListenableFuture<String> listenableFuture =
-        new AbstractFuture<String>() {
+  void testThatInnerToStringIsNotLost() {
+    String customInnerToString = "my-custom-inner-tostring";
+    ApiFuture<String> apiFuture =
+        new AbstractApiFuture<String>() {
           @Override
           public String toString() {
-            return customInnerFutureDesc;
+            return customInnerToString;
           }
         };
-
-    ListenableFutureToApiFuture<String> apiFuture =
-        new ListenableFutureToApiFuture<>(listenableFuture);
-    Truth.assertThat(apiFuture.toString()).contains(customInnerFutureDesc);
+    ApiFutureToListenableFuture<String> listenableFuture =
+        new ApiFutureToListenableFuture<>(apiFuture);
+    assertThat(listenableFuture.toString()).contains(customInnerToString);
   }
 }
