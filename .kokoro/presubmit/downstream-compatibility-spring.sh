@@ -48,6 +48,10 @@ pushd spring-cloud-gcp
 
 # Generate showcase autoconfig
 pushd spring-cloud-generator
+# The script is not executable for non-owners. Here we manually chmod it.
+# TODO(diegomarquezp): remove this line after
+# https://github.com/GoogleCloudPlatform/spring-cloud-gcp/pull/3183 is merged
+chmod 755 ./scripts/generate-showcase.sh
 ./scripts/generate-showcase.sh
 pushd showcase/showcase-spring-starter
 mvn verify
