@@ -22,8 +22,6 @@ from library_generation.cli.entry_point import (
 )
 from library_generation.model.generation_config import from_yaml
 
-from cli.entry_point import __generate_repo_and_pr_description_impl
-
 script_dir = os.path.dirname(os.path.realpath(__file__))
 test_resource_dir = os.path.join(script_dir, "..", "resources", "test-config")
 
