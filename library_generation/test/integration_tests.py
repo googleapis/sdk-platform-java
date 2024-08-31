@@ -53,7 +53,8 @@ current_config_name = "current_generation_config.yaml"
 # library_generation/test/resources/integration/test_generator_coordinates
 # This allows us to decouple the generation workflow testing with what the
 # generator jar will actually generate.
-# See library_generation/DEVELOPMENT.MD
+# See library_generation/DEVELOPMENT.md ("The Hermetic Build's
+# well-known folder).
 WELL_KNOWN_GENERATOR_JAR_FILENAME = "gapic-generator-java.jar"
 
 
