@@ -15,6 +15,8 @@
 import sys
 import glob
 import json
+from xml.etree.ElementTree import ElementTree
+
 from lxml import etree
 import os
 import re
@@ -92,7 +94,10 @@ def _is_cloud_client(existing_modules: List[module.Module]) -> bool:
 
 
 def update_cloud_pom(
-    filename: str, proto_modules: List[module.Module], grpc_modules: List[module.Module]
+    filename: str,
+    proto_modules: List[module.Module],
+    grpc_modules: List[module.Module],
+    is_monorepo: bool,
 ):
     tree = etree.parse(filename)
     root = tree.getroot()
@@ -103,6 +108,9 @@ def update_cloud_pom(
         for m in dependencies
         if m.find("{http://maven.apache.org/POM/4.0.0}artifactId") is not None
     ]
+
+    if is_monorepo:
+        _set_test_scoped_deps(dependencies)
 
     try:
         grpc_index = _find_dependency_index(
@@ -167,6 +175,39 @@ def update_cloud_pom(
                 dependencies.insert(proto_index + 1, new_dependency)
 
     tree.write(filename, pretty_print=True, xml_declaration=True, encoding="utf-8")
+
+
+def _set_test_scoped_deps(dependencies: list[ElementTree]) -> None:
+    """
+    As of July 2024, we have two dependencies that should be declared as
+    test-scoped in a monorepo: grpc-google-common-protos and grpc-google-iam-v1.
+    HW libraries are treated as usual
+    :param dependencies: List of XML Objects representing a <dependency/>
+    """
+    TEST_SCOPED_DEPENDENCIES = ["grpc-google-common-protos", "grpc-google-iam-v1"]
+    print(
+        'converting dependencies "grpc-google-common-protos" and "grpc-google-iam-v1" to test-scoped'
+    )
+    for d in dependencies:
+        artifact_query = "{http://maven.apache.org/POM/4.0.0}artifactId"
+        scope_query = "{http://maven.apache.org/POM/4.0.0}scope"
+        current_scope = d.find(scope_query)
+        artifact_id_elem = d.find(artifact_query)
+        if artifact_id_elem is None:
+            continue
+        artifact_id = artifact_id_elem.text
+        is_test_scoped = (
+            current_scope.text == "test" if current_scope is not None else False
+        )
+        if artifact_id in TEST_SCOPED_DEPENDENCIES and not is_test_scoped:
+            new_scope = etree.Element(scope_query)
+            new_scope.text = "test"
+            if current_scope is not None:
+                d.replace(current_scope, new_scope)
+            else:
+                d.append(new_scope)
+            new_scope.tail = "\n    "
+            new_scope.getprevious().tail = "\n      "
 
 
 def update_parent_pom(filename: str, modules: List[module.Module]):
@@ -492,7 +533,9 @@ def main(versions_file, monorepo):
     if os.path.isfile(f"{artifact_id}/pom.xml"):
         print("updating modules in cloud pom.xml")
         if artifact_id not in excluded_poms_list:
-            update_cloud_pom(f"{artifact_id}/pom.xml", proto_modules, grpc_modules)
+            update_cloud_pom(
+                f"{artifact_id}/pom.xml", proto_modules, grpc_modules, monorepo
+            )
     elif artifact_id not in excluded_poms_list:
         print("creating missing cloud pom.xml")
         templates.render(
