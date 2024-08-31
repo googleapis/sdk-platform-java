@@ -4,8 +4,7 @@
 
 # Linting
 
-When contributing, ensure your changes to python code have a valid
-format.
+When contributing, ensure your changes to python code have a valid format.
 
 ```
 python -m pip install black
@@ -30,9 +29,9 @@ python -m unittest test/integration_tests.py
 # Running the unit tests
 
 The unit tests of the hermetic build scripts are contained in several scripts,
-corresponding to a specific component. Every unit test script ends with
-`unit_tests.py`. To avoid them specifying them
-individually, we can use the following command:
+corresponding to a specific component.
+Every unit test script ends with `unit_tests.py`.
+To avoid them specifying them individually, we can use the following command:
 
 ```bash
 python -m unittest discover -s test/ -p "*unit_tests.py"
@@ -45,28 +44,32 @@ python -m unittest discover -s test/ -p "*unit_tests.py"
 # Running the scripts in your local environment
 
 Although the scripts are designed to be run in a Docker container, you can also
-run them directly. This section explains how to run the entrypoint script
+run them directly.
+This section explains how to run the entrypoint script
 (`library_generation/cli/entry_point.py`).
 
 ## Assumptions made by the scripts
 ### The Hermetic Build's well-known folder
 Located in `${HOME}/.library_generation`, this folder is assumed by the scripts
-to contain the generator JAR. Please note that this is a recent feature and only
-this jar is expected to be there. Soon enough, more binaries such as the gRPC
-and protoc plugins will also be stored here. Developers must make sure
-this folder is properly configured before running the scripts locally.
-Note that this relies on the `HOME` en var which is always
-defined as per
+to contain the generator JAR. 
+Please note that this is a recent feature and only this jar is expected to be
+there. 
+Soon enough, more binaries such as the gRPC and protoc plugins will also be
+stored here. 
+Developers must make sure this folder is properly configured before running the
+scripts locally.
+Note that this relies on the `HOME` en var which is always defined as per
 [POSIX env var definition](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html).
 
 #### Put the gapic-generator-java jar in its well-known location
 
 Run `cd sdk-platform-java && mvn install -DskipTests -Dclirr.skip
--Dcheckstyle.skip`. This will generate a jar located in
+-Dcheckstyle.skip`. 
+This will generate a jar located in
 `~/.m2/repository/com/google/api/gapic-generator-java/{version}/gapic-generator-java-{version}.jar`
 
-Then `mv` the jar into the well-known location of the jar. The
-generation scripts will assume the jar is there.
+Then `mv` the jar into the well-known location of the jar. 
+The generation scripts will assume the jar is there.
 
 ```shell
 mv /path/to/jar "${HOME}/.library_generation/gapic-generator-java.jar"
@@ -137,9 +140,9 @@ This will create an `image-id` file at the root of the repo with the hash ID of
 the image.
 
 ## Run the docker image
-The docker image will perform changes on its internal `/workspace` folder, to which you
-need to map a folder on your host machine (i.e. map your downloaded repo to this
-folder).
+The docker image will perform changes on its internal `/workspace` folder, 
+to which you need to map a folder on your host machine (i.e. map your downloaded
+repo to this folder).
 
 To run the docker container on the google-cloud-java repo, you must run:
 ```bash
@@ -156,9 +159,9 @@ docker run -u "$(id -u)":"$(id -g)"  -v/path/to/google-cloud-java:/workspace $(c
 
 ## Debug the created containers
 If you are working on changing the way the containers are created, you may want
-to inspect the containers to check the setup. It would be convenient in such
-case to have a text editor/viewer available. You can achieve this by modifying
-the Dockerfile as follows:
+to inspect the containers to check the setup.
+It would be convenient in such case to have a text editor/viewer available. 
+You can achieve this by modifying the Dockerfile as follows:
 
 ```docker
 # install OS tools
