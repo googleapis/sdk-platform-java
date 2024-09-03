@@ -17,6 +17,7 @@ import sys
 import click as click
 from library_generation.generate_pr_description import generate_pr_descriptions
 from library_generation.generate_repo import generate_from_yaml
+from library_generation.model.config_change import ConfigChange
 from library_generation.model.generation_config import from_yaml
 from library_generation.utils.generation_config_comparator import compare_config
 
@@ -145,11 +146,10 @@ def __generate_repo_and_pr_description_impl(
         baseline_config=from_yaml(baseline_generation_config_path),
         current_config=from_yaml(current_generation_config_path),
     )
-    # pass None if this is not a monorepo in order to trigger the full
-    # generation
+    # pass None if we want to fully generate the repository.
     target_library_names = (
         config_change.get_changed_libraries()
-        if config_change.current_config.is_monorepo()
+        if not __needs_full_repo_generation(config_change=config_change)
         else None
     )
     generate_from_yaml(
@@ -161,6 +161,15 @@ def __generate_repo_and_pr_description_impl(
         config_change=config_change,
         description_path=repository_path,
     )
+
+
+def __needs_full_repo_generation(config_change: ConfigChange) -> bool:
+    """
+    Whether you should need a full repo generation, i.e., generate all
+    libraries in the generation configuration.
+    """
+    current_config = config_change.current_config
+    return not current_config.is_monorepo() or current_config.contains_common_protos()
 
 
 @main.command()
