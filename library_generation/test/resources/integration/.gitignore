@@ -1,2 +1,0 @@
-# Ignore all downloaded jars. The integration test downloads a specific generator jar
-*.jar
