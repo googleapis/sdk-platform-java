@@ -54,8 +54,6 @@ Located in `${HOME}/.library_generation`, this folder is assumed by the scripts
 to contain the generator JAR. 
 Please note that this is a recent feature and only this jar is expected to be
 there. 
-Soon enough, more binaries such as the gRPC and protoc plugins will also be
-stored here. 
 Developers must make sure this folder is properly configured before running the
 scripts locally.
 Note that this relies on the `HOME` en var which is always defined as per
