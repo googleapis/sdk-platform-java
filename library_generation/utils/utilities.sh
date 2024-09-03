@@ -124,7 +124,7 @@ get_protoc_version() {
     echo "${DOCKER_PROTOC_VERSION}"
     return
   else
-    >&2 echo "Cannot infer protoc version because DOCKER_GRPC_VERSION is not set"
+    >&2 echo "Cannot infer protoc version because DOCKER_PROTOC_VERSION is not set"
     exit 1
   fi
 }

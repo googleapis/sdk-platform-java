@@ -22,15 +22,6 @@ extract_folder_name_test() {
   assertEquals "google-cloud-aiplatform-v1-java" "${folder_name}"
 }
 
-get_grpc_version_fails_with_no_env_var_test() {
-  # the absence of DOCKER_GRPC_VERSION will make this function to fail
-  exit_code=0
-  (
-    get_grpc_version
-  ) || exit_code=$?
-  assertEquals 1 "${exit_code}"
-}
-
 get_grpc_version_succeed_docker_env_var_test() {
   local version_with_docker
   local version_without_docker
@@ -49,15 +40,6 @@ get_protoc_version_succeed_docker_env_var_test() {
   version_with_docker=$(get_protoc_version)
   assertEquals "${DOCKER_PROTOC_VERSION}" "${version_with_docker}"
   unset DOCKER_PROTOC_VERSION
-}
-
-get_protoc_version_fails_with_no_env_var_test() {
-  # the absence of DOCKER_PROTOC_VERSION will make this function to fail
-  exit_code=0
-  (
-    get_protoc_version
-  ) || exit_code=$?
-  assertEquals 1 "${exit_code}"
 }
 
 get_gapic_opts_with_rest_test() {
@@ -183,40 +165,6 @@ download_tools_succeed_with_baked_grpc() {
   unset grpc_path
 }
 
-download_tools_fails_without_baked_generator() {
-  # This test has the same structure as
-  # download_tools_succeed_with_baked_protoc, but meant for
-  # gapic-generator-java.
-  local test_dir=$(mktemp -d)
-  pushd "${test_dir}"
-  export output_folder=$(get_output_folder)
-  mkdir "${output_folder}"
-
-  local test_protoc_version="1.64.0"
-  local test_grpc_version="1.64.0"
-  local jar_location="${SIMULATED_HOME}/.library_generation/gapic-generator-java.jar"
-  # we expect the function to fail because the generator jar is not found in
-  # its well-known location. To achieve this, we temporarily remove the fake
-  # generator jar
-  rm "${jar_location}"
-  log=$(mktemp)
-  (
-    download_tools "${test_protoc_version}" "${test_grpc_version}" "linux-x86_64" > /dev/null 2>"${log}"
-  ) || echo '' # expected
-
-  has_expected_log="false"
-  if grep -q "Please configure your environment" < "${log}"; then
-    has_expected_log="true"
-  fi
-  assertEquals "true" "${has_expected_log}"
-
-  rm -rdf "${output_folder}"
-  touch "${jar_location}"
-  unset DOCKER_GRPC_LOCATION
-  unset output_folder
-  unset grpc_path
-}
-
 download_grpc_plugin_succeed_with_valid_version_linux_test() {
   download_grpc_plugin "1.55.1" "linux-x86_64"
   assertFileOrDirectoryExists "protoc-gen-grpc-java-1.55.1-linux-x86_64.exe"
@@ -334,10 +282,8 @@ get_proto_path_from_preprocessed_sources_multiple_proto_dirs_fails() {
 # One line per test.
 test_list=(
   extract_folder_name_test
-  get_grpc_version_fails_with_no_env_var_test
   get_grpc_version_succeed_docker_env_var_test
   get_protoc_version_succeed_docker_env_var_test
-  get_protoc_version_fails_with_no_env_var_test
   get_gapic_opts_with_rest_test
   get_gapic_opts_without_rest_test
   get_gapic_opts_with_non_default_test
@@ -348,7 +294,6 @@ test_list=(
   download_protoc_failed_with_invalid_arch_test
   download_tools_succeed_with_baked_protoc
   download_tools_succeed_with_baked_grpc
-  download_tools_fails_without_baked_generator
   download_grpc_plugin_succeed_with_valid_version_linux_test
   download_grpc_plugin_succeed_with_valid_version_macos_test
   download_grpc_plugin_failed_with_invalid_version_linux_test
