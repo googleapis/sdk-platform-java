@@ -64,22 +64,17 @@ fi
 
 image_tag=local
 workspace_name="/workspace"
-baseline_generation_config="baseline_generation_config.yaml"
 docker_file="library_generation.Dockerfile"
 message="chore: generate libraries at $(date)"
 
-git checkout "${target_branch}"
 git checkout "${current_branch}"
-# if the last commit doesn't contain changes to generation configuration,
-# do not generate again as the result will be the same.
+# if the last commit doesn't contain changes to generation configuration
+# or Dockerfile, do not generate again as the result will be the same.
 change_of_last_commit="$(git diff-tree --no-commit-id --name-only HEAD~1..HEAD -r)"
 if [[ ! ("${change_of_last_commit}" == *"${generation_config}"* || "${change_of_last_commit}" == *"${docker_file}"*) ]]; then
     echo "The last commit doesn't contain any changes to the generation_config.yaml or Dockerfile, skipping the whole generation process." || true
     exit 0
 fi
-# copy generation configuration from target branch to current branch.
-git show "${target_branch}":"${generation_config}" > "${baseline_generation_config}"
-config_diff=$(diff "${generation_config}" "${baseline_generation_config}" || true)
 
 generator_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
 echo "Local generator version: ${generator_version}"
@@ -99,22 +94,18 @@ docker run \
   -v "$(pwd):${workspace_name}" \
   -v "$HOME"/.m2:/home/.m2 \
   -e GENERATOR_VERSION="${generator_version}" \
-  gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
-  --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
-  --current-generation-config-path="${workspace_name}/${generation_config}"
+  gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}"
 
 # commit the change to the pull request.
-rm -rdf output googleapis "${baseline_generation_config}"
+rm -rdf output googleapis
 git add --all -- ':!pr_description.txt'
 changed_files=$(git diff --cached --name-only)
 if [[ "${changed_files}" == "" ]]; then
-    echo "There is no generated code change with the generation config and Dockerfile change ${config_diff}."
+    echo "There is no generated code change."
     echo "Skip committing to the pull request."
     exit 0
 fi
 
-echo "Configuration diff:"
-echo "${config_diff}"
 git commit -m "${message}"
 git push
 # set pr body if pr_description.txt is generated.
