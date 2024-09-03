@@ -88,6 +88,22 @@ def generate(
     The commit history, if generated, will be available in
     repository_path/pr_description.txt.
     """
+    __generate_repo_and_pr_description_impl(
+        baseline_generation_config_path, current_generation_config_path, repository_path
+    )
+
+
+def __generate_repo_and_pr_description_impl(
+    baseline_generation_config_path: str,
+    current_generation_config_path: str,
+    repository_path: str,
+):
+    """
+    Implementation method for generate().
+    The decoupling of generate and __generate_repo_and_pr_description_impl is
+    meant to allow testing of this implementation function.
+    """
+
     default_generation_config_path = f"{os.getcwd()}/generation_config.yaml"
 
     if (
@@ -129,10 +145,17 @@ def generate(
         baseline_config=from_yaml(baseline_generation_config_path),
         current_config=from_yaml(current_generation_config_path),
     )
+    # pass None if this is not a monorepo in order to trigger the full
+    # generation
+    target_library_names = (
+        config_change.get_changed_libraries()
+        if config_change.current_config.is_monorepo()
+        else None
+    )
     generate_from_yaml(
         config=config_change.current_config,
         repository_path=repository_path,
-        target_library_names=config_change.get_changed_libraries(),
+        target_library_names=target_library_names,
     )
     generate_pr_descriptions(
         config_change=config_change,
