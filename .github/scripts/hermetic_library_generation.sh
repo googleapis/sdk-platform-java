@@ -68,8 +68,8 @@ docker_file="library_generation.Dockerfile"
 message="chore: generate libraries at $(date)"
 
 git checkout "${current_branch}"
-# if the last commit doesn't contain changes to generation configuration,
-# do not generate again as the result will be the same.
+# if the last commit doesn't contain changes to generation configuration
+# or Dockerfile, do not generate again as the result will be the same.
 change_of_last_commit="$(git diff-tree --no-commit-id --name-only HEAD~1..HEAD -r)"
 if [[ ! ("${change_of_last_commit}" == *"${generation_config}"* || "${change_of_last_commit}" == *"${docker_file}"*) ]]; then
     echo "The last commit doesn't contain any changes to the generation_config.yaml or Dockerfile, skipping the whole generation process." || true
