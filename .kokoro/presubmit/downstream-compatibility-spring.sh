@@ -34,8 +34,8 @@ git clone "https://github.com/GoogleCloudPlatform/spring-cloud-gcp.git" --depth=
 update_all_poms_dependency "spring-cloud-gcp" "gapic-generator-java-bom" "${GAPIC_GENERATOR_VERSION}"
 
 # Install spring-cloud-gcp modules
-pushd spring-cloud-gcp/spring-cloud-generator
-../mvnw \
+pushd spring-cloud-gcp
+./mvnw \
   -U \
   --batch-mode \
   --no-transfer-progress \
@@ -47,10 +47,16 @@ pushd spring-cloud-gcp/spring-cloud-generator
 
 
 # Generate showcase autoconfig
+pushd spring-cloud-generator
+# The script is not executable for non-owners. Here we manually chmod it.
+# TODO(diegomarquezp): remove this line after
+# https://github.com/GoogleCloudPlatform/spring-cloud-gcp/pull/3183 is merged and released.
+chmod 755 ./scripts/generate-showcase.sh
 ./scripts/generate-showcase.sh
 pushd showcase/showcase-spring-starter
 mvn verify
 popd # showcase/showcase-spring-starter
 
-popd # spring-cloud-gcp/spring-cloud-generator
+popd # spring-cloud-generator
+popd # spring-cloud-gcp
 popd # gapic-generator-java/target

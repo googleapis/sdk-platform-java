@@ -29,7 +29,9 @@ from library_generation.test.compare_poms import compare_xml
 from library_generation.utils.utilities import sh_util as shell_call
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
-golden_dir = os.path.join(script_dir, "resources", "integration", "golden")
+config_dir = os.path.join(script_dir, "resources", "integration")
+golden_dir = os.path.join(config_dir, "golden")
+generator_jar_coordinates_file = os.path.join(config_dir, "test_generator_coordinates")
 repo_root_dir = os.path.join(script_dir, "..", "..")
 build_file = os.path.join(
     repo_root_dir, ".cloudbuild", "library_generation", "library_generation.Dockerfile"
@@ -42,15 +44,25 @@ committish_map = {
     "google-cloud-java": "chore/test-hermetic-build",
     "java-bigtable": "chore/test-hermetic-build",
 }
-config_dir = f"{script_dir}/resources/integration"
 baseline_config_name = "baseline_generation_config.yaml"
 current_config_name = "current_generation_config.yaml"
+
+# This variable is used to override the jar created by building the image
+# with our own downloaded jar in order to lock the integration test to use
+# a constant version specified in
+# library_generation/test/resources/integration/test_generator_coordinates
+# This allows us to decouple the generation workflow testing with what the
+# generator jar will actually generate.
+# See library_generation/DEVELOPMENT.md ("The Hermetic Build's
+# well-known folder).
+WELL_KNOWN_GENERATOR_JAR_FILENAME = "gapic-generator-java.jar"
 
 
 class IntegrationTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        IntegrationTest.__build_image(docker_file=build_file, cwd=repo_root_dir)
+        cls.__download_generator_jar(coordinates_file=generator_jar_coordinates_file)
+        cls.__build_image(docker_file=build_file, cwd=repo_root_dir)
 
     @classmethod
     def setUp(cls) -> None:
@@ -187,6 +199,41 @@ class IntegrationTest(unittest.TestCase):
         )
 
     @classmethod
+    def __download_generator_jar(cls, coordinates_file: str) -> None:
+        """
+        Downloads the jar at the version specified in the
+        coordinates file
+        :param coordinates_file: path to the file containing the coordinates
+        """
+        with open(coordinates_file, "r") as coordinates_file_handle:
+            # make this var available in the function scope
+            # nonlocal coordinates
+            coordinates = coordinates_file_handle.read()
+        # download the jar
+        subprocess.check_call(
+            [
+                "mvn",
+                "dependency:copy",
+                f"-Dartifact={coordinates}",
+                f"-DoutputDirectory={config_dir}",
+            ]
+        )
+
+        # compute the filename of the downloaded jar
+        split_coordinates = coordinates.split(":")
+        artifact_id = split_coordinates[1]
+        version = split_coordinates[2]
+        jar_filename = f"{artifact_id}-{version}.jar"
+
+        # rename the jar to its well-known filename defined at the top of this
+        # script file
+        source_jar_path = os.path.join(config_dir, jar_filename)
+        destination_jar_path = os.path.join(
+            config_dir, WELL_KNOWN_GENERATOR_JAR_FILENAME
+        )
+        shutil.move(source_jar_path, destination_jar_path)
+
+    @classmethod
     def __remove_generated_files(cls):
         shutil.rmtree(f"{output_dir}", ignore_errors=True)
         if os.path.isdir(f"{golden_dir}"):
@@ -247,6 +294,8 @@ class IntegrationTest(unittest.TestCase):
                 f"{repo_location}:/workspace/repo",
                 "-v",
                 f"{config_location}:/workspace/config",
+                "-v",
+                f"{config_dir}/{WELL_KNOWN_GENERATOR_JAR_FILENAME}:/home/.library_generation/{WELL_KNOWN_GENERATOR_JAR_FILENAME}",
                 "-w",
                 "/workspace/repo",
                 image_tag,

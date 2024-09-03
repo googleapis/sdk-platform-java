@@ -24,3 +24,5 @@ target/
 **/*egg-info/
 **/build/
 **/dist/
+library_generation/**/*.jar
+
