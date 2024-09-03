@@ -178,6 +178,7 @@ public abstract class ClientContext {
 
     String settingsGdchApiAudience = settings.getGdchApiAudience();
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
+    String credentialType = credentials.getCredentialType();
     boolean usingGDCH = credentials instanceof GdchCredentials;
     if (usingGDCH) {
       // Can only determine if the GDC-H is being used via the Credentials. The Credentials object
@@ -223,7 +224,7 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsExecutor() && settings.getExecutorProvider() != null) {
       transportChannelProvider = transportChannelProvider.withExecutor(backgroundExecutor);
     }
-    Map<String, String> headers = getHeadersFromSettings(settings);
+    Map<String, String> headers = getHeadersFromSettingsAndAppendCredentialType(settings, credentialType);
     if (transportChannelProvider.needsHeaders()) {
       transportChannelProvider = transportChannelProvider.withHeaders(headers);
     }
@@ -293,9 +294,10 @@ public abstract class ClientContext {
 
   /**
    * Getting a header map from HeaderProvider and InternalHeaderProvider from settings with Quota
-   * Project Id.
+   * Project Id. Then append credential type to x-goog-api-client header.
    */
-  private static Map<String, String> getHeadersFromSettings(StubSettings settings) {
+  private static Map<String, String> getHeadersFromSettingsAndAppendCredentialType(
+      StubSettings settings, String credentialType) {
     // Resolve conflicts when merging headers from multiple sources
     Map<String, String> userHeaders = settings.getHeaderProvider().getHeaders();
     Map<String, String> internalHeaders = settings.getInternalHeaderProvider().getHeaders();
@@ -322,6 +324,9 @@ public abstract class ClientContext {
     effectiveHeaders.putAll(userHeaders);
     effectiveHeaders.putAll(conflictResolution);
 
+    effectiveHeaders.computeIfPresent(
+        ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+        (key, value) -> value + " cred-type/" + credentialType);
     return ImmutableMap.copyOf(effectiveHeaders);
   }
 
