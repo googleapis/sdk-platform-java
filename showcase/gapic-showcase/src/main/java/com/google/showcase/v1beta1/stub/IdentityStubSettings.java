@@ -159,9 +159,7 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
 
             @Override
             public Iterable<User> extractResources(ListUsersResponse payload) {
-              return payload.getUsersList() == null
-                  ? ImmutableList.<User>of()
-                  : payload.getUsersList();
+              return payload.getUsersList();
             }
           };
 
@@ -195,9 +193,7 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
 
             @Override
             public Iterable<Location> extractResources(ListLocationsResponse payload) {
-              return payload.getLocationsList() == null
-                  ? ImmutableList.<Location>of()
-                  : payload.getLocationsList();
+              return payload.getLocationsList();
             }
           };
 

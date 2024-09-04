@@ -171,9 +171,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
             @Override
             public Iterable<LogEntry> extractResources(ListLogEntriesResponse payload) {
-              return payload.getEntriesList() == null
-                  ? ImmutableList.<LogEntry>of()
-                  : payload.getEntriesList();
+              return payload.getEntriesList();
             }
           };
 
@@ -220,9 +218,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
             @Override
             public Iterable<MonitoredResourceDescriptor> extractResources(
                 ListMonitoredResourceDescriptorsResponse payload) {
-              return payload.getResourceDescriptorsList() == null
-                  ? ImmutableList.<MonitoredResourceDescriptor>of()
-                  : payload.getResourceDescriptorsList();
+              return payload.getResourceDescriptorsList();
             }
           };
 
@@ -256,9 +252,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
             @Override
             public Iterable<String> extractResources(ListLogsResponse payload) {
-              return payload.getLogNamesList() == null
-                  ? ImmutableList.<String>of()
-                  : payload.getLogNamesList();
+              return payload.getLogNamesList();
             }
           };
 

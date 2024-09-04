@@ -166,9 +166,7 @@ public class SchemaServiceStubSettings extends StubSettings<SchemaServiceStubSet
 
             @Override
             public Iterable<Schema> extractResources(ListSchemasResponse payload) {
-              return payload.getSchemasList() == null
-                  ? ImmutableList.<Schema>of()
-                  : payload.getSchemasList();
+              return payload.getSchemasList();
             }
           };
 
@@ -206,9 +204,7 @@ public class SchemaServiceStubSettings extends StubSettings<SchemaServiceStubSet
 
             @Override
             public Iterable<Schema> extractResources(ListSchemaRevisionsResponse payload) {
-              return payload.getSchemasList() == null
-                  ? ImmutableList.<Schema>of()
-                  : payload.getSchemasList();
+              return payload.getSchemasList();
             }
           };
 

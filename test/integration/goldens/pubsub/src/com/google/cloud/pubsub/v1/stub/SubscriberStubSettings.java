@@ -186,9 +186,7 @@ public class SubscriberStubSettings extends StubSettings<SubscriberStubSettings>
 
             @Override
             public Iterable<Subscription> extractResources(ListSubscriptionsResponse payload) {
-              return payload.getSubscriptionsList() == null
-                  ? ImmutableList.<Subscription>of()
-                  : payload.getSubscriptionsList();
+              return payload.getSubscriptionsList();
             }
           };
 
@@ -222,9 +220,7 @@ public class SubscriberStubSettings extends StubSettings<SubscriberStubSettings>
 
             @Override
             public Iterable<Snapshot> extractResources(ListSnapshotsResponse payload) {
-              return payload.getSnapshotsList() == null
-                  ? ImmutableList.<Snapshot>of()
-                  : payload.getSnapshotsList();
+              return payload.getSnapshotsList();
             }
           };
 

@@ -178,9 +178,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
             @Override
             public Iterable<Topic> extractResources(ListTopicsResponse payload) {
-              return payload.getTopicsList() == null
-                  ? ImmutableList.<Topic>of()
-                  : payload.getTopicsList();
+              return payload.getTopicsList();
             }
           };
 
@@ -220,9 +218,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
             @Override
             public Iterable<String> extractResources(ListTopicSubscriptionsResponse payload) {
-              return payload.getSubscriptionsList() == null
-                  ? ImmutableList.<String>of()
-                  : payload.getSubscriptionsList();
+              return payload.getSubscriptionsList();
             }
           };
 
@@ -259,9 +255,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
             @Override
             public Iterable<String> extractResources(ListTopicSnapshotsResponse payload) {
-              return payload.getSnapshotsList() == null
-                  ? ImmutableList.<String>of()
-                  : payload.getSnapshotsList();
+              return payload.getSnapshotsList();
             }
           };
 

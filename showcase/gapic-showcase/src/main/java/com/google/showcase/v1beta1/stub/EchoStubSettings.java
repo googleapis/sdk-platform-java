@@ -82,7 +82,6 @@ import com.google.showcase.v1beta1.WaitMetadata;
 import com.google.showcase.v1beta1.WaitRequest;
 import com.google.showcase.v1beta1.WaitResponse;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
@@ -187,9 +186,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
             @Override
             public Iterable<EchoResponse> extractResources(PagedExpandResponse payload) {
-              return payload.getResponsesList() == null
-                  ? ImmutableList.<EchoResponse>of()
-                  : payload.getResponsesList();
+              return payload.getResponsesList();
             }
           };
 
@@ -230,9 +227,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
             @Override
             public Iterable<Map.Entry<String, PagedExpandResponseList>> extractResources(
                 PagedExpandLegacyMappedResponse payload) {
-              return payload.getAlphabetizedMap() == null
-                  ? Collections.<Map.Entry<String, PagedExpandResponseList>>emptySet()
-                  : payload.getAlphabetizedMap().entrySet();
+              return payload.getAlphabetizedMap().entrySet();
             }
           };
 
@@ -266,9 +261,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
             @Override
             public Iterable<Location> extractResources(ListLocationsResponse payload) {
-              return payload.getLocationsList() == null
-                  ? ImmutableList.<Location>of()
-                  : payload.getLocationsList();
+              return payload.getLocationsList();
             }
           };
 
