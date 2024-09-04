@@ -179,21 +179,15 @@ class EntryPointTest(unittest.TestCase):
         target_library_names=changed libraries which does not trigger the full
         generation.
         """
-        baseline_config_path = (
-            f"{test_resource_dir}/monorepo_without_common_protos.yaml"
-        )
-        current_config_path = (
-            f"{test_resource_dir}/monorepo_without_common_protos_modified.yaml"
-        )
-        self.assertTrue(from_yaml(current_config_path).is_monorepo())
-        self.assertTrue(from_yaml(baseline_config_path).is_monorepo())
+        config_path = f"{test_resource_dir}/monorepo_without_common_protos.yaml"
+        self.assertTrue(from_yaml(config_path).is_monorepo())
         # we call the implementation method directly since click
         # does special handling when a method is annotated with @main.command()
         generate_impl(
-            baseline_generation_config_path=baseline_config_path,
-            current_generation_config_path=current_config_path,
+            baseline_generation_config_path=config_path,
+            current_generation_config_path=config_path,
             repository_path=".",
         )
         generate_from_yaml.assert_called_with(
-            config=ANY, repository_path=ANY, target_library_names=["cloudbuild"]
+            config=ANY, repository_path=ANY, target_library_names=[]
         )

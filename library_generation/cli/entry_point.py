@@ -89,12 +89,12 @@ def generate(
     The commit history, if generated, will be available in
     repository_path/pr_description.txt.
     """
-    __generate_repo_and_pr_description_impl(
+    _generate_repo_and_pr_description_impl(
         baseline_generation_config_path, current_generation_config_path, repository_path
     )
 
 
-def __generate_repo_and_pr_description_impl(
+def _generate_repo_and_pr_description_impl(
     baseline_generation_config_path: str,
     current_generation_config_path: str,
     repository_path: str,
@@ -149,7 +149,7 @@ def __generate_repo_and_pr_description_impl(
     # pass None if we want to fully generate the repository.
     target_library_names = (
         config_change.get_changed_libraries()
-        if not __needs_full_repo_generation(config_change=config_change)
+        if not _needs_full_repo_generation(config_change=config_change)
         else None
     )
     generate_from_yaml(
@@ -163,7 +163,7 @@ def __generate_repo_and_pr_description_impl(
     )
 
 
-def __needs_full_repo_generation(config_change: ConfigChange) -> bool:
+def _needs_full_repo_generation(config_change: ConfigChange) -> bool:
     """
     Whether you should need a full repo generation, i.e., generate all
     libraries in the generation configuration.
