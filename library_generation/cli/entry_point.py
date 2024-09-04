@@ -89,12 +89,12 @@ def generate(
     The commit history, if generated, will be available in
     repository_path/pr_description.txt.
     """
-    _generate_repo_and_pr_description_impl(
+    __generate_repo_and_pr_description_impl(
         baseline_generation_config_path, current_generation_config_path, repository_path
     )
 
 
-def _generate_repo_and_pr_description_impl(
+def __generate_repo_and_pr_description_impl(
     baseline_generation_config_path: str,
     current_generation_config_path: str,
     repository_path: str,
