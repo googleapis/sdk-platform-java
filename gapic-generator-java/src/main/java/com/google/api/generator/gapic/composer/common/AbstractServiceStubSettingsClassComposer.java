@@ -65,13 +65,11 @@ import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
-import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.SuperObjectValue;
-import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -767,27 +765,9 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 .setGenerics(Arrays.asList(repeatedResponseType.reference()))
                 .build());
 
-    Expr getResponsesExpr;
-    Expr elseExpr;
-    Expr thenExpr;
     if (repeatedResponseType.reference() != null
         && "java.util.Map.Entry".equals(repeatedResponseType.reference().fullName())) {
-      getResponsesExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(payloadVarExpr)
-              .setMethodName(
-                  String.format("get%sMap", JavaStyle.toUpperCamelCase(repeatedFieldName)))
-              .setReturnType(returnType)
-              .build();
-      thenExpr =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(
-                  TypeNode.withReference(ConcreteReference.withClazz(Collections.class)))
-              .setGenerics(Arrays.asList(repeatedResponseType.reference()))
-              .setMethodName("emptySet")
-              .setReturnType(returnType)
-              .build();
-      elseExpr =
+      returnExpr =
           MethodInvocationExpr.builder()
               .setMethodName("entrySet")
               .setExprReferenceExpr(
@@ -799,39 +779,14 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
               .setReturnType(returnType)
               .build();
     } else {
-      getResponsesExpr =
+      returnExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(payloadVarExpr)
               .setMethodName(
                   String.format("get%sList", JavaStyle.toUpperCamelCase(repeatedFieldName)))
               .setReturnType(returnType)
               .build();
-      thenExpr =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(
-                  TypeNode.withReference(ConcreteReference.withClazz(ImmutableList.class)))
-              .setGenerics(Arrays.asList(repeatedResponseType.reference()))
-              .setMethodName("of")
-              .setReturnType(returnType)
-              .build();
-      elseExpr = getResponsesExpr;
     }
-    // While protobufs should not be null, this null-check is needed to protect against NPEs
-    // in paged iteration on clients that use legacy HTTP/JSON types, as these clients can
-    // actually return null instead of an empty list.
-    // Context:
-    //   Original issue: https://github.com/googleapis/google-cloud-java/issues/3736
-    //   Relevant discussion where this check was first added:
-    //        https://github.com/googleapis/google-cloud-java/pull/4499#discussion_r257057409
-    Expr conditionExpr =
-        RelationalOperationExpr.equalToWithExprs(getResponsesExpr, ValueExpr.createNullExpr());
-
-    returnExpr =
-        TernaryExpr.builder()
-            .setConditionExpr(conditionExpr)
-            .setThenExpr(thenExpr)
-            .setElseExpr(elseExpr)
-            .build();
     anonClassMethods.add(
         methodStarterBuilder
             .setReturnType(returnType)
