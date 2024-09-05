@@ -37,8 +37,6 @@
     <perfmark-api.version>0.27.0</perfmark-api.version>
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
     <google.cloud.opentelemetry.version>0.31.0</google.cloud.opentelemetry.version>
-    <opentelemetry-exporter-metrics.version>0.31.0</opentelemetry-exporter-metrics.version>
-    <opentelemetry-shared-resourcemapping.version>0.31.0</opentelemetry-shared-resourcemapping.version>
     <opentelemetry-grpc-instrumentation.version>2.1.0-alpha</opentelemetry-grpc-instrumentation.version>
     <opentelemetry-semconv.version>1.26.0-alpha</opentelemetry-semconv.version>
     <flogger.version>0.8</flogger.version>
@@ -149,12 +147,12 @@
       <dependency>
         <groupId>com.google.cloud.opentelemetry</groupId>
         <artifactId>exporter-metrics</artifactId>
-        <version>${opentelemetry-exporter-metrics.version}</version>
+        <version>${google.cloud.opentelemetry.version}</version>
       </dependency>
       <dependency>
         <groupId>com.google.cloud.opentelemetry</groupId>
         <artifactId>shared-resourcemapping</artifactId>
-        <version>${opentelemetry-shared-resourcemapping.version}</version>
+        <version>${google.cloud.opentelemetry.version}</version>
       </dependency>
 
       <!-- TODO: replace with opencensus-bom when available -->
