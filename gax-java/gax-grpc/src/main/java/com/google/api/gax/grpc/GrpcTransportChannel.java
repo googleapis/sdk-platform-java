@@ -60,6 +60,8 @@ public abstract class GrpcTransportChannel implements TransportChannel {
   /** The channel in use. */
   abstract ManagedChannel getManagedChannel();
 
+  public abstract boolean getUseDirectPath();
+
   public Channel getChannel() {
     return getManagedChannel();
   }
@@ -107,9 +109,15 @@ public abstract class GrpcTransportChannel implements TransportChannel {
     return newBuilder().setManagedChannel(channel).build();
   }
 
+  public static GrpcTransportChannel create(ManagedChannel channel, boolean canUseDirectPath) {
+    return newBuilder().setManagedChannel(channel).setUseDirectPath(canUseDirectPath).build();
+  }
+
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setManagedChannel(ManagedChannel value);
+
+    abstract Builder setUseDirectPath(boolean value);
 
     public abstract GrpcTransportChannel build();
   }

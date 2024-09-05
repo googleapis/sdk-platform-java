@@ -260,7 +260,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private TransportChannel createChannel() throws IOException {
     return GrpcTransportChannel.create(
         ChannelPool.create(
-            channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel));
+            channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel),
+        this.canUseDirectPath());
   }
 
   private boolean isDirectPathEnabled() {
