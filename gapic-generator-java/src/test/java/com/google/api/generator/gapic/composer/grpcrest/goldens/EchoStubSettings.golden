@@ -186,9 +186,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
             @Override
             public Iterable<EchoResponse> extractResources(PagedExpandResponse payload) {
-              return payload.getResponsesList() == null
-                  ? ImmutableList.<EchoResponse>of()
-                  : payload.getResponsesList();
+              return payload.getResponsesList();
             }
           };
 
@@ -222,9 +220,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
             @Override
             public Iterable<EchoResponse> extractResources(PagedExpandResponse payload) {
-              return payload.getResponsesList() == null
-                  ? ImmutableList.<EchoResponse>of()
-                  : payload.getResponsesList();
+              return payload.getResponsesList();
             }
           };
 

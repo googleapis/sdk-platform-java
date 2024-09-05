@@ -255,9 +255,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
 
             @Override
             public Iterable<Asset> extractResources(ListAssetsResponse payload) {
-              return payload.getAssetsList() == null
-                  ? ImmutableList.<Asset>of()
-                  : payload.getAssetsList();
+              return payload.getAssetsList();
             }
           };
 
@@ -296,9 +294,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
             @Override
             public Iterable<ResourceSearchResult> extractResources(
                 SearchAllResourcesResponse payload) {
-              return payload.getResultsList() == null
-                  ? ImmutableList.<ResourceSearchResult>of()
-                  : payload.getResultsList();
+              return payload.getResultsList();
             }
           };
 
@@ -337,9 +333,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
             @Override
             public Iterable<IamPolicySearchResult> extractResources(
                 SearchAllIamPoliciesResponse payload) {
-              return payload.getResultsList() == null
-                  ? ImmutableList.<IamPolicySearchResult>of()
-                  : payload.getResultsList();
+              return payload.getResultsList();
             }
           };
 
@@ -376,9 +370,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
 
             @Override
             public Iterable<SavedQuery> extractResources(ListSavedQueriesResponse payload) {
-              return payload.getSavedQueriesList() == null
-                  ? ImmutableList.<SavedQuery>of()
-                  : payload.getSavedQueriesList();
+              return payload.getSavedQueriesList();
             }
           };
 
