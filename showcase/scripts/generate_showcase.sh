@@ -66,7 +66,7 @@ if [[ -f "${well_known_generator_jar_location}" ]]; then
   echo "replacing well-known generator jar with the latest one"
   rm "${well_known_generator_jar_location}"
 fi
-maven_repository="$(mvn help:evaluate -Dexpression=settings.localRepository | grep -v '\[INFO\]')"
+maven_repository="$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)"
 generator_version=$(get_version_from_versions_txt "gapic-generator-java")
 source_jar_path="${maven_repository}/com/google/api/gapic-generator-java/${generator_version}/gapic-generator-java-${generator_version}.jar"
 
