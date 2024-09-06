@@ -51,7 +51,7 @@ jobs:
           -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${IMAGE_TAG}" \
           .
     - name: Generate changed libraries
-      uses: ./library_generation/generation.yaml
+      uses: ./.github/workflows/generation.yaml
       with:
         base_ref: ${{ github.base_ref }}
         head_ref: ${{ github.head_ref }}
