@@ -240,9 +240,7 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
 
             @Override
             public Iterable<Bucket> extractResources(ListBucketsResponse payload) {
-              return payload.getBucketsList() == null
-                  ? ImmutableList.<Bucket>of()
-                  : payload.getBucketsList();
+              return payload.getBucketsList();
             }
           };
 
@@ -280,9 +278,7 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
 
             @Override
             public Iterable<Notification> extractResources(ListNotificationsResponse payload) {
-              return payload.getNotificationsList() == null
-                  ? ImmutableList.<Notification>of()
-                  : payload.getNotificationsList();
+              return payload.getNotificationsList();
             }
           };
 
@@ -316,9 +312,7 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
 
             @Override
             public Iterable<Object> extractResources(ListObjectsResponse payload) {
-              return payload.getObjectsList() == null
-                  ? ImmutableList.<Object>of()
-                  : payload.getObjectsList();
+              return payload.getObjectsList();
             }
           };
 
@@ -353,9 +347,7 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
 
             @Override
             public Iterable<HmacKeyMetadata> extractResources(ListHmacKeysResponse payload) {
-              return payload.getHmacKeysList() == null
-                  ? ImmutableList.<HmacKeyMetadata>of()
-                  : payload.getHmacKeysList();
+              return payload.getHmacKeysList();
             }
           };
 

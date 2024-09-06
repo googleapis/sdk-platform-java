@@ -182,9 +182,7 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
 
             @Override
             public Iterable<Location> extractResources(ListLocationsResponse payload) {
-              return payload.getLocationsList() == null
-                  ? ImmutableList.<Location>of()
-                  : payload.getLocationsList();
+              return payload.getLocationsList();
             }
           };
 

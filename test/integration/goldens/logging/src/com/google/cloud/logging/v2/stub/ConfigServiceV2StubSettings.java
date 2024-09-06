@@ -249,9 +249,7 @@ public class ConfigServiceV2StubSettings extends StubSettings<ConfigServiceV2Stu
 
             @Override
             public Iterable<LogBucket> extractResources(ListBucketsResponse payload) {
-              return payload.getBucketsList() == null
-                  ? ImmutableList.<LogBucket>of()
-                  : payload.getBucketsList();
+              return payload.getBucketsList();
             }
           };
 
@@ -285,9 +283,7 @@ public class ConfigServiceV2StubSettings extends StubSettings<ConfigServiceV2Stu
 
             @Override
             public Iterable<LogView> extractResources(ListViewsResponse payload) {
-              return payload.getViewsList() == null
-                  ? ImmutableList.<LogView>of()
-                  : payload.getViewsList();
+              return payload.getViewsList();
             }
           };
 
@@ -321,9 +317,7 @@ public class ConfigServiceV2StubSettings extends StubSettings<ConfigServiceV2Stu
 
             @Override
             public Iterable<LogSink> extractResources(ListSinksResponse payload) {
-              return payload.getSinksList() == null
-                  ? ImmutableList.<LogSink>of()
-                  : payload.getSinksList();
+              return payload.getSinksList();
             }
           };
 
@@ -359,9 +353,7 @@ public class ConfigServiceV2StubSettings extends StubSettings<ConfigServiceV2Stu
 
             @Override
             public Iterable<LogExclusion> extractResources(ListExclusionsResponse payload) {
-              return payload.getExclusionsList() == null
-                  ? ImmutableList.<LogExclusion>of()
-                  : payload.getExclusionsList();
+              return payload.getExclusionsList();
             }
           };
 

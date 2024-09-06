@@ -171,9 +171,7 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
 
             @Override
             public Iterable<Shelf> extractResources(ListShelvesResponse payload) {
-              return payload.getShelvesList() == null
-                  ? ImmutableList.<Shelf>of()
-                  : payload.getShelvesList();
+              return payload.getShelvesList();
             }
           };
 
@@ -207,9 +205,7 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
 
             @Override
             public Iterable<Book> extractResources(ListBooksResponse payload) {
-              return payload.getBooksList() == null
-                  ? ImmutableList.<Book>of()
-                  : payload.getBooksList();
+              return payload.getBooksList();
             }
           };
 

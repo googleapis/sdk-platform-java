@@ -150,9 +150,7 @@ public class ConnectionServiceStubSettings extends StubSettings<ConnectionServic
 
             @Override
             public Iterable<Connection> extractResources(ListConnectionsResponse payload) {
-              return payload.getConnectionsList() == null
-                  ? ImmutableList.<Connection>of()
-                  : payload.getConnectionsList();
+              return payload.getConnectionsList();
             }
           };
 

@@ -238,9 +238,7 @@ public class KeyManagementServiceStubSettings
 
             @Override
             public Iterable<KeyRing> extractResources(ListKeyRingsResponse payload) {
-              return payload.getKeyRingsList() == null
-                  ? ImmutableList.<KeyRing>of()
-                  : payload.getKeyRingsList();
+              return payload.getKeyRingsList();
             }
           };
 
@@ -275,9 +273,7 @@ public class KeyManagementServiceStubSettings
 
             @Override
             public Iterable<CryptoKey> extractResources(ListCryptoKeysResponse payload) {
-              return payload.getCryptoKeysList() == null
-                  ? ImmutableList.<CryptoKey>of()
-                  : payload.getCryptoKeysList();
+              return payload.getCryptoKeysList();
             }
           };
 
@@ -316,9 +312,7 @@ public class KeyManagementServiceStubSettings
             @Override
             public Iterable<CryptoKeyVersion> extractResources(
                 ListCryptoKeyVersionsResponse payload) {
-              return payload.getCryptoKeyVersionsList() == null
-                  ? ImmutableList.<CryptoKeyVersion>of()
-                  : payload.getCryptoKeyVersionsList();
+              return payload.getCryptoKeyVersionsList();
             }
           };
 
@@ -353,9 +347,7 @@ public class KeyManagementServiceStubSettings
 
             @Override
             public Iterable<ImportJob> extractResources(ListImportJobsResponse payload) {
-              return payload.getImportJobsList() == null
-                  ? ImmutableList.<ImportJob>of()
-                  : payload.getImportJobsList();
+              return payload.getImportJobsList();
             }
           };
 
@@ -389,9 +381,7 @@ public class KeyManagementServiceStubSettings
 
             @Override
             public Iterable<Location> extractResources(ListLocationsResponse payload) {
-              return payload.getLocationsList() == null
-                  ? ImmutableList.<Location>of()
-                  : payload.getLocationsList();
+              return payload.getLocationsList();
             }
           };
 
