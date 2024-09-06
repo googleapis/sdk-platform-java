@@ -45,19 +45,19 @@ jobs:
     - name: Get local generator version
       shell: bash
       run: |
-        generator_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
-        echo "generator_version=${generator_version}" >> "$GITHUB_ENV"
+        GENERATOR_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
+        echo "GENERATOR_VERSION=${GENERATOR_VERSION}" >> "$GITHUB_ENV"
     - name: Build image
       shell: bash
       run: |
         docker build \
           -f .cloudbuild/library_generation/library_generation.Dockerfile \
-          -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${generator_version}" \
+          -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${GENERATOR_VERSION}" \
           .
     - name: Generate changed libraries
       uses: ./library_generation
       with:
         base_ref: ${{ github.base_ref }}
         head_ref: ${{ github.head_ref }}
-        image_tag: ${generator_version}
+        image_tag: ${{ env.GENERATOR_VERSION }}
         token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
