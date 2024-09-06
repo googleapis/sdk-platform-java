@@ -33,6 +33,9 @@ jobs:
           exit 0
         fi
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
     - uses: actions/setup-java@v4
       with:
         java-version: 17
@@ -41,7 +44,10 @@ jobs:
     - name: Install Maven modules
       shell: bash
       run: |
+        git checkout "${HEAD_REF}"
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+      env:
+        HEAD_REF: ${{ github.head_ref }}
     - name: Get local generator version
       shell: bash
       run: |

@@ -17,11 +17,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - uses: actions/checkout@v4
-    with:
-      fetch-depth: 0
-      clean: false
-      token: ${{ inputs.token }}
   - name: Generate changed libraries
     shell: bash
     run: |
