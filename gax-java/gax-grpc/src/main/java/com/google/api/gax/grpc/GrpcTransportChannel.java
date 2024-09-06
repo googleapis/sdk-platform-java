@@ -106,7 +106,7 @@ public abstract class GrpcTransportChannel implements TransportChannel {
   }
 
   public static Builder newBuilder() {
-    return new AutoValue_GrpcTransportChannel.Builder();
+    return new AutoValue_GrpcTransportChannel.Builder().setUseDirectPath(false);
   }
 
   public static GrpcTransportChannel create(ManagedChannel channel) {
