@@ -22,6 +22,7 @@ set -e
 # The parameters of this script is:
 # 1. target_branch, the branch into which the pull request is merged.
 # 2. current_branch, the branch with which the pull request is associated.
+# 3. image_tag,
 # 3. [optional] generation_config, the path to the generation configuration,
 # the default value is generation_config.yaml in the repository root.
 while [[ $# -gt 0 ]]; do
@@ -33,6 +34,10 @@ case "${key}" in
     ;;
   --current_branch)
     current_branch="$2"
+    shift
+    ;;
+  --image_tag)
+    image_tag="$2"
     shift
     ;;
   --generation_config)
@@ -62,7 +67,6 @@ if [ -z "${generation_config}" ]; then
   echo "Use default generation config: ${generation_config}"
 fi
 
-image_tag=local
 workspace_name="/workspace"
 baseline_generation_config="baseline_generation_config.yaml"
 message="chore: generate libraries at $(date)"
@@ -76,14 +80,6 @@ git show "${target_branch}":"${generation_config}" > "${baseline_generation_conf
 generator_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
 echo "Local generator version: ${generator_version}"
 
-# install generator locally since we're using a SNAPSHOT version.
-mvn -V -B -ntp clean install -DskipTests
-
-# build image locally since we want to include latest change.
-docker build \
-  -f .cloudbuild/library_generation/library_generation.Dockerfile \
-  -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
-  .
 # run hermetic code generation docker image.
 docker run \
   --rm \
