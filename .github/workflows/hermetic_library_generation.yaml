@@ -51,5 +51,5 @@ jobs:
       with:
         base_ref: ${{ github.base_ref }}
         head_ref: ${{ github.head_ref }}
-        image_tag: ${ IMAGE_TAG }
+        image_tag: ${{ env.IMAGE_TAG }}
         token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
