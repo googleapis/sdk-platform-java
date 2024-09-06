@@ -20,7 +20,6 @@ on:
 env:
   REPO_FULL_NAME: ${{ github.event.pull_request.head.repo.full_name }}
   GITHUB_REPOSITORY: ${{ github.repository }}
-  IMAGE_TAG: local
 jobs:
   library_generation:
     runs-on: ubuntu-latest
@@ -39,17 +38,26 @@ jobs:
         java-version: 17
         distribution: temurin
         cache: maven
+    - name: Install Maven modules
+      shell: bash
+      run: |
+        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+    - name: Get local generator version
+      shell: bash
+      run: |
+        generator_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
+        echo "generator_version=${generator_version}" >> "$GITHUB_ENV"
     - name: Build image
       shell: bash
       run: |
         docker build \
           -f .cloudbuild/library_generation/library_generation.Dockerfile \
-          -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${IMAGE_TAG}" \
+          -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${generator_version}" \
           .
     - name: Generate changed libraries
       uses: ./library_generation
       with:
         base_ref: ${{ github.base_ref }}
         head_ref: ${{ github.head_ref }}
-        image_tag: ${{ env.IMAGE_TAG }}
+        image_tag: ${generator_version}
         token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}

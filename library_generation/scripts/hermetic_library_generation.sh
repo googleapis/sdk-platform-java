@@ -77,16 +77,13 @@ git checkout "${current_branch}"
 # copy generation configuration from target branch to current branch.
 git show "${target_branch}":"${generation_config}" > "${baseline_generation_config}"
 
-generator_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
-echo "Local generator version: ${generator_version}"
-
 # run hermetic code generation docker image.
 docker run \
   --rm \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):${workspace_name}" \
   -v "$HOME"/.m2:/home/.m2 \
-  -e GENERATOR_VERSION="${generator_version}" \
+  -e GENERATOR_VERSION="${image_tag}" \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
   --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
   --current-generation-config-path="${workspace_name}/${generation_config}"
