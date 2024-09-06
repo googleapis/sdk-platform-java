@@ -144,6 +144,16 @@
         <artifactId>opentelemetry-semconv</artifactId>
         <version>${opentelemetry-semconv.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.google.cloud.opentelemetry</groupId>
+        <artifactId>exporter-metrics</artifactId>
+        <version>${google.cloud.opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.cloud.opentelemetry</groupId>
+        <artifactId>shared-resourcemapping</artifactId>
+        <version>${google.cloud.opentelemetry.version}</version>
+      </dependency>
 
       <!-- TODO: replace with opencensus-bom when available -->
       <dependency>
