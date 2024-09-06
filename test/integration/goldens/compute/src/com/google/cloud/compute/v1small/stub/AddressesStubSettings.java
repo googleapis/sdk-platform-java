@@ -59,7 +59,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
@@ -201,9 +200,7 @@ public class AddressesStubSettings extends StubSettings<AddressesStubSettings> {
             @Override
             public Iterable<Map.Entry<String, AddressesScopedList>> extractResources(
                 AddressAggregatedList payload) {
-              return payload.getItemsMap() == null
-                  ? Collections.<Map.Entry<String, AddressesScopedList>>emptySet()
-                  : payload.getItemsMap().entrySet();
+              return payload.getItemsMap().entrySet();
             }
           };
 
@@ -237,9 +234,7 @@ public class AddressesStubSettings extends StubSettings<AddressesStubSettings> {
 
             @Override
             public Iterable<Address> extractResources(AddressList payload) {
-              return payload.getItemsList() == null
-                  ? ImmutableList.<Address>of()
-                  : payload.getItemsList();
+              return payload.getItemsList();
             }
           };
 
