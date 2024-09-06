@@ -60,7 +60,11 @@ public abstract class GrpcTransportChannel implements TransportChannel {
   /** The channel in use. */
   abstract ManagedChannel getManagedChannel();
 
-  public abstract boolean getUseDirectPath();
+  abstract boolean getUseDirectPath();
+
+  public boolean useDirectPath() {
+    return getUseDirectPath();
+  }
 
   public Channel getChannel() {
     return getManagedChannel();
