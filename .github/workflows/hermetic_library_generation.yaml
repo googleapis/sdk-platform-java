@@ -39,10 +39,6 @@ jobs:
         java-version: 17
         distribution: temurin
         cache: maven
-    - name: Install Maven modules
-      shell: bash
-      run: |
-        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: Build image
       shell: bash
       run: |
