@@ -20,7 +20,7 @@ runs:
   - uses: actions/checkout@v4
     with:
       fetch-depth: 0
-      token: ${{ secrets.token }}
+      token: ${{ inputs.token }}
   - name: Generate changed libraries
     shell: bash
     run: |
