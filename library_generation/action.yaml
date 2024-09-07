@@ -1,35 +1,11 @@
 name: Reusable library generation
 description: Hermetic library generation action
-inputs:
-  base_ref:
-    required: true
-    description: base_ref
-  head_ref:
-    required: true
-    description: head_ref
-  image_tag:
-    required: false
-    description: image tag
-  token:
-    required: true
-    description: PAT
 
 runs:
   using: "composite"
   steps:
-  - name: Generate changed libraries
+  - name: Copy shell script
     shell: bash
     run: |
-      set -x
-      [ -z "$(git config user.email)" ] && git config --global user.email "cloud-java-bot@google.com"
-      [ -z "$(git config user.name)" ] && git config --global user.name "cloud-java-bot"
       cd ${{ github.action_path }}
-      bash scripts/hermetic_library_generation.sh \
-        --target_branch "${BASE_REF}" \
-        --current_branch "${HEAD_REF}" \
-        --image_tag "${IMAGE_TAG}"
-    env:
-      BASE_REF: ${{ inputs.base_ref }}
-      HEAD_REF: ${{ inputs.head_ref }}
-      IMAGE_TAG: ${{ inputs.image_tag }}
-      GH_TOKEN: ${{ inputs.token }}
+      cp scripts/hermetic_library_generation.sh $GITHUB_WORKSPACE

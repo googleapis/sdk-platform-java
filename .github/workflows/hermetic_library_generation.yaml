@@ -27,7 +27,6 @@ jobs:
     - name: Prerequisite
       shell: bash
       run: |
-        set -x
         if [[ "${GITHUB_REPOSITORY}" != "${REPO_FULL_NAME}" ]]; then
           echo "This PR comes from a fork. Skip library generation."
           exit 0
@@ -36,22 +35,10 @@ jobs:
       with:
         fetch-depth: 0
         token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
-    - uses: actions/setup-java@v4
-      with:
-        java-version: 17
-        distribution: temurin
-        cache: maven
-    - name: Install Maven modules
-      shell: bash
-      run: |
-        git checkout "${HEAD_REF}"
-        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
-      env:
-        HEAD_REF: ${{ github.head_ref }}
     - name: Get local generator version
       shell: bash
       run: |
-        GENERATOR_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
+        GENERATOR_VERSION=$(grep "gapic-generator-java" versions.txt | cut -d ':' -f 3 | xargs)
         echo "GENERATOR_VERSION=${GENERATOR_VERSION}" >> "$GITHUB_ENV"
     - name: Build image
       shell: bash
@@ -61,9 +48,17 @@ jobs:
           -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${GENERATOR_VERSION}" \
           .
     - name: Generate changed libraries
-      uses: ./library_generation
-      with:
-        base_ref: ${{ github.base_ref }}
-        head_ref: ${{ github.head_ref }}
-        image_tag: ${{ env.GENERATOR_VERSION }}
-        token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
+      shell: bash
+      run: |
+        set -x
+        [ -z "$(git config user.email)" ] && git config --global user.email "cloud-java-bot@google.com"
+        [ -z "$(git config user.name)" ] && git config --global user.name "cloud-java-bot"
+        bash library_generation/scripts/hermetic_library_generation.sh \
+          --target_branch "${BASE_REF}" \
+          --current_branch "${HEAD_REF}" \
+          --image_tag "${IMAGE_TAG}"
+      env:
+        BASE_REF: ${{ github.base_ref }}
+        HEAD_REF: ${{ github.head_ref }}
+        IMAGE_TAG: ${{ env.GENERATOR_VERSION }}
+        GH_TOKEN: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
