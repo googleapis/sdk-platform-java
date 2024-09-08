@@ -1,5 +1,5 @@
-name: Reusable library generation
-description: Hermetic library generation action
+name: Copy library generation script
+description: Copy library generation shell script to the calling workflow
 
 runs:
   using: "composite"
