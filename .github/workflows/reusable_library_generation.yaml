@@ -32,9 +32,6 @@ on:
     secrets:
       token:
         required: true
-env:
-  REPO_FULL_NAME: ${{ inputs.repo_full_name }}
-  GITHUB_REPOSITORY: ${{ inputs.github_repository }}
 jobs:
   library_generation_impl:
     runs-on: ubuntu-latest
@@ -46,6 +43,9 @@ jobs:
           echo "This PR comes from a fork. Skip library generation."
           exit 0
         fi
+      env:
+        GITHUB_REPOSITORY: ${{ inputs.github_repository }}
+        REPO_FULL_NAME: ${{ inputs.repo_full_name }}
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
