@@ -16,22 +16,22 @@
 name: Hermetic library generation upon generation config change through pull requests
 on:
   workflow_call:
-  inputs:
-    repo_full_name:
-      required: true
-      type: string
-    github_repository:
-      required: true
-      type: string
-    base_ref:
-      required: true
-      type: string
-    head_ref:
-      required: true
-      type: string
-  secrets:
-    token:
-      required: true
+    inputs:
+      repo_full_name:
+        required: true
+        type: string
+      github_repository:
+        required: true
+        type: string
+      base_ref:
+        required: true
+        type: string
+      head_ref:
+        required: true
+        type: string
+    secrets:
+      token:
+        required: true
 env:
   REPO_FULL_NAME: ${{ inputs.repo_full_name }}
   GITHUB_REPOSITORY: ${{ inputs.github_repository }}
