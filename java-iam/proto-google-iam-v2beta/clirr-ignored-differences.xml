@@ -16,4 +16,10 @@
     <className>com/google/iam/v2beta/*OrBuilder</className>
     <method>boolean has*(*)</method>
   </difference>
+  <difference>
+    <differenceType>7006</differenceType>
+    <className>com/google/iam/v2beta/*</className>
+    <method>*</method>
+    <to>**</to>
+  </difference>
 </differences>

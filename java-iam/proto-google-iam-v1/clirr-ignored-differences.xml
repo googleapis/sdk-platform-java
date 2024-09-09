@@ -30,4 +30,10 @@
     <className>com/google/iam/v1/logging/*OrBuilder</className>
     <method>boolean has*(*)</method>
   </difference>
+  <difference>
+    <differenceType>7006</differenceType>
+    <className>com/google/iam/v1/*</className>
+    <method>*</method>
+    <to>**</to>
+  </difference>
 </differences>
