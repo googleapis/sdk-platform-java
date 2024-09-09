@@ -233,9 +233,7 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
 
             @Override
             public Iterable<Room> extractResources(ListRoomsResponse payload) {
-              return payload.getRoomsList() == null
-                  ? ImmutableList.<Room>of()
-                  : payload.getRoomsList();
+              return payload.getRoomsList();
             }
           };
 
@@ -269,9 +267,7 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
 
             @Override
             public Iterable<Blurb> extractResources(ListBlurbsResponse payload) {
-              return payload.getBlurbsList() == null
-                  ? ImmutableList.<Blurb>of()
-                  : payload.getBlurbsList();
+              return payload.getBlurbsList();
             }
           };
 
@@ -305,9 +301,7 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
 
             @Override
             public Iterable<Location> extractResources(ListLocationsResponse payload) {
-              return payload.getLocationsList() == null
-                  ? ImmutableList.<Location>of()
-                  : payload.getLocationsList();
+              return payload.getLocationsList();
             }
           };
 

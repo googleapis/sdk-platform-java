@@ -158,9 +158,7 @@ public class MetricsServiceV2StubSettings extends StubSettings<MetricsServiceV2S
 
             @Override
             public Iterable<LogMetric> extractResources(ListLogMetricsResponse payload) {
-              return payload.getMetricsList() == null
-                  ? ImmutableList.<LogMetric>of()
-                  : payload.getMetricsList();
+              return payload.getMetricsList();
             }
           };
 

@@ -185,9 +185,7 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
 
             @Override
             public Iterable<Session> extractResources(ListSessionsResponse payload) {
-              return payload.getSessionsList() == null
-                  ? ImmutableList.<Session>of()
-                  : payload.getSessionsList();
+              return payload.getSessionsList();
             }
           };
 
@@ -221,9 +219,7 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
 
             @Override
             public Iterable<Test> extractResources(ListTestsResponse payload) {
-              return payload.getTestsList() == null
-                  ? ImmutableList.<Test>of()
-                  : payload.getTestsList();
+              return payload.getTestsList();
             }
           };
 
@@ -257,9 +253,7 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
 
             @Override
             public Iterable<Location> extractResources(ListLocationsResponse payload) {
-              return payload.getLocationsList() == null
-                  ? ImmutableList.<Location>of()
-                  : payload.getLocationsList();
+              return payload.getLocationsList();
             }
           };
 
