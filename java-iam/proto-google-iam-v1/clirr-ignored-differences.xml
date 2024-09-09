@@ -32,7 +32,7 @@
   </difference>
   <difference>
     <differenceType>7006</differenceType>
-    <className>com/google/iam/v1/*</className>
+    <className>com/google/iam/v1/**</className>
     <method>*</method>
     <to>**</to>
   </difference>

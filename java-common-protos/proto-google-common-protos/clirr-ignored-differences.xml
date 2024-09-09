@@ -141,7 +141,7 @@
   </difference>
   <difference>
     <differenceType>7006</differenceType>
-    <className>com/google/*</className>
+    <className>com/google/**</className>
     <method>*</method>
     <to>**</to>
   </difference>

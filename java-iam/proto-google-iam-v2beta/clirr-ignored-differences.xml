@@ -18,7 +18,7 @@
   </difference>
   <difference>
     <differenceType>7006</differenceType>
-    <className>com/google/iam/v2beta/*</className>
+    <className>com/google/iam/v2beta/**</className>
     <method>*</method>
     <to>**</to>
   </difference>
