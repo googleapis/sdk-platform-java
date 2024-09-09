@@ -108,7 +108,7 @@
   <!-- Ignore method additions to an InternalExtensionOnly interface-->
   <difference>
     <differenceType>7012</differenceType>
-    <className>com.google.api.gax.batching.Batcher</className>
+    <className>com/google/api/gax/batching/Batcher</className>
     <method>*</method>
   </difference>
 </differences>
