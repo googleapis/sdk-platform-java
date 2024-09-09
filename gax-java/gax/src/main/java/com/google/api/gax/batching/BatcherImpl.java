@@ -476,7 +476,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     private long totalThrottledTimeMs = 0;
     private BatchResource resource;
 
-    private ApiFuture<ResponseT> operation;
+    private ApiFuture<ResponseT> responseFuture;
 
     private Batch(
         RequestT prototype,
@@ -502,12 +502,12 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
 
     void setResponseFuture(@Nonnull ApiFuture<ResponseT> responseFuture) {
       Preconditions.checkNotNull(responseFuture);
-      this.operation = responseFuture;
+      this.responseFuture = responseFuture;
     }
 
     void cancel() {
-      if (this.operation != null) {
-        this.operation.cancel(true);
+      if (this.responseFuture != null) {
+        this.responseFuture.cancel(true);
       }
     }
 
@@ -543,7 +543,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
             Optional.ofNullable(entry.getElement()).map(Object::toString).orElse("null"));
       }
       return MoreObjects.toStringHelper(this)
-          .add("operation", operation)
+          .add("responseFuture", responseFuture)
           .add("elements", elementsStr)
           .toString();
     }
