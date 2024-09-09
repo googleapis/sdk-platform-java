@@ -34,7 +34,7 @@ SHELL [ "/bin/bash", "-c" ]
 
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
 ARG PROTOC_VERSION=25.4
-ARG GRPC_VERSION=2.45.0
+ARG GRPC_VERSION=1.66.0
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
@@ -82,9 +82,9 @@ RUN python -m pip install -r requirements.txt
 RUN python -m pip install .
 
 # Install nvm with node and npm
-ENV NODE_VERSION 2.45.0
+ENV NODE_VERSION 20.12.0
 WORKDIR /home
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v2.45.0/install.sh | bash
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 RUN chmod o+rx /home/.nvm
 ENV NODE_PATH=/home/.nvm/versions/node/v${NODE_VERSION}/bin
 ENV PATH=${PATH}:${NODE_PATH}
