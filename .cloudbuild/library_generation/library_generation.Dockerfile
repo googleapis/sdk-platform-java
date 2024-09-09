@@ -20,7 +20,7 @@ WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
 ENV DOCKER_GAPIC_GENERATOR_VERSION="2.44.1-SNAPSHOT" 
-# {x-version-update-end:gapic-generator-java:current}
+# {x-version-update-end}
 
 RUN mvn install -DskipTests -Dclirr.skip -Dcheckstyle.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
