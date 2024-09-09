@@ -476,7 +476,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     private long totalThrottledTimeMs = 0;
     private BatchResource resource;
 
-    private ApiFuture<ResponseT> responseFuture;
+    private volatile ApiFuture<ResponseT> responseFuture;
 
     private Batch(
         RequestT prototype,
