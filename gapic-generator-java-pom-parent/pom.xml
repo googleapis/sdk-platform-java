@@ -33,6 +33,7 @@
     <protobuf.version>4.27.4</protobuf.version>
     <guava.version>33.3.0-jre</guava.version>
     <opentelemetry.version>1.41.0</opentelemetry.version>
+    <protobuf.version>4.27.4</protobuf.version>
     <maven.compiler.release>8</maven.compiler.release>
     <errorprone.version>2.31.0</errorprone.version>
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
