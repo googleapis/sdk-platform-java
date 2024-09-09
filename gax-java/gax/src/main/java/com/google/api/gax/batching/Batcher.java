@@ -32,8 +32,9 @@ package com.google.api.gax.batching;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.api.gax.rpc.ApiCallContext;
+import java.time.Duration;
+import java.util.concurrent.TimeoutException;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * Represents a batching context where individual elements will be accumulated and flushed in a
@@ -96,7 +97,7 @@ public interface Batcher<ElementT, ElementResultT> extends AutoCloseable {
    * remaining work. The batcher will remain in a closed state and will not allow additional
    * elements to be added.
    */
-  void close(@Nullable Duration timeout) throws InterruptedException;
+  void close(@Nullable Duration timeout) throws InterruptedException, TimeoutException;
 
   /**
    * Closes this Batcher by preventing new elements from being added, and then sending outstanding

@@ -56,6 +56,7 @@ import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Queues;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -84,7 +85,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 class BatcherImplTest {
 
@@ -273,8 +273,8 @@ class BatcherImplTest {
 
     Stopwatch stopwatch = Stopwatch.createStarted();
 
-    BatchingException closeException =
-        assertThrows(BatchingException.class, () -> underTest.close(Duration.ofMillis(10)));
+    TimeoutException closeException =
+        assertThrows(TimeoutException.class, () -> underTest.close(Duration.ofMillis(10)));
 
     // resolve the future to allow batcher to close
     innerFuture.set(ImmutableList.of(1));
@@ -307,7 +307,7 @@ class BatcherImplTest {
 
     try {
       underTest.close(Duration.ofMillis(10));
-    } catch (BatchingException ignored) {
+    } catch (TimeoutException ignored) {
       // ignored
     }
 
@@ -338,8 +338,8 @@ class BatcherImplTest {
     ApiFuture<Integer> elementF = underTest.add(1);
 
     // Initial close will timeout
-    BatchingException firstCloseException =
-        assertThrows(BatchingException.class, () -> underTest.close(Duration.ofMillis(10)));
+    TimeoutException firstCloseException =
+        assertThrows(TimeoutException.class, () -> underTest.close(Duration.ofMillis(10)));
     assertThat(firstCloseException).hasMessageThat().contains("Timed out");
 
     underTest.cancelOutstanding();

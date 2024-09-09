@@ -50,6 +50,7 @@ import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -65,7 +66,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * Queues up the elements until {@link #flush()} is called; once batching is over, returned future
@@ -303,7 +303,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     } catch (Exception ex) {
       batchResponse = ApiFutures.immediateFailedFuture(ex);
     }
-    accumulatedBatch.setOperation(batchResponse);
+    accumulatedBatch.setResponseFuture(batchResponse);
 
     outstandingBatches.put(accumulatedBatch, Boolean.TRUE);
 
@@ -378,11 +378,17 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
   /** {@inheritDoc} */
   @Override
   public void close() throws InterruptedException {
-    close(null);
+    try {
+      close(null);
+    } catch (TimeoutException e) {
+      // should never happen with a null timeout
+      throw new IllegalStateException(
+          "Unexpected timeout exception when trying to close the batcher without a timeout", e);
+    }
   }
 
   @Override
-  public void close(@Nullable Duration timeout) throws InterruptedException {
+  public void close(@Nullable Duration timeout) throws InterruptedException, TimeoutException {
     try {
       if (timeout != null) {
         closeAsync().get(timeout.toMillis(), TimeUnit.MILLISECONDS);
@@ -408,7 +414,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
       msg += " Batch request prototype: " + prototype + ".";
       msg += " Outstanding batches: " + batchesStr;
 
-      throw new BatchingException(msg);
+      throw new TimeoutException(msg);
     }
   }
 
@@ -494,9 +500,9 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
       totalThrottledTimeMs += throttledTimeMs;
     }
 
-    void setOperation(@Nonnull ApiFuture<ResponseT> operation) {
-      Preconditions.checkNotNull(operation);
-      this.operation = operation;
+    void setResponseFuture(@Nonnull ApiFuture<ResponseT> responseFuture) {
+      Preconditions.checkNotNull(responseFuture);
+      this.operation = responseFuture;
     }
 
     void cancel() {
