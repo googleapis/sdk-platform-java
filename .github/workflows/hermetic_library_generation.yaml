@@ -51,7 +51,7 @@ jobs:
           -f .cloudbuild/library_generation/library_generation.Dockerfile \
           -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${GENERATOR_VERSION}" \
           .
-    - uses: .github/scripts
+    - uses: ./.github/scripts
       with:
         repo_full_name: ${{ github.event.pull_request.head.repo.full_name }}
         github_repository: ${{ github.repository }}
