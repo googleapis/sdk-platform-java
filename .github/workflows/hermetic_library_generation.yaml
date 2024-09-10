@@ -24,7 +24,7 @@ jobs:
   library_generation:
     runs-on: ubuntu-latest
     steps:
-    - name: Prerequisite
+    - name: Determine whether the pull request comes from a fork
       shell: bash
       run: |
         if [[ "${GITHUB_REPOSITORY}" != "${REPO_FULL_NAME}" ]]; then
