@@ -42,14 +42,10 @@ jobs:
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
       env:
         HEAD_REF: ${{ github.head_ref }}
-    - name: Get local generator version
-      shell: bash
-      run: |
-        GENERATOR_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
-        echo "GENERATOR_VERSION=${GENERATOR_VERSION}" >> "$GITHUB_ENV"
     - name: Build image
       shell: bash
       run: |
+        GENERATOR_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
         docker build \
           -f .cloudbuild/library_generation/library_generation.Dockerfile \
           -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${GENERATOR_VERSION}" \
