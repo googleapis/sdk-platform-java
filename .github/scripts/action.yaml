@@ -1,5 +1,15 @@
 name: Copy library generation script
 description: Copy library generation shell script to the calling workflow
+inputs:
+  base_ref:
+    description: base branch
+    required: true
+  head_ref:
+    description: head branch
+    required: true
+  token:
+    description: PAT
+    required: true
 
 runs:
   using: "composite"
@@ -20,6 +30,6 @@ runs:
         --target_branch "${BASE_REF}" \
         --current_branch "${HEAD_REF}"
     env:
-      BASE_REF: ${{ github.base_ref }}
-      HEAD_REF: ${{ github.head_ref }}
-      GH_TOKEN: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
+      BASE_REF: ${{ inputs.base_ref }}
+      HEAD_REF: ${{ inputs.head_ref }}
+      GH_TOKEN: ${{ inputs.token }}
