@@ -35,10 +35,17 @@ jobs:
       with:
         fetch-depth: 0
         token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
+    - name: Install Maven modules
+      shell: bash
+      run: |
+        git checkout "${HEAD_REF}"
+        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+      env:
+        HEAD_REF: ${{ github.head_ref }}
     - name: Build image
       shell: bash
       run: |
-        GENERATOR_VERSION=$(grep "gapic-generator-java" versions.txt | cut -d ':' -f 3 | xargs)
+        GENERATOR_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
         echo "GENERATOR_VERSION=${GENERATOR_VERSION}" >> "$GITHUB_ENV"
         docker build \
           -f .cloudbuild/library_generation/library_generation.Dockerfile \
