@@ -28,6 +28,7 @@ jobs:
       id: determine_fork
       shell: bash
       run: |
+        set -x
         if [[ "${GITHUB_REPOSITORY}" != "${REPO_FULL_NAME}" ]]; then
           echo "This PR comes from a fork. Skip library generation."
           echo "should_run=false" >> $GITHUB_OUTPUT
