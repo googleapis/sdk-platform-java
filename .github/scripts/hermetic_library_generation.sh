@@ -22,8 +22,8 @@ set -e
 # The parameters of this script is:
 # 1. target_branch, the branch into which the pull request is merged.
 # 2. current_branch, the branch with which the pull request is associated.
-# 3. image_tag,
-# 3. [optional] generation_config, the path to the generation configuration,
+# 3. [optional] image_tag, the tag of gcr.io/cloud-devrel-public-resources/java-library-generation.
+# 4. [optional] generation_config, the path to the generation configuration,
 # the default value is generation_config.yaml in the repository root.
 while [[ $# -gt 0 ]]; do
 key="$1"
@@ -81,15 +81,11 @@ git checkout "${current_branch}"
 # copy generation configuration from target branch to current branch.
 git show "${target_branch}":"${generation_config}" > "${baseline_generation_config}"
 
-# get .m2 folder so it's mapped into the docker container
-m2_folder=$(dirname "$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)")
-
 # run hermetic code generation docker image.
 docker run \
   --rm \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):${workspace_name}" \
-  -v "${m2_folder}":/home/.m2 \
   -e GENERATOR_VERSION="${image_tag}" \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
   --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
