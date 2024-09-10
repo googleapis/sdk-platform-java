@@ -13,6 +13,9 @@ inputs:
   head_ref:
     description: head branch
     required: true
+  image_tag:
+    description: the tag of hermetic build image
+    required: false
   token:
     description: PAT
     required: true
@@ -44,8 +47,10 @@ runs:
       cd "${GITHUB_WORKSPACE}"
       bash hermetic_library_generation.sh \
         --target_branch "${BASE_REF}" \
-        --current_branch "${HEAD_REF}"
+        --current_branch "${HEAD_REF}" \
+        --image_tag "${IMAGE_TAG}"
     env:
       BASE_REF: ${{ inputs.base_ref }}
       HEAD_REF: ${{ inputs.head_ref }}
+      IMAGE_TAG: ${{ inputs.image_tag }}
       GH_TOKEN: ${{ inputs.token }}
