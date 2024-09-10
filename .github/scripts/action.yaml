@@ -1,5 +1,5 @@
-name: Copy library generation script
-description: Copy library generation shell script to the calling workflow
+name: Hermetic library generation
+description: Run hermetic library generation to produce changed libraries
 inputs:
   repo_full_name:
     description: full name of the repository in which the head branch lives
@@ -23,7 +23,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - name: Prerequisite
+  - name: Determine whether the pull request comes from a fork
     shell: bash
     run: |
       if [[ "${GITHUB_REPOSITORY}" != "${REPO_FULL_NAME}" ]]; then
