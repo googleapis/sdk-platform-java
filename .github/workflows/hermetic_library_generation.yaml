@@ -23,12 +23,13 @@ env:
 jobs:
   should_run_library_generation:
     runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.determine_fork.outputs.should_run }}
     steps:
     - name: Determine whether the pull request comes from a fork
       id: determine_fork
       shell: bash
       run: |
-        set -x
         if [[ "${GITHUB_REPOSITORY}" != "${REPO_FULL_NAME}" ]]; then
           echo "This PR comes from a fork. Skip library generation."
           echo "should_run=false" >> $GITHUB_OUTPUT
