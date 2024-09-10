@@ -1,6 +1,12 @@
 name: Copy library generation script
 description: Copy library generation shell script to the calling workflow
 inputs:
+  repo_full_name:
+    description: full name of the repository in which the head branch lives
+    required: true
+  github_repository:
+    description: the full name of the repository in which base branch lives
+    required: true
   base_ref:
     description: base branch
     required: true
@@ -14,6 +20,16 @@ inputs:
 runs:
   using: "composite"
   steps:
+  - name: Prerequisite
+    shell: bash
+    run: |
+      if [[ "${GITHUB_REPOSITORY}" != "${REPO_FULL_NAME}" ]]; then
+        echo "This PR comes from a fork. Skip library generation."
+        exit 0
+      fi
+    env:
+      GITHUB_REPOSITORY: ${{ inputs.github_repository }}
+      REPO_FULL_NAME: ${{ inputs.repo_full_name }}
   - name: Copy shell script
     shell: bash
     run: |
