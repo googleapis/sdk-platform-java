@@ -41,6 +41,7 @@ import java.util.Map;
 public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
   private static final long serialVersionUID = -8876627296793342119L;
   static final String QUOTA_PROJECT_ID_HEADER_KEY = "x-goog-user-project";
+  static final String PROTOBUF_VERSION_TOKEN_KEY = "protobuf";
 
   public static final String API_VERSION_HEADER_KEY = "x-goog-api-version";
 
@@ -57,6 +58,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
       appendToken(apiClientHeaderValue, builder.getGeneratedLibToken());
       appendToken(apiClientHeaderValue, builder.getGeneratedRuntimeToken());
       appendToken(apiClientHeaderValue, builder.getTransportToken());
+      appendToken(apiClientHeaderValue, builder.protobufRuntimeToken);
       if (apiClientHeaderValue.length() > 0) {
         headersBuilder.put(builder.getApiClientHeaderKey(), apiClientHeaderValue.toString());
       }
@@ -110,6 +112,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     private String generatedRuntimeToken;
     private String transportToken;
     private String quotaProjectIdToken;
+    private final String protobufRuntimeToken;
 
     private String resourceHeaderKey;
     private String resourceToken;
@@ -130,6 +133,9 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
       resourceToken = null;
 
       apiVersionToken = null;
+
+      // set any default metric headers
+      protobufRuntimeToken = constructToken(PROTOBUF_VERSION_TOKEN_KEY, GaxProperties.getProtobufVersion());
     }
 
     public String getApiClientHeaderKey() {
@@ -165,6 +171,10 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
 
     public Builder setGeneratedLibToken(String name, String version) {
       this.generatedLibToken = constructToken(name, version);
+      // TODO(b:/: this is a temporary fix while waiting for new field to be added
+      if (name.equals("gapic")) {
+        this.generatedLibToken += "--" +  GaxProperties.getProtobufVersion();
+      }
       return this;
     }
 

@@ -29,29 +29,42 @@
  */
 package com.google.api.gax.core;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.google.api.gax.core.GaxProperties.BUNDLE_VERSION_KEY;
+import static com.google.api.gax.core.GaxProperties.getBundleVersion;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 import com.google.common.base.Strings;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
+import java.util.Optional;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 import java.util.regex.Pattern;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.Before;
 
 class GaxPropertiesTest {
 
+
   @Test
   void testGaxVersion() {
-    String gaxVersion = GaxProperties.getGaxVersion();
-    assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(gaxVersion).find());
-    String[] versionComponents = gaxVersion.split("\\.");
-    // This test was added in version 1.56.0, so check that the major and minor numbers are greater
-    // than that.
-    int major = Integer.parseInt(versionComponents[0]);
-    int minor = Integer.parseInt(versionComponents[1]);
+    Version version = readVersion(GaxProperties.getGaxVersion());
 
-    assertTrue(major >= 1);
-    if (major == 1) {
-      assertTrue(minor >= 56);
+    assertTrue(version.major >= 1);
+    if (version.major == 1) {
+      assertTrue(version.minor >= 56);
     }
   }
 
@@ -158,5 +171,42 @@ class GaxPropertiesTest {
 
     String runtimeInfo = GaxProperties.getRuntimeVersion();
     assertEquals("null__oracle__20.0.1", runtimeInfo);
+  }
+
+  @Test
+  public void testGetProtobufVersion() throws IOException {
+    Version version = readVersion(GaxProperties.getProtobufVersion());
+
+    assertTrue(version.major >= 3);
+    if (version.major == 3) {
+      assertTrue(version.minor >= 25);
+    }
+  }
+
+  @Test
+  public void testGetBundleVersion_noManifestFile() throws IOException {
+    Optional<String> version = getBundleVersion(GaxProperties.class);
+
+    assertFalse(version.isPresent());
+  }
+
+  private Version readVersion(String version) {
+    assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
+    String[] versionComponents = version.split("\\.");
+    // This test was added in version 1.56.0, so check that the major and minor numbers are greater
+    // than that.
+    int major = Integer.parseInt(versionComponents[0]);
+    int minor = Integer.parseInt(versionComponents[1]);
+    return new Version(major, minor);
+  }
+
+  private static class Version {
+    public int major;
+    public int minor;
+
+    public Version(int major, int minor) {
+      this.major = major;
+      this.minor = minor;
+    }
   }
 }

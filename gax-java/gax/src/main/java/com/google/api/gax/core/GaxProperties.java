@@ -32,9 +32,16 @@ package com.google.api.gax.core;
 import com.google.api.core.InternalApi;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
+import com.google.protobuf.Any;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.util.Optional;
 import java.util.Properties;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
 
 /** Provides properties of the GAX library. */
 @InternalApi
@@ -43,6 +50,8 @@ public class GaxProperties {
   private static final String DEFAULT_VERSION = "";
   private static final String GAX_VERSION = getLibraryVersion(GaxProperties.class, "version.gax");
   private static final String JAVA_VERSION = getRuntimeVersion();
+  private static final String PROTOBUF_VERSION = getBundleVersion(Any.class).orElse(DEFAULT_VERSION);
+  static final String BUNDLE_VERSION_KEY = "Bundle-Version";
 
   private GaxProperties() {}
 
@@ -91,6 +100,11 @@ public class GaxProperties {
     return GAX_VERSION;
   }
 
+  /** Returns the current version of protobuf runtime library. */
+  public static String getProtobufVersion() {
+    return PROTOBUF_VERSION;
+  }
+
   /**
    * Returns the current runtime version. For GraalVM the values in this method will be fetched at
    * build time and the values should not differ from the runtime (executable)
@@ -112,5 +126,23 @@ public class GaxProperties {
     // replacing all characters that are not numbers, letters, underscores, periods, or backslashes
     // with hyphens.
     return javaRuntimeInformation.replaceAll("[^0-9a-zA-Z_\\\\.]", "-");
+  }
+
+  /**
+   * Returns the current library version as reported by {BUNDLE_VERSION_KEY} in library's META-INF/MANIFEST.
+   * This should only be used if MANIFEST file does not contain a widely recognized version declaration such as SPECIFIC_VERSION OR IMPLEMENTATION_VERSION
+   */
+  @VisibleForTesting
+  static Optional<String> getBundleVersion(Class<?> clazz) {
+    try {
+      File file = new File(clazz.getProtectionDomain().getCodeSource().getLocation().toURI());
+      try (JarFile jar = new JarFile(file.getPath())) {
+        Attributes attributes = jar.getManifest().getMainAttributes();
+        return Optional.ofNullable(attributes.getValue(BUNDLE_VERSION_KEY));
+      }
+    } catch (URISyntaxException | IOException e) {
+      // Unable to read Protobuf runtime version. Recover gracefully.
+      return Optional.empty();
+    }
   }
 }
