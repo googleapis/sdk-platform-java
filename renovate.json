@@ -21,17 +21,6 @@
     {
       "customType": "regex",
       "fileMatch": [
-        "^gax-java/dependencies\\.properties$"
-      ],
-      "matchStrings": [
-        "version\\.com_google_protobuf=(?<currentValue>.+?)\\n"
-      ],
-      "depNameTemplate": "com.google.protobuf:protobuf-java",
-      "datasourceTemplate": "maven"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
                "^\\.cloudbuild/library_generation/library_generation\\.Dockerfile$"
       ],
       "matchStrings": [
