@@ -31,7 +31,7 @@ inputs:
     description: the tag of hermetic build image
     required: false
   token:
-    description: PAT
+    description: Personal Access Token
     required: true
 
 runs:
