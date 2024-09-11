@@ -34,7 +34,7 @@ import com.google.api.gax.batching.FlowControlEventStats.FlowControlEvent;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Stopwatch;
 import java.util.concurrent.TimeUnit;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /** Provides flow control capability. */
 public class FlowController {

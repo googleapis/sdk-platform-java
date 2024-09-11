@@ -37,7 +37,7 @@ import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import java.time.Duration;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the batching settings to use for an API method that is capable of batching.

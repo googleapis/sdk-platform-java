@@ -52,7 +52,7 @@ import com.google.common.base.Preconditions;
 import java.io.IOException;
 import java.util.concurrent.Executor;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A base settings class to configure a client stub class.

@@ -28,7 +28,7 @@ import io.opencensus.trace.SpanContext;
 import io.opencensus.trace.Tracer;
 import io.opencensus.trace.propagation.TextFormat;
 import java.io.IOException;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Provides utilities for Open Census to record http stats/trace information and propagate tracing

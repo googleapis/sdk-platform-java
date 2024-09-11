@@ -37,7 +37,7 @@ import com.google.api.core.ObsoleteApi;
 import com.google.common.base.Preconditions;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A watchdog provider which instantiates a new provider on every request.

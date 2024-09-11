@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Context for an API call.
@@ -64,7 +64,7 @@ public interface ApiCallContext extends RetryingContext {
   ApiCallContext withTransportChannel(TransportChannel channel);
 
   /** Returns a new ApiCallContext with the given Endpoint Context. */
-  ApiCallContext withEndpointContext(EndpointContext endpointContext);
+  ApiCallContext withEndpointContext(@Nullable EndpointContext endpointContext);
 
   /** This method is obsolete. Use {@link #withTimeoutDuration(java.time.Duration)} instead. */
   @ObsoleteApi("Use withTimeoutDuration(java.time.Duration) instead")
@@ -85,8 +85,8 @@ public interface ApiCallContext extends RetryingContext {
   ApiCallContext withTimeoutDuration(@Nullable java.time.Duration timeout);
 
   /** This method is obsolete. Use {@link #getTimeoutDuration()} instead. */
-  @Nullable
   @ObsoleteApi("Use getTimeoutDuration() instead")
+  @Nullable
   org.threeten.bp.Duration getTimeout();
 
   /** Returns the configured per-RPC timeout. */

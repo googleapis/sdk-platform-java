@@ -38,7 +38,7 @@ import com.google.api.core.ObsoleteApi;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /** Options for an http-json call, including deadline and credentials. */
 @AutoValue

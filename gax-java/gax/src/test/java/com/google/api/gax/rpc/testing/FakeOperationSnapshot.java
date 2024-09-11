@@ -33,7 +33,7 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.auto.value.AutoValue;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @InternalApi("for testing")
 @AutoValue
