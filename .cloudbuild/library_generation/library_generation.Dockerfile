@@ -63,7 +63,7 @@ COPY . .
 ENV DOCKER_GAPIC_GENERATOR_VERSION="2.45.1-SNAPSHOT" 
 # {x-version-update-end}
 
-RUN mvn install -DskipTests -Dclirr.skip -Dcheckstyle.skip \
+RUN mvn install -T 10 -DskipTests -Dclirr.skip -Dcheckstyle.skip \
     -pl gapic-generator-java -am
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "/gapic-generator-java.jar"
@@ -100,7 +100,7 @@ RUN ls -lah  /root/.local
 
 # Final image. Installs the rest of the dependencies and gets the binaries
 # from the previous stages
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python:3.12.3-alpine3.18 as final
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/node:22.1-alpine as final
 
 
 ARG PROTOC_VERSION=25.4
@@ -109,9 +109,9 @@ ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
 # Install shell script tools
-RUN apk update && apk add unzip rsync jq git maven bash curl
-
+RUN apk update && apk add unzip rsync jq git maven bash curl python3
 SHELL [ "/bin/bash", "-c" ]
+
 
 # Use utilites script to download dependencies
 COPY library_generation/utils/utilities.sh /utilities.sh
@@ -136,8 +136,8 @@ ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 RUN rm /utilities.sh
 
 # Here we transfer gapic-generator-java from the previous stage.
-# Note that the destination is a well-known location that will be assumed at runtime
-# We hard-code the location string so it cannot be overriden
+# Note that the destination is a well-known location that will be assumed at runtime.
+# We hard-code the location string so it cannot be overriden.
 COPY --from=ggj-build "/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
 RUN chmod 555 "${HOME}/.library_generation/gapic-generator-java.jar"
 
