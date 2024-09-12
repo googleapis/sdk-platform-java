@@ -726,7 +726,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
     // verify this info is passed correctly to transport channel
     TransportChannel transportChannel = provider.getTransportChannel();
-    Truth.assertThat(((GrpcTransportChannel) transportChannel).useDirectPath()).isTrue();
+    Truth.assertThat(((GrpcTransportChannel) transportChannel).isDirectPath()).isTrue();
     transportChannel.shutdownNow();
   }
 
@@ -751,7 +751,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
     // verify this info is passed correctly to transport channel
     TransportChannel transportChannel = provider.getTransportChannel();
-    Truth.assertThat(((GrpcTransportChannel) transportChannel).useDirectPath()).isFalse();
+    Truth.assertThat(((GrpcTransportChannel) transportChannel).isDirectPath()).isFalse();
     transportChannel.shutdownNow();
   }
 
