@@ -22,7 +22,7 @@ COPY . .
 ENV DOCKER_GAPIC_GENERATOR_VERSION="2.45.1-SNAPSHOT" 
 # {x-version-update-end}
 
-RUN mvn install -DskipTests -Dclirr.skip -Dcheckstyle.skip
+RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
