@@ -137,7 +137,7 @@ download_tools_succeed_with_baked_protoc() {
   download_tools "99.99" "${test_grpc_version}" "linux-x86_64"
   assertEquals "${protoc_bin_folder}" "${protoc_path}"
 
-  rm -rdf "${output_folder}"
+  rm -rf "${output_folder}"
   unset DOCKER_PROTOC_LOCATION
   unset DOCKER_PROTOC_VERSION
   unset output_folder
@@ -158,7 +158,7 @@ download_tools_succeed_with_baked_grpc() {
   download_tools "${test_protoc_version}" "99.99" "linux-x86_64"
   assertEquals "${DOCKER_GRPC_LOCATION}" "${grpc_path}"
 
-  rm -rdf "${output_folder}"
+  rm -rf "${output_folder}"
   unset DOCKER_GRPC_LOCATION
   unset DOCKER_GRPC_VERSION
   unset output_folder
@@ -242,7 +242,7 @@ copy_directory_if_exists_valid_folder_succeeds() {
   mkdir -p "${destination}"
   copy_directory_if_exists "${source_folder}" "gapic" "${destination}/copied-folder"
   n_matching_folders=$(ls "${destination}" | grep -e 'copied-folder' | wc -l)
-  rm -rdf "${destination}"
+  rm -rf "${destination}"
   assertEquals 1 ${n_matching_folders}
 }
 
@@ -252,7 +252,7 @@ copy_directory_if_exists_invalid_folder_does_not_copy() {
   mkdir -p "${destination}"
   copy_directory_if_exists "${source_folder}" "gapic" "${destination}/copied-folder"
   n_matching_folders=$(ls "${destination}" | grep -e 'copied-folder' | wc -l) || res=$?
-  rm -rdf "${destination}"
+  rm -rf "${destination}"
   assertEquals 0 ${n_matching_folders}
 }
 
