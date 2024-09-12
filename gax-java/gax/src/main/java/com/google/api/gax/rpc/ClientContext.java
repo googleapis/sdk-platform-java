@@ -177,8 +177,16 @@ public abstract class ClientContext {
     EndpointContext endpointContext = settings.getEndpointContext();
     String endpoint = endpointContext.resolvedEndpoint();
 
-    String settingsGdchApiAudience = settings.getGdchApiAudience();
+    String apiKey = settings.getApiKey();
+
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
+
+    if (apiKey != null && credentials != null) {
+      throw new Exception();
+    }
+
+    String settingsGdchApiAudience = settings.getGdchApiAudience();
+
     boolean usingGDCH = credentials instanceof GdchCredentials;
     if (usingGDCH) {
       // Can only determine if the GDC-H is being used via the Credentials. The Credentials object
@@ -217,6 +225,10 @@ public abstract class ClientContext {
       credentials = new QuotaProjectIdHidingCredentials(credentials);
     }
 
+    if (apiKey != null) {
+      credentials = ApiKeyCredentials.create(settings.getApiKey());
+    }
+
     TransportChannelProvider transportChannelProvider = settings.getTransportChannelProvider();
     // After needsExecutor and StubSettings#setExecutorProvider are deprecated, transport channel
     // executor can only be set from TransportChannelProvider#withExecutor directly, and a provider
@@ -241,10 +253,6 @@ public abstract class ClientContext {
 
     if (credentials != null) {
       defaultCallContext = defaultCallContext.withCredentials(credentials);
-    }
-    if (settings.getApiKey() != null) {
-      defaultCallContext =
-          defaultCallContext.withCredentials(ApiKeyCredentials.create(settings.getApiKey()));
     }
     defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
 
