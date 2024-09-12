@@ -75,7 +75,6 @@ FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python:3.12.3-alp
 # If not passed will leave it unset to support GCE Metadata in CI builds
 ARG GOOGLE_APPLICATION_CREDENTIALS
 
-# Use bash to allow multiline echoes
 RUN apk add bash curl
 
 # Install gcloud to obtain the credentials to use the Airlock repostiory
