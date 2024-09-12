@@ -109,10 +109,6 @@ public abstract class GrpcTransportChannel implements TransportChannel {
     return newBuilder().setManagedChannel(channel).build();
   }
 
-  public static GrpcTransportChannel create(ManagedChannel channel, boolean canUseDirectPath) {
-    return newBuilder().setManagedChannel(channel).setDirectPath(canUseDirectPath).build();
-  }
-
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setManagedChannel(ManagedChannel value);
