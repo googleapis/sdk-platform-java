@@ -562,7 +562,8 @@ class ChannelPool extends ManagedChannel {
                 if (!wasClosed.compareAndSet(false, true)) {
                   LOG.log(
                       Level.WARNING,
-                      "Call is being closed more than once. Please make sure that onClose() is not being manually called.");
+                      "Call is being closed more than once. Please make sure that onClose() is not"
+                          + " being manually called.");
                   return;
                 }
                 try {
@@ -573,7 +574,8 @@ class ChannelPool extends ManagedChannel {
                   } else {
                     LOG.log(
                         Level.WARNING,
-                        "Entry was released before the call is closed. This may be due to an exception on start of the call.");
+                        "Entry was released before the call is closed. This may be due to an"
+                            + " exception on start of the call.");
                   }
                 }
               }
@@ -586,7 +588,8 @@ class ChannelPool extends ManagedChannel {
         } else {
           LOG.log(
               Level.WARNING,
-              "The entry is already released. This indicates that onClose() has already been called previously");
+              "The entry is already released. This indicates that onClose() has already been called"
+                  + " previously");
         }
         throw e;
       }

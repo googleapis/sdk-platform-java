@@ -88,11 +88,13 @@ public abstract class FlowControlSettings {
       Preconditions.checkArgument(
           settings.getMaxOutstandingElementCount() == null
               || settings.getMaxOutstandingElementCount() > 0,
-          "maxOutstandingElementCount limit is disabled by default, but if set it must be set to a value greater than 0.");
+          "maxOutstandingElementCount limit is disabled by default, but if set it must be set to a"
+              + " value greater than 0.");
       Preconditions.checkArgument(
           settings.getMaxOutstandingRequestBytes() == null
               || settings.getMaxOutstandingRequestBytes() > 0,
-          "maxOutstandingRequestBytes limit is disabled by default, but if set it must be set to a value greater than 0.");
+          "maxOutstandingRequestBytes limit is disabled by default, but if set it must be set to a"
+              + " value greater than 0.");
       return settings;
     }
   }

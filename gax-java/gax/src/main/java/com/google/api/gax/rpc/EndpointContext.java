@@ -61,7 +61,9 @@ public abstract class EndpointContext {
 
   public static final String GOOGLE_CLOUD_UNIVERSE_DOMAIN = "GOOGLE_CLOUD_UNIVERSE_DOMAIN";
   public static final String INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE =
-      "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
+      "The configured universe domain (%s) does not match the universe domain found in the"
+          + " credentials (%s). If you haven't configured the universe domain explicitly,"
+          + " `googleapis.com` is the default.";
   public static final String UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE =
       "Unable to retrieve the Universe Domain from the Credentials.";
 

@@ -49,7 +49,7 @@ import org.jspecify.annotations.Nullable;
 public final class InstantiatingWatchdogProvider implements WatchdogProvider {
   @Nullable private final ApiClock clock;
   @Nullable private final ScheduledExecutorService executor;
-  @Nullable private final java.time.Duration checkInterval;
+  private final java.time.@Nullable Duration checkInterval;
 
   public static WatchdogProvider create() {
     return new InstantiatingWatchdogProvider(null, null, null);
@@ -58,7 +58,7 @@ public final class InstantiatingWatchdogProvider implements WatchdogProvider {
   private InstantiatingWatchdogProvider(
       @Nullable ApiClock clock,
       @Nullable ScheduledExecutorService executor,
-      @Nullable java.time.Duration checkInterval) {
+      java.time.@Nullable Duration checkInterval) {
     this.clock = clock;
     this.executor = executor;
     this.checkInterval = checkInterval;

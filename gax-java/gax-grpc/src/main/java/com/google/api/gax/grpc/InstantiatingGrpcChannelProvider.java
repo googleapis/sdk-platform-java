@@ -69,8 +69,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jspecify.annotations.Nullable;
 import javax.net.ssl.KeyManagerFactory;
+import org.jspecify.annotations.Nullable;
 
 /**
  * InstantiatingGrpcChannelProvider is a TransportChannelProvider which constructs a gRPC
@@ -312,8 +312,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
               Level.WARNING,
               "Env var "
                   + DIRECT_PATH_ENV_ENABLE_XDS
-                  + " was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
-                  + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
+                  + " was found and set to TRUE, but DirectPath was not enabled for this client. If"
+                  + " this is intended for this client, please note that this is a misconfiguration"
+                  + " and set the attemptDirectPath option as well.");
         }
         // Case 2: Direct Path xDS was enabled via Builder. Direct Path Traffic Director must be set
         // (enabled with `setAttemptDirectPath(true)`) along with xDS.
@@ -321,7 +322,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         else if (isDirectPathXdsEnabledViaBuilderOption()) {
           LOG.log(
               Level.WARNING,
-              "DirectPath is misconfigured. The DirectPath XDS option was set, but the attemptDirectPath option was not. Please set both the attemptDirectPath and attemptDirectPathXds options.");
+              "DirectPath is misconfigured. The DirectPath XDS option was set, but the"
+                  + " attemptDirectPath option was not. Please set both the attemptDirectPath and"
+                  + " attemptDirectPathXds options.");
         }
       } else {
         // Case 3: credential is not correctly set

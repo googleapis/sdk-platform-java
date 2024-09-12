@@ -103,15 +103,13 @@ public abstract class BatchingSettings {
   public abstract Long getRequestByteThreshold();
 
   /** This method is obsolete. Use {@link #getDelayThresholdDuration() } instead */
-  @Nullable
   @ObsoleteApi("Use getDelayThresholdDuration() instead")
-  public org.threeten.bp.Duration getDelayThreshold() {
+  public org.threeten.bp.@Nullable Duration getDelayThreshold() {
     return toThreetenDuration(getDelayThresholdDuration());
   }
 
   /** Get the delay threshold to use for batching. */
-  @Nullable
-  public abstract java.time.Duration getDelayThresholdDuration();
+  public abstract java.time.@Nullable Duration getDelayThresholdDuration();
 
   /** Returns the Boolean object to indicate if the batching is enabled. Default to true */
   public abstract Boolean getIsEnabled();

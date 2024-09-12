@@ -281,11 +281,11 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
      * instead.
      */
     @ObsoleteApi("Use setWatchdogCheckIntervalDuration(java.time.Duration) instead")
-    public B setWatchdogCheckInterval(@Nullable org.threeten.bp.Duration checkInterval) {
+    public B setWatchdogCheckInterval(org.threeten.bp.@Nullable Duration checkInterval) {
       return setWatchdogCheckIntervalDuration(toJavaTimeDuration(checkInterval));
     }
 
-    public B setWatchdogCheckIntervalDuration(@Nullable java.time.Duration checkInterval) {
+    public B setWatchdogCheckIntervalDuration(java.time.@Nullable Duration checkInterval) {
       stubSettings.setStreamWatchdogCheckIntervalDuration(checkInterval);
       return self();
     }
@@ -365,14 +365,12 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     /** This method is obsolete. Use {@link #getWatchdogCheckIntervalDuration()} instead */
-    @Nullable
     @ObsoleteApi("Use getWatchdogCheckIntervalDuration() instead")
-    public org.threeten.bp.Duration getWatchdogCheckInterval() {
+    public org.threeten.bp.@Nullable Duration getWatchdogCheckInterval() {
       return stubSettings.getStreamWatchdogCheckInterval();
     }
 
-    @Nullable
-    public java.time.Duration getWatchdogCheckIntervalDuration() {
+    public java.time.@Nullable Duration getWatchdogCheckIntervalDuration() {
       return stubSettings.getStreamWatchdogCheckIntervalDuration();
     }
 
