@@ -46,24 +46,20 @@ public abstract class HttpJsonCallOptions {
   public static final HttpJsonCallOptions DEFAULT = newBuilder().build();
 
   /** This method is obsolete. Use {@link #getTimeoutDuration()} instead. */
-  @Nullable
   @ObsoleteApi("Use getTimeoutDuration() instead")
-  public final org.threeten.bp.Duration getTimeout() {
+  public final org.threeten.bp.@Nullable Duration getTimeout() {
     return toThreetenDuration(getTimeoutDuration());
   }
 
-  @Nullable
-  public abstract java.time.Duration getTimeoutDuration();
+  public abstract java.time.@Nullable Duration getTimeoutDuration();
 
   /** This method is obsolete. Use {@link #getDeadlineInstant()} instead. */
-  @Nullable
   @ObsoleteApi("Use getDeadlineInstant() instead")
-  public final org.threeten.bp.Instant getDeadline() {
+  public final org.threeten.bp.@Nullable Instant getDeadline() {
     return toThreetenInstant(getDeadlineInstant());
   }
 
-  @Nullable
-  public abstract java.time.Instant getDeadlineInstant();
+  public abstract java.time.@Nullable Instant getDeadlineInstant();
 
   @Nullable
   public abstract Credentials getCredentials();

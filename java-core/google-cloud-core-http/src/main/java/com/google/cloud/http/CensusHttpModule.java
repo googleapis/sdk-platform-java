@@ -46,7 +46,7 @@ public final class CensusHttpModule {
   @Nullable private final TextFormat propagationTextFormat;
 
   /** {@link TextFormat.Setter} for {@link #propagationTextFormat}. */
-  @Nullable private final TextFormat.Setter<HttpHeaders> propagationTextFormatSetter;
+  private final TextFormat.@Nullable Setter<HttpHeaders> propagationTextFormatSetter;
 
   /** Whether spans are stored locally. */
   private final boolean isRecordEvents;

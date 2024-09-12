@@ -67,8 +67,7 @@ public abstract class GapicContext {
   @Nullable
   public abstract GapicServiceConfig serviceConfig();
 
-  @Nullable
-  public abstract com.google.api.Service serviceYamlProto();
+  public abstract com.google.api.@Nullable Service serviceYamlProto();
 
   public boolean containsServices() {
     return !services().isEmpty();

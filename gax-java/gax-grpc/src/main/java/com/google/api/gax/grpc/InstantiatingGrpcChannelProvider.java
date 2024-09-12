@@ -112,8 +112,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final GrpcInterceptorProvider interceptorProvider;
   @Nullable private final Integer maxInboundMessageSize;
   @Nullable private final Integer maxInboundMetadataSize;
-  @Nullable private final java.time.Duration keepAliveTime;
-  @Nullable private final java.time.Duration keepAliveTimeout;
+  private final java.time.@Nullable Duration keepAliveTime;
+  private final java.time.@Nullable Duration keepAliveTimeout;
   @Nullable private final Boolean keepAliveWithoutCalls;
   private final ChannelPoolSettings channelPoolSettings;
   @Nullable private final Credentials credentials;
@@ -582,8 +582,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private GrpcInterceptorProvider interceptorProvider;
     @Nullable private Integer maxInboundMessageSize;
     @Nullable private Integer maxInboundMetadataSize;
-    @Nullable private java.time.Duration keepAliveTime;
-    @Nullable private java.time.Duration keepAliveTimeout;
+    private java.time.@Nullable Duration keepAliveTime;
+    private java.time.@Nullable Duration keepAliveTimeout;
     @Nullable private Boolean keepAliveWithoutCalls;
     @Nullable private ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
     @Nullable private Credentials credentials;
