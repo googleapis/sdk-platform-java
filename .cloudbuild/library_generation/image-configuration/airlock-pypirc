@@ -1,0 +1,5 @@
+[distutils]
+index-servers = python-3p-trusted
+
+[python-3p-trusted]
+repository: https://us-python.pkg.dev/artifact-foundry-prod/python-3p-trusted/
