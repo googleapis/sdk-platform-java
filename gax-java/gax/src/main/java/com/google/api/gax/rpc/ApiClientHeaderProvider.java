@@ -40,11 +40,11 @@ import java.util.Map;
  */
 public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
   private static final long serialVersionUID = -8876627296793342119L;
-  private static final String GCCL_HEADER_VERSION_KEY = "gccl";
   static final String QUOTA_PROJECT_ID_HEADER_KEY = "x-goog-user-project";
   static final String PROTOBUF_HEADER_VERSION_KEY = "protobuf";
   public static final String API_VERSION_HEADER_KEY = "x-goog-api-version";
   public static final String GAPIC_HEADER_VERSION_KEY = "gapic";
+  public static final String GCCL_HEADER_VERSION_KEY = "gccl";
 
   private final Map<String, String> headers;
 
@@ -182,8 +182,8 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     }
 
     private String getProtobufVersionToAppend() {
-      // TODO(b:/366417603): appending protobuf version to gapic column is a temporary fix while
-      // waiting for dedicated field to be added
+      // TODO(b:/366417603): appending protobuf version to existing client library column is a temporary fix while
+      // waiting for dedicated field to be added in concord
       return "--" + PROTOBUF_HEADER_VERSION_KEY + "-" + GaxProperties.getProtobufVersion();
     }
 
