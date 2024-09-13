@@ -57,7 +57,6 @@ import org.junit.Before;
 
 class GaxPropertiesTest {
 
-
   @Test
   void testGaxVersion() {
     Version version = readVersion(GaxProperties.getGaxVersion());

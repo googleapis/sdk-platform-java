@@ -130,7 +130,7 @@ public class GaxProperties {
 
   /**
    * Returns the current library version as reported by {BUNDLE_VERSION_KEY} in library's META-INF/MANIFEST.
-   * This should only be used if MANIFEST file does not contain a widely recognized version declaration such as SPECIFIC_VERSION OR IMPLEMENTATION_VERSION
+   * This should only be used if MANIFEST file does not contain a widely recognized version declaration such as SPECIFIC_VERSION OR IMPLEMENTATION_VERSION, otherwise please use #getLibraryVersion
    */
   @VisibleForTesting
   static Optional<String> getBundleVersion(Class<?> clazz) {

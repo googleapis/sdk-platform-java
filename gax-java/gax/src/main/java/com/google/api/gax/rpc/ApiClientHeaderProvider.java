@@ -136,8 +136,8 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
 
       apiVersionToken = null;
 
-      // set any default metric headers
-      protobufRuntimeToken = constructToken(PROTOBUF_VERSION_KEY, GaxProperties.getProtobufVersion());
+      protobufRuntimeToken =
+          constructToken(PROTOBUF_VERSION_KEY, GaxProperties.getProtobufVersion());
     }
 
     public String getApiClientHeaderKey() {
@@ -183,7 +183,8 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     }
 
     private String getProtobufVersionToAppend() {
-        // TODO(b:/366417603): appending protobuf version to gapic column is a temporary fix while waiting for dedicated field to be added
+      // TODO(b:/366417603): appending protobuf version to gapic column is a temporary fix while
+      // waiting for dedicated field to be added
       return "--" + PROTOBUF_VERSION_KEY + "-" + GaxProperties.getProtobufVersion();
     }
 
@@ -205,7 +206,9 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
       return this;
     }
 
-    /** @return the quotaProjectIdToken used for quota and billing purposes. */
+    /**
+     * @return the quotaProjectIdToken used for quota and billing purposes.
+     */
     public String getQuotaProjectIdToken() {
       return quotaProjectIdToken;
     }
