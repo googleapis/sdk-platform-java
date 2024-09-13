@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.rpc.ApiClientHeaderProvider.PROTOBUF_VERSION_KEY;
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -38,10 +39,11 @@ class ApiClientHeaderProviderTest {
   private static final String X_GOOG_API_CLIENT = "x-goog-api-client";
   private static final String CLOUD_RESOURCE_PREFIX = "google-cloud-resource-prefix";
 
-  private static final String PROTOBUF_HEADER = ApiClientHeaderProvider.PROTOBUF_VERSION_TOKEN_KEY+"/.*";
-  private static final String FULL_HEADER_MATCH = "^gl-java/.* gapic/4\\.5\\.6++__"+PROTOBUF_HEADER+" gax/.* grpc/1\\.2\\.3 "+PROTOBUF_HEADER+"$";
+  private static final String PROTOBUF_HEADER = PROTOBUF_VERSION_KEY +"/.*";
+  private static final String PROTOBUF_APPENDER = "--"+PROTOBUF_VERSION_KEY +"-.*";
+  private static final String FULL_HEADER_MATCH = "^gl-java/.* gapic/4\\.5\\.6"+ PROTOBUF_APPENDER +" gax/.* grpc/1\\.2\\.3 "+PROTOBUF_HEADER+"$";
   private static final String HEADER_WITHOUT_GAPIC_MATCH =
-      "^gl-java/.* gccl/1\\.2\\.3 gax/.* "+PROTOBUF_HEADER+"$";
+      "^gl-java/.* gccl/1\\.2\\.3"+PROTOBUF_APPENDER+" gax/.* "+PROTOBUF_HEADER+"$";
 
   @Test
   void testServiceHeaderDefault() {
@@ -71,7 +73,7 @@ class ApiClientHeaderProviderTest {
     assertThat(provider.getHeaders().size()).isEqualTo(1);
     assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
             .matches(
-                    "^gl-java/.* gccl/4\\.5\\.6 gapic/7\\.8\\.9__"+PROTOBUF_HEADER+" gax/.* grpc/1\\.2\\.3 "+PROTOBUF_HEADER+"$");
+                    "^gl-java/.* gccl/4\\.5\\.6"+ PROTOBUF_APPENDER + " gapic/7\\.8\\.9"+ PROTOBUF_APPENDER +" gax/.* grpc/1\\.2\\.3 "+PROTOBUF_HEADER+"$");
   }
 
   @Test
@@ -83,7 +85,7 @@ class ApiClientHeaderProviderTest {
                     .build();
     assertThat(provider.getHeaders().size()).isEqualTo(1);
     assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
-            .matches("^gl-java/.* gccl/4\\.5\\.6 gax/.* grpc/1\\.2\\.3 "+PROTOBUF_HEADER+"$");
+            .matches("^gl-java/.* gccl/4\\.5\\.6"+PROTOBUF_APPENDER+" gax/.* grpc/1\\.2\\.3 "+PROTOBUF_HEADER+"$");
   }
 
   @Test
@@ -155,5 +157,23 @@ class ApiClientHeaderProviderTest {
             ApiClientHeaderProvider.newBuilder().setApiVersionToken("").build();
     assertThat(
             emptyProvider.getHeaders().get(ApiClientHeaderProvider.API_VERSION_HEADER_KEY).isEmpty());
+  }
+
+  @Test
+  void testNonGapicGeneratedLibToken_doesNotAppend() {
+    ApiClientHeaderProvider provider =
+            ApiClientHeaderProvider.newBuilder().setGeneratedLibToken("other-token", "1.2.3").build();
+
+    assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
+            .matches("^gl-java/.* other-token/1.2.3 gax/.* "+PROTOBUF_HEADER+"$");
+  }
+
+  @Test
+  void testNonGcclGeneratedLibToken_doesNotAppend() {
+    ApiClientHeaderProvider provider =
+            ApiClientHeaderProvider.newBuilder().setClientLibToken("other-token", "1.2.3").build();
+
+    assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
+            .matches("^gl-java/.* other-token/1.2.3 gax/.* "+PROTOBUF_HEADER+"$");
   }
 }

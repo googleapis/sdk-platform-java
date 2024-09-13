@@ -41,7 +41,9 @@ import java.util.Map;
 public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
   private static final long serialVersionUID = -8876627296793342119L;
   static final String QUOTA_PROJECT_ID_HEADER_KEY = "x-goog-user-project";
-  static final String PROTOBUF_VERSION_TOKEN_KEY = "protobuf";
+  static final String PROTOBUF_VERSION_KEY = "protobuf";
+  static final String GAPIC_VERSION_KEY = "gapic";
+  static final String GCCL_VERSION_KEY = "gccl";
 
   public static final String API_VERSION_HEADER_KEY = "x-goog-api-version";
 
@@ -135,7 +137,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
       apiVersionToken = null;
 
       // set any default metric headers
-      protobufRuntimeToken = constructToken(PROTOBUF_VERSION_TOKEN_KEY, GaxProperties.getProtobufVersion());
+      protobufRuntimeToken = constructToken(PROTOBUF_VERSION_KEY, GaxProperties.getProtobufVersion());
     }
 
     public String getApiClientHeaderKey() {
@@ -162,6 +164,9 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
 
     public Builder setClientLibToken(String name, String version) {
       this.clientLibToken = constructToken(name, version);
+      if (name.equals(GCCL_VERSION_KEY)) {
+        clientLibToken += getProtobufVersionToAppend();
+      }
       return this;
     }
 
@@ -171,11 +176,15 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
 
     public Builder setGeneratedLibToken(String name, String version) {
       this.generatedLibToken = constructToken(name, version);
-      // TODO(b:/: this is a temporary fix while waiting for new field to be added
-      if (name.equals("gapic")) {
-        this.generatedLibToken += "--" +  GaxProperties.getProtobufVersion();
+      if (name.equals(GAPIC_VERSION_KEY)) {
+        generatedLibToken += getProtobufVersionToAppend();
       }
       return this;
+    }
+
+    private String getProtobufVersionToAppend() {
+        // TODO(b:/366417603): appending protobuf version to gapic column is a temporary fix while waiting for dedicated field to be added
+      return "--" + PROTOBUF_VERSION_KEY + "-" + GaxProperties.getProtobufVersion();
     }
 
     public String getGeneratedRuntimeToken() {
