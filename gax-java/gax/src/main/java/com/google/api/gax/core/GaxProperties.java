@@ -33,7 +33,6 @@ import com.google.api.core.InternalApi;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import com.google.protobuf.Any;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,7 +49,8 @@ public class GaxProperties {
   private static final String DEFAULT_VERSION = "";
   private static final String GAX_VERSION = getLibraryVersion(GaxProperties.class, "version.gax");
   private static final String JAVA_VERSION = getRuntimeVersion();
-  private static final String PROTOBUF_VERSION = getBundleVersion(Any.class).orElse(DEFAULT_VERSION);
+  private static final String PROTOBUF_VERSION =
+      getBundleVersion(Any.class).orElse(DEFAULT_VERSION);
   static final String BUNDLE_VERSION_KEY = "Bundle-Version";
 
   private GaxProperties() {}
@@ -129,8 +129,10 @@ public class GaxProperties {
   }
 
   /**
-   * Returns the current library version as reported by {BUNDLE_VERSION_KEY} in library's META-INF/MANIFEST.
-   * This should only be used if MANIFEST file does not contain a widely recognized version declaration such as SPECIFIC_VERSION OR IMPLEMENTATION_VERSION, otherwise please use #getLibraryVersion
+   * Returns the current library version as reported by {BUNDLE_VERSION_KEY} in library's
+   * META-INF/MANIFEST. This should only be used if MANIFEST file does not contain a widely
+   * recognized version declaration such as SPECIFIC_VERSION OR IMPLEMENTATION_VERSION, otherwise
+   * please use #getLibraryVersion
    */
   @VisibleForTesting
   static Optional<String> getBundleVersion(Class<?> clazz) {

@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
-import static com.google.api.gax.rpc.ApiClientHeaderProvider.PROTOBUF_VERSION_KEY;
+import static com.google.api.gax.rpc.ApiClientHeaderProvider.PROTOBUF_HEADER_VERSION_KEY;
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -39,8 +39,8 @@ class ApiClientHeaderProviderTest {
   private static final String X_GOOG_API_CLIENT = "x-goog-api-client";
   private static final String CLOUD_RESOURCE_PREFIX = "google-cloud-resource-prefix";
 
-  private static final String PROTOBUF_HEADER = PROTOBUF_VERSION_KEY + "/.*";
-  private static final String PROTOBUF_APPENDER = "--" + PROTOBUF_VERSION_KEY + "-.*";
+  private static final String PROTOBUF_HEADER = PROTOBUF_HEADER_VERSION_KEY + "/.*";
+  private static final String PROTOBUF_APPENDER = "--" + PROTOBUF_HEADER_VERSION_KEY + "-.*";
   private static final String FULL_HEADER_MATCH =
       "^gl-java/.* gapic/4\\.5\\.6"
           + PROTOBUF_APPENDER
@@ -171,7 +171,7 @@ class ApiClientHeaderProviderTest {
   }
 
   @Test
-  void testNonGapicGeneratedLibToken_doesNotAppend() {
+  void testNonGapicGeneratedLibToken_doesNotAppendProtobufVersion() {
     ApiClientHeaderProvider provider =
         ApiClientHeaderProvider.newBuilder().setGeneratedLibToken("other-token", "1.2.3").build();
 
@@ -180,7 +180,7 @@ class ApiClientHeaderProviderTest {
   }
 
   @Test
-  void testNonGcclGeneratedLibToken_doesNotAppend() {
+  void testNonGcclGeneratedLibToken_doesNotAppendProtobufVersion() {
     ApiClientHeaderProvider provider =
         ApiClientHeaderProvider.newBuilder().setClientLibToken("other-token", "1.2.3").build();
 

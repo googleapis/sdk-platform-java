@@ -29,31 +29,15 @@
  */
 package com.google.api.gax.core;
 
-import static com.google.api.gax.core.GaxProperties.BUNDLE_VERSION_KEY;
 import static com.google.api.gax.core.GaxProperties.getBundleVersion;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 import com.google.common.base.Strings;
-
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.security.CodeSource;
-import java.security.ProtectionDomain;
 import java.util.Optional;
-import java.util.jar.Attributes;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
 import java.util.regex.Pattern;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.junit.Before;
 
 class GaxPropertiesTest {
 
