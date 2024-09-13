@@ -53,6 +53,7 @@ import com.google.api.gax.rpc.testing.FakeChannel;
 import com.google.api.gax.rpc.testing.FakeClientSettings;
 import com.google.api.gax.rpc.testing.FakeStubSettings;
 import com.google.api.gax.rpc.testing.FakeTransportChannel;
+import com.google.auth.CredentialType;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auth.oauth2.GdchCredentials;
@@ -691,7 +692,7 @@ class ClientContextTest {
             null,
             DEFAULT_ENDPOINT);
     GoogleCredentials googleCredentials = Mockito.mock(GoogleCredentials.class);
-    when(googleCredentials.getCredentialType()).thenReturn("u");
+    when(googleCredentials.getCredentialType()).thenReturn(CredentialType.USER_CREDENTIALS);
 
     ClientSettings.Builder builder =
         new FakeClientSettings.Builder()

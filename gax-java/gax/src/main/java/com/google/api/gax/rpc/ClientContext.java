@@ -178,7 +178,7 @@ public abstract class ClientContext {
 
     String settingsGdchApiAudience = settings.getGdchApiAudience();
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
-    String credentialType = credentials.getCredentialType();
+    String credentialType = credentials.getCredentialType().getLabel();
     boolean usingGDCH = credentials instanceof GdchCredentials;
     if (usingGDCH) {
       // Can only determine if the GDC-H is being used via the Credentials. The Credentials object
