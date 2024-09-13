@@ -6,9 +6,9 @@
 set -ex
 
 readonly SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-lib_gen_scripts_dir="${SCRIPT_DIR}/../../library_generation/"
-source "${lib_gen_scripts_dir}/test/test_utilities.sh"
-source "${lib_gen_scripts_dir}/utils/utilities.sh"
+readonly LIB_GEN_SCRIPTS_DIR="${SCRIPT_DIR}/../../library_generation/"
+source "${LIB_GEN_SCRIPTS_DIR}/test/test_utilities.sh"
+source "${LIB_GEN_SCRIPTS_DIR}/utils/utilities.sh"
 readonly perform_cleanup=$1
 
 cd "${SCRIPT_DIR}"
@@ -19,6 +19,14 @@ get_version_from_pom() {
   key="$2"
   # prints the result to stdout
   grep -e "<${key}>" "${target_pom}" | cut -d'>' -f2 | cut -d'<' -f1
+}
+
+# gets the latest version of the specified artifact from versions.txt
+get_version_from_versions_txt() {
+  readonly VERSIONS_TXT_PATH="${SCRIPT_DIR}/../../versions.txt"
+  target_artifact="$1"
+  # prints the result to stdout
+  grep -e "${target_artifact}" "${VERSIONS_TXT_PATH}" | cut -d: -f3
 }
 
 # clone gapic-showcase
@@ -46,6 +54,30 @@ if [ ! -d google ];then
   mv googleapis/google output
   rm -rdf googleapis
 fi
+
+# copy the generator into its well-known location. For more details,
+# refer to library_generation/DEVELOPMENT.md
+well_known_folder="${HOME}/.library_generation"
+well_known_generator_jar_location="${well_known_folder}/gapic-generator-java.jar"
+if [[ ! -d "${well_known_folder}" ]]; then
+  mkdir "${well_known_folder}"
+fi
+if [[ -f "${well_known_generator_jar_location}" ]]; then
+  echo "replacing well-known generator jar with the latest one"
+  rm "${well_known_generator_jar_location}"
+fi
+maven_repository="$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)"
+generator_version=$(get_version_from_versions_txt "gapic-generator-java")
+source_jar_path="${maven_repository}/com/google/api/gapic-generator-java/${generator_version}/gapic-generator-java-${generator_version}.jar"
+
+if [[ ! -f "${source_jar_path}" ]]; then
+  echo "generator jar not found in its assumed location"
+  echo "in the local repository: ${source_jar_path}"
+  echo "(did you run mvn install in this repository's root?)"
+  exit 1
+fi
+# transfer the snapshot jar into its well-known location
+cp "${source_jar_path}" "${well_known_generator_jar_location}"
 
 gapic_additional_protos="google/iam/v1/iam_policy.proto google/cloud/location/locations.proto"
 

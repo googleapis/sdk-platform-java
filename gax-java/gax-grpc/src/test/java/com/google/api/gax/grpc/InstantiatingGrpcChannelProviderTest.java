@@ -706,7 +706,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
-  public void canUseDirectPath_happyPath() {
+  public void canUseDirectPath_happyPath() throws IOException {
     System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
@@ -718,14 +718,20 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
-            .setEnvProvider(envProvider);
+            .setEnvProvider(envProvider)
+            .setHeaderProvider(Mockito.mock(HeaderProvider.class));
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isTrue();
+
+    // verify this info is passed correctly to transport channel
+    TransportChannel transportChannel = provider.getTransportChannel();
+    Truth.assertThat(((GrpcTransportChannel) transportChannel).isDirectPath()).isTrue();
+    transportChannel.shutdownNow();
   }
 
   @Test
-  public void canUseDirectPath_directPathEnvVarDisabled() {
+  public void canUseDirectPath_directPathEnvVarDisabled() throws IOException {
     System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
@@ -737,10 +743,16 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
-            .setEnvProvider(envProvider);
+            .setEnvProvider(envProvider)
+            .setHeaderProvider(Mockito.mock(HeaderProvider.class));
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
+
+    // verify this info is passed correctly to transport channel
+    TransportChannel transportChannel = provider.getTransportChannel();
+    Truth.assertThat(((GrpcTransportChannel) transportChannel).isDirectPath()).isFalse();
+    transportChannel.shutdownNow();
   }
 
   @Test
