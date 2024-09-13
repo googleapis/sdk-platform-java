@@ -1,4 +1,4 @@
-googleapis_commitish: 0f44538daf93e648e4fe5529acf8219cef3a0a39
+googleapis_commitish: 0eb6e43796dbc0212d0b5114c2106a3c6ebd6228
 # the libraries are ordered with respect to library name, which is
 # java-{library.library_name} or java-{library.api-shortname} when
 # library.library_name is not defined.
