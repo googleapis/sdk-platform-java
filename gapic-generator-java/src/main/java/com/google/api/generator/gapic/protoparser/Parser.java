@@ -451,9 +451,11 @@ public class Parser {
     if (!librarySettingsList.get(0).getVersion().isEmpty()
         && !protoPackage.equals(librarySettingsList.get(0).getVersion())) {
       LOGGER.warning(
-          "Service yaml config may be misconfigured. "
-              + "Version in publishing.library_settings does not match proto package."
-              + "Disregarding selective generation settings.");
+          String.format(
+              "Service yaml config is misconfigured. Version in "
+                  + "publishing.library_settings (%s) does not match proto package (%s)."
+                  + "Disregarding selective generation settings.",
+              librarySettingsList.get(0).getVersion(), protoPackage));
       return true;
     }
     List<String> includeMethodsList =
