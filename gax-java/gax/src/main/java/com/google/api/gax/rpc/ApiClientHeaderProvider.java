@@ -182,7 +182,8 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     }
 
     private String getProtobufVersionToAppend() {
-      // TODO(b:/366417603): appending protobuf version to existing client library column is a temporary fix while
+      // TODO(b:/366417603): appending protobuf version to existing client library column is a
+      // temporary fix while
       // waiting for dedicated field to be added in concord
       return "--" + PROTOBUF_HEADER_VERSION_KEY + "-" + GaxProperties.getProtobufVersion();
     }
