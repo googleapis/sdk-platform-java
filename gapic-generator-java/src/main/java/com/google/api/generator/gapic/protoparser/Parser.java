@@ -465,6 +465,10 @@ public class Parser {
             .getCommon()
             .getSelectiveGapicGeneration()
             .getMethodsList();
+    // default to include all when nothing specified
+    if (includeMethodsList.isEmpty()) {
+      return true;
+    }
 
     return includeMethodsList.contains(method.getFullName());
   }
