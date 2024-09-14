@@ -32,9 +32,7 @@ package com.google.api.gax.rpc;
 import com.google.api.gax.core.GaxProperties;
 import com.google.common.collect.ImmutableMap;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Implementation of HeaderProvider that provides headers describing the API client library making
@@ -44,14 +42,18 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
   private static final long serialVersionUID = -8876627296793342119L;
   static final String QUOTA_PROJECT_ID_HEADER_KEY = "x-goog-user-project";
   static final String PROTOBUF_HEADER_VERSION_KEY = "protobuf";
+
   public static final String API_VERSION_HEADER_KEY = "x-goog-api-version";
   public static final String GAPIC_HEADER_VERSION_KEY = "gapic";
   public static final String GCCL_HEADER_VERSION_KEY = "gccl";
+  private static final String protobufVersionStorageAppendage = "--" + PROTOBUF_HEADER_VERSION_KEY + "-" + GaxProperties.getProtobufVersion();
+  private static String tokensToAppendProfobufTo = "";
 
   private final Map<String, String> headers;
 
   protected ApiClientHeaderProvider(Builder builder) {
     ImmutableMap.Builder<String, String> headersBuilder = ImmutableMap.builder();
+    tokensToAppendProfobufTo ="("+GCCL_HEADER_VERSION_KEY+"|"+GAPIC_HEADER_VERSION_KEY+").*";
 
     if (builder.getApiClientHeaderKey() != null) {
       StringBuilder apiClientHeaderValue = new StringBuilder();
@@ -92,6 +94,17 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
         sb.append(' ');
       }
       sb.append(token);
+      checkAndAppendProtobufVersionIfNecessary(sb, token);
+    }
+  }
+
+  private static void checkAndAppendProtobufVersionIfNecessary(StringBuilder sb, String token) {
+    // TODO(b:/366417603): appending protobuf version to existing client library column is a
+    // temporary fix while waiting for dedicated field to be added in concord
+    if (token.matches(tokensToAppendProfobufTo)) {
+      sb.append(protobufVersionStorageAppendage);
+      // once protobuf version as been appended do not need to append anymore
+      tokensToAppendProfobufTo = "";
     }
   }
 
@@ -121,7 +134,6 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     private String resourceToken;
 
     private String apiVersionToken;
-    private final Set<String> tokensToAppendProtobuf;
 
     protected Builder() {
       // Initialize with default values
@@ -137,9 +149,6 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
       apiVersionToken = null;
       protobufRuntimeToken =
           constructToken(PROTOBUF_HEADER_VERSION_KEY, GaxProperties.getProtobufVersion());
-      tokensToAppendProtobuf = new HashSet<>();
-      tokensToAppendProtobuf.add(GCCL_HEADER_VERSION_KEY);
-      tokensToAppendProtobuf.add(GAPIC_HEADER_VERSION_KEY);
     }
 
     public String getApiClientHeaderKey() {
@@ -166,7 +175,6 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
 
     public Builder setClientLibToken(String name, String version) {
       this.clientLibToken = constructToken(name, version);
-      clientLibToken += checkAndAppendProtobufVersionIfNecessary(name);
       return this;
     }
 
@@ -176,18 +184,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
 
     public Builder setGeneratedLibToken(String name, String version) {
       this.generatedLibToken = constructToken(name, version);
-      generatedLibToken += checkAndAppendProtobufVersionIfNecessary(name);
       return this;
-    }
-
-    private String checkAndAppendProtobufVersionIfNecessary(String name) {
-      // TODO(b:/366417603): appending protobuf version to existing client library column is a
-      // temporary fix while waiting for dedicated field to be added in concord
-      if (tokensToAppendProtobuf.contains(name)) {
-        return "--" + PROTOBUF_HEADER_VERSION_KEY + "-" + GaxProperties.getProtobufVersion();
-      } else {
-        return "";
-      }
     }
 
     public String getGeneratedRuntimeToken() {

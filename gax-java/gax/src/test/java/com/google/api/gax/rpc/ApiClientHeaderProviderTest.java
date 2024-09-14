@@ -80,7 +80,6 @@ class ApiClientHeaderProviderTest {
             "^gl-java/.* gccl/4\\.5\\.6"
                 + PROTOBUF_APPENDER
                 + " gapic/7\\.8\\.9"
-                + PROTOBUF_APPENDER
                 + " gax/.* grpc/1\\.2\\.3 "
                 + PROTOBUF_HEADER
                 + "$");
