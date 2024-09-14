@@ -32,7 +32,9 @@ package com.google.api.gax.rpc;
 import com.google.api.gax.core.GaxProperties;
 import com.google.common.collect.ImmutableMap;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Implementation of HeaderProvider that provides headers describing the API client library making
@@ -119,6 +121,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     private String resourceToken;
 
     private String apiVersionToken;
+    private final Set<String> tokensToAppendProtobuf;
 
     protected Builder() {
       // Initialize with default values
@@ -129,14 +132,14 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
       setClientRuntimeToken(GaxProperties.getGaxVersion());
       transportToken = null;
       quotaProjectIdToken = null;
-
       resourceHeaderKey = getDefaultResourceHeaderKey();
       resourceToken = null;
-
       apiVersionToken = null;
-
       protobufRuntimeToken =
           constructToken(PROTOBUF_HEADER_VERSION_KEY, GaxProperties.getProtobufVersion());
+      tokensToAppendProtobuf = new HashSet<>();
+      tokensToAppendProtobuf.add(GCCL_HEADER_VERSION_KEY);
+      tokensToAppendProtobuf.add(GAPIC_HEADER_VERSION_KEY);
     }
 
     public String getApiClientHeaderKey() {
@@ -163,9 +166,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
 
     public Builder setClientLibToken(String name, String version) {
       this.clientLibToken = constructToken(name, version);
-      if (name.equals(GCCL_HEADER_VERSION_KEY)) {
-        clientLibToken += getProtobufVersionToAppend();
-      }
+      clientLibToken += checkAndAppendProtobufVersionIfNecessary(name);
       return this;
     }
 
@@ -175,17 +176,18 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
 
     public Builder setGeneratedLibToken(String name, String version) {
       this.generatedLibToken = constructToken(name, version);
-      if (name.equals(GAPIC_HEADER_VERSION_KEY)) {
-        generatedLibToken += getProtobufVersionToAppend();
-      }
+      generatedLibToken += checkAndAppendProtobufVersionIfNecessary(name);
       return this;
     }
 
-    private String getProtobufVersionToAppend() {
+    private String checkAndAppendProtobufVersionIfNecessary(String name) {
       // TODO(b:/366417603): appending protobuf version to existing client library column is a
-      // temporary fix while
-      // waiting for dedicated field to be added in concord
-      return "--" + PROTOBUF_HEADER_VERSION_KEY + "-" + GaxProperties.getProtobufVersion();
+      // temporary fix while waiting for dedicated field to be added in concord
+      if (tokensToAppendProtobuf.contains(name)) {
+        return "--" + PROTOBUF_HEADER_VERSION_KEY + "-" + GaxProperties.getProtobufVersion();
+      } else {
+        return "";
+      }
     }
 
     public String getGeneratedRuntimeToken() {
