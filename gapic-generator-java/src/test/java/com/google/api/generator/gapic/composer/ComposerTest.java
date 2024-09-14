@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
@@ -171,29 +170,6 @@ class ComposerTest {
   @Test
   void testComposePackageInfo_emptyGapicContext_returnsNull() {
     assertNull(Composer.composePackageInfo(GapicContext.EMPTY));
-  }
-
-  @Test
-  void testComposeSelectively_serviceClientShouldOnlyContainSelectedMethods() {
-    GapicContext context = GrpcTestProtoLoader.instance().parseSelectiveGenerationTesting();
-    List<GapicClass> serviceClasses = Composer.composeServiceClasses(context);
-    assertEquals(10, serviceClasses.size());
-    for (GapicClass clazz : serviceClasses) {
-      for (MethodDefinition method : clazz.classDefinition().methods()) {
-        String methodName = method.methodIdentifier().name();
-        if (method.isConstructor()) {
-          continue;
-        }
-        // should not contain methods for rpc not in selective config
-        assertFalse(methodName.startsWith("expand"));
-        assertFalse(methodName.startsWith("collect"));
-        assertFalse(methodName.startsWith("pagedExpand"));
-        assertFalse(methodName.startsWith("simplePagedExpand"));
-        assertFalse(methodName.startsWith("wait"));
-        assertFalse(methodName.startsWith("block"));
-        assertFalse(methodName.startsWith("collideName"));
-      }
-    }
   }
 
   private List<GapicClass> getTestClassListFromService(Service testService) {

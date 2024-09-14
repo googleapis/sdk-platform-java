@@ -60,6 +60,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -728,8 +729,11 @@ class ParserTest {
         fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, helperResourceNames);
     // resource Name Foobarbaz is not present
     assertEquals(2, helperResourceNames.size());
-    assertEquals("foobar", ((ResourceName) helperResourceNames.toArray()[0]).variableName());
-    assertEquals("anythingGoes", ((ResourceName) helperResourceNames.toArray()[1]).variableName());
+    assertTrue(
+        helperResourceNames.stream()
+            .map(ResourceName::variableName)
+            .collect(Collectors.toSet())
+            .containsAll(ImmutableList.of("foobar", "anythingGoes")));
   }
 
   @Test
@@ -772,9 +776,9 @@ class ParserTest {
     assertEquals(2, services.size());
     assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
 
-    assertEquals(11, services.get(0).methods().size());
+    assertEquals(5, services.get(0).methods().size());
     assertEquals("EchoServiceShouldGenerateNone", services.get(1).overriddenName());
-    assertEquals(10, services.get(1).methods().size());
+    assertEquals(2, services.get(1).methods().size());
   }
 
   @Test
@@ -798,9 +802,9 @@ class ParserTest {
     assertEquals(2, services.size());
     assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
 
-    assertEquals(11, services.get(0).methods().size());
+    assertEquals(5, services.get(0).methods().size());
     assertEquals("EchoServiceShouldGenerateNone", services.get(1).overriddenName());
-    assertEquals(10, services.get(1).methods().size());
+    assertEquals(2, services.get(1).methods().size());
   }
 
   private void assertMethodArgumentEquals(

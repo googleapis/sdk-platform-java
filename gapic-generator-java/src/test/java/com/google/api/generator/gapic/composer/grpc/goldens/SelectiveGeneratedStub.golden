@@ -26,36 +26,39 @@ import javax.annotation.Generated;
 @BetaApi
 @Generated("by gapic-generator-java")
 public class GrpcEchoServiceShouldGeneratePartialStub extends EchoServiceShouldGeneratePartialStub {
-  private static final MethodDescriptor<EchoRequest, EchoResponse> echoMethodDescriptor =
-      MethodDescriptor.<EchoRequest, EchoResponse>newBuilder()
-          .setType(MethodDescriptor.MethodType.UNARY)
-          .setFullMethodName(
-              "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartial/Echo")
-          .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
-          .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
-          .build();
+  private static final MethodDescriptor<EchoRequest, EchoResponse>
+      echoShouldIncludeMethodDescriptor =
+          MethodDescriptor.<EchoRequest, EchoResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(
+                  "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartial/EchoShouldInclude")
+              .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+              .build();
 
-  private static final MethodDescriptor<EchoRequest, EchoResponse> chatMethodDescriptor =
-      MethodDescriptor.<EchoRequest, EchoResponse>newBuilder()
-          .setType(MethodDescriptor.MethodType.BIDI_STREAMING)
-          .setFullMethodName(
-              "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartial/Chat")
-          .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
-          .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
-          .build();
+  private static final MethodDescriptor<EchoRequest, EchoResponse>
+      chatShouldIncludeMethodDescriptor =
+          MethodDescriptor.<EchoRequest, EchoResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.BIDI_STREAMING)
+              .setFullMethodName(
+                  "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartial/ChatShouldInclude")
+              .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+              .build();
 
-  private static final MethodDescriptor<EchoRequest, EchoResponse> chatAgainMethodDescriptor =
-      MethodDescriptor.<EchoRequest, EchoResponse>newBuilder()
-          .setType(MethodDescriptor.MethodType.BIDI_STREAMING)
-          .setFullMethodName(
-              "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartial/ChatAgain")
-          .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
-          .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
-          .build();
+  private static final MethodDescriptor<EchoRequest, EchoResponse>
+      chatAgainShouldIncludeMethodDescriptor =
+          MethodDescriptor.<EchoRequest, EchoResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.BIDI_STREAMING)
+              .setFullMethodName(
+                  "google.selective.generate.v1beta1.EchoServiceShouldGeneratePartial/ChatAgainShouldInclude")
+              .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
+              .build();
 
-  private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
-  private final BidiStreamingCallable<EchoRequest, EchoResponse> chatCallable;
-  private final BidiStreamingCallable<EchoRequest, EchoResponse> chatAgainCallable;
+  private final UnaryCallable<EchoRequest, EchoResponse> echoShouldIncludeCallable;
+  private final BidiStreamingCallable<EchoRequest, EchoResponse> chatShouldIncludeCallable;
+  private final BidiStreamingCallable<EchoRequest, EchoResponse> chatAgainShouldIncludeCallable;
 
   private final BackgroundResource backgroundResources;
   private final GrpcOperationsStub operationsStub;
@@ -104,28 +107,34 @@ public class GrpcEchoServiceShouldGeneratePartialStub extends EchoServiceShouldG
     this.callableFactory = callableFactory;
     this.operationsStub = GrpcOperationsStub.create(clientContext, callableFactory);
 
-    GrpcCallSettings<EchoRequest, EchoResponse> echoTransportSettings =
+    GrpcCallSettings<EchoRequest, EchoResponse> echoShouldIncludeTransportSettings =
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
-            .setMethodDescriptor(echoMethodDescriptor)
+            .setMethodDescriptor(echoShouldIncludeMethodDescriptor)
             .build();
-    GrpcCallSettings<EchoRequest, EchoResponse> chatTransportSettings =
+    GrpcCallSettings<EchoRequest, EchoResponse> chatShouldIncludeTransportSettings =
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
-            .setMethodDescriptor(chatMethodDescriptor)
+            .setMethodDescriptor(chatShouldIncludeMethodDescriptor)
             .build();
-    GrpcCallSettings<EchoRequest, EchoResponse> chatAgainTransportSettings =
+    GrpcCallSettings<EchoRequest, EchoResponse> chatAgainShouldIncludeTransportSettings =
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
-            .setMethodDescriptor(chatAgainMethodDescriptor)
+            .setMethodDescriptor(chatAgainShouldIncludeMethodDescriptor)
             .build();
 
-    this.echoCallable =
+    this.echoShouldIncludeCallable =
         callableFactory.createUnaryCallable(
-            echoTransportSettings, settings.echoSettings(), clientContext);
-    this.chatCallable =
+            echoShouldIncludeTransportSettings,
+            settings.echoShouldIncludeSettings(),
+            clientContext);
+    this.chatShouldIncludeCallable =
         callableFactory.createBidiStreamingCallable(
-            chatTransportSettings, settings.chatSettings(), clientContext);
-    this.chatAgainCallable =
+            chatShouldIncludeTransportSettings,
+            settings.chatShouldIncludeSettings(),
+            clientContext);
+    this.chatAgainShouldIncludeCallable =
         callableFactory.createBidiStreamingCallable(
-            chatAgainTransportSettings, settings.chatAgainSettings(), clientContext);
+            chatAgainShouldIncludeTransportSettings,
+            settings.chatAgainShouldIncludeSettings(),
+            clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -136,18 +145,18 @@ public class GrpcEchoServiceShouldGeneratePartialStub extends EchoServiceShouldG
   }
 
   @Override
-  public UnaryCallable<EchoRequest, EchoResponse> echoCallable() {
-    return echoCallable;
+  public UnaryCallable<EchoRequest, EchoResponse> echoShouldIncludeCallable() {
+    return echoShouldIncludeCallable;
   }
 
   @Override
-  public BidiStreamingCallable<EchoRequest, EchoResponse> chatCallable() {
-    return chatCallable;
+  public BidiStreamingCallable<EchoRequest, EchoResponse> chatShouldIncludeCallable() {
+    return chatShouldIncludeCallable;
   }
 
   @Override
-  public BidiStreamingCallable<EchoRequest, EchoResponse> chatAgainCallable() {
-    return chatAgainCallable;
+  public BidiStreamingCallable<EchoRequest, EchoResponse> chatAgainShouldIncludeCallable() {
+    return chatAgainShouldIncludeCallable;
   }
 
   @Override
