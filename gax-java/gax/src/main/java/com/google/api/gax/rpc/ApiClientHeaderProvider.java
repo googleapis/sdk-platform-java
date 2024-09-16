@@ -98,7 +98,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
   }
 
   private static void checkAndAppendProtobufVersionIfNecessary(StringBuilder sb, String token) {
-    // TODO(b:/366417603): appending protobuf version to existing client library column is a
+    // TODO(b/366417603): appending protobuf version to existing client library token until resolved
     // temporary fix while waiting for dedicated field to be added in concord
     if (token.matches(tokensToAppendProfobufVersionTo)) {
       sb.append(protobufVersionAppendValue);
