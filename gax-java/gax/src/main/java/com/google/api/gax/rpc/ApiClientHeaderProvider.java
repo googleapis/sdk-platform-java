@@ -44,15 +44,15 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
   static final String PROTOBUF_HEADER_VERSION_KEY = "protobuf";
 
   public static final String API_VERSION_HEADER_KEY = "x-goog-api-version";
-  private static final String protobufVersionStorageAppendage =
+  private static final String protobufVersionAppendValue =
       "--" + PROTOBUF_HEADER_VERSION_KEY + "-" + GaxProperties.getProtobufVersion();
-  private static String tokensToAppendProfobufTo = "";
+  private static String tokensToAppendProfobufVersionTo = "";
 
   private final Map<String, String> headers;
 
   protected ApiClientHeaderProvider(Builder builder) {
     ImmutableMap.Builder<String, String> headersBuilder = ImmutableMap.builder();
-    tokensToAppendProfobufTo = "(gccl|gapic).*";
+    tokensToAppendProfobufVersionTo = "(gccl|gapic).*";
 
     if (builder.getApiClientHeaderKey() != null) {
       StringBuilder apiClientHeaderValue = new StringBuilder();
@@ -100,10 +100,11 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
   private static void checkAndAppendProtobufVersionIfNecessary(StringBuilder sb, String token) {
     // TODO(b:/366417603): appending protobuf version to existing client library column is a
     // temporary fix while waiting for dedicated field to be added in concord
-    if (token.matches(tokensToAppendProfobufTo)) {
-      sb.append(protobufVersionStorageAppendage);
-      // once protobuf version as been appended do not need to append anymore
-      tokensToAppendProfobufTo = "";
+    if (token.matches(tokensToAppendProfobufVersionTo)) {
+      sb.append(protobufVersionAppendValue);
+      // once protobuf version as been appended to a token do not need to append to any additional
+      // tokens
+      tokensToAppendProfobufVersionTo = "";
     }
   }
 
