@@ -30,7 +30,9 @@
 package com.google.api.gax.core;
 
 import static com.google.api.gax.core.GaxProperties.getBundleVersion;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.common.base.Strings;
 import java.io.IOException;

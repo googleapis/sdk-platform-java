@@ -48,13 +48,11 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
   public static final String API_VERSION_HEADER_KEY = "x-goog-api-version";
   private static final String protobufVersionAppendValue =
       "--" + PROTOBUF_HEADER_VERSION_KEY + "-" + GaxProperties.getProtobufVersion();
-  private static String tokensToAppendProfobufVersionTo = "";
 
   private final Map<String, String> headers;
 
   protected ApiClientHeaderProvider(Builder builder) {
     ImmutableMap.Builder<String, String> headersBuilder = ImmutableMap.builder();
-    // tokensToAppendProfobufVersionTo = "(gccl|gapic).*";
 
     if (builder.getApiClientHeaderKey() != null) {
       StringBuilder apiClientHeaderValue = new StringBuilder();
