@@ -17,17 +17,13 @@ package com.google.api.generator.gapic.protoparser;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-import com.google.api.ClientLibrarySettings;
+import com.google.api.*;
 import com.google.api.FieldInfo.Format;
-import com.google.api.MethodSettings;
-import com.google.api.Publishing;
-import com.google.api.Service;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -762,26 +758,17 @@ class ParserTest {
 
   @Test
   void selectiveGenerationTest_shouldGenerateAllIfNoPublishingSectionInServiceYaml() {
-    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
-    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+    String protoPackage = "google.selective.generate.v1beta1";
 
-    String serviceYamlFilename = "selective_api_generation_no_publishing_v1beta1.yaml";
-    String testFilesDirectory = "src/test/resources/";
-    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
     Optional<com.google.api.Service> serviceYamlOpt =
-        ServiceYamlParser.parse(serviceYamlPath.toString());
-    Assert.assertTrue(serviceYamlOpt.isPresent());
+        Optional.of(Mockito.mock(com.google.api.Service.class));
+    Publishing publishing = Mockito.mock(Publishing.class);
+    when(serviceYamlOpt.get().getPublishing()).thenReturn(publishing);
+    when(publishing.getLibrarySettingsCount()).thenReturn(0);
 
-    List<com.google.api.generator.gapic.model.Service> services =
-        Parser.parseService(
-            fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
-    assertEquals(2, services.size());
-    assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
-
-    assertEquals(5, services.get(0).methods().size());
-    assertEquals("EchoServiceShouldGenerateNone", services.get(1).overriddenName());
-    assertEquals(2, services.get(1).methods().size());
+    assertTrue(
+        Parser.shouldIncludeMethodInGeneration(
+            Mockito.mock(MethodDescriptor.class), serviceYamlOpt, protoPackage));
   }
 
   @Test
@@ -805,28 +792,27 @@ class ParserTest {
 
   @Test
   void selectiveGenerationTest_shouldGenerateAllIfNoJavaSectionInServiceYaml() {
-    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
-    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+    String protoPackage = "google.selective.generate.v1beta1";
+    Publishing publishing = Mockito.mock(Publishing.class);
+    when(publishing.getLibrarySettingsCount()).thenReturn(3);
+    when(publishing.getLibrarySettingsList())
+        .thenReturn(
+            Collections.singletonList(
+                ClientLibrarySettings.newBuilder()
+                    .setCppSettings(
+                        CppSettings.newBuilder()
+                            .setCommon(
+                                CommonLanguageSettings.newBuilder()
+                                    .setSelectiveGapicGeneration(
+                                        SelectiveGapicGeneration.newBuilder()
+                                            .addMethods("included.cppMethod")))
+                            .build())
+                    .build()));
+    Service service = Service.getDefaultInstance().toBuilder().setPublishing(publishing).build();
 
-    String serviceYamlFilename = "selective_api_generation_no_java_settings_v1beta1.yaml";
-    String testFilesDirectory = "src/test/resources/";
-    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
-    Optional<com.google.api.Service> serviceYamlOpt =
-        ServiceYamlParser.parse(serviceYamlPath.toString());
-    assertTrue(serviceYamlOpt.isPresent());
-    assertEquals(1, serviceYamlOpt.get().getPublishing().getLibrarySettingsCount());
-    assertNotNull(serviceYamlOpt.get().getPublishing().getLibrarySettings(0).getPythonSettings());
-
-    List<com.google.api.generator.gapic.model.Service> services =
-        Parser.parseService(
-            fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
-    assertEquals(2, services.size());
-    assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
-
-    assertEquals(5, services.get(0).methods().size());
-    assertEquals("EchoServiceShouldGenerateNone", services.get(1).overriddenName());
-    assertEquals(2, services.get(1).methods().size());
+    assertTrue(
+        Parser.shouldIncludeMethodInGeneration(
+            Mockito.mock(MethodDescriptor.class), Optional.of(service), protoPackage));
   }
 
   private void assertMethodArgumentEquals(

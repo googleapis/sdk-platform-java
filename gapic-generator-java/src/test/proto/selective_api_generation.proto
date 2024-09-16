@@ -42,8 +42,6 @@ option (google.api.resource_definition) = {
 //  - A service with several rpcs, non of them should be generated
 // This proto should be tested side-by-side with yaml file:
 //  - selective_api_generation_v1beta1.yaml
-//  - selective_api_generation_no_java_settings_v1beta1.yaml
-//  - selective_api_generation_no_publishing_v1beta1.yaml
 
 service EchoServiceShouldGeneratePartial {
   option (google.api.default_host) = "localhost:7469";
