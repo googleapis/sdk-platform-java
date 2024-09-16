@@ -251,7 +251,7 @@ public class MetricsTracer implements ApiTracer {
    * Gax.
    */
   public void addAttributes(Map<String, String> attributes) {
-    attributes.putAll(attributes);
+    this.attributes.putAll(attributes);
   };
 
   @VisibleForTesting
