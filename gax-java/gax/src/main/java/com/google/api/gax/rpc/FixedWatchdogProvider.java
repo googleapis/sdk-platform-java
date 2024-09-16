@@ -34,7 +34,7 @@ import com.google.api.core.InternalApi;
 import com.google.api.core.ObsoleteApi;
 import java.time.Duration;
 import java.util.concurrent.ScheduledExecutorService;
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -62,7 +62,7 @@ public final class FixedWatchdogProvider implements WatchdogProvider {
   }
 
   @Override
-  public WatchdogProvider withClock(@Nonnull ApiClock clock) {
+  public WatchdogProvider withClock(@NonNull ApiClock clock) {
     throw new UnsupportedOperationException("FixedWatchdogProvider doesn't need a clock");
   }
 

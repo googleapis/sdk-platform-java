@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.retrying;
 
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -41,7 +41,7 @@ import org.jspecify.annotations.Nullable;
 public interface StreamResumptionStrategy<RequestT, ResponseT> {
 
   /** Creates a new instance of this StreamResumptionStrategy without accumulated state */
-  @Nonnull
+  @NonNull
   StreamResumptionStrategy<RequestT, ResponseT> createNew();
 
   /**
@@ -58,7 +58,7 @@ public interface StreamResumptionStrategy<RequestT, ResponseT> {
    *       through this method.
    * </ol>
    */
-  @Nonnull
+  @NonNull
   ResponseT processResponse(ResponseT response);
 
   /**

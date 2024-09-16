@@ -33,7 +33,7 @@ import com.google.api.core.InternalApi;
 import java.util.Iterator;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * A blocking Iterable-style wrapper around server stream responses.
@@ -81,7 +81,7 @@ public class ServerStream<V> implements Iterable<V> {
 
   /** {@inheritDoc} */
   @Override
-  @Nonnull
+  @NonNull
   public Iterator<V> iterator() {
     if (consumed) {
       throw new IllegalStateException("Iterator already consumed");

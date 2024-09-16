@@ -36,7 +36,7 @@ import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import com.google.common.base.Preconditions;
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * A wrapper callable that will wrap a callable chain in a trace.
@@ -48,14 +48,14 @@ import javax.annotation.Nonnull;
 public final class TracedServerStreamingCallable<RequestT, ResponseT>
     extends ServerStreamingCallable<RequestT, ResponseT> {
 
-  @Nonnull private final ApiTracerFactory tracerFactory;
-  @Nonnull private final SpanName spanName;
-  @Nonnull private final ServerStreamingCallable<RequestT, ResponseT> innerCallable;
+  @NonNull private final ApiTracerFactory tracerFactory;
+  @NonNull private final SpanName spanName;
+  @NonNull private final ServerStreamingCallable<RequestT, ResponseT> innerCallable;
 
   public TracedServerStreamingCallable(
-      @Nonnull ServerStreamingCallable<RequestT, ResponseT> innerCallable,
-      @Nonnull ApiTracerFactory tracerFactory,
-      @Nonnull SpanName spanName) {
+      @NonNull ServerStreamingCallable<RequestT, ResponseT> innerCallable,
+      @NonNull ApiTracerFactory tracerFactory,
+      @NonNull SpanName spanName) {
     this.tracerFactory = Preconditions.checkNotNull(tracerFactory, "tracerFactory can't be null");
     this.spanName = Preconditions.checkNotNull(spanName, "spanName can't be null");
     this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");

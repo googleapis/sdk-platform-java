@@ -36,7 +36,7 @@ import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.tracing.ApiTracer;
 import com.google.api.gax.tracing.BaseApiTracer;
 import java.util.Set;
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Backwards compatibility class to aid in transition to adding operation state to {@link
@@ -48,7 +48,7 @@ class NoopRetryingContext implements RetryingContext {
   }
 
   /** {@inheritDoc} */
-  @Nonnull
+  @NonNull
   @Override
   public ApiTracer getTracer() {
     return BaseApiTracer.getInstance();

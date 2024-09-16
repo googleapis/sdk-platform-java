@@ -39,7 +39,7 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.common.base.MoreObjects;
 import java.io.IOException;
 import java.util.concurrent.Executor;
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -113,14 +113,12 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
   }
 
   /** This method is obsolete. Use {@link #getWatchdogCheckIntervalDuration()} instead. */
-  @Nonnull
   @ObsoleteApi("Use getWatchdogCheckIntervalDuration() instead")
-  public final org.threeten.bp.Duration getWatchdogCheckInterval() {
+  public final org.threeten.bp.@NonNull Duration getWatchdogCheckInterval() {
     return stubSettings.getStreamWatchdogCheckInterval();
   }
 
-  @Nonnull
-  public final java.time.Duration getWatchdogCheckIntervalDuration() {
+  public final java.time.@NonNull Duration getWatchdogCheckIntervalDuration() {
     return stubSettings.getStreamWatchdogCheckIntervalDuration();
   }
 

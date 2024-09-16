@@ -64,7 +64,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -626,7 +626,7 @@ public final class GrpcCallContext implements ApiCallContext {
 
   /** {@inheritDoc} */
   @Override
-  @Nonnull
+  @NonNull
   public ApiTracer getTracer() {
     ApiTracer tracer = callOptions.getOption(TRACER_KEY);
     if (tracer == null) {
@@ -637,7 +637,7 @@ public final class GrpcCallContext implements ApiCallContext {
 
   /** {@inheritDoc} */
   @Override
-  public GrpcCallContext withTracer(@Nonnull ApiTracer tracer) {
+  public GrpcCallContext withTracer(@NonNull ApiTracer tracer) {
     Preconditions.checkNotNull(tracer);
     return withCallOptions(callOptions.withOption(TRACER_KEY, tracer));
   }
