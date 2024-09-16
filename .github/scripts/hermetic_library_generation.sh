@@ -99,12 +99,14 @@ docker run \
 rm -rdf output googleapis "${baseline_generation_config}"
 git add --all -- ':!pr_description.txt' ':!hermetic_library_generation.sh'
 changed_files=$(git diff --cached --name-only)
-if [[ "${changed_files}" == "" ]]; then
-    echo "There is no generated code change."
+if [[ "${changed_files}" != "" ]]; then
+    echo "Commit changes..."
+    git commit -m "${message}"
+    git push
+else
+    echo "There is no generated code change, skip commit."
 fi
 
-git commit --allow-empty -m "${message}"
-git push
 # set pr body if pr_description.txt is generated.
 if [[ -f "pr_description.txt" ]]; then
   pr_num=$(gh pr list -s open -H "${current_branch}" -q . --json number | jq ".[] | .number")
