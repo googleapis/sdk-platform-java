@@ -183,40 +183,25 @@ public abstract class ClientContext {
               "You can not provide both ApiKey and Credentials for a client.");
     }
     if (apiKey != null) {
+      // if API key exists it becomes the default credential
       credentials = ApiKeyCredentials.create(settings.getApiKey());
-    } else {
-      // check if need to adjust credentials for Gdch audience
-      String settingsGdchApiAudience = settings.getGdchApiAudience();
-      boolean usingGDCH = credentials instanceof GdchCredentials;
-      if (usingGDCH) {
-        // Can only determine if the GDC-H is being used via the Credentials. The Credentials object
-        // is resolved in the ClientContext and must be passed to the EndpointContext. Rebuild the
-        // endpointContext only on GDC-H flows.
-        endpointContext = endpointContext.withGDCH();
-        // Resolve the new endpoint with the GDC-H flow
-        endpoint = endpointContext.resolvedEndpoint();
-        // We recompute the GdchCredentials with the audience
-        String audienceString;
-        if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
-          audienceString = settingsGdchApiAudience;
-        } else if (!Strings.isNullOrEmpty(endpoint)) {
-          audienceString = endpoint;
-        } else {
-          throw new IllegalArgumentException("Could not infer GDCH api audience from settings");
-        }
+    }
 
-        URI gdchAudienceUri;
-        try {
-          gdchAudienceUri = URI.create(audienceString);
-        } catch (IllegalArgumentException ex) { // thrown when passing a malformed uri string
-          throw new IllegalArgumentException(
-              "The GDC-H API audience string is not a valid URI", ex);
-        }
-        credentials = ((GdchCredentials) credentials).createWithGdchAudience(gdchAudienceUri);
-      } else if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
-        throw new IllegalArgumentException(
-            "GDC-H API audience can only be set when using GdchCredentials");
-      }
+    // check if need to adjust credentials/endpoint/endpointContext for GDC-H
+    String settingsGdchApiAudience = settings.getGdchApiAudience();
+    boolean usingGDCH = credentials instanceof GdchCredentials;
+    if (usingGDCH) {
+      // Can only determine if the GDC-H is being used via the Credentials. The Credentials object
+      // is resolved in the ClientContext and must be passed to the EndpointContext. Rebuild the
+      // endpointContext only on GDC-H flows.
+      endpointContext = endpointContext.withGDCH();
+      // Resolve the new endpoint with the GDC-H flow
+      endpoint = endpointContext.resolvedEndpoint();
+      // We recompute the GdchCredentials with the audience
+      credentials = getGdchCredentials(settingsGdchApiAudience, endpoint, credentials);
+    } else if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
+      throw new IllegalArgumentException(
+          "GDC-H API audience can only be set when using GdchCredentials");
     }
 
     if (settings.getQuotaProjectId() != null && credentials != null) {
@@ -302,6 +287,27 @@ public abstract class ClientContext {
         .setTracerFactory(settings.getTracerFactory())
         .setEndpointContext(endpointContext)
         .build();
+  }
+
+  private static Credentials getGdchCredentials(String settingsGdchApiAudience, String endpoint, Credentials credentials) throws IOException {
+    String audienceString;
+    if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
+      audienceString = settingsGdchApiAudience;
+    } else if (!Strings.isNullOrEmpty(endpoint)) {
+      audienceString = endpoint;
+    } else {
+      throw new IllegalArgumentException("Could not infer GDCH api audience from settings");
+    }
+
+    URI gdchAudienceUri;
+    try {
+      gdchAudienceUri = URI.create(audienceString);
+    } catch (IllegalArgumentException ex) { // thrown when passing a malformed uri string
+      throw new IllegalArgumentException(
+          "The GDC-H API audience string is not a valid URI", ex);
+    }
+    credentials = ((GdchCredentials) credentials).createWithGdchAudience(gdchAudienceUri);
+    return credentials;
   }
 
   /**
