@@ -245,6 +245,15 @@ public class MetricsTracer implements ApiTracer {
     attributes.put(key, value);
   };
 
+  /**
+   * Add attributes that will be attached to all metrics. This is expected to be called by
+   * handwritten client teams to add additional attributes that are not supposed be collected by
+   * Gax.
+   */
+  public void addAttributes(Map<String, String> attributes) {
+    attributes.putAll(attributes);
+  };
+
   @VisibleForTesting
   Map<String, String> getAttributes() {
     return attributes;
