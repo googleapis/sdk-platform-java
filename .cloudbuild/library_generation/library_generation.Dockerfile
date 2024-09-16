@@ -63,13 +63,14 @@ COPY . .
 ENV DOCKER_GAPIC_GENERATOR_VERSION="2.45.1-SNAPSHOT" 
 # {x-version-update-end}
 
-RUN mvn install -T 10 -DskipTests -Dclirr.skip -Dcheckstyle.skip \
+# use Docker Buildkit caching for faster local builds
+RUN --mount=type=cache,target=/root/.m2 mvn install -T 10 -DskipTests -Dclirr.skip -Dcheckstyle.skip \
     -pl gapic-generator-java -am
-RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
+RUN --mount=type=cache,target=/root/.m2 cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "/gapic-generator-java.jar"
 
 # Builds the python scripts in library_generation
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python:3.12.3-alpine3.18 as python-scripts-build
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python:3.11-alpine as python-scripts-build
 
 # This will use GOOGLE_APPLICATION_CREDENTIALS if passed in docker build command.
 # If not passed will leave it unset to support GCE Metadata in CI builds
@@ -80,8 +81,6 @@ RUN apk add bash curl
 # Install gcloud to obtain the credentials to use the Airlock repostiory
 RUN curl -sSL https://sdk.cloud.google.com | bash -e
 ENV PATH $PATH:/root/google-cloud-sdk/bin
-#RUN --mount=type=secret,id=credentials \
-#      gcloud auth application-default print-access-token && exit 1
 
 
 # Configure the Airlock pip package repository
@@ -99,18 +98,46 @@ RUN python -m pip install --user .
 RUN ls -lah  /root/.local
 
 # Final image. Installs the rest of the dependencies and gets the binaries
-# from the previous stages
+# from the previous stages. We use the node base image for it to be compatible
+# with the standalone binary owl-bot compiled in the previous stage
 FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/node:22.1-alpine as final
-
 
 ARG PROTOC_VERSION=25.4
 ARG GRPC_VERSION=1.66.0
+# This SHA is the latest known-to-work version of this binary compatibility tool
+ARG GLIB_MUS_SHA=7717dd4dc26377dd9cedcc92b72ebf35f9e68a2d
 ENV HOME=/home
-ENV OS_ARCHITECTURE="linux-x86_64"
+ENV OS_ARCH="linux-x86_64"
 
-# Install shell script tools
-RUN apk update && apk add unzip rsync jq git maven bash curl python3
+# Install shell script tools. Keep them in sorted order.
+RUN apk update && apk add \
+    bash \
+    curl \
+    git \
+    jq \
+    maven \
+    py-pip \
+    python3 \
+    rsync \
+    sudo \
+    unzip
 SHELL [ "/bin/bash", "-c" ]
+
+# Install compatibility layer to run glibc-based programs (such as the
+# grpc plugin).
+# Alpine, by default, only supports musl-based binaries, and there is no public
+# downloadable distrubution of the grpc that is Alpine (musl) compatible.
+# This is one of the recommended approaches
+# as per https://wiki.alpinelinux.org/wiki/Running_glibc_programs
+WORKDIR /home
+RUN git clone https://gitlab.com/manoel-linux1/GlibMus-HQ.git
+WORKDIR /home/GlibMus-HQ
+# We lock the tool to the latest known-to-work version
+RUN git checkout "${GLIB_MUS_SHA}"
+RUN chmod a+x compile-x86_64-alpine-linux.sh
+RUN ./compile-x86_64-alpine-linux.sh
+WORKDIR /home
+RUN rm -rf /home/GlibMus-HQ
 
 
 # Use utilites script to download dependencies
@@ -118,22 +145,25 @@ COPY library_generation/utils/utilities.sh /utilities.sh
 
 # install protoc
 WORKDIR /protoc
-RUN source /utilities.sh \
-	&& download_protoc "${PROTOC_VERSION}" "${OS_ARCHITECTURE}"
+RUN source /utilities.sh && download_protoc "${PROTOC_VERSION}" "${OS_ARCH}"
 # we indicate protoc is available in the container via env vars
 ENV DOCKER_PROTOC_LOCATION=/protoc
 ENV DOCKER_PROTOC_VERSION="${PROTOC_VERSION}"
 
 # install grpc
 WORKDIR /grpc
-RUN source /utilities.sh \
-	&& download_grpc_plugin "${GRPC_VERSION}" "${OS_ARCHITECTURE}"
+RUN source /utilities.sh && download_grpc_plugin "${GRPC_VERSION}" "${OS_ARCH}"
 # similar to protoc, we indicate grpc is available in the container via env vars
-ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java-${GRPC_VERSION}-${OS_ARCHITECTURE}.exe"
+ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java-${GRPC_VERSION}-${OS_ARCH}.exe"
 ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 
 # Remove utilities script now that we downloaded the generation tools
 RUN rm /utilities.sh
+
+# Make home folder accessible for all users since the container is usually
+# launched using the -u $(user -i) argument.
+RUN chmod -R 766 "${HOME}"
+RUN touch "${HOME}/.bashrc" && chmod 755 "${HOME}/.bashrc"
 
 # Here we transfer gapic-generator-java from the previous stage.
 # Note that the destination is a well-known location that will be assumed at runtime.
@@ -147,7 +177,9 @@ RUN chmod 555 "/usr/bin/owl-bot"
 
 # Copy the library_generation python packages
 COPY --from=python-scripts-build "/root/.local" "${HOME}/.local"
-
+COPY --from=python-scripts-build "/usr/local/lib/python3.11/site-packages" "/usr/local/lib/python3.11/site-packages"
+RUN chmod -R 555 "${HOME}/.local"
+RUN chmod -R 555 "/usr/local/lib/python3.11/site-packages"
 
 # set dummy git credentials for the empty commit used in postprocessing
 # we use system so all users using the container will use this configuration

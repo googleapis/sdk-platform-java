@@ -282,5 +282,5 @@ rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_pro
 popd # destination path
 
 cp -r ${temp_destination_path}/* "${output_folder}/${destination_path}"
-rm -rdf "${temp_destination_path}"
+rm -rf "${temp_destination_path}"
 exit 0
