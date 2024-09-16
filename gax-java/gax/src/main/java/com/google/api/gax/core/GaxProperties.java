@@ -131,7 +131,7 @@ public class GaxProperties {
   /**
    * Returns the current library version as reported by {BUNDLE_VERSION_KEY} in library's
    * META-INF/MANIFEST. This should only be used if MANIFEST file does not contain a widely
-   * recognized version declaration such as SPECIFIC_VERSION OR IMPLEMENTATION_VERSION, otherwise
+   * recognized version declaration such as Specific-Version OR Implementation-Version, otherwise
    * please use #getLibraryVersion
    */
   @VisibleForTesting
@@ -143,7 +143,7 @@ public class GaxProperties {
         return Optional.ofNullable(attributes.getValue(BUNDLE_VERSION_KEY));
       }
     } catch (URISyntaxException | IOException e) {
-      // Unable to read Protobuf runtime version. Recover gracefully.
+      // Unable to read Bundle-Version from manifest. Recover gracefully.
       return Optional.empty();
     }
   }

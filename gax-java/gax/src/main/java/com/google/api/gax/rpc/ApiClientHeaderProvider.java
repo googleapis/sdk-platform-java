@@ -33,6 +33,8 @@ import com.google.api.gax.core.GaxProperties;
 import com.google.common.collect.ImmutableMap;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Implementation of HeaderProvider that provides headers describing the API client library making
@@ -52,7 +54,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
 
   protected ApiClientHeaderProvider(Builder builder) {
     ImmutableMap.Builder<String, String> headersBuilder = ImmutableMap.builder();
-    tokensToAppendProfobufVersionTo = "(gccl|gapic).*";
+    // tokensToAppendProfobufVersionTo = "(gccl|gapic).*";
 
     if (builder.getApiClientHeaderKey() != null) {
       StringBuilder apiClientHeaderValue = new StringBuilder();
@@ -62,9 +64,12 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
       appendToken(apiClientHeaderValue, builder.getGeneratedLibToken());
       appendToken(apiClientHeaderValue, builder.getGeneratedRuntimeToken());
       appendToken(apiClientHeaderValue, builder.getTransportToken());
-      appendToken(apiClientHeaderValue, builder.protobufRuntimeToken);
+      appendToken(apiClientHeaderValue, builder.getProtobufRuntimeToken());
+
       if (apiClientHeaderValue.length() > 0) {
-        headersBuilder.put(builder.getApiClientHeaderKey(), apiClientHeaderValue.toString());
+        headersBuilder.put(
+            builder.getApiClientHeaderKey(),
+            checkAndAppendProtobufVersionIfNecessary(apiClientHeaderValue));
       }
     }
 
@@ -82,6 +87,20 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     this.headers = headersBuilder.build();
   }
 
+  private static String checkAndAppendProtobufVersionIfNecessary(
+      StringBuilder apiClientHeaderValue) {
+    // TODO(b/366417603): appending protobuf version to existing client library token until resolved
+    // temporary fix while waiting for dedicated field to be added in concord
+    Pattern pattern = Pattern.compile("(gccl|gapic)\\S*");
+    Matcher matcher = pattern.matcher(apiClientHeaderValue);
+    if (matcher.find()) {
+      return apiClientHeaderValue.substring(0, matcher.end())
+          + protobufVersionAppendValue
+          + apiClientHeaderValue.substring(matcher.end());
+    }
+    return apiClientHeaderValue.toString();
+  }
+
   @Override
   public Map<String, String> getHeaders() {
     return headers;
@@ -93,18 +112,6 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
         sb.append(' ');
       }
       sb.append(token);
-      checkAndAppendProtobufVersionIfNecessary(sb, token);
-    }
-  }
-
-  private static void checkAndAppendProtobufVersionIfNecessary(StringBuilder sb, String token) {
-    // TODO(b/366417603): appending protobuf version to existing client library token until resolved
-    // temporary fix while waiting for dedicated field to be added in concord
-    if (token.matches(tokensToAppendProfobufVersionTo)) {
-      sb.append(protobufVersionAppendValue);
-      // once protobuf version as been appended to a token do not need to append to any additional
-      // tokens
-      tokensToAppendProfobufVersionTo = "";
     }
   }
 
@@ -241,6 +248,10 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     public Builder setApiVersionToken(String apiVersionToken) {
       this.apiVersionToken = apiVersionToken;
       return this;
+    }
+
+    public String getProtobufRuntimeToken() {
+      return protobufRuntimeToken;
     }
 
     private String constructToken(String name, String version) {
