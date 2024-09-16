@@ -101,11 +101,9 @@ git add --all -- ':!pr_description.txt' ':!hermetic_library_generation.sh'
 changed_files=$(git diff --cached --name-only)
 if [[ "${changed_files}" == "" ]]; then
     echo "There is no generated code change."
-    echo "Skip committing to the pull request."
-    exit 0
 fi
 
-git commit -m "${message}"
+git commit --allow-empty -m "${message}"
 git push
 # set pr body if pr_description.txt is generated.
 if [[ -f "pr_description.txt" ]]; then
