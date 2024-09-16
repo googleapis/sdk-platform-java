@@ -64,8 +64,10 @@ ENV DOCKER_GAPIC_GENERATOR_VERSION="2.45.1-SNAPSHOT"
 # {x-version-update-end}
 
 # use Docker Buildkit caching for faster local builds
-RUN --mount=type=cache,target=/root/.m2 mvn install -T 10 -DskipTests -Dclirr.skip -Dcheckstyle.skip \
-    -pl gapic-generator-java -am
+RUN --mount=type=cache,target=/root/.m2 mvn install -T 1.5C \
+    -DskipTests -Dclirr.skip -Dcheckstyle.skip -Djacoco.skip -Dmaven.test.skip \
+    -Dmaven.site.skikip -Dmaven.javadoc.skip -pl gapic-generator-java -am
+
 RUN --mount=type=cache,target=/root/.m2 cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "/gapic-generator-java.jar"
 
@@ -177,9 +179,8 @@ RUN chmod 555 "/usr/bin/owl-bot"
 
 # Copy the library_generation python packages
 COPY --from=python-scripts-build "/root/.local" "${HOME}/.local"
-COPY --from=python-scripts-build "/usr/local/lib/python3.11/site-packages" "/usr/local/lib/python3.11/site-packages"
+COPY --from=python-scripts-build "/usr/local/lib/python3.11/site-packages" "/usr/lib/python3.11/"
 RUN chmod -R 555 "${HOME}/.local"
-RUN chmod -R 555 "/usr/local/lib/python3.11/site-packages"
 
 # set dummy git credentials for the empty commit used in postprocessing
 # we use system so all users using the container will use this configuration
