@@ -29,7 +29,7 @@
     <findbugs.version>3.0.2</findbugs.version>
     <jspecify.version>1.0.0</jspecify.version>
     <jackson.version>2.17.2</jackson.version>
-    <errorprone.version>2.31.0</errorprone.version>
+    <errorprone.version>2.32.0</errorprone.version>
     <codec.version>1.17.1</codec.version>
     <httpcomponents.httpcore.version>4.4.16</httpcomponents.httpcore.version>
     <httpcomponents.httpclient.version>4.5.14</httpcomponents.httpclient.version>

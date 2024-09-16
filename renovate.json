@@ -24,29 +24,6 @@
         "^gax-java/dependencies\\.properties$"
       ],
       "matchStrings": [
-        "version\\.com_google_protobuf=(?<currentValue>.+?)\\n"
-      ],
-      "depNameTemplate": "com.google.protobuf:protobuf-java",
-      "datasourceTemplate": "maven"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-               "^\\.cloudbuild/library_generation/library_generation\\.Dockerfile$"
-      ],
-      "matchStrings": [
-        "ARG PROTOC_VERSION=[\"']?(?<currentValue>.+?)[\"']?\\s+"
-      ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "protocolbuffers/protobuf",
-      "extractVersionTemplate": "^v(?<version>.*)$"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^gax-java/dependencies\\.properties$"
-      ],
-      "matchStrings": [
         "version\\.google_java_format=(?<currentValue>.+?)\\n"
       ],
       "depNameTemplate": "com.google.googlejavaformat:google-java-format",
@@ -92,6 +69,12 @@
       ],
       "matchPackagePatterns": [
         "*"
+      ],
+      "enabled": false
+    },
+    {
+      "matchPackagePatterns": [
+        "^com.google.protobuf:"
       ],
       "enabled": false
     },
@@ -152,13 +135,6 @@
         "^com.fasterxml.jackson.core"
       ],
       "groupName": "jackson dependencies"
-    },
-    {
-      "matchPackagePatterns": [
-        "^com.google.protobuf",
-		"^protocolbuffers/protobuf"
-      ],
-      "groupName": "Protobuf dependencies"
     },
     {
       "matchPackagePatterns": [
