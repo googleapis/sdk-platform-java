@@ -58,11 +58,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
   /** Constructs an instance of ClientSettings. */
   protected ClientSettings(Builder builder) throws IOException {
-    if (builder.stubSettings.getApiKey() != null
-        && builder.stubSettings.getCredentialsProvider().getCredentials() != null) {
-      throw new IllegalArgumentException(
-          "You can not provide both ApiKey and Credentials for a client.");
-    }
     this.stubSettings = builder.stubSettings.build();
   }
 

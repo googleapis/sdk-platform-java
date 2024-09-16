@@ -31,12 +31,7 @@ package com.google.api.gax.rpc;
 
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -67,6 +62,8 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+
+import org.apache.http.impl.client.SystemDefaultCredentialsProvider;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -1093,5 +1090,31 @@ class ClientContextTest {
 
     FakeCallContext fakeCallContext = (FakeCallContext) context.getDefaultCallContext();
     assertThat(fakeCallContext.getCredentials()).isInstanceOf(ApiKeyCredentials.class);
+  }
+
+  @Test
+  void testCreateClient_throwsErrorIfApiKeyAndCredentialsAreProvided() throws Exception {
+    String apiKey = "key";
+    FakeStubSettings.Builder builder = new FakeStubSettings.Builder();
+    InterceptingExecutor executor = new InterceptingExecutor(1);
+    FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
+    FakeTransportProvider transportProvider =
+            new FakeTransportProvider(
+                    transportChannel, executor, true, ImmutableMap.of(), null, DEFAULT_ENDPOINT);
+    builder.setTransportChannelProvider(transportProvider);
+
+    HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
+    Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of());
+    builder.setHeaderProvider(headerProvider);
+    builder.setApiKey(apiKey);
+    builder.setCredentialsProvider(Mockito.mock(CredentialsProvider.class));
+
+    try {
+      ClientContext context = ClientContext.create(builder.build());
+      fail("No exception raised");
+    } catch (IllegalArgumentException e) {
+      assert(
+              e.getMessage().contains("You can not provide both ApiKey and Credentials for a client."));
+    }
   }
 }
