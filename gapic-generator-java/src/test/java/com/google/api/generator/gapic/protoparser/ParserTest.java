@@ -21,7 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 
+import com.google.api.ClientLibrarySettings;
 import com.google.api.FieldInfo.Format;
 import com.google.api.MethodSettings;
 import com.google.api.Publishing;
@@ -64,6 +66,7 @@ import java.util.stream.Collectors;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 class ParserTest {
   private static final String ECHO_PACKAGE = "com.google.showcase.v1beta1";
@@ -779,6 +782,25 @@ class ParserTest {
     assertEquals(5, services.get(0).methods().size());
     assertEquals("EchoServiceShouldGenerateNone", services.get(1).overriddenName());
     assertEquals(2, services.get(1).methods().size());
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldIncludeMethodInGenerationWhenProtoPackageMismatch() {
+    String protoPackage = "google.selective.generate.v1beta1";
+
+    Optional<com.google.api.Service> serviceYamlOpt =
+        Optional.of(Mockito.mock(com.google.api.Service.class));
+    Publishing publishing = Mockito.mock(Publishing.class);
+    when(serviceYamlOpt.get().getPublishing()).thenReturn(publishing);
+    when(publishing.getLibrarySettingsCount()).thenReturn(3);
+    List<ClientLibrarySettings> librarySettingsList =
+        ImmutableList.of(Mockito.mock(ClientLibrarySettings.class));
+    when(publishing.getLibrarySettingsList()).thenReturn(librarySettingsList);
+    when(librarySettingsList.get(0).getVersion()).thenReturn("google.selective.generate.v1");
+
+    assertTrue(
+        Parser.shouldIncludeMethodInGeneration(
+            Mockito.mock(MethodDescriptor.class), serviceYamlOpt, protoPackage));
   }
 
   @Test
