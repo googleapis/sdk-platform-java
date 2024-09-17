@@ -1080,7 +1080,6 @@ class ClientContextTest {
         new FakeTransportProvider(
             transportChannel, executor, true, ImmutableMap.of(), null, DEFAULT_ENDPOINT);
     builder.setTransportChannelProvider(transportProvider);
-
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of());
     builder.setHeaderProvider(headerProvider);
@@ -1102,7 +1101,6 @@ class ClientContextTest {
             new FakeTransportProvider(
                     transportChannel, executor, true, ImmutableMap.of(), null, DEFAULT_ENDPOINT);
     builder.setTransportChannelProvider(transportProvider);
-
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of());
     builder.setHeaderProvider(headerProvider);
@@ -1110,7 +1108,7 @@ class ClientContextTest {
     builder.setCredentialsProvider(Mockito.mock(CredentialsProvider.class));
 
     try {
-      ClientContext context = ClientContext.create(builder.build());
+      ClientContext.create(builder.build());
       fail("No exception raised");
     } catch (IllegalArgumentException e) {
       assert(

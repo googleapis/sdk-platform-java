@@ -234,7 +234,6 @@ public abstract class ClientContext {
 
     ApiCallContext defaultCallContext =
         transportChannel.getEmptyCallContext().withTransportChannel(transportChannel);
-
     if (credentials != null) {
       defaultCallContext = defaultCallContext.withCredentials(credentials);
     }
@@ -289,7 +288,11 @@ public abstract class ClientContext {
         .build();
   }
 
-  private static Credentials getGdchCredentials(String settingsGdchApiAudience, String endpoint, Credentials credentials) throws IOException {
+  /**
+   * Constructs a new {@link Credentials} object based on credentials provided with a GDC-H audience
+   */
+  private static Credentials getGdchCredentials(
+      String settingsGdchApiAudience, String endpoint, Credentials credentials) throws IOException {
     String audienceString;
     if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
       audienceString = settingsGdchApiAudience;
