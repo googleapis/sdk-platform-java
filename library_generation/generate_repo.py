@@ -12,6 +12,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import shutil
+
 import library_generation.utils.utilities as util
 from library_generation.generate_composed_library import generate_composed_library
 from library_generation.model.generation_config import GenerationConfig
@@ -22,6 +24,7 @@ from library_generation.utils.monorepo_postprocessor import monorepo_postprocess
 def generate_from_yaml(
     config: GenerationConfig,
     repository_path: str,
+    api_definition_path: str,
     target_library_names: list[str] = None,
 ) -> None:
     """
@@ -31,6 +34,7 @@ def generate_from_yaml(
     :param config: a GenerationConfig object.
     :param repository_path: The repository path to which the generated files
     will be sent.
+    :param api_definition_path:
     :param target_library_names: a list of libraries to be generated.
     If specified, only the library whose library_name is in target_library_names
     will be generated.
@@ -43,6 +47,8 @@ def generate_from_yaml(
     repo_config = util.prepare_repo(
         gen_config=config, library_config=target_libraries, repo_path=repository_path
     )
+    # copy api definition to output folder.
+    shutil.copytree(api_definition_path, repo_config.output_folder)
 
     for library_path, library in repo_config.get_libraries().items():
         print(f"generating library {library.get_library_name()}")

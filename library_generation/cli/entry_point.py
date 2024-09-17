@@ -63,10 +63,21 @@ def main(ctx):
     directory.
     """,
 )
+@click.option(
+    "--api-definition-path",
+    type=str,
+    default=".",
+    show_default=True,
+    help="""
+    The path to which the api definition (protos and service yaml) resides.
+    If not specified, the path is the current working directory.
+    """,
+)
 def generate(
     baseline_generation_config_path: str,
     current_generation_config_path: str,
     repository_path: str,
+    api_definition_path: str,
 ):
     """
     Compare baseline generation config and current generation config and
@@ -90,7 +101,10 @@ def generate(
     repository_path/pr_description.txt.
     """
     __generate_repo_and_pr_description_impl(
-        baseline_generation_config_path, current_generation_config_path, repository_path
+        baseline_generation_config_path=baseline_generation_config_path,
+        current_generation_config_path=current_generation_config_path,
+        repository_path=repository_path,
+        api_definition_path=api_definition_path,
     )
 
 
@@ -98,6 +112,7 @@ def __generate_repo_and_pr_description_impl(
     baseline_generation_config_path: str,
     current_generation_config_path: str,
     repository_path: str,
+    api_definition_path: str,
 ):
     """
     Implementation method for generate().
@@ -129,6 +144,7 @@ def __generate_repo_and_pr_description_impl(
 
     current_generation_config_path = os.path.abspath(current_generation_config_path)
     repository_path = os.path.abspath(repository_path)
+    api_definition_path = os.path.abspath(api_definition_path)
     if not baseline_generation_config_path:
         # Execute full generation based on current_generation_config if
         # baseline_generation_config is not specified.
@@ -136,6 +152,7 @@ def __generate_repo_and_pr_description_impl(
         generate_from_yaml(
             config=from_yaml(current_generation_config_path),
             repository_path=repository_path,
+            api_definition_path=api_definition_path,
         )
         return
 
@@ -155,6 +172,7 @@ def __generate_repo_and_pr_description_impl(
     generate_from_yaml(
         config=config_change.current_config,
         repository_path=repository_path,
+        api_definition_path=api_definition_path,
         target_library_names=target_library_names,
     )
     generate_pr_descriptions(
