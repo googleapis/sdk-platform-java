@@ -68,7 +68,7 @@ ENV DOCKER_GAPIC_GENERATOR_VERSION="2.45.1-SNAPSHOT"
 
 # use Docker Buildkit caching for faster local builds
 RUN --mount=type=cache,target=/root/.m2 mvn install -B -ntp -T 1.5C \
-    -DskipTests -Dclirr.skip -Dcheckstyle.skip -Djacoco.skip -Dmaven.test.skip \
+    -Dclirr.skip -Dcheckstyle.skip -Djacoco.skip -Dmaven.test.skip \
     -Dmaven.site.skikip -Dmaven.javadoc.skip -pl gapic-generator-java -am
 
 RUN --mount=type=cache,target=/root/.m2 cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
