@@ -41,13 +41,13 @@ image_tag = "test-image:latest"
 repo_prefix = "https://github.com/googleapis"
 output_dir = shell_call("get_output_folder")
 # this map tells which branch of each repo should we use for our diff tests
-committish_map = {
+commitish_map = {
     "google-cloud-java": "chore/test-hermetic-build",
     "java-bigtable": "chore/test-hermetic-build",
 }
 baseline_config_name = "baseline_generation_config.yaml"
 current_config_name = "current_generation_config.yaml"
-googleapis_committish = "113a378d5aad5018876ec0a8cbfd4d6a4f746809"
+googleapis_commitish = "113a378d5aad5018876ec0a8cbfd4d6a4f746809"
 # This variable is used to override the jar created by building the image
 # with our own downloaded jar in order to lock the integration test to use
 # a constant version specified in
@@ -71,7 +71,7 @@ class IntegrationTest(unittest.TestCase):
         os.makedirs(f"{golden_dir}", exist_ok=True)
 
     def test_entry_point_running_in_container(self):
-        api_definition_path = self.__copy_api_definition(googleapis_committish)
+        api_definition_path = self.__copy_api_definition(googleapis_commitish)
         config_files = self.__get_config_files(config_dir)
         for repo, config_file in config_files:
             config = from_yaml(config_file)
@@ -79,7 +79,7 @@ class IntegrationTest(unittest.TestCase):
             config_location = f"{golden_dir}/../{repo}"
             # 1. pull repository
             repo_dest = self.__pull_repo_to(
-                Path(repo_location), repo, committish_map[repo]
+                Path(repo_location), repo, commitish_map[repo]
             )
             # 2. prepare golden files
             library_names = self.__get_library_names_from_config(config)

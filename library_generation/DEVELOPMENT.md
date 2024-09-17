@@ -102,7 +102,7 @@ shell session.
 ## Running the script
 The entrypoint script (`library_generation/cli/entry_point.py`) allows you to
 update the target repository with the latest changes starting from the
-googleapis committish declared in `generation_config.yaml`.
+googleapis commitish declared in `generation_config.yaml`.
 
 ### Download the repo
 For example, google-cloud-java
