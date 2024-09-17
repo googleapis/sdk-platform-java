@@ -136,7 +136,7 @@ To configure your credentials:
 
 ```bash
 # creates or updates the credentials file in ~/.config/gcloud
-gcloud auth application-default-login 
+gcloud auth application-default login 
 ```
 
 ## Build the docker image
