@@ -25,6 +25,8 @@ steps:
       "-t", "${_IMAGE_NAME}",
       "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
     id: library-generation-image-build
+    env:
+    - 'DOCKER_BUILDKIT=1'
     waitFor: ["-"]
   # Python scripts compilation
   - name: python

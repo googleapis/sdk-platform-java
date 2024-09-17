@@ -29,6 +29,8 @@ steps:
       "-t", "${_VERSIONED_IMAGE_ID}",
       "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
     id: library-generation-build
+    env:
+    - 'DOCKER_BUILDKIT=1'
     waitFor: ["-"]
 
 images:
