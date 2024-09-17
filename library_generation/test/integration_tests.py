@@ -13,6 +13,7 @@
 # limitations under the License.
 import difflib
 import json
+import tempfile
 from filecmp import cmp
 from filecmp import dircmp
 from git import Repo
@@ -46,7 +47,7 @@ committish_map = {
 }
 baseline_config_name = "baseline_generation_config.yaml"
 current_config_name = "current_generation_config.yaml"
-
+googleapis_committish = "113a378d5aad5018876ec0a8cbfd4d6a4f746809"
 # This variable is used to override the jar created by building the image
 # with our own downloaded jar in order to lock the integration test to use
 # a constant version specified in
@@ -54,7 +55,7 @@ current_config_name = "current_generation_config.yaml"
 # This allows us to decouple the generation workflow testing with what the
 # generator jar will actually generate.
 # See library_generation/DEVELOPMENT.md ("The Hermetic Build's
-# well-known folder).
+# well-known folder").
 WELL_KNOWN_GENERATOR_JAR_FILENAME = "gapic-generator-java.jar"
 
 
@@ -68,6 +69,7 @@ class IntegrationTest(unittest.TestCase):
     def setUp(cls) -> None:
         cls.__remove_generated_files()
         os.makedirs(f"{golden_dir}", exist_ok=True)
+        cls.__copy_api_definition_to_output_dir(googleapis_committish)
 
     def test_entry_point_running_in_container(self):
         config_files = self.__get_config_files(config_dir)
@@ -190,8 +192,19 @@ class IntegrationTest(unittest.TestCase):
         self.__remove_generated_files()
 
     @classmethod
+    def __copy_api_definition_to_output_dir(cls, committish: str):
+        temp_dir = tempfile.mkdtemp()
+        repo_dest = cls.__pull_repo_to(
+            dest=temp_dir, repo="googleapis", committish=committish
+        )
+        print(f"Copying api definition to {output_dir}...")
+        shutil.copytree(f"{repo_dest}/google", output_dir, dirs_exist_ok=True)
+        shutil.copytree(f"{repo_dest}/grafeas", output_dir, dirs_exist_ok=True)
+        shutil.rmtree(temp_dir)
+
+    @classmethod
     def __build_image(cls, docker_file: str, cwd: str):
-        # we build the docker image without removing intermediate containers so
+        # we build the docker image without removing intermediate containers, so
         # we can re-test more quickly
         subprocess.check_call(
             ["docker", "build", "-f", docker_file, "-t", image_tag, "."],
