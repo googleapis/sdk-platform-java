@@ -105,9 +105,13 @@ class EntryPointTest(unittest.TestCase):
             baseline_generation_config_path=config_path,
             current_generation_config_path=config_path,
             repository_path=".",
+            api_definition_path=".",
         )
         generate_from_yaml.assert_called_with(
-            config=ANY, repository_path=ANY, target_library_names=None
+            config=ANY,
+            repository_path=ANY,
+            api_definition_path=ANY,
+            target_library_names=None,
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
@@ -134,9 +138,13 @@ class EntryPointTest(unittest.TestCase):
             baseline_generation_config_path=baseline_config_path,
             current_generation_config_path=current_config_path,
             repository_path=".",
+            api_definition_path=".",
         )
         generate_from_yaml.assert_called_with(
-            config=ANY, repository_path=ANY, target_library_names=None
+            config=ANY,
+            repository_path=ANY,
+            api_definition_path=ANY,
+            target_library_names=None,
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
@@ -160,9 +168,13 @@ class EntryPointTest(unittest.TestCase):
             baseline_generation_config_path=config_path,
             current_generation_config_path=config_path,
             repository_path=".",
+            api_definition_path=".",
         )
         generate_from_yaml.assert_called_with(
-            config=ANY, repository_path=ANY, target_library_names=None
+            config=ANY,
+            repository_path=ANY,
+            api_definition_path=ANY,
+            target_library_names=None,
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
@@ -187,7 +199,11 @@ class EntryPointTest(unittest.TestCase):
             baseline_generation_config_path=config_path,
             current_generation_config_path=config_path,
             repository_path=".",
+            api_definition_path=".",
         )
         generate_from_yaml.assert_called_with(
-            config=ANY, repository_path=ANY, target_library_names=[]
+            config=ANY,
+            repository_path=ANY,
+            api_definition_path=ANY,
+            target_library_names=[],
         )
