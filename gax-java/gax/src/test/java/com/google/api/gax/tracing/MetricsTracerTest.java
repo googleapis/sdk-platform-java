@@ -43,6 +43,7 @@ import com.google.api.gax.rpc.NotFoundException;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.common.collect.ImmutableMap;
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -226,6 +227,16 @@ class MetricsTracerTest {
   void testAddAttributes_recordsAttributes() {
     metricsTracer.addAttributes("FakeTableId", "12345");
     assertThat(metricsTracer.getAttributes().get("FakeTableId")).isEqualTo("12345");
+  }
+
+  @Test
+  void testAddAttributes_recordsAttributesWithMap() {
+    Map<String, String> attributes = new HashMap<>();
+    attributes.put("FakeTableId", "12345");
+    attributes.put("FakeInstanceId", "67890");
+    metricsTracer.addAttributes(attributes);
+    assertThat(metricsTracer.getAttributes().get("FakeTableId")).isEqualTo("12345");
+    assertThat(metricsTracer.getAttributes().get("FakeInstanceId")).isEqualTo("67890");
   }
 
   @Test
