@@ -34,7 +34,7 @@ def generate_from_yaml(
     :param config: a GenerationConfig object.
     :param repository_path: The repository path to which the generated files
     will be sent.
-    :param api_definition_path:
+    :param api_definition_path: The path to where the api definition resides.
     :param target_library_names: a list of libraries to be generated.
     If specified, only the library whose library_name is in target_library_names
     will be generated.

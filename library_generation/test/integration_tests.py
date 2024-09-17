@@ -69,9 +69,9 @@ class IntegrationTest(unittest.TestCase):
     def setUp(cls) -> None:
         cls.__remove_generated_files()
         os.makedirs(f"{golden_dir}", exist_ok=True)
-        cls.__copy_api_definition_to_output_dir(googleapis_committish)
 
     def test_entry_point_running_in_container(self):
+        api_definition_path = self.__copy_api_definition(googleapis_committish)
         config_files = self.__get_config_files(config_dir)
         for repo, config_file in config_files:
             config = from_yaml(config_file)
@@ -92,6 +92,7 @@ class IntegrationTest(unittest.TestCase):
                 config_location=config_location,
                 baseline_config=baseline_config_name,
                 current_config=current_config_name,
+                api_definition=api_definition_path,
             )
             # 4. compare generation result with golden files
             print(
@@ -192,15 +193,16 @@ class IntegrationTest(unittest.TestCase):
         self.__remove_generated_files()
 
     @classmethod
-    def __copy_api_definition_to_output_dir(cls, committish: str):
-        temp_dir = tempfile.mkdtemp()
+    def __copy_api_definition(cls, committish: str) -> str:
         repo_dest = cls.__pull_repo_to(
-            dest=temp_dir, repo="googleapis", committish=committish
+            dest=tempfile.mkdtemp(), repo="googleapis", committish=committish
         )
-        print(f"Copying api definition to {output_dir}...")
-        shutil.copytree(f"{repo_dest}/google", output_dir, dirs_exist_ok=True)
-        shutil.copytree(f"{repo_dest}/grafeas", output_dir, dirs_exist_ok=True)
-        shutil.rmtree(temp_dir)
+        api_temp_dir = tempfile.mkdtemp()
+        print(f"Copying api definition to {api_temp_dir}...")
+        shutil.copytree(f"{repo_dest}/google", api_temp_dir, dirs_exist_ok=True)
+        shutil.copytree(f"{repo_dest}/grafeas", api_temp_dir, dirs_exist_ok=True)
+        shutil.rmtree(repo_dest)
+        return api_temp_dir
 
     @classmethod
     def __build_image(cls, docker_file: str, cwd: str):
@@ -291,6 +293,7 @@ class IntegrationTest(unittest.TestCase):
         config_location: str,
         baseline_config: str,
         current_config: str,
+        api_definition: str,
     ):
         # we use the calling user to prevent the mapped volumes from changing
         # owners
@@ -308,12 +311,15 @@ class IntegrationTest(unittest.TestCase):
                 "-v",
                 f"{config_location}:/workspace/config",
                 "-v",
+                f"{api_definition}:/workspace/api",
+                "-v",
                 f"{config_dir}/{WELL_KNOWN_GENERATOR_JAR_FILENAME}:/home/.library_generation/{WELL_KNOWN_GENERATOR_JAR_FILENAME}",
                 "-w",
                 "/workspace/repo",
                 image_tag,
                 f"--baseline-generation-config-path=/workspace/config/{baseline_config}",
                 f"--current-generation-config-path=/workspace/config/{current_config}",
+                f"--api-definition-path=/workspace/api",
             ],
         )
 
