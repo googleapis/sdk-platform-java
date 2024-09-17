@@ -202,6 +202,8 @@ class IntegrationTest(unittest.TestCase):
         shutil.copytree(f"{repo_dest}/google", api_temp_dir, dirs_exist_ok=True)
         shutil.copytree(f"{repo_dest}/grafeas", api_temp_dir, dirs_exist_ok=True)
         shutil.rmtree(repo_dest)
+        print(f"List files and dirs in {api_temp_dir}")
+        os.listdir(api_temp_dir)
         return api_temp_dir
 
     @classmethod
