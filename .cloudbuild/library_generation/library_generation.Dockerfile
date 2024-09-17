@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # Creates the owl-bot binary (no node runtime needed)
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/node:22.1-alpine as owlbot-cli-build
+
+# node:22.1-alpine
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/node@sha256:487dc5d5122d578e13f2231aa4ac0f63068becd921099c4c677c850df93bede8 as owlbot-cli-build
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
 
 # install tools
@@ -55,7 +57,8 @@ RUN npx postject owl-bot-bin NODE_SEA_BLOB sea-prep.blob \
 RUN cp ./owl-bot-bin /owl-bot-bin
 
 # Creates the generator jar
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/maven:3.8.6-openjdk-11-slim as ggj-build
+# maven:3.8.6-openjdk-11-slim
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/maven@sha256:2cb7c73ba2fd0f7ae64cfabd99180030ec85841a1197b4ae821d21836cb0aa3b  as ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
@@ -72,7 +75,8 @@ RUN --mount=type=cache,target=/root/.m2 cp "/root/.m2/repository/com/google/api/
   "/gapic-generator-java.jar"
 
 # Builds the python scripts in library_generation
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python:3.11-alpine as python-scripts-build
+# python:3.11-alpine
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:0b5ed25d3cc27cd35c7b0352bac8ef2ebc8dd3da72a0c03caaf4eb15d9ec827a as python-scripts-build
 
 # This will use GOOGLE_APPLICATION_CREDENTIALS if passed in docker build command.
 # If not passed will leave it unset to support GCE Metadata in CI builds
@@ -102,7 +106,8 @@ RUN python -m pip install --target /usr/local/lib/python3.11 .
 # Final image. Installs the rest of the dependencies and gets the binaries
 # from the previous stages. We use the node base image for it to be compatible
 # with the standalone binary owl-bot compiled in the previous stage
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/node:22.1-alpine as final
+# node:22.1-alpine
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/node@sha256:487dc5d5122d578e13f2231aa4ac0f63068becd921099c4c677c850df93bede8 as final
 
 ARG PROTOC_VERSION=25.4
 ARG GRPC_VERSION=1.66.0
@@ -129,7 +134,7 @@ SHELL [ "/bin/bash", "-c" ]
 # grpc plugin).
 # Alpine, by default, only supports musl-based binaries, and there is no public
 # downloadable distrubution of the grpc that is Alpine (musl) compatible.
-# This is one of the recommended approaches
+# This is one of the recommended approaches to ensure glibc-compatibility
 # as per https://wiki.alpinelinux.org/wiki/Running_glibc_programs
 WORKDIR /home
 RUN git clone https://gitlab.com/manoel-linux1/GlibMus-HQ.git
