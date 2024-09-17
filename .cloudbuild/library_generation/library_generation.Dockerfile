@@ -38,7 +38,7 @@ RUN sed -i '/testWebhook/d' src/bin/owl-bot.ts
 # with all its dependencies embedded.
 # This is because SEA (see below) cannot
 # resolve external modules in a multi-file project.
-# We use the esbuild tool see https://esbuild.github.io/
+# We use the esbuild tool. See https://esbuild.github.io/
 COPY ./.cloudbuild/library_generation/image-configuration/owlbot-cli-build-config.js .
 RUN npm i esbuild
 RUN node owlbot-cli-build-config.js
