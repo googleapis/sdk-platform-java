@@ -199,8 +199,12 @@ class IntegrationTest(unittest.TestCase):
         )
         api_temp_dir = tempfile.mkdtemp()
         print(f"Copying api definition to {api_temp_dir}...")
-        shutil.copytree(f"{repo_dest}/google", api_temp_dir, dirs_exist_ok=True)
-        shutil.copytree(f"{repo_dest}/grafeas", api_temp_dir, dirs_exist_ok=True)
+        shutil.copytree(
+            f"{repo_dest}/google", f"{api_temp_dir}/google", dirs_exist_ok=True
+        )
+        shutil.copytree(
+            f"{repo_dest}/grafeas", f"{api_temp_dir}/grafeas", dirs_exist_ok=True
+        )
         shutil.rmtree(repo_dest)
         print(f"List files and dirs in {api_temp_dir}")
         print(os.listdir(api_temp_dir))
