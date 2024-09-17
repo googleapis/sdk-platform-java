@@ -95,9 +95,9 @@ COPY library_generation /src
 
 # install main scripts as a python package
 WORKDIR /src
-RUN --mount=type=secret,id=credentials python -m pip install --user -r requirements.txt
-RUN python -m pip install --user .
-RUN ls -lah  /root/.local
+
+RUN --mount=type=secret,id=credentials python -m pip install --target /usr/local/lib/python3.11 -r requirements.txt
+RUN python -m pip install --target /usr/local/lib/python3.11 .
 
 # Final image. Installs the rest of the dependencies and gets the binaries
 # from the previous stages. We use the node base image for it to be compatible
@@ -164,13 +164,17 @@ RUN rm /utilities.sh
 
 # Make home folder accessible for all users since the container is usually
 # launched using the -u $(user -i) argument.
-RUN chmod -R 766 "${HOME}"
+# Execution is needed for gapic-generator-java.jar, whereas write permission is
+# needed for writing .gitconfig and creating .gitconfig.lock (postprocessing).
+# Note that this is NOT a recursive permission setting.
+RUN chmod 777 "${HOME}"
 RUN touch "${HOME}/.bashrc" && chmod 755 "${HOME}/.bashrc"
 
 # Here we transfer gapic-generator-java from the previous stage.
 # Note that the destination is a well-known location that will be assumed at runtime.
 # We hard-code the location string so it cannot be overriden.
 COPY --from=ggj-build "/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
+RUN chmod 755 "${HOME}/.library_generation"
 RUN chmod 555 "${HOME}/.library_generation/gapic-generator-java.jar"
 
 # Copy the owlbot-cli binary
@@ -178,14 +182,14 @@ COPY --from=owlbot-cli-build "/owl-bot-bin" "/usr/bin/owl-bot"
 RUN chmod 555 "/usr/bin/owl-bot"
 
 # Copy the library_generation python packages
-COPY --from=python-scripts-build "/root/.local" "${HOME}/.local"
-COPY --from=python-scripts-build "/usr/local/lib/python3.11/site-packages" "/usr/lib/python3.11/"
-RUN chmod -R 555 "${HOME}/.local"
+COPY --from=python-scripts-build "/usr/local/lib/python3.11/" "/usr/lib/python3.11/"
 
 # set dummy git credentials for the empty commit used in postprocessing
 # we use system so all users using the container will use this configuration
 RUN git config --system user.email "cloud-java-bot@google.com"
 RUN git config --system user.name "Cloud Java Bot"
+RUN touch "${HOME}/.gitconfig"
+RUN chmod 666 "${HOME}/.gitconfig"
 
 WORKDIR /workspace
 ENTRYPOINT [ "python", "-m", "library_generation.cli.entry_point", "generate" ]
