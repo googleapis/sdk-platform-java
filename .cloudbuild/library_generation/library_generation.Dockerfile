@@ -123,7 +123,6 @@ RUN apk update && apk add \
     git \
     jq \
     maven \
-    openjdk-jre-headless \
     py-pip \
     python3 \
     rsync \
