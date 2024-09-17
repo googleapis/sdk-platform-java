@@ -123,6 +123,7 @@ RUN apk update && apk add \
     git \
     jq \
     maven \
+    openjdk-jre-headless \
     py-pip \
     python3 \
     rsync \
@@ -145,6 +146,13 @@ RUN chmod a+x compile-x86_64-alpine-linux.sh
 RUN ./compile-x86_64-alpine-linux.sh
 WORKDIR /home
 RUN rm -rf /home/GlibMus-HQ
+# We remove some unnecessary compatibility SOs and archive files
+WORKDIR /usr/lib
+RUN rm -rf LibLLVM-17* libatomic.a gcc llvm17 libexec
+# We also remove unnecessary programs installed by this tool
+WORKDIR /usr/bin
+RUN rm -rf lto-dump
+
 
 
 # Use utilites script to download dependencies
