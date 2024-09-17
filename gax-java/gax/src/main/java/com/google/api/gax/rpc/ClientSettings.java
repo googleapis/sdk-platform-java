@@ -311,7 +311,8 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
      * Sets the API key. The API key will get translated to an [ApiKeyCredentials] and stored in
      * [CallContext].
      *
-     * Note: you can not set an API key and credentials object in the same Settings.  It will fail when creating the client.
+     * <p>Note: you can not set an API key and credentials object in the same Settings. It will fail
+     * when creating the client.
      */
     public B setApiKey(String apiKey) {
       stubSettings.setApiKey(apiKey);

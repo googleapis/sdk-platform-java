@@ -31,7 +31,13 @@ package com.google.api.gax.rpc;
 
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -62,8 +68,6 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-
-import org.apache.http.impl.client.SystemDefaultCredentialsProvider;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -1098,8 +1102,8 @@ class ClientContextTest {
     InterceptingExecutor executor = new InterceptingExecutor(1);
     FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
     FakeTransportProvider transportProvider =
-            new FakeTransportProvider(
-                    transportChannel, executor, true, ImmutableMap.of(), null, DEFAULT_ENDPOINT);
+        new FakeTransportProvider(
+            transportChannel, executor, true, ImmutableMap.of(), null, DEFAULT_ENDPOINT);
     builder.setTransportChannelProvider(transportProvider);
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of());
@@ -1111,8 +1115,8 @@ class ClientContextTest {
       ClientContext.create(builder.build());
       fail("No exception raised");
     } catch (IllegalArgumentException e) {
-      assert(
-              e.getMessage().contains("You can not provide both ApiKey and Credentials for a client."));
+      assert (e.getMessage()
+          .contains("You can not provide both ApiKey and Credentials for a client."));
     }
   }
 }

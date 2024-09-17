@@ -180,7 +180,7 @@ public abstract class ClientContext {
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
     if (apiKey != null && credentials != null) {
       throw new IllegalArgumentException(
-              "You can not provide both ApiKey and Credentials for a client.");
+          "You can not provide both ApiKey and Credentials for a client.");
     }
     if (apiKey != null) {
       // if API key exists it becomes the default credential
@@ -207,8 +207,7 @@ public abstract class ClientContext {
     if (settings.getQuotaProjectId() != null && credentials != null) {
       // If the quotaProjectId is set, wrap original credentials with correct quotaProjectId as
       // QuotaProjectIdHidingCredentials.
-      // Ensure that a custom set quota project id takes priority over one detected by
-      // credentials.
+      // Ensure that a custom set quota project id takes priority over one detected by credentials.
       // Avoid the backend receiving possibly conflict values of quotaProjectId
       credentials = new QuotaProjectIdHidingCredentials(credentials);
     }
@@ -306,8 +305,7 @@ public abstract class ClientContext {
     try {
       gdchAudienceUri = URI.create(audienceString);
     } catch (IllegalArgumentException ex) { // thrown when passing a malformed uri string
-      throw new IllegalArgumentException(
-          "The GDC-H API audience string is not a valid URI", ex);
+      throw new IllegalArgumentException("The GDC-H API audience string is not a valid URI", ex);
     }
     credentials = ((GdchCredentials) credentials).createWithGdchAudience(gdchAudienceUri);
     return credentials;
