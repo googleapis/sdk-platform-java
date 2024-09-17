@@ -81,13 +81,14 @@ def get_repo_level_commit_messages(
     baseline_commit_sha: str,
     paths: Dict[str, str],
     is_monorepo: bool,
-    repo_level_message: list[str] = None,
+    repo_level_message: list[str],
 ) -> str:
     """
     Combine commit messages of a repository from latest_commit to
     baseline_commit. Only commits which change files in a pre-defined
     file paths will be considered.
-    Note that baseline_commit should be an ancestor of latest_commit.
+    Note that baseline_commit should be an ancestor of or the same as
+    latest_commit.
 
     :param repo_url: the url of the repository.
     :param current_commit_sha: the newest commit to be considered in
@@ -101,8 +102,6 @@ def get_repo_level_commit_messages(
     :raise ValueError: if current_commit is older than or equal to
     baseline_commit.
     """
-    if current_commit_sha == baseline_commit_sha:
-        return EMPTY_MESSAGE
     tmp_dir = "/tmp/repo"
     shutil.rmtree(tmp_dir, ignore_errors=True)
     os.mkdir(tmp_dir)
@@ -111,11 +110,12 @@ def get_repo_level_commit_messages(
     baseline_commit = repo.commit(baseline_commit_sha)
     current_commit_time = __get_commit_timestamp(current_commit)
     baseline_commit_time = __get_commit_timestamp(baseline_commit)
-    if current_commit_time <= baseline_commit_time:
+    if current_commit_time < baseline_commit_time:
         raise ValueError(
             f"current_commit ({current_commit_sha[:7]}, committed on "
-            f"{current_commit_time}) should be newer than baseline_commit "
-            f"({baseline_commit_sha[:7]}, committed on {baseline_commit_time})."
+            f"{current_commit_time}) should be newer than or equal to "
+            f"baseline_commit ({baseline_commit_sha[:7]}, committed on "
+            f"{baseline_commit_time})."
         )
     qualified_commits = {}
     commit = current_commit
@@ -128,8 +128,6 @@ def get_repo_level_commit_messages(
             break
         commit = commit_parents[0]
     shutil.rmtree(tmp_dir, ignore_errors=True)
-    if len(qualified_commits) == 0:
-        return EMPTY_MESSAGE
 
     return __combine_commit_messages(
         current_commit=current_commit,
@@ -165,15 +163,19 @@ def __combine_commit_messages(
     is_monorepo: bool,
     repo_level_message: list[str],
 ) -> str:
-    description = [
-        f"This pull request is generated with proto changes between "
-        f"{commit_link(baseline_commit)} (exclusive) "
-        f"and {commit_link(current_commit)} (inclusive).\n",
-    ]
+    description = []
+    if current_commit != baseline_commit:
+        description.append(
+            f"This pull request is generated with proto changes between "
+            f"{commit_link(baseline_commit)} (exclusive) "
+            f"and {commit_link(current_commit)} (inclusive).\n",
+        )
     commit_message = repo_level_message
     commit_message.extend(
         format_commit_message(commits=commits, is_monorepo=is_monorepo)
     )
+    if len(commit_message) == 0:
+        return EMPTY_MESSAGE
     description.extend(wrap_override_commit(commit_message))
     return "\n".join(description)
 

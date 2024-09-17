@@ -12,10 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# install gapic-generator-java in a separate layer so we don't overload the image
+# with the transferred source code and jars
+FROM gcr.io/cloud-devrel-public-resources/java21 AS ggj-build
+
+WORKDIR /sdk-platform-java
+COPY . .
+# {x-version-update-start:gapic-generator-java:current}
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.45.1-SNAPSHOT" 
+# {x-version-update-end}
+
+RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
+  "./gapic-generator-java.jar"
+
 # build from the root of this repo:
 FROM gcr.io/cloud-devrel-public-resources/python
 
 SHELL [ "/bin/bash", "-c" ]
+
 
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
 ARG PROTOC_VERSION=25.4
@@ -47,7 +62,15 @@ RUN source /src/utils/utilities.sh \
 ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java-${GRPC_VERSION}-${OS_ARCHITECTURE}.exe"
 ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 
-# use python 3.11 (the base image has several python versions; here we define the default one)
+
+# Here we transfer gapic-generator-java from the previous stage.
+# Note that the destination is a well-known location that will be assumed at runtime
+# We hard-code the location string to avoid making it configurable (via ARG) as
+# well as to avoid it making it overridable at runtime (via ENV).
+COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
+RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
+
+#  use python 3.11 (the base image has several python versions; here we define the default one)
 RUN rm $(which python3)
 RUN ln -s $(which python3.11) /usr/local/bin/python
 RUN ln -s $(which python3.11) /usr/local/bin/python3

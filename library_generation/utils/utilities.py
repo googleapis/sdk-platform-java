@@ -17,6 +17,8 @@ import subprocess
 import os
 import shutil
 from pathlib import Path
+from typing import Any
+
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from typing import List
@@ -39,20 +41,43 @@ def create_argument(arg_key: str, arg_container: object) -> List[str]:
     return []
 
 
-def run_process_and_print_output(arguments: List[str], job_name: str = "Job"):
+def run_process_and_print_output(
+    arguments: List[str] | str, job_name: str = "Job", exit_on_fail=True, **kwargs
+) -> Any:
     """
     Runs a process with the given "arguments" list and prints its output.
     If the process fails, then the whole program exits
+    :param arguments: list of strings or string containing the arguments
+    :param job_name: optional job name to be printed
+    :param exit_on_fail: True if the main program should exit when the
+    subprocess exits with non-zero. Used for testing.
+    :param kwargs: passed to the underlying subprocess.run() call
     """
-    # check_output() raises an exception if it exited with a nonzero code
-    try:
-        output = subprocess.check_output(arguments, stderr=subprocess.STDOUT)
-        print(output.decode(), end="", flush=True)
-        print(f"{job_name} finished successfully")
-    except subprocess.CalledProcessError as ex:
-        print(ex.output.decode(), end="", flush=True)
-        print(f"{job_name} failed")
+    # split "arguments" if passed as a single string
+    if isinstance(arguments, str):
+        arguments = arguments.split(" ")
+    if "stderr" not in kwargs:
+        kwargs["stderr"] = subprocess.STDOUT
+    proc_info = subprocess.run(arguments, stdout=subprocess.PIPE, **kwargs)
+    print(proc_info.stdout.decode(), end="", flush=True)
+    print(
+        f"{job_name} {'finished successfully' if proc_info.returncode == 0 else 'failed'}"
+    )
+    if exit_on_fail and proc_info.returncode != 0:
         sys.exit(1)
+    return proc_info
+
+
+def run_process_and_get_output_string(
+    arguments: List[str] | str, job_name: str = "Job", exit_on_fail=True, **kwargs
+) -> Any:
+    """
+    Wrapper of run_process_and_print_output() that returns the merged
+    stdout and stderr in a single string without its trailing newline char.
+    """
+    return run_process_and_print_output(
+        arguments, job_name, exit_on_fail, stderr=subprocess.PIPE, **kwargs
+    ).stdout.decode()[:-1]
 
 
 def sh_util(statement: str, **kwargs) -> str:
