@@ -54,7 +54,7 @@ def generate_from_yaml(
     )
     shutil.copytree(api_definition_path, repo_config.output_folder, dirs_exist_ok=True)
     print(f"List files in {repo_config.output_folder}")
-    os.listdir(repo_config.output_folder)
+    print(os.listdir(repo_config.output_folder))
 
     for library_path, library in repo_config.get_libraries().items():
         print(f"generating library {library.get_library_name()}")
