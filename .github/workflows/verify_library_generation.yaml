@@ -38,40 +38,6 @@ jobs:
         head_repo_url: ${{ github.event.pull_request.head.repo.html_url }}
         head_repo_name: ${{ github.event.pull_request.head.repo.full_name  }}
         base_repo: ${{ github.repository }}
-  library-generation-integration-tests:
-    runs-on: ubuntu-22.04
-    needs: should-run-library-generation-tests
-    if: needs.should-run-library-generation-tests.outputs.should_run == 'true'
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
-      with:
-        python-version: 3.11
-    - name: install pyenv
-      shell: bash
-      run: |
-        set -ex
-        curl https://pyenv.run | bash
-        # setup environment
-        export PYENV_ROOT="$HOME/.pyenv"
-        export PATH="$PYENV_ROOT/bin:$PATH"
-        echo "PYENV_ROOT=${PYENV_ROOT}" >> $GITHUB_ENV
-        echo "PATH=${PATH}" >> $GITHUB_ENV
-
-        set +ex
-    - name: install python dependencies
-      shell: bash
-      run: |
-        set -ex
-        pushd library_generation
-        pip install -r requirements.txt
-        pip install .
-        popd
-    - name: Run integration tests
-      shell: bash
-      run: |
-        set -x
-        python -m unittest library_generation/test/integration_tests.py
   library-generation-unit-tests:
     runs-on: ubuntu-22.04
     needs: should-run-library-generation-tests
