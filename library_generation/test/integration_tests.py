@@ -206,8 +206,6 @@ class IntegrationTest(unittest.TestCase):
             f"{repo_dest}/grafeas", f"{api_temp_dir}/grafeas", dirs_exist_ok=True
         )
         shutil.rmtree(repo_dest)
-        print(f"List files and dirs in {api_temp_dir}")
-        print(os.listdir(api_temp_dir))
         return api_temp_dir
 
     @classmethod
