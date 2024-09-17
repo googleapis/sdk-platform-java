@@ -26,35 +26,9 @@ RUN git clone https://github.com/googleapis/repo-automation-bots
 WORKDIR /tools/repo-automation-bots/packages/owl-bot
 RUN git checkout "${OWLBOT_CLI_COMMITTISH}"
 
-# Part of the code path (that we don't use) ends up touching a dependency called
-# @google-cloud/datastore that tries a fs.readFileSync that is not handled by
-# default by esbundle (esbundle is good a figuring out imports but doesn't
-# actively scan filesystem interactions such as fs.readFileSync). This makes the
-# app to fetch a file at runtime that is not available in the bundle context.
-# This is why we remove this import and its usage from the entrypoint.
-RUN sed -i '/testWebhook/d' src/bin/owl-bot.ts
-
-# Bundle the source code and its dependencies into a single javascript file
-# with all its dependencies embedded.
-# This is because SEA (see below) cannot
-# resolve external modules in a multi-file project.
-# We use the esbuild tool. See https://esbuild.github.io/
-COPY ./.cloudbuild/library_generation/image-configuration/owlbot-cli-build-config.js .
-RUN npm i esbuild
-RUN node owlbot-cli-build-config.js
-
-# Compile the bundled javascript file into a Linux executable
-# Create a Standalone Executable Application (SEA) configuration file.
-# See https://nodejs.org/api/single-executable-applications.html
-RUN echo '{ "main": "bundle.js", "output": "sea-prep.blob" }' > build/sea-config.json
-WORKDIR /tools/repo-automation-bots/packages/owl-bot/build
-RUN node --experimental-sea-config sea-config.json
-RUN cp $(command -v node) owl-bot-bin
-RUN npx postject owl-bot-bin NODE_SEA_BLOB sea-prep.blob \
-    --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
-
-# move to a simple path for convenience
-RUN cp ./owl-bot-bin /owl-bot-bin
+# Install dependencies and compile the tool
+RUN npm i
+RUN npm run compile
 
 # Creates the generator jar
 # maven:3.8.6-openjdk-11-slim
@@ -67,7 +41,9 @@ ENV DOCKER_GAPIC_GENERATOR_VERSION="2.45.1-SNAPSHOT"
 # {x-version-update-end}
 
 # use Docker Buildkit caching for faster local builds
-RUN --mount=type=cache,target=/root/.m2 mvn install -B -ntp -T 1.5C \
+RUN --mount=type=cache,target=/root/.m2 \
+    --mount=type=cache,target=/sdk-platform-java/gapic-generator-java/target \
+    mvn install -B -ntp -T 1.5C \
     -Dclirr.skip -Dcheckstyle.skip -Djacoco.skip -Dmaven.test.skip \
     -Dmaven.site.skikip -Dmaven.javadoc.skip -pl gapic-generator-java -am
 
@@ -129,7 +105,6 @@ RUN apk update && apk add \
     sudo \
     unzip
 SHELL [ "/bin/bash", "-c" ]
-
 # Install compatibility layer to run glibc-based programs (such as the
 # grpc plugin).
 # Alpine, by default, only supports musl-based binaries, and there is no public
@@ -151,8 +126,6 @@ RUN rm -rf LibLLVM-17* libatomic.a gcc llvm17 libexec
 # We also remove unnecessary programs installed by this tool
 WORKDIR /usr/bin
 RUN rm -rf lto-dump
-
-
 
 # Use utilites script to download dependencies
 COPY library_generation/utils/utilities.sh /utilities.sh
@@ -190,8 +163,9 @@ RUN chmod 755 "${HOME}/.library_generation"
 RUN chmod 555 "${HOME}/.library_generation/gapic-generator-java.jar"
 
 # Copy the owlbot-cli binary
-COPY --from=owlbot-cli-build "/owl-bot-bin" "/usr/bin/owl-bot"
-RUN chmod 555 "/usr/bin/owl-bot"
+COPY --from=owlbot-cli-build /tools/repo-automation-bots/packages/owl-bot "/owl-bot"
+WORKDIR /owl-bot
+RUN npm link
 
 # Copy the library_generation python packages
 COPY --from=python-scripts-build "/usr/local/lib/python3.11/" "/usr/lib/python3.11/"
