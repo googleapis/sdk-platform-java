@@ -51,16 +51,16 @@ RUN --mount=type=cache,target=/root/.m2 cp "/root/.m2/repository/com/google/api/
   "/gapic-generator-java.jar"
 
 # Builds the python scripts in library_generation
-# python:3.11-alpine
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:0b5ed25d3cc27cd35c7b0352bac8ef2ebc8dd3da72a0c03caaf4eb15d9ec827a as python-scripts-build
+# python:3.12.3-alpine3.18
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:24680ddf8422899b24756d62b31eb5de782fbb42e9c2bb1c70f1f55fcf891721 as python-scripts-build
 
 COPY library_generation /src
 
 # install main scripts as a python package
 WORKDIR /src
 
-RUN python -m pip install --target /usr/local/lib/python3.11 -r requirements.txt
-RUN python -m pip install --target /usr/local/lib/python3.11 .
+RUN python -m pip install --target /usr/local/lib/python3.12 -r requirements.txt
+RUN python -m pip install --target /usr/local/lib/python3.12 .
 
 # alpine:3.20.1
 FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/alpine@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0 as glibc-compat
@@ -86,8 +86,8 @@ RUN sh compile-x86_64-alpine-linux.sh
 # Final image. Installs the rest of the dependencies and gets the binaries
 # from the previous stages. We use the node base image for it to be compatible
 # with the standalone binary owl-bot compiled in the previous stage
-# node:22.1-alpine
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/node@sha256:487dc5d5122d578e13f2231aa4ac0f63068becd921099c4c677c850df93bede8 as final
+# alpine:3.20.1
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/alpine@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0 as final
 
 ARG PROTOC_VERSION=25.4
 ARG GRPC_VERSION=1.66.0
@@ -100,8 +100,9 @@ RUN apk update && apk add \
     curl \
     git \
     jq \
-    lddtree \
     maven \
+    nodejs \
+    npm \
     py-pip \
     python3 \
     rsync \
@@ -164,7 +165,7 @@ RUN chmod 755 "${HOME}/.library_generation"
 RUN chmod 555 "${HOME}/.library_generation/gapic-generator-java.jar"
 
 # Copy the library_generation python packages
-COPY --from=python-scripts-build "/usr/local/lib/python3.11/" "/usr/lib/python3.11/"
+COPY --from=python-scripts-build "/usr/local/lib/python3.12/" "/usr/lib/python3.12/"
 
 # set dummy git credentials for the empty commit used in postprocessing
 # we use system so all users using the container will use this configuration
