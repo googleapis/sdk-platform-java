@@ -45,7 +45,7 @@ RUN --mount=type=cache,target=/root/.m2 \
     --mount=type=cache,target=/sdk-platform-java/gapic-generator-java/target \
     mvn install -B -ntp -T 1.5C \
     -Dclirr.skip -Dcheckstyle.skip -Djacoco.skip -Dmaven.test.skip \
-    -Dmaven.site.skikip -Dmaven.javadoc.skip -pl gapic-generator-java -am
+    -Dmaven.site.skip -Dmaven.javadoc.skip -pl gapic-generator-java -am
 
 RUN --mount=type=cache,target=/root/.m2 cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "/gapic-generator-java.jar"
