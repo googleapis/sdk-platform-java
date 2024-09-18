@@ -36,6 +36,9 @@ steps:
       "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
     env:
     - 'DOCKER_BUILDKIT=1'
+    volumes:
+    - name: docker-local
+      path: /var/lib/docker/overlay2
   - id: maven-build
     name: gcr.io/cloud-builders/mvn
     waitFor: ["skip-if-coming-from-fork"]
@@ -45,6 +48,9 @@ steps:
       "-DskipTests", "-Dmaven.test.skip", "-Dcheckstyle.skip", "-Dclirr.skip",
       "-Dmaven.javadoc.skip"
     ]
+    volumes:
+    - name: maven-local
+      path: /home/.m2
   - id: script-run
     name: gcr.io/google.com/cloudsdktool/cloud-sdk # contains docker and git
     waitFor: ["maven-build", "library-generation-build"]
@@ -56,6 +62,11 @@ steps:
         --target_branch "${_BASE_BRANCH}" \
         --current_branch "${_HEAD_BRANCH}" \
         --image_tag "${_VERSIONED_IMAGE_ID}"
+    volumes:
+    - name: maven-local
+      path: /home/.m2
+    - name: docker-local
+      path: /var/lib/docker/overlay2
 options:
   # Builds ran by service accounts we need to either a) specify a logs bucket,
   # b) use REGIONAL_USER_OWNER_BUCKET, or c) use CLOUD_LOGGING_ONLY. We go for c)

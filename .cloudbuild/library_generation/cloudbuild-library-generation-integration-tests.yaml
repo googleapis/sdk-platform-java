@@ -19,30 +19,31 @@ substitutions:
   _IMAGE_NAME: "test-image"
 steps:
   # Library generation build
-  - name: gcr.io/cloud-builders/docker
+  - id: library-generation-image-build
+    name: gcr.io/cloud-builders/docker
     args: [
       "build",
       "-t", "${_IMAGE_NAME}",
       "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
-    id: library-generation-image-build
     env:
     - 'DOCKER_BUILDKIT=1'
     waitFor: ["-"]
   # Dependency installation
-  - name: python
+  - id: library-generation-python-libs
+    name: python
     args: [ "python", "-m", "pip", "install", "--require-hashes", "-r", "library_generation/requirements.txt" ]
-    id: library-generation-python-libs
     waitFor: ["library-generation-image-build"]
   # Python scripts compilation
-  - name: python
+  - id: library-generation-python-compile
+    name: python
     args: [ "python", "-m", "pip", "install", "library_generation" ]
-    id: library-generation-python-compile
+
     waitFor: ["library-generation-image-build"]
   # Python integration tests execution
-  - name: python
+  - id: run-integration-tests
+    name: python
     args: [ "python", "-m", "unittest",
             "library_generation/test/integration_tests.py" ]
-    id: library-generation-python-compile
     waitFor: ["library-generation-python-compile", "library-generation-python-libs"]
 options:
   # Builds ran by service accounts we need to either a) specify a logs bucket,
