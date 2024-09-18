@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.rpc;
 
-import static com.google.api.gax.rpc.ApiClientHeaderProvider.PROTOBUF_HEADER_VERSION_KEY;
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -66,7 +65,8 @@ class ApiClientHeaderProviderTest {
             .build();
     assertThat(provider.getHeaders().size()).isEqualTo(1);
     assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
-        .matches("^gl-java/.* gccl/4\\.5\\.6--protobuf-.* gapic/7\\.8\\.9 gax/.* grpc/1\\.2\\.3 protobuf/.*");
+        .matches(
+            "^gl-java/.* gccl/4\\.5\\.6--protobuf-.* gapic/7\\.8\\.9 gax/.* grpc/1\\.2\\.3 protobuf/.*");
   }
 
   @Test

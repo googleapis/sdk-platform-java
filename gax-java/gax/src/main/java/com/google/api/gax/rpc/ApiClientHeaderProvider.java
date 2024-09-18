@@ -90,9 +90,10 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     Matcher matcher = pattern.matcher(apiClientHeaderValue);
     if (matcher.find()) {
       return apiClientHeaderValue.substring(0, matcher.end())
-          +  "--"
-              + PROTOBUF_HEADER_VERSION_KEY
-              + "-" + GaxProperties.getProtobufVersion()
+          + "--"
+          + PROTOBUF_HEADER_VERSION_KEY
+          + "-"
+          + GaxProperties.getProtobufVersion()
           + apiClientHeaderValue.substring(matcher.end());
     }
     return apiClientHeaderValue.toString();
@@ -132,7 +133,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     private String generatedRuntimeToken;
     private String transportToken;
     private String quotaProjectIdToken;
-    final private String protobufRuntimeToken;
+    private final String protobufRuntimeToken;
 
     private String resourceHeaderKey;
     private String resourceToken;

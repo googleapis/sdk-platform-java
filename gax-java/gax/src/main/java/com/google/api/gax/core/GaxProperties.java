@@ -129,9 +129,10 @@ public class GaxProperties {
 
   /**
    * Returns the current library version as reported by Bundle-Version attribute in library's
-   * META-INF/MANIFEST for libraries using OSGi bundle manifest https://www.ibm.com/docs/en/wasdtfe?topic=overview-osgi-bundles.
-   * This should only be used if MANIFEST file does not contain a widely recognized version declaration such as Specific-Version OR Implementation-Version declared in
-   * Manifest Specification
+   * META-INF/MANIFEST for libraries using OSGi bundle manifest
+   * https://www.ibm.com/docs/en/wasdtfe?topic=overview-osgi-bundles. This should only be used if
+   * MANIFEST file does not contain a widely recognized version declaration such as Specific-Version
+   * OR Implementation-Version declared in Manifest Specification
    * https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#Manifest_Specification,
    * otherwise please use #getLibraryVersion
    */
