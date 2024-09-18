@@ -1,7 +1,7 @@
 # Generate a repository containing GAPIC Client Libraries
 
 The script, `entry_point.py`, allows you to generate a repository containing
-GAPIC client libraries with googleapis commit history (a monorepo, for example,
+GAPIC client libraries with change history (a monorepo, for example, 
 google-cloud-java) from a configuration file.
 
 ## Environment
@@ -53,6 +53,14 @@ of versions.txt.
 The path to where the api definition (proto, service yaml) resides.
 
 The default value is the current working directory when running the script.
+
+Note that you need not only the protos defined the service, but also the transitive
+dependencies of those protos.
+For example, if your service is defined in `example_service.proto` and it imports
+`google/api/annotations.proto`, you need the `annotations.proto` resides in a
+folder that has the exact structure of the import statement (`google/api` in this
+case), and set `api_definition_path` to the path contains the root folder (`google`
+in this case).
 
 ## Output of `entry_point.py`
 
