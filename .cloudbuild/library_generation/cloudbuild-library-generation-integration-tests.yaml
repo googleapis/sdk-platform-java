@@ -16,7 +16,7 @@
 # tests setup in GitHub Actions
 timeout: 7200s # 2 hours
 substitutions:
-  _IMAGE_NAME: "hermetic-build"
+  _IMAGE_NAME: "test-image"
 steps:
   # Library generation build
   - name: gcr.io/cloud-builders/docker
@@ -28,6 +28,11 @@ steps:
     env:
     - 'DOCKER_BUILDKIT=1'
     waitFor: ["-"]
+  # Dependency installation
+  - name: python
+    args: [ "python", "-m", "pip", "install", "--require-hashes", "-r", "library_generation/requirements.txt" ]
+    id: library-generation-python-libs
+    waitFor: ["library-generation-image-build"]
   # Python scripts compilation
   - name: python
     args: [ "python", "-m", "pip", "install", "library_generation" ]
@@ -38,4 +43,4 @@ steps:
     args: [ "python", "-m", "unittest",
             "library_generation/test/integration_tests.py" ]
     id: library-generation-python-compile
-    waitFor: ["library-generation-python-compile"]
+    waitFor: ["library-generation-python-compile", "library-generation-python-libs"]
