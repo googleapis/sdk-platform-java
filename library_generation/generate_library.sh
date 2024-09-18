@@ -237,11 +237,6 @@ case "${proto_path}" in
       proto_files="${proto_files//${removed_proto}/}"
     done
     ;;
-  "google/devtools/containeranalysis/v1beta1"*)
-    # this proto is excluded from //google/devtools/containeranalysis/v1beta1:google-cloud-devtools-containeranalysis-v1beta1-java
-    removed_proto="google/devtools/containeranalysis/v1beta1/cvss/cvss.proto"
-    proto_files="${proto_files//${removed_proto}/}"
-    ;;
 esac
 "$protoc_path"/protoc "--java_out=${temp_destination_path}/java_proto.jar" ${proto_files}
 if [[ "${proto_only}" == "false" ]]; then
@@ -260,9 +255,6 @@ case "${proto_path}" in
     for added_proto in ${protos}; do
       proto_files="${proto_files} ${added_proto}"
     done
-    ;;
-  "google/devtools/containeranalysis/v1beta1"*)
-    proto_files="${proto_files} google/devtools/containeranalysis/v1beta1/cvss/cvss.proto"
     ;;
 esac
 # copy proto files to proto-*/src/main/proto
