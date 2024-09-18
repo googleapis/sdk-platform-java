@@ -56,4 +56,7 @@ steps:
         --target_branch "${_BASE_BRANCH}" \
         --current_branch "${_HEAD_BRANCH}" \
         --image_tag "${_VERSIONED_IMAGE_ID}"
-
+options:
+  # Builds ran by service accounts we need to either a) specify a logs bucket,
+  # b) use REGIONAL_USER_OWNER_BUCKET, or c) use CLOUD_LOGGING_ONLY. We go for c)
+  logging: CLOUD_LOGGING_ONLY

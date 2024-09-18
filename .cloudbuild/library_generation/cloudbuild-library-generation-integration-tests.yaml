@@ -44,3 +44,7 @@ steps:
             "library_generation/test/integration_tests.py" ]
     id: library-generation-python-compile
     waitFor: ["library-generation-python-compile", "library-generation-python-libs"]
+options:
+  # Builds ran by service accounts we need to either a) specify a logs bucket,
+  # b) use REGIONAL_USER_OWNER_BUCKET, or c) use CLOUD_LOGGING_ONLY. We go for c)
+  logging: CLOUD_LOGGING_ONLY
