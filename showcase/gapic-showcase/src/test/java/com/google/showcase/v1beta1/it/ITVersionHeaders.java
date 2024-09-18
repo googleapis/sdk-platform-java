@@ -338,7 +338,7 @@ class ITVersionHeaders {
         Pattern.compile("gl-java/.+ gapic/.+--protobuf-.+ gax/.+ grpc/.+ protobuf/.*");
     grpcClient.echo(EchoRequest.newBuilder().build());
     String headerValue = grpcInterceptor.metadata.get(API_CLIENT_HEADER_KEY);
-    System.out.println(headerValue);
+    assertThat(headerValue).isEqualTo(CUSTOM_API_VERSION);
     assertTrue(defautlGrpcHeaderPattern.matcher(headerValue).matches());
   }
 
@@ -350,7 +350,7 @@ class ITVersionHeaders {
     ArrayList headerValues =
         (ArrayList) httpJsonInterceptor.metadata.getHeaders().get(HTTP_CLIENT_API_HEADER_KEY);
     String headerValue = (String) headerValues.get(0);
-    System.out.println(headerValue);
+    assertThat(headerValue).isEqualTo(CUSTOM_API_VERSION);
     assertTrue(defautlHttpHeaderPattern.matcher(headerValue).matches());
   }
 }
