@@ -129,6 +129,14 @@ This is convenient in order to avoid installing the dependencies manually.
 > From now, the examples assume you are in the root of your sdk-platform-java
 > folder.
 
+## Enabling the Airlock Artifact Registry
+The base images of the Dockerfile are hosted in Google's Airlock repository.
+To enable it, run the following `gcloud` commands:
+
+```shell
+gcloud auth configure-docker us-docker.pkg.dev
+```
+
 ## Build the docker image
 ```bash
 docker build --file .cloudbuild/library_generation/library_generation.Dockerfile --iidfile image-id .
