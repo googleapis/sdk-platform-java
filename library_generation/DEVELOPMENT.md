@@ -137,9 +137,23 @@ To enable it, run the following `gcloud` commands:
 gcloud auth configure-docker us-docker.pkg.dev
 ```
 
+## Prepare your gcloud Application-Default-Credentials
+This is necessary for the build context to access the Airlock repository of
+Python packages.
+To configure your credentials:
+
+```bash
+# creates or updates the credentials file in ~/.config/gcloud
+gcloud auth application-default login 
+```
+
 ## Build the docker image
 ```bash
-docker build --file .cloudbuild/library_generation/library_generation.Dockerfile --iidfile image-id .
+DOCKER_BUILDKIT=1 docker build \
+  --file .cloudbuild/library_generation/library_generation.Dockerfile \
+  --secret="id=credentials,src=$HOME/.config/gcloud/application_default_credentials.json" \
+  --build-arg GOOGLE_APPLICATION_CREDENTIALS=/run/secrets/credentials \
+  --iidfile image-id .
 ```
 
 This will create an `image-id` file at the root of the repo with the hash ID of

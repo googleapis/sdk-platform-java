@@ -54,12 +54,29 @@ RUN --mount=type=cache,target=/root/.m2 cp "/root/.m2/repository/com/google/api/
 # python:3.12.3-alpine3.18
 FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:24680ddf8422899b24756d62b31eb5de782fbb42e9c2bb1c70f1f55fcf891721 as python-scripts-build
 
+# This will use GOOGLE_APPLICATION_CREDENTIALS if passed in docker build command.
+# If not passed will leave it unset to support GCE Metadata in CI builds
+ARG GOOGLE_APPLICATION_CREDENTIALS
+
+RUN apk add bash curl
+
+# Install gcloud to obtain the credentials to use the Airlock repostiory
+RUN curl -sSL https://sdk.cloud.google.com | bash -e
+ENV PATH $PATH:/root/google-cloud-sdk/bin
+
+
+# Configure the Airlock pip package repository
+RUN pip install keyrings.google-artifactregistry-auth -i https://pypi.org/simple/
+COPY .cloudbuild/library_generation/image-configuration/airlock-pypirc /root/.pypirc
+COPY .cloudbuild/library_generation/image-configuration/airlock-pip.conf /etc/pip.conf
+RUN chmod 600 /root/.pypirc /etc/pip.conf
+
 COPY library_generation /src
 
 # install main scripts as a python package
 WORKDIR /src
 
-RUN python -m pip install --target /usr/local/lib/python3.12 -r requirements.txt
+RUN --mount=type=secret,id=credentials python -m pip install --target /usr/local/lib/python3.12 -r requirements.txt
 RUN python -m pip install --target /usr/local/lib/python3.12 .
 
 # alpine:3.20.1
@@ -152,17 +169,17 @@ RUN rm /utilities.sh
 RUN chmod 777 "${HOME}"
 RUN touch "${HOME}/.bashrc" && chmod 755 "${HOME}/.bashrc"
 
-# Copy the owlbot-cli binary
-COPY --from=owlbot-cli-build /tools/repo-automation-bots/packages/owl-bot "/owl-bot"
-WORKDIR /owl-bot
-RUN npm link
-
 # Here we transfer gapic-generator-java from the previous stage.
 # Note that the destination is a well-known location that will be assumed at runtime.
 # We hard-code the location string so it cannot be overriden.
 COPY --from=ggj-build "/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
 RUN chmod 755 "${HOME}/.library_generation"
 RUN chmod 555 "${HOME}/.library_generation/gapic-generator-java.jar"
+
+# Copy the owlbot-cli binary
+COPY --from=owlbot-cli-build /tools/repo-automation-bots/packages/owl-bot "/owl-bot"
+WORKDIR /owl-bot
+RUN npm link
 
 # Copy the library_generation python packages
 COPY --from=python-scripts-build "/usr/local/lib/python3.12/" "/usr/lib/python3.12/"

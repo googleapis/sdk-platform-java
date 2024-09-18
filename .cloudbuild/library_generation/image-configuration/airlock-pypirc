@@ -1,0 +1,11 @@
+[distutils]
+index-servers = ah-3p-staging-python
+# TODO: use this index instead when `lxml` and `versions` are available in the `trusted` airlock registry
+# We can confirm their availability in https://airlock.corp.goog/search?query=&type=Python
+# index-servers = python-3p-trusted
+
+[ah-3p-staging-python]
+repository: https://us-python.pkg.dev/artifact-foundry-prod/ah-3p-staging-python/
+# TODO: use this repository instead when `lxml` and `versions` are available in the `trusted` airlock registry
+# We can confirm their availability in https://airlock.corp.goog/search?query=&type=Python
+# repository: https://us-python.pkg.dev/artifact-foundry-prod/python-3p-trusted/
