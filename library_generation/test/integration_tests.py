@@ -191,6 +191,7 @@ class IntegrationTest(unittest.TestCase):
                 )
                 print("  PR description comparison succeed.")
         self.__remove_generated_files()
+        shutil.rmtree(api_definition_path)
 
     @classmethod
     def __copy_api_definition(cls, committish: str) -> str:
