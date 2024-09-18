@@ -347,7 +347,8 @@ class ITVersionHeaders {
         Pattern.compile("gl-java/.* gapic/.*?--protobuf-.* gax/.* rest/ protobuf/.*");
     httpJsonClient.echo(EchoRequest.newBuilder().build());
     ArrayList<String> headerValues =
-        (ArrayList<String>) httpJsonInterceptor.metadata.getHeaders().get(HTTP_CLIENT_API_HEADER_KEY);
+        (ArrayList<String>)
+            httpJsonInterceptor.metadata.getHeaders().get(HTTP_CLIENT_API_HEADER_KEY);
     String headerValue = headerValues.get(0);
     assertTrue(defautlHttpHeaderPattern.matcher(headerValue).matches());
   }
