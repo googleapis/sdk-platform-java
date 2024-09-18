@@ -84,16 +84,29 @@ git show "${target_branch}":"${generation_config}" > "${baseline_generation_conf
 # get .m2 folder so it's mapped into the docker container
 m2_folder=$(dirname "$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)")
 
+# download api definition from googleapis repository
+googleapis_commitish=$(grep googleapis_commitish "${generation_config}" | cut -d ":" -f 2 | xargs)
+api_def_dir=$(mktemp -d)
+git clone https://github.com/googleapis/googleapis.git "${api_def_dir}"
+pushd "${api_def_dir}"
+git checkout "${googleapis_commitish}"
+popd
+
 # run hermetic code generation docker image.
 docker run \
   --rm \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):${workspace_name}" \
   -v "${m2_folder}":/home/.m2 \
+  -v "${api_def_dir}:${workspace_name}/api" \
   -e GENERATOR_VERSION="${image_tag}" \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
   --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
-  --current-generation-config-path="${workspace_name}/${generation_config}"
+  --current-generation-config-path="${workspace_name}/${generation_config}" \
+  --api-definition-path="${workspace_name}/api"
+
+# remove api definition after generation
+rm -rf "${api_def_dir}"
 
 # commit the change to the pull request.
 rm -rdf output googleapis "${baseline_generation_config}"
