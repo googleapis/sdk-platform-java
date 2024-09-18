@@ -51,7 +51,6 @@ public class GaxProperties {
   private static final String JAVA_VERSION = getRuntimeVersion();
   private static final String PROTOBUF_VERSION =
       getBundleVersion(Any.class).orElse(DEFAULT_VERSION);
-  static final String BUNDLE_VERSION_KEY = "Bundle-Version";
 
   private GaxProperties() {}
 
@@ -129,9 +128,9 @@ public class GaxProperties {
   }
 
   /**
-   * Returns the current library version as reported by {BUNDLE_VERSION_KEY} in library's
-   * META-INF/MANIFEST. This should only be used if MANIFEST file does not contain a widely
-   * recognized version declaration such as Specific-Version OR Implementation-Version declared in
+   * Returns the current library version as reported by Bundle-Version attribute in library's
+   * META-INF/MANIFEST for libraries using OSGi bundle manifest https://www.ibm.com/docs/en/wasdtfe?topic=overview-osgi-bundles.
+   * This should only be used if MANIFEST file does not contain a widely recognized version declaration such as Specific-Version OR Implementation-Version declared in
    * Manifest Specification
    * https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#Manifest_Specification,
    * otherwise please use #getLibraryVersion
@@ -142,7 +141,7 @@ public class GaxProperties {
       File file = new File(clazz.getProtectionDomain().getCodeSource().getLocation().toURI());
       try (JarFile jar = new JarFile(file.getPath())) {
         Attributes attributes = jar.getManifest().getMainAttributes();
-        return Optional.ofNullable(attributes.getValue(BUNDLE_VERSION_KEY));
+        return Optional.ofNullable(attributes.getValue("Bundle-Version"));
       }
     } catch (URISyntaxException | IOException e) {
       // Unable to read Bundle-Version from manifest. Recover gracefully.

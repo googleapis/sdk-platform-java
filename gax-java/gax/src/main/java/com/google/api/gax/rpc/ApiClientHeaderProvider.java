@@ -46,8 +46,6 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
   static final String PROTOBUF_HEADER_VERSION_KEY = "protobuf";
 
   public static final String API_VERSION_HEADER_KEY = "x-goog-api-version";
-  private static final String protobufVersionAppendValue =
-      "--" + PROTOBUF_HEADER_VERSION_KEY + "-" + GaxProperties.getProtobufVersion();
 
   private final Map<String, String> headers;
 
@@ -62,7 +60,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
       appendToken(apiClientHeaderValue, builder.getGeneratedLibToken());
       appendToken(apiClientHeaderValue, builder.getGeneratedRuntimeToken());
       appendToken(apiClientHeaderValue, builder.getTransportToken());
-      appendToken(apiClientHeaderValue, builder.getProtobufRuntimeToken());
+      appendToken(apiClientHeaderValue, builder.protobufRuntimeToken);
 
       if (apiClientHeaderValue.length() > 0) {
         headersBuilder.put(
@@ -92,7 +90,9 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     Matcher matcher = pattern.matcher(apiClientHeaderValue);
     if (matcher.find()) {
       return apiClientHeaderValue.substring(0, matcher.end())
-          + protobufVersionAppendValue
+          +  "--"
+              + PROTOBUF_HEADER_VERSION_KEY
+              + "-" + GaxProperties.getProtobufVersion()
           + apiClientHeaderValue.substring(matcher.end());
     }
     return apiClientHeaderValue.toString();
@@ -132,7 +132,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     private String generatedRuntimeToken;
     private String transportToken;
     private String quotaProjectIdToken;
-    private final String protobufRuntimeToken;
+    final private String protobufRuntimeToken;
 
     private String resourceHeaderKey;
     private String resourceToken;
@@ -245,10 +245,6 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     public Builder setApiVersionToken(String apiVersionToken) {
       this.apiVersionToken = apiVersionToken;
       return this;
-    }
-
-    public String getProtobufRuntimeToken() {
-      return protobufRuntimeToken;
     }
 
     private String constructToken(String name, String version) {
