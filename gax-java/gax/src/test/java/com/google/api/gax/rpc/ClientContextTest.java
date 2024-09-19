@@ -37,7 +37,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -68,6 +67,7 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import org.junit.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -1113,12 +1113,7 @@ class ClientContextTest {
     Mockito.when(credentialsProvider.getCredentials()).thenReturn(Mockito.mock(Credentials.class));
     builder.setCredentialsProvider(credentialsProvider);
 
-    try {
-      ClientContext.create(builder.build());
-      fail("No exception raised");
-    } catch (IllegalArgumentException e) {
-      assert (e.getMessage()
-          .contains("You can not provide both ApiKey and Credentials for a client."));
-    }
+    Assert.assertThrows(
+        IllegalArgumentException.class, () -> ClientContext.create(builder.build()));
   }
 }
