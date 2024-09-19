@@ -185,23 +185,23 @@ public abstract class ClientContext {
     if (apiKey != null) {
       // if API key exists it becomes the default credential
       credentials = ApiKeyCredentials.create(settings.getApiKey());
-    }
-
-    // check if need to adjust credentials/endpoint/endpointContext for GDC-H
-    String settingsGdchApiAudience = settings.getGdchApiAudience();
-    boolean usingGDCH = credentials instanceof GdchCredentials;
-    if (usingGDCH) {
-      // Can only determine if the GDC-H is being used via the Credentials. The Credentials object
-      // is resolved in the ClientContext and must be passed to the EndpointContext. Rebuild the
-      // endpointContext only on GDC-H flows.
-      endpointContext = endpointContext.withGDCH();
-      // Resolve the new endpoint with the GDC-H flow
-      endpoint = endpointContext.resolvedEndpoint();
-      // We recompute the GdchCredentials with the audience
-      credentials = getGdchCredentials(settingsGdchApiAudience, endpoint, credentials);
-    } else if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
-      throw new IllegalArgumentException(
-          "GDC-H API audience can only be set when using GdchCredentials");
+    } else {
+      // check if need to adjust credentials/endpoint/endpointContext for GDC-H
+      String settingsGdchApiAudience = settings.getGdchApiAudience();
+      boolean usingGDCH = credentials instanceof GdchCredentials;
+      if (usingGDCH) {
+        // Can only determine if the GDC-H is being used via the Credentials. The Credentials object
+        // is resolved in the ClientContext and must be passed to the EndpointContext. Rebuild the
+        // endpointContext only on GDC-H flows.
+        endpointContext = endpointContext.withGDCH();
+        // Resolve the new endpoint with the GDC-H flow
+        endpoint = endpointContext.resolvedEndpoint();
+        // We recompute the GdchCredentials with the audience
+        credentials = getGdchCredentials(settingsGdchApiAudience, endpoint, credentials);
+      } else if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
+        throw new IllegalArgumentException(
+            "GDC-H API audience can only be set when using GdchCredentials");
+      }
     }
 
     if (settings.getQuotaProjectId() != null && credentials != null) {

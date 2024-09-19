@@ -1109,7 +1109,9 @@ class ClientContextTest {
     Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of());
     builder.setHeaderProvider(headerProvider);
     builder.setApiKey(apiKey);
-    builder.setCredentialsProvider(Mockito.mock(CredentialsProvider.class));
+    CredentialsProvider credentialsProvider = Mockito.mock(CredentialsProvider.class);
+    Mockito.when(credentialsProvider.getCredentials()).thenReturn(Mockito.mock(Credentials.class));
+    builder.setCredentialsProvider(credentialsProvider);
 
     try {
       ClientContext.create(builder.build());

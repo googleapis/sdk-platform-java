@@ -589,8 +589,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
 
     /**
-     * Sets the API key. The API key will get translated to an [ApiKeyCredentials] and stored in
-     * [CallContext].
+     * Sets the API key. The API key will get translated to an {@link
+     * com.google.auth.ApiKeyCredentials} and stored in {@link ClientContext}.
      */
     public B setApiKey(String apiKey) {
       this.apiKey = apiKey;
