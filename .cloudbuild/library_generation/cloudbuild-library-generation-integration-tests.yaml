@@ -31,38 +31,41 @@ steps:
     volumes:
     - name: docker-local
       path: /var/lib/docker/overlay2
-
-# Dependency installation
+  # Dependency installation
   - id: library-generation-python-libs
-    name: python
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
     waitFor: ["-"]
-    args: [ "python", "-m", "pip", "install", "--require-hashes", "-r", "library_generation/requirements.txt" ]
+    args: [ "python", "-m", "pip", "install", "--require-hashes", "-r",
+            "--target", "/usr/lib/python3.9",
+            "library_generation/requirements.txt" ]
     volumes:
     - name: python-local
-      path: /usr/local/lib/python3.12
+      path: /usr/lib/python3.9
   # Python scripts compilation
   - id: library-generation-python-compile
-    name: python
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
     waitFor: ["-"]
-    args: [ "python", "-m", "pip", "install", "library_generation" ]
+    args: [ "python", "-m", "pip", "install",
+            "--target", "/usr/lib/python3.9",
+            "library_generation" ]
     volumes:
     - name: python-local
-      path: /usr/local/lib/python3.12
+      path: /usr/lib/python3.9
   # Python integration tests execution
   - id: run-integration-tests
-    name: python
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
     waitFor: [
       "library-generation-python-compile",
       "library-generation-python-libs",
       "library-generation-image-build"
     ]
-    args: [ "python", "-m", "unittest",
+    args: [ "python3", "-m", "unittest",
             "library_generation/test/integration_tests.py" ]
     volumes:
     - name: docker-local
       path: /var/lib/docker/overlay2
     - name: python-local
-      path: /usr/local/lib/python3.12
+      path: /usr/lib/python3.9
 options:
   # Builds ran by service accounts we need to either a) specify a logs bucket,
   # b) use REGIONAL_USER_OWNER_BUCKET, or c) use CLOUD_LOGGING_ONLY. We go for c)
