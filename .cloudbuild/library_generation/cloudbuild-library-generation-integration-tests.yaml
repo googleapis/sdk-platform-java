@@ -21,30 +21,48 @@ steps:
   # Library generation build
   - id: library-generation-image-build
     name: gcr.io/cloud-builders/docker
+    waitFor: ["-"]
     args: [
       "build",
       "-t", "${_IMAGE_NAME}",
       "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
     env:
     - 'DOCKER_BUILDKIT=1'
-    waitFor: ["-"]
-  # Dependency installation
+    volumes:
+    - name: docker-local
+      path: /var/lib/docker/overlay2
+
+# Dependency installation
   - id: library-generation-python-libs
     name: python
+    waitFor: ["-"]
     args: [ "python", "-m", "pip", "install", "--require-hashes", "-r", "library_generation/requirements.txt" ]
-    waitFor: ["library-generation-image-build"]
+    volumes:
+    - name: python-local
+      path: /usr/local/lib/python3.12
   # Python scripts compilation
   - id: library-generation-python-compile
     name: python
+    waitFor: ["-"]
     args: [ "python", "-m", "pip", "install", "library_generation" ]
-
-    waitFor: ["library-generation-image-build"]
+    volumes:
+    - name: python-local
+      path: /usr/local/lib/python3.12
   # Python integration tests execution
   - id: run-integration-tests
     name: python
+    waitFor: [
+      "library-generation-python-compile",
+      "library-generation-python-libs",
+      "library-generation-image-build"
+    ]
     args: [ "python", "-m", "unittest",
             "library_generation/test/integration_tests.py" ]
-    waitFor: ["library-generation-python-compile", "library-generation-python-libs"]
+    volumes:
+    - name: docker-local
+      path: /var/lib/docker/overlay2
+    - name: python-local
+      path: /usr/local/lib/python3.12
 options:
   # Builds ran by service accounts we need to either a) specify a logs bucket,
   # b) use REGIONAL_USER_OWNER_BUCKET, or c) use CLOUD_LOGGING_ONLY. We go for c)
