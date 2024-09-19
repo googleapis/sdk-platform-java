@@ -288,7 +288,8 @@ public abstract class ClientContext {
   }
 
   /**
-   * Constructs a new {@link Credentials} object based on credentials provided with a GDC-H audience
+   * Constructs a new {@link com.google.auth.Credentials} object based on credentials provided with
+   * a GDC-H audience
    */
   private static Credentials getGdchCredentials(
       String settingsGdchApiAudience, String endpoint, Credentials credentials) throws IOException {
