@@ -56,6 +56,8 @@ The default value is the current working directory when running the script.
 
 Note that you need not only the protos defined the service, but also the transitive
 dependencies of those protos.
+Any missing dependencies will cause `File not found` error.
+
 For example, if your service is defined in `example_service.proto` and it imports
 `google/api/annotations.proto`, you need the `annotations.proto` resides in a
 folder that has the exact structure of the import statement (`google/api` in this
