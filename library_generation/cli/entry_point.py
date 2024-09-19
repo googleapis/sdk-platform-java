@@ -69,7 +69,8 @@ def main(ctx):
     default=".",
     show_default=True,
     help="""
-    The path to which the api definition (proto and service yaml) resides.
+    The path to which the api definition (proto and service yaml) and its
+    dependencies resides.
     If not specified, the path is the current working directory.
     """,
 )
