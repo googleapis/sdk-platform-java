@@ -207,8 +207,6 @@ class IntegrationTest(unittest.TestCase):
             f"{repo_dest}/grafeas", f"{api_temp_dir}/grafeas", dirs_exist_ok=True
         )
         shutil.rmtree(repo_dest)
-        print(f"Removing api dependency in {api_temp_dir}/google/api...")
-        shutil.rmtree(f"{api_temp_dir}/google/api")
         return api_temp_dir
 
     @classmethod
