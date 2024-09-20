@@ -155,7 +155,9 @@ To run the docker container on the google-cloud-java repo, you must run:
 docker run \
   -u "$(id -u)":"$(id -g)"  \
   -v /path/to/google-cloud-java:/workspace \
-  $(cat image-id)
+  -v /path/to/api-definition:/workspace/apis \
+  $(cat image-id) \
+  --api-definition-path=/workspace/apis
 ```
 
  * `-u "$(id -u)":"$(id -g)"` makes docker run the container impersonating
@@ -164,9 +166,11 @@ docker run \
  * `-v /path/to/google-cloud-java:/workspace` maps the host machine's
    google-cloud-java folder to the /workspace folder. 
    The image is configured to perform changes in this directory.
-   Note that this setup assumes the api definition resides in host machine's
-   google-cloud-java folder.
+ * `-v /path/to/api-definition:/workspace/apis` maps the host machine's
+   api-definition folder to /workspace/apis folder.
  * `$(cat image-id)` obtains the image ID created in the build step.
+ * `--api-definition-path=/workspace/apis` set the API definition path to
+   `/workspace/apis`.
 
 ## Debug the created containers
 If you are working on changing the way the containers are created, you may want
