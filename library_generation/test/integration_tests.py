@@ -71,7 +71,7 @@ class IntegrationTest(unittest.TestCase):
         os.makedirs(f"{golden_dir}", exist_ok=True)
 
     def test_entry_point_running_in_container(self):
-        api_definition_path = self.__copy_api_definition(googleapis_commitish)
+        api_definitions_path = self.__copy_api_definition(googleapis_commitish)
         config_files = self.__get_config_files(config_dir)
         for repo, config_file in config_files:
             config = from_yaml(config_file)
@@ -92,7 +92,7 @@ class IntegrationTest(unittest.TestCase):
                 config_location=config_location,
                 baseline_config=baseline_config_name,
                 current_config=current_config_name,
-                api_definition=api_definition_path,
+                api_definition=api_definitions_path,
             )
             # 4. compare generation result with golden files
             print(
@@ -191,7 +191,7 @@ class IntegrationTest(unittest.TestCase):
                 )
                 print("  PR description comparison succeed.")
         self.__remove_generated_files()
-        shutil.rmtree(api_definition_path)
+        shutil.rmtree(api_definitions_path)
 
     @classmethod
     def __copy_api_definition(cls, committish: str) -> str:
@@ -324,7 +324,7 @@ class IntegrationTest(unittest.TestCase):
                 image_tag,
                 f"--baseline-generation-config-path=/workspace/config/{baseline_config}",
                 f"--current-generation-config-path=/workspace/config/{current_config}",
-                f"--api-definition-path=/workspace/api",
+                f"--api-definitions-path=/workspace/api",
             ],
         )
 

@@ -25,7 +25,7 @@ from library_generation.utils.monorepo_postprocessor import monorepo_postprocess
 def generate_from_yaml(
     config: GenerationConfig,
     repository_path: str,
-    api_definition_path: str,
+    api_definitions_path: str,
     target_library_names: list[str] = None,
 ) -> None:
     """
@@ -35,7 +35,7 @@ def generate_from_yaml(
     :param config: a GenerationConfig object.
     :param repository_path: The repository path to which the generated files
     will be sent.
-    :param api_definition_path: The path to where the api definition resides.
+    :param api_definitions_path: The path to where the api definition resides.
     :param target_library_names: a list of libraries to be generated.
     If specified, only the library whose library_name is in target_library_names
     will be generated.
@@ -49,7 +49,7 @@ def generate_from_yaml(
         gen_config=config, library_config=target_libraries, repo_path=repository_path
     )
     # copy api definition to output folder.
-    shutil.copytree(api_definition_path, repo_config.output_folder, dirs_exist_ok=True)
+    shutil.copytree(api_definitions_path, repo_config.output_folder, dirs_exist_ok=True)
 
     for library_path, library in repo_config.get_libraries().items():
         print(f"generating library {library.get_library_name()}")

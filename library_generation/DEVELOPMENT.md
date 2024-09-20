@@ -107,7 +107,7 @@ generate a GAPIC repository with a given api definition (proto, service yaml).
 For example, googleapis
 ```
 git clone https://github.com/googleapis/googleapis
-export api_definition_path="$(pwd)/googleapis"
+export api_definitions_path="$(pwd)/googleapis"
 ```
 
 ### Download the repo
@@ -126,7 +126,7 @@ python -m pip install .
 ```
 python cli/entry_point.py generate \
    --repository-path="${path_to_repo}" \
-   --api-definition-path="${api_definition_path}"
+   --api-definitions-path="${api_definitions_path}"
 ```
 
 
@@ -157,7 +157,7 @@ docker run \
   -v /path/to/google-cloud-java:/workspace \
   -v /path/to/api-definition:/workspace/apis \
   $(cat image-id) \
-  --api-definition-path=/workspace/apis
+  --api-definitions-path=/workspace/apis
 ```
 
  * `-u "$(id -u)":"$(id -g)"` makes docker run the container impersonating
@@ -169,7 +169,7 @@ docker run \
  * `-v /path/to/api-definition:/workspace/apis` maps the host machine's
    api-definition folder to /workspace/apis folder.
  * `$(cat image-id)` obtains the image ID created in the build step.
- * `--api-definition-path=/workspace/apis` set the API definition path to
+ * `--api-definitions-path=/workspace/apis` set the API definition path to
    `/workspace/apis`.
 
 ## Debug the created containers

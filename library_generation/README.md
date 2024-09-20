@@ -48,7 +48,7 @@ right version for each library.
 Please refer [here](go/java-client-releasing#versionstxt-manifest) for more info
 of versions.txt.
 
-### Api definition path (`api_definition_path`), optional
+### Api definitions path (`api_definitions_path`), optional
 
 The path to where the api definition (proto, service yaml) resides.
 
@@ -61,7 +61,7 @@ Any missing dependencies will cause `File not found` error.
 For example, if your service is defined in `example_service.proto` and it imports
 `google/api/annotations.proto`, you need the `annotations.proto` resides in a
 folder that has the exact structure of the import statement (`google/api` in this
-case), and set `api_definition_path` to the path contains the root folder (`google`
+case), and set `api_definitions_path` to the path contains the root folder (`google`
 in this case).
 
 ## Output of `entry_point.py`
@@ -219,7 +219,7 @@ python library_generation/entry_point.py generate \
 --baseline-generation-config-path=/path/to/baseline_config_file \
 --current-generation-config-path=/path/to/current_config_file \
 --repository-path=path/to/repository \
---api-definition-path=path/to/api_definition
+--api-definitions-path=path/to/api_definition
 ```
 If you run `entry_point.py` with the example [configuration](#an-example-of-generation-configuration)
 shown above, the repository structure is:
