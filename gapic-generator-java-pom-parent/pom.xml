@@ -36,7 +36,7 @@
     <maven.compiler.release>8</maven.compiler.release>
     <errorprone.version>2.32.0</errorprone.version>
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
-    <threetenbp.version>1.6.9</threetenbp.version>
+    <threetenbp.version>1.7.0</threetenbp.version>
     <junit.version>5.11.0</junit.version>
   </properties>
 
