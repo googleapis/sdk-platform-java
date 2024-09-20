@@ -22,7 +22,8 @@ set -e
 # The parameters of this script is:
 # 1. target_branch, the branch into which the pull request is merged.
 # 2. current_branch, the branch with which the pull request is associated.
-# 3. [optional] generation_config, the path to the generation configuration,
+# 3. [optional] image_tag, the tag of gcr.io/cloud-devrel-public-resources/java-library-generation.
+# 4. [optional] generation_config, the path to the generation configuration,
 # the default value is generation_config.yaml in the repository root.
 while [[ $# -gt 0 ]]; do
 key="$1"
@@ -33,6 +34,10 @@ case "${key}" in
     ;;
   --current_branch)
     current_branch="$2"
+    shift
+    ;;
+  --image_tag)
+    image_tag="$2"
     shift
     ;;
   --generation_config)
@@ -62,7 +67,10 @@ if [ -z "${generation_config}" ]; then
   echo "Use default generation config: ${generation_config}"
 fi
 
-image_tag=local
+if [ -z "${image_tag}" ]; then
+  image_tag=$(grep "gapic_generator_version" "${generation_config}" | cut -d ':' -f 2 | xargs)
+fi
+
 workspace_name="/workspace"
 baseline_generation_config="baseline_generation_config.yaml"
 message="chore: generate libraries at $(date)"
@@ -73,40 +81,32 @@ git checkout "${current_branch}"
 # copy generation configuration from target branch to current branch.
 git show "${target_branch}":"${generation_config}" > "${baseline_generation_config}"
 
-generator_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
-echo "Local generator version: ${generator_version}"
+# get .m2 folder so it's mapped into the docker container
+m2_folder=$(dirname "$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)")
 
-# install generator locally since we're using a SNAPSHOT version.
-mvn -V -B -ntp clean install -DskipTests
-
-# build image locally since we want to include latest change.
-docker build \
-  -f .cloudbuild/library_generation/library_generation.Dockerfile \
-  -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
-  .
 # run hermetic code generation docker image.
 docker run \
   --rm \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):${workspace_name}" \
-  -v "$HOME"/.m2:/home/.m2 \
-  -e GENERATOR_VERSION="${generator_version}" \
+  -v "${m2_folder}":/home/.m2 \
+  -e GENERATOR_VERSION="${image_tag}" \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
   --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
   --current-generation-config-path="${workspace_name}/${generation_config}"
 
 # commit the change to the pull request.
 rm -rdf output googleapis "${baseline_generation_config}"
-git add --all -- ':!pr_description.txt'
+git add --all -- ':!pr_description.txt' ':!hermetic_library_generation.sh'
 changed_files=$(git diff --cached --name-only)
-if [[ "${changed_files}" == "" ]]; then
-    echo "There is no generated code change."
-    echo "Skip committing to the pull request."
-    exit 0
+if [[ "${changed_files}" != "" ]]; then
+    echo "Commit changes..."
+    git commit -m "${message}"
+    git push
+else
+    echo "There is no generated code change, skip commit."
 fi
 
-git commit -m "${message}"
-git push
 # set pr body if pr_description.txt is generated.
 if [[ -f "pr_description.txt" ]]; then
   pr_num=$(gh pr list -s open -H "${current_branch}" -q . --json number | jq ".[] | .number")

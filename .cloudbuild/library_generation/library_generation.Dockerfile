@@ -22,7 +22,7 @@ COPY . .
 ENV DOCKER_GAPIC_GENERATOR_VERSION="2.45.1-SNAPSHOT" 
 # {x-version-update-end}
 
-RUN mvn install -DskipTests -Dclirr.skip -Dcheckstyle.skip
+RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
@@ -33,7 +33,7 @@ SHELL [ "/bin/bash", "-c" ]
 
 
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
-ARG PROTOC_VERSION=25.4
+ARG PROTOC_VERSION=25.5
 ARG GRPC_VERSION=1.66.0
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"

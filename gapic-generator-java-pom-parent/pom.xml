@@ -27,14 +27,14 @@
         consistent across modules in this repository -->
     <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
     <grpc.version>1.66.0</grpc.version>
-    <google.auth.version>1.25.0</google.auth.version>
+    <google.auth.version>1.26.0</google.auth.version>
     <google.http-client.version>1.45.0</google.http-client.version>
     <gson.version>2.11.0</gson.version>
     <guava.version>33.3.0-jre</guava.version>
-    <protobuf.version>4.27.4</protobuf.version>
-    <opentelemetry.version>1.42.0</opentelemetry.version>
+    <protobuf.version>4.28.2</protobuf.version>
+    <opentelemetry.version>1.42.1</opentelemetry.version>
     <maven.compiler.release>8</maven.compiler.release>
-    <errorprone.version>2.31.0</errorprone.version>
+    <errorprone.version>2.32.0</errorprone.version>
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
     <threetenbp.version>1.6.9</threetenbp.version>
     <junit.version>5.11.0</junit.version>
