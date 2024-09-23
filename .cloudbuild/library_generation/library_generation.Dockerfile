@@ -19,7 +19,7 @@ FROM gcr.io/cloud-devrel-public-resources/java21 AS ggj-build
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.45.1-SNAPSHOT" 
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.46.0" 
 # {x-version-update-end}
 
 RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
