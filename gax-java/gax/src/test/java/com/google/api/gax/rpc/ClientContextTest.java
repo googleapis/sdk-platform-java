@@ -67,7 +67,6 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.junit.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -1113,7 +1112,6 @@ class ClientContextTest {
     Mockito.when(credentialsProvider.getCredentials()).thenReturn(Mockito.mock(Credentials.class));
     builder.setCredentialsProvider(credentialsProvider);
 
-    Assert.assertThrows(
-        IllegalArgumentException.class, () -> ClientContext.create(builder.build()));
+    assertThrows(IllegalArgumentException.class, () -> ClientContext.create(builder.build()));
   }
 }
