@@ -110,7 +110,7 @@ class JavaUnitTests(unittest.TestCase):
         ) as workdir:
             # generate the common templates
             java.common_templates(template_path=TEMPLATES_PATH)
-            assert os.path.isfile("renovate.json")
+            self.assertTrue(os.path.isfile("renovate.json"))
 
             # lint xml, yaml files
             # use os.walk because glob ignores hidden directories
@@ -270,7 +270,7 @@ class JavaUnitTests(unittest.TestCase):
             # generate the common templates
             java.common_templates(template_path=TEMPLATES_PATH)
 
-            assert os.path.isfile(".github/release-please.yml")
+            self.assertTrue(os.path.isfile(".github/release-please.yml"))
             with open(".github/release-please.yml") as fp:
                 assert (
                     fp.read()
@@ -285,8 +285,7 @@ class JavaUnitTests(unittest.TestCase):
     """
                 )
 
-    @staticmethod
-    def assert_matches_golden(expected, actual):
+    def assert_matches_golden(self, expected, actual):
         matching_lines = 0
         with open(actual, "rt") as fp:
             with open(expected, "rt") as golden:
@@ -294,7 +293,7 @@ class JavaUnitTests(unittest.TestCase):
                     matching_lines += 1
                     log_line = fp.readline()
                     expected = golden.readline()
-                    assert repr(log_line) == repr(expected)
+                    self.assertEqual(repr(log_line), repr(expected))
                     if not log_line:
                         break
         assert matching_lines > 0
