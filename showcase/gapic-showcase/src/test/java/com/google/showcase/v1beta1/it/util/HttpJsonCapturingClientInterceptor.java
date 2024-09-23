@@ -19,7 +19,6 @@ package com.google.showcase.v1beta1.it.util;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.httpjson.HttpJsonClientInterceptor;
 import com.google.api.gax.rpc.FixedHeaderProvider;

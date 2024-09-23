@@ -319,7 +319,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
      * [CallContext].
      *
      * <p>Note: you can not set an API key and credentials object in the same Settings. It will fail
-     * when creating the client.
+     * when building the settings.
      */
     public B setApiKey(String apiKey) {
       stubSettings.setApiKey(apiKey);

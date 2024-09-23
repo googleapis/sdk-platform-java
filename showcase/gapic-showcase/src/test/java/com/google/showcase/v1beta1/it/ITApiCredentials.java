@@ -40,7 +40,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test suite to confirm a client can be instantiated with API key credentials and sent to back end
+ * Test suite to confirm a client can be instantiated with API key credentials and correct
+ * authorization sent via headers to back end
  */
 class ITApiCredentials {
 

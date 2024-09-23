@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.showcase.v1beta1.it.util;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -42,7 +43,6 @@ import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.HttpJsonMetadata;
 import io.grpc.ForwardingClientCall;
 import io.grpc.Status;
-
 
 /** Implements a client interceptor to retrieve the metadata from a GRPC client request. */
 public class GrpcCapturingClientInterceptor implements ClientInterceptor {
