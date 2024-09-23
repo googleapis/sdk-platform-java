@@ -272,17 +272,17 @@ class JavaUnitTests(unittest.TestCase):
 
             self.assertTrue(os.path.isfile(".github/release-please.yml"))
             with open(".github/release-please.yml") as fp:
-                assert (
-                    fp.read()
-                    == """branches:
-    - branch: 1.127.12-sp
-      bumpMinorPreMajor: true
-      handleGHRelease: true
-      releaseType: java-lts
-    bumpMinorPreMajor: true
-    handleGHRelease: true
-    releaseType: java-yoshi
-    """
+                self.assertEqual(
+                    fp.read(),
+                    """branches:
+- branch: 1.127.12-sp
+  bumpMinorPreMajor: true
+  handleGHRelease: true
+  releaseType: java-lts
+bumpMinorPreMajor: true
+handleGHRelease: true
+releaseType: java-yoshi
+""",
                 )
 
     def assert_matches_golden(self, expected, actual):
