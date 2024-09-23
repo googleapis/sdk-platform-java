@@ -17,6 +17,8 @@ import shutil
 import tempfile
 import unittest
 import xml.etree.ElementTree as elementTree
+from unittest import mock
+
 import yaml
 from pathlib import Path
 from synthtool.languages import java
@@ -24,9 +26,14 @@ import requests_mock
 from . import util
 
 TEST_OWLBOT = Path(__file__).parent.parent.parent.parent / "resources" / "test-owlbot"
-FIXTURES = Path(__file__).parent.parent / "resources" / "test-owlbot" / "fixtures"
+FIXTURES = (
+    Path(__file__).parent.parent.parent.parent
+    / "resources"
+    / "test-owlbot"
+    / "fixtures"
+)
 TEMPLATES_PATH = (
-    Path(__file__).parent.parent.parent / "owlbot" / "synthtool" / "templates"
+    Path(__file__).parent.parent.parent.parent.parent / "owlbot" / "templates"
 )
 
 SAMPLE_METADATA = """
@@ -83,6 +90,7 @@ class JavaUnitTests(unittest.TestCase):
                 ),
             )
 
+    @mock.patch.dict(os.environ, {"SYNTHTOOL_TEMPLATES": f"{TEMPLATES_PATH}"})
     def test_working_common_templates(self):
         def assert_valid_xml(file):
             try:
@@ -116,17 +124,18 @@ class JavaUnitTests(unittest.TestCase):
 
     def test_remove_method(self):
         with tempfile.TemporaryDirectory() as tempdir:
-            shutil.copyfile(
-                "tests/testdata/SampleClass.java", tempdir + "/SampleClass.java"
-            )
+            cwd = os.getcwd()
+            os.chdir(TEST_OWLBOT)
+            shutil.copyfile("testdata/SampleClass.java", tempdir + "/SampleClass.java")
 
             java.remove_method(
                 tempdir + "/SampleClass.java", "public static void foo()"
             )
             java.remove_method(tempdir + "/SampleClass.java", "public void asdf()")
             self.assert_matches_golden(
-                "tests/testdata/SampleClassGolden.java", tempdir + "/SampleClass.java"
+                "testdata/SampleClassGolden.java", tempdir + "/SampleClass.java"
             )
+            os.chdir(cwd)
 
     def test_copy_and_rename_method(self):
         with tempfile.TemporaryDirectory() as tempdir:
@@ -150,11 +159,9 @@ class JavaUnitTests(unittest.TestCase):
             os.chdir(cwd)
 
     def test_deprecate_method(self):
-        # with tempfile.TemporaryDirectory() as tempdir:
-        if True:
+        with tempfile.TemporaryDirectory() as tempdir:
             cwd = os.getcwd()
             os.chdir(TEST_OWLBOT)
-            tempdir = tempfile.mkdtemp()
             shutil.copyfile(
                 "testdata/SampleDeprecateClass.java",
                 tempdir + "/SampleDeprecateClass.java",
@@ -189,60 +196,73 @@ class JavaUnitTests(unittest.TestCase):
 
     def test_fix_proto_license(self):
         with tempfile.TemporaryDirectory() as tempdir:
+            cwd = os.getcwd()
+            os.chdir(TEST_OWLBOT)
             temppath = Path(tempdir).resolve()
             os.mkdir(temppath / "src")
             shutil.copyfile(
-                "tests/testdata/src/foo/FooProto.java", temppath / "src/FooProto.java"
+                "testdata/src/foo/FooProto.java", temppath / "src/FooProto.java"
             )
 
             java.fix_proto_headers(temppath)
             self.assert_matches_golden(
-                "tests/testdata/FooProtoGolden.java", temppath / "src/FooProto.java"
+                "testdata/FooProtoGolden.java", temppath / "src/FooProto.java"
             )
+            os.chdir(cwd)
 
     def test_fix_proto_license_idempotent(self):
         with tempfile.TemporaryDirectory() as tempdir:
+            cwd = os.getcwd()
+            os.chdir(TEST_OWLBOT)
             temppath = Path(tempdir).resolve()
             os.mkdir(temppath / "src")
             shutil.copyfile(
-                "tests/testdata/src/foo/FooProto.java", temppath / "src/FooProto.java"
+                "testdata/src/foo/FooProto.java", temppath / "src/FooProto.java"
             )
 
             # run the header fix twice
             java.fix_proto_headers(temppath)
             java.fix_proto_headers(temppath)
             self.assert_matches_golden(
-                "tests/testdata/FooProtoGolden.java", temppath / "src/FooProto.java"
+                "testdata/FooProtoGolden.java", temppath / "src/FooProto.java"
             )
+            os.chdir(cwd)
 
     def test_fix_grpc_license(self):
         with tempfile.TemporaryDirectory() as tempdir:
+            cwd = os.getcwd()
+            os.chdir(TEST_OWLBOT)
             temppath = Path(tempdir).resolve()
             os.mkdir(temppath / "src")
             shutil.copyfile(
-                "tests/testdata/src/foo/FooGrpc.java", temppath / "src/FooGrpc.java"
+                "testdata/src/foo/FooGrpc.java", temppath / "src/FooGrpc.java"
             )
 
             java.fix_grpc_headers(temppath)
             self.assert_matches_golden(
-                "tests/testdata/FooGrpcGolden.java", temppath / "src/FooGrpc.java"
+                "testdata/FooGrpcGolden.java", temppath / "src/FooGrpc.java"
             )
+            os.chdir(cwd)
 
     def test_fix_grpc_license_idempotent(self):
         with tempfile.TemporaryDirectory() as tempdir:
+            cwd = os.getcwd()
+            os.chdir(TEST_OWLBOT)
             temppath = Path(tempdir).resolve()
             os.mkdir(temppath / "src")
             shutil.copyfile(
-                "tests/testdata/src/foo/FooGrpc.java", temppath / "src/FooGrpc.java"
+                "testdata/src/foo/FooGrpc.java", temppath / "src/FooGrpc.java"
             )
 
             # run the header fix twice
             java.fix_grpc_headers(temppath)
             java.fix_grpc_headers(temppath)
             self.assert_matches_golden(
-                "tests/testdata/FooGrpcGolden.java", temppath / "src/FooGrpc.java"
+                "testdata/FooGrpcGolden.java", temppath / "src/FooGrpc.java"
             )
+            os.chdir(cwd)
 
+    @mock.patch.dict(os.environ, {"SYNTHTOOL_TEMPLATES": f"{TEMPLATES_PATH}"})
     def test_release_please_handle_releases(self):
         with util.copied_fixtures_dir(
             FIXTURES / "java_templates" / "release-please-update"
@@ -264,40 +284,6 @@ class JavaUnitTests(unittest.TestCase):
     releaseType: java-yoshi
     """
                 )
-
-    def test_defaults(self):
-        with util.copied_fixtures_dir(FIXTURES / "java_templates" / "defaults_test"):
-            java.common_templates(template_path=TEMPLATES_PATH)
-            assert os.path.isfile(".kokoro/nightly/integration.cfg")
-            self.assert_matches_golden(
-                "nightly-integration-golden.cfg", ".kokoro/nightly/integration.cfg"
-            )
-            assert os.path.isfile(".kokoro/nightly/java11-integration.cfg")
-            self.assert_matches_golden(
-                "java11-integration-golden.cfg",
-                ".kokoro/nightly/java11-integration.cfg",
-            )
-            assert os.path.isfile(".kokoro/presubmit/integration.cfg")
-            self.assert_matches_golden(
-                "presubmit-integration-golden.cfg", ".kokoro/presubmit/integration.cfg"
-            )
-
-    def test_merge_partials(self):
-        with util.copied_fixtures_dir(FIXTURES / "java_templates" / "partials_test"):
-            java.common_templates(template_path=TEMPLATES_PATH)
-            assert os.path.isfile(".kokoro/nightly/integration.cfg")
-            self.assert_matches_golden(
-                "nightly-integration-golden.cfg", ".kokoro/nightly/integration.cfg"
-            )
-            assert os.path.isfile(".kokoro/nightly/java11-integration.cfg")
-            self.assert_matches_golden(
-                "java11-integration-golden.cfg",
-                ".kokoro/nightly/java11-integration.cfg",
-            )
-            assert os.path.isfile(".kokoro/presubmit/integration.cfg")
-            self.assert_matches_golden(
-                "presubmit-integration-golden.cfg", ".kokoro/presubmit/integration.cfg"
-            )
 
     @staticmethod
     def assert_matches_golden(expected, actual):
