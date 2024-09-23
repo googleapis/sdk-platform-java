@@ -1095,9 +1095,9 @@ class ClientContextTest {
   }
 
   @Test
-  void testCreateClient_throwsErrorIfApiKeyAndCredentialsAreProvided() throws Exception {
+  public void testSetApiKey_withDefaultCredentials_overridesCredentials() throws IOException {
     String apiKey = "key";
-    FakeStubSettings.Builder builder = new FakeStubSettings.Builder();
+    FakeStubSettings.Builder builder = FakeStubSettings.newBuilder();
     InterceptingExecutor executor = new InterceptingExecutor(1);
     FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
     FakeTransportProvider transportProvider =
@@ -1108,10 +1108,10 @@ class ClientContextTest {
     Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of());
     builder.setHeaderProvider(headerProvider);
     builder.setApiKey(apiKey);
-    CredentialsProvider credentialsProvider = Mockito.mock(CredentialsProvider.class);
-    Mockito.when(credentialsProvider.getCredentials()).thenReturn(Mockito.mock(Credentials.class));
-    builder.setCredentialsProvider(credentialsProvider);
 
-    assertThrows(IllegalArgumentException.class, () -> ClientContext.create(builder.build()));
+    ClientContext context = ClientContext.create(builder.build());
+
+    FakeCallContext fakeCallContext = (FakeCallContext) context.getDefaultCallContext();
+    assertThat(fakeCallContext.getCredentials()).isInstanceOf(ApiKeyCredentials.class);
   }
 }

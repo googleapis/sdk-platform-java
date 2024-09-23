@@ -30,9 +30,7 @@
 package com.google.api.gax.rpc;
 
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import com.google.api.core.ApiClock;
@@ -282,7 +280,6 @@ class ClientSettingsTest {
     builder.setWatchdogProvider(watchdogProvider);
     builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
     builder.setQuotaProjectId(quotaProjectId);
-    builder.setApiKey(apiKey);
 
     FakeClientSettings settings = builder.build();
     FakeClientSettings.Builder newBuilder = new FakeClientSettings.Builder(settings);
@@ -299,7 +296,6 @@ class ClientSettingsTest {
     Truth.assertThat(newBuilder.getWatchdogCheckIntervalDuration())
         .isEqualTo(watchdogCheckInterval);
     Truth.assertThat(newBuilder.getQuotaProjectId()).isEqualTo(quotaProjectId);
-    Truth.assertThat(newBuilder.getApiKey()).isEqualTo(apiKey);
   }
 
   @Test
@@ -577,6 +573,17 @@ class ClientSettingsTest {
         tt -> createClientSettings.apply(() -> builder.setWatchdogCheckInterval(tt)),
         cs -> cs.getWatchdogCheckIntervalDuration(),
         cs -> cs.getWatchdogCheckInterval());
+  }
+
+  @Test
+  void testClientSettingsBuilder_throwsErrorIfApiKeyAndCredentialsAreProvided() throws Exception {
+    FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
+    CredentialsProvider credentialsProvider = Mockito.mock(CredentialsProvider.class);
+    when(credentialsProvider.getCredentials()).thenReturn(Mockito.mock(Credentials.class));
+    builder.setCredentialsProvider(credentialsProvider);
+    builder.setApiKey("api_key");
+
+    assertThrows(IllegalArgumentException.class, builder::build);
   }
 
   @Test

@@ -177,15 +177,12 @@ public abstract class ClientContext {
     EndpointContext endpointContext = settings.getEndpointContext();
     String endpoint = endpointContext.resolvedEndpoint();
     String apiKey = settings.getApiKey();
-    Credentials credentials = settings.getCredentialsProvider().getCredentials();
-    if (apiKey != null && credentials != null) {
-      throw new IllegalArgumentException(
-          "You can not provide both ApiKey and Credentials for a client.");
-    }
+    Credentials credentials;
     if (apiKey != null) {
       // if API key exists it becomes the default credential
       credentials = ApiKeyCredentials.create(settings.getApiKey());
     } else {
+      credentials = settings.getCredentialsProvider().getCredentials();
       // check if need to adjust credentials/endpoint/endpointContext for GDC-H
       String settingsGdchApiAudience = settings.getGdchApiAudience();
       boolean usingGDCH = credentials instanceof GdchCredentials;

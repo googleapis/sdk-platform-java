@@ -58,6 +58,10 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
   /** Constructs an instance of ClientSettings. */
   protected ClientSettings(Builder builder) throws IOException {
+    if (builder.stubSettings.getApiKey() != null && builder.explicitCredentialsProvided) {
+      throw new IllegalArgumentException(
+          "You can not provide both ApiKey and Credentials for a client.");
+    }
     this.stubSettings = builder.stubSettings.build();
   }
 
@@ -159,6 +163,8 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
     private StubSettings.Builder stubSettings;
 
+    private boolean explicitCredentialsProvided = false;
+
     /** Create a builder from a ClientSettings object. */
     protected Builder(ClientSettings settings) {
       this.stubSettings = settings.stubSettings.toBuilder();
@@ -213,6 +219,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
     /** Sets the CredentialsProvider to use for getting the credentials to make calls with. */
     public B setCredentialsProvider(CredentialsProvider credentialsProvider) {
+      explicitCredentialsProvided = true;
       stubSettings.setCredentialsProvider(credentialsProvider);
       return self();
     }
@@ -298,9 +305,9 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     /**
      * Sets the GDC-H api audience. This is intended only to be used with {@link
      * com.google.auth.oauth2.GdchCredentials} If this field is set and other type of {@link
-     * com.google.auth.Credentials} is used then an {@link IllegalArgumentException} will be thrown.
-     * If the provided credentials already have an api audience, then it will be overriden by this
-     * audience
+     * com.google.auth.Credentials} is used then an {@link java.lang.IllegalArgumentException} will
+     * be thrown. If the provided credentials already have an api audience, then it will be
+     * overriden by this audience
      */
     public B setGdchApiAudience(@Nullable String gdchApiAudience) {
       stubSettings.setGdchApiAudience(gdchApiAudience);
