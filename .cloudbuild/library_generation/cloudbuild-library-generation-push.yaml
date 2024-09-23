@@ -31,6 +31,9 @@ steps:
     id: library-generation-build
     waitFor: ["-"]
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 images:
   - ${_SHA_IMAGE_ID}
   - ${_LATEST_IMAGE_ID}
