@@ -30,6 +30,8 @@
 package com.google.api.gax.rpc;
 
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
@@ -57,7 +59,6 @@ import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -588,9 +589,7 @@ class ClientSettingsTest {
     builder.setApiKey("");
 
     FakeClientSettings fakeClientSettings = builder.build();
-
-    Assertions.assertEquals(
-        fakeClientSettings.getCredentialsProvider().getCredentials(), credentials);
-    Assertions.assertNull(fakeClientSettings.getApiKey());
+    assertEquals(fakeClientSettings.getCredentialsProvider().getCredentials(), credentials);
+    assertNull(fakeClientSettings.getApiKey());
   }
 }
