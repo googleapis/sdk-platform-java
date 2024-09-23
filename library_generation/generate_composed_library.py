@@ -59,10 +59,6 @@ def generate_composed_library(
     :return None
     """
     output_folder = repo_config.output_folder
-    util.pull_api_definition(
-        config=config, library=library, output_folder=output_folder
-    )
-
     base_arguments = __construct_tooling_arg(config=config)
     owlbot_cli_source_folder = util.sh_util("mktemp -d")
     os.makedirs(f"{library_path}", exist_ok=True)
@@ -73,7 +69,7 @@ def generate_composed_library(
         # generate postprocessing prerequisite files (.repo-metadata.json, .OwlBot-hermetic.yaml,
         # owlbot.py) here because transport is parsed from BUILD.bazel,
         # which lives in a versioned proto_path. The value of transport will be
-        # overriden by the config object if specified. Note that this override
+        # overridden by the config object if specified. Note that this override
         # does not affect library generation but instead used only for
         # generating postprocessing files such as README.
         util.generate_postprocessing_prerequisite_files(
