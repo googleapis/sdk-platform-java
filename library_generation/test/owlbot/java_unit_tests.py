@@ -26,15 +26,8 @@ import requests_mock
 from library_generation.test.owlbot import util
 
 TEST_OWLBOT = Path(__file__).parent.parent / "resources" / "test-owlbot"
-FIXTURES = (
-    Path(__file__).parent.parent
-    / "resources"
-    / "test-owlbot"
-    / "fixtures"
-)
-TEMPLATES_PATH = (
-    Path(__file__).parent.parent.parent / "owlbot" / "templates"
-)
+FIXTURES = Path(__file__).parent.parent / "resources" / "test-owlbot" / "fixtures"
+TEMPLATES_PATH = Path(__file__).parent.parent.parent / "owlbot" / "templates"
 
 SAMPLE_METADATA = """
 <metadata>
