@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.auth.ApiKeyCredentials;
+import com.google.auth.http.AuthHttpConstants;
 import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
@@ -32,15 +33,15 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.google.auth.http.AuthHttpConstants;
 
-/** Test suite to confirm a client can be instantiated with API key credentials and sent to back end*/
+/**
+ * Test suite to confirm a client can be instantiated with API key credentials and sent to back end
+ */
 class ITApiCredentials {
 
   private static final String API_KEY = "fake_api_key";
