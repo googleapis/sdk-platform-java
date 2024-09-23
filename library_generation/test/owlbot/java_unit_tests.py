@@ -21,8 +21,8 @@ from unittest import mock
 
 import yaml
 from pathlib import Path
-from synthtool.languages import java
 import requests_mock
+from library_generation.owlbot.synthtool.languages import java
 from library_generation.test.owlbot import util
 
 TEST_OWLBOT = Path(__file__).parent.parent / "resources" / "test-owlbot"
