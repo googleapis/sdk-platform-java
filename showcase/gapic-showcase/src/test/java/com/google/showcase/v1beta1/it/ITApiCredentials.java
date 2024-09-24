@@ -97,6 +97,7 @@ class ITApiCredentials {
 
     grpcClient.echo(EchoRequest.newBuilder().build());
 
+    assertThat(settings.getApiKey()).isEqualTo(API_KEY);
     String headerValue = grpcInterceptor.metadata.get(apiKeyAuthHeader);
     assertThat(headerValue).isEqualTo(API_KEY);
     String defaultAuthorizationHeaderValue =
