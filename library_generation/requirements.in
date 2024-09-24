@@ -26,3 +26,4 @@ jinja2==3.1.4
 # a list where typing extensions is pinned to >=4.0.1. This will produce an error saying "all requirements
 # must have their versions pinned with ==". The following line pins the dependency to a specific version via ==
 typing-extensions==4.0.1
+requests-mock # used in owlbot unit tests
