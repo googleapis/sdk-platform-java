@@ -17,10 +17,10 @@ import xml.etree.ElementTree as ET
 import re
 import requests
 import yaml
-import library_generation.owlbot.synthtool as s
-import library_generation.owlbot.synthtool.gcp as gcp
+import synthtool as s
+import synthtool.gcp as gcp
 import logging
-from library_generation.owlbot.synthtool.gcp import common, samples, snippets
+from synthtool.gcp import common, samples, snippets
 from pathlib import Path
 from typing import Any, Optional, Dict, Iterable, List
 from datetime import date

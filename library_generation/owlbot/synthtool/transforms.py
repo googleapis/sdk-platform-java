@@ -20,7 +20,7 @@ import re
 import sys
 import logging
 
-from library_generation.owlbot.synthtool import _tracked_paths
+from synthtool import _tracked_paths
 
 PathOrStr = Union[str, Path]
 ListOfPathsOrStrs = Iterable[Union[str, Path]]
