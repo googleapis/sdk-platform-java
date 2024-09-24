@@ -14,13 +14,10 @@
 
 import json
 import os
-import re
 import sys
-import shutil
 import yaml
 from pathlib import Path
 from typing import Dict, List, Optional
-import jinja2
 import logging
 
 from synthtool import _tracked_paths

@@ -14,7 +14,7 @@
 
 from pathlib import Path
 import glob
-from synthtool.languages import java
+from library_generation.owlbot.synthtool.languages import java
 
 
 root = Path(".").resolve()
