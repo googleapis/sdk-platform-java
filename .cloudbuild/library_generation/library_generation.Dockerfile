@@ -14,7 +14,7 @@
 
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
-FROM gcr.io/cloud-devrel-public-resources/java21 AS ggj-build
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/maven@sha256:2cb7c73ba2fd0f7ae64cfabd99180030ec85841a1197b4ae821d21836cb0aa3b AS ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
@@ -27,7 +27,7 @@ RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_
   "./gapic-generator-java.jar"
 
 # build from the root of this repo:
-FROM gcr.io/cloud-devrel-public-resources/python
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:e31986c72ec7f2a4e1c4d7a4e6034b5db537293b01df9192934ec028f762279e
 
 SHELL [ "/bin/bash", "-c" ]
 
