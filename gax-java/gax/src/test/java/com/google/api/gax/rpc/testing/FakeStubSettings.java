@@ -40,7 +40,7 @@ import java.io.IOException;
 public class FakeStubSettings extends StubSettings {
 
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
-          ImmutableList.<String>builder().build();
+      ImmutableList.<String>builder().build();
 
   private FakeStubSettings(Builder builder) throws IOException {
     super(builder);
@@ -89,8 +89,9 @@ public class FakeStubSettings extends StubSettings {
     /** Returns default credentials provider. */
     public static GoogleCredentialsProvider defaultCredentialsProviderBuilder() {
       return GoogleCredentialsProvider.newBuilder()
-              .setScopesToApply(DEFAULT_SERVICE_SCOPES)
-              .setUseJwtAccessWithScope(true).build();
+          .setScopesToApply(DEFAULT_SERVICE_SCOPES)
+          .setUseJwtAccessWithScope(true)
+          .build();
     }
   }
 }
