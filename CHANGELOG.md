@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.46.1](https://github.com/googleapis/sdk-platform-java/compare/v2.46.0...v2.46.1) (2024-09-25)
+
+
+### Dependencies
+
+* update dependency black to v24.8.0 ([#3234](https://github.com/googleapis/sdk-platform-java/issues/3234)) ([73d803b](https://github.com/googleapis/sdk-platform-java/commit/73d803b0dddca82a32c1789a9f92bc48431850aa))
+* update dependency lxml to v5.3.0 ([#3237](https://github.com/googleapis/sdk-platform-java/issues/3237)) ([ee2d05a](https://github.com/googleapis/sdk-platform-java/commit/ee2d05a1d7cb03615ba190802e4e720be2955345))
+* update dependency net.bytebuddy:byte-buddy to v1.15.2 ([#3235](https://github.com/googleapis/sdk-platform-java/issues/3235)) ([a7781a6](https://github.com/googleapis/sdk-platform-java/commit/a7781a6ab3a052f60a51b4d1d06464553dcd6b5c))
+* update dependency pyyaml to v6.0.2 ([#3231](https://github.com/googleapis/sdk-platform-java/issues/3231)) ([ce60bdf](https://github.com/googleapis/sdk-platform-java/commit/ce60bdf2c95ce3e9e549f1a9a2eb788424e3d454))
+* update dependency watchdog to v4.0.2 ([#3232](https://github.com/googleapis/sdk-platform-java/issues/3232)) ([ab0976b](https://github.com/googleapis/sdk-platform-java/commit/ab0976b196afb3ff67aca17f121d01bb511375c3))
+* update google api dependencies ([#3224](https://github.com/googleapis/sdk-platform-java/issues/3224)) ([4803738](https://github.com/googleapis/sdk-platform-java/commit/4803738938bf7f602baca025b4bdfbef13f6202e))
+* update google.cloud.opentelemetry.version to v0.32.0 ([#3225](https://github.com/googleapis/sdk-platform-java/issues/3225)) ([69e3e38](https://github.com/googleapis/sdk-platform-java/commit/69e3e38a680cfb5fc9dbcb1fea67d39c89945bdd))
+* update grpc dependencies to v1.68.0 ([#3220](https://github.com/googleapis/sdk-platform-java/issues/3220)) ([f6e30a5](https://github.com/googleapis/sdk-platform-java/commit/f6e30a57816affeb1802d3266b6166ec174a06ee))
+* update junit5 monorepo to v5.11.1 ([#3236](https://github.com/googleapis/sdk-platform-java/issues/3236)) ([8b42993](https://github.com/googleapis/sdk-platform-java/commit/8b42993767c6bba36f396156a5e84217d83c7c57))
+
 ## [2.46.0](https://github.com/googleapis/sdk-platform-java/compare/v2.45.0...v2.46.0) (2024-09-23)
 
 
