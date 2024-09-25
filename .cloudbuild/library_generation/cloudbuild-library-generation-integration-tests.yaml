@@ -1,0 +1,49 @@
+# Copyright 2024 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+timeout: 7200s # 2 hours
+substitutions:
+  _IMAGE_NAME: "test-image"
+steps:
+  # Library generation build
+  - id: library-generation-image-build
+    name: gcr.io/cloud-builders/docker
+    args: [
+      "build",
+      "-t", "${_IMAGE_NAME}",
+      "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
+    env:
+    - 'DOCKER_BUILDKIT=1'
+    waitFor: ["-"]
+  # Dependency installation
+  - id: library-generation-python-libs
+    name: python
+    args: [ "python", "-m", "pip", "install", "--require-hashes", "-r", "library_generation/requirements.txt" ]
+    waitFor: ["library-generation-image-build"]
+  # Python scripts compilation
+  - id: library-generation-python-compile
+    name: python
+    args: [ "python", "-m", "pip", "install", "library_generation" ]
+    waitFor: ["library-generation-image-build"]
+  # Python integration tests execution
+  - id: run-integration-tests
+    name: python
+    args: [ "python", "-m", "unittest",
+            "library_generation/test/integration_tests.py" ]
+    waitFor: ["library-generation-python-compile", "library-generation-python-libs"]
+
+options:
+  # Builds ran by service accounts we need to either a) specify a logs bucket,
+  # b) use REGIONAL_USER_OWNER_BUCKET, or c) use CLOUD_LOGGING_ONLY. We go for c)
+  logging: CLOUD_LOGGING_ONLY
