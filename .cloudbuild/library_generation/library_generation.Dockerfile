@@ -14,6 +14,11 @@
 
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
+FROM gcr.io/cloud-builders/gcloud
+# If GOOGLE_APPLICATION_CREDENTIALS is passed in docker build command use it, if not leave it unset to support GCE Metadata in CI builds
+ARG GOOGLE_APPLICATION_CREDENTIALS
+RUN --mount=type=secret,id=credentials gcloud auth list
+
 FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/maven@sha256:2cb7c73ba2fd0f7ae64cfabd99180030ec85841a1197b4ae821d21836cb0aa3b AS ggj-build
 
 WORKDIR /sdk-platform-java

@@ -21,6 +21,8 @@ steps:
     name: gcr.io/cloud-builders/docker
     args: [
       "build",
+      "--secret", "id=credentials,src=$HOME/.config/gcloud/application_default_credentials.json",
+      "--build-arg", "GOOGLE_APPLICATION_CREDENTIALS=/run/secrets/credentials",
       "-t", "${_IMAGE_NAME}",
       "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
     env:
