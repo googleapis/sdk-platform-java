@@ -89,7 +89,7 @@ class ITApiKeyCredentials {
         Metadata.Key.of(API_KEY_AUTH_HEADER, Metadata.ASCII_STRING_MARSHALLER);
     Metadata.Key<String> defaultAuthorizationHeader =
         Metadata.Key.of(AuthHttpConstants.AUTHORIZATION, Metadata.ASCII_STRING_MARSHALLER);
-    EchoSettings settings =
+    EchoSettings.Builder echoBuilder =
         EchoSettings.newBuilder()
             .setApiKey(API_KEY)
             .setEndpoint(GRPC_ENDPOINT)
@@ -97,12 +97,13 @@ class ITApiKeyCredentials {
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .setInterceptorProvider(() -> ImmutableList.of(grpcInterceptor))
-                    .build())
-            .build();
+                    .build());
+    EchoSettings settings = echoBuilder.build();
     grpcClient = EchoClient.create(settings);
 
     grpcClient.echo(EchoRequest.newBuilder().build());
 
+    assertThat(echoBuilder.getApiKey()).isEqualTo(API_KEY);
     assertThat(settings.getApiKey()).isEqualTo(API_KEY);
     String headerValue = grpcInterceptor.metadata.get(apiKeyAuthHeader);
     assertThat(headerValue).isEqualTo(API_KEY);
