@@ -24,7 +24,7 @@ FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/maven@sha256:2cb7
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.46.1-SNAPSHOT" 
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.46.2-SNAPSHOT" 
 # {x-version-update-end}
 
 RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
@@ -39,7 +39,7 @@ SHELL [ "/bin/bash", "-c" ]
 
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
 ARG PROTOC_VERSION=25.5
-ARG GRPC_VERSION=1.66.0
+ARG GRPC_VERSION=1.68.0
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
