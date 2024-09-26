@@ -882,14 +882,9 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   @Test
   public void createChannel_handlesMatchCredentialAndExplicitHeaders() throws IOException {
     String apiHeaderKey = "fake_api_key_2";
-    Map<String, String> header =
-        new HashMap<String, String>() {
-          {
-            put("x-goog-api-key", apiHeaderKey);
-          }
-        };
+    Map<String, String> header = new HashMap<>();
+    header.put("x-goog-api-key", apiHeaderKey);
     FixedHeaderProvider headerProvider = FixedHeaderProvider.create(header);
-
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setCredentials(computeEngineCredentials)
@@ -908,12 +903,10 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   public void createChannel_handlesNullCredentials() throws IOException {
     Map<String, String> header = new HashMap();
     FixedHeaderProvider headerProvider = FixedHeaderProvider.create(header);
-
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setHeaderProvider(headerProvider)
             .setEndpoint("test.random.com:443");
-
     InstantiatingGrpcChannelProvider provider = builder.build();
 
     // calls createChannel

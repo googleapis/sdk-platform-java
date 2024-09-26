@@ -17,10 +17,11 @@
 package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.api.gax.rpc.FixedHeaderProvider;
+import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.http.AuthHttpConstants;
 import com.google.common.collect.ImmutableList;
@@ -34,17 +35,15 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.HashMap;
-import java.util.Map;
-import com.google.api.gax.rpc.TransportChannelProvider;
-import com.google.api.gax.rpc.FixedHeaderProvider;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Test suite to confirm a client can be instantiated with API key credentials and correct
@@ -116,29 +115,36 @@ class ITApiKeyCredentials {
   void testCreateGrpcClient_withApiKeySetViaSetterAndHeader_dedupsHeader() throws IOException {
     String apiHeaderKey = "fake_api_key_2";
     Metadata.Key<String> apiKeyAuthHeader =
-            Metadata.Key.of(API_KEY_AUTH_HEADER, Metadata.ASCII_STRING_MARSHALLER);
+        Metadata.Key.of(API_KEY_AUTH_HEADER, Metadata.ASCII_STRING_MARSHALLER);
     Metadata.Key<String> defaultAuthorizationHeader =
-            Metadata.Key.of(AuthHttpConstants.AUTHORIZATION, Metadata.ASCII_STRING_MARSHALLER);
-    Map<String, String> header = new HashMap<String, String>() { {put(API_KEY_AUTH_HEADER, apiHeaderKey);}};
+        Metadata.Key.of(AuthHttpConstants.AUTHORIZATION, Metadata.ASCII_STRING_MARSHALLER);
+    Map<String, String> header =
+        new HashMap<String, String>() {
+          {
+            put(API_KEY_AUTH_HEADER, apiHeaderKey);
+          }
+        };
     FixedHeaderProvider headerProvider = FixedHeaderProvider.create(header);
 
-    TransportChannelProvider transportChannelProvider =  EchoSettings.defaultGrpcTransportProviderBuilder().setHeaderProvider(headerProvider)
+    TransportChannelProvider transportChannelProvider =
+        EchoSettings.defaultGrpcTransportProviderBuilder()
+            .setHeaderProvider(headerProvider)
             .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
             .setInterceptorProvider(() -> ImmutableList.of(grpcInterceptor))
-                    .build();
+            .build();
     EchoSettings settings =
-            EchoSettings.newBuilder()
-                    .setApiKey(API_KEY)
-                    .setEndpoint(GRPC_ENDPOINT)
-                    .setTransportChannelProvider(transportChannelProvider)
-                    .build();
+        EchoSettings.newBuilder()
+            .setApiKey(API_KEY)
+            .setEndpoint(GRPC_ENDPOINT)
+            .setTransportChannelProvider(transportChannelProvider)
+            .build();
     grpcClient = EchoClient.create(settings);
 
     grpcClient.echo(EchoRequest.newBuilder().build());
 
-    Iterable<String> matchingHeaders =  grpcInterceptor.metadata.getAll(apiKeyAuthHeader);
-    List<String> matchingHeadersList = StreamSupport.stream(matchingHeaders.spliterator(), false)
-            .collect(Collectors.toList());
+    Iterable<String> matchingHeaders = grpcInterceptor.metadata.getAll(apiKeyAuthHeader);
+    List<String> matchingHeadersList =
+        StreamSupport.stream(matchingHeaders.spliterator(), false).collect(Collectors.toList());
 
     String headerValue = matchingHeadersList.get(0);
     assertThat(headerValue).isEqualTo(API_KEY);
@@ -146,20 +152,21 @@ class ITApiKeyCredentials {
   }
 
   @Test
-  void testCreateGrpcClient_withApiKeyAndExplicitCredentials_overridesCredentials() throws IOException {
+  void testCreateGrpcClient_withApiKeyAndExplicitCredentials_overridesCredentials()
+      throws IOException {
     Metadata.Key<String> apiKeyAuthHeader =
-            Metadata.Key.of(API_KEY_AUTH_HEADER, Metadata.ASCII_STRING_MARSHALLER);
+        Metadata.Key.of(API_KEY_AUTH_HEADER, Metadata.ASCII_STRING_MARSHALLER);
     EchoSettings settings =
-      EchoSettings.newBuilder()
+        EchoSettings.newBuilder()
             .setApiKey(API_KEY)
             .setEndpoint(GRPC_ENDPOINT)
             .setCredentialsProvider(
-                    FixedCredentialsProvider.create(ApiKeyCredentials.create("invalid")))
+                FixedCredentialsProvider.create(ApiKeyCredentials.create("invalid")))
             .setTransportChannelProvider(
-                    EchoSettings.defaultGrpcTransportProviderBuilder()
-                            .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                            .setInterceptorProvider(() -> ImmutableList.of(grpcInterceptor))
-                            .build())
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .setInterceptorProvider(() -> ImmutableList.of(grpcInterceptor))
+                    .build())
             .build();
     grpcClient = EchoClient.create(settings);
 
@@ -197,60 +204,68 @@ class ITApiKeyCredentials {
   void testCreateHttpClient_withApiKeySetViaSetterAndHeader_dedupsHeader() throws Exception {
     String apiHeaderKey = "fake_api_key_2";
     Metadata.Key<String> apiKeyAuthHeader =
-            Metadata.Key.of(API_KEY_AUTH_HEADER, Metadata.ASCII_STRING_MARSHALLER);
+        Metadata.Key.of(API_KEY_AUTH_HEADER, Metadata.ASCII_STRING_MARSHALLER);
     Metadata.Key<String> defaultAuthorizationHeader =
-            Metadata.Key.of(AuthHttpConstants.AUTHORIZATION, Metadata.ASCII_STRING_MARSHALLER);
-    Map<String, String> header = new HashMap<String, String>() { {put(API_KEY_AUTH_HEADER, apiHeaderKey);}};
+        Metadata.Key.of(AuthHttpConstants.AUTHORIZATION, Metadata.ASCII_STRING_MARSHALLER);
+    Map<String, String> header =
+        new HashMap<String, String>() {
+          {
+            put(API_KEY_AUTH_HEADER, apiHeaderKey);
+          }
+        };
     FixedHeaderProvider headerProvider = FixedHeaderProvider.create(header);
 
-    TransportChannelProvider transportChannelProvider =  EchoSettings.defaultHttpJsonTransportProviderBuilder().setHeaderProvider(headerProvider)
+    TransportChannelProvider transportChannelProvider =
+        EchoSettings.defaultHttpJsonTransportProviderBuilder()
+            .setHeaderProvider(headerProvider)
             .setInterceptorProvider(() -> ImmutableList.of(httpJsonInterceptor))
             .build();
     EchoSettings httpJsonEchoSettings =
-            EchoSettings.newHttpJsonBuilder()
-                    .setApiKey(API_KEY)
-                    .setTransportChannelProvider(
-                            EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                                    .setHttpTransport(
-                                            new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                                    .setEndpoint(HTTP_ENDPOINT)
-                                    .setInterceptorProvider(() -> ImmutableList.of(httpJsonInterceptor))
-                                    .build())
-                    .build();
+        EchoSettings.newHttpJsonBuilder()
+            .setApiKey(API_KEY)
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint(HTTP_ENDPOINT)
+                    .setInterceptorProvider(() -> ImmutableList.of(httpJsonInterceptor))
+                    .build())
+            .build();
     httpJsonClient = EchoClient.create(httpJsonEchoSettings);
 
     httpJsonClient.echo(EchoRequest.newBuilder().build());
 
     ArrayList<String> headerValues =
-            (ArrayList<String>)
-                    httpJsonInterceptor.metadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
+        (ArrayList<String>)
+            httpJsonInterceptor.metadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
     String headerValue = headerValues.get(0);
     assertThat(headerValue).isEqualTo(API_KEY);
     assertThat(headerValues.size()).isEqualTo(1);
   }
 
   @Test
-  void testCreateHttpClient_withApiKeyAndExplicitCredentials_overridesCredentials() throws Exception {
+  void testCreateHttpClient_withApiKeyAndExplicitCredentials_overridesCredentials()
+      throws Exception {
     EchoSettings httpJsonEchoSettings =
-            EchoSettings.newHttpJsonBuilder()
-                    .setApiKey(API_KEY)
-                    .setCredentialsProvider(
-                            FixedCredentialsProvider.create(ApiKeyCredentials.create("invalid")))
-                    .setTransportChannelProvider(
-                            EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                                    .setHttpTransport(
-                                            new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                                    .setEndpoint(HTTP_ENDPOINT)
-                                    .setInterceptorProvider(() -> ImmutableList.of(httpJsonInterceptor))
-                                    .build())
-                    .build();
+        EchoSettings.newHttpJsonBuilder()
+            .setApiKey(API_KEY)
+            .setCredentialsProvider(
+                FixedCredentialsProvider.create(ApiKeyCredentials.create("invalid")))
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint(HTTP_ENDPOINT)
+                    .setInterceptorProvider(() -> ImmutableList.of(httpJsonInterceptor))
+                    .build())
+            .build();
     httpJsonClient = EchoClient.create(httpJsonEchoSettings);
 
     httpJsonClient.echo(EchoRequest.newBuilder().build());
 
     ArrayList<String> headerValues =
-            (ArrayList<String>)
-                    httpJsonInterceptor.metadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
+        (ArrayList<String>)
+            httpJsonInterceptor.metadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
     String headerValue = headerValues.get(0);
     assertThat(headerValue).isEqualTo(API_KEY);
   }

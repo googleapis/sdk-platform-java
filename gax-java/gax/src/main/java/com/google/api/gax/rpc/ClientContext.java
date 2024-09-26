@@ -279,7 +279,7 @@ public abstract class ClientContext {
         .build();
   }
 
-  /** Determines which credentials to use. Order */
+  /** Determines which credentials to use. API key overrides credentials provided by provider. */
   private static Credentials getCredentials(StubSettings settings) throws IOException {
     Credentials credentials;
     if (settings.getApiKey() != null) {
