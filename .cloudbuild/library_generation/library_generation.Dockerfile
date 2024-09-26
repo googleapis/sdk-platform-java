@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# If GOOGLE_APPLICATION_CREDENTIALS is passed in docker build command use it, if not leave it unset to support GCE Metadata in CI builds
-ARG GOOGLE_APPLICATION_CREDENTIALS
-
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
 FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/maven@sha256:2cb7c73ba2fd0f7ae64cfabd99180030ec85841a1197b4ae821d21836cb0aa3b AS ggj-build
+
+# If GOOGLE_APPLICATION_CREDENTIALS is passed in docker build command use it, if not leave it unset to support GCE Metadata in CI builds
+ARG GOOGLE_APPLICATION_CREDENTIALS
 
 WORKDIR /sdk-platform-java
 COPY . .
@@ -25,7 +25,8 @@ COPY . .
 ENV DOCKER_GAPIC_GENERATOR_VERSION="2.46.2-SNAPSHOT" 
 # {x-version-update-end}
 
-RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+RUN --mount=type=secret,id=credentials \
+    mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
@@ -42,9 +43,10 @@ ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
-RUN apt-get update && apt-get install -y \
-	unzip openjdk-17-jdk rsync maven jq \
-	&& apt-get clean
+RUN --mount=type=secret,id=credentials \
+    apt-get update && apt-get install -y \
+	  unzip openjdk-17-jdk rsync maven jq \
+	  && apt-get clean
 
 # copy source code
 COPY library_generation /src
