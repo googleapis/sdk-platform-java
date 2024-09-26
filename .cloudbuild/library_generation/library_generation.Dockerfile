@@ -17,7 +17,7 @@
 FROM gcr.io/cloud-builders/gcloud
 # If GOOGLE_APPLICATION_CREDENTIALS is passed in docker build command use it, if not leave it unset to support GCE Metadata in CI builds
 ARG GOOGLE_APPLICATION_CREDENTIALS
-RUN --mount=type=secret,id=credentials gcloud auth list
+RUN --mount=type=secret,id=credentials gcloud auth configure-docker us-docker.pkg.dev
 
 FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/maven@sha256:2cb7c73ba2fd0f7ae64cfabd99180030ec85841a1197b4ae821d21836cb0aa3b AS ggj-build
 
