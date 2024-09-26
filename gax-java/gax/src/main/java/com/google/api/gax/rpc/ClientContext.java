@@ -176,29 +176,24 @@ public abstract class ClientContext {
     // A valid EndpointContext should have been created in the StubSettings
     EndpointContext endpointContext = settings.getEndpointContext();
     String endpoint = endpointContext.resolvedEndpoint();
-    String apiKey = settings.getApiKey();
-    Credentials credentials;
-    if (apiKey != null) {
-      // if API key exists it becomes the default credential
-      credentials = ApiKeyCredentials.create(settings.getApiKey());
-    } else {
-      credentials = settings.getCredentialsProvider().getCredentials();
-      // check if need to adjust credentials/endpoint/endpointContext for GDC-H
-      String settingsGdchApiAudience = settings.getGdchApiAudience();
-      boolean usingGDCH = credentials instanceof GdchCredentials;
-      if (usingGDCH) {
-        // Can only determine if the GDC-H is being used via the Credentials. The Credentials object
-        // is resolved in the ClientContext and must be passed to the EndpointContext. Rebuild the
-        // endpointContext only on GDC-H flows.
-        endpointContext = endpointContext.withGDCH();
-        // Resolve the new endpoint with the GDC-H flow
-        endpoint = endpointContext.resolvedEndpoint();
-        // We recompute the GdchCredentials with the audience
-        credentials = getGdchCredentials(settingsGdchApiAudience, endpoint, credentials);
-      } else if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
-        throw new IllegalArgumentException(
-            "GDC-H API audience can only be set when using GdchCredentials");
-      }
+    Credentials credentials = getCredentials(settings);
+    // check if need to adjust credentials/endpoint/endpointContext for GDC-H
+    String settingsGdchApiAudience = settings.getGdchApiAudience();
+    boolean usingGDCH = credentials instanceof GdchCredentials;
+    if (usingGDCH) {
+      // Can only determine if the GDC-H is being used via the Credentials. The Credentials object
+      // is resolved in the ClientContext and must be passed to the EndpointContext. Rebuild the
+      // endpointContext only on GDC-H flows.
+      endpointContext = endpointContext.withGDCH();
+      // Resolve the new endpoint with the GDC-H flow
+      endpoint = endpointContext.resolvedEndpoint();
+      // We recompute the GdchCredentials with the audience
+      credentials =
+          getGdchCredentials(
+              settingsGdchApiAudience, endpointContext.resolvedEndpoint(), credentials);
+    } else if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
+      throw new IllegalArgumentException(
+          "GDC-H API audience can only be set when using GdchCredentials");
     }
 
     if (settings.getQuotaProjectId() != null && credentials != null) {
@@ -282,6 +277,18 @@ public abstract class ClientContext {
         .setTracerFactory(settings.getTracerFactory())
         .setEndpointContext(endpointContext)
         .build();
+  }
+
+  /** Determines which credentials to use. Order */
+  private static Credentials getCredentials(StubSettings settings) throws IOException {
+    Credentials credentials;
+    if (settings.getApiKey() != null) {
+      // if API key exists it becomes the default credential
+      credentials = ApiKeyCredentials.create(settings.getApiKey());
+    } else {
+      credentials = settings.getCredentialsProvider().getCredentials();
+    }
+    return credentials;
   }
 
   /**

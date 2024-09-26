@@ -58,10 +58,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
   /** Constructs an instance of ClientSettings. */
   protected ClientSettings(Builder builder) throws IOException {
-    if (builder.stubSettings.getApiKey() != null && builder.explicitCredentialsProvided) {
-      throw new IllegalArgumentException(
-          "You can not provide both ApiKey and Credentials for a client.");
-    }
     this.stubSettings = builder.stubSettings.build();
   }
 
@@ -163,8 +159,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
     private StubSettings.Builder stubSettings;
 
-    private boolean explicitCredentialsProvided = false;
-
     /** Create a builder from a ClientSettings object. */
     protected Builder(ClientSettings settings) {
       this.stubSettings = settings.stubSettings.toBuilder();
@@ -219,7 +213,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
     /** Sets the CredentialsProvider to use for getting the credentials to make calls with. */
     public B setCredentialsProvider(CredentialsProvider credentialsProvider) {
-      explicitCredentialsProvided = true;
       stubSettings.setCredentialsProvider(credentialsProvider);
       return self();
     }
@@ -318,8 +311,8 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
      * Sets the API key. The API key will get translated to an {@link
      * com.google.auth.ApiKeyCredentials} and stored in {@link ClientContext}.
      *
-     * <p>Note: you can not set an API key and credentials object in the same Settings. It will fail
-     * when building the settings.
+     * <p>Note: If you set an API key and {@link CredentialsProvider} in the same Settings. The api
+     * key will override any credentials provided.
      */
     public B setApiKey(String apiKey) {
       stubSettings.setApiKey(apiKey);

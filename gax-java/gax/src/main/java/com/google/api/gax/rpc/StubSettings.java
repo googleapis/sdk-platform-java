@@ -236,12 +236,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return gdchApiAudience;
   }
 
-  /**
-   * Gets the ApiKey that should be used for authentication. If an empty string was provided it will
-   * return null
-   */
+  /** Gets the ApiKey that should be used for authentication. */
   public final String getApiKey() {
-    return (apiKey == null || apiKey.isEmpty()) ? null : apiKey;
+    return apiKey;
   }
 
   @Override

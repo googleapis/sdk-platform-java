@@ -63,6 +63,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
@@ -407,8 +408,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   private ManagedChannel createSingleChannel() throws IOException {
+    Map<String, String> mergedHeaders = mergeHeadersWithCredentialHeaders();
     GrpcHeaderInterceptor headerInterceptor =
-        new GrpcHeaderInterceptor(headerProvider.getHeaders());
+        new GrpcHeaderInterceptor(ImmutableMap.copyOf(mergedHeaders));
+
     GrpcMetadataHandlerInterceptor metadataHandlerInterceptor =
         new GrpcMetadataHandlerInterceptor();
 
@@ -494,6 +497,20 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       channelPrimer.primeChannel(managedChannel);
     }
     return managedChannel;
+  }
+
+  // dedup any headers explicitly set with headers provided by credential, with preference to
+  // credential headers
+  private Map<String, String> mergeHeadersWithCredentialHeaders() {
+    Map<String, String> userHeaders = new HashMap<>(headerProvider.getHeaders());
+    if (credentials != null) {
+      try {
+        userHeaders.keySet().removeAll(credentials.getRequestMetadata().keySet());
+      } catch (Exception e) {
+        // no-op, if we can't retrieve credentials metadata we will leave headers intact
+      }
+    }
+    return userHeaders;
   }
 
   /**

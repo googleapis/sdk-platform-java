@@ -30,11 +30,7 @@
 package com.google.api.gax.rpc;
 
 import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.when;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.NanoClock;
@@ -576,30 +572,5 @@ class ClientSettingsTest {
         tt -> createClientSettings.apply(() -> builder.setWatchdogCheckInterval(tt)),
         cs -> cs.getWatchdogCheckIntervalDuration(),
         cs -> cs.getWatchdogCheckInterval());
-  }
-
-  @Test
-  void testClientSettingsBuilder_throwsErrorIfApiKeyAndCredentialsAreProvided() throws Exception {
-    FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
-    CredentialsProvider credentialsProvider = Mockito.mock(CredentialsProvider.class);
-    when(credentialsProvider.getCredentials()).thenReturn(Mockito.mock(Credentials.class));
-    builder.setCredentialsProvider(credentialsProvider);
-    builder.setApiKey("api_key");
-
-    assertThrows(IllegalArgumentException.class, builder::build);
-  }
-
-  @Test
-  void testEmptyApiKeyClientSettingsBuild_isTreatedAsNull() throws Exception {
-    FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
-    CredentialsProvider credentialsProvider = Mockito.mock(CredentialsProvider.class);
-    Credentials credentials = Mockito.mock(Credentials.class);
-    when(credentialsProvider.getCredentials()).thenReturn(credentials);
-    builder.setCredentialsProvider(credentialsProvider);
-    builder.setApiKey("");
-
-    FakeClientSettings fakeClientSettings = builder.build();
-    assertEquals(fakeClientSettings.getCredentialsProvider().getCredentials(), credentials);
-    assertNull(fakeClientSettings.getApiKey());
   }
 }

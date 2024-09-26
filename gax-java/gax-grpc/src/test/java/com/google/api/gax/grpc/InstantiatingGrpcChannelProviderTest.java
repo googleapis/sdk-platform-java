@@ -34,10 +34,12 @@ import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider.Builder;
+import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannel;
 import com.google.api.gax.rpc.TransportChannelProvider;
@@ -875,6 +877,50 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
+  }
+
+  @Test
+  public void createChannel_handlesMatchCredentialAndExplicitHeaders() throws IOException {
+    String apiHeaderKey = "fake_api_key_2";
+    Map<String, String> header =
+        new HashMap<String, String>() {
+          {
+            put("x-goog-api-key", apiHeaderKey);
+          }
+        };
+    FixedHeaderProvider headerProvider = FixedHeaderProvider.create(header);
+
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setCredentials(computeEngineCredentials)
+            .setHeaderProvider(headerProvider)
+            .setEndpoint("test.random.com:443");
+    InstantiatingGrpcChannelProvider provider = builder.build();
+
+    // calls createChannel
+    TransportChannel transportChannel = provider.getTransportChannel();
+
+    assertNotNull(transportChannel);
+    transportChannel.shutdownNow();
+  }
+
+  @Test
+  public void createChannel_handlesNullCredentials() throws IOException {
+    Map<String, String> header = new HashMap();
+    FixedHeaderProvider headerProvider = FixedHeaderProvider.create(header);
+
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setHeaderProvider(headerProvider)
+            .setEndpoint("test.random.com:443");
+
+    InstantiatingGrpcChannelProvider provider = builder.build();
+
+    // calls createChannel
+    TransportChannel transportChannel = provider.getTransportChannel();
+
+    assertNotNull(transportChannel);
+    transportChannel.shutdownNow();
   }
 
   private static class FakeLogHandler extends Handler {
