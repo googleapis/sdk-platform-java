@@ -25,8 +25,7 @@ COPY . .
 ENV DOCKER_GAPIC_GENERATOR_VERSION="2.46.2-SNAPSHOT" 
 # {x-version-update-end}
 
-RUN --mount=type=secret,id=credentials \
-    mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
@@ -43,8 +42,7 @@ ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
-RUN --mount=type=secret,id=credentials \
-    apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y \
 	  unzip openjdk-17-jdk rsync maven jq \
 	  && apt-get clean
 
