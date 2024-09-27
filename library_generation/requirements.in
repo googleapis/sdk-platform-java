@@ -22,8 +22,9 @@ nox==2024.4.15
 requests==2.32.3
 setuptools==65.5.1
 jinja2==3.1.4
+requests-mock==1.12.1 # used in owlbot unit tests
 # typing-extensions is a transitive dependency. If we run `pip-compile ... --generate-hashes` it will produce
 # a list where typing extensions is pinned to >=4.0.1. This will produce an error saying "all requirements
 # must have their versions pinned with ==". The following line pins the dependency to a specific version via ==
 typing-extensions==4.0.1
-requests-mock # used in owlbot unit tests
+tomli==1.1.0

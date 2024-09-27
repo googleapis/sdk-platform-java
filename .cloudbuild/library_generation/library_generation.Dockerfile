@@ -73,12 +73,7 @@ ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
 RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
 
-#  use python 3.11 (the base image has several python versions; here we define the default one)
-RUN rm $(which python3)
-RUN ln -s $(which python3.11) /usr/local/bin/python
-RUN ln -s $(which python3.11) /usr/local/bin/python3
 RUN python -m pip install --upgrade pip
-
 # install main scripts as a python package
 WORKDIR /src
 RUN python -m pip install -r requirements.txt
