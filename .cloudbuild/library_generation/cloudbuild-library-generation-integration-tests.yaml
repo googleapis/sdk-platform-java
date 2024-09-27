@@ -21,7 +21,6 @@ steps:
     name: gcr.io/cloud-builders/docker
     args: [
       "build",
-      "--network", "cloudbuild",
       "-t", "${_IMAGE_NAME}",
       "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
     env:
