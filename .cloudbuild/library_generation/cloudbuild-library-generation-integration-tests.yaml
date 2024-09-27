@@ -20,8 +20,8 @@ steps:
   - id: library-generation-image-build
     name: gcr.io/cloud-builders/docker
     args: [
-      "buildx",
       "build",
+      "--network", "cloudbuild",
       "-t", "${_IMAGE_NAME}",
       "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
     env:
