@@ -14,8 +14,8 @@ branchProtectionRules:
   - build (17)
   - cla/google
   - compatibility
-  - graalvm-presubmit-sdk-platform-java-a
-  - graalvm-presubmit-sdk-platform-java-b
+  - graalvm-presubmit-sdk-platform-java-a (cloud-devrel-kokoro-resources)
+  - graalvm-presubmit-sdk-platform-java-b (cloud-devrel-kokoro-resources)
   - library_generation
   - library-generation-integration-tests
   - library-generation-lint-python
