@@ -19,12 +19,14 @@ steps:
   # Library generation build
   - id: library-generation-image-build
     name: gcr.io/cloud-builders/docker
-    args: [
-      "build",
-      "-t", "${_IMAGE_NAME}",
-      "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
-    env:
-    - 'DOCKER_BUILDKIT=1'
+    entrypoint: bash
+    args:
+    - -c
+    - |
+      docker buildx build \
+        -f .cloudbuild/library_generation/library_generation.Dockerfile \
+        -t "${_IMAGE_NAME}" \
+        -o type=image
     waitFor: ["-"]
   # Dependency installation
   - id: library-generation-python-libs
