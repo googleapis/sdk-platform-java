@@ -26,7 +26,8 @@ steps:
       docker buildx build \
         -f .cloudbuild/library_generation/library_generation.Dockerfile \
         -t "${_IMAGE_NAME}" \
-        -o type=image
+        -o type=image \
+        .
     waitFor: ["-"]
   # Dependency installation
   - id: library-generation-python-libs
