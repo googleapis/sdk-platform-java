@@ -40,7 +40,7 @@ runs:
   - name: Authenticate
     uses: google-github-actions/auth@v2
     with:
-      workload_identity_provider: projects/122457793624/locations/global/workloadIdentityPools/github_actions_pool/providers/github_provider
+      workload_identity_provider: projects/122457793624/locations/us-central1/workloadIdentityPools/github_actions_pool/providers/github_provider
       service_account: cloud-build-runner@java-hermetic-build-prod.iam.gserviceaccount.com
   - name: Set up Cloud SDK
     uses: google-github-actions/setup-gcloud@v2
