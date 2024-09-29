@@ -40,8 +40,7 @@ runs:
   - name: Authenticate
     uses: google-github-actions/auth@v2
     with:
-      workload_identity_provider: projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
-      service_account: cloud-build-runner@java-hermetic-build-prod.iam.gserviceaccount.com
+      workload_identity_provider: projects/jave-hermetic-build-prod/locations/global/workloadIdentityPools/github_actions_pool/providers/github_provider
   - name: Set up Cloud SDK
     uses: google-github-actions/setup-gcloud@v2
   - name: Configure Artifact registry
