@@ -100,7 +100,7 @@ docker run \
   -v "${m2_folder}":/home/.m2 \
   -v "${api_def_dir}:${workspace_name}/googleapis" \
   -e GENERATOR_VERSION="${image_tag}" \
-  us-docker.pkg.dev/java-hermetic-build-prod/java-hermetic-build-prod-images:"${image_tag}" \
+  us-docker.pkg.dev/java-hermetic-build-prod/java-hermetic-build-prod-images/library-generation:"${image_tag}" \
   --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
   --current-generation-config-path="${workspace_name}/${generation_config}" \
   --api-definitions-path="${workspace_name}/googleapis"
