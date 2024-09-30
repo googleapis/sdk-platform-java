@@ -270,6 +270,7 @@ class IntegrationTest(unittest.TestCase):
                 copytree(
                     f"{repo_dest}/gapic-libraries-bom",
                     f"{golden_dir}/gapic-libraries-bom",
+                    dirs_exist_ok=True,
                 )
                 copy(f"{repo_dest}/pom.xml", golden_dir)
             else:
