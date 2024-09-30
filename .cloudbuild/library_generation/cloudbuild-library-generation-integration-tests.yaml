@@ -20,14 +20,14 @@ steps:
   - id: library-generation-image-build
     name: gcr.io/cloud-builders/docker
     entrypoint: bash
-    args:
-    - -c
-    - |
-      docker buildx build \
-        -f .cloudbuild/library_generation/library_generation.Dockerfile \
-        -t "${_IMAGE_NAME}" \
-        -o type=image \
-        .
+    args: [
+      "-c",
+      "docker", "buildx", "build",
+      "-f", ".cloudbuild/library_generation/library_generation.Dockerfile",
+      "-t", "${_IMAGE_NAME}",
+      "-o", "type=image",
+      "."
+    ]
     waitFor: ["-"]
   # Dependency installation
   - id: library-generation-python-libs
@@ -38,7 +38,7 @@ steps:
   - id: library-generation-python-compile
     name: python
     args: [ "python", "-m", "pip", "install", "library_generation" ]
-    waitFor: ["library-generation-image-build"]
+    waitFor: ["library-generation-python-libs"]
   # Python integration tests execution
   - id: run-integration-tests
     name: python
