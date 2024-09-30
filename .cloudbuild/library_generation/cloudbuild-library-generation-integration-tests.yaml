@@ -20,47 +20,28 @@ steps:
   - id: library-generation-image-build
     name: gcr.io/cloud-builders/docker
     entrypoint: bash
-    args: [
-      "-c",
-      "docker", "buildx", "build",
-      "-f", ".cloudbuild/library_generation/library_generation.Dockerfile",
-      "-t", "${_IMAGE_NAME}",
-      "-o", "type=image",
-      "."
-    ]
+    args:
+    - -c
+    - |
+      docker buildx build \
+      -f .cloudbuild/library_generation/library_generation.Dockerfile \
+      -t "${_IMAGE_NAME}" \
+      -o type=image \
+      .
     waitFor: ["-"]
-  - id: setup-virtual-env
-    name: python
-    entrypoint: python
-    args: [ "-m", "venv", ".venv" ]
-    waitFor: ["-"]
-  - id: init-virtualenv
-    name: bash
-    script: |
-      source .venv/bin/activate
-    waitFor: ["setup-virtual-env"]
-  # Dependency installation
-  - id: library-generation-python-libs
-    name: python
-    entrypoint: pip
-    args: [ "install", "--require-hashes", "-r", "library_generation/requirements.txt" ]
-    waitFor: ["init-virtualenv"]
-  # Python scripts compilation
-  - id: library-generation-python-compile
-    name: python
-    entrypoint: pip
-    args: [ "install", "library_generation" ]
-    waitFor: ["init-virtualenv"]
-  # Python integration tests execution
-  - id: run-integration-tests
-    name: python
-    entrypoint: python
-    args: [ "-m", "unittest", "library_generation/test/integration_tests.py" ]
-    waitFor: [
-      "library-generation-image-build",
-      "library-generation-python-compile",
-      "library-generation-python-libs"
-    ]
+  - id: run-integration-test
+    name: python3.12
+    entrypoint: bash
+    args:
+    - -c
+    - |
+      python -m venv .venv
+      source .venv/bin/activate 
+      pip install --upgrade pip
+      pip install --require-hashes -r library_generation/requirements.txt
+      pip install library_generation
+      python -m unittest library_generation/test/integration_tests.py
+    waitFor: ["library-generation-image-build"]
 
 options:
   # Builds ran by service accounts we need to either a) specify a logs bucket,
