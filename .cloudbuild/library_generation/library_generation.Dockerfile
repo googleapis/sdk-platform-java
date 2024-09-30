@@ -39,7 +39,7 @@ ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
-RUN apk update && apk add bash curl jq maven npm rsync unzip
+RUN apk update && apk add bash curl git jq maven npm rsync unzip
 
 # copy source code
 COPY library_generation /src
