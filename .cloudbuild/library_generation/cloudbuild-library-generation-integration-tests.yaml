@@ -30,9 +30,11 @@ steps:
       .
     waitFor: ["-"]
   - id: install-deps
-    name: bash
-    script:
-      |
+    name: python:3.12
+    entrypoint: bash
+    args:
+    - -c
+    - |
       # copy generator JAR
       apt-get update && apt-get install -y maven
       # install docker engine
