@@ -32,9 +32,6 @@ RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_
 # build from the root of this repo:
 FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:24680ddf8422899b24756d62b31eb5de782fbb42e9c2bb1c70f1f55fcf891721
 
-SHELL [ "/bin/bash", "-c" ]
-
-
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
 ARG PROTOC_VERSION=25.5
 ARG GRPC_VERSION=1.68.0
