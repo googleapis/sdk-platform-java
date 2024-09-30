@@ -311,7 +311,9 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
      * Sets the API key. The API key will get translated to an {@link
      * com.google.auth.ApiKeyCredentials} and stored in {@link ClientContext}.
      *
-     * <p>Note: If you set an API key and {@link CredentialsProvider} in the same ClientSettings the
+     * API Key authorization is not supported for every product.  Please check the documentation for each product to confirm if it is supported.
+     *
+     * If you set an API key and {@link CredentialsProvider} in the same ClientSettings the
      * API key will override any credentials provided.
      */
     public B setApiKey(String apiKey) {

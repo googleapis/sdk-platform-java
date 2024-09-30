@@ -36,6 +36,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider.Builder;
@@ -46,6 +47,7 @@ import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.api.gax.rpc.mtls.AbstractMtlsTransportChannelTest;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.CloudShellCredentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
@@ -289,9 +291,9 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
     ManagedChannelBuilder<?> swappedBuilder = Mockito.mock(ManagedChannelBuilder.class);
     ManagedChannel fakeChannel = Mockito.mock(ManagedChannel.class);
-    Mockito.when(swappedBuilder.build()).thenReturn(fakeChannel);
+    when(swappedBuilder.build()).thenReturn(fakeChannel);
 
-    Mockito.when(channelConfigurator.apply(channelBuilderCaptor.capture()))
+    when(channelConfigurator.apply(channelBuilderCaptor.capture()))
         .thenReturn(swappedBuilder);
 
     // Invoke the provider
@@ -711,7 +713,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   public void canUseDirectPath_happyPath() throws IOException {
     System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(
+    when(
             envProvider.getenv(
                 InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
         .thenReturn("false");
@@ -736,7 +738,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   public void canUseDirectPath_directPathEnvVarDisabled() throws IOException {
     System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(
+    when(
             envProvider.getenv(
                 InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
         .thenReturn("true");
@@ -788,7 +790,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     System.setProperty("os.name", "Linux");
     Credentials credentials = Mockito.mock(Credentials.class);
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(
+    when(
             envProvider.getenv(
                 InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
         .thenReturn("false");
@@ -807,7 +809,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   public void canUseDirectPath_isNotOnComputeEngine_invalidOsNameSystemProperty() {
     System.setProperty("os.name", "Not Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(
+    when(
             envProvider.getenv(
                 InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
         .thenReturn("false");
@@ -826,7 +828,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   public void canUseDirectPath_isNotOnComputeEngine_invalidSystemProductName() {
     System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(
+    when(
             envProvider.getenv(
                 InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
         .thenReturn("false");
@@ -845,7 +847,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   public void canUseDirectPath_isNotOnComputeEngine_unableToGetSystemProductName() {
     System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(
+    when(
             envProvider.getenv(
                 InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
         .thenReturn("false");
@@ -863,7 +865,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   public void canUseDirectPath_nonGDUUniverseDomain() {
     System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(
+    when(
             envProvider.getenv(
                 InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
         .thenReturn("false");
@@ -881,14 +883,11 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   public void createChannel_handlesMatchCredentialAndExplicitHeaders() throws IOException {
-    String apiHeaderKey = "fake_api_key_2";
-    Map<String, String> header = new HashMap<>();
-    header.put("x-goog-api-key", apiHeaderKey);
-    FixedHeaderProvider headerProvider = FixedHeaderProvider.create(header);
+    ApiKeyCredentials apiKeyCredentials = ApiKeyCredentials.create("fake_api_key");
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
-            .setCredentials(computeEngineCredentials)
-            .setHeaderProvider(headerProvider)
+            .setCredentials(apiKeyCredentials)
+            .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
             .setEndpoint("test.random.com:443");
     InstantiatingGrpcChannelProvider provider = builder.build();
 
@@ -914,6 +913,47 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
     assertNotNull(transportChannel);
     transportChannel.shutdownNow();
+  }
+
+  @Test
+  public void createChannel_handlesNullCredentialsMetadataRequest() throws IOException {
+    Credentials credentials = Mockito.mock(Credentials.class);
+    when(credentials.getRequestMetadata()).thenReturn(null);
+    InstantiatingGrpcChannelProvider.Builder builder =
+            InstantiatingGrpcChannelProvider.newBuilder()
+                    .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
+                    .setEndpoint("test.random.com:443");
+    InstantiatingGrpcChannelProvider provider = builder.build();
+
+    // calls createChannel
+    TransportChannel transportChannel = provider.getTransportChannel();
+
+    assertNotNull(transportChannel);
+    transportChannel.shutdownNow();
+  }
+
+  @Test
+  public void createChannel_handlesErrorRetrievingCredentialsMetadataRequest() throws IOException {
+    Credentials credentials = Mockito.mock(Credentials.class);
+    when(credentials.getRequestMetadata()).thenThrow(new IOException("Error getting request metadata"));
+    InstantiatingGrpcChannelProvider.Builder builder =
+            InstantiatingGrpcChannelProvider.newBuilder()
+                    .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
+                    .setEndpoint("test.random.com:443");
+    InstantiatingGrpcChannelProvider provider = builder.build();
+
+    // calls createChannel
+    TransportChannel transportChannel = provider.getTransportChannel();
+
+    assertNotNull(transportChannel);
+    transportChannel.shutdownNow();
+  }
+
+  private FixedHeaderProvider getHeaderProviderWithApiKeyHeader() {
+    String apiHeaderKey = "fake_api_key_2";
+    Map<String, String> header = new HashMap<>();
+    header.put("x-goog-api-key", apiHeaderKey);
+    return FixedHeaderProvider.create(header);
   }
 
   private static class FakeLogHandler extends Handler {

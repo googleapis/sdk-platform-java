@@ -64,6 +64,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
@@ -505,8 +506,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     Map<String, String> userHeaders = new HashMap<>(headerProvider.getHeaders());
     if (credentials != null) {
       try {
-        userHeaders.keySet().removeAll(credentials.getRequestMetadata().keySet());
-      } catch (Exception e) {
+        Map<String, List<String>> credentialRequestMetatData = credentials.getRequestMetadata();
+        if (credentialRequestMetatData != null) {
+          userHeaders.keySet().removeAll(credentialRequestMetatData.keySet());
+        }
+      } catch (IOException e) {
         // no-op, if we can't retrieve credentials metadata we will leave headers intact
       }
     }

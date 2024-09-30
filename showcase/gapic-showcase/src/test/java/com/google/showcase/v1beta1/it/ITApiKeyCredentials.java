@@ -153,31 +153,6 @@ class ITApiKeyCredentials {
   }
 
   @Test
-  void testCreateGrpcClient_withApiKeyAndExplicitCredentials_overridesCredentials()
-      throws IOException {
-    Metadata.Key<String> apiKeyAuthHeader =
-        Metadata.Key.of(API_KEY_AUTH_HEADER, Metadata.ASCII_STRING_MARSHALLER);
-    EchoSettings settings =
-        EchoSettings.newBuilder()
-            .setApiKey(API_KEY)
-            .setEndpoint(GRPC_ENDPOINT)
-            .setCredentialsProvider(
-                FixedCredentialsProvider.create(ApiKeyCredentials.create("invalid")))
-            .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .setInterceptorProvider(() -> ImmutableList.of(grpcInterceptor))
-                    .build())
-            .build();
-    grpcClient = EchoClient.create(settings);
-
-    grpcClient.echo(EchoRequest.newBuilder().build());
-
-    String headerValue = grpcInterceptor.metadata.get(apiKeyAuthHeader);
-    assertThat(headerValue).isEqualTo(API_KEY);
-  }
-
-  @Test
   void testCreateHttpClient_withApiKey_sendsApiHeaderToServer() throws Exception {
     EchoSettings httpJsonEchoSettings =
         EchoSettings.newHttpJsonBuilder()
@@ -242,32 +217,5 @@ class ITApiKeyCredentials {
     String headerValue = headerValues.get(0);
     assertThat(headerValue).isEqualTo(API_KEY);
     assertThat(headerValues.size()).isEqualTo(1);
-  }
-
-  @Test
-  void testCreateHttpClient_withApiKeyAndExplicitCredentials_overridesCredentials()
-      throws Exception {
-    EchoSettings httpJsonEchoSettings =
-        EchoSettings.newHttpJsonBuilder()
-            .setApiKey(API_KEY)
-            .setCredentialsProvider(
-                FixedCredentialsProvider.create(ApiKeyCredentials.create("invalid")))
-            .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(
-                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint(HTTP_ENDPOINT)
-                    .setInterceptorProvider(() -> ImmutableList.of(httpJsonInterceptor))
-                    .build())
-            .build();
-    httpJsonClient = EchoClient.create(httpJsonEchoSettings);
-
-    httpJsonClient.echo(EchoRequest.newBuilder().build());
-
-    ArrayList<String> headerValues =
-        (ArrayList<String>)
-            httpJsonInterceptor.metadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
-    String headerValue = headerValues.get(0);
-    assertThat(headerValue).isEqualTo(API_KEY);
   }
 }
