@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
 import shutil
 
 import library_generation.utils.utilities as util
@@ -49,6 +48,7 @@ def generate_from_yaml(
         gen_config=config, library_config=target_libraries, repo_path=repository_path
     )
     # copy api definition to output folder.
+    print(f"Copy from {api_definitions_path} to {repo_config.output_folder}")
     shutil.copytree(api_definitions_path, repo_config.output_folder, dirs_exist_ok=True)
 
     for library_path, library in repo_config.get_libraries().items():
