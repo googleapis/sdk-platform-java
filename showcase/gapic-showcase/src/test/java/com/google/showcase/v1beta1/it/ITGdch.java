@@ -136,6 +136,12 @@ class ITGdch {
     // we create the client as usual - no audience passed
     String testEndpoint = "custom-endpoint:123";
     settings = settings.toBuilder().setEndpoint(testEndpoint).build();
+    // need to register the new credentials with updated endpoint before creating
+    // TransportChannelProvider, as they must be valid to retrieve credential headers (used for
+    // de-duping)
+    registerCredential(
+        ClientContext.getGdchCredentials(
+            null, testEndpoint, settings.getCredentialsProvider().getCredentials()));
     context = ClientContext.create(settings);
     stubSettings = EchoStubSettings.newBuilder(context).build();
     client = EchoClient.create(stubSettings.createStub());
@@ -161,7 +167,6 @@ class ITGdch {
     // However, the credentials prepared in ClientContext should be able to refresh since the
     // audience would be
     // internally defaulted the endpoint of the StubSettings
-    registerCredential(fromContext);
     ((GdchCredentials) fromContext).refreshAccessToken();
     String usedAudience = transportFactory.transport.getLastAudienceSent();
     assertEquals(testEndpoint, usedAudience);
@@ -182,8 +187,14 @@ class ITGdch {
     // audience. It should
     // be created without issues
     String testAudience = "valid-audience";
-    settings =
-        settings.toBuilder().setGdchApiAudience(testAudience).setEndpoint("localhost:7469").build();
+    String endpoint = "localhost:7469";
+    settings = settings.toBuilder().setGdchApiAudience(testAudience).setEndpoint(endpoint).build();
+    // need to register the new credentials with updated audience before creating
+    // TransportChannelProvider, as they must be valid to retrieve credential headers (used for
+    // de-duping)
+    registerCredential(
+        ClientContext.getGdchCredentials(
+            testAudience, endpoint, settings.getCredentialsProvider().getCredentials()));
     context = ClientContext.create(settings);
     stubSettings = EchoStubSettings.newBuilder(context).build();
     client = EchoClient.create(stubSettings.createStub());
@@ -206,7 +217,6 @@ class ITGdch {
     // But the credentials prepared in ClientContext should be able to refresh since the audience
     // would be internally
     // set to the one passed in stub settings
-    registerCredential(fromContext);
     ((GdchCredentials) fromContext).refreshAccessToken();
     String usedAudience = transportFactory.transport.getLastAudienceSent();
     assertEquals(testAudience, usedAudience);

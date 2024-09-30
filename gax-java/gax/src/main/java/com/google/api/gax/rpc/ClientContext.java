@@ -47,6 +47,7 @@ import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GdchCredentials;
 import com.google.auto.value.AutoValue;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
@@ -188,9 +189,7 @@ public abstract class ClientContext {
       // Resolve the new endpoint with the GDC-H flow
       endpoint = endpointContext.resolvedEndpoint();
       // We recompute the GdchCredentials with the audience
-      credentials =
-          getGdchCredentials(
-              settingsGdchApiAudience, endpointContext.resolvedEndpoint(), credentials);
+      credentials = getGdchCredentials(settingsGdchApiAudience, endpoint, credentials);
     } else if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
       throw new IllegalArgumentException(
           "GDC-H API audience can only be set when using GdchCredentials");
@@ -295,7 +294,8 @@ public abstract class ClientContext {
    * Constructs a new {@link com.google.auth.Credentials} object based on credentials provided with
    * a GDC-H audience
    */
-  private static Credentials getGdchCredentials(
+  @VisibleForTesting
+  public static GdchCredentials getGdchCredentials(
       String settingsGdchApiAudience, String endpoint, Credentials credentials) throws IOException {
     String audienceString;
     if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
@@ -312,8 +312,7 @@ public abstract class ClientContext {
     } catch (IllegalArgumentException ex) { // thrown when passing a malformed uri string
       throw new IllegalArgumentException("The GDC-H API audience string is not a valid URI", ex);
     }
-    credentials = ((GdchCredentials) credentials).createWithGdchAudience(gdchAudienceUri);
-    return credentials;
+    return ((GdchCredentials) credentials).createWithGdchAudience(gdchAudienceUri);
   }
 
   /**
