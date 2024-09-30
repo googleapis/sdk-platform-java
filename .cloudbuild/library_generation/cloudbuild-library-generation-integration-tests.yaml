@@ -35,6 +35,8 @@ steps:
     args:
     - -c
     - |
+      # copy generator JAR
+      apt-get update && apt-get install -y maven
       python -m venv .venv
       source .venv/bin/activate 
       pip install --upgrade pip
