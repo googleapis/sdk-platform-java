@@ -30,7 +30,7 @@ steps:
       .
     waitFor: ["-"]
   - id: run-integration-test
-    name: python3.12
+    name: python
     entrypoint: bash
     args:
     - -c
