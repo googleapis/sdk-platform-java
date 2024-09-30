@@ -29,22 +29,34 @@ steps:
       "."
     ]
     waitFor: ["-"]
+  - id: setup-virtual-env
+    name: python
+    args: ["python", "-m", "venv", ".venv"]
+    waitFor: ["-"]
+  - id: init-virtualenv
+    name: sh
+    args: ["source", ".venv/bin/activate"]
+    waitFor: ["setup-virtual-env"]
   # Dependency installation
   - id: library-generation-python-libs
     name: python
     args: [ "python", "-m", "pip", "install", "--require-hashes", "-r", "library_generation/requirements.txt" ]
-    waitFor: ["library-generation-image-build"]
+    waitFor: ["init-virtualenv"]
   # Python scripts compilation
   - id: library-generation-python-compile
     name: python
     args: [ "python", "-m", "pip", "install", "library_generation" ]
-    waitFor: ["library-generation-python-libs"]
+    waitFor: ["init-virtualenv"]
   # Python integration tests execution
   - id: run-integration-tests
     name: python
     args: [ "python", "-m", "unittest",
             "library_generation/test/integration_tests.py" ]
-    waitFor: ["library-generation-python-compile", "library-generation-python-libs"]
+    waitFor: [
+      "library-generation-image-build",
+      "library-generation-python-compile",
+      "library-generation-python-libs"
+    ]
 
 options:
   # Builds ran by service accounts we need to either a) specify a logs bucket,
