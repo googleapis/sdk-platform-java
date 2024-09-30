@@ -236,7 +236,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return gdchApiAudience;
   }
 
-  /** Gets the ApiKey that should be used for authentication. */
+  /** Gets the API Key that should be used for authentication. */
   public final String getApiKey() {
     return apiKey;
   }
@@ -642,12 +642,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return clock;
     }
 
-    /**
-     * Gets the ApiKey that was previously set on this Builder. If an empty string was provided it
-     * will return null
-     */
+    /** Gets the API Key that was previously set on this Builder. */
     public final String getApiKey() {
-      return (apiKey == null || apiKey.isEmpty()) ? null : apiKey;
+      return apiKey;
     }
 
     /**

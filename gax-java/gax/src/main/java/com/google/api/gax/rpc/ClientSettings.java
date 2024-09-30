@@ -112,6 +112,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getStreamWatchdogProvider();
   }
 
+  /** Gets the API Key that should be used for authentication. */
   public final String getApiKey() {
     return stubSettings.getApiKey();
   }
@@ -384,7 +385,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return stubSettings.getStreamWatchdogProvider();
     }
 
-    /** Gets the ApiKey that was previously set on this Builder. */
+    /** Gets the API Key that was previously set on this Builder. */
     public String getApiKey() {
       return stubSettings.getApiKey();
     }
