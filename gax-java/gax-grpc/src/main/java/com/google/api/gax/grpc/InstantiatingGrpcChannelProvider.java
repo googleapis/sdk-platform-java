@@ -511,9 +511,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       try {
         Map<String, List<String>> credentialRequestMetatData = credentials.getRequestMetadata();
         if (credentialRequestMetatData != null) {
-          headersWithDuplicatesRemoved
-              .keySet()
-              .removeAll(credentialRequestMetatData.keySet());
+          headersWithDuplicatesRemoved.keySet().removeAll(credentialRequestMetatData.keySet());
         }
       } catch (IOException e) {
         // no-op, if we can't retrieve credentials metadata we will leave headers intact
@@ -589,7 +587,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return true;
   }
 
-  /** @return list of provided headers that will be sent with GRPC call with any duplicates removed see {@link #removeCredentialDuplicateHeaders()} */
+  /**
+   * @return list of provided headers that will be sent with GRPC call with any duplicates removed
+   *     see {@link #removeCredentialDuplicateHeaders()}
+   */
   public Map<String, String> getHeadersWithDuplicatesRemoved() {
     return headersWithDuplicatesRemoved;
   }
