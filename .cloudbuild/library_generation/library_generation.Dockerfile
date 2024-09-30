@@ -39,9 +39,7 @@ ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
-RUN apt-get update && apt-get install -y \
-	  unzip openjdk-17-jdk rsync maven jq \
-	  && apt-get clean
+RUN apk update && apk add unzip openjdk-17-jdk rsync maven jq
 
 # copy source code
 COPY library_generation /src
