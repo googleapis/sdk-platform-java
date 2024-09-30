@@ -137,11 +137,11 @@ class ITGdch {
     String testEndpoint = "custom-endpoint:123";
     settings = settings.toBuilder().setEndpoint(testEndpoint).build();
     // need to register the new credentials with updated endpoint before creating
-    // TransportChannelProvider, as they must be valid to retrieve credential headers (used for
+    // TransportChannelProvider, as we need to retrieve credential headers (used for
     // de-duping)
-    registerCredential(
-        ClientContext.getGdchCredentials(
-            null, testEndpoint, settings.getCredentialsProvider().getCredentials()));
+    Credentials updatedCredentials = ClientContext.getGdchCredentials(
+            null, testEndpoint, settings.getCredentialsProvider().getCredentials());
+    registerCredential(updatedCredentials);
     context = ClientContext.create(settings);
     stubSettings = EchoStubSettings.newBuilder(context).build();
     client = EchoClient.create(stubSettings.createStub());
@@ -190,11 +190,11 @@ class ITGdch {
     String endpoint = "localhost:7469";
     settings = settings.toBuilder().setGdchApiAudience(testAudience).setEndpoint(endpoint).build();
     // need to register the new credentials with updated audience before creating
-    // TransportChannelProvider, as they must be valid to retrieve credential headers (used for
+    // TransportChannelProvider, as we need to retrieve credential headers (used for
     // de-duping)
-    registerCredential(
-        ClientContext.getGdchCredentials(
-            testAudience, endpoint, settings.getCredentialsProvider().getCredentials()));
+    Credentials updatedCredentials = ClientContext.getGdchCredentials(
+            testAudience, endpoint, settings.getCredentialsProvider().getCredentials());
+    registerCredential(updatedCredentials);
     context = ClientContext.create(settings);
     stubSettings = EchoStubSettings.newBuilder(context).build();
     client = EchoClient.create(stubSettings.createStub());
