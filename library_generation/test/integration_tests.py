@@ -21,8 +21,8 @@ import os
 import shutil
 import subprocess
 import unittest
-from distutils.dir_util import copy_tree
-from distutils.file_util import copy_file
+from shutil import copytree
+from shutil import copyfile
 from pathlib import Path
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.generation_config import from_yaml
@@ -269,14 +269,14 @@ class IntegrationTest(unittest.TestCase):
     ):
         for library_name in library_names:
             if config.is_monorepo():
-                copy_tree(f"{repo_dest}/{library_name}", f"{golden_dir}/{library_name}")
-                copy_tree(
+                copytree(f"{repo_dest}/{library_name}", f"{golden_dir}/{library_name}")
+                copytree(
                     f"{repo_dest}/gapic-libraries-bom",
                     f"{golden_dir}/gapic-libraries-bom",
                 )
-                copy_file(f"{repo_dest}/pom.xml", golden_dir)
+                copyfile(f"{repo_dest}/pom.xml", golden_dir)
             else:
-                copy_tree(f"{repo_dest}", f"{golden_dir}/{library_name}")
+                copytree(f"{repo_dest}", f"{golden_dir}/{library_name}")
 
     @classmethod
     def __run_entry_point_in_docker_container(
