@@ -18,11 +18,12 @@ from filecmp import cmp
 from filecmp import dircmp
 from git import Repo
 import os
-import shutil
 import subprocess
 import unittest
 from shutil import copytree
-from shutil import copyfile
+from shutil import rmtree
+from shutil import copy
+from shutil import move
 from pathlib import Path
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.generation_config import from_yaml
@@ -187,7 +188,7 @@ class IntegrationTest(unittest.TestCase):
                 )
                 print("  PR description comparison succeed.")
         self.__remove_generated_files()
-        shutil.rmtree(api_definitions_path)
+        rmtree(api_definitions_path)
 
     @classmethod
     def __copy_api_definition(cls, committish: str) -> str:
@@ -196,13 +197,9 @@ class IntegrationTest(unittest.TestCase):
         )
         api_temp_dir = tempfile.mkdtemp()
         print(f"Copying api definition to {api_temp_dir}...")
-        shutil.copytree(
-            f"{repo_dest}/google", f"{api_temp_dir}/google", dirs_exist_ok=True
-        )
-        shutil.copytree(
-            f"{repo_dest}/grafeas", f"{api_temp_dir}/grafeas", dirs_exist_ok=True
-        )
-        shutil.rmtree(repo_dest)
+        copytree(f"{repo_dest}/google", f"{api_temp_dir}/google", dirs_exist_ok=True)
+        copytree(f"{repo_dest}/grafeas", f"{api_temp_dir}/grafeas", dirs_exist_ok=True)
+        rmtree(repo_dest)
         return api_temp_dir
 
     @classmethod
@@ -238,17 +235,17 @@ class IntegrationTest(unittest.TestCase):
         destination_jar_path = os.path.join(
             config_dir, WELL_KNOWN_GENERATOR_JAR_FILENAME
         )
-        shutil.move(source_jar_path, destination_jar_path)
+        move(source_jar_path, destination_jar_path)
 
     @classmethod
     def __remove_generated_files(cls):
-        shutil.rmtree(f"{output_dir}", ignore_errors=True)
+        rmtree(f"{output_dir}", ignore_errors=True)
         if os.path.isdir(f"{golden_dir}"):
-            shutil.rmtree(f"{golden_dir}")
+            rmtree(f"{golden_dir}")
 
     @classmethod
     def __pull_repo_to(cls, dest: Path, repo: str, committish: str) -> str:
-        shutil.rmtree(dest, ignore_errors=True)
+        rmtree(dest, ignore_errors=True)
         repo_url = f"{repo_prefix}/{repo}"
         print(f"Cloning repository {repo_url}")
         repo = Repo.clone_from(repo_url, dest)
@@ -274,7 +271,7 @@ class IntegrationTest(unittest.TestCase):
                     f"{repo_dest}/gapic-libraries-bom",
                     f"{golden_dir}/gapic-libraries-bom",
                 )
-                copyfile(f"{repo_dest}/pom.xml", golden_dir)
+                copy(f"{repo_dest}/pom.xml", golden_dir)
             else:
                 copytree(f"{repo_dest}", f"{golden_dir}/{library_name}")
 
