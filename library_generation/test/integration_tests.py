@@ -196,9 +196,11 @@ class IntegrationTest(unittest.TestCase):
             dest=tempfile.mkdtemp(), repo="googleapis", committish=committish
         )
         api_temp_dir = tempfile.mkdtemp()
+        print(os.listdir(f"{repo_dest}/google"))
         print(f"Copying api definition to {api_temp_dir}...")
         copytree(f"{repo_dest}/google", f"{api_temp_dir}/google", dirs_exist_ok=True)
         copytree(f"{repo_dest}/grafeas", f"{api_temp_dir}/grafeas", dirs_exist_ok=True)
+        print(os.listdir(f"{api_temp_dir}/google"))
         rmtree(repo_dest)
         return api_temp_dir
 
