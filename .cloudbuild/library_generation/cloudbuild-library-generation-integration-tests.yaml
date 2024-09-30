@@ -29,12 +29,10 @@ steps:
       -o type=image \
       .
     waitFor: ["-"]
-  - id: run-integration-test
-    name: python:3.12
-    entrypoint: bash
-    args:
-    - -c
-    - |
+  - id: install-deps
+    name: bash
+    script:
+      |
       # copy generator JAR
       apt-get update && apt-get install -y maven
       # install docker engine
@@ -46,8 +44,15 @@ steps:
       pip install --upgrade pip
       pip install --require-hashes -r library_generation/requirements.txt
       pip install ./library_generation
+    waitFor: ["-"]
+  - id: run-integration-test
+    name: python:3.12
+    entrypoint: bash
+    args:
+    - -c
+    - |
       python -m unittest ./library_generation/test/integration_tests.py
-    waitFor: ["library-generation-image-build"]
+    waitFor: ["library-generation-image-build", "install-deps"]
 
 options:
   # Builds ran by service accounts we need to either a) specify a logs bucket,
