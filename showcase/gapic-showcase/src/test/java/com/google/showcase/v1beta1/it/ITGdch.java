@@ -139,7 +139,8 @@ class ITGdch {
     // need to register the new credentials with updated endpoint before creating
     // TransportChannelProvider, as we need to retrieve credential headers (used for
     // de-duping)
-    Credentials updatedCredentials = ClientContext.getGdchCredentials(
+    Credentials updatedCredentials =
+        ClientContext.getGdchCredentials(
             null, testEndpoint, settings.getCredentialsProvider().getCredentials());
     registerCredential(updatedCredentials);
     context = ClientContext.create(settings);
@@ -192,7 +193,8 @@ class ITGdch {
     // need to register the new credentials with updated audience before creating
     // TransportChannelProvider, as we need to retrieve credential headers (used for
     // de-duping)
-    Credentials updatedCredentials = ClientContext.getGdchCredentials(
+    Credentials updatedCredentials =
+        ClientContext.getGdchCredentials(
             testAudience, endpoint, settings.getCredentialsProvider().getCredentials());
     registerCredential(updatedCredentials);
     context = ClientContext.create(settings);
