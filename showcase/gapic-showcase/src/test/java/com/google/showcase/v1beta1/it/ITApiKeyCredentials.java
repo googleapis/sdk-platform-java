@@ -19,10 +19,8 @@ package com.google.showcase.v1beta1.it;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
-import com.google.auth.ApiKeyCredentials;
 import com.google.auth.http.AuthHttpConstants;
 import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.EchoClient;
