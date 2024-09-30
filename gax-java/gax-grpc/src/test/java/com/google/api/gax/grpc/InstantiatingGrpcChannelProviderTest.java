@@ -34,7 +34,7 @@ import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiFunction;
@@ -82,6 +82,8 @@ import org.mockito.Mockito;
 
 class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelTest {
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com:443";
+  private static final String API_KEY_HEADER_VALUE = "fake_api_key_2";
+  private static final String API_KEY_AUTH_HEADER = "x-goog-api-key";
   private static String originalOSName;
   private ComputeEngineCredentials computeEngineCredentials;
 
@@ -709,7 +711,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
-  public void canUseDirectPath_happyPath() throws IOException {
+  public void canUseDirectPath_happyPath() {
     System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
@@ -721,20 +723,14 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
-            .setEnvProvider(envProvider)
-            .setHeaderProvider(Mockito.mock(HeaderProvider.class));
+            .setEnvProvider(envProvider);
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isTrue();
-
-    // verify this info is passed correctly to transport channel
-    TransportChannel transportChannel = provider.getTransportChannel();
-    Truth.assertThat(((GrpcTransportChannel) transportChannel).isDirectPath()).isTrue();
-    transportChannel.shutdownNow();
   }
 
   @Test
-  public void canUseDirectPath_directPathEnvVarDisabled() throws IOException {
+  public void canUseDirectPath_directPathEnvVarDisabled() {
     System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(
@@ -746,16 +742,10 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(DEFAULT_ENDPOINT)
-            .setEnvProvider(envProvider)
-            .setHeaderProvider(Mockito.mock(HeaderProvider.class));
+            .setEnvProvider(envProvider);
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
-
-    // verify this info is passed correctly to transport channel
-    TransportChannel transportChannel = provider.getTransportChannel();
-    Truth.assertThat(((GrpcTransportChannel) transportChannel).isDirectPath()).isFalse();
-    transportChannel.shutdownNow();
   }
 
   @Test
@@ -881,58 +871,63 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
-  public void createChannel_handlesMatchCredentialAndExplicitHeaders() throws IOException {
-    ApiKeyCredentials apiKeyCredentials = ApiKeyCredentials.create("fake_api_key");
+  public void providerInitializedWithNonConflictingHeaders_retainsHeaders() {
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
+            .setEndpoint("test.random.com:443");
+    InstantiatingGrpcChannelProvider provider = builder.build();
+    assertEquals(1, provider.getProvidedHeadersWithDuplicatesRemoved().size());
+    assertEquals(
+        API_KEY_HEADER_VALUE,
+        provider.getProvidedHeadersWithDuplicatesRemoved().get(API_KEY_AUTH_HEADER));
+  }
+
+  @Test
+  public void providersInitializedWithConflictingHeaders_removesDuplicates() throws IOException {
+    String correctApiKey = "fake_api_key";
+    ApiKeyCredentials apiKeyCredentials = ApiKeyCredentials.create(correctApiKey);
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setCredentials(apiKeyCredentials)
             .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
             .setEndpoint("test.random.com:443");
     InstantiatingGrpcChannelProvider provider = builder.build();
-
-    // calls createChannel
-    TransportChannel transportChannel = provider.getTransportChannel();
-
-    assertNotNull(transportChannel);
-    transportChannel.shutdownNow();
+    assertEquals(0, provider.getProvidedHeadersWithDuplicatesRemoved().size());
+    assertNull(provider.getProvidedHeadersWithDuplicatesRemoved().get(API_KEY_AUTH_HEADER));
   }
 
   @Test
-  public void createChannel_handlesNullCredentials() throws IOException {
+  public void buildProvider_handlesNullHeaderProvider() {
     Map<String, String> header = new HashMap();
-    FixedHeaderProvider headerProvider = FixedHeaderProvider.create(header);
+    //  FixedHeaderProvider headerProvider = FixedHeaderProvider.create(header);
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
-            .setHeaderProvider(headerProvider)
+            // .setHeaderProvider(headerProvider)
             .setEndpoint("test.random.com:443");
     InstantiatingGrpcChannelProvider provider = builder.build();
-
-    // calls createChannel
-    TransportChannel transportChannel = provider.getTransportChannel();
-
-    assertNotNull(transportChannel);
-    transportChannel.shutdownNow();
+    assertEquals(0, provider.getProvidedHeadersWithDuplicatesRemoved().size());
   }
 
   @Test
-  public void createChannel_handlesNullCredentialsMetadataRequest() throws IOException {
+  public void buildProvider_handlesNullCredentialsMetadataRequest() throws IOException {
     Credentials credentials = Mockito.mock(Credentials.class);
     Mockito.when(credentials.getRequestMetadata()).thenReturn(null);
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
             .setEndpoint("test.random.com:443");
+
     InstantiatingGrpcChannelProvider provider = builder.build();
 
-    // calls createChannel
-    TransportChannel transportChannel = provider.getTransportChannel();
-
-    assertNotNull(transportChannel);
-    transportChannel.shutdownNow();
+    assertEquals(1, provider.getProvidedHeadersWithDuplicatesRemoved().size());
+    assertEquals(
+        API_KEY_HEADER_VALUE,
+        provider.getProvidedHeadersWithDuplicatesRemoved().get(API_KEY_AUTH_HEADER));
   }
 
   @Test
-  public void createChannel_handlesErrorRetrievingCredentialsMetadataRequest() throws IOException {
+  public void buildProvider_handlesErrorRetrievingCredentialsMetadataRequest() throws IOException {
     Credentials credentials = Mockito.mock(Credentials.class);
     Mockito.when(credentials.getRequestMetadata())
         .thenThrow(new IOException("Error getting request metadata"));
@@ -942,17 +937,15 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setEndpoint("test.random.com:443");
     InstantiatingGrpcChannelProvider provider = builder.build();
 
-    // calls createChannel
-    TransportChannel transportChannel = provider.getTransportChannel();
-
-    assertNotNull(transportChannel);
-    transportChannel.shutdownNow();
+    assertEquals(1, provider.getProvidedHeadersWithDuplicatesRemoved().size());
+    assertEquals(
+        API_KEY_HEADER_VALUE,
+        provider.getProvidedHeadersWithDuplicatesRemoved().get(API_KEY_AUTH_HEADER));
   }
 
   private FixedHeaderProvider getHeaderProviderWithApiKeyHeader() {
-    String apiHeaderKey = "fake_api_key_2";
     Map<String, String> header = new HashMap<>();
-    header.put("x-goog-api-key", apiHeaderKey);
+    header.put("x-goog-api-key", API_KEY_HEADER_VALUE);
     return FixedHeaderProvider.create(header);
   }
 

@@ -125,6 +125,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Boolean allowNonDefaultServiceAccount;
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
+  private final Map<String, String> providedHeadersWithDuplicatesRemoved = new HashMap<>();
 
   @Nullable
   private final ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
@@ -409,9 +410,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   private ManagedChannel createSingleChannel() throws IOException {
-    Map<String, String> mergedHeaders = mergeHeadersWithCredentialHeaders();
     GrpcHeaderInterceptor headerInterceptor =
-        new GrpcHeaderInterceptor(ImmutableMap.copyOf(mergedHeaders));
+        new GrpcHeaderInterceptor(providedHeadersWithDuplicatesRemoved);
 
     GrpcMetadataHandlerInterceptor metadataHandlerInterceptor =
         new GrpcMetadataHandlerInterceptor();
@@ -500,21 +500,25 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return managedChannel;
   }
 
-  // dedup any headers explicitly set with headers provided by credential, with preference to
-  // credential headers
-  private Map<String, String> mergeHeadersWithCredentialHeaders() {
-    Map<String, String> userHeaders = new HashMap<>(headerProvider.getHeaders());
+  /* Remove any provided headers that will also get set by credentials. They will be added as part of the grpc call when performing auth
+   * {@link io.grpc.auth.GoogleAuthLibraryCallCredentials#applyRequestMetadata}.  GRPC does not dedup headers {@link https://github.com/grpc/grpc-java/blob/a140e1bb0cfa662bcdb7823d73320eb8d49046f1/api/src/main/java/io/grpc/Metadata.java#L504} so we must before initiating call.
+   */
+  private void removeCredentialDuplicateHeaders() {
+    if (headerProvider != null) {
+      providedHeadersWithDuplicatesRemoved.putAll(headerProvider.getHeaders());
+    }
     if (credentials != null) {
       try {
         Map<String, List<String>> credentialRequestMetatData = credentials.getRequestMetadata();
         if (credentialRequestMetatData != null) {
-          userHeaders.keySet().removeAll(credentialRequestMetatData.keySet());
+          providedHeadersWithDuplicatesRemoved
+              .keySet()
+              .removeAll(credentialRequestMetatData.keySet());
         }
       } catch (IOException e) {
         // no-op, if we can't retrieve credentials metadata we will leave headers intact
       }
     }
-    return userHeaders;
   }
 
   /**
@@ -583,6 +587,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Override
   public boolean shouldAutoClose() {
     return true;
+  }
+
+  /** @return final headers that will be sent with GRPC call with any duplications removed */
+  public Map<String, String> getProvidedHeadersWithDuplicatesRemoved() {
+    return providedHeadersWithDuplicatesRemoved;
   }
 
   public Builder toBuilder() {
@@ -904,7 +913,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     public InstantiatingGrpcChannelProvider build() {
-      return new InstantiatingGrpcChannelProvider(this);
+      InstantiatingGrpcChannelProvider instantiatingGrpcChannelProvider =
+          new InstantiatingGrpcChannelProvider(this);
+      instantiatingGrpcChannelProvider.removeCredentialDuplicateHeaders();
+      return instantiatingGrpcChannelProvider;
     }
 
     /**
