@@ -30,7 +30,7 @@ RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_
   "./gapic-generator-java.jar"
 
 # build from the root of this repo:
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:e31986c72ec7f2a4e1c4d7a4e6034b5db537293b01df9192934ec028f762279e
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@sha256:24680ddf8422899b24756d62b31eb5de782fbb42e9c2bb1c70f1f55fcf891721
 
 SHELL [ "/bin/bash", "-c" ]
 
