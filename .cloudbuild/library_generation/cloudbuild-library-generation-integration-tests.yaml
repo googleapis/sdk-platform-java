@@ -36,7 +36,7 @@ steps:
     - -c
     - |
       # copy generator JAR
-      apt-get update && apt-get install -y maven
+      apt-get update && apt-get install -y docker-ce docker-ce-cli maven
       python -m venv .venv
       source .venv/bin/activate 
       pip install --upgrade pip
