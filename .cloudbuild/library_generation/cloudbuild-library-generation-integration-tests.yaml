@@ -36,7 +36,10 @@ steps:
     - -c
     - |
       # copy generator JAR
-      apt-get update && apt-get install -y docker-ce docker-ce-cli maven
+      apt-get update && apt-get install -y maven
+      # install docker engine
+      curl -fsSL https://get.docker.com -o get-docker.sh
+      sudo sh get-docker.sh
       python -m venv .venv
       source .venv/bin/activate 
       pip install --upgrade pip
