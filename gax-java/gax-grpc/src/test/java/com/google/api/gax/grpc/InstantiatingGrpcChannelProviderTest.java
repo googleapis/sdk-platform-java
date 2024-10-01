@@ -48,6 +48,7 @@ import com.google.api.gax.rpc.mtls.AbstractMtlsTransportChannelTest;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
+import com.google.auth.http.*;
 import com.google.auth.oauth2.CloudShellCredentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.common.collect.ImmutableList;
@@ -876,15 +877,17 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         InstantiatingGrpcChannelProvider.newBuilder()
             .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
             .setEndpoint("test.random.com:443");
+
     InstantiatingGrpcChannelProvider provider = builder.build();
-    assertEquals(1, provider.getHeadersWithDuplicatesRemoved().size());
+
+    assertEquals(1, provider.headersWithDuplicatesRemoved.size());
     assertEquals(
-        API_KEY_HEADER_VALUE,
-        provider.getHeadersWithDuplicatesRemoved().get(API_KEY_AUTH_HEADER_KEY));
+        API_KEY_HEADER_VALUE, provider.headersWithDuplicatesRemoved.get(API_KEY_AUTH_HEADER_KEY));
   }
 
   @Test
-  public void providersInitializedWithConflictingHeaders_removesDuplicates() throws IOException {
+  public void providersInitializedWithConflictingApiKeyCredentialHeaders_removesDuplicates()
+      throws IOException {
     String correctApiKey = "fake_api_key";
     ApiKeyCredentials apiKeyCredentials = ApiKeyCredentials.create(correctApiKey);
     InstantiatingGrpcChannelProvider.Builder builder =
@@ -892,21 +895,42 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setCredentials(apiKeyCredentials)
             .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
             .setEndpoint("test.random.com:443");
+
     InstantiatingGrpcChannelProvider provider = builder.build();
-    assertEquals(0, provider.getHeadersWithDuplicatesRemoved().size());
-    assertNull(provider.getHeadersWithDuplicatesRemoved().get(API_KEY_AUTH_HEADER_KEY));
+
+    assertEquals(0, provider.headersWithDuplicatesRemoved.size());
+    assertNull(provider.headersWithDuplicatesRemoved.get(API_KEY_AUTH_HEADER_KEY));
+  }
+
+  @Test
+  public void
+      providersInitializedWithConflictingNonApiKeyCredentialHeaders_doesNotRemoveDuplicates()
+          throws IOException {
+    String authProvidedHeader = "Bearer token";
+    Map<String, String> header = new HashMap<>();
+    header.put(AuthHttpConstants.AUTHORIZATION, authProvidedHeader);
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setCredentials(computeEngineCredentials)
+            .setHeaderProvider(FixedHeaderProvider.create(header))
+            .setEndpoint("test.random.com:443");
+
+    InstantiatingGrpcChannelProvider provider = builder.build();
+
+    assertEquals(1, provider.headersWithDuplicatesRemoved.size());
+    assertEquals(
+        authProvidedHeader,
+        provider.headersWithDuplicatesRemoved.get(AuthHttpConstants.AUTHORIZATION));
   }
 
   @Test
   public void buildProvider_handlesNullHeaderProvider() {
-    Map<String, String> header = new HashMap();
-    //  FixedHeaderProvider headerProvider = FixedHeaderProvider.create(header);
     InstantiatingGrpcChannelProvider.Builder builder =
-        InstantiatingGrpcChannelProvider.newBuilder()
-            // .setHeaderProvider(headerProvider)
-            .setEndpoint("test.random.com:443");
+        InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("test.random.com:443");
+
     InstantiatingGrpcChannelProvider provider = builder.build();
-    assertEquals(0, provider.getHeadersWithDuplicatesRemoved().size());
+
+    assertEquals(0, provider.headersWithDuplicatesRemoved.size());
   }
 
   @Test
@@ -920,10 +944,9 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
     InstantiatingGrpcChannelProvider provider = builder.build();
 
-    assertEquals(1, provider.getHeadersWithDuplicatesRemoved().size());
+    assertEquals(1, provider.headersWithDuplicatesRemoved.size());
     assertEquals(
-        API_KEY_HEADER_VALUE,
-        provider.getHeadersWithDuplicatesRemoved().get(API_KEY_AUTH_HEADER_KEY));
+        API_KEY_HEADER_VALUE, provider.headersWithDuplicatesRemoved.get(API_KEY_AUTH_HEADER_KEY));
   }
 
   @Test
@@ -937,10 +960,9 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setEndpoint("test.random.com:443");
     InstantiatingGrpcChannelProvider provider = builder.build();
 
-    assertEquals(1, provider.getHeadersWithDuplicatesRemoved().size());
+    assertEquals(1, provider.headersWithDuplicatesRemoved.size());
     assertEquals(
-        API_KEY_HEADER_VALUE,
-        provider.getHeadersWithDuplicatesRemoved().get(API_KEY_AUTH_HEADER_KEY));
+        API_KEY_HEADER_VALUE, provider.headersWithDuplicatesRemoved.get(API_KEY_AUTH_HEADER_KEY));
   }
 
   private FixedHeaderProvider getHeaderProviderWithApiKeyHeader() {
