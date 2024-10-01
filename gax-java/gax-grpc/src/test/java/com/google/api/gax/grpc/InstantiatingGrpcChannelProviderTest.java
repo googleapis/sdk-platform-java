@@ -48,7 +48,7 @@ import com.google.api.gax.rpc.mtls.AbstractMtlsTransportChannelTest;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
-import com.google.auth.http.*;
+import com.google.auth.http.AuthHttpConstants;
 import com.google.auth.oauth2.CloudShellCredentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.common.collect.ImmutableList;
@@ -967,7 +967,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   private FixedHeaderProvider getHeaderProviderWithApiKeyHeader() {
     Map<String, String> header = new HashMap<>();
-    header.put("x-goog-api-key", API_KEY_HEADER_VALUE);
+    header.put(API_KEY_AUTH_HEADER_KEY, API_KEY_HEADER_VALUE);
     return FixedHeaderProvider.create(header);
   }
 

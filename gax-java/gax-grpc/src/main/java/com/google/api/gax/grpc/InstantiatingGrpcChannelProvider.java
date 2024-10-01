@@ -517,7 +517,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           headersWithDuplicatesRemoved.keySet().removeAll(credentialRequestMetatData.keySet());
         }
       } catch (IOException e) {
-        // no-op, if we can't retrieve credentials metadata we will leave headers intact
+        // unreachable, there is no scenario that getRequestMetatData for ApiKeyCredentials will throw an IOException
       }
     }
   }
