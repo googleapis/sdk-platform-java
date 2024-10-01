@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import glob
 import os
 import xml.etree.ElementTree as ET
 import re
@@ -164,80 +163,6 @@ def version_from_maven_metadata(metadata: str) -> Optional[str]:
         return latest.text
 
     return None
-
-
-def _common_generation(
-    service: str,
-    version: str,
-    library: Path,
-    package_pattern: str,
-    suffix: str = "",
-    destination_name: str = None,
-    cloud_api: bool = True,
-    diregapic: bool = False,
-    preserve_gapic: bool = False,
-):
-    """Helper function to execution the common generation cleanup actions.
-
-    Fixes headers for protobuf classes and generated gRPC stub services. Copies
-    code and samples to their final destinations by convention. Runs the code
-    formatter on the generated code.
-
-    Args:
-        service (str): Name of the service.
-        version (str): Service API version.
-        library (Path): Path to the temp directory with the generated library.
-        package_pattern (str): Package name template for fixing file headers.
-        suffix (str, optional): Suffix that the generated library folder. The
-            artman output differs from bazel's output directory. Defaults to "".
-        destination_name (str, optional): Override the service name for the
-            destination of the output code. Defaults to the service name.
-        preserve_gapic (bool, optional): Whether to preserve the gapic directory
-            prefix. Default False.
-    """
-
-    if destination_name is None:
-        destination_name = service
-
-    cloud_prefix = "cloud-" if cloud_api else ""
-    package_name = package_pattern.format(service=service, version=version)
-    proto_library_name = f"proto-google-{cloud_prefix}{service}-{version}"
-    grpc_library_name = f"grpc-google-{cloud_prefix}{service}-{version}"
-    gapic_library_name = f"gapic-google-{cloud_prefix}{service}-{version}"
-    fix_proto_headers(library / f"{proto_library_name}{suffix}")
-    fix_grpc_headers(library / f"{grpc_library_name}{suffix}", package_name)
-
-    if preserve_gapic:
-        s.copy(
-            [library / f"{gapic_library_name}{suffix}/src"],
-            f"{gapic_library_name}/src",
-            required=True,
-        )
-    else:
-        s.copy(
-            [library / f"{gapic_library_name}{suffix}/src"],
-            f"google-{cloud_prefix}{destination_name}/src",
-            required=True,
-        )
-
-    s.copy(
-        [library / f"{grpc_library_name}{suffix}/src"],
-        f"{grpc_library_name}/src",
-        # For REST-only clients, like java-compute, gRPC artifact does not exist
-        required=(not diregapic),
-    )
-    s.copy(
-        [library / f"{proto_library_name}{suffix}/src"],
-        f"{proto_library_name}/src",
-        required=True,
-    )
-
-    if preserve_gapic:
-        format_code(f"{gapic_library_name}/src")
-    else:
-        format_code(f"google-{cloud_prefix}{destination_name}/src")
-    format_code(f"{grpc_library_name}/src")
-    format_code(f"{proto_library_name}/src")
 
 
 def _merge_release_please(destination_text: str):

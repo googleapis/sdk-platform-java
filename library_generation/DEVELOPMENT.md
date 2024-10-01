@@ -101,8 +101,14 @@ shell session.
 
 ## Running the script
 The entrypoint script (`library_generation/cli/entry_point.py`) allows you to
-update the target repository with the latest changes starting from the
-googleapis committish declared in `generation_config.yaml`.
+generate a GAPIC repository with a given api definition (proto, service yaml).
+
+### Download the api definition
+For example, googleapis
+```
+git clone https://github.com/googleapis/googleapis
+export api_definitions_path="$(pwd)/googleapis"
+```
 
 ### Download the repo
 For example, google-cloud-java
@@ -118,7 +124,9 @@ python -m pip install .
 
 ### Run the script
 ```
-python cli/entry_point.py generate --repository-path="${path_to_repo}"
+python cli/entry_point.py generate \
+   --repository-path="${path_to_repo}" \
+   --api-definitions-path="${api_definitions_path}"
 ```
 
 
@@ -144,16 +152,25 @@ repo to this folder).
 
 To run the docker container on the google-cloud-java repo, you must run:
 ```bash
-docker run -u "$(id -u)":"$(id -g)"  -v/path/to/google-cloud-java:/workspace $(cat image-id)
+docker run \
+  -u "$(id -u)":"$(id -g)"  \
+  -v /path/to/google-cloud-java:/workspace \
+  -v /path/to/api-definition:/workspace/apis \
+  $(cat image-id) \
+  --api-definitions-path=/workspace/apis
 ```
 
  * `-u "$(id -u)":"$(id -g)"` makes docker run the container impersonating
    yourself. This avoids folder ownership changes since it runs as root by
    default.
- * `-v/path/to/google-cloud-java:/workspace` maps the host machine's
-   google-cloud-java folder to the /workspace folder. The image is configured to
-   perform changes in this directory
- * `$(cat image-id)` obtains the image ID created in the build step
+ * `-v /path/to/google-cloud-java:/workspace` maps the host machine's
+   google-cloud-java folder to the /workspace folder. 
+   The image is configured to perform changes in this directory.
+ * `-v /path/to/api-definition:/workspace/apis` maps the host machine's
+   api-definition folder to /workspace/apis folder.
+ * `$(cat image-id)` obtains the image ID created in the build step.
+ * `--api-definitions-path=/workspace/apis` set the API definition path to
+   `/workspace/apis`.
 
 ## Debug the created containers
 If you are working on changing the way the containers are created, you may want
@@ -173,5 +190,10 @@ We add `less` and `vim` as text tools for further inspection.
 You can also run a shell in a new container by running:
 
 ```bash
-docker run --rm -it -u=$(id -u):$(id -g)  -v/path/to/google-cloud-java:/workspace --entrypoint="bash" $(cat image-id)
+docker run \
+  --rm -it \
+  -u $(id -u):$(id -g) \
+  -v /path/to/google-cloud-java:/workspace \
+  --entrypoint="bash" \
+  $(cat image-id)
 ```
