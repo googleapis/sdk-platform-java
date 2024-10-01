@@ -146,8 +146,6 @@ def __generate_repo_and_pr_description_impl(
     current_generation_config_path = os.path.abspath(current_generation_config_path)
     repository_path = os.path.abspath(repository_path)
     api_definitions_path = os.path.abspath(api_definitions_path)
-    print(f"baseline: {os.listdir(current_generation_config_path)}")
-    print(f"api-definition: {os.listdir(api_definitions_path)}")
     if not baseline_generation_config_path:
         # Execute full generation based on current_generation_config if
         # baseline_generation_config is not specified.

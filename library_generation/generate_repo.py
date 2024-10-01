@@ -49,10 +49,7 @@ def generate_from_yaml(
         gen_config=config, library_config=target_libraries, repo_path=repository_path
     )
     # copy api definition to output folder.
-    print(os.listdir(api_definitions_path))
-    print(f"Copy from {api_definitions_path} to {repo_config.output_folder}")
     shutil.copytree(api_definitions_path, repo_config.output_folder, dirs_exist_ok=True)
-    print(os.listdir(repo_config.output_folder))
 
     for library_path, library in repo_config.get_libraries().items():
         print(f"generating library {library.get_library_name()}")
