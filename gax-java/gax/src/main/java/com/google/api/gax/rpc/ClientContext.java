@@ -43,6 +43,7 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
+import com.google.auth.CredentialTypeForMetrics;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GdchCredentials;
 import com.google.auto.value.AutoValue;
@@ -178,7 +179,7 @@ public abstract class ClientContext {
 
     String settingsGdchApiAudience = settings.getGdchApiAudience();
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
-    String credentialType = credentials.getCredentialType().getLabel();
+    CredentialTypeForMetrics credentialType = credentials.getMetricsCredentialType();
     boolean usingGDCH = credentials instanceof GdchCredentials;
     if (usingGDCH) {
       // Can only determine if the GDC-H is being used via the Credentials. The Credentials object
@@ -298,7 +299,7 @@ public abstract class ClientContext {
    * Project Id. Then append credential type to x-goog-api-client header.
    */
   private static Map<String, String> getHeadersFromSettingsAndAppendCredentialType(
-      StubSettings settings, String credentialType) {
+      StubSettings settings, CredentialTypeForMetrics credentialType) {
     // Resolve conflicts when merging headers from multiple sources
     Map<String, String> userHeaders = settings.getHeaderProvider().getHeaders();
     Map<String, String> internalHeaders = settings.getInternalHeaderProvider().getHeaders();
@@ -325,9 +326,11 @@ public abstract class ClientContext {
     effectiveHeaders.putAll(userHeaders);
     effectiveHeaders.putAll(conflictResolution);
 
-    effectiveHeaders.computeIfPresent(
-        ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
-        (key, value) -> value + " cred-type/" + credentialType);
+    if (credentialType != CredentialTypeForMetrics.DO_NOT_SEND) {
+      effectiveHeaders.computeIfPresent(
+          ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+          (key, value) -> value + " cred-type/" + credentialType.getLabel());
+    }
     return ImmutableMap.copyOf(effectiveHeaders);
   }
 
