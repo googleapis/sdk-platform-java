@@ -42,7 +42,6 @@ runs:
     with:
       workload_identity_provider: projects/122457793624/locations/us-central1/workloadIdentityPools/github_actions_pool/providers/github_provider
       service_account: wif-github-actions@java-hermetic-build-prod.iam.gserviceaccount.com
-      token_format: "access_token"
   - name: Set up Cloud SDK
     uses: google-github-actions/setup-gcloud@v2
   - name: Configure Artifact registry
