@@ -884,7 +884,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
-  public void providerInitializedWithNonConflictingHeaders_retainsHeaders() {
+  void providerInitializedWithNonConflictingHeaders_retainsHeaders() {
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
@@ -898,8 +898,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
-  public void providersInitializedWithConflictingApiKeyCredentialHeaders_removesDuplicates()
-      throws IOException {
+  void providersInitializedWithConflictingApiKeyCredentialHeaders_removesDuplicates() {
     String correctApiKey = "fake_api_key";
     ApiKeyCredentials apiKeyCredentials = ApiKeyCredentials.create(correctApiKey);
     InstantiatingGrpcChannelProvider.Builder builder =
@@ -915,9 +914,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
-  public void
-      providersInitializedWithConflictingNonApiKeyCredentialHeaders_doesNotRemoveDuplicates()
-          throws IOException {
+  void providersInitializedWithConflictingNonApiKeyCredentialHeaders_doesNotRemoveDuplicates() {
     String authProvidedHeader = "Bearer token";
     Map<String, String> header = new HashMap<>();
     header.put(AuthHttpConstants.AUTHORIZATION, authProvidedHeader);
@@ -936,7 +933,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
-  public void buildProvider_handlesNullHeaderProvider() {
+  void buildProvider_handlesNullHeaderProvider() {
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("test.random.com:443");
 
@@ -946,7 +943,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
-  public void buildProvider_handlesNullCredentialsMetadataRequest() throws IOException {
+  void buildProvider_handlesNullCredentialsMetadataRequest() throws IOException {
     Credentials credentials = Mockito.mock(Credentials.class);
     Mockito.when(credentials.getRequestMetadata()).thenReturn(null);
     InstantiatingGrpcChannelProvider.Builder builder =
@@ -962,7 +959,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
-  public void buildProvider_handlesErrorRetrievingCredentialsMetadataRequest() throws IOException {
+  void buildProvider_handlesErrorRetrievingCredentialsMetadataRequest() throws IOException {
     Credentials credentials = Mockito.mock(Credentials.class);
     Mockito.when(credentials.getRequestMetadata())
         .thenThrow(new IOException("Error getting request metadata"));

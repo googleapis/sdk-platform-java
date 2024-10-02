@@ -295,7 +295,7 @@ public abstract class ClientContext {
    * a GDC-H audience
    */
   @VisibleForTesting
-  public static GdchCredentials getGdchCredentials(
+  static GdchCredentials getGdchCredentials(
       String settingsGdchApiAudience, String endpoint, Credentials credentials) throws IOException {
     String audienceString;
     if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {

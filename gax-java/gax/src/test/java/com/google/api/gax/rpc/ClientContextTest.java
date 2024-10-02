@@ -1074,7 +1074,7 @@ class ClientContextTest {
   }
 
   @Test
-  public void testSetApiKey_createsApiCredentials() throws IOException {
+  void testSetApiKey_createsApiCredentials() throws IOException {
     String apiKey = "key";
     FakeStubSettings.Builder builder = new FakeStubSettings.Builder();
     InterceptingExecutor executor = new InterceptingExecutor(1);
@@ -1095,7 +1095,7 @@ class ClientContextTest {
   }
 
   @Test
-  public void testSetApiKey_withDefaultCredentials_overridesCredentials() throws IOException {
+  void testSetApiKey_withDefaultCredentials_overridesCredentials() throws IOException {
     String apiKey = "key";
     FakeStubSettings.Builder builder = FakeStubSettings.newBuilder();
     InterceptingExecutor executor = new InterceptingExecutor(1);
