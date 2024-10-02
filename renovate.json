@@ -175,6 +175,12 @@
         "^io.netty"
       ],
       "groupName": "Netty dependencies"
+    },
+    {
+      "matchPackagePatterns": [
+        "^com.google.errorprone"
+      ],
+      "groupName": "Error Prone dependencies"
     }
   ]
 }
