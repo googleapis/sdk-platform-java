@@ -14,8 +14,6 @@
 
 """Synthtool synthesizes libraries from disparate sources."""
 
-import sys
-
 from synthtool.transforms import (
     move,
     replace,

@@ -13,6 +13,7 @@
 # limitations under the License.
 import difflib
 import json
+import tempfile
 from filecmp import cmp
 from filecmp import dircmp
 from git import Repo
@@ -29,7 +30,9 @@ from library_generation.test.compare_poms import compare_xml
 from library_generation.utils.utilities import sh_util as shell_call
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
-golden_dir = os.path.join(script_dir, "resources", "integration", "golden")
+config_dir = os.path.join(script_dir, "resources", "integration")
+golden_dir = os.path.join(config_dir, "golden")
+generator_jar_coordinates_file = os.path.join(config_dir, "test_generator_coordinates")
 repo_root_dir = os.path.join(script_dir, "..", "..")
 build_file = os.path.join(
     repo_root_dir, ".cloudbuild", "library_generation", "library_generation.Dockerfile"
@@ -38,19 +41,29 @@ image_tag = "test-image:latest"
 repo_prefix = "https://github.com/googleapis"
 output_dir = shell_call("get_output_folder")
 # this map tells which branch of each repo should we use for our diff tests
-committish_map = {
+commitish_map = {
     "google-cloud-java": "chore/test-hermetic-build",
     "java-bigtable": "chore/test-hermetic-build",
 }
-config_dir = f"{script_dir}/resources/integration"
 baseline_config_name = "baseline_generation_config.yaml"
 current_config_name = "current_generation_config.yaml"
+googleapis_commitish = "113a378d5aad5018876ec0a8cbfd4d6a4f746809"
+# This variable is used to override the jar created by building the image
+# with our own downloaded jar in order to lock the integration test to use
+# a constant version specified in
+# library_generation/test/resources/integration/test_generator_coordinates
+# This allows us to decouple the generation workflow testing with what the
+# generator jar will actually generate.
+# See library_generation/DEVELOPMENT.md ("The Hermetic Build's
+# well-known folder").
+WELL_KNOWN_GENERATOR_JAR_FILENAME = "gapic-generator-java.jar"
 
 
 class IntegrationTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        IntegrationTest.__build_image(docker_file=build_file, cwd=repo_root_dir)
+        cls.__download_generator_jar(coordinates_file=generator_jar_coordinates_file)
+        cls.__build_image(docker_file=build_file, cwd=repo_root_dir)
 
     @classmethod
     def setUp(cls) -> None:
@@ -58,6 +71,7 @@ class IntegrationTest(unittest.TestCase):
         os.makedirs(f"{golden_dir}", exist_ok=True)
 
     def test_entry_point_running_in_container(self):
+        api_definitions_path = self.__copy_api_definition(googleapis_commitish)
         config_files = self.__get_config_files(config_dir)
         for repo, config_file in config_files:
             config = from_yaml(config_file)
@@ -65,7 +79,7 @@ class IntegrationTest(unittest.TestCase):
             config_location = f"{golden_dir}/../{repo}"
             # 1. pull repository
             repo_dest = self.__pull_repo_to(
-                Path(repo_location), repo, committish_map[repo]
+                Path(repo_location), repo, commitish_map[repo]
             )
             # 2. prepare golden files
             library_names = self.__get_library_names_from_config(config)
@@ -78,6 +92,7 @@ class IntegrationTest(unittest.TestCase):
                 config_location=config_location,
                 baseline_config=baseline_config_name,
                 current_config=current_config_name,
+                api_definition=api_definitions_path,
             )
             # 4. compare generation result with golden files
             print(
@@ -176,15 +191,67 @@ class IntegrationTest(unittest.TestCase):
                 )
                 print("  PR description comparison succeed.")
         self.__remove_generated_files()
+        shutil.rmtree(api_definitions_path)
+
+    @classmethod
+    def __copy_api_definition(cls, committish: str) -> str:
+        repo_dest = cls.__pull_repo_to(
+            dest=tempfile.mkdtemp(), repo="googleapis", committish=committish
+        )
+        api_temp_dir = tempfile.mkdtemp()
+        print(f"Copying api definition to {api_temp_dir}...")
+        shutil.copytree(
+            f"{repo_dest}/google", f"{api_temp_dir}/google", dirs_exist_ok=True
+        )
+        shutil.copytree(
+            f"{repo_dest}/grafeas", f"{api_temp_dir}/grafeas", dirs_exist_ok=True
+        )
+        shutil.rmtree(repo_dest)
+        return api_temp_dir
 
     @classmethod
     def __build_image(cls, docker_file: str, cwd: str):
-        # we build the docker image without removing intermediate containers so
+        # we build the docker image without removing intermediate containers, so
         # we can re-test more quickly
         subprocess.check_call(
             ["docker", "build", "-f", docker_file, "-t", image_tag, "."],
             cwd=cwd,
         )
+
+    @classmethod
+    def __download_generator_jar(cls, coordinates_file: str) -> None:
+        """
+        Downloads the jar at the version specified in the
+        coordinates file
+        :param coordinates_file: path to the file containing the coordinates
+        """
+        with open(coordinates_file, "r") as coordinates_file_handle:
+            # make this var available in the function scope
+            # nonlocal coordinates
+            coordinates = coordinates_file_handle.read()
+        # download the jar
+        subprocess.check_call(
+            [
+                "mvn",
+                "dependency:copy",
+                f"-Dartifact={coordinates}",
+                f"-DoutputDirectory={config_dir}",
+            ]
+        )
+
+        # compute the filename of the downloaded jar
+        split_coordinates = coordinates.split(":")
+        artifact_id = split_coordinates[1]
+        version = split_coordinates[2]
+        jar_filename = f"{artifact_id}-{version}.jar"
+
+        # rename the jar to its well-known filename defined at the top of this
+        # script file
+        source_jar_path = os.path.join(config_dir, jar_filename)
+        destination_jar_path = os.path.join(
+            config_dir, WELL_KNOWN_GENERATOR_JAR_FILENAME
+        )
+        shutil.move(source_jar_path, destination_jar_path)
 
     @classmethod
     def __remove_generated_files(cls):
@@ -231,6 +298,7 @@ class IntegrationTest(unittest.TestCase):
         config_location: str,
         baseline_config: str,
         current_config: str,
+        api_definition: str,
     ):
         # we use the calling user to prevent the mapped volumes from changing
         # owners
@@ -247,11 +315,16 @@ class IntegrationTest(unittest.TestCase):
                 f"{repo_location}:/workspace/repo",
                 "-v",
                 f"{config_location}:/workspace/config",
+                "-v",
+                f"{api_definition}:/workspace/api",
+                "-v",
+                f"{config_dir}/{WELL_KNOWN_GENERATOR_JAR_FILENAME}:/home/.library_generation/{WELL_KNOWN_GENERATOR_JAR_FILENAME}",
                 "-w",
                 "/workspace/repo",
                 image_tag,
                 f"--baseline-generation-config-path=/workspace/config/{baseline_config}",
                 f"--current-generation-config-path=/workspace/config/{current_config}",
+                f"--api-definitions-path=/workspace/api",
             ],
         )
 

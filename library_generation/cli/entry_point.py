@@ -17,6 +17,7 @@ import sys
 import click as click
 from library_generation.generate_pr_description import generate_pr_descriptions
 from library_generation.generate_repo import generate_from_yaml
+from library_generation.model.config_change import ConfigChange
 from library_generation.model.generation_config import from_yaml
 from library_generation.utils.generation_config_comparator import compare_config
 
@@ -62,10 +63,22 @@ def main(ctx):
     directory.
     """,
 )
+@click.option(
+    "--api-definitions-path",
+    type=str,
+    default=".",
+    show_default=True,
+    help="""
+    The path to which the api definition (proto and service yaml) and its
+    dependencies resides.
+    If not specified, the path is the current working directory.
+    """,
+)
 def generate(
     baseline_generation_config_path: str,
     current_generation_config_path: str,
     repository_path: str,
+    api_definitions_path: str,
 ):
     """
     Compare baseline generation config and current generation config and
@@ -88,6 +101,26 @@ def generate(
     The commit history, if generated, will be available in
     repository_path/pr_description.txt.
     """
+    __generate_repo_and_pr_description_impl(
+        baseline_generation_config_path=baseline_generation_config_path,
+        current_generation_config_path=current_generation_config_path,
+        repository_path=repository_path,
+        api_definitions_path=api_definitions_path,
+    )
+
+
+def __generate_repo_and_pr_description_impl(
+    baseline_generation_config_path: str,
+    current_generation_config_path: str,
+    repository_path: str,
+    api_definitions_path: str,
+):
+    """
+    Implementation method for generate().
+    The decoupling of generate and __generate_repo_and_pr_description_impl is
+    meant to allow testing of this implementation function.
+    """
+
     default_generation_config_path = f"{os.getcwd()}/generation_config.yaml"
 
     if (
@@ -112,6 +145,7 @@ def generate(
 
     current_generation_config_path = os.path.abspath(current_generation_config_path)
     repository_path = os.path.abspath(repository_path)
+    api_definitions_path = os.path.abspath(api_definitions_path)
     if not baseline_generation_config_path:
         # Execute full generation based on current_generation_config if
         # baseline_generation_config is not specified.
@@ -119,6 +153,7 @@ def generate(
         generate_from_yaml(
             config=from_yaml(current_generation_config_path),
             repository_path=repository_path,
+            api_definitions_path=api_definitions_path,
         )
         return
 
@@ -129,15 +164,31 @@ def generate(
         baseline_config=from_yaml(baseline_generation_config_path),
         current_config=from_yaml(current_generation_config_path),
     )
+    # pass None if we want to fully generate the repository.
+    target_library_names = (
+        config_change.get_changed_libraries()
+        if not _needs_full_repo_generation(config_change=config_change)
+        else None
+    )
     generate_from_yaml(
         config=config_change.current_config,
         repository_path=repository_path,
-        target_library_names=config_change.get_changed_libraries(),
+        api_definitions_path=api_definitions_path,
+        target_library_names=target_library_names,
     )
     generate_pr_descriptions(
         config_change=config_change,
         description_path=repository_path,
     )
+
+
+def _needs_full_repo_generation(config_change: ConfigChange) -> bool:
+    """
+    Whether you should need a full repo generation, i.e., generate all
+    libraries in the generation configuration.
+    """
+    current_config = config_change.current_config
+    return not current_config.is_monorepo() or current_config.contains_common_protos()
 
 
 @main.command()

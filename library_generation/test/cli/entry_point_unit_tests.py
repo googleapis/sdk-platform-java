@@ -13,8 +13,14 @@
 # limitations under the License.
 import os
 import unittest
+from unittest.mock import patch, ANY
 from click.testing import CliRunner
-from library_generation.cli.entry_point import generate, validate_generation_config
+from library_generation.cli.entry_point import (
+    generate,
+    validate_generation_config,
+    __generate_repo_and_pr_description_impl as generate_impl,
+)
+from library_generation.model.generation_config import from_yaml
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 test_resource_dir = os.path.join(script_dir, "..", "resources", "test-config")
@@ -77,4 +83,127 @@ class EntryPointTest(unittest.TestCase):
         self.assertRegex(
             result.output,
             "have the same library name",
+        )
+
+    @patch("library_generation.cli.entry_point.generate_from_yaml")
+    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
+    def test_generate_non_monorepo_without_changes_triggers_full_generation(
+        self,
+        generate_pr_descriptions,
+        generate_from_yaml,
+    ):
+        """
+        this tests confirms the behavior of generation of non monorepos
+        (HW libraries). generate() should call generate_from_yaml()
+        with target_library_names=None in order to trigger the full generation
+        """
+        config_path = f"{test_resource_dir}/generation_config.yaml"
+        self.assertFalse(from_yaml(config_path).is_monorepo())
+        # we call the implementation method directly since click
+        # does special handling when a method is annotated with @main.command()
+        generate_impl(
+            baseline_generation_config_path=config_path,
+            current_generation_config_path=config_path,
+            repository_path=".",
+            api_definitions_path=".",
+        )
+        generate_from_yaml.assert_called_with(
+            config=ANY,
+            repository_path=ANY,
+            api_definitions_path=ANY,
+            target_library_names=None,
+        )
+
+    @patch("library_generation.cli.entry_point.generate_from_yaml")
+    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
+    def test_generate_non_monorepo_with_changes_triggers_full_generation(
+        self,
+        generate_pr_descriptions,
+        generate_from_yaml,
+    ):
+        """
+        this tests confirms the behavior of generation of non monorepos
+        (HW libraries). generate() should call generate_from_yaml()
+        with target_library_names=None in order to trigger the full generation
+        """
+        baseline_config_path = f"{test_resource_dir}/generation_config.yaml"
+        current_config_path = (
+            f"{test_resource_dir}/generation_config_library_modified.yaml"
+        )
+        self.assertFalse(from_yaml(current_config_path).is_monorepo())
+        self.assertFalse(from_yaml(baseline_config_path).is_monorepo())
+        # we call the implementation method directly since click
+        # does special handling when a method is annotated with @main.command()
+        generate_impl(
+            baseline_generation_config_path=baseline_config_path,
+            current_generation_config_path=current_config_path,
+            repository_path=".",
+            api_definitions_path=".",
+        )
+        generate_from_yaml.assert_called_with(
+            config=ANY,
+            repository_path=ANY,
+            api_definitions_path=ANY,
+            target_library_names=None,
+        )
+
+    @patch("library_generation.cli.entry_point.generate_from_yaml")
+    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
+    def test_generate_monorepo_with_common_protos_triggers_full_generation(
+        self,
+        generate_pr_descriptions,
+        generate_from_yaml,
+    ):
+        """
+        this tests confirms the behavior of generation of a monorepo with
+        common protos.
+        generate() should call generate_from_yaml() with
+        target_library_names=None in order to trigger the full generation
+        """
+        config_path = f"{test_resource_dir}/monorepo_with_common_protos.yaml"
+        self.assertTrue(from_yaml(config_path).is_monorepo())
+        # we call the implementation method directly since click
+        # does special handling when a method is annotated with @main.command()
+        generate_impl(
+            baseline_generation_config_path=config_path,
+            current_generation_config_path=config_path,
+            repository_path=".",
+            api_definitions_path=".",
+        )
+        generate_from_yaml.assert_called_with(
+            config=ANY,
+            repository_path=ANY,
+            api_definitions_path=ANY,
+            target_library_names=None,
+        )
+
+    @patch("library_generation.cli.entry_point.generate_from_yaml")
+    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
+    def test_generate_monorepo_without_common_protos_does_not_trigger_full_generation(
+        self,
+        generate_pr_descriptions,
+        generate_from_yaml,
+    ):
+        """
+        this tests confirms the behavior of generation of a monorepo without
+        common protos.
+        generate() should call generate_from_yaml() with
+        target_library_names=changed libraries which does not trigger the full
+        generation.
+        """
+        config_path = f"{test_resource_dir}/monorepo_without_common_protos.yaml"
+        self.assertTrue(from_yaml(config_path).is_monorepo())
+        # we call the implementation method directly since click
+        # does special handling when a method is annotated with @main.command()
+        generate_impl(
+            baseline_generation_config_path=config_path,
+            current_generation_config_path=config_path,
+            repository_path=".",
+            api_definitions_path=".",
+        )
+        generate_from_yaml.assert_called_with(
+            config=ANY,
+            repository_path=ANY,
+            api_definitions_path=ANY,
+            target_library_names=[],
         )

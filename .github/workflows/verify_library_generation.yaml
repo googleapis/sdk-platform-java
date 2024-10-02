@@ -73,21 +73,11 @@ jobs:
         set -x
         python -m unittest library_generation/test/integration_tests.py
   library-generation-unit-tests:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-22.04
     needs: should-run-library-generation-tests
     if: needs.should-run-library-generation-tests.outputs.should_run == 'true'
-    strategy:
-      matrix:
-        java: [ 8 ]
-        os: [ ubuntu-22.04, macos-12 ]
     steps:
     - uses: actions/checkout@v4
-    - name: install utils (macos)
-      if: matrix.os == 'macos-12'
-      shell: bash
-      run: |
-        brew update --preinstall
-        brew install coreutils
     - uses: actions/setup-python@v5
       with:
         python-version: 3.11
@@ -97,22 +87,8 @@ jobs:
         set -ex
         pushd library_generation
         pip install -r requirements.txt
+        pip install .
         popd
-    - name: install synthtool
-      shell: bash
-      run: |
-        set -ex
-        mkdir -p /tmp/synthtool
-        pushd /tmp/synthtool
-        if [ ! -d "synthtool" ]; then
-          git clone https://github.com/googleapis/synthtool.git
-        fi
-        pushd "synthtool"
-
-        git reset --hard origin/no-java-templates
-
-        python3 -m pip install -e .
-        python3 -m pip install -r requirements.in
     - name: Run shell unit tests
       run: |
         set -x
