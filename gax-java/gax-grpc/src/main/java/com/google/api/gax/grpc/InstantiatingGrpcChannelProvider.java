@@ -43,6 +43,7 @@ import com.google.api.gax.rpc.TransportChannel;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.common.annotations.VisibleForTesting;
@@ -63,6 +64,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
@@ -123,6 +126,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Boolean allowNonDefaultServiceAccount;
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
+  @VisibleForTesting final Map<String, String> headersWithDuplicatesRemoved = new HashMap<>();
 
   @Nullable
   private final ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
@@ -408,7 +412,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   private ManagedChannel createSingleChannel() throws IOException {
     GrpcHeaderInterceptor headerInterceptor =
-        new GrpcHeaderInterceptor(headerProvider.getHeaders());
+        new GrpcHeaderInterceptor(headersWithDuplicatesRemoved);
+
     GrpcMetadataHandlerInterceptor metadataHandlerInterceptor =
         new GrpcMetadataHandlerInterceptor();
 
@@ -494,6 +499,28 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       channelPrimer.primeChannel(managedChannel);
     }
     return managedChannel;
+  }
+
+  /* Remove provided headers that will also get set by {@link com.google.auth.ApiKeyCredentials}. They will be added as part of the grpc call when performing auth
+   * {@link io.grpc.auth.GoogleAuthLibraryCallCredentials#applyRequestMetadata}.  GRPC does not dedup headers {@link https://github.com/grpc/grpc-java/blob/a140e1bb0cfa662bcdb7823d73320eb8d49046f1/api/src/main/java/io/grpc/Metadata.java#L504} so we must before initiating the call.
+   *
+   * Note: This is specific for ApiKeyCredentials as duplicate API key headers causes a failure on the back end.  At this time we are not sure of the behavior for other credentials.
+   */
+  private void removeApiKeyCredentialDuplicateHeaders() {
+    if (headerProvider != null) {
+      headersWithDuplicatesRemoved.putAll(headerProvider.getHeaders());
+    }
+    if (credentials != null && credentials instanceof ApiKeyCredentials) {
+      try {
+        Map<String, List<String>> credentialRequestMetatData = credentials.getRequestMetadata();
+        if (credentialRequestMetatData != null) {
+          headersWithDuplicatesRemoved.keySet().removeAll(credentialRequestMetatData.keySet());
+        }
+      } catch (IOException e) {
+        // unreachable, there is no scenario that getRequestMetatData for ApiKeyCredentials will
+        // throw an IOException
+      }
+    }
   }
 
   /**
@@ -883,7 +910,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     public InstantiatingGrpcChannelProvider build() {
-      return new InstantiatingGrpcChannelProvider(this);
+      InstantiatingGrpcChannelProvider instantiatingGrpcChannelProvider =
+          new InstantiatingGrpcChannelProvider(this);
+      instantiatingGrpcChannelProvider.removeApiKeyCredentialDuplicateHeaders();
+      return instantiatingGrpcChannelProvider;
     }
 
     /**
