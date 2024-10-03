@@ -131,12 +131,12 @@ get_protoc_version() {
 }
 
 # Given the versions of the gapic generator, protoc and the protoc-grpc plugin,
-# this function will download each one of the required_tools and create the environment
+# this function will download each one of the tools and create the environment
 # variables "protoc_path" and "grpc_path" which are expected upstream. Note that
 # if the specified versions of protoc and grpc match DOCKER_PROTOC_VERSION and
 # DOCKER_GRPC_VERSION respectively, this function will instead set "protoc_path"
 # and "grpc_path" to DOCKER_PROTOC_PATH and DOCKER_GRPC_PATH respectively (no
-# download), since the docker image will have downloaded these required_tools beforehand.
+# download), since the docker image will have downloaded these tools beforehand.
 #
 # For the case of gapic-generator-java, no env var will be exported for the
 # upstream flow. Instead, the jar must be located in the well-known location
