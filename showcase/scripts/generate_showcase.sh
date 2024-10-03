@@ -55,10 +55,12 @@ if [ ! -d google ];then
   rm -rdf googleapis
 fi
 
-# copy the generator into its well-known location. For more details,
+# copy the generator and formatter into its well-known location.
+# For more details,
 # refer to library_generation/DEVELOPMENT.md
 well_known_folder="${HOME}/.library_generation"
 well_known_generator_jar_location="${well_known_folder}/gapic-generator-java.jar"
+well_known_formatter_jar_location="${well_known_folder}/google-java-format.jar"
 if [[ ! -d "${well_known_folder}" ]]; then
   mkdir "${well_known_folder}"
 fi
@@ -66,19 +68,27 @@ if [[ -f "${well_known_generator_jar_location}" ]]; then
   echo "replacing well-known generator jar with the latest one"
   rm "${well_known_generator_jar_location}"
 fi
+if [[ -f "${well_known_formatter_jar_location}" ]]; then
+  echo "replacing well-known formatter jar with the latest one"
+  rm "${well_known_formatter_jar_location}"
+fi
 maven_repository="$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)"
 generator_version=$(get_version_from_versions_txt "gapic-generator-java")
-source_jar_path="${maven_repository}/com/google/api/gapic-generator-java/${generator_version}/gapic-generator-java-${generator_version}.jar"
+generator_jar_path="${maven_repository}/com/google/api/gapic-generator-java/${generator_version}/gapic-generator-java-${generator_version}.jar"
 
-if [[ ! -f "${source_jar_path}" ]]; then
+if [[ ! -f "${generator_jar_path}" ]]; then
   echo "generator jar not found in its assumed location"
-  echo "in the local repository: ${source_jar_path}"
+  echo "in the local repository: ${generator_jar_path}"
   echo "(did you run mvn install in this repository's root?)"
   exit 1
 fi
 # transfer the snapshot jar into its well-known location
-cp "${source_jar_path}" "${well_known_generator_jar_location}"
-
+cp "${generator_jar_path}" "${well_known_generator_jar_location}"
+# transfer java formatter to its well-known location
+download_from \
+  "https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar" \
+  "google-java-format.jar" \
+cp "google-java-format.jar" "${well_known_formatter_jar_location}"
 gapic_additional_protos="google/iam/v1/iam_policy.proto google/cloud/location/locations.proto"
 
 path_to_generator_parent_pom="${SCRIPT_DIR}/../../gapic-generator-java-pom-parent/pom.xml"

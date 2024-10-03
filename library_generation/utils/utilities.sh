@@ -138,10 +138,11 @@ get_protoc_version() {
 # and "grpc_path" to DOCKER_PROTOC_PATH and DOCKER_GRPC_PATH respectively (no
 # download), since the docker image will have downloaded these tools beforehand.
 #
-# For the case of gapic-generator-java, no env var will be exported for the
-# upstream flow. Instead, the jar must be located in the well-known location
-# (${HOME}/.library_generation/gapic-generator-java.jar). More information in
-# `library_generation/DEVELOPMENT.md`
+# For the case of generator and formatter, no env var will be exported for the
+# upstream flow.
+# Instead, the jar must be located in the well-known location
+# (${HOME}/.library_generation/).
+# More information in `library_generation/DEVELOPMENT.md`.
 download_tools() {
   local protoc_version=$1
   local grpc_version=$2
