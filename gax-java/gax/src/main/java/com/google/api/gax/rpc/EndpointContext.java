@@ -146,9 +146,13 @@ public abstract class EndpointContext {
       // GDC-H has no universe domain, return
       return;
     }
+    // (TODO: b/349488459) - Disable automatic requests to MDS until 01/2025
+    // If MDS is required for Universe Domain, do not do any validation
+    if (credentials instanceof ComputeEngineCredentials) {
+      return;
+    }
     String credentialsUniverseDomain = Credentials.GOOGLE_DEFAULT_UNIVERSE;
     // If credentials is not NoCredentialsProvider, use the Universe Domain inside Credentials
-    // (TODO: b/349488459) - Disable automatic requests to MDS until 01/2025
     if (credentials != null && (!(credentials instanceof ComputeEngineCredentials))) {
       credentialsUniverseDomain = credentials.getUniverseDomain();
     }
