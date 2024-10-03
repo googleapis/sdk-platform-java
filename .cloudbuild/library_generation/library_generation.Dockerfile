@@ -35,6 +35,7 @@ SHELL [ "/bin/bash", "-c" ]
 ARG OWLBOT_CLI_COMMITTISH=ac84fa5c423a0069bbce3d2d869c9730c8fdf550
 ARG PROTOC_VERSION=25.5
 ARG GRPC_VERSION=1.67.1
+ARG JAVA_FORMAT_VERSION=1.23.0
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
@@ -100,6 +101,9 @@ RUN npm i && npm run compile && npm link
 RUN owl-bot copy-code --version
 RUN chmod -R o+rx ${NODE_PATH}
 RUN ln -sf ${NODE_PATH}/* /usr/local/bin
+
+# download the Java formatter
+ADD https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar /tools/google-java-format.jar
 
 # allow users to access the script folders
 RUN chmod -R o+rx /src

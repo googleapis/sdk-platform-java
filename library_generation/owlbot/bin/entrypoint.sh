@@ -65,7 +65,7 @@ echo "...done"
 
 # write or restore clirr-ignored-differences.xml
 echo "Generating clirr-ignored-differences.xml..."
-${scripts_root}/owlbot/bin/write_clirr_ignore.sh "${scripts_root}"
+"${scripts_root}"/owlbot/bin/write_clirr_ignore.sh "${scripts_root}"
 echo "...done"
 
 # fix license headers
@@ -73,12 +73,6 @@ echo "Fixing missing license headers..."
 python3 "${scripts_root}/owlbot/src/fix-license-headers.py"
 echo "...done"
 
-# Ensure formatting on all .java files in the repository.
-# Here we manually set the user.home system variable. Unfortunately, Maven
-# user.home inference involves the /etc/passwd file (confirmed empirically),
-# instead of the presumable $HOME env var, which may not work properly
-# when `docker run`ning with the -u flag because we may incur in users
-# not registered in the container's /etc/passwd file
 echo "Reformatting source..."
-mvn fmt:format -Duser.home="${HOME}" -V --batch-mode --no-transfer-progress
+"${scripts_root}"/owlbot/bin/format_source.sh
 echo "...done"
