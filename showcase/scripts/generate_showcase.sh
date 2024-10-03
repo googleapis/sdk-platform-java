@@ -58,9 +58,11 @@ fi
 # copy the generator and formatter into its well-known location.
 # For more details,
 # refer to library_generation/DEVELOPMENT.md
+java_formatter_name="google-java-format.jar"
+java_formatter_version="1.7"
 well_known_folder="${HOME}/.library_generation"
 well_known_generator_jar_location="${well_known_folder}/gapic-generator-java.jar"
-well_known_formatter_jar_location="${well_known_folder}/google-java-format.jar"
+well_known_formatter_jar_location="${well_known_folder}/${java_formatter_name}"
 if [[ ! -d "${well_known_folder}" ]]; then
   mkdir "${well_known_folder}"
 fi
@@ -86,9 +88,9 @@ fi
 cp "${generator_jar_path}" "${well_known_generator_jar_location}"
 # transfer java formatter to its well-known location
 download_from \
-  "https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/1.7/google-java-format-1.7-all-deps.jar" \
-  "google-java-format.jar"
-cp "google-java-format.jar" "${well_known_formatter_jar_location}"
+  "https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${java_formatter_version}google-java-format-${java_formatter_version}-all-deps.jar" \
+  "${java_formatter_name}"
+cp "${java_formatter_name}" "${well_known_formatter_jar_location}"
 gapic_additional_protos="google/iam/v1/iam_policy.proto google/cloud/location/locations.proto"
 
 path_to_generator_parent_pom="${SCRIPT_DIR}/../../gapic-generator-java-pom-parent/pom.xml"
