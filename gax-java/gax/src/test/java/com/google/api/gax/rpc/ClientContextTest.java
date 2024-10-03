@@ -681,70 +681,61 @@ class ClientContextTest {
 
   @Test
   void testApiClientHeaderAppendsCredType() throws Exception {
-    TransportChannelProvider transportChannelProvider =
-        new FakeTransportProvider(
-            FakeTransportChannel.create(new FakeChannel()),
-            null,
-            true,
-            null,
-            null,
-            DEFAULT_ENDPOINT);
     GoogleCredentials googleCredentials = Mockito.mock(GoogleCredentials.class);
     when(googleCredentials.getMetricsCredentialType())
         .thenReturn(CredentialTypeForMetrics.USER_CREDENTIALS);
 
-    ClientSettings.Builder builder =
-        new FakeClientSettings.Builder()
-            .setExecutorProvider(
-                FixedExecutorProvider.create(Mockito.mock(ScheduledExecutorService.class)))
-            .setTransportChannelProvider(transportChannelProvider)
-            .setCredentialsProvider(FixedCredentialsProvider.create(googleCredentials));
+    Map<String, String> headers =
+        setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+            FixedCredentialsProvider.create(googleCredentials),
+            FixedHeaderProvider.create("x-goog-api-client", "internal-agent"));
 
-    builder.setInternalHeaderProvider(
-        FixedHeaderProvider.create("x-goog-api-client", "internal-agent"));
-
-    ClientContext clientContext = ClientContext.create(builder.build());
-    FakeTransportChannel transportChannel =
-        (FakeTransportChannel) clientContext.getTransportChannel();
-
-    assertThat(transportChannel.getHeaders())
-        .containsEntry("x-goog-api-client", "internal-agent cred-type/u");
+    assertThat(headers).containsEntry("x-goog-api-client", "internal-agent cred-type/u");
   }
 
   @Test
   void testApiClientHeaderDoNotAppendsCredType_whenNoApiClientHeader() throws Exception {
-    TransportChannelProvider transportChannelProvider =
-        new FakeTransportProvider(
-            FakeTransportChannel.create(new FakeChannel()),
-            null,
-            true,
-            null,
-            null,
-            DEFAULT_ENDPOINT);
     GoogleCredentials googleCredentials = Mockito.mock(GoogleCredentials.class);
     when(googleCredentials.getMetricsCredentialType())
         .thenReturn(CredentialTypeForMetrics.USER_CREDENTIALS);
 
-    ClientSettings.Builder builder =
-        new FakeClientSettings.Builder()
-            .setExecutorProvider(
-                FixedExecutorProvider.create(Mockito.mock(ScheduledExecutorService.class)))
-            .setTransportChannelProvider(transportChannelProvider)
-            .setCredentialsProvider(FixedCredentialsProvider.create(googleCredentials));
+    Map<String, String> headers =
+        setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+            FixedCredentialsProvider.create(googleCredentials),
+            FixedHeaderProvider.create("some-other-header", "internal-agent"));
 
-    builder.setInternalHeaderProvider(
-        FixedHeaderProvider.create("some-other-header", "internal-agent"));
+    assertThat(headers).doesNotContainKey("x-goog-api-client");
+    assertThat(headers).containsEntry("some-other-header", "internal-agent");
+  }
 
-    ClientContext clientContext = ClientContext.create(builder.build());
-    FakeTransportChannel transportChannel =
-        (FakeTransportChannel) clientContext.getTransportChannel();
+  @Test
+  void testApiClientHeaderDoNotAppendsCredType_whenNullCredentials() throws IOException {
+    Map<String, String> headers =
+        setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+            NoCredentialsProvider.create(),
+            FixedHeaderProvider.create("x-goog-api-client", "internal-agent"));
 
-    assertThat(transportChannel.getHeaders()).doesNotContainKey("x-goog-api-client");
-    assertThat(transportChannel.getHeaders()).containsEntry("some-other-header", "internal-agent");
+    assertThat(headers).containsKey("x-goog-api-client");
+    assertThat(headers.get("x-goog-api-client")).doesNotContain("cred-type/");
   }
 
   @Test
   void testApiClientHeaderDoNotAppendsCredType_whenCredTypeDoNotSend() throws Exception {
+    GoogleCredentials googleCredentials = Mockito.mock(GoogleCredentials.class);
+    when(googleCredentials.getMetricsCredentialType())
+        .thenReturn(CredentialTypeForMetrics.DO_NOT_SEND);
+
+    Map<String, String> headers =
+        setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+            FixedCredentialsProvider.create(googleCredentials),
+            FixedHeaderProvider.create("x-goog-api-client", "internal-agent"));
+
+    assertThat(headers).containsKey("x-goog-api-client");
+    assertThat(headers.get("x-goog-api-client")).doesNotContain("cred-type/");
+  }
+
+  private Map<String, String> setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+      CredentialsProvider credentialsProvider, HeaderProvider headerProvider) throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()),
@@ -753,26 +744,19 @@ class ClientContextTest {
             null,
             null,
             DEFAULT_ENDPOINT);
-    GoogleCredentials googleCredentials = Mockito.mock(GoogleCredentials.class);
-    when(googleCredentials.getMetricsCredentialType())
-        .thenReturn(CredentialTypeForMetrics.DO_NOT_SEND);
 
     ClientSettings.Builder builder =
         new FakeClientSettings.Builder()
             .setExecutorProvider(
                 FixedExecutorProvider.create(Mockito.mock(ScheduledExecutorService.class)))
             .setTransportChannelProvider(transportChannelProvider)
-            .setCredentialsProvider(FixedCredentialsProvider.create(googleCredentials));
-
-    builder.setInternalHeaderProvider(
-        FixedHeaderProvider.create("x-goog-api-client", "internal-agent"));
+            .setCredentialsProvider(credentialsProvider)
+            .setInternalHeaderProvider(headerProvider);
 
     ClientContext clientContext = ClientContext.create(builder.build());
     FakeTransportChannel transportChannel =
         (FakeTransportChannel) clientContext.getTransportChannel();
-
-    assertThat(transportChannel.getHeaders()).containsKey("x-goog-api-client");
-    assertThat(transportChannel.getHeaders().get("x-goog-api-client")).doesNotContain("cred-type/");
+    return transportChannel.getHeaders();
   }
 
   private static String endpoint = "https://foo.googleapis.com";
