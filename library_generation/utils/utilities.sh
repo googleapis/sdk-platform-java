@@ -167,7 +167,7 @@ download_required_tools() {
     export grpc_path=$(download_grpc_plugin "${grpc_version}" "${os_architecture}")
   fi
 
-  # Here we check whether required_tools is stored in the expected location.
+  # Here we check whether required tools is stored in the expected location.
   # The docker image will prepare jar files in this location.
   # This check is meant to ensure integrity of the downstream workflow.
   error_if_not_exists "${GAPIC_GENERATOR_LOCATION}"
