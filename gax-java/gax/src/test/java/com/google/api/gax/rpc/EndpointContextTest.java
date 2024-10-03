@@ -29,12 +29,14 @@
  */
 package com.google.api.gax.rpc;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.api.gax.rpc.testing.FakeMtlsProvider;
 import com.google.auth.Credentials;
+import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.common.truth.Truth;
 import io.grpc.Status;
 import java.io.IOException;
@@ -436,5 +438,20 @@ class EndpointContextTest {
     assertThrows(
         UnauthenticatedException.class,
         () -> endpointContext.validateUniverseDomain(credentials, statusCode));
+  }
+
+  // (TODO: b/349488459) - Disable automatic requests to MDS until 01/2025
+  // Test is to ensure that no validation is being run for ComputeEngineCredentials
+  @Test
+  void hasValidUniverseDomain_computeEngineCredentials_noValidationOnUniverseDomain()
+      throws IOException {
+    Credentials credentials = Mockito.mock(ComputeEngineCredentials.class);
+    Mockito.when(credentials.getUniverseDomain()).thenReturn(Credentials.GOOGLE_DEFAULT_UNIVERSE);
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder
+            // Set a custom Universe Domain that doesn't match
+            .setUniverseDomain("test.com")
+            .build();
+    assertDoesNotThrow(() -> endpointContext.validateUniverseDomain(credentials, statusCode));
   }
 }
