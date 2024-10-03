@@ -153,7 +153,7 @@ public abstract class EndpointContext {
     }
     String credentialsUniverseDomain = Credentials.GOOGLE_DEFAULT_UNIVERSE;
     // If credentials is not NoCredentialsProvider, use the Universe Domain inside Credentials
-    if (credentials != null && (!(credentials instanceof ComputeEngineCredentials))) {
+    if (credentials != null) {
       credentialsUniverseDomain = credentials.getUniverseDomain();
     }
     if (!resolvedUniverseDomain().equals(credentialsUniverseDomain)) {
