@@ -32,6 +32,7 @@ package com.google.api.gax.rpc;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.Credentials;
+import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
@@ -147,7 +148,8 @@ public abstract class EndpointContext {
     }
     String credentialsUniverseDomain = Credentials.GOOGLE_DEFAULT_UNIVERSE;
     // If credentials is not NoCredentialsProvider, use the Universe Domain inside Credentials
-    if (credentials != null) {
+    // (TODO: b/349488459) - Disable automatic retries until 01/2025
+    if (credentials != null && (!(credentials instanceof ComputeEngineCredentials))) {
       credentialsUniverseDomain = credentials.getUniverseDomain();
     }
     if (!resolvedUniverseDomain().equals(credentialsUniverseDomain)) {
