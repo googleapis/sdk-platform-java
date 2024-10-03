@@ -75,7 +75,7 @@ mv /path/to/jar "${HOME}/.library_generation/gapic-generator-java.jar"
 #### Put the java formatter jar in its well-known location
 
 Download google-java-format-{version}-all-deps.jar from [Maven Central](https://central.sonatype.com/artifact/com.google.googlejavaformat/google-java-format)
-or [GitHub](https://github.com/google/google-java-format).
+or [GitHub releases](https://github.com/google/google-java-format/releases).
 Then `mv` the jar into the well-known location of the jar.
 The generation scripts will assume the jar is there.
 
