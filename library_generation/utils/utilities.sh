@@ -142,7 +142,7 @@ get_protoc_version() {
 # upstream flow. Instead, the jar must be located in the well-known location
 # (${HOME}/.library_generation/gapic-generator-java.jar). More information in
 # `library_generation/DEVELOPMENT.md`
-download_required_tools() {
+download_tools() {
   local protoc_version=$1
   local grpc_version=$2
   local os_architecture=$3
