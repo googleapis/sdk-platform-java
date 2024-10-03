@@ -22,6 +22,9 @@ set -e
 
 # Find all the java files relative to the current directory and format them
 # using google-java-format
+scripts_root=$1
+
+source "${scripts_root}/utils/utilities.sh"
 list="$(find . -name '*.java' -not -path ".*/samples/snippets/generated/**/*" )"
 tmp_file=$(mktemp)
 
@@ -39,6 +42,6 @@ do
 done
 
 # use formatter downloaded in the Dockerfile.
-cat $tmp_file | xargs java -jar "/src/google-java-format.jar" --replace
+cat $tmp_file | xargs java -jar "$(get_java_formatter_location)" --replace
 
 rm $tmp_file

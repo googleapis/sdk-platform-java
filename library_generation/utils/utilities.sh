@@ -4,6 +4,7 @@ set -eo pipefail
 utilities_script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 # The $HOME variable is always set in the OS env as per POSIX specification.
 GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
+JAVA_FORMATTER_LOCATION="${HOME}/.library_generation/google-java-format.jar"
 
 # Utility functions used in `generate_library.sh` and showcase generation.
 extract_folder_name() {
@@ -379,4 +380,8 @@ download_googleapis_files_and_folders() {
 
 get_gapic_generator_location() {
   echo "${GAPIC_GENERATOR_LOCATION}"
+}
+
+get_java_formatter_location() {
+  echo "${JAVA_FORMATTER_LOCATION}"
 }

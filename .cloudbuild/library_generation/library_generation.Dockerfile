@@ -103,9 +103,9 @@ RUN chmod -R o+rx ${NODE_PATH}
 RUN ln -sf ${NODE_PATH}/* /usr/local/bin
 
 # download the Java formatter
-WORKDIR /tools
 ADD https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar \
-  /src/google-java-format.jar
+  "${HOME}"/.library_generation/google-java-format.jar
+RUN chmod 755 "${HOME}"/.library_generation/google-java-format.jar
 
 # allow users to access the script folders
 RUN chmod -R o+rx /src

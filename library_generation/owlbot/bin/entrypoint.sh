@@ -74,5 +74,5 @@ python3 "${scripts_root}/owlbot/src/fix-license-headers.py"
 echo "...done"
 
 echo "Reformatting source..."
-"${scripts_root}"/owlbot/bin/format_source.sh
+"${scripts_root}"/owlbot/bin/format_source.sh "${scripts_root}"
 echo "...done"
