@@ -122,7 +122,6 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    * <code>DAY_OF_WEEK_UNSPECIFIED = 0;</code>
    */
   public static final int DAY_OF_WEEK_UNSPECIFIED_VALUE = 0;
-
   /**
    *
    *
@@ -133,7 +132,6 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    * <code>MONDAY = 1;</code>
    */
   public static final int MONDAY_VALUE = 1;
-
   /**
    *
    *
@@ -144,7 +142,6 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    * <code>TUESDAY = 2;</code>
    */
   public static final int TUESDAY_VALUE = 2;
-
   /**
    *
    *
@@ -155,7 +152,6 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    * <code>WEDNESDAY = 3;</code>
    */
   public static final int WEDNESDAY_VALUE = 3;
-
   /**
    *
    *
@@ -166,7 +162,6 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    * <code>THURSDAY = 4;</code>
    */
   public static final int THURSDAY_VALUE = 4;
-
   /**
    *
    *
@@ -177,7 +172,6 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    * <code>FRIDAY = 5;</code>
    */
   public static final int FRIDAY_VALUE = 5;
-
   /**
    *
    *
@@ -188,7 +182,6 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    * <code>SATURDAY = 6;</code>
    */
   public static final int SATURDAY_VALUE = 6;
-
   /**
    *
    *

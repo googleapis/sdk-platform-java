@@ -41,7 +41,6 @@ public interface AuthorizationInfoOrBuilder
    * @return The resource.
    */
   java.lang.String getResource();
-
   /**
    *
    *
@@ -72,7 +71,6 @@ public interface AuthorizationInfoOrBuilder
    * @return The permission.
    */
   java.lang.String getPermission();
-
   /**
    *
    *
@@ -117,7 +115,6 @@ public interface AuthorizationInfoOrBuilder
    * @return Whether the resourceAttributes field is set.
    */
   boolean hasResourceAttributes();
-
   /**
    *
    *
@@ -135,7 +132,6 @@ public interface AuthorizationInfoOrBuilder
    * @return The resourceAttributes.
    */
   com.google.rpc.context.AttributeContext.Resource getResourceAttributes();
-
   /**
    *
    *

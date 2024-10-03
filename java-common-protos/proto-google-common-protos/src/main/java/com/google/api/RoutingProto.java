@@ -31,7 +31,6 @@ public final class RoutingProto {
   }
 
   public static final int ROUTING_FIELD_NUMBER = 72295729;
-
   /**
    *
    *

@@ -37,7 +37,6 @@ public interface LoggingOrBuilder
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
   java.util.List<com.google.api.Logging.LoggingDestination> getProducerDestinationsList();
-
   /**
    *
    *
@@ -51,7 +50,6 @@ public interface LoggingOrBuilder
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
   com.google.api.Logging.LoggingDestination getProducerDestinations(int index);
-
   /**
    *
    *
@@ -65,7 +63,6 @@ public interface LoggingOrBuilder
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
   int getProducerDestinationsCount();
-
   /**
    *
    *
@@ -80,7 +77,6 @@ public interface LoggingOrBuilder
    */
   java.util.List<? extends com.google.api.Logging.LoggingDestinationOrBuilder>
       getProducerDestinationsOrBuilderList();
-
   /**
    *
    *
@@ -108,7 +104,6 @@ public interface LoggingOrBuilder
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
   java.util.List<com.google.api.Logging.LoggingDestination> getConsumerDestinationsList();
-
   /**
    *
    *
@@ -122,7 +117,6 @@ public interface LoggingOrBuilder
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
   com.google.api.Logging.LoggingDestination getConsumerDestinations(int index);
-
   /**
    *
    *
@@ -136,7 +130,6 @@ public interface LoggingOrBuilder
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
   int getConsumerDestinationsCount();
-
   /**
    *
    *
@@ -151,7 +144,6 @@ public interface LoggingOrBuilder
    */
   java.util.List<? extends com.google.api.Logging.LoggingDestinationOrBuilder>
       getConsumerDestinationsOrBuilderList();
-
   /**
    *
    *

@@ -81,7 +81,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.Quota)
     QuotaOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Quota.newBuilder() to construct.
   private Quota(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -114,7 +113,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.QuotaLimit> limits_;
-
   /**
    *
    *
@@ -128,7 +126,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.QuotaLimit> getLimitsList() {
     return limits_;
   }
-
   /**
    *
    *
@@ -142,7 +139,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<? extends com.google.api.QuotaLimitOrBuilder> getLimitsOrBuilderList() {
     return limits_;
   }
-
   /**
    *
    *
@@ -156,7 +152,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
   public int getLimitsCount() {
     return limits_.size();
   }
-
   /**
    *
    *
@@ -170,7 +165,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.QuotaLimit getLimits(int index) {
     return limits_.get(index);
   }
-
   /**
    *
    *
@@ -189,7 +183,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.MetricRule> metricRules_;
-
   /**
    *
    *
@@ -204,7 +197,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.MetricRule> getMetricRulesList() {
     return metricRules_;
   }
-
   /**
    *
    *
@@ -220,7 +212,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       getMetricRulesOrBuilderList() {
     return metricRules_;
   }
-
   /**
    *
    *
@@ -235,7 +226,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
   public int getMetricRulesCount() {
     return metricRules_.size();
   }
-
   /**
    *
    *
@@ -250,7 +240,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.MetricRule getMetricRules(int index) {
     return metricRules_.get(index);
   }
-
   /**
    *
    *
@@ -436,7 +425,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -792,7 +780,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
         return limitsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -809,7 +796,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
         return limitsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -826,7 +812,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
         return limitsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -849,7 +834,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -869,7 +853,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -892,7 +875,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -915,7 +897,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -935,7 +916,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -955,7 +935,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -975,7 +954,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -995,7 +973,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1015,7 +992,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1028,7 +1004,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.QuotaLimit.Builder getLimitsBuilder(int index) {
       return getLimitsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1045,7 +1020,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
         return limitsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1062,7 +1036,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(limits_);
       }
     }
-
     /**
      *
      *
@@ -1075,7 +1048,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.QuotaLimit.Builder addLimitsBuilder() {
       return getLimitsFieldBuilder().addBuilder(com.google.api.QuotaLimit.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1089,7 +1061,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       return getLimitsFieldBuilder()
           .addBuilder(index, com.google.api.QuotaLimit.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1153,7 +1124,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
         return metricRulesBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -1171,7 +1141,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
         return metricRulesBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -1189,7 +1158,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
         return metricRulesBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -1213,7 +1181,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1234,7 +1201,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1258,7 +1224,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1282,7 +1247,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1303,7 +1267,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1324,7 +1287,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1346,7 +1308,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1367,7 +1328,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1388,7 +1348,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1402,7 +1361,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.MetricRule.Builder getMetricRulesBuilder(int index) {
       return getMetricRulesFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1420,7 +1378,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
         return metricRulesBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1439,7 +1396,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(metricRules_);
       }
     }
-
     /**
      *
      *
@@ -1454,7 +1410,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       return getMetricRulesFieldBuilder()
           .addBuilder(com.google.api.MetricRule.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1469,7 +1424,6 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
       return getMetricRulesFieldBuilder()
           .addBuilder(index, com.google.api.MetricRule.getDefaultInstance());
     }
-
     /**
      *
      *

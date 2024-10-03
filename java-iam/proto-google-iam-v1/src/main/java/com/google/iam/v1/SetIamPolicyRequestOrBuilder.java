@@ -39,7 +39,6 @@ public interface SetIamPolicyRequestOrBuilder
    * @return The resource.
    */
   java.lang.String getResource();
-
   /**
    *
    *
@@ -71,7 +70,6 @@ public interface SetIamPolicyRequestOrBuilder
    * @return Whether the policy field is set.
    */
   boolean hasPolicy();
-
   /**
    *
    *
@@ -87,7 +85,6 @@ public interface SetIamPolicyRequestOrBuilder
    * @return The policy.
    */
   com.google.iam.v1.Policy getPolicy();
-
   /**
    *
    *
@@ -118,7 +115,6 @@ public interface SetIamPolicyRequestOrBuilder
    * @return Whether the updateMask field is set.
    */
   boolean hasUpdateMask();
-
   /**
    *
    *
@@ -135,7 +131,6 @@ public interface SetIamPolicyRequestOrBuilder
    * @return The updateMask.
    */
   com.google.protobuf.FieldMask getUpdateMask();
-
   /**
    *
    *

@@ -44,7 +44,6 @@ public interface UsageOrBuilder
    * @return A list containing the requirements.
    */
   java.util.List<java.lang.String> getRequirementsList();
-
   /**
    *
    *
@@ -65,7 +64,6 @@ public interface UsageOrBuilder
    * @return The count of requirements.
    */
   int getRequirementsCount();
-
   /**
    *
    *
@@ -87,7 +85,6 @@ public interface UsageOrBuilder
    * @return The requirements at the given index.
    */
   java.lang.String getRequirements(int index);
-
   /**
    *
    *
@@ -122,7 +119,6 @@ public interface UsageOrBuilder
    * <code>repeated .google.api.UsageRule rules = 6;</code>
    */
   java.util.List<com.google.api.UsageRule> getRulesList();
-
   /**
    *
    *
@@ -135,7 +131,6 @@ public interface UsageOrBuilder
    * <code>repeated .google.api.UsageRule rules = 6;</code>
    */
   com.google.api.UsageRule getRules(int index);
-
   /**
    *
    *
@@ -148,7 +143,6 @@ public interface UsageOrBuilder
    * <code>repeated .google.api.UsageRule rules = 6;</code>
    */
   int getRulesCount();
-
   /**
    *
    *
@@ -161,7 +155,6 @@ public interface UsageOrBuilder
    * <code>repeated .google.api.UsageRule rules = 6;</code>
    */
   java.util.List<? extends com.google.api.UsageRuleOrBuilder> getRulesOrBuilderList();
-
   /**
    *
    *
@@ -194,7 +187,6 @@ public interface UsageOrBuilder
    * @return The producerNotificationChannel.
    */
   java.lang.String getProducerNotificationChannel();
-
   /**
    *
    *

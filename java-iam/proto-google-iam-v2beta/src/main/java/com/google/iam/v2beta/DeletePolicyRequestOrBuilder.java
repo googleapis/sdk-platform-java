@@ -45,7 +45,6 @@ public interface DeletePolicyRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -85,7 +84,6 @@ public interface DeletePolicyRequestOrBuilder
    * @return The etag.
    */
   java.lang.String getEtag();
-
   /**
    *
    *

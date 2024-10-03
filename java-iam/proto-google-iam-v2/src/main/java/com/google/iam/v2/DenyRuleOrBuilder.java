@@ -75,7 +75,6 @@ public interface DenyRuleOrBuilder
    * @return A list containing the deniedPrincipals.
    */
   java.util.List<java.lang.String> getDeniedPrincipalsList();
-
   /**
    *
    *
@@ -127,7 +126,6 @@ public interface DenyRuleOrBuilder
    * @return The count of deniedPrincipals.
    */
   int getDeniedPrincipalsCount();
-
   /**
    *
    *
@@ -180,7 +178,6 @@ public interface DenyRuleOrBuilder
    * @return The deniedPrincipals at the given index.
    */
   java.lang.String getDeniedPrincipals(int index);
-
   /**
    *
    *
@@ -253,7 +250,6 @@ public interface DenyRuleOrBuilder
    * @return A list containing the exceptionPrincipals.
    */
   java.util.List<java.lang.String> getExceptionPrincipalsList();
-
   /**
    *
    *
@@ -273,7 +269,6 @@ public interface DenyRuleOrBuilder
    * @return The count of exceptionPrincipals.
    */
   int getExceptionPrincipalsCount();
-
   /**
    *
    *
@@ -294,7 +289,6 @@ public interface DenyRuleOrBuilder
    * @return The exceptionPrincipals at the given index.
    */
   java.lang.String getExceptionPrincipals(int index);
-
   /**
    *
    *
@@ -331,7 +325,6 @@ public interface DenyRuleOrBuilder
    * @return A list containing the deniedPermissions.
    */
   java.util.List<java.lang.String> getDeniedPermissionsList();
-
   /**
    *
    *
@@ -347,7 +340,6 @@ public interface DenyRuleOrBuilder
    * @return The count of deniedPermissions.
    */
   int getDeniedPermissionsCount();
-
   /**
    *
    *
@@ -364,7 +356,6 @@ public interface DenyRuleOrBuilder
    * @return The deniedPermissions at the given index.
    */
   java.lang.String getDeniedPermissions(int index);
-
   /**
    *
    *
@@ -400,7 +391,6 @@ public interface DenyRuleOrBuilder
    * @return A list containing the exceptionPermissions.
    */
   java.util.List<java.lang.String> getExceptionPermissionsList();
-
   /**
    *
    *
@@ -419,7 +409,6 @@ public interface DenyRuleOrBuilder
    * @return The count of exceptionPermissions.
    */
   int getExceptionPermissionsCount();
-
   /**
    *
    *
@@ -439,7 +428,6 @@ public interface DenyRuleOrBuilder
    * @return The exceptionPermissions at the given index.
    */
   java.lang.String getExceptionPermissions(int index);
-
   /**
    *
    *
@@ -482,7 +470,6 @@ public interface DenyRuleOrBuilder
    * @return Whether the denialCondition field is set.
    */
   boolean hasDenialCondition();
-
   /**
    *
    *
@@ -505,7 +492,6 @@ public interface DenyRuleOrBuilder
    * @return The denialCondition.
    */
   com.google.type.Expr getDenialCondition();
-
   /**
    *
    *

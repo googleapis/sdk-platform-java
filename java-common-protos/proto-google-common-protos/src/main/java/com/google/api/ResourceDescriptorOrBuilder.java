@@ -45,7 +45,6 @@ public interface ResourceDescriptorOrBuilder
    * @return The type.
    */
   java.lang.String getType();
-
   /**
    *
    *
@@ -98,7 +97,6 @@ public interface ResourceDescriptorOrBuilder
    * @return A list containing the pattern.
    */
   java.util.List<java.lang.String> getPatternList();
-
   /**
    *
    *
@@ -129,7 +127,6 @@ public interface ResourceDescriptorOrBuilder
    * @return The count of pattern.
    */
   int getPatternCount();
-
   /**
    *
    *
@@ -161,7 +158,6 @@ public interface ResourceDescriptorOrBuilder
    * @return The pattern at the given index.
    */
   java.lang.String getPattern(int index);
-
   /**
    *
    *
@@ -207,7 +203,6 @@ public interface ResourceDescriptorOrBuilder
    * @return The nameField.
    */
   java.lang.String getNameField();
-
   /**
    *
    *
@@ -248,7 +243,6 @@ public interface ResourceDescriptorOrBuilder
    * @return The enum numeric value on the wire for history.
    */
   int getHistoryValue();
-
   /**
    *
    *
@@ -300,7 +294,6 @@ public interface ResourceDescriptorOrBuilder
    * @return The plural.
    */
   java.lang.String getPlural();
-
   /**
    *
    *
@@ -340,7 +333,6 @@ public interface ResourceDescriptorOrBuilder
    * @return The singular.
    */
   java.lang.String getSingular();
-
   /**
    *
    *
@@ -370,7 +362,6 @@ public interface ResourceDescriptorOrBuilder
    * @return A list containing the style.
    */
   java.util.List<com.google.api.ResourceDescriptor.Style> getStyleList();
-
   /**
    *
    *
@@ -385,7 +376,6 @@ public interface ResourceDescriptorOrBuilder
    * @return The count of style.
    */
   int getStyleCount();
-
   /**
    *
    *
@@ -401,7 +391,6 @@ public interface ResourceDescriptorOrBuilder
    * @return The style at the given index.
    */
   com.google.api.ResourceDescriptor.Style getStyle(int index);
-
   /**
    *
    *
@@ -416,7 +405,6 @@ public interface ResourceDescriptorOrBuilder
    * @return A list containing the enum numeric values on the wire for style.
    */
   java.util.List<java.lang.Integer> getStyleValueList();
-
   /**
    *
    *

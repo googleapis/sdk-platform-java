@@ -36,7 +36,6 @@ public interface MetricDescriptorOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -69,7 +68,6 @@ public interface MetricDescriptorOrBuilder
    * @return The type.
    */
   java.lang.String getType();
-
   /**
    *
    *
@@ -105,7 +103,6 @@ public interface MetricDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
   java.util.List<com.google.api.LabelDescriptor> getLabelsList();
-
   /**
    *
    *
@@ -121,7 +118,6 @@ public interface MetricDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
   com.google.api.LabelDescriptor getLabels(int index);
-
   /**
    *
    *
@@ -137,7 +133,6 @@ public interface MetricDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
   int getLabelsCount();
-
   /**
    *
    *
@@ -153,7 +148,6 @@ public interface MetricDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
   java.util.List<? extends com.google.api.LabelDescriptorOrBuilder> getLabelsOrBuilderList();
-
   /**
    *
    *
@@ -183,7 +177,6 @@ public interface MetricDescriptorOrBuilder
    * @return The enum numeric value on the wire for metricKind.
    */
   int getMetricKindValue();
-
   /**
    *
    *
@@ -211,7 +204,6 @@ public interface MetricDescriptorOrBuilder
    * @return The enum numeric value on the wire for valueType.
    */
   int getValueTypeValue();
-
   /**
    *
    *
@@ -339,7 +331,6 @@ public interface MetricDescriptorOrBuilder
    * @return The unit.
    */
   java.lang.String getUnit();
-
   /**
    *
    *
@@ -466,7 +457,6 @@ public interface MetricDescriptorOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
-
   /**
    *
    *
@@ -495,7 +485,6 @@ public interface MetricDescriptorOrBuilder
    * @return The displayName.
    */
   java.lang.String getDisplayName();
-
   /**
    *
    *
@@ -524,7 +513,6 @@ public interface MetricDescriptorOrBuilder
    * @return Whether the metadata field is set.
    */
   boolean hasMetadata();
-
   /**
    *
    *
@@ -537,7 +525,6 @@ public interface MetricDescriptorOrBuilder
    * @return The metadata.
    */
   com.google.api.MetricDescriptor.MetricDescriptorMetadata getMetadata();
-
   /**
    *
    *
@@ -561,7 +548,6 @@ public interface MetricDescriptorOrBuilder
    * @return The enum numeric value on the wire for launchStage.
    */
   int getLaunchStageValue();
-
   /**
    *
    *
@@ -592,7 +578,6 @@ public interface MetricDescriptorOrBuilder
    * @return A list containing the monitoredResourceTypes.
    */
   java.util.List<java.lang.String> getMonitoredResourceTypesList();
-
   /**
    *
    *
@@ -610,7 +595,6 @@ public interface MetricDescriptorOrBuilder
    * @return The count of monitoredResourceTypes.
    */
   int getMonitoredResourceTypesCount();
-
   /**
    *
    *
@@ -629,7 +613,6 @@ public interface MetricDescriptorOrBuilder
    * @return The monitoredResourceTypes at the given index.
    */
   java.lang.String getMonitoredResourceTypes(int index);
-
   /**
    *
    *

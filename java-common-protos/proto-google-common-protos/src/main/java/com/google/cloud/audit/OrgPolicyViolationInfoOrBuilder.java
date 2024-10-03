@@ -38,7 +38,6 @@ public interface OrgPolicyViolationInfoOrBuilder
    * @return Whether the payload field is set.
    */
   boolean hasPayload();
-
   /**
    *
    *
@@ -53,7 +52,6 @@ public interface OrgPolicyViolationInfoOrBuilder
    * @return The payload.
    */
   com.google.protobuf.Struct getPayload();
-
   /**
    *
    *
@@ -80,7 +78,6 @@ public interface OrgPolicyViolationInfoOrBuilder
    * @return The resourceType.
    */
   java.lang.String getResourceType();
-
   /**
    *
    *
@@ -112,7 +109,6 @@ public interface OrgPolicyViolationInfoOrBuilder
    * </code>
    */
   int getResourceTagsCount();
-
   /**
    *
    *
@@ -130,11 +126,9 @@ public interface OrgPolicyViolationInfoOrBuilder
    * </code>
    */
   boolean containsResourceTags(java.lang.String key);
-
   /** Use {@link #getResourceTagsMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, java.lang.String> getResourceTags();
-
   /**
    *
    *
@@ -152,7 +146,6 @@ public interface OrgPolicyViolationInfoOrBuilder
    * </code>
    */
   java.util.Map<java.lang.String, java.lang.String> getResourceTagsMap();
-
   /**
    *
    *
@@ -174,7 +167,6 @@ public interface OrgPolicyViolationInfoOrBuilder
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue);
-
   /**
    *
    *
@@ -205,7 +197,6 @@ public interface OrgPolicyViolationInfoOrBuilder
    * </code>
    */
   java.util.List<com.google.cloud.audit.ViolationInfo> getViolationInfoList();
-
   /**
    *
    *
@@ -218,7 +209,6 @@ public interface OrgPolicyViolationInfoOrBuilder
    * </code>
    */
   com.google.cloud.audit.ViolationInfo getViolationInfo(int index);
-
   /**
    *
    *
@@ -231,7 +221,6 @@ public interface OrgPolicyViolationInfoOrBuilder
    * </code>
    */
   int getViolationInfoCount();
-
   /**
    *
    *
@@ -245,7 +234,6 @@ public interface OrgPolicyViolationInfoOrBuilder
    */
   java.util.List<? extends com.google.cloud.audit.ViolationInfoOrBuilder>
       getViolationInfoOrBuilderList();
-
   /**
    *
    *

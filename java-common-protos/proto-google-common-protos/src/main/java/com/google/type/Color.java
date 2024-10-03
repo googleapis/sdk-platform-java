@@ -156,7 +156,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.type.Color)
     ColorOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Color.newBuilder() to construct.
   private Color(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -185,7 +184,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int RED_FIELD_NUMBER = 1;
   private float red_ = 0F;
-
   /**
    *
    *
@@ -204,7 +202,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
 
   public static final int GREEN_FIELD_NUMBER = 2;
   private float green_ = 0F;
-
   /**
    *
    *
@@ -223,7 +220,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
 
   public static final int BLUE_FIELD_NUMBER = 3;
   private float blue_ = 0F;
-
   /**
    *
    *
@@ -242,7 +238,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
 
   public static final int ALPHA_FIELD_NUMBER = 4;
   private com.google.protobuf.FloatValue alpha_;
-
   /**
    *
    *
@@ -268,7 +263,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
   public boolean hasAlpha() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -294,7 +288,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.FloatValue getAlpha() {
     return alpha_ == null ? com.google.protobuf.FloatValue.getDefaultInstance() : alpha_;
   }
-
   /**
    *
    *
@@ -511,7 +504,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -866,7 +858,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private float red_;
-
     /**
      *
      *
@@ -882,7 +873,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     public float getRed() {
       return red_;
     }
-
     /**
      *
      *
@@ -902,7 +892,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -922,7 +911,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     }
 
     private float green_;
-
     /**
      *
      *
@@ -938,7 +926,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     public float getGreen() {
       return green_;
     }
-
     /**
      *
      *
@@ -958,7 +945,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -978,7 +964,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     }
 
     private float blue_;
-
     /**
      *
      *
@@ -994,7 +979,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     public float getBlue() {
       return blue_;
     }
-
     /**
      *
      *
@@ -1014,7 +998,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1039,7 +1022,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.FloatValue.Builder,
             com.google.protobuf.FloatValueOrBuilder>
         alphaBuilder_;
-
     /**
      *
      *
@@ -1064,7 +1046,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     public boolean hasAlpha() {
       return ((bitField0_ & 0x00000008) != 0);
     }
-
     /**
      *
      *
@@ -1093,7 +1074,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
         return alphaBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1126,7 +1106,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1156,7 +1135,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1194,7 +1172,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1224,7 +1201,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1249,7 +1225,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getAlphaFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1276,7 +1251,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
         return alpha_ == null ? com.google.protobuf.FloatValue.getDefaultInstance() : alpha_;
       }
     }
-
     /**
      *
      *

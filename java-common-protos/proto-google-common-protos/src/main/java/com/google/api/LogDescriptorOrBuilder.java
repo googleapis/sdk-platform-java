@@ -39,7 +39,6 @@ public interface LogDescriptorOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -68,7 +67,6 @@ public interface LogDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
   java.util.List<com.google.api.LabelDescriptor> getLabelsList();
-
   /**
    *
    *
@@ -81,7 +79,6 @@ public interface LogDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
   com.google.api.LabelDescriptor getLabels(int index);
-
   /**
    *
    *
@@ -94,7 +91,6 @@ public interface LogDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
   int getLabelsCount();
-
   /**
    *
    *
@@ -107,7 +103,6 @@ public interface LogDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
   java.util.List<? extends com.google.api.LabelDescriptorOrBuilder> getLabelsOrBuilderList();
-
   /**
    *
    *
@@ -134,7 +129,6 @@ public interface LogDescriptorOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
-
   /**
    *
    *
@@ -162,7 +156,6 @@ public interface LogDescriptorOrBuilder
    * @return The displayName.
    */
   java.lang.String getDisplayName();
-
   /**
    *
    *

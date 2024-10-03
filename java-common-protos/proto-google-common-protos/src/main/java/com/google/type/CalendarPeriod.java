@@ -128,7 +128,6 @@ public enum CalendarPeriod implements com.google.protobuf.ProtocolMessageEnum {
    * <code>CALENDAR_PERIOD_UNSPECIFIED = 0;</code>
    */
   public static final int CALENDAR_PERIOD_UNSPECIFIED_VALUE = 0;
-
   /**
    *
    *
@@ -139,7 +138,6 @@ public enum CalendarPeriod implements com.google.protobuf.ProtocolMessageEnum {
    * <code>DAY = 1;</code>
    */
   public static final int DAY_VALUE = 1;
-
   /**
    *
    *
@@ -151,7 +149,6 @@ public enum CalendarPeriod implements com.google.protobuf.ProtocolMessageEnum {
    * <code>WEEK = 2;</code>
    */
   public static final int WEEK_VALUE = 2;
-
   /**
    *
    *
@@ -164,7 +161,6 @@ public enum CalendarPeriod implements com.google.protobuf.ProtocolMessageEnum {
    * <code>FORTNIGHT = 3;</code>
    */
   public static final int FORTNIGHT_VALUE = 3;
-
   /**
    *
    *
@@ -175,7 +171,6 @@ public enum CalendarPeriod implements com.google.protobuf.ProtocolMessageEnum {
    * <code>MONTH = 4;</code>
    */
   public static final int MONTH_VALUE = 4;
-
   /**
    *
    *
@@ -187,7 +182,6 @@ public enum CalendarPeriod implements com.google.protobuf.ProtocolMessageEnum {
    * <code>QUARTER = 5;</code>
    */
   public static final int QUARTER_VALUE = 5;
-
   /**
    *
    *
@@ -198,7 +192,6 @@ public enum CalendarPeriod implements com.google.protobuf.ProtocolMessageEnum {
    * <code>HALF = 6;</code>
    */
   public static final int HALF_VALUE = 6;
-
   /**
    *
    *

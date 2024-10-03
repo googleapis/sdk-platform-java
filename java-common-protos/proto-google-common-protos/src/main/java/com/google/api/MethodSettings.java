@@ -33,7 +33,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.MethodSettings)
     MethodSettingsOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use MethodSettings.newBuilder() to construct.
   private MethodSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -80,7 +79,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the initialPollDelay field is set.
      */
     boolean hasInitialPollDelay();
-
     /**
      *
      *
@@ -94,7 +92,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * @return The initialPollDelay.
      */
     com.google.protobuf.Duration getInitialPollDelay();
-
     /**
      *
      *
@@ -135,7 +132,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the maxPollDelay field is set.
      */
     boolean hasMaxPollDelay();
-
     /**
      *
      *
@@ -149,7 +145,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * @return The maxPollDelay.
      */
     com.google.protobuf.Duration getMaxPollDelay();
-
     /**
      *
      *
@@ -175,7 +170,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the totalPollTimeout field is set.
      */
     boolean hasTotalPollTimeout();
-
     /**
      *
      *
@@ -189,7 +183,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * @return The totalPollTimeout.
      */
     com.google.protobuf.Duration getTotalPollTimeout();
-
     /**
      *
      *
@@ -202,7 +195,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.protobuf.DurationOrBuilder getTotalPollTimeoutOrBuilder();
   }
-
   /**
    *
    *
@@ -221,7 +213,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.api.MethodSettings.LongRunning)
       LongRunningOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use LongRunning.newBuilder() to construct.
     private LongRunning(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -253,7 +244,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
     public static final int INITIAL_POLL_DELAY_FIELD_NUMBER = 1;
     private com.google.protobuf.Duration initialPollDelay_;
-
     /**
      *
      *
@@ -270,7 +260,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     public boolean hasInitialPollDelay() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -289,7 +278,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
           ? com.google.protobuf.Duration.getDefaultInstance()
           : initialPollDelay_;
     }
-
     /**
      *
      *
@@ -309,7 +297,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
 
     public static final int POLL_DELAY_MULTIPLIER_FIELD_NUMBER = 2;
     private float pollDelayMultiplier_ = 0F;
-
     /**
      *
      *
@@ -330,7 +317,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
 
     public static final int MAX_POLL_DELAY_FIELD_NUMBER = 3;
     private com.google.protobuf.Duration maxPollDelay_;
-
     /**
      *
      *
@@ -347,7 +333,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     public boolean hasMaxPollDelay() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -366,7 +351,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
           ? com.google.protobuf.Duration.getDefaultInstance()
           : maxPollDelay_;
     }
-
     /**
      *
      *
@@ -386,7 +370,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
 
     public static final int TOTAL_POLL_TIMEOUT_FIELD_NUMBER = 4;
     private com.google.protobuf.Duration totalPollTimeout_;
-
     /**
      *
      *
@@ -403,7 +386,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     public boolean hasTotalPollTimeout() {
       return ((bitField0_ & 0x00000004) != 0);
     }
-
     /**
      *
      *
@@ -422,7 +404,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
           ? com.google.protobuf.Duration.getDefaultInstance()
           : totalPollTimeout_;
     }
-
     /**
      *
      *
@@ -643,7 +624,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -913,7 +893,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
               com.google.protobuf.Duration.Builder,
               com.google.protobuf.DurationOrBuilder>
           initialPollDelayBuilder_;
-
       /**
        *
        *
@@ -929,7 +908,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       public boolean hasInitialPollDelay() {
         return ((bitField0_ & 0x00000001) != 0);
       }
-
       /**
        *
        *
@@ -951,7 +929,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
           return initialPollDelayBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -975,7 +952,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -996,7 +972,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1025,7 +1000,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -1046,7 +1020,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1062,7 +1035,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return getInitialPollDelayFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -1082,7 +1054,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
               : initialPollDelay_;
         }
       }
-
       /**
        *
        *
@@ -1111,7 +1082,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       }
 
       private float pollDelayMultiplier_;
-
       /**
        *
        *
@@ -1129,7 +1099,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       public float getPollDelayMultiplier() {
         return pollDelayMultiplier_;
       }
-
       /**
        *
        *
@@ -1151,7 +1120,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1178,7 +1146,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
               com.google.protobuf.Duration.Builder,
               com.google.protobuf.DurationOrBuilder>
           maxPollDelayBuilder_;
-
       /**
        *
        *
@@ -1194,7 +1161,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       public boolean hasMaxPollDelay() {
         return ((bitField0_ & 0x00000004) != 0);
       }
-
       /**
        *
        *
@@ -1216,7 +1182,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
           return maxPollDelayBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -1240,7 +1205,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1261,7 +1225,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1290,7 +1253,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -1311,7 +1273,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1327,7 +1288,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return getMaxPollDelayFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -1347,7 +1307,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
               : maxPollDelay_;
         }
       }
-
       /**
        *
        *
@@ -1381,7 +1340,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
               com.google.protobuf.Duration.Builder,
               com.google.protobuf.DurationOrBuilder>
           totalPollTimeoutBuilder_;
-
       /**
        *
        *
@@ -1397,7 +1355,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       public boolean hasTotalPollTimeout() {
         return ((bitField0_ & 0x00000008) != 0);
       }
-
       /**
        *
        *
@@ -1419,7 +1376,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
           return totalPollTimeoutBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -1443,7 +1399,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1464,7 +1419,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1493,7 +1447,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -1514,7 +1467,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1530,7 +1482,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return getTotalPollTimeoutFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -1550,7 +1501,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
               : totalPollTimeout_;
         }
       }
-
       /**
        *
        *
@@ -1647,7 +1597,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object selector_ = "";
-
   /**
    *
    *
@@ -1679,7 +1628,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -1714,7 +1662,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
 
   public static final int LONG_RUNNING_FIELD_NUMBER = 2;
   private com.google.api.MethodSettings.LongRunning longRunning_;
-
   /**
    *
    *
@@ -1743,7 +1690,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
   public boolean hasLongRunning() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -1774,7 +1720,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         ? com.google.api.MethodSettings.LongRunning.getDefaultInstance()
         : longRunning_;
   }
-
   /**
    *
    *
@@ -1809,7 +1754,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList autoPopulatedFields_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -1834,7 +1778,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getAutoPopulatedFieldsList() {
     return autoPopulatedFields_;
   }
-
   /**
    *
    *
@@ -1859,7 +1802,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
   public int getAutoPopulatedFieldsCount() {
     return autoPopulatedFields_.size();
   }
-
   /**
    *
    *
@@ -1885,7 +1827,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getAutoPopulatedFields(int index) {
     return autoPopulatedFields_.get(index);
   }
-
   /**
    *
    *
@@ -2099,7 +2040,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -2330,7 +2270,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object selector_ = "";
-
     /**
      *
      *
@@ -2361,7 +2300,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2392,7 +2330,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2422,7 +2359,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2448,7 +2384,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2486,7 +2421,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
             com.google.api.MethodSettings.LongRunning.Builder,
             com.google.api.MethodSettings.LongRunningOrBuilder>
         longRunningBuilder_;
-
     /**
      *
      *
@@ -2514,7 +2448,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     public boolean hasLongRunning() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -2548,7 +2481,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         return longRunningBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -2584,7 +2516,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2618,7 +2549,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2659,7 +2589,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2692,7 +2621,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2720,7 +2648,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getLongRunningFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -2752,7 +2679,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
             : longRunning_;
       }
     }
-
     /**
      *
      *
@@ -2801,7 +2727,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000004;
     }
-
     /**
      *
      *
@@ -2827,7 +2752,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       autoPopulatedFields_.makeImmutable();
       return autoPopulatedFields_;
     }
-
     /**
      *
      *
@@ -2852,7 +2776,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     public int getAutoPopulatedFieldsCount() {
       return autoPopulatedFields_.size();
     }
-
     /**
      *
      *
@@ -2878,7 +2801,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getAutoPopulatedFields(int index) {
       return autoPopulatedFields_.get(index);
     }
-
     /**
      *
      *
@@ -2904,7 +2826,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getAutoPopulatedFieldsBytes(int index) {
       return autoPopulatedFields_.getByteString(index);
     }
-
     /**
      *
      *
@@ -2938,7 +2859,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2971,7 +2891,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3001,7 +2920,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3030,7 +2948,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

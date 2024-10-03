@@ -36,7 +36,6 @@ public interface GoSettingsOrBuilder
    * @return Whether the common field is set.
    */
   boolean hasCommon();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface GoSettingsOrBuilder
    * @return The common.
    */
   com.google.api.CommonLanguageSettings getCommon();
-
   /**
    *
    *

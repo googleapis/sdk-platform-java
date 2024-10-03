@@ -34,7 +34,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.ContextRule)
     ContextRuleOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ContextRule.newBuilder() to construct.
   private ContextRule(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -70,7 +69,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object selector_ = "";
-
   /**
    *
    *
@@ -97,7 +95,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -130,7 +127,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList requested_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -146,7 +142,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getRequestedList() {
     return requested_;
   }
-
   /**
    *
    *
@@ -162,7 +157,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public int getRequestedCount() {
     return requested_.size();
   }
-
   /**
    *
    *
@@ -179,7 +173,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getRequested(int index) {
     return requested_.get(index);
   }
-
   /**
    *
    *
@@ -202,7 +195,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList provided_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -218,7 +210,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getProvidedList() {
     return provided_;
   }
-
   /**
    *
    *
@@ -234,7 +225,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public int getProvidedCount() {
     return provided_.size();
   }
-
   /**
    *
    *
@@ -251,7 +241,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getProvided(int index) {
     return provided_.get(index);
   }
-
   /**
    *
    *
@@ -274,7 +263,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList allowedRequestExtensions_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -290,7 +278,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getAllowedRequestExtensionsList() {
     return allowedRequestExtensions_;
   }
-
   /**
    *
    *
@@ -306,7 +293,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public int getAllowedRequestExtensionsCount() {
     return allowedRequestExtensions_.size();
   }
-
   /**
    *
    *
@@ -323,7 +309,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getAllowedRequestExtensions(int index) {
     return allowedRequestExtensions_.get(index);
   }
-
   /**
    *
    *
@@ -346,7 +331,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList allowedResponseExtensions_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -362,7 +346,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getAllowedResponseExtensionsList() {
     return allowedResponseExtensions_;
   }
-
   /**
    *
    *
@@ -378,7 +361,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public int getAllowedResponseExtensionsCount() {
     return allowedResponseExtensions_.size();
   }
-
   /**
    *
    *
@@ -395,7 +377,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getAllowedResponseExtensions(int index) {
     return allowedResponseExtensions_.get(index);
   }
-
   /**
    *
    *
@@ -638,7 +619,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -906,7 +886,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object selector_ = "";
-
     /**
      *
      *
@@ -932,7 +911,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -958,7 +936,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -983,7 +960,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1004,7 +980,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1040,7 +1015,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000002;
     }
-
     /**
      *
      *
@@ -1057,7 +1031,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       requested_.makeImmutable();
       return requested_;
     }
-
     /**
      *
      *
@@ -1073,7 +1046,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public int getRequestedCount() {
       return requested_.size();
     }
-
     /**
      *
      *
@@ -1090,7 +1062,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getRequested(int index) {
       return requested_.get(index);
     }
-
     /**
      *
      *
@@ -1107,7 +1078,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getRequestedBytes(int index) {
       return requested_.getByteString(index);
     }
-
     /**
      *
      *
@@ -1132,7 +1102,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1156,7 +1125,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1177,7 +1145,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1197,7 +1164,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1232,7 +1198,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000004;
     }
-
     /**
      *
      *
@@ -1249,7 +1214,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       provided_.makeImmutable();
       return provided_;
     }
-
     /**
      *
      *
@@ -1265,7 +1229,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public int getProvidedCount() {
       return provided_.size();
     }
-
     /**
      *
      *
@@ -1282,7 +1245,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getProvided(int index) {
       return provided_.get(index);
     }
-
     /**
      *
      *
@@ -1299,7 +1261,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getProvidedBytes(int index) {
       return provided_.getByteString(index);
     }
-
     /**
      *
      *
@@ -1324,7 +1285,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1348,7 +1308,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1369,7 +1328,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1389,7 +1347,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1425,7 +1382,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000008;
     }
-
     /**
      *
      *
@@ -1442,7 +1398,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       allowedRequestExtensions_.makeImmutable();
       return allowedRequestExtensions_;
     }
-
     /**
      *
      *
@@ -1458,7 +1413,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public int getAllowedRequestExtensionsCount() {
       return allowedRequestExtensions_.size();
     }
-
     /**
      *
      *
@@ -1475,7 +1429,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getAllowedRequestExtensions(int index) {
       return allowedRequestExtensions_.get(index);
     }
-
     /**
      *
      *
@@ -1492,7 +1445,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getAllowedRequestExtensionsBytes(int index) {
       return allowedRequestExtensions_.getByteString(index);
     }
-
     /**
      *
      *
@@ -1517,7 +1469,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1541,7 +1492,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1562,7 +1512,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1582,7 +1531,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1618,7 +1566,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000010;
     }
-
     /**
      *
      *
@@ -1635,7 +1582,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       allowedResponseExtensions_.makeImmutable();
       return allowedResponseExtensions_;
     }
-
     /**
      *
      *
@@ -1651,7 +1597,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public int getAllowedResponseExtensionsCount() {
       return allowedResponseExtensions_.size();
     }
-
     /**
      *
      *
@@ -1668,7 +1613,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getAllowedResponseExtensions(int index) {
       return allowedResponseExtensions_.get(index);
     }
-
     /**
      *
      *
@@ -1685,7 +1629,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getAllowedResponseExtensionsBytes(int index) {
       return allowedResponseExtensions_.getByteString(index);
     }
-
     /**
      *
      *
@@ -1710,7 +1653,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1734,7 +1676,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1755,7 +1696,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1775,7 +1715,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

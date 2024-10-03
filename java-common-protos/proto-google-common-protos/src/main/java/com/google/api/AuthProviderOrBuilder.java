@@ -39,7 +39,6 @@ public interface AuthProviderOrBuilder
    * @return The id.
    */
   java.lang.String getId();
-
   /**
    *
    *
@@ -73,7 +72,6 @@ public interface AuthProviderOrBuilder
    * @return The issuer.
    */
   java.lang.String getIssuer();
-
   /**
    *
    *
@@ -115,7 +113,6 @@ public interface AuthProviderOrBuilder
    * @return The jwksUri.
    */
   java.lang.String getJwksUri();
-
   /**
    *
    *
@@ -168,7 +165,6 @@ public interface AuthProviderOrBuilder
    * @return The audiences.
    */
   java.lang.String getAudiences();
-
   /**
    *
    *
@@ -211,7 +207,6 @@ public interface AuthProviderOrBuilder
    * @return The authorizationUrl.
    */
   java.lang.String getAuthorizationUrl();
-
   /**
    *
    *
@@ -253,7 +248,6 @@ public interface AuthProviderOrBuilder
    * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
    */
   java.util.List<com.google.api.JwtLocation> getJwtLocationsList();
-
   /**
    *
    *
@@ -281,7 +275,6 @@ public interface AuthProviderOrBuilder
    * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
    */
   com.google.api.JwtLocation getJwtLocations(int index);
-
   /**
    *
    *
@@ -309,7 +302,6 @@ public interface AuthProviderOrBuilder
    * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
    */
   int getJwtLocationsCount();
-
   /**
    *
    *
@@ -337,7 +329,6 @@ public interface AuthProviderOrBuilder
    * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
    */
   java.util.List<? extends com.google.api.JwtLocationOrBuilder> getJwtLocationsOrBuilderList();
-
   /**
    *
    *

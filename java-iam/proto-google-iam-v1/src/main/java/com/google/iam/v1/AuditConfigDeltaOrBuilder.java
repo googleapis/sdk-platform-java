@@ -37,7 +37,6 @@ public interface AuditConfigDeltaOrBuilder
    * @return The enum numeric value on the wire for action.
    */
   int getActionValue();
-
   /**
    *
    *
@@ -67,7 +66,6 @@ public interface AuditConfigDeltaOrBuilder
    * @return The service.
    */
   java.lang.String getService();
-
   /**
    *
    *
@@ -98,7 +96,6 @@ public interface AuditConfigDeltaOrBuilder
    * @return The exemptedMember.
    */
   java.lang.String getExemptedMember();
-
   /**
    *
    *
@@ -128,7 +125,6 @@ public interface AuditConfigDeltaOrBuilder
    * @return The logType.
    */
   java.lang.String getLogType();
-
   /**
    *
    *

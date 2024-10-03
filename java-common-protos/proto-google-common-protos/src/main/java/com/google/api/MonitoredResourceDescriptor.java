@@ -42,7 +42,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
     // @@protoc_insertion_point(message_implements:google.api.MonitoredResourceDescriptor)
     MonitoredResourceDescriptorOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use MonitoredResourceDescriptor.newBuilder() to construct.
   private MonitoredResourceDescriptor(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -82,7 +81,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
-
   /**
    *
    *
@@ -111,7 +109,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       return s;
     }
   }
-
   /**
    *
    *
@@ -145,7 +142,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object type_ = "";
-
   /**
    *
    *
@@ -174,7 +170,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       return s;
     }
   }
-
   /**
    *
    *
@@ -208,7 +203,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object displayName_ = "";
-
   /**
    *
    *
@@ -235,7 +229,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       return s;
     }
   }
-
   /**
    *
    *
@@ -267,7 +260,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object description_ = "";
-
   /**
    *
    *
@@ -292,7 +284,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       return s;
     }
   }
-
   /**
    *
    *
@@ -322,7 +313,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.LabelDescriptor> labels_;
-
   /**
    *
    *
@@ -338,7 +328,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
   public java.util.List<com.google.api.LabelDescriptor> getLabelsList() {
     return labels_;
   }
-
   /**
    *
    *
@@ -355,7 +344,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       getLabelsOrBuilderList() {
     return labels_;
   }
-
   /**
    *
    *
@@ -371,7 +359,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
   public int getLabelsCount() {
     return labels_.size();
   }
-
   /**
    *
    *
@@ -387,7 +374,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
   public com.google.api.LabelDescriptor getLabels(int index) {
     return labels_.get(index);
   }
-
   /**
    *
    *
@@ -406,7 +392,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
 
   public static final int LAUNCH_STAGE_FIELD_NUMBER = 7;
   private int launchStage_ = 0;
-
   /**
    *
    *
@@ -422,7 +407,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
   public int getLaunchStageValue() {
     return launchStage_;
   }
-
   /**
    *
    *
@@ -646,7 +630,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -956,7 +939,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
     private int bitField0_;
 
     private java.lang.Object name_ = "";
-
     /**
      *
      *
@@ -984,7 +966,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1012,7 +993,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1039,7 +1019,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1062,7 +1041,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1092,7 +1070,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
     }
 
     private java.lang.Object type_ = "";
-
     /**
      *
      *
@@ -1120,7 +1097,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1148,7 +1124,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1175,7 +1150,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1198,7 +1172,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1228,7 +1201,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
     }
 
     private java.lang.Object displayName_ = "";
-
     /**
      *
      *
@@ -1254,7 +1226,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1280,7 +1251,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1305,7 +1275,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1326,7 +1295,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1354,7 +1322,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
     }
 
     private java.lang.Object description_ = "";
-
     /**
      *
      *
@@ -1378,7 +1345,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1402,7 +1368,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1425,7 +1390,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1444,7 +1408,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1503,7 +1466,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
         return labelsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -1522,7 +1484,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
         return labelsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -1541,7 +1502,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
         return labelsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -1566,7 +1526,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       }
       return this;
     }
-
     /**
      *
      *
@@ -1588,7 +1547,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       }
       return this;
     }
-
     /**
      *
      *
@@ -1613,7 +1571,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       }
       return this;
     }
-
     /**
      *
      *
@@ -1638,7 +1595,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       }
       return this;
     }
-
     /**
      *
      *
@@ -1660,7 +1616,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       }
       return this;
     }
-
     /**
      *
      *
@@ -1682,7 +1637,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       }
       return this;
     }
-
     /**
      *
      *
@@ -1705,7 +1659,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       }
       return this;
     }
-
     /**
      *
      *
@@ -1727,7 +1680,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       }
       return this;
     }
-
     /**
      *
      *
@@ -1749,7 +1701,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       }
       return this;
     }
-
     /**
      *
      *
@@ -1764,7 +1715,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
     public com.google.api.LabelDescriptor.Builder getLabelsBuilder(int index) {
       return getLabelsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1783,7 +1733,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
         return labelsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1803,7 +1752,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
         return java.util.Collections.unmodifiableList(labels_);
       }
     }
-
     /**
      *
      *
@@ -1819,7 +1767,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       return getLabelsFieldBuilder()
           .addBuilder(com.google.api.LabelDescriptor.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1835,7 +1782,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       return getLabelsFieldBuilder()
           .addBuilder(index, com.google.api.LabelDescriptor.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1869,7 +1815,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
     }
 
     private int launchStage_ = 0;
-
     /**
      *
      *
@@ -1885,7 +1830,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
     public int getLaunchStageValue() {
       return launchStage_;
     }
-
     /**
      *
      *
@@ -1904,7 +1848,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1921,7 +1864,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       com.google.api.LaunchStage result = com.google.api.LaunchStage.forNumber(launchStage_);
       return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -1943,7 +1885,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       onChanged();
       return this;
     }
-
     /**
      *
      *

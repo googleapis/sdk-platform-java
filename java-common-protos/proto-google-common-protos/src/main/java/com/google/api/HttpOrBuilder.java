@@ -36,7 +36,6 @@ public interface HttpOrBuilder
    * <code>repeated .google.api.HttpRule rules = 1;</code>
    */
   java.util.List<com.google.api.HttpRule> getRulesList();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface HttpOrBuilder
    * <code>repeated .google.api.HttpRule rules = 1;</code>
    */
   com.google.api.HttpRule getRules(int index);
-
   /**
    *
    *
@@ -62,7 +60,6 @@ public interface HttpOrBuilder
    * <code>repeated .google.api.HttpRule rules = 1;</code>
    */
   int getRulesCount();
-
   /**
    *
    *
@@ -75,7 +72,6 @@ public interface HttpOrBuilder
    * <code>repeated .google.api.HttpRule rules = 1;</code>
    */
   java.util.List<? extends com.google.api.HttpRuleOrBuilder> getRulesOrBuilderList();
-
   /**
    *
    *

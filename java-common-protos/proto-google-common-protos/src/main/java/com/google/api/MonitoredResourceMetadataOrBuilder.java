@@ -45,7 +45,6 @@ public interface MonitoredResourceMetadataOrBuilder
    * @return Whether the systemLabels field is set.
    */
   boolean hasSystemLabels();
-
   /**
    *
    *
@@ -67,7 +66,6 @@ public interface MonitoredResourceMetadataOrBuilder
    * @return The systemLabels.
    */
   com.google.protobuf.Struct getSystemLabels();
-
   /**
    *
    *
@@ -98,7 +96,6 @@ public interface MonitoredResourceMetadataOrBuilder
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
   int getUserLabelsCount();
-
   /**
    *
    *
@@ -109,11 +106,9 @@ public interface MonitoredResourceMetadataOrBuilder
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
   boolean containsUserLabels(java.lang.String key);
-
   /** Use {@link #getUserLabelsMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, java.lang.String> getUserLabels();
-
   /**
    *
    *
@@ -124,7 +119,6 @@ public interface MonitoredResourceMetadataOrBuilder
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
   java.util.Map<java.lang.String, java.lang.String> getUserLabelsMap();
-
   /**
    *
    *
@@ -139,7 +133,6 @@ public interface MonitoredResourceMetadataOrBuilder
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue);
-
   /**
    *
    *

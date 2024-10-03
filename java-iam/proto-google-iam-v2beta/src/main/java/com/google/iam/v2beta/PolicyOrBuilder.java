@@ -47,7 +47,6 @@ public interface PolicyOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -85,7 +84,6 @@ public interface PolicyOrBuilder
    * @return The uid.
    */
   java.lang.String getUid();
-
   /**
    *
    *
@@ -112,7 +110,6 @@ public interface PolicyOrBuilder
    * @return The kind.
    */
   java.lang.String getKind();
-
   /**
    *
    *
@@ -139,7 +136,6 @@ public interface PolicyOrBuilder
    * @return The displayName.
    */
   java.lang.String getDisplayName();
-
   /**
    *
    *
@@ -165,7 +161,6 @@ public interface PolicyOrBuilder
    * <code>map&lt;string, string&gt; annotations = 5;</code>
    */
   int getAnnotationsCount();
-
   /**
    *
    *
@@ -177,11 +172,9 @@ public interface PolicyOrBuilder
    * <code>map&lt;string, string&gt; annotations = 5;</code>
    */
   boolean containsAnnotations(java.lang.String key);
-
   /** Use {@link #getAnnotationsMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, java.lang.String> getAnnotations();
-
   /**
    *
    *
@@ -193,7 +186,6 @@ public interface PolicyOrBuilder
    * <code>map&lt;string, string&gt; annotations = 5;</code>
    */
   java.util.Map<java.lang.String, java.lang.String> getAnnotationsMap();
-
   /**
    *
    *
@@ -209,7 +201,6 @@ public interface PolicyOrBuilder
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue);
-
   /**
    *
    *
@@ -239,7 +230,6 @@ public interface PolicyOrBuilder
    * @return The etag.
    */
   java.lang.String getEtag();
-
   /**
    *
    *
@@ -271,7 +261,6 @@ public interface PolicyOrBuilder
    * @return Whether the createTime field is set.
    */
   boolean hasCreateTime();
-
   /**
    *
    *
@@ -285,7 +274,6 @@ public interface PolicyOrBuilder
    * @return The createTime.
    */
   com.google.protobuf.Timestamp getCreateTime();
-
   /**
    *
    *
@@ -311,7 +299,6 @@ public interface PolicyOrBuilder
    * @return Whether the updateTime field is set.
    */
   boolean hasUpdateTime();
-
   /**
    *
    *
@@ -325,7 +312,6 @@ public interface PolicyOrBuilder
    * @return The updateTime.
    */
   com.google.protobuf.Timestamp getUpdateTime();
-
   /**
    *
    *
@@ -351,7 +337,6 @@ public interface PolicyOrBuilder
    * @return Whether the deleteTime field is set.
    */
   boolean hasDeleteTime();
-
   /**
    *
    *
@@ -365,7 +350,6 @@ public interface PolicyOrBuilder
    * @return The deleteTime.
    */
   com.google.protobuf.Timestamp getDeleteTime();
-
   /**
    *
    *
@@ -389,7 +373,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v2beta.PolicyRule rules = 10;</code>
    */
   java.util.List<com.google.iam.v2beta.PolicyRule> getRulesList();
-
   /**
    *
    *
@@ -401,7 +384,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v2beta.PolicyRule rules = 10;</code>
    */
   com.google.iam.v2beta.PolicyRule getRules(int index);
-
   /**
    *
    *
@@ -413,7 +395,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v2beta.PolicyRule rules = 10;</code>
    */
   int getRulesCount();
-
   /**
    *
    *
@@ -425,7 +406,6 @@ public interface PolicyOrBuilder
    * <code>repeated .google.iam.v2beta.PolicyRule rules = 10;</code>
    */
   java.util.List<? extends com.google.iam.v2beta.PolicyRuleOrBuilder> getRulesOrBuilderList();
-
   /**
    *
    *

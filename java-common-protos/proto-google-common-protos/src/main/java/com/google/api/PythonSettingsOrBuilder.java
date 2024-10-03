@@ -36,7 +36,6 @@ public interface PythonSettingsOrBuilder
    * @return Whether the common field is set.
    */
   boolean hasCommon();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface PythonSettingsOrBuilder
    * @return The common.
    */
   com.google.api.CommonLanguageSettings getCommon();
-
   /**
    *
    *
@@ -73,7 +71,6 @@ public interface PythonSettingsOrBuilder
    * @return Whether the experimentalFeatures field is set.
    */
   boolean hasExperimentalFeatures();
-
   /**
    *
    *
@@ -86,7 +83,6 @@ public interface PythonSettingsOrBuilder
    * @return The experimentalFeatures.
    */
   com.google.api.PythonSettings.ExperimentalFeatures getExperimentalFeatures();
-
   /**
    *
    *

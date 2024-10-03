@@ -50,7 +50,6 @@ public interface PhoneNumberOrBuilder
    * @return Whether the e164Number field is set.
    */
   boolean hasE164Number();
-
   /**
    *
    *
@@ -77,7 +76,6 @@ public interface PhoneNumberOrBuilder
    * @return The e164Number.
    */
   java.lang.String getE164Number();
-
   /**
    *
    *
@@ -120,7 +118,6 @@ public interface PhoneNumberOrBuilder
    * @return Whether the shortCode field is set.
    */
   boolean hasShortCode();
-
   /**
    *
    *
@@ -136,7 +133,6 @@ public interface PhoneNumberOrBuilder
    * @return The shortCode.
    */
   com.google.type.PhoneNumber.ShortCode getShortCode();
-
   /**
    *
    *
@@ -171,7 +167,6 @@ public interface PhoneNumberOrBuilder
    * @return The extension.
    */
   java.lang.String getExtension();
-
   /**
    *
    *

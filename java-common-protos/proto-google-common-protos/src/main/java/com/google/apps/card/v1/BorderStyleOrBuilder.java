@@ -36,7 +36,6 @@ public interface BorderStyleOrBuilder
    * @return The enum numeric value on the wire for type.
    */
   int getTypeValue();
-
   /**
    *
    *
@@ -62,7 +61,6 @@ public interface BorderStyleOrBuilder
    * @return Whether the strokeColor field is set.
    */
   boolean hasStrokeColor();
-
   /**
    *
    *
@@ -75,7 +73,6 @@ public interface BorderStyleOrBuilder
    * @return The strokeColor.
    */
   com.google.type.Color getStrokeColor();
-
   /**
    *
    *

@@ -58,7 +58,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.type.PhoneNumber)
     PhoneNumberOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use PhoneNumber.newBuilder() to construct.
   private PhoneNumber(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -108,7 +107,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * @return The regionCode.
      */
     java.lang.String getRegionCode();
-
     /**
      *
      *
@@ -139,7 +137,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * @return The number.
      */
     java.lang.String getNumber();
-
     /**
      *
      *
@@ -154,7 +151,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.protobuf.ByteString getNumberBytes();
   }
-
   /**
    *
    *
@@ -177,7 +173,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.type.PhoneNumber.ShortCode)
       ShortCodeOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use ShortCode.newBuilder() to construct.
     private ShortCode(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -213,7 +208,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object regionCode_ = "";
-
     /**
      *
      *
@@ -241,7 +235,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -274,7 +267,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object number_ = "";
-
     /**
      *
      *
@@ -299,7 +291,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -493,7 +484,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -703,7 +693,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private java.lang.Object regionCode_ = "";
-
       /**
        *
        *
@@ -730,7 +719,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -757,7 +745,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -783,7 +770,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -805,7 +791,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -834,7 +819,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       }
 
       private java.lang.Object number_ = "";
-
       /**
        *
        *
@@ -858,7 +842,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -882,7 +865,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -905,7 +887,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -924,7 +905,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1030,7 +1010,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     private KindCase(int value) {
       this.value = value;
     }
-
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -1064,7 +1043,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int E164_NUMBER_FIELD_NUMBER = 1;
-
   /**
    *
    *
@@ -1093,7 +1071,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
   public boolean hasE164Number() {
     return kindCase_ == 1;
   }
-
   /**
    *
    *
@@ -1135,7 +1112,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -1179,7 +1155,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SHORT_CODE_FIELD_NUMBER = 2;
-
   /**
    *
    *
@@ -1198,7 +1173,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
   public boolean hasShortCode() {
     return kindCase_ == 2;
   }
-
   /**
    *
    *
@@ -1220,7 +1194,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.type.PhoneNumber.ShortCode.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -1245,7 +1218,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object extension_ = "";
-
   /**
    *
    *
@@ -1277,7 +1249,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -1504,7 +1475,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1796,7 +1766,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     public boolean hasE164Number() {
       return kindCase_ == 1;
     }
-
     /**
      *
      *
@@ -1839,7 +1808,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1882,7 +1850,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1918,7 +1885,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1952,7 +1918,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1995,7 +1960,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
             com.google.type.PhoneNumber.ShortCode.Builder,
             com.google.type.PhoneNumber.ShortCodeOrBuilder>
         shortCodeBuilder_;
-
     /**
      *
      *
@@ -2014,7 +1978,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     public boolean hasShortCode() {
       return kindCase_ == 2;
     }
-
     /**
      *
      *
@@ -2043,7 +2006,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         return com.google.type.PhoneNumber.ShortCode.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -2069,7 +2031,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       kindCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -2092,7 +2053,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       kindCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -2127,7 +2087,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       kindCase_ = 2;
       return this;
     }
-
     /**
      *
      *
@@ -2156,7 +2115,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2172,7 +2130,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     public com.google.type.PhoneNumber.ShortCode.Builder getShortCodeBuilder() {
       return getShortCodeFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -2196,7 +2153,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         return com.google.type.PhoneNumber.ShortCode.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -2232,7 +2188,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object extension_ = "";
-
     /**
      *
      *
@@ -2263,7 +2218,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2294,7 +2248,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2324,7 +2277,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2350,7 +2302,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

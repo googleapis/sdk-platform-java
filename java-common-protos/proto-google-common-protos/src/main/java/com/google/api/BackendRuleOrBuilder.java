@@ -39,7 +39,6 @@ public interface BackendRuleOrBuilder
    * @return The selector.
    */
   java.lang.String getSelector();
-
   /**
    *
    *
@@ -87,7 +86,6 @@ public interface BackendRuleOrBuilder
    * @return The address.
    */
   java.lang.String getAddress();
-
   /**
    *
    *
@@ -170,7 +168,6 @@ public interface BackendRuleOrBuilder
    * @return The enum numeric value on the wire for pathTranslation.
    */
   int getPathTranslationValue();
-
   /**
    * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
    *
@@ -192,7 +189,6 @@ public interface BackendRuleOrBuilder
    * @return Whether the jwtAudience field is set.
    */
   boolean hasJwtAudience();
-
   /**
    *
    *
@@ -207,7 +203,6 @@ public interface BackendRuleOrBuilder
    * @return The jwtAudience.
    */
   java.lang.String getJwtAudience();
-
   /**
    *
    *
@@ -238,7 +233,6 @@ public interface BackendRuleOrBuilder
    * @return Whether the disableAuth field is set.
    */
   boolean hasDisableAuth();
-
   /**
    *
    *
@@ -287,7 +281,6 @@ public interface BackendRuleOrBuilder
    * @return The protocol.
    */
   java.lang.String getProtocol();
-
   /**
    *
    *
@@ -331,7 +324,6 @@ public interface BackendRuleOrBuilder
    * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
    */
   int getOverridesByRequestProtocolCount();
-
   /**
    *
    *
@@ -342,11 +334,9 @@ public interface BackendRuleOrBuilder
    * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
    */
   boolean containsOverridesByRequestProtocol(java.lang.String key);
-
   /** Use {@link #getOverridesByRequestProtocolMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, com.google.api.BackendRule> getOverridesByRequestProtocol();
-
   /**
    *
    *
@@ -357,7 +347,6 @@ public interface BackendRuleOrBuilder
    * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
    */
   java.util.Map<java.lang.String, com.google.api.BackendRule> getOverridesByRequestProtocolMap();
-
   /**
    *
    *
@@ -372,7 +361,6 @@ public interface BackendRuleOrBuilder
       java.lang.String key,
       /* nullable */
       com.google.api.BackendRule defaultValue);
-
   /**
    *
    *

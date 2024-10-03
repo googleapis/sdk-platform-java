@@ -36,7 +36,6 @@ public interface VisibilityOrBuilder
    * <code>repeated .google.api.VisibilityRule rules = 1;</code>
    */
   java.util.List<com.google.api.VisibilityRule> getRulesList();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface VisibilityOrBuilder
    * <code>repeated .google.api.VisibilityRule rules = 1;</code>
    */
   com.google.api.VisibilityRule getRules(int index);
-
   /**
    *
    *
@@ -62,7 +60,6 @@ public interface VisibilityOrBuilder
    * <code>repeated .google.api.VisibilityRule rules = 1;</code>
    */
   int getRulesCount();
-
   /**
    *
    *
@@ -75,7 +72,6 @@ public interface VisibilityOrBuilder
    * <code>repeated .google.api.VisibilityRule rules = 1;</code>
    */
   java.util.List<? extends com.google.api.VisibilityRuleOrBuilder> getRulesOrBuilderList();
-
   /**
    *
    *

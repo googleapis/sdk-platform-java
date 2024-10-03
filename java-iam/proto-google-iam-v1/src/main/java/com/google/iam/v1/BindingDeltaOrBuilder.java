@@ -37,7 +37,6 @@ public interface BindingDeltaOrBuilder
    * @return The enum numeric value on the wire for action.
    */
   int getActionValue();
-
   /**
    *
    *
@@ -66,7 +65,6 @@ public interface BindingDeltaOrBuilder
    * @return The role.
    */
   java.lang.String getRole();
-
   /**
    *
    *
@@ -96,7 +94,6 @@ public interface BindingDeltaOrBuilder
    * @return The member.
    */
   java.lang.String getMember();
-
   /**
    *
    *
@@ -124,7 +121,6 @@ public interface BindingDeltaOrBuilder
    * @return Whether the condition field is set.
    */
   boolean hasCondition();
-
   /**
    *
    *
@@ -137,7 +133,6 @@ public interface BindingDeltaOrBuilder
    * @return The condition.
    */
   com.google.type.Expr getCondition();
-
   /**
    *
    *

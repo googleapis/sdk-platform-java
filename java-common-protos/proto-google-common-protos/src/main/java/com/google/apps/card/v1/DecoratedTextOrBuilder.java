@@ -39,7 +39,6 @@ public interface DecoratedTextOrBuilder
    */
   @java.lang.Deprecated
   boolean hasIcon();
-
   /**
    *
    *
@@ -55,7 +54,6 @@ public interface DecoratedTextOrBuilder
    */
   @java.lang.Deprecated
   com.google.apps.card.v1.Icon getIcon();
-
   /**
    *
    *
@@ -80,7 +78,6 @@ public interface DecoratedTextOrBuilder
    * @return Whether the startIcon field is set.
    */
   boolean hasStartIcon();
-
   /**
    *
    *
@@ -93,7 +90,6 @@ public interface DecoratedTextOrBuilder
    * @return The startIcon.
    */
   com.google.apps.card.v1.Icon getStartIcon();
-
   /**
    *
    *
@@ -117,7 +113,6 @@ public interface DecoratedTextOrBuilder
    * @return The topLabel.
    */
   java.lang.String getTopLabel();
-
   /**
    *
    *
@@ -152,7 +147,6 @@ public interface DecoratedTextOrBuilder
    * @return The text.
    */
   java.lang.String getText();
-
   /**
    *
    *
@@ -203,7 +197,6 @@ public interface DecoratedTextOrBuilder
    * @return The bottomLabel.
    */
   java.lang.String getBottomLabel();
-
   /**
    *
    *
@@ -229,7 +222,6 @@ public interface DecoratedTextOrBuilder
    * @return Whether the onClick field is set.
    */
   boolean hasOnClick();
-
   /**
    *
    *
@@ -242,7 +234,6 @@ public interface DecoratedTextOrBuilder
    * @return The onClick.
    */
   com.google.apps.card.v1.OnClick getOnClick();
-
   /**
    *
    *
@@ -266,7 +257,6 @@ public interface DecoratedTextOrBuilder
    * @return Whether the button field is set.
    */
   boolean hasButton();
-
   /**
    *
    *
@@ -279,7 +269,6 @@ public interface DecoratedTextOrBuilder
    * @return The button.
    */
   com.google.apps.card.v1.Button getButton();
-
   /**
    *
    *
@@ -304,7 +293,6 @@ public interface DecoratedTextOrBuilder
    * @return Whether the switchControl field is set.
    */
   boolean hasSwitchControl();
-
   /**
    *
    *
@@ -318,7 +306,6 @@ public interface DecoratedTextOrBuilder
    * @return The switchControl.
    */
   com.google.apps.card.v1.DecoratedText.SwitchControl getSwitchControl();
-
   /**
    *
    *
@@ -349,7 +336,6 @@ public interface DecoratedTextOrBuilder
    * @return Whether the endIcon field is set.
    */
   boolean hasEndIcon();
-
   /**
    *
    *
@@ -368,7 +354,6 @@ public interface DecoratedTextOrBuilder
    * @return The endIcon.
    */
   com.google.apps.card.v1.Icon getEndIcon();
-
   /**
    *
    *

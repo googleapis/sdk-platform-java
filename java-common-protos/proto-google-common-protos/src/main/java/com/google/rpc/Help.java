@@ -37,7 +37,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.rpc.Help)
     HelpOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Help.newBuilder() to construct.
   private Help(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -82,7 +81,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      * @return The description.
      */
     java.lang.String getDescription();
-
     /**
      *
      *
@@ -108,7 +106,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      * @return The url.
      */
     java.lang.String getUrl();
-
     /**
      *
      *
@@ -122,7 +119,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.protobuf.ByteString getUrlBytes();
   }
-
   /**
    *
    *
@@ -137,7 +133,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.rpc.Help.Link)
       LinkOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use Link.newBuilder() to construct.
     private Link(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -171,7 +166,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object description_ = "";
-
     /**
      *
      *
@@ -195,7 +189,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -224,7 +217,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object url_ = "";
-
     /**
      *
      *
@@ -248,7 +240,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -440,7 +431,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -638,7 +628,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private java.lang.Object description_ = "";
-
       /**
        *
        *
@@ -661,7 +650,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -684,7 +672,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -706,7 +693,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -724,7 +710,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -749,7 +734,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       }
 
       private java.lang.Object url_ = "";
-
       /**
        *
        *
@@ -772,7 +756,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -795,7 +778,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -817,7 +799,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -835,7 +816,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -927,7 +907,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.rpc.Help.Link> links_;
-
   /**
    *
    *
@@ -941,7 +920,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.rpc.Help.Link> getLinksList() {
     return links_;
   }
-
   /**
    *
    *
@@ -955,7 +933,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<? extends com.google.rpc.Help.LinkOrBuilder> getLinksOrBuilderList() {
     return links_;
   }
-
   /**
    *
    *
@@ -969,7 +946,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
   public int getLinksCount() {
     return links_.size();
   }
-
   /**
    *
    *
@@ -983,7 +959,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
   public com.google.rpc.Help.Link getLinks(int index) {
     return links_.get(index);
   }
-
   /**
    *
    *
@@ -1157,7 +1132,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1414,7 +1388,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
         return linksBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -1431,7 +1404,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
         return linksBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -1448,7 +1420,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
         return linksBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -1471,7 +1442,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1491,7 +1461,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1514,7 +1483,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1537,7 +1505,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1557,7 +1524,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1577,7 +1543,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1597,7 +1562,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1617,7 +1581,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1637,7 +1600,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1650,7 +1612,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
     public com.google.rpc.Help.Link.Builder getLinksBuilder(int index) {
       return getLinksFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1667,7 +1628,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
         return linksBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1684,7 +1644,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(links_);
       }
     }
-
     /**
      *
      *
@@ -1697,7 +1656,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
     public com.google.rpc.Help.Link.Builder addLinksBuilder() {
       return getLinksFieldBuilder().addBuilder(com.google.rpc.Help.Link.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1711,7 +1669,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
       return getLinksFieldBuilder()
           .addBuilder(index, com.google.rpc.Help.Link.getDefaultInstance());
     }
-
     /**
      *
      *

@@ -38,7 +38,6 @@ public interface AuditConfigOrBuilder
    * @return The service.
    */
   java.lang.String getService();
-
   /**
    *
    *
@@ -64,7 +63,6 @@ public interface AuditConfigOrBuilder
    * <code>repeated .google.iam.v1.AuditLogConfig audit_log_configs = 3;</code>
    */
   java.util.List<com.google.iam.v1.AuditLogConfig> getAuditLogConfigsList();
-
   /**
    *
    *
@@ -75,7 +73,6 @@ public interface AuditConfigOrBuilder
    * <code>repeated .google.iam.v1.AuditLogConfig audit_log_configs = 3;</code>
    */
   com.google.iam.v1.AuditLogConfig getAuditLogConfigs(int index);
-
   /**
    *
    *
@@ -86,7 +83,6 @@ public interface AuditConfigOrBuilder
    * <code>repeated .google.iam.v1.AuditLogConfig audit_log_configs = 3;</code>
    */
   int getAuditLogConfigsCount();
-
   /**
    *
    *
@@ -98,7 +94,6 @@ public interface AuditConfigOrBuilder
    */
   java.util.List<? extends com.google.iam.v1.AuditLogConfigOrBuilder>
       getAuditLogConfigsOrBuilderList();
-
   /**
    *
    *

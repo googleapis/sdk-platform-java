@@ -40,7 +40,6 @@ public interface WeightOrBuilder
    * @return Whether the amountMicros field is set.
    */
   boolean hasAmountMicros();
-
   /**
    *
    *
@@ -71,7 +70,6 @@ public interface WeightOrBuilder
    * @return The enum numeric value on the wire for unit.
    */
   int getUnitValue();
-
   /**
    *
    *

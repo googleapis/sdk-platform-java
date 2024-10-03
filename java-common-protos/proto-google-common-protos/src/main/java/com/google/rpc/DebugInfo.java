@@ -33,7 +33,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.rpc.DebugInfo)
     DebugInfoOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use DebugInfo.newBuilder() to construct.
   private DebugInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -67,7 +66,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList stackEntries_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
-
   /**
    *
    *
@@ -82,7 +80,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getStackEntriesList() {
     return stackEntries_;
   }
-
   /**
    *
    *
@@ -97,7 +94,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
   public int getStackEntriesCount() {
     return stackEntries_.size();
   }
-
   /**
    *
    *
@@ -113,7 +109,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getStackEntries(int index) {
     return stackEntries_.get(index);
   }
-
   /**
    *
    *
@@ -134,7 +129,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object detail_ = "";
-
   /**
    *
    *
@@ -158,7 +152,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -356,7 +349,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -566,7 +558,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000001;
     }
-
     /**
      *
      *
@@ -582,7 +573,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       stackEntries_.makeImmutable();
       return stackEntries_;
     }
-
     /**
      *
      *
@@ -597,7 +587,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
     public int getStackEntriesCount() {
       return stackEntries_.size();
     }
-
     /**
      *
      *
@@ -613,7 +602,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getStackEntries(int index) {
       return stackEntries_.get(index);
     }
-
     /**
      *
      *
@@ -629,7 +617,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getStackEntriesBytes(int index) {
       return stackEntries_.getByteString(index);
     }
-
     /**
      *
      *
@@ -653,7 +640,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -676,7 +662,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -696,7 +681,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -715,7 +699,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -741,7 +724,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object detail_ = "";
-
     /**
      *
      *
@@ -764,7 +746,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -787,7 +768,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -809,7 +789,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -827,7 +806,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

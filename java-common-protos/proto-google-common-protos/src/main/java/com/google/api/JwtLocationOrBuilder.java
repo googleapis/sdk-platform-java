@@ -36,7 +36,6 @@ public interface JwtLocationOrBuilder
    * @return Whether the header field is set.
    */
   boolean hasHeader();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface JwtLocationOrBuilder
    * @return The header.
    */
   java.lang.String getHeader();
-
   /**
    *
    *
@@ -75,7 +73,6 @@ public interface JwtLocationOrBuilder
    * @return Whether the query field is set.
    */
   boolean hasQuery();
-
   /**
    *
    *
@@ -88,7 +85,6 @@ public interface JwtLocationOrBuilder
    * @return The query.
    */
   java.lang.String getQuery();
-
   /**
    *
    *
@@ -114,7 +110,6 @@ public interface JwtLocationOrBuilder
    * @return Whether the cookie field is set.
    */
   boolean hasCookie();
-
   /**
    *
    *
@@ -127,7 +122,6 @@ public interface JwtLocationOrBuilder
    * @return The cookie.
    */
   java.lang.String getCookie();
-
   /**
    *
    *
@@ -160,7 +154,6 @@ public interface JwtLocationOrBuilder
    * @return The valuePrefix.
    */
   java.lang.String getValuePrefix();
-
   /**
    *
    *

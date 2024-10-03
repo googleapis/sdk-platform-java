@@ -87,7 +87,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.type.Quaternion)
     QuaternionOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Quaternion.newBuilder() to construct.
   private Quaternion(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -115,7 +114,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
 
   public static final int X_FIELD_NUMBER = 1;
   private double x_ = 0D;
-
   /**
    *
    *
@@ -134,7 +132,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
 
   public static final int Y_FIELD_NUMBER = 2;
   private double y_ = 0D;
-
   /**
    *
    *
@@ -153,7 +150,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
 
   public static final int Z_FIELD_NUMBER = 3;
   private double z_ = 0D;
-
   /**
    *
    *
@@ -172,7 +168,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
 
   public static final int W_FIELD_NUMBER = 4;
   private double w_ = 0D;
-
   /**
    *
    *
@@ -385,7 +380,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -656,7 +650,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private double x_;
-
     /**
      *
      *
@@ -672,7 +665,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     public double getX() {
       return x_;
     }
-
     /**
      *
      *
@@ -692,7 +684,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -712,7 +703,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     }
 
     private double y_;
-
     /**
      *
      *
@@ -728,7 +718,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     public double getY() {
       return y_;
     }
-
     /**
      *
      *
@@ -748,7 +737,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -768,7 +756,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     }
 
     private double z_;
-
     /**
      *
      *
@@ -784,7 +771,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     public double getZ() {
       return z_;
     }
-
     /**
      *
      *
@@ -804,7 +790,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -824,7 +809,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     }
 
     private double w_;
-
     /**
      *
      *
@@ -840,7 +824,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     public double getW() {
       return w_;
     }
-
     /**
      *
      *
@@ -860,7 +843,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

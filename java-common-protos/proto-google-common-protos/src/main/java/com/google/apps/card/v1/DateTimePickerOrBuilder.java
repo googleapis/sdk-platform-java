@@ -39,7 +39,6 @@ public interface DateTimePickerOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -70,7 +69,6 @@ public interface DateTimePickerOrBuilder
    * @return The label.
    */
   java.lang.String getLabel();
-
   /**
    *
    *
@@ -98,7 +96,6 @@ public interface DateTimePickerOrBuilder
    * @return The enum numeric value on the wire for type.
    */
   int getTypeValue();
-
   /**
    *
    *
@@ -163,7 +160,6 @@ public interface DateTimePickerOrBuilder
    * @return Whether the onChangeAction field is set.
    */
   boolean hasOnChangeAction();
-
   /**
    *
    *
@@ -177,7 +173,6 @@ public interface DateTimePickerOrBuilder
    * @return The onChangeAction.
    */
   com.google.apps.card.v1.Action getOnChangeAction();
-
   /**
    *
    *

@@ -75,7 +75,6 @@ public enum ClientLibraryDestination implements com.google.protobuf.ProtocolMess
    * <code>CLIENT_LIBRARY_DESTINATION_UNSPECIFIED = 0;</code>
    */
   public static final int CLIENT_LIBRARY_DESTINATION_UNSPECIFIED_VALUE = 0;
-
   /**
    *
    *
@@ -87,7 +86,6 @@ public enum ClientLibraryDestination implements com.google.protobuf.ProtocolMess
    * <code>GITHUB = 10;</code>
    */
   public static final int GITHUB_VALUE = 10;
-
   /**
    *
    *

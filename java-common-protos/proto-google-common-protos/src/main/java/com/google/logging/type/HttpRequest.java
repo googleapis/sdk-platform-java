@@ -35,7 +35,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.logging.type.HttpRequest)
     HttpRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use HttpRequest.newBuilder() to construct.
   private HttpRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -77,7 +76,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object requestMethod_ = "";
-
   /**
    *
    *
@@ -101,7 +99,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -130,7 +127,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object requestUrl_ = "";
-
   /**
    *
    *
@@ -156,7 +152,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -185,7 +180,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int REQUEST_SIZE_FIELD_NUMBER = 3;
   private long requestSize_ = 0L;
-
   /**
    *
    *
@@ -205,7 +199,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int STATUS_FIELD_NUMBER = 4;
   private int status_ = 0;
-
   /**
    *
    *
@@ -225,7 +218,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int RESPONSE_SIZE_FIELD_NUMBER = 5;
   private long responseSize_ = 0L;
-
   /**
    *
    *
@@ -247,7 +239,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object userAgent_ = "";
-
   /**
    *
    *
@@ -273,7 +264,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -304,7 +294,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object remoteIp_ = "";
-
   /**
    *
    *
@@ -330,7 +319,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -361,7 +349,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object serverIp_ = "";
-
   /**
    *
    *
@@ -387,7 +374,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -418,7 +404,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object referer_ = "";
-
   /**
    *
    *
@@ -444,7 +429,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -473,7 +457,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int LATENCY_FIELD_NUMBER = 14;
   private com.google.protobuf.Duration latency_;
-
   /**
    *
    *
@@ -490,7 +473,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
   public boolean hasLatency() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -507,7 +489,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.Duration getLatency() {
     return latency_ == null ? com.google.protobuf.Duration.getDefaultInstance() : latency_;
   }
-
   /**
    *
    *
@@ -525,7 +506,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int CACHE_LOOKUP_FIELD_NUMBER = 11;
   private boolean cacheLookup_ = false;
-
   /**
    *
    *
@@ -544,7 +524,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int CACHE_HIT_FIELD_NUMBER = 9;
   private boolean cacheHit_ = false;
-
   /**
    *
    *
@@ -564,7 +543,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int CACHE_VALIDATED_WITH_ORIGIN_SERVER_FIELD_NUMBER = 10;
   private boolean cacheValidatedWithOriginServer_ = false;
-
   /**
    *
    *
@@ -585,7 +563,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   public static final int CACHE_FILL_BYTES_FIELD_NUMBER = 12;
   private long cacheFillBytes_ = 0L;
-
   /**
    *
    *
@@ -607,7 +584,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object protocol_ = "";
-
   /**
    *
    *
@@ -631,7 +607,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -948,7 +923,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1343,7 +1317,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object requestMethod_ = "";
-
     /**
      *
      *
@@ -1366,7 +1339,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1389,7 +1361,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1411,7 +1382,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1429,7 +1399,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1454,7 +1423,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object requestUrl_ = "";
-
     /**
      *
      *
@@ -1479,7 +1447,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1504,7 +1471,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1528,7 +1494,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1548,7 +1513,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1575,7 +1539,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private long requestSize_;
-
     /**
      *
      *
@@ -1592,7 +1555,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     public long getRequestSize() {
       return requestSize_;
     }
-
     /**
      *
      *
@@ -1613,7 +1575,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1634,7 +1595,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int status_;
-
     /**
      *
      *
@@ -1651,7 +1611,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     public int getStatus() {
       return status_;
     }
-
     /**
      *
      *
@@ -1672,7 +1631,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1693,7 +1651,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private long responseSize_;
-
     /**
      *
      *
@@ -1710,7 +1667,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     public long getResponseSize() {
       return responseSize_;
     }
-
     /**
      *
      *
@@ -1731,7 +1687,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1752,7 +1707,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object userAgent_ = "";
-
     /**
      *
      *
@@ -1777,7 +1731,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1802,7 +1755,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1826,7 +1778,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1846,7 +1797,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1873,7 +1823,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object remoteIp_ = "";
-
     /**
      *
      *
@@ -1898,7 +1847,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1923,7 +1871,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1947,7 +1894,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1967,7 +1913,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1994,7 +1939,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object serverIp_ = "";
-
     /**
      *
      *
@@ -2019,7 +1963,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2044,7 +1987,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2068,7 +2010,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2088,7 +2029,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2115,7 +2055,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object referer_ = "";
-
     /**
      *
      *
@@ -2140,7 +2079,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2165,7 +2103,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2189,7 +2126,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2209,7 +2145,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2241,7 +2176,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
             com.google.protobuf.Duration.Builder,
             com.google.protobuf.DurationOrBuilder>
         latencyBuilder_;
-
     /**
      *
      *
@@ -2257,7 +2191,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean hasLatency() {
       return ((bitField0_ & 0x00000200) != 0);
     }
-
     /**
      *
      *
@@ -2277,7 +2210,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return latencyBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -2301,7 +2233,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2322,7 +2253,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2351,7 +2281,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2372,7 +2301,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2388,7 +2316,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getLatencyFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -2406,7 +2333,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return latency_ == null ? com.google.protobuf.Duration.getDefaultInstance() : latency_;
       }
     }
-
     /**
      *
      *
@@ -2435,7 +2361,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private boolean cacheLookup_;
-
     /**
      *
      *
@@ -2451,7 +2376,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean getCacheLookup() {
       return cacheLookup_;
     }
-
     /**
      *
      *
@@ -2471,7 +2395,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2491,7 +2414,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private boolean cacheHit_;
-
     /**
      *
      *
@@ -2508,7 +2430,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean getCacheHit() {
       return cacheHit_;
     }
-
     /**
      *
      *
@@ -2529,7 +2450,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2550,7 +2470,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private boolean cacheValidatedWithOriginServer_;
-
     /**
      *
      *
@@ -2568,7 +2487,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     public boolean getCacheValidatedWithOriginServer() {
       return cacheValidatedWithOriginServer_;
     }
-
     /**
      *
      *
@@ -2590,7 +2508,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2612,7 +2529,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private long cacheFillBytes_;
-
     /**
      *
      *
@@ -2629,7 +2545,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     public long getCacheFillBytes() {
       return cacheFillBytes_;
     }
-
     /**
      *
      *
@@ -2650,7 +2565,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2671,7 +2585,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object protocol_ = "";
-
     /**
      *
      *
@@ -2694,7 +2607,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2717,7 +2629,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2739,7 +2650,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2757,7 +2667,6 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

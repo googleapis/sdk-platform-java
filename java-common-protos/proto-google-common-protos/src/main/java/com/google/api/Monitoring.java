@@ -84,7 +84,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.Monitoring)
     MonitoringOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Monitoring.newBuilder() to construct.
   private Monitoring(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -132,7 +131,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      * @return The monitoredResource.
      */
     java.lang.String getMonitoredResource();
-
     /**
      *
      *
@@ -162,7 +160,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the metrics.
      */
     java.util.List<java.lang.String> getMetricsList();
-
     /**
      *
      *
@@ -177,7 +174,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      * @return The count of metrics.
      */
     int getMetricsCount();
-
     /**
      *
      *
@@ -193,7 +189,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      * @return The metrics at the given index.
      */
     java.lang.String getMetrics(int index);
-
     /**
      *
      *
@@ -210,7 +205,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.protobuf.ByteString getMetricsBytes(int index);
   }
-
   /**
    *
    *
@@ -226,7 +220,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.api.Monitoring.MonitoringDestination)
       MonitoringDestinationOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use MonitoringDestination.newBuilder() to construct.
     private MonitoringDestination(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -262,7 +255,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object monitoredResource_ = "";
-
     /**
      *
      *
@@ -288,7 +280,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -320,7 +311,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     @SuppressWarnings("serial")
     private com.google.protobuf.LazyStringArrayList metrics_ =
         com.google.protobuf.LazyStringArrayList.emptyList();
-
     /**
      *
      *
@@ -337,7 +327,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ProtocolStringList getMetricsList() {
       return metrics_;
     }
-
     /**
      *
      *
@@ -354,7 +343,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     public int getMetricsCount() {
       return metrics_.size();
     }
-
     /**
      *
      *
@@ -372,7 +360,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getMetrics(int index) {
       return metrics_.get(index);
     }
-
     /**
      *
      *
@@ -567,7 +554,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -778,7 +764,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private java.lang.Object monitoredResource_ = "";
-
       /**
        *
        *
@@ -803,7 +788,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -828,7 +812,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -852,7 +835,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -872,7 +854,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -907,7 +888,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         }
         bitField0_ |= 0x00000002;
       }
-
       /**
        *
        *
@@ -925,7 +905,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         metrics_.makeImmutable();
         return metrics_;
       }
-
       /**
        *
        *
@@ -942,7 +921,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       public int getMetricsCount() {
         return metrics_.size();
       }
-
       /**
        *
        *
@@ -960,7 +938,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       public java.lang.String getMetrics(int index) {
         return metrics_.get(index);
       }
-
       /**
        *
        *
@@ -978,7 +955,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       public com.google.protobuf.ByteString getMetricsBytes(int index) {
         return metrics_.getByteString(index);
       }
-
       /**
        *
        *
@@ -1004,7 +980,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1029,7 +1004,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1051,7 +1025,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1072,7 +1045,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1167,7 +1139,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.Monitoring.MonitoringDestination> producerDestinations_;
-
   /**
    *
    *
@@ -1187,7 +1158,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       getProducerDestinationsList() {
     return producerDestinations_;
   }
-
   /**
    *
    *
@@ -1207,7 +1177,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       getProducerDestinationsOrBuilderList() {
     return producerDestinations_;
   }
-
   /**
    *
    *
@@ -1226,7 +1195,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
   public int getProducerDestinationsCount() {
     return producerDestinations_.size();
   }
-
   /**
    *
    *
@@ -1245,7 +1213,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.Monitoring.MonitoringDestination getProducerDestinations(int index) {
     return producerDestinations_.get(index);
   }
-
   /**
    *
    *
@@ -1270,7 +1237,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.Monitoring.MonitoringDestination> consumerDestinations_;
-
   /**
    *
    *
@@ -1290,7 +1256,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       getConsumerDestinationsList() {
     return consumerDestinations_;
   }
-
   /**
    *
    *
@@ -1310,7 +1275,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       getConsumerDestinationsOrBuilderList() {
     return consumerDestinations_;
   }
-
   /**
    *
    *
@@ -1329,7 +1293,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
   public int getConsumerDestinationsCount() {
     return consumerDestinations_.size();
   }
-
   /**
    *
    *
@@ -1348,7 +1311,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.Monitoring.MonitoringDestination getConsumerDestinations(int index) {
     return consumerDestinations_.get(index);
   }
-
   /**
    *
    *
@@ -1541,7 +1503,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1913,7 +1874,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         return producerDestinationsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -1935,7 +1895,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         return producerDestinationsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -1957,7 +1916,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         return producerDestinationsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -1986,7 +1944,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2012,7 +1969,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2040,7 +1996,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2069,7 +2024,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2095,7 +2049,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2121,7 +2074,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2147,7 +2099,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2172,7 +2123,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2197,7 +2147,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2216,7 +2165,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         int index) {
       return getProducerDestinationsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -2239,7 +2187,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         return producerDestinationsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -2262,7 +2209,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(producerDestinations_);
       }
     }
-
     /**
      *
      *
@@ -2282,7 +2228,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       return getProducerDestinationsFieldBuilder()
           .addBuilder(com.google.api.Monitoring.MonitoringDestination.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -2302,7 +2247,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       return getProducerDestinationsFieldBuilder()
           .addBuilder(index, com.google.api.Monitoring.MonitoringDestination.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -2382,7 +2326,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         return consumerDestinationsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -2404,7 +2347,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         return consumerDestinationsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -2426,7 +2368,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         return consumerDestinationsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -2455,7 +2396,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2481,7 +2421,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2509,7 +2448,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2538,7 +2476,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2564,7 +2501,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2590,7 +2526,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2616,7 +2551,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2641,7 +2575,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2666,7 +2599,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2685,7 +2617,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         int index) {
       return getConsumerDestinationsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -2708,7 +2639,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         return consumerDestinationsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -2731,7 +2661,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(consumerDestinations_);
       }
     }
-
     /**
      *
      *
@@ -2751,7 +2680,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       return getConsumerDestinationsFieldBuilder()
           .addBuilder(com.google.api.Monitoring.MonitoringDestination.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -2771,7 +2699,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       return getConsumerDestinationsFieldBuilder()
           .addBuilder(index, com.google.api.Monitoring.MonitoringDestination.getDefaultInstance());
     }
-
     /**
      *
      *

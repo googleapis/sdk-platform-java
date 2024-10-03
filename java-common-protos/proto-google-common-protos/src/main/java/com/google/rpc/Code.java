@@ -323,7 +323,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>OK = 0;</code>
    */
   public static final int OK_VALUE = 0;
-
   /**
    *
    *
@@ -336,7 +335,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>CANCELLED = 1;</code>
    */
   public static final int CANCELLED_VALUE = 1;
-
   /**
    *
    *
@@ -353,7 +351,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>UNKNOWN = 2;</code>
    */
   public static final int UNKNOWN_VALUE = 2;
-
   /**
    *
    *
@@ -369,7 +366,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>INVALID_ARGUMENT = 3;</code>
    */
   public static final int INVALID_ARGUMENT_VALUE = 3;
-
   /**
    *
    *
@@ -386,7 +382,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>DEADLINE_EXCEEDED = 4;</code>
    */
   public static final int DEADLINE_EXCEEDED_VALUE = 4;
-
   /**
    *
    *
@@ -405,7 +400,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>NOT_FOUND = 5;</code>
    */
   public static final int NOT_FOUND_VALUE = 5;
-
   /**
    *
    *
@@ -419,7 +413,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>ALREADY_EXISTS = 6;</code>
    */
   public static final int ALREADY_EXISTS_VALUE = 6;
-
   /**
    *
    *
@@ -439,7 +432,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>PERMISSION_DENIED = 7;</code>
    */
   public static final int PERMISSION_DENIED_VALUE = 7;
-
   /**
    *
    *
@@ -453,7 +445,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>UNAUTHENTICATED = 16;</code>
    */
   public static final int UNAUTHENTICATED_VALUE = 16;
-
   /**
    *
    *
@@ -467,7 +458,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>RESOURCE_EXHAUSTED = 8;</code>
    */
   public static final int RESOURCE_EXHAUSTED_VALUE = 8;
-
   /**
    *
    *
@@ -495,7 +485,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>FAILED_PRECONDITION = 9;</code>
    */
   public static final int FAILED_PRECONDITION_VALUE = 9;
-
   /**
    *
    *
@@ -512,7 +501,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>ABORTED = 10;</code>
    */
   public static final int ABORTED_VALUE = 10;
-
   /**
    *
    *
@@ -539,7 +527,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>OUT_OF_RANGE = 11;</code>
    */
   public static final int OUT_OF_RANGE_VALUE = 11;
-
   /**
    *
    *
@@ -553,7 +540,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>UNIMPLEMENTED = 12;</code>
    */
   public static final int UNIMPLEMENTED_VALUE = 12;
-
   /**
    *
    *
@@ -568,7 +554,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>INTERNAL = 13;</code>
    */
   public static final int INTERNAL_VALUE = 13;
-
   /**
    *
    *
@@ -587,7 +572,6 @@ public enum Code implements com.google.protobuf.ProtocolMessageEnum {
    * <code>UNAVAILABLE = 14;</code>
    */
   public static final int UNAVAILABLE_VALUE = 14;
-
   /**
    *
    *

@@ -39,7 +39,6 @@ public interface DocumentationOrBuilder
    * @return The summary.
    */
   java.lang.String getSummary();
-
   /**
    *
    *
@@ -66,7 +65,6 @@ public interface DocumentationOrBuilder
    * <code>repeated .google.api.Page pages = 5;</code>
    */
   java.util.List<com.google.api.Page> getPagesList();
-
   /**
    *
    *
@@ -77,7 +75,6 @@ public interface DocumentationOrBuilder
    * <code>repeated .google.api.Page pages = 5;</code>
    */
   com.google.api.Page getPages(int index);
-
   /**
    *
    *
@@ -88,7 +85,6 @@ public interface DocumentationOrBuilder
    * <code>repeated .google.api.Page pages = 5;</code>
    */
   int getPagesCount();
-
   /**
    *
    *
@@ -99,7 +95,6 @@ public interface DocumentationOrBuilder
    * <code>repeated .google.api.Page pages = 5;</code>
    */
   java.util.List<? extends com.google.api.PageOrBuilder> getPagesOrBuilderList();
-
   /**
    *
    *
@@ -123,7 +118,6 @@ public interface DocumentationOrBuilder
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
   java.util.List<com.google.api.DocumentationRule> getRulesList();
-
   /**
    *
    *
@@ -136,7 +130,6 @@ public interface DocumentationOrBuilder
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
   com.google.api.DocumentationRule getRules(int index);
-
   /**
    *
    *
@@ -149,7 +142,6 @@ public interface DocumentationOrBuilder
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
   int getRulesCount();
-
   /**
    *
    *
@@ -162,7 +154,6 @@ public interface DocumentationOrBuilder
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
   java.util.List<? extends com.google.api.DocumentationRuleOrBuilder> getRulesOrBuilderList();
-
   /**
    *
    *
@@ -188,7 +179,6 @@ public interface DocumentationOrBuilder
    * @return The documentationRootUrl.
    */
   java.lang.String getDocumentationRootUrl();
-
   /**
    *
    *
@@ -217,7 +207,6 @@ public interface DocumentationOrBuilder
    * @return The serviceRootUrl.
    */
   java.lang.String getServiceRootUrl();
-
   /**
    *
    *
@@ -258,7 +247,6 @@ public interface DocumentationOrBuilder
    * @return The overview.
    */
   java.lang.String getOverview();
-
   /**
    *
    *

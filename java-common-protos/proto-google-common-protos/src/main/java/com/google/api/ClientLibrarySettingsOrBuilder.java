@@ -38,7 +38,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The version.
    */
   java.lang.String getVersion();
-
   /**
    *
    *
@@ -66,7 +65,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The enum numeric value on the wire for launchStage.
    */
   int getLaunchStageValue();
-
   /**
    *
    *
@@ -106,7 +104,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return Whether the javaSettings field is set.
    */
   boolean hasJavaSettings();
-
   /**
    *
    *
@@ -119,7 +116,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The javaSettings.
    */
   com.google.api.JavaSettings getJavaSettings();
-
   /**
    *
    *
@@ -143,7 +139,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return Whether the cppSettings field is set.
    */
   boolean hasCppSettings();
-
   /**
    *
    *
@@ -156,7 +151,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The cppSettings.
    */
   com.google.api.CppSettings getCppSettings();
-
   /**
    *
    *
@@ -180,7 +174,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return Whether the phpSettings field is set.
    */
   boolean hasPhpSettings();
-
   /**
    *
    *
@@ -193,7 +186,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The phpSettings.
    */
   com.google.api.PhpSettings getPhpSettings();
-
   /**
    *
    *
@@ -217,7 +209,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return Whether the pythonSettings field is set.
    */
   boolean hasPythonSettings();
-
   /**
    *
    *
@@ -230,7 +221,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The pythonSettings.
    */
   com.google.api.PythonSettings getPythonSettings();
-
   /**
    *
    *
@@ -254,7 +244,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return Whether the nodeSettings field is set.
    */
   boolean hasNodeSettings();
-
   /**
    *
    *
@@ -267,7 +256,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The nodeSettings.
    */
   com.google.api.NodeSettings getNodeSettings();
-
   /**
    *
    *
@@ -291,7 +279,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return Whether the dotnetSettings field is set.
    */
   boolean hasDotnetSettings();
-
   /**
    *
    *
@@ -304,7 +291,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The dotnetSettings.
    */
   com.google.api.DotnetSettings getDotnetSettings();
-
   /**
    *
    *
@@ -328,7 +314,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return Whether the rubySettings field is set.
    */
   boolean hasRubySettings();
-
   /**
    *
    *
@@ -341,7 +326,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The rubySettings.
    */
   com.google.api.RubySettings getRubySettings();
-
   /**
    *
    *
@@ -365,7 +349,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return Whether the goSettings field is set.
    */
   boolean hasGoSettings();
-
   /**
    *
    *
@@ -378,7 +361,6 @@ public interface ClientLibrarySettingsOrBuilder
    * @return The goSettings.
    */
   com.google.api.GoSettings getGoSettings();
-
   /**
    *
    *

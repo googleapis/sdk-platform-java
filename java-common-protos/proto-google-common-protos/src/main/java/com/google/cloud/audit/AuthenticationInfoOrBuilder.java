@@ -41,7 +41,6 @@ public interface AuthenticationInfoOrBuilder
    * @return The principalEmail.
    */
   java.lang.String getPrincipalEmail();
-
   /**
    *
    *
@@ -73,7 +72,6 @@ public interface AuthenticationInfoOrBuilder
    * @return The authoritySelector.
    */
   java.lang.String getAuthoritySelector();
-
   /**
    *
    *
@@ -103,7 +101,6 @@ public interface AuthenticationInfoOrBuilder
    * @return Whether the thirdPartyPrincipal field is set.
    */
   boolean hasThirdPartyPrincipal();
-
   /**
    *
    *
@@ -119,7 +116,6 @@ public interface AuthenticationInfoOrBuilder
    * @return The thirdPartyPrincipal.
    */
   com.google.protobuf.Struct getThirdPartyPrincipal();
-
   /**
    *
    *
@@ -150,7 +146,6 @@ public interface AuthenticationInfoOrBuilder
    * @return The serviceAccountKeyName.
    */
   java.lang.String getServiceAccountKeyName();
-
   /**
    *
    *
@@ -185,7 +180,6 @@ public interface AuthenticationInfoOrBuilder
    */
   java.util.List<com.google.cloud.audit.ServiceAccountDelegationInfo>
       getServiceAccountDelegationInfoList();
-
   /**
    *
    *
@@ -202,7 +196,6 @@ public interface AuthenticationInfoOrBuilder
    * </code>
    */
   com.google.cloud.audit.ServiceAccountDelegationInfo getServiceAccountDelegationInfo(int index);
-
   /**
    *
    *
@@ -219,7 +212,6 @@ public interface AuthenticationInfoOrBuilder
    * </code>
    */
   int getServiceAccountDelegationInfoCount();
-
   /**
    *
    *
@@ -237,7 +229,6 @@ public interface AuthenticationInfoOrBuilder
    */
   java.util.List<? extends com.google.cloud.audit.ServiceAccountDelegationInfoOrBuilder>
       getServiceAccountDelegationInfoOrBuilderList();
-
   /**
    *
    *
@@ -269,7 +260,6 @@ public interface AuthenticationInfoOrBuilder
    * @return The principalSubject.
    */
   java.lang.String getPrincipalSubject();
-
   /**
    *
    *

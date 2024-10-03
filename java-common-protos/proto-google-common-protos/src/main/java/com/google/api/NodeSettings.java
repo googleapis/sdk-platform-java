@@ -33,7 +33,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.NodeSettings)
     NodeSettingsOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use NodeSettings.newBuilder() to construct.
   private NodeSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -62,7 +61,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int COMMON_FIELD_NUMBER = 1;
   private com.google.api.CommonLanguageSettings common_;
-
   /**
    *
    *
@@ -78,7 +76,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
   public boolean hasCommon() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -94,7 +91,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.CommonLanguageSettings getCommon() {
     return common_ == null ? com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
   }
-
   /**
    *
    *
@@ -271,7 +267,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -469,7 +464,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
             com.google.api.CommonLanguageSettings.Builder,
             com.google.api.CommonLanguageSettingsOrBuilder>
         commonBuilder_;
-
     /**
      *
      *
@@ -484,7 +478,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
     public boolean hasCommon() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -505,7 +498,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
         return commonBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -528,7 +520,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -548,7 +539,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -576,7 +566,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -596,7 +585,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -611,7 +599,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getCommonFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -630,7 +617,6 @@ public final class NodeSettings extends com.google.protobuf.GeneratedMessageV3
             : common_;
       }
     }
-
     /**
      *
      *

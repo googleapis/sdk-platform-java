@@ -36,7 +36,6 @@ public interface DeleteOperationRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *

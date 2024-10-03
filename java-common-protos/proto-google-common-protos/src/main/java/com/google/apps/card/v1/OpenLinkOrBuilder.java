@@ -36,7 +36,6 @@ public interface OpenLinkOrBuilder
    * @return The url.
    */
   java.lang.String getUrl();
-
   /**
    *
    *
@@ -65,7 +64,6 @@ public interface OpenLinkOrBuilder
    * @return The enum numeric value on the wire for openAs.
    */
   int getOpenAsValue();
-
   /**
    *
    *
@@ -98,7 +96,6 @@ public interface OpenLinkOrBuilder
    * @return The enum numeric value on the wire for onClose.
    */
   int getOnCloseValue();
-
   /**
    *
    *

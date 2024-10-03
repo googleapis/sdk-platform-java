@@ -37,7 +37,6 @@ public interface CardOrBuilder
    * @return Whether the header field is set.
    */
   boolean hasHeader();
-
   /**
    *
    *
@@ -51,7 +50,6 @@ public interface CardOrBuilder
    * @return The header.
    */
   com.google.apps.card.v1.Card.CardHeader getHeader();
-
   /**
    *
    *
@@ -77,7 +75,6 @@ public interface CardOrBuilder
    * <code>repeated .google.apps.card.v1.Card.Section sections = 2;</code>
    */
   java.util.List<com.google.apps.card.v1.Card.Section> getSectionsList();
-
   /**
    *
    *
@@ -91,7 +88,6 @@ public interface CardOrBuilder
    * <code>repeated .google.apps.card.v1.Card.Section sections = 2;</code>
    */
   com.google.apps.card.v1.Card.Section getSections(int index);
-
   /**
    *
    *
@@ -105,7 +101,6 @@ public interface CardOrBuilder
    * <code>repeated .google.apps.card.v1.Card.Section sections = 2;</code>
    */
   int getSectionsCount();
-
   /**
    *
    *
@@ -120,7 +115,6 @@ public interface CardOrBuilder
    */
   java.util.List<? extends com.google.apps.card.v1.Card.SectionOrBuilder>
       getSectionsOrBuilderList();
-
   /**
    *
    *
@@ -147,7 +141,6 @@ public interface CardOrBuilder
    * @return The enum numeric value on the wire for sectionDividerStyle.
    */
   int getSectionDividerStyleValue();
-
   /**
    *
    *
@@ -205,7 +198,6 @@ public interface CardOrBuilder
    * <code>repeated .google.apps.card.v1.Card.CardAction card_actions = 3;</code>
    */
   java.util.List<com.google.apps.card.v1.Card.CardAction> getCardActionsList();
-
   /**
    *
    *
@@ -250,7 +242,6 @@ public interface CardOrBuilder
    * <code>repeated .google.apps.card.v1.Card.CardAction card_actions = 3;</code>
    */
   com.google.apps.card.v1.Card.CardAction getCardActions(int index);
-
   /**
    *
    *
@@ -295,7 +286,6 @@ public interface CardOrBuilder
    * <code>repeated .google.apps.card.v1.Card.CardAction card_actions = 3;</code>
    */
   int getCardActionsCount();
-
   /**
    *
    *
@@ -341,7 +331,6 @@ public interface CardOrBuilder
    */
   java.util.List<? extends com.google.apps.card.v1.Card.CardActionOrBuilder>
       getCardActionsOrBuilderList();
-
   /**
    *
    *
@@ -402,7 +391,6 @@ public interface CardOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -441,7 +429,6 @@ public interface CardOrBuilder
    * @return Whether the fixedFooter field is set.
    */
   boolean hasFixedFooter();
-
   /**
    *
    *
@@ -464,7 +451,6 @@ public interface CardOrBuilder
    * @return The fixedFooter.
    */
   com.google.apps.card.v1.Card.CardFixedFooter getFixedFooter();
-
   /**
    *
    *
@@ -502,7 +488,6 @@ public interface CardOrBuilder
    * @return The enum numeric value on the wire for displayStyle.
    */
   int getDisplayStyleValue();
-
   /**
    *
    *
@@ -537,7 +522,6 @@ public interface CardOrBuilder
    * @return Whether the peekCardHeader field is set.
    */
   boolean hasPeekCardHeader();
-
   /**
    *
    *
@@ -555,7 +539,6 @@ public interface CardOrBuilder
    * @return The peekCardHeader.
    */
   com.google.apps.card.v1.Card.CardHeader getPeekCardHeader();
-
   /**
    *
    *

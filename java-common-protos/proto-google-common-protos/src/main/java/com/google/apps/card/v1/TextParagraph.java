@@ -46,7 +46,6 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.TextParagraph)
     TextParagraphOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use TextParagraph.newBuilder() to construct.
   private TextParagraph(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -81,7 +80,6 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object text_ = "";
-
   /**
    *
    *
@@ -105,7 +103,6 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -287,7 +284,6 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -484,7 +480,6 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object text_ = "";
-
     /**
      *
      *
@@ -507,7 +502,6 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -530,7 +524,6 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -552,7 +545,6 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -570,7 +562,6 @@ public final class TextParagraph extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

@@ -40,7 +40,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.LogDescriptor)
     LogDescriptorOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use LogDescriptor.newBuilder() to construct.
   private LogDescriptor(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -75,7 +74,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
-
   /**
    *
    *
@@ -102,7 +100,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -134,7 +131,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.LabelDescriptor> labels_;
-
   /**
    *
    *
@@ -150,7 +146,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.LabelDescriptor> getLabelsList() {
     return labels_;
   }
-
   /**
    *
    *
@@ -167,7 +162,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       getLabelsOrBuilderList() {
     return labels_;
   }
-
   /**
    *
    *
@@ -183,7 +177,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
   public int getLabelsCount() {
     return labels_.size();
   }
-
   /**
    *
    *
@@ -199,7 +192,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.LabelDescriptor getLabels(int index) {
     return labels_.get(index);
   }
-
   /**
    *
    *
@@ -220,7 +212,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object description_ = "";
-
   /**
    *
    *
@@ -245,7 +236,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -275,7 +265,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object displayName_ = "";
-
   /**
    *
    *
@@ -300,7 +289,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -512,7 +500,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -787,7 +774,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object name_ = "";
-
     /**
      *
      *
@@ -813,7 +799,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -839,7 +824,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -864,7 +848,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -885,7 +868,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -946,7 +928,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         return labelsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -965,7 +946,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         return labelsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -984,7 +964,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         return labelsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -1009,7 +988,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1031,7 +1009,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1056,7 +1033,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1081,7 +1057,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1103,7 +1078,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1125,7 +1099,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1148,7 +1121,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1170,7 +1142,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1192,7 +1163,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1207,7 +1177,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.LabelDescriptor.Builder getLabelsBuilder(int index) {
       return getLabelsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1226,7 +1195,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         return labelsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1246,7 +1214,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(labels_);
       }
     }
-
     /**
      *
      *
@@ -1262,7 +1229,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       return getLabelsFieldBuilder()
           .addBuilder(com.google.api.LabelDescriptor.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1278,7 +1244,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       return getLabelsFieldBuilder()
           .addBuilder(index, com.google.api.LabelDescriptor.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1312,7 +1277,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object description_ = "";
-
     /**
      *
      *
@@ -1336,7 +1300,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1360,7 +1323,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1383,7 +1345,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1402,7 +1363,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1428,7 +1388,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object displayName_ = "";
-
     /**
      *
      *
@@ -1452,7 +1411,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1476,7 +1434,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1499,7 +1456,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1518,7 +1474,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

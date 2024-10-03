@@ -40,7 +40,6 @@ public interface ErrorInfoOrBuilder
    * @return The reason.
    */
   java.lang.String getReason();
-
   /**
    *
    *
@@ -75,7 +74,6 @@ public interface ErrorInfoOrBuilder
    * @return The domain.
    */
   java.lang.String getDomain();
-
   /**
    *
    *
@@ -111,7 +109,6 @@ public interface ErrorInfoOrBuilder
    * <code>map&lt;string, string&gt; metadata = 3;</code>
    */
   int getMetadataCount();
-
   /**
    *
    *
@@ -129,11 +126,9 @@ public interface ErrorInfoOrBuilder
    * <code>map&lt;string, string&gt; metadata = 3;</code>
    */
   boolean containsMetadata(java.lang.String key);
-
   /** Use {@link #getMetadataMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, java.lang.String> getMetadata();
-
   /**
    *
    *
@@ -151,7 +146,6 @@ public interface ErrorInfoOrBuilder
    * <code>map&lt;string, string&gt; metadata = 3;</code>
    */
   java.util.Map<java.lang.String, java.lang.String> getMetadataMap();
-
   /**
    *
    *
@@ -173,7 +167,6 @@ public interface ErrorInfoOrBuilder
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue);
-
   /**
    *
    *

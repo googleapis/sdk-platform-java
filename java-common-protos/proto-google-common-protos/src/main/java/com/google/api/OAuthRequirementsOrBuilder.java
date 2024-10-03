@@ -42,7 +42,6 @@ public interface OAuthRequirementsOrBuilder
    * @return The canonicalScopes.
    */
   java.lang.String getCanonicalScopes();
-
   /**
    *
    *

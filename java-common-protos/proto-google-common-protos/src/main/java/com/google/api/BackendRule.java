@@ -33,7 +33,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.BackendRule)
     BackendRuleOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use BackendRule.newBuilder() to construct.
   private BackendRule(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -159,7 +158,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
 
     /** <code>PATH_TRANSLATION_UNSPECIFIED = 0;</code> */
     public static final int PATH_TRANSLATION_UNSPECIFIED_VALUE = 0;
-
     /**
      *
      *
@@ -192,7 +190,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <code>CONSTANT_ADDRESS = 1;</code>
      */
     public static final int CONSTANT_ADDRESS_VALUE = 1;
-
     /**
      *
      *
@@ -324,7 +321,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     private AuthenticationCase(int value) {
       this.value = value;
     }
-
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -361,7 +357,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object selector_ = "";
-
   /**
    *
    *
@@ -388,7 +383,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -420,7 +414,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object address_ = "";
-
   /**
    *
    *
@@ -463,7 +456,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -509,7 +501,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
 
   public static final int DEADLINE_FIELD_NUMBER = 3;
   private double deadline_ = 0D;
-
   /**
    *
    *
@@ -529,7 +520,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
 
   public static final int MIN_DEADLINE_FIELD_NUMBER = 4;
   private double minDeadline_ = 0D;
-
   /**
    *
    *
@@ -551,7 +541,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
 
   public static final int OPERATION_DEADLINE_FIELD_NUMBER = 5;
   private double operationDeadline_ = 0D;
-
   /**
    *
    *
@@ -571,7 +560,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
 
   public static final int PATH_TRANSLATION_FIELD_NUMBER = 6;
   private int pathTranslation_ = 0;
-
   /**
    * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
    *
@@ -581,7 +569,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   public int getPathTranslationValue() {
     return pathTranslation_;
   }
-
   /**
    * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
    *
@@ -595,7 +582,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int JWT_AUDIENCE_FIELD_NUMBER = 7;
-
   /**
    *
    *
@@ -612,7 +598,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   public boolean hasJwtAudience() {
     return authenticationCase_ == 7;
   }
-
   /**
    *
    *
@@ -642,7 +627,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -674,7 +658,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DISABLE_AUTH_FIELD_NUMBER = 8;
-
   /**
    *
    *
@@ -693,7 +676,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   public boolean hasDisableAuth() {
     return authenticationCase_ == 8;
   }
-
   /**
    *
    *
@@ -720,7 +702,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object protocol_ = "";
-
   /**
    *
    *
@@ -764,7 +745,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -840,7 +820,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   public int getOverridesByRequestProtocolCount() {
     return internalGetOverridesByRequestProtocol().getMap().size();
   }
-
   /**
    *
    *
@@ -857,7 +836,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     }
     return internalGetOverridesByRequestProtocol().getMap().containsKey(key);
   }
-
   /** Use {@link #getOverridesByRequestProtocolMap()} instead. */
   @java.lang.Override
   @java.lang.Deprecated
@@ -865,7 +843,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       getOverridesByRequestProtocol() {
     return getOverridesByRequestProtocolMap();
   }
-
   /**
    *
    *
@@ -880,7 +857,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       getOverridesByRequestProtocolMap() {
     return internalGetOverridesByRequestProtocol().getMap();
   }
-
   /**
    *
    *
@@ -902,7 +878,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         internalGetOverridesByRequestProtocol().getMap();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
-
   /**
    *
    *
@@ -1211,7 +1186,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1572,7 +1546,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object selector_ = "";
-
     /**
      *
      *
@@ -1598,7 +1571,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1624,7 +1596,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1649,7 +1620,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1670,7 +1640,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1698,7 +1667,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object address_ = "";
-
     /**
      *
      *
@@ -1740,7 +1708,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1782,7 +1749,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1823,7 +1789,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1860,7 +1825,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1904,7 +1868,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     }
 
     private double deadline_;
-
     /**
      *
      *
@@ -1921,7 +1884,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     public double getDeadline() {
       return deadline_;
     }
-
     /**
      *
      *
@@ -1942,7 +1904,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1963,7 +1924,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     }
 
     private double minDeadline_;
-
     /**
      *
      *
@@ -1982,7 +1942,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     public double getMinDeadline() {
       return minDeadline_;
     }
-
     /**
      *
      *
@@ -2005,7 +1964,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2028,7 +1986,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     }
 
     private double operationDeadline_;
-
     /**
      *
      *
@@ -2045,7 +2002,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     public double getOperationDeadline() {
       return operationDeadline_;
     }
-
     /**
      *
      *
@@ -2066,7 +2022,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2087,7 +2042,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int pathTranslation_ = 0;
-
     /**
      * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
      *
@@ -2097,7 +2051,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     public int getPathTranslationValue() {
       return pathTranslation_;
     }
-
     /**
      * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
      *
@@ -2110,7 +2063,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
      *
@@ -2122,7 +2074,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
           com.google.api.BackendRule.PathTranslation.forNumber(pathTranslation_);
       return result == null ? com.google.api.BackendRule.PathTranslation.UNRECOGNIZED : result;
     }
-
     /**
      * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
      *
@@ -2138,7 +2089,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
      *
@@ -2168,7 +2118,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     public boolean hasJwtAudience() {
       return authenticationCase_ == 7;
     }
-
     /**
      *
      *
@@ -2199,7 +2148,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2230,7 +2178,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2254,7 +2201,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2276,7 +2222,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -2319,7 +2264,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     public boolean hasDisableAuth() {
       return authenticationCase_ == 8;
     }
-
     /**
      *
      *
@@ -2340,7 +2284,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       }
       return false;
     }
-
     /**
      *
      *
@@ -2363,7 +2306,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2388,7 +2330,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object protocol_ = "";
-
     /**
      *
      *
@@ -2431,7 +2372,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -2474,7 +2414,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -2516,7 +2455,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2554,7 +2492,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2614,8 +2551,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
           defaultEntry() {
         return OverridesByRequestProtocolDefaultEntryHolder.defaultEntry;
       }
-    }
-    ;
+    };
 
     private static final OverridesByRequestProtocolConverter overridesByRequestProtocolConverter =
         new OverridesByRequestProtocolConverter();
@@ -2657,7 +2593,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     public int getOverridesByRequestProtocolCount() {
       return internalGetOverridesByRequestProtocol().ensureBuilderMap().size();
     }
-
     /**
      *
      *
@@ -2674,7 +2609,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       }
       return internalGetOverridesByRequestProtocol().ensureBuilderMap().containsKey(key);
     }
-
     /** Use {@link #getOverridesByRequestProtocolMap()} instead. */
     @java.lang.Override
     @java.lang.Deprecated
@@ -2682,7 +2616,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         getOverridesByRequestProtocol() {
       return getOverridesByRequestProtocolMap();
     }
-
     /**
      *
      *
@@ -2697,7 +2630,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         getOverridesByRequestProtocolMap() {
       return internalGetOverridesByRequestProtocol().getImmutableMap();
     }
-
     /**
      *
      *
@@ -2721,7 +2653,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
           ? overridesByRequestProtocolConverter.build(map.get(key))
           : defaultValue;
     }
-
     /**
      *
      *
@@ -2749,7 +2680,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       internalGetMutableOverridesByRequestProtocol().clear();
       return this;
     }
-
     /**
      *
      *
@@ -2766,7 +2696,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       internalGetMutableOverridesByRequestProtocol().ensureBuilderMap().remove(key);
       return this;
     }
-
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, com.google.api.BackendRule>
@@ -2774,7 +2703,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       bitField0_ |= 0x00000200;
       return internalGetMutableOverridesByRequestProtocol().ensureMessageMap();
     }
-
     /**
      *
      *
@@ -2796,7 +2724,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       bitField0_ |= 0x00000200;
       return this;
     }
-
     /**
      *
      *
@@ -2818,7 +2745,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       bitField0_ |= 0x00000200;
       return this;
     }
-
     /**
      *
      *

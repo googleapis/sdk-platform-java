@@ -36,7 +36,6 @@ public interface PropertyOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -62,7 +61,6 @@ public interface PropertyOrBuilder
    * @return The enum numeric value on the wire for type.
    */
   int getTypeValue();
-
   /**
    *
    *
@@ -88,7 +86,6 @@ public interface PropertyOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
-
   /**
    *
    *

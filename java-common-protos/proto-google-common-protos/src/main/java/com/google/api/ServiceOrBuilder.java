@@ -39,7 +39,6 @@ public interface ServiceOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -69,7 +68,6 @@ public interface ServiceOrBuilder
    * @return The title.
    */
   java.lang.String getTitle();
-
   /**
    *
    *
@@ -96,7 +94,6 @@ public interface ServiceOrBuilder
    * @return The producerProjectId.
    */
   java.lang.String getProducerProjectId();
-
   /**
    *
    *
@@ -125,7 +122,6 @@ public interface ServiceOrBuilder
    * @return The id.
    */
   java.lang.String getId();
-
   /**
    *
    *
@@ -156,7 +152,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Api apis = 3;</code>
    */
   java.util.List<com.google.protobuf.Api> getApisList();
-
   /**
    *
    *
@@ -171,7 +166,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Api apis = 3;</code>
    */
   com.google.protobuf.Api getApis(int index);
-
   /**
    *
    *
@@ -186,7 +180,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Api apis = 3;</code>
    */
   int getApisCount();
-
   /**
    *
    *
@@ -201,7 +194,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Api apis = 3;</code>
    */
   java.util.List<? extends com.google.protobuf.ApiOrBuilder> getApisOrBuilderList();
-
   /**
    *
    *
@@ -234,7 +226,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Type types = 4;</code>
    */
   java.util.List<com.google.protobuf.Type> getTypesList();
-
   /**
    *
    *
@@ -252,7 +243,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Type types = 4;</code>
    */
   com.google.protobuf.Type getTypes(int index);
-
   /**
    *
    *
@@ -270,7 +260,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Type types = 4;</code>
    */
   int getTypesCount();
-
   /**
    *
    *
@@ -288,7 +277,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Type types = 4;</code>
    */
   java.util.List<? extends com.google.protobuf.TypeOrBuilder> getTypesOrBuilderList();
-
   /**
    *
    *
@@ -323,7 +311,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Enum enums = 5;</code>
    */
   java.util.List<com.google.protobuf.Enum> getEnumsList();
-
   /**
    *
    *
@@ -340,7 +327,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Enum enums = 5;</code>
    */
   com.google.protobuf.Enum getEnums(int index);
-
   /**
    *
    *
@@ -357,7 +343,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Enum enums = 5;</code>
    */
   int getEnumsCount();
-
   /**
    *
    *
@@ -374,7 +359,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.protobuf.Enum enums = 5;</code>
    */
   java.util.List<? extends com.google.protobuf.EnumOrBuilder> getEnumsOrBuilderList();
-
   /**
    *
    *
@@ -404,7 +388,6 @@ public interface ServiceOrBuilder
    * @return Whether the documentation field is set.
    */
   boolean hasDocumentation();
-
   /**
    *
    *
@@ -417,7 +400,6 @@ public interface ServiceOrBuilder
    * @return The documentation.
    */
   com.google.api.Documentation getDocumentation();
-
   /**
    *
    *
@@ -441,7 +423,6 @@ public interface ServiceOrBuilder
    * @return Whether the backend field is set.
    */
   boolean hasBackend();
-
   /**
    *
    *
@@ -454,7 +435,6 @@ public interface ServiceOrBuilder
    * @return The backend.
    */
   com.google.api.Backend getBackend();
-
   /**
    *
    *
@@ -478,7 +458,6 @@ public interface ServiceOrBuilder
    * @return Whether the http field is set.
    */
   boolean hasHttp();
-
   /**
    *
    *
@@ -491,7 +470,6 @@ public interface ServiceOrBuilder
    * @return The http.
    */
   com.google.api.Http getHttp();
-
   /**
    *
    *
@@ -515,7 +493,6 @@ public interface ServiceOrBuilder
    * @return Whether the quota field is set.
    */
   boolean hasQuota();
-
   /**
    *
    *
@@ -528,7 +505,6 @@ public interface ServiceOrBuilder
    * @return The quota.
    */
   com.google.api.Quota getQuota();
-
   /**
    *
    *
@@ -552,7 +528,6 @@ public interface ServiceOrBuilder
    * @return Whether the authentication field is set.
    */
   boolean hasAuthentication();
-
   /**
    *
    *
@@ -565,7 +540,6 @@ public interface ServiceOrBuilder
    * @return The authentication.
    */
   com.google.api.Authentication getAuthentication();
-
   /**
    *
    *
@@ -589,7 +563,6 @@ public interface ServiceOrBuilder
    * @return Whether the context field is set.
    */
   boolean hasContext();
-
   /**
    *
    *
@@ -602,7 +575,6 @@ public interface ServiceOrBuilder
    * @return The context.
    */
   com.google.api.Context getContext();
-
   /**
    *
    *
@@ -626,7 +598,6 @@ public interface ServiceOrBuilder
    * @return Whether the usage field is set.
    */
   boolean hasUsage();
-
   /**
    *
    *
@@ -639,7 +610,6 @@ public interface ServiceOrBuilder
    * @return The usage.
    */
   com.google.api.Usage getUsage();
-
   /**
    *
    *
@@ -663,7 +633,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.Endpoint endpoints = 18;</code>
    */
   java.util.List<com.google.api.Endpoint> getEndpointsList();
-
   /**
    *
    *
@@ -676,7 +645,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.Endpoint endpoints = 18;</code>
    */
   com.google.api.Endpoint getEndpoints(int index);
-
   /**
    *
    *
@@ -689,7 +657,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.Endpoint endpoints = 18;</code>
    */
   int getEndpointsCount();
-
   /**
    *
    *
@@ -702,7 +669,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.Endpoint endpoints = 18;</code>
    */
   java.util.List<? extends com.google.api.EndpointOrBuilder> getEndpointsOrBuilderList();
-
   /**
    *
    *
@@ -728,7 +694,6 @@ public interface ServiceOrBuilder
    * @return Whether the control field is set.
    */
   boolean hasControl();
-
   /**
    *
    *
@@ -741,7 +706,6 @@ public interface ServiceOrBuilder
    * @return The control.
    */
   com.google.api.Control getControl();
-
   /**
    *
    *
@@ -763,7 +727,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.LogDescriptor logs = 23;</code>
    */
   java.util.List<com.google.api.LogDescriptor> getLogsList();
-
   /**
    *
    *
@@ -774,7 +737,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.LogDescriptor logs = 23;</code>
    */
   com.google.api.LogDescriptor getLogs(int index);
-
   /**
    *
    *
@@ -785,7 +747,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.LogDescriptor logs = 23;</code>
    */
   int getLogsCount();
-
   /**
    *
    *
@@ -796,7 +757,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.LogDescriptor logs = 23;</code>
    */
   java.util.List<? extends com.google.api.LogDescriptorOrBuilder> getLogsOrBuilderList();
-
   /**
    *
    *
@@ -818,7 +778,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
    */
   java.util.List<com.google.api.MetricDescriptor> getMetricsList();
-
   /**
    *
    *
@@ -829,7 +788,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
    */
   com.google.api.MetricDescriptor getMetrics(int index);
-
   /**
    *
    *
@@ -840,7 +798,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
    */
   int getMetricsCount();
-
   /**
    *
    *
@@ -851,7 +808,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
    */
   java.util.List<? extends com.google.api.MetricDescriptorOrBuilder> getMetricsOrBuilderList();
-
   /**
    *
    *
@@ -875,7 +831,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
    */
   java.util.List<com.google.api.MonitoredResourceDescriptor> getMonitoredResourcesList();
-
   /**
    *
    *
@@ -888,7 +843,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
    */
   com.google.api.MonitoredResourceDescriptor getMonitoredResources(int index);
-
   /**
    *
    *
@@ -901,7 +855,6 @@ public interface ServiceOrBuilder
    * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
    */
   int getMonitoredResourcesCount();
-
   /**
    *
    *
@@ -915,7 +868,6 @@ public interface ServiceOrBuilder
    */
   java.util.List<? extends com.google.api.MonitoredResourceDescriptorOrBuilder>
       getMonitoredResourcesOrBuilderList();
-
   /**
    *
    *
@@ -941,7 +893,6 @@ public interface ServiceOrBuilder
    * @return Whether the billing field is set.
    */
   boolean hasBilling();
-
   /**
    *
    *
@@ -954,7 +905,6 @@ public interface ServiceOrBuilder
    * @return The billing.
    */
   com.google.api.Billing getBilling();
-
   /**
    *
    *
@@ -978,7 +928,6 @@ public interface ServiceOrBuilder
    * @return Whether the logging field is set.
    */
   boolean hasLogging();
-
   /**
    *
    *
@@ -991,7 +940,6 @@ public interface ServiceOrBuilder
    * @return The logging.
    */
   com.google.api.Logging getLogging();
-
   /**
    *
    *
@@ -1015,7 +963,6 @@ public interface ServiceOrBuilder
    * @return Whether the monitoring field is set.
    */
   boolean hasMonitoring();
-
   /**
    *
    *
@@ -1028,7 +975,6 @@ public interface ServiceOrBuilder
    * @return The monitoring.
    */
   com.google.api.Monitoring getMonitoring();
-
   /**
    *
    *
@@ -1052,7 +998,6 @@ public interface ServiceOrBuilder
    * @return Whether the systemParameters field is set.
    */
   boolean hasSystemParameters();
-
   /**
    *
    *
@@ -1065,7 +1010,6 @@ public interface ServiceOrBuilder
    * @return The systemParameters.
    */
   com.google.api.SystemParameters getSystemParameters();
-
   /**
    *
    *
@@ -1089,7 +1033,6 @@ public interface ServiceOrBuilder
    * @return Whether the sourceInfo field is set.
    */
   boolean hasSourceInfo();
-
   /**
    *
    *
@@ -1102,7 +1045,6 @@ public interface ServiceOrBuilder
    * @return The sourceInfo.
    */
   com.google.api.SourceInfo getSourceInfo();
-
   /**
    *
    *
@@ -1128,7 +1070,6 @@ public interface ServiceOrBuilder
    * @return Whether the publishing field is set.
    */
   boolean hasPublishing();
-
   /**
    *
    *
@@ -1143,7 +1084,6 @@ public interface ServiceOrBuilder
    * @return The publishing.
    */
   com.google.api.Publishing getPublishing();
-
   /**
    *
    *
@@ -1172,7 +1112,6 @@ public interface ServiceOrBuilder
    * @return Whether the configVersion field is set.
    */
   boolean hasConfigVersion();
-
   /**
    *
    *
@@ -1188,7 +1127,6 @@ public interface ServiceOrBuilder
    * @return The configVersion.
    */
   com.google.protobuf.UInt32Value getConfigVersion();
-
   /**
    *
    *

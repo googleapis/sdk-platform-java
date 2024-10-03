@@ -46,7 +46,6 @@ public interface CreatePolicyRequestOrBuilder
    * @return The parent.
    */
   java.lang.String getParent();
-
   /**
    *
    *
@@ -82,7 +81,6 @@ public interface CreatePolicyRequestOrBuilder
    * @return Whether the policy field is set.
    */
   boolean hasPolicy();
-
   /**
    *
    *
@@ -95,7 +93,6 @@ public interface CreatePolicyRequestOrBuilder
    * @return The policy.
    */
   com.google.iam.v2beta.Policy getPolicy();
-
   /**
    *
    *
@@ -122,7 +119,6 @@ public interface CreatePolicyRequestOrBuilder
    * @return The policyId.
    */
   java.lang.String getPolicyId();
-
   /**
    *
    *

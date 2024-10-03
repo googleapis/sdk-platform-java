@@ -38,7 +38,6 @@ public interface MetricOrBuilder
    * @return The type.
    */
   java.lang.String getType();
-
   /**
    *
    *
@@ -65,7 +64,6 @@ public interface MetricOrBuilder
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
   int getLabelsCount();
-
   /**
    *
    *
@@ -77,11 +75,9 @@ public interface MetricOrBuilder
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
   boolean containsLabels(java.lang.String key);
-
   /** Use {@link #getLabelsMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, java.lang.String> getLabels();
-
   /**
    *
    *
@@ -93,7 +89,6 @@ public interface MetricOrBuilder
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
   java.util.Map<java.lang.String, java.lang.String> getLabelsMap();
-
   /**
    *
    *
@@ -109,7 +104,6 @@ public interface MetricOrBuilder
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue);
-
   /**
    *
    *

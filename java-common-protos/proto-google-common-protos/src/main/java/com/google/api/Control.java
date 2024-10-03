@@ -38,7 +38,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.Control)
     ControlOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Control.newBuilder() to construct.
   private Control(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -71,7 +70,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object environment_ = "";
-
   /**
    *
    *
@@ -97,7 +95,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -128,7 +125,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.MethodPolicy> methodPolicies_;
-
   /**
    *
    *
@@ -142,7 +138,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.MethodPolicy> getMethodPoliciesList() {
     return methodPolicies_;
   }
-
   /**
    *
    *
@@ -157,7 +152,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       getMethodPoliciesOrBuilderList() {
     return methodPolicies_;
   }
-
   /**
    *
    *
@@ -171,7 +165,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
   public int getMethodPoliciesCount() {
     return methodPolicies_.size();
   }
-
   /**
    *
    *
@@ -185,7 +178,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.MethodPolicy getMethodPolicies(int index) {
     return methodPolicies_.get(index);
   }
-
   /**
    *
    *
@@ -368,7 +360,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -611,7 +602,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object environment_ = "";
-
     /**
      *
      *
@@ -636,7 +626,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -661,7 +650,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -685,7 +673,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -705,7 +692,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -763,7 +749,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
         return methodPoliciesBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -780,7 +765,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
         return methodPoliciesBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -797,7 +781,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
         return methodPoliciesBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -820,7 +803,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -841,7 +823,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -864,7 +845,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -887,7 +867,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -907,7 +886,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -928,7 +906,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -949,7 +926,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -969,7 +945,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -989,7 +964,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1002,7 +976,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.MethodPolicy.Builder getMethodPoliciesBuilder(int index) {
       return getMethodPoliciesFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1019,7 +992,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
         return methodPoliciesBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1037,7 +1009,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(methodPolicies_);
       }
     }
-
     /**
      *
      *
@@ -1051,7 +1022,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       return getMethodPoliciesFieldBuilder()
           .addBuilder(com.google.api.MethodPolicy.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1065,7 +1035,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       return getMethodPoliciesFieldBuilder()
           .addBuilder(index, com.google.api.MethodPolicy.getDefaultInstance());
     }
-
     /**
      *
      *

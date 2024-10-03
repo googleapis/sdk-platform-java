@@ -36,7 +36,6 @@ public interface GetLocationRequestOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *

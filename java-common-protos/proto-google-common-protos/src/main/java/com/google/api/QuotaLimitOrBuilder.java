@@ -41,7 +41,6 @@ public interface QuotaLimitOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -74,7 +73,6 @@ public interface QuotaLimitOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
-
   /**
    *
    *
@@ -167,7 +165,6 @@ public interface QuotaLimitOrBuilder
    * @return The duration.
    */
   java.lang.String getDuration();
-
   /**
    *
    *
@@ -197,7 +194,6 @@ public interface QuotaLimitOrBuilder
    * @return The metric.
    */
   java.lang.String getMetric();
-
   /**
    *
    *
@@ -233,7 +229,6 @@ public interface QuotaLimitOrBuilder
    * @return The unit.
    */
   java.lang.String getUnit();
-
   /**
    *
    *
@@ -267,7 +262,6 @@ public interface QuotaLimitOrBuilder
    * <code>map&lt;string, int64&gt; values = 10;</code>
    */
   int getValuesCount();
-
   /**
    *
    *
@@ -280,11 +274,9 @@ public interface QuotaLimitOrBuilder
    * <code>map&lt;string, int64&gt; values = 10;</code>
    */
   boolean containsValues(java.lang.String key);
-
   /** Use {@link #getValuesMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, java.lang.Long> getValues();
-
   /**
    *
    *
@@ -297,7 +289,6 @@ public interface QuotaLimitOrBuilder
    * <code>map&lt;string, int64&gt; values = 10;</code>
    */
   java.util.Map<java.lang.String, java.lang.Long> getValuesMap();
-
   /**
    *
    *
@@ -310,7 +301,6 @@ public interface QuotaLimitOrBuilder
    * <code>map&lt;string, int64&gt; values = 10;</code>
    */
   long getValuesOrDefault(java.lang.String key, long defaultValue);
-
   /**
    *
    *
@@ -339,7 +329,6 @@ public interface QuotaLimitOrBuilder
    * @return The displayName.
    */
   java.lang.String getDisplayName();
-
   /**
    *
    *

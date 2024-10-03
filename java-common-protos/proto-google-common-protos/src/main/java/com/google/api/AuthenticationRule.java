@@ -41,7 +41,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
     // @@protoc_insertion_point(message_implements:google.api.AuthenticationRule)
     AuthenticationRuleOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use AuthenticationRule.newBuilder() to construct.
   private AuthenticationRule(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -76,7 +75,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object selector_ = "";
-
   /**
    *
    *
@@ -103,7 +101,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       return s;
     }
   }
-
   /**
    *
    *
@@ -133,7 +130,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
 
   public static final int OAUTH_FIELD_NUMBER = 2;
   private com.google.api.OAuthRequirements oauth_;
-
   /**
    *
    *
@@ -149,7 +145,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
   public boolean hasOauth() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -165,7 +160,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
   public com.google.api.OAuthRequirements getOauth() {
     return oauth_ == null ? com.google.api.OAuthRequirements.getDefaultInstance() : oauth_;
   }
-
   /**
    *
    *
@@ -182,7 +176,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
 
   public static final int ALLOW_WITHOUT_CREDENTIAL_FIELD_NUMBER = 5;
   private boolean allowWithoutCredential_ = false;
-
   /**
    *
    *
@@ -204,7 +197,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.AuthRequirement> requirements_;
-
   /**
    *
    *
@@ -218,7 +210,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
   public java.util.List<com.google.api.AuthRequirement> getRequirementsList() {
     return requirements_;
   }
-
   /**
    *
    *
@@ -233,7 +224,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       getRequirementsOrBuilderList() {
     return requirements_;
   }
-
   /**
    *
    *
@@ -247,7 +237,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
   public int getRequirementsCount() {
     return requirements_.size();
   }
-
   /**
    *
    *
@@ -261,7 +250,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
   public com.google.api.AuthRequirement getRequirements(int index) {
     return requirements_.get(index);
   }
-
   /**
    *
    *
@@ -467,7 +455,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -758,7 +745,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
     private int bitField0_;
 
     private java.lang.Object selector_ = "";
-
     /**
      *
      *
@@ -784,7 +770,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -810,7 +795,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -835,7 +819,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -856,7 +839,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -889,7 +871,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
             com.google.api.OAuthRequirements.Builder,
             com.google.api.OAuthRequirementsOrBuilder>
         oauthBuilder_;
-
     /**
      *
      *
@@ -904,7 +885,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
     public boolean hasOauth() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -923,7 +903,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
         return oauthBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -946,7 +925,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -966,7 +944,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -994,7 +971,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1014,7 +990,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1029,7 +1004,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       onChanged();
       return getOauthFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1046,7 +1020,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
         return oauth_ == null ? com.google.api.OAuthRequirements.getDefaultInstance() : oauth_;
       }
     }
-
     /**
      *
      *
@@ -1074,7 +1047,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
     }
 
     private boolean allowWithoutCredential_;
-
     /**
      *
      *
@@ -1091,7 +1063,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
     public boolean getAllowWithoutCredential() {
       return allowWithoutCredential_;
     }
-
     /**
      *
      *
@@ -1112,7 +1083,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1164,7 +1134,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
         return requirementsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -1181,7 +1150,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
         return requirementsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -1198,7 +1166,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
         return requirementsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -1221,7 +1188,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1242,7 +1208,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1265,7 +1230,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1288,7 +1252,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1308,7 +1271,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1329,7 +1291,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1350,7 +1311,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1370,7 +1330,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1390,7 +1349,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       }
       return this;
     }
-
     /**
      *
      *
@@ -1403,7 +1361,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
     public com.google.api.AuthRequirement.Builder getRequirementsBuilder(int index) {
       return getRequirementsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1420,7 +1377,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
         return requirementsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1438,7 +1394,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
         return java.util.Collections.unmodifiableList(requirements_);
       }
     }
-
     /**
      *
      *
@@ -1452,7 +1407,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       return getRequirementsFieldBuilder()
           .addBuilder(com.google.api.AuthRequirement.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1466,7 +1420,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       return getRequirementsFieldBuilder()
           .addBuilder(index, com.google.api.AuthRequirement.getDefaultInstance());
     }
-
     /**
      *
      *

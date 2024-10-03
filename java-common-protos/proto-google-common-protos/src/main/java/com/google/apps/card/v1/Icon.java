@@ -44,7 +44,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Icon)
     IconOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Icon.newBuilder() to construct.
   private Icon(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -92,7 +91,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
     private IconsCase(int value) {
       this.value = value;
     }
-
     /**
      * @param value The number of the enum to look for.
      * @return The enum associated with the given number.
@@ -128,7 +126,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int KNOWN_ICON_FIELD_NUMBER = 1;
-
   /**
    *
    *
@@ -149,7 +146,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
   public boolean hasKnownIcon() {
     return iconsCase_ == 1;
   }
-
   /**
    *
    *
@@ -183,7 +179,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -219,7 +214,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ICON_URL_FIELD_NUMBER = 2;
-
   /**
    *
    *
@@ -243,7 +237,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
   public boolean hasIconUrl() {
     return iconsCase_ == 2;
   }
-
   /**
    *
    *
@@ -280,7 +273,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -319,7 +311,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int MATERIAL_ICON_FIELD_NUMBER = 5;
-
   /**
    *
    *
@@ -347,7 +338,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
   public boolean hasMaterialIcon() {
     return iconsCase_ == 5;
   }
-
   /**
    *
    *
@@ -378,7 +368,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
     }
     return com.google.apps.card.v1.MaterialIcon.getDefaultInstance();
   }
-
   /**
    *
    *
@@ -412,7 +401,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object altText_ = "";
-
   /**
    *
    *
@@ -445,7 +433,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -481,7 +468,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
 
   public static final int IMAGE_TYPE_FIELD_NUMBER = 4;
   private int imageType_ = 0;
-
   /**
    *
    *
@@ -499,7 +485,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
   public int getImageTypeValue() {
     return imageType_;
   }
-
   /**
    *
    *
@@ -736,7 +721,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1033,7 +1017,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
     public boolean hasKnownIcon() {
       return iconsCase_ == 1;
     }
-
     /**
      *
      *
@@ -1068,7 +1051,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1103,7 +1085,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1131,7 +1112,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1157,7 +1137,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1211,7 +1190,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
     public boolean hasIconUrl() {
       return iconsCase_ == 2;
     }
-
     /**
      *
      *
@@ -1249,7 +1227,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1287,7 +1264,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1318,7 +1294,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1347,7 +1322,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1385,7 +1359,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.MaterialIcon.Builder,
             com.google.apps.card.v1.MaterialIconOrBuilder>
         materialIconBuilder_;
-
     /**
      *
      *
@@ -1413,7 +1386,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
     public boolean hasMaterialIcon() {
       return iconsCase_ == 5;
     }
-
     /**
      *
      *
@@ -1451,7 +1423,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.MaterialIcon.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1486,7 +1457,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       iconsCase_ = 5;
       return this;
     }
-
     /**
      *
      *
@@ -1518,7 +1488,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       iconsCase_ = 5;
       return this;
     }
-
     /**
      *
      *
@@ -1563,7 +1532,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       iconsCase_ = 5;
       return this;
     }
-
     /**
      *
      *
@@ -1601,7 +1569,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1626,7 +1593,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.MaterialIcon.Builder getMaterialIconBuilder() {
       return getMaterialIconFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1659,7 +1625,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
         return com.google.apps.card.v1.MaterialIcon.getDefaultInstance();
       }
     }
-
     /**
      *
      *
@@ -1704,7 +1669,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object altText_ = "";
-
     /**
      *
      *
@@ -1736,7 +1700,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1768,7 +1731,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1799,7 +1761,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1826,7 +1787,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1860,7 +1820,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int imageType_ = 0;
-
     /**
      *
      *
@@ -1878,7 +1837,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
     public int getImageTypeValue() {
       return imageType_;
     }
-
     /**
      *
      *
@@ -1899,7 +1857,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1919,7 +1876,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
           com.google.apps.card.v1.Widget.ImageType.forNumber(imageType_);
       return result == null ? com.google.apps.card.v1.Widget.ImageType.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -1943,7 +1899,6 @@ public final class Icon extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *

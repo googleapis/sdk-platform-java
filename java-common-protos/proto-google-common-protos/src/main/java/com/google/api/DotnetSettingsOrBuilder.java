@@ -36,7 +36,6 @@ public interface DotnetSettingsOrBuilder
    * @return Whether the common field is set.
    */
   boolean hasCommon();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface DotnetSettingsOrBuilder
    * @return The common.
    */
   com.google.api.CommonLanguageSettings getCommon();
-
   /**
    *
    *
@@ -75,7 +73,6 @@ public interface DotnetSettingsOrBuilder
    * <code>map&lt;string, string&gt; renamed_services = 2;</code>
    */
   int getRenamedServicesCount();
-
   /**
    *
    *
@@ -90,11 +87,9 @@ public interface DotnetSettingsOrBuilder
    * <code>map&lt;string, string&gt; renamed_services = 2;</code>
    */
   boolean containsRenamedServices(java.lang.String key);
-
   /** Use {@link #getRenamedServicesMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, java.lang.String> getRenamedServices();
-
   /**
    *
    *
@@ -109,7 +104,6 @@ public interface DotnetSettingsOrBuilder
    * <code>map&lt;string, string&gt; renamed_services = 2;</code>
    */
   java.util.Map<java.lang.String, java.lang.String> getRenamedServicesMap();
-
   /**
    *
    *
@@ -128,7 +122,6 @@ public interface DotnetSettingsOrBuilder
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue);
-
   /**
    *
    *
@@ -158,7 +151,6 @@ public interface DotnetSettingsOrBuilder
    * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
    */
   int getRenamedResourcesCount();
-
   /**
    *
    *
@@ -173,11 +165,9 @@ public interface DotnetSettingsOrBuilder
    * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
    */
   boolean containsRenamedResources(java.lang.String key);
-
   /** Use {@link #getRenamedResourcesMap()} instead. */
   @java.lang.Deprecated
   java.util.Map<java.lang.String, java.lang.String> getRenamedResources();
-
   /**
    *
    *
@@ -192,7 +182,6 @@ public interface DotnetSettingsOrBuilder
    * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
    */
   java.util.Map<java.lang.String, java.lang.String> getRenamedResourcesMap();
-
   /**
    *
    *
@@ -211,7 +200,6 @@ public interface DotnetSettingsOrBuilder
       java.lang.String key,
       /* nullable */
       java.lang.String defaultValue);
-
   /**
    *
    *
@@ -243,7 +231,6 @@ public interface DotnetSettingsOrBuilder
    * @return A list containing the ignoredResources.
    */
   java.util.List<java.lang.String> getIgnoredResourcesList();
-
   /**
    *
    *
@@ -260,7 +247,6 @@ public interface DotnetSettingsOrBuilder
    * @return The count of ignoredResources.
    */
   int getIgnoredResourcesCount();
-
   /**
    *
    *
@@ -278,7 +264,6 @@ public interface DotnetSettingsOrBuilder
    * @return The ignoredResources at the given index.
    */
   java.lang.String getIgnoredResources(int index);
-
   /**
    *
    *
@@ -310,7 +295,6 @@ public interface DotnetSettingsOrBuilder
    * @return A list containing the forcedNamespaceAliases.
    */
   java.util.List<java.lang.String> getForcedNamespaceAliasesList();
-
   /**
    *
    *
@@ -324,7 +308,6 @@ public interface DotnetSettingsOrBuilder
    * @return The count of forcedNamespaceAliases.
    */
   int getForcedNamespaceAliasesCount();
-
   /**
    *
    *
@@ -339,7 +322,6 @@ public interface DotnetSettingsOrBuilder
    * @return The forcedNamespaceAliases at the given index.
    */
   java.lang.String getForcedNamespaceAliases(int index);
-
   /**
    *
    *
@@ -369,7 +351,6 @@ public interface DotnetSettingsOrBuilder
    * @return A list containing the handwrittenSignatures.
    */
   java.util.List<java.lang.String> getHandwrittenSignaturesList();
-
   /**
    *
    *
@@ -384,7 +365,6 @@ public interface DotnetSettingsOrBuilder
    * @return The count of handwrittenSignatures.
    */
   int getHandwrittenSignaturesCount();
-
   /**
    *
    *
@@ -400,7 +380,6 @@ public interface DotnetSettingsOrBuilder
    * @return The handwrittenSignatures at the given index.
    */
   java.lang.String getHandwrittenSignatures(int index);
-
   /**
    *
    *

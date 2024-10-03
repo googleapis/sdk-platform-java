@@ -36,7 +36,6 @@ public interface PolicyRuleOrBuilder
    * @return Whether the denyRule field is set.
    */
   boolean hasDenyRule();
-
   /**
    *
    *
@@ -49,7 +48,6 @@ public interface PolicyRuleOrBuilder
    * @return The denyRule.
    */
   com.google.iam.v2.DenyRule getDenyRule();
-
   /**
    *
    *
@@ -74,7 +72,6 @@ public interface PolicyRuleOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
-
   /**
    *
    *

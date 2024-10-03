@@ -37,7 +37,6 @@ public interface BindingOrBuilder
    * @return The role.
    */
   java.lang.String getRole();
-
   /**
    *
    *
@@ -105,7 +104,6 @@ public interface BindingOrBuilder
    * @return A list containing the members.
    */
   java.util.List<java.lang.String> getMembersList();
-
   /**
    *
    *
@@ -159,7 +157,6 @@ public interface BindingOrBuilder
    * @return The count of members.
    */
   int getMembersCount();
-
   /**
    *
    *
@@ -214,7 +211,6 @@ public interface BindingOrBuilder
    * @return The members at the given index.
    */
   java.lang.String getMembers(int index);
-
   /**
    *
    *
@@ -293,7 +289,6 @@ public interface BindingOrBuilder
    * @return Whether the condition field is set.
    */
   boolean hasCondition();
-
   /**
    *
    *
@@ -317,7 +312,6 @@ public interface BindingOrBuilder
    * @return The condition.
    */
   com.google.type.Expr getCondition();
-
   /**
    *
    *

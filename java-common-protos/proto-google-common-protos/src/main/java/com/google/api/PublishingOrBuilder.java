@@ -35,7 +35,6 @@ public interface PublishingOrBuilder
    * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
    */
   java.util.List<com.google.api.MethodSettings> getMethodSettingsList();
-
   /**
    *
    *
@@ -47,7 +46,6 @@ public interface PublishingOrBuilder
    * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
    */
   com.google.api.MethodSettings getMethodSettings(int index);
-
   /**
    *
    *
@@ -59,7 +57,6 @@ public interface PublishingOrBuilder
    * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
    */
   int getMethodSettingsCount();
-
   /**
    *
    *
@@ -71,7 +68,6 @@ public interface PublishingOrBuilder
    * <code>repeated .google.api.MethodSettings method_settings = 2;</code>
    */
   java.util.List<? extends com.google.api.MethodSettingsOrBuilder> getMethodSettingsOrBuilderList();
-
   /**
    *
    *
@@ -97,7 +93,6 @@ public interface PublishingOrBuilder
    * @return The newIssueUri.
    */
   java.lang.String getNewIssueUri();
-
   /**
    *
    *
@@ -125,7 +120,6 @@ public interface PublishingOrBuilder
    * @return The documentationUri.
    */
   java.lang.String getDocumentationUri();
-
   /**
    *
    *
@@ -154,7 +148,6 @@ public interface PublishingOrBuilder
    * @return The apiShortName.
    */
   java.lang.String getApiShortName();
-
   /**
    *
    *
@@ -182,7 +175,6 @@ public interface PublishingOrBuilder
    * @return The githubLabel.
    */
   java.lang.String getGithubLabel();
-
   /**
    *
    *
@@ -209,7 +201,6 @@ public interface PublishingOrBuilder
    * @return A list containing the codeownerGithubTeams.
    */
   java.util.List<java.lang.String> getCodeownerGithubTeamsList();
-
   /**
    *
    *
@@ -223,7 +214,6 @@ public interface PublishingOrBuilder
    * @return The count of codeownerGithubTeams.
    */
   int getCodeownerGithubTeamsCount();
-
   /**
    *
    *
@@ -238,7 +228,6 @@ public interface PublishingOrBuilder
    * @return The codeownerGithubTeams at the given index.
    */
   java.lang.String getCodeownerGithubTeams(int index);
-
   /**
    *
    *
@@ -267,7 +256,6 @@ public interface PublishingOrBuilder
    * @return The docTagPrefix.
    */
   java.lang.String getDocTagPrefix();
-
   /**
    *
    *
@@ -294,7 +282,6 @@ public interface PublishingOrBuilder
    * @return The enum numeric value on the wire for organization.
    */
   int getOrganizationValue();
-
   /**
    *
    *
@@ -320,7 +307,6 @@ public interface PublishingOrBuilder
    * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
    */
   java.util.List<com.google.api.ClientLibrarySettings> getLibrarySettingsList();
-
   /**
    *
    *
@@ -333,7 +319,6 @@ public interface PublishingOrBuilder
    * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
    */
   com.google.api.ClientLibrarySettings getLibrarySettings(int index);
-
   /**
    *
    *
@@ -346,7 +331,6 @@ public interface PublishingOrBuilder
    * <code>repeated .google.api.ClientLibrarySettings library_settings = 109;</code>
    */
   int getLibrarySettingsCount();
-
   /**
    *
    *
@@ -360,7 +344,6 @@ public interface PublishingOrBuilder
    */
   java.util.List<? extends com.google.api.ClientLibrarySettingsOrBuilder>
       getLibrarySettingsOrBuilderList();
-
   /**
    *
    *
@@ -387,7 +370,6 @@ public interface PublishingOrBuilder
    * @return The protoReferenceDocumentationUri.
    */
   java.lang.String getProtoReferenceDocumentationUri();
-
   /**
    *
    *
@@ -415,7 +397,6 @@ public interface PublishingOrBuilder
    * @return The restReferenceDocumentationUri.
    */
   java.lang.String getRestReferenceDocumentationUri();
-
   /**
    *
    *

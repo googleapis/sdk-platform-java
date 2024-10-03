@@ -36,7 +36,6 @@ public interface ImageComponentOrBuilder
    * @return The imageUri.
    */
   java.lang.String getImageUri();
-
   /**
    *
    *
@@ -62,7 +61,6 @@ public interface ImageComponentOrBuilder
    * @return The altText.
    */
   java.lang.String getAltText();
-
   /**
    *
    *
@@ -88,7 +86,6 @@ public interface ImageComponentOrBuilder
    * @return Whether the cropStyle field is set.
    */
   boolean hasCropStyle();
-
   /**
    *
    *
@@ -101,7 +98,6 @@ public interface ImageComponentOrBuilder
    * @return The cropStyle.
    */
   com.google.apps.card.v1.ImageCropStyle getCropStyle();
-
   /**
    *
    *
@@ -125,7 +121,6 @@ public interface ImageComponentOrBuilder
    * @return Whether the borderStyle field is set.
    */
   boolean hasBorderStyle();
-
   /**
    *
    *
@@ -138,7 +133,6 @@ public interface ImageComponentOrBuilder
    * @return The borderStyle.
    */
   com.google.apps.card.v1.BorderStyle getBorderStyle();
-
   /**
    *
    *

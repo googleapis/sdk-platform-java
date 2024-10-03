@@ -31,7 +31,6 @@ public final class AnnotationsProto {
   }
 
   public static final int HTTP_FIELD_NUMBER = 72295728;
-
   /**
    *
    *

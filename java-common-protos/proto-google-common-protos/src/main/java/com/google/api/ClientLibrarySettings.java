@@ -33,7 +33,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     // @@protoc_insertion_point(message_implements:google.api.ClientLibrarySettings)
     ClientLibrarySettingsOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use ClientLibrarySettings.newBuilder() to construct.
   private ClientLibrarySettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -69,7 +68,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object version_ = "";
-
   /**
    *
    *
@@ -95,7 +93,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       return s;
     }
   }
-
   /**
    *
    *
@@ -124,7 +121,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
 
   public static final int LAUNCH_STAGE_FIELD_NUMBER = 2;
   private int launchStage_ = 0;
-
   /**
    *
    *
@@ -140,7 +136,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public int getLaunchStageValue() {
     return launchStage_;
   }
-
   /**
    *
    *
@@ -160,7 +155,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
 
   public static final int REST_NUMERIC_ENUMS_FIELD_NUMBER = 3;
   private boolean restNumericEnums_ = false;
-
   /**
    *
    *
@@ -180,7 +174,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
 
   public static final int JAVA_SETTINGS_FIELD_NUMBER = 21;
   private com.google.api.JavaSettings javaSettings_;
-
   /**
    *
    *
@@ -196,7 +189,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public boolean hasJavaSettings() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -212,7 +204,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public com.google.api.JavaSettings getJavaSettings() {
     return javaSettings_ == null ? com.google.api.JavaSettings.getDefaultInstance() : javaSettings_;
   }
-
   /**
    *
    *
@@ -229,7 +220,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
 
   public static final int CPP_SETTINGS_FIELD_NUMBER = 22;
   private com.google.api.CppSettings cppSettings_;
-
   /**
    *
    *
@@ -245,7 +235,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public boolean hasCppSettings() {
     return ((bitField0_ & 0x00000002) != 0);
   }
-
   /**
    *
    *
@@ -261,7 +250,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public com.google.api.CppSettings getCppSettings() {
     return cppSettings_ == null ? com.google.api.CppSettings.getDefaultInstance() : cppSettings_;
   }
-
   /**
    *
    *
@@ -278,7 +266,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
 
   public static final int PHP_SETTINGS_FIELD_NUMBER = 23;
   private com.google.api.PhpSettings phpSettings_;
-
   /**
    *
    *
@@ -294,7 +281,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public boolean hasPhpSettings() {
     return ((bitField0_ & 0x00000004) != 0);
   }
-
   /**
    *
    *
@@ -310,7 +296,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public com.google.api.PhpSettings getPhpSettings() {
     return phpSettings_ == null ? com.google.api.PhpSettings.getDefaultInstance() : phpSettings_;
   }
-
   /**
    *
    *
@@ -327,7 +312,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
 
   public static final int PYTHON_SETTINGS_FIELD_NUMBER = 24;
   private com.google.api.PythonSettings pythonSettings_;
-
   /**
    *
    *
@@ -343,7 +327,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public boolean hasPythonSettings() {
     return ((bitField0_ & 0x00000008) != 0);
   }
-
   /**
    *
    *
@@ -361,7 +344,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         ? com.google.api.PythonSettings.getDefaultInstance()
         : pythonSettings_;
   }
-
   /**
    *
    *
@@ -380,7 +362,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
 
   public static final int NODE_SETTINGS_FIELD_NUMBER = 25;
   private com.google.api.NodeSettings nodeSettings_;
-
   /**
    *
    *
@@ -396,7 +377,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public boolean hasNodeSettings() {
     return ((bitField0_ & 0x00000010) != 0);
   }
-
   /**
    *
    *
@@ -412,7 +392,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public com.google.api.NodeSettings getNodeSettings() {
     return nodeSettings_ == null ? com.google.api.NodeSettings.getDefaultInstance() : nodeSettings_;
   }
-
   /**
    *
    *
@@ -429,7 +408,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
 
   public static final int DOTNET_SETTINGS_FIELD_NUMBER = 26;
   private com.google.api.DotnetSettings dotnetSettings_;
-
   /**
    *
    *
@@ -445,7 +423,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public boolean hasDotnetSettings() {
     return ((bitField0_ & 0x00000020) != 0);
   }
-
   /**
    *
    *
@@ -463,7 +440,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         ? com.google.api.DotnetSettings.getDefaultInstance()
         : dotnetSettings_;
   }
-
   /**
    *
    *
@@ -482,7 +458,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
 
   public static final int RUBY_SETTINGS_FIELD_NUMBER = 27;
   private com.google.api.RubySettings rubySettings_;
-
   /**
    *
    *
@@ -498,7 +473,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public boolean hasRubySettings() {
     return ((bitField0_ & 0x00000040) != 0);
   }
-
   /**
    *
    *
@@ -514,7 +488,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public com.google.api.RubySettings getRubySettings() {
     return rubySettings_ == null ? com.google.api.RubySettings.getDefaultInstance() : rubySettings_;
   }
-
   /**
    *
    *
@@ -531,7 +504,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
 
   public static final int GO_SETTINGS_FIELD_NUMBER = 28;
   private com.google.api.GoSettings goSettings_;
-
   /**
    *
    *
@@ -547,7 +519,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public boolean hasGoSettings() {
     return ((bitField0_ & 0x00000080) != 0);
   }
-
   /**
    *
    *
@@ -563,7 +534,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
   public com.google.api.GoSettings getGoSettings() {
     return goSettings_ == null ? com.google.api.GoSettings.getDefaultInstance() : goSettings_;
   }
-
   /**
    *
    *
@@ -865,7 +835,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -1241,7 +1210,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     private int bitField0_;
 
     private java.lang.Object version_ = "";
-
     /**
      *
      *
@@ -1266,7 +1234,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -1291,7 +1258,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -1315,7 +1281,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1335,7 +1300,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1362,7 +1326,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     }
 
     private int launchStage_ = 0;
-
     /**
      *
      *
@@ -1378,7 +1341,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     public int getLaunchStageValue() {
       return launchStage_;
     }
-
     /**
      *
      *
@@ -1397,7 +1359,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1414,7 +1375,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       com.google.api.LaunchStage result = com.google.api.LaunchStage.forNumber(launchStage_);
       return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -1436,7 +1396,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1456,7 +1415,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     }
 
     private boolean restNumericEnums_;
-
     /**
      *
      *
@@ -1473,7 +1431,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     public boolean getRestNumericEnums() {
       return restNumericEnums_;
     }
-
     /**
      *
      *
@@ -1494,7 +1451,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1520,7 +1476,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             com.google.api.JavaSettings.Builder,
             com.google.api.JavaSettingsOrBuilder>
         javaSettingsBuilder_;
-
     /**
      *
      *
@@ -1535,7 +1490,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     public boolean hasJavaSettings() {
       return ((bitField0_ & 0x00000008) != 0);
     }
-
     /**
      *
      *
@@ -1556,7 +1510,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         return javaSettingsBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1579,7 +1532,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1599,7 +1551,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1627,7 +1578,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -1647,7 +1597,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1662,7 +1611,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return getJavaSettingsFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1681,7 +1629,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             : javaSettings_;
       }
     }
-
     /**
      *
      *
@@ -1714,7 +1661,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             com.google.api.CppSettings.Builder,
             com.google.api.CppSettingsOrBuilder>
         cppSettingsBuilder_;
-
     /**
      *
      *
@@ -1729,7 +1675,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     public boolean hasCppSettings() {
       return ((bitField0_ & 0x00000010) != 0);
     }
-
     /**
      *
      *
@@ -1750,7 +1695,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         return cppSettingsBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1773,7 +1717,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1793,7 +1736,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1821,7 +1763,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -1841,7 +1782,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1856,7 +1796,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return getCppSettingsFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -1875,7 +1814,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             : cppSettings_;
       }
     }
-
     /**
      *
      *
@@ -1908,7 +1846,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             com.google.api.PhpSettings.Builder,
             com.google.api.PhpSettingsOrBuilder>
         phpSettingsBuilder_;
-
     /**
      *
      *
@@ -1923,7 +1860,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     public boolean hasPhpSettings() {
       return ((bitField0_ & 0x00000020) != 0);
     }
-
     /**
      *
      *
@@ -1944,7 +1880,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         return phpSettingsBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -1967,7 +1902,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -1987,7 +1921,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2015,7 +1948,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -2035,7 +1967,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2050,7 +1981,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return getPhpSettingsFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -2069,7 +1999,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             : phpSettings_;
       }
     }
-
     /**
      *
      *
@@ -2102,7 +2031,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             com.google.api.PythonSettings.Builder,
             com.google.api.PythonSettingsOrBuilder>
         pythonSettingsBuilder_;
-
     /**
      *
      *
@@ -2117,7 +2045,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     public boolean hasPythonSettings() {
       return ((bitField0_ & 0x00000040) != 0);
     }
-
     /**
      *
      *
@@ -2138,7 +2065,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         return pythonSettingsBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -2161,7 +2087,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2181,7 +2106,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2209,7 +2133,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -2229,7 +2152,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2244,7 +2166,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return getPythonSettingsFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -2263,7 +2184,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             : pythonSettings_;
       }
     }
-
     /**
      *
      *
@@ -2296,7 +2216,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             com.google.api.NodeSettings.Builder,
             com.google.api.NodeSettingsOrBuilder>
         nodeSettingsBuilder_;
-
     /**
      *
      *
@@ -2311,7 +2230,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     public boolean hasNodeSettings() {
       return ((bitField0_ & 0x00000080) != 0);
     }
-
     /**
      *
      *
@@ -2332,7 +2250,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         return nodeSettingsBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -2355,7 +2272,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2375,7 +2291,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2403,7 +2318,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -2423,7 +2337,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2438,7 +2351,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return getNodeSettingsFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -2457,7 +2369,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             : nodeSettings_;
       }
     }
-
     /**
      *
      *
@@ -2490,7 +2401,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             com.google.api.DotnetSettings.Builder,
             com.google.api.DotnetSettingsOrBuilder>
         dotnetSettingsBuilder_;
-
     /**
      *
      *
@@ -2505,7 +2415,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     public boolean hasDotnetSettings() {
       return ((bitField0_ & 0x00000100) != 0);
     }
-
     /**
      *
      *
@@ -2526,7 +2435,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         return dotnetSettingsBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -2549,7 +2457,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2569,7 +2476,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2597,7 +2503,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -2617,7 +2522,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2632,7 +2536,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return getDotnetSettingsFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -2651,7 +2554,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             : dotnetSettings_;
       }
     }
-
     /**
      *
      *
@@ -2684,7 +2586,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             com.google.api.RubySettings.Builder,
             com.google.api.RubySettingsOrBuilder>
         rubySettingsBuilder_;
-
     /**
      *
      *
@@ -2699,7 +2600,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     public boolean hasRubySettings() {
       return ((bitField0_ & 0x00000200) != 0);
     }
-
     /**
      *
      *
@@ -2720,7 +2620,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         return rubySettingsBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -2743,7 +2642,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2763,7 +2661,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2791,7 +2688,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -2811,7 +2707,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2826,7 +2721,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return getRubySettingsFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -2845,7 +2739,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             : rubySettings_;
       }
     }
-
     /**
      *
      *
@@ -2878,7 +2771,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
             com.google.api.GoSettings.Builder,
             com.google.api.GoSettingsOrBuilder>
         goSettingsBuilder_;
-
     /**
      *
      *
@@ -2893,7 +2785,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
     public boolean hasGoSettings() {
       return ((bitField0_ & 0x00000400) != 0);
     }
-
     /**
      *
      *
@@ -2912,7 +2803,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         return goSettingsBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -2935,7 +2825,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2955,7 +2844,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -2983,7 +2871,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       }
       return this;
     }
-
     /**
      *
      *
@@ -3003,7 +2890,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -3018,7 +2904,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
       onChanged();
       return getGoSettingsFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -3035,7 +2920,6 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
         return goSettings_ == null ? com.google.api.GoSettings.getDefaultInstance() : goSettings_;
       }
     }
-
     /**
      *
      *

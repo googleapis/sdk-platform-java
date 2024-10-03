@@ -45,7 +45,6 @@ public final class Divider extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Divider)
     DividerOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Divider.newBuilder() to construct.
   private Divider(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -220,7 +219,6 @@ public final class Divider extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *

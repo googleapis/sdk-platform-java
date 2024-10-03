@@ -41,7 +41,6 @@ public interface MonitoredResourceDescriptorOrBuilder
    * @return The name.
    */
   java.lang.String getName();
-
   /**
    *
    *
@@ -77,7 +76,6 @@ public interface MonitoredResourceDescriptorOrBuilder
    * @return The type.
    */
   java.lang.String getType();
-
   /**
    *
    *
@@ -111,7 +109,6 @@ public interface MonitoredResourceDescriptorOrBuilder
    * @return The displayName.
    */
   java.lang.String getDisplayName();
-
   /**
    *
    *
@@ -141,7 +138,6 @@ public interface MonitoredResourceDescriptorOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
-
   /**
    *
    *
@@ -168,7 +164,6 @@ public interface MonitoredResourceDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
   java.util.List<com.google.api.LabelDescriptor> getLabelsList();
-
   /**
    *
    *
@@ -181,7 +176,6 @@ public interface MonitoredResourceDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
   com.google.api.LabelDescriptor getLabels(int index);
-
   /**
    *
    *
@@ -194,7 +188,6 @@ public interface MonitoredResourceDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
   int getLabelsCount();
-
   /**
    *
    *
@@ -207,7 +200,6 @@ public interface MonitoredResourceDescriptorOrBuilder
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
   java.util.List<? extends com.google.api.LabelDescriptorOrBuilder> getLabelsOrBuilderList();
-
   /**
    *
    *
@@ -233,7 +225,6 @@ public interface MonitoredResourceDescriptorOrBuilder
    * @return The enum numeric value on the wire for launchStage.
    */
   int getLaunchStageValue();
-
   /**
    *
    *

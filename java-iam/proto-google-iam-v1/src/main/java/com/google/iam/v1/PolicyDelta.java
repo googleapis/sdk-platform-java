@@ -33,7 +33,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.iam.v1.PolicyDelta)
     PolicyDeltaOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use PolicyDelta.newBuilder() to construct.
   private PolicyDelta(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -67,7 +66,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.iam.v1.BindingDelta> bindingDeltas_;
-
   /**
    *
    *
@@ -81,7 +79,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.iam.v1.BindingDelta> getBindingDeltasList() {
     return bindingDeltas_;
   }
-
   /**
    *
    *
@@ -96,7 +93,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       getBindingDeltasOrBuilderList() {
     return bindingDeltas_;
   }
-
   /**
    *
    *
@@ -110,7 +106,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
   public int getBindingDeltasCount() {
     return bindingDeltas_.size();
   }
-
   /**
    *
    *
@@ -124,7 +119,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
   public com.google.iam.v1.BindingDelta getBindingDeltas(int index) {
     return bindingDeltas_.get(index);
   }
-
   /**
    *
    *
@@ -143,7 +137,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.iam.v1.AuditConfigDelta> auditConfigDeltas_;
-
   /**
    *
    *
@@ -157,7 +150,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.iam.v1.AuditConfigDelta> getAuditConfigDeltasList() {
     return auditConfigDeltas_;
   }
-
   /**
    *
    *
@@ -172,7 +164,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       getAuditConfigDeltasOrBuilderList() {
     return auditConfigDeltas_;
   }
-
   /**
    *
    *
@@ -186,7 +177,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
   public int getAuditConfigDeltasCount() {
     return auditConfigDeltas_.size();
   }
-
   /**
    *
    *
@@ -200,7 +190,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
   public com.google.iam.v1.AuditConfigDelta getAuditConfigDeltas(int index) {
     return auditConfigDeltas_.get(index);
   }
-
   /**
    *
    *
@@ -386,7 +375,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -697,7 +685,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
         return bindingDeltasBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -714,7 +701,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
         return bindingDeltasBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -731,7 +717,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
         return bindingDeltasBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -754,7 +739,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -775,7 +759,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -798,7 +781,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -821,7 +803,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -841,7 +822,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -862,7 +842,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -883,7 +862,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -903,7 +881,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -923,7 +900,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -936,7 +912,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
     public com.google.iam.v1.BindingDelta.Builder getBindingDeltasBuilder(int index) {
       return getBindingDeltasFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -953,7 +928,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
         return bindingDeltasBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -971,7 +945,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(bindingDeltas_);
       }
     }
-
     /**
      *
      *
@@ -985,7 +958,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       return getBindingDeltasFieldBuilder()
           .addBuilder(com.google.iam.v1.BindingDelta.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -999,7 +971,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       return getBindingDeltasFieldBuilder()
           .addBuilder(index, com.google.iam.v1.BindingDelta.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1066,7 +1037,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
         return auditConfigDeltasBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -1083,7 +1053,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
         return auditConfigDeltasBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -1100,7 +1069,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
         return auditConfigDeltasBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -1123,7 +1091,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1144,7 +1111,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1167,7 +1133,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1190,7 +1155,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1211,7 +1175,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1232,7 +1195,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1253,7 +1215,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1273,7 +1234,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1293,7 +1253,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -1306,7 +1265,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
     public com.google.iam.v1.AuditConfigDelta.Builder getAuditConfigDeltasBuilder(int index) {
       return getAuditConfigDeltasFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -1323,7 +1281,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
         return auditConfigDeltasBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -1341,7 +1298,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(auditConfigDeltas_);
       }
     }
-
     /**
      *
      *
@@ -1355,7 +1311,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       return getAuditConfigDeltasFieldBuilder()
           .addBuilder(com.google.iam.v1.AuditConfigDelta.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -1369,7 +1324,6 @@ public final class PolicyDelta extends com.google.protobuf.GeneratedMessageV3
       return getAuditConfigDeltasFieldBuilder()
           .addBuilder(index, com.google.iam.v1.AuditConfigDelta.getDefaultInstance());
     }
-
     /**
      *
      *

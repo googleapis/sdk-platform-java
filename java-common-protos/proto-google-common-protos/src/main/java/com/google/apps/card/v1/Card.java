@@ -136,7 +136,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.Card)
     CardOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use Card.newBuilder() to construct.
   private Card(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -226,7 +225,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * <code>DIVIDER_STYLE_UNSPECIFIED = 0;</code>
      */
     public static final int DIVIDER_STYLE_UNSPECIFIED_VALUE = 0;
-
     /**
      *
      *
@@ -237,7 +235,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * <code>SOLID_DIVIDER = 1;</code>
      */
     public static final int SOLID_DIVIDER_VALUE = 1;
-
     /**
      *
      *
@@ -393,7 +390,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * <code>DISPLAY_STYLE_UNSPECIFIED = 0;</code>
      */
     public static final int DISPLAY_STYLE_UNSPECIFIED_VALUE = 0;
-
     /**
      *
      *
@@ -407,7 +403,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * <code>PEEK = 1;</code>
      */
     public static final int PEEK_VALUE = 1;
-
     /**
      *
      *
@@ -523,7 +518,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return The title.
      */
     java.lang.String getTitle();
-
     /**
      *
      *
@@ -553,7 +547,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return The subtitle.
      */
     java.lang.String getSubtitle();
-
     /**
      *
      *
@@ -583,7 +576,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return The enum numeric value on the wire for imageType.
      */
     int getImageTypeValue();
-
     /**
      *
      *
@@ -612,7 +604,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return The imageUrl.
      */
     java.lang.String getImageUrl();
-
     /**
      *
      *
@@ -638,7 +629,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return The imageAltText.
      */
     java.lang.String getImageAltText();
-
     /**
      *
      *
@@ -652,7 +642,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.protobuf.ByteString getImageAltTextBytes();
   }
-
   /**
    *
    *
@@ -671,7 +660,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.Card.CardHeader)
       CardHeaderOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use CardHeader.newBuilder() to construct.
     private CardHeader(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -710,7 +698,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object title_ = "";
-
     /**
      *
      *
@@ -737,7 +724,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -769,7 +755,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object subtitle_ = "";
-
     /**
      *
      *
@@ -794,7 +779,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -822,7 +806,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
     public static final int IMAGE_TYPE_FIELD_NUMBER = 3;
     private int imageType_ = 0;
-
     /**
      *
      *
@@ -841,7 +824,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public int getImageTypeValue() {
       return imageType_;
     }
-
     /**
      *
      *
@@ -867,7 +849,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object imageUrl_ = "";
-
     /**
      *
      *
@@ -891,7 +872,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -920,7 +900,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object imageAltText_ = "";
-
     /**
      *
      *
@@ -944,7 +923,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -1164,7 +1142,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -1413,7 +1390,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private java.lang.Object title_ = "";
-
       /**
        *
        *
@@ -1439,7 +1415,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -1465,7 +1440,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -1490,7 +1464,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1511,7 +1484,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1539,7 +1511,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
 
       private java.lang.Object subtitle_ = "";
-
       /**
        *
        *
@@ -1563,7 +1534,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -1587,7 +1557,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -1610,7 +1579,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1629,7 +1597,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1655,7 +1622,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
 
       private int imageType_ = 0;
-
       /**
        *
        *
@@ -1674,7 +1640,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       public int getImageTypeValue() {
         return imageType_;
       }
-
       /**
        *
        *
@@ -1696,7 +1661,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1717,7 +1681,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Widget.ImageType.forNumber(imageType_);
         return result == null ? com.google.apps.card.v1.Widget.ImageType.UNRECOGNIZED : result;
       }
-
       /**
        *
        *
@@ -1742,7 +1705,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1765,7 +1727,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
 
       private java.lang.Object imageUrl_ = "";
-
       /**
        *
        *
@@ -1788,7 +1749,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -1811,7 +1771,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -1833,7 +1792,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1851,7 +1809,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1876,7 +1833,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
 
       private java.lang.Object imageAltText_ = "";
-
       /**
        *
        *
@@ -1899,7 +1855,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -1922,7 +1877,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -1944,7 +1898,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1962,7 +1915,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2075,7 +2027,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return The header.
      */
     java.lang.String getHeader();
-
     /**
      *
      *
@@ -2108,7 +2059,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Widget widgets = 2;</code>
      */
     java.util.List<com.google.apps.card.v1.Widget> getWidgetsList();
-
     /**
      *
      *
@@ -2120,7 +2070,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Widget widgets = 2;</code>
      */
     com.google.apps.card.v1.Widget getWidgets(int index);
-
     /**
      *
      *
@@ -2132,7 +2081,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Widget widgets = 2;</code>
      */
     int getWidgetsCount();
-
     /**
      *
      *
@@ -2144,7 +2092,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * <code>repeated .google.apps.card.v1.Widget widgets = 2;</code>
      */
     java.util.List<? extends com.google.apps.card.v1.WidgetOrBuilder> getWidgetsOrBuilderList();
-
     /**
      *
      *
@@ -2197,7 +2144,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      */
     int getUncollapsibleWidgetsCount();
   }
-
   /**
    *
    *
@@ -2216,7 +2162,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.Card.Section)
       SectionOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use Section.newBuilder() to construct.
     private Section(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -2252,7 +2197,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object header_ = "";
-
     /**
      *
      *
@@ -2284,7 +2228,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -2321,7 +2264,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private java.util.List<com.google.apps.card.v1.Widget> widgets_;
-
     /**
      *
      *
@@ -2336,7 +2278,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public java.util.List<com.google.apps.card.v1.Widget> getWidgetsList() {
       return widgets_;
     }
-
     /**
      *
      *
@@ -2352,7 +2293,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         getWidgetsOrBuilderList() {
       return widgets_;
     }
-
     /**
      *
      *
@@ -2367,7 +2307,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public int getWidgetsCount() {
       return widgets_.size();
     }
-
     /**
      *
      *
@@ -2382,7 +2321,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Widget getWidgets(int index) {
       return widgets_.get(index);
     }
-
     /**
      *
      *
@@ -2400,7 +2338,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
     public static final int COLLAPSIBLE_FIELD_NUMBER = 5;
     private boolean collapsible_ = false;
-
     /**
      *
      *
@@ -2426,7 +2363,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
     public static final int UNCOLLAPSIBLE_WIDGETS_COUNT_FIELD_NUMBER = 6;
     private int uncollapsibleWidgetsCount_ = 0;
-
     /**
      *
      *
@@ -2639,7 +2575,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -2915,7 +2850,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private java.lang.Object header_ = "";
-
       /**
        *
        *
@@ -2946,7 +2880,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -2977,7 +2910,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -3007,7 +2939,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -3033,7 +2964,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -3098,7 +3028,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return widgetsBuilder_.getMessageList();
         }
       }
-
       /**
        *
        *
@@ -3116,7 +3045,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return widgetsBuilder_.getCount();
         }
       }
-
       /**
        *
        *
@@ -3134,7 +3062,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return widgetsBuilder_.getMessage(index);
         }
       }
-
       /**
        *
        *
@@ -3158,7 +3085,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -3179,7 +3105,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -3203,7 +3128,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -3227,7 +3151,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -3248,7 +3171,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -3269,7 +3191,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -3291,7 +3212,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -3312,7 +3232,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -3333,7 +3252,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -3347,7 +3265,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       public com.google.apps.card.v1.Widget.Builder getWidgetsBuilder(int index) {
         return getWidgetsFieldBuilder().getBuilder(index);
       }
-
       /**
        *
        *
@@ -3365,7 +3282,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return widgetsBuilder_.getMessageOrBuilder(index);
         }
       }
-
       /**
        *
        *
@@ -3384,7 +3300,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return java.util.Collections.unmodifiableList(widgets_);
         }
       }
-
       /**
        *
        *
@@ -3399,7 +3314,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return getWidgetsFieldBuilder()
             .addBuilder(com.google.apps.card.v1.Widget.getDefaultInstance());
       }
-
       /**
        *
        *
@@ -3414,7 +3328,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return getWidgetsFieldBuilder()
             .addBuilder(index, com.google.apps.card.v1.Widget.getDefaultInstance());
       }
-
       /**
        *
        *
@@ -3447,7 +3360,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
 
       private boolean collapsible_;
-
       /**
        *
        *
@@ -3470,7 +3382,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       public boolean getCollapsible() {
         return collapsible_;
       }
-
       /**
        *
        *
@@ -3497,7 +3408,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -3524,7 +3434,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
 
       private int uncollapsibleWidgetsCount_;
-
       /**
        *
        *
@@ -3547,7 +3456,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       public int getUncollapsibleWidgetsCount() {
         return uncollapsibleWidgetsCount_;
       }
-
       /**
        *
        *
@@ -3574,7 +3482,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -3681,7 +3588,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return The actionLabel.
      */
     java.lang.String getActionLabel();
-
     /**
      *
      *
@@ -3707,7 +3613,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the onClick field is set.
      */
     boolean hasOnClick();
-
     /**
      *
      *
@@ -3720,7 +3625,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return The onClick.
      */
     com.google.apps.card.v1.OnClick getOnClick();
-
     /**
      *
      *
@@ -3732,7 +3636,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.apps.card.v1.OnClickOrBuilder getOnClickOrBuilder();
   }
-
   /**
    *
    *
@@ -3752,7 +3655,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.Card.CardAction)
       CardActionOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use CardAction.newBuilder() to construct.
     private CardAction(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -3788,7 +3690,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object actionLabel_ = "";
-
     /**
      *
      *
@@ -3812,7 +3713,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return s;
       }
     }
-
     /**
      *
      *
@@ -3839,7 +3739,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
     public static final int ON_CLICK_FIELD_NUMBER = 2;
     private com.google.apps.card.v1.OnClick onClick_;
-
     /**
      *
      *
@@ -3855,7 +3754,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public boolean hasOnClick() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -3871,7 +3769,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.OnClick getOnClick() {
       return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
     }
-
     /**
      *
      *
@@ -4059,7 +3956,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -4280,7 +4176,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private java.lang.Object actionLabel_ = "";
-
       /**
        *
        *
@@ -4303,7 +4198,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -4326,7 +4220,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -4348,7 +4241,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4366,7 +4258,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4396,7 +4287,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
               com.google.apps.card.v1.OnClick.Builder,
               com.google.apps.card.v1.OnClickOrBuilder>
           onClickBuilder_;
-
       /**
        *
        *
@@ -4411,7 +4301,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       public boolean hasOnClick() {
         return ((bitField0_ & 0x00000002) != 0);
       }
-
       /**
        *
        *
@@ -4430,7 +4319,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return onClickBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -4453,7 +4341,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4473,7 +4360,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4501,7 +4387,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -4521,7 +4406,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4536,7 +4420,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return getOnClickFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -4553,7 +4436,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return onClick_ == null ? com.google.apps.card.v1.OnClick.getDefaultInstance() : onClick_;
         }
       }
-
       /**
        *
        *
@@ -4662,7 +4544,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the primaryButton field is set.
      */
     boolean hasPrimaryButton();
-
     /**
      *
      *
@@ -4676,7 +4557,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return The primaryButton.
      */
     com.google.apps.card.v1.Button getPrimaryButton();
-
     /**
      *
      *
@@ -4703,7 +4583,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the secondaryButton field is set.
      */
     boolean hasSecondaryButton();
-
     /**
      *
      *
@@ -4718,7 +4597,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      * @return The secondaryButton.
      */
     com.google.apps.card.v1.Button getSecondaryButton();
-
     /**
      *
      *
@@ -4732,7 +4610,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.apps.card.v1.ButtonOrBuilder getSecondaryButtonOrBuilder();
   }
-
   /**
    *
    *
@@ -4760,7 +4637,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.apps.card.v1.Card.CardFixedFooter)
       CardFixedFooterOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use CardFixedFooter.newBuilder() to construct.
     private CardFixedFooter(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -4792,7 +4668,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
     public static final int PRIMARY_BUTTON_FIELD_NUMBER = 1;
     private com.google.apps.card.v1.Button primaryButton_;
-
     /**
      *
      *
@@ -4809,7 +4684,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public boolean hasPrimaryButton() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -4828,7 +4702,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           ? com.google.apps.card.v1.Button.getDefaultInstance()
           : primaryButton_;
     }
-
     /**
      *
      *
@@ -4848,7 +4721,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
     public static final int SECONDARY_BUTTON_FIELD_NUMBER = 2;
     private com.google.apps.card.v1.Button secondaryButton_;
-
     /**
      *
      *
@@ -4866,7 +4738,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public boolean hasSecondaryButton() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -4886,7 +4757,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           ? com.google.apps.card.v1.Button.getDefaultInstance()
           : secondaryButton_;
     }
-
     /**
      *
      *
@@ -5084,7 +4954,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -5325,7 +5194,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
               com.google.apps.card.v1.Button.Builder,
               com.google.apps.card.v1.ButtonOrBuilder>
           primaryButtonBuilder_;
-
       /**
        *
        *
@@ -5341,7 +5209,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       public boolean hasPrimaryButton() {
         return ((bitField0_ & 0x00000001) != 0);
       }
-
       /**
        *
        *
@@ -5363,7 +5230,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return primaryButtonBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -5387,7 +5253,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -5408,7 +5273,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -5437,7 +5301,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -5458,7 +5321,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -5474,7 +5336,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return getPrimaryButtonFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -5494,7 +5355,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
               : primaryButton_;
         }
       }
-
       /**
        *
        *
@@ -5528,7 +5388,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
               com.google.apps.card.v1.Button.Builder,
               com.google.apps.card.v1.ButtonOrBuilder>
           secondaryButtonBuilder_;
-
       /**
        *
        *
@@ -5545,7 +5404,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       public boolean hasSecondaryButton() {
         return ((bitField0_ & 0x00000002) != 0);
       }
-
       /**
        *
        *
@@ -5568,7 +5426,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           return secondaryButtonBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -5593,7 +5450,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -5615,7 +5471,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -5645,7 +5500,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         }
         return this;
       }
-
       /**
        *
        *
@@ -5667,7 +5521,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -5684,7 +5537,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return getSecondaryButtonFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -5705,7 +5557,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
               : secondaryButton_;
         }
       }
-
       /**
        *
        *
@@ -5801,7 +5652,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int HEADER_FIELD_NUMBER = 1;
   private com.google.apps.card.v1.Card.CardHeader header_;
-
   /**
    *
    *
@@ -5818,7 +5668,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
   public boolean hasHeader() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -5835,7 +5684,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.Card.CardHeader getHeader() {
     return header_ == null ? com.google.apps.card.v1.Card.CardHeader.getDefaultInstance() : header_;
   }
-
   /**
    *
    *
@@ -5855,7 +5703,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.apps.card.v1.Card.Section> sections_;
-
   /**
    *
    *
@@ -5872,7 +5719,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.apps.card.v1.Card.Section> getSectionsList() {
     return sections_;
   }
-
   /**
    *
    *
@@ -5890,7 +5736,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       getSectionsOrBuilderList() {
     return sections_;
   }
-
   /**
    *
    *
@@ -5907,7 +5752,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
   public int getSectionsCount() {
     return sections_.size();
   }
-
   /**
    *
    *
@@ -5924,7 +5768,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.Card.Section getSections(int index) {
     return sections_.get(index);
   }
-
   /**
    *
    *
@@ -5944,7 +5787,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
   public static final int SECTION_DIVIDER_STYLE_FIELD_NUMBER = 9;
   private int sectionDividerStyle_ = 0;
-
   /**
    *
    *
@@ -5960,7 +5802,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
   public int getSectionDividerStyleValue() {
     return sectionDividerStyle_;
   }
-
   /**
    *
    *
@@ -5983,7 +5824,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.apps.card.v1.Card.CardAction> cardActions_;
-
   /**
    *
    *
@@ -6031,7 +5871,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.apps.card.v1.Card.CardAction> getCardActionsList() {
     return cardActions_;
   }
-
   /**
    *
    *
@@ -6080,7 +5919,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       getCardActionsOrBuilderList() {
     return cardActions_;
   }
-
   /**
    *
    *
@@ -6128,7 +5966,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
   public int getCardActionsCount() {
     return cardActions_.size();
   }
-
   /**
    *
    *
@@ -6176,7 +6013,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
   public com.google.apps.card.v1.Card.CardAction getCardActions(int index) {
     return cardActions_.get(index);
   }
-
   /**
    *
    *
@@ -6229,7 +6065,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
-
   /**
    *
    *
@@ -6256,7 +6091,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
-
   /**
    *
    *
@@ -6286,7 +6120,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
   public static final int FIXED_FOOTER_FIELD_NUMBER = 5;
   private com.google.apps.card.v1.Card.CardFixedFooter fixedFooter_;
-
   /**
    *
    *
@@ -6312,7 +6145,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
   public boolean hasFixedFooter() {
     return ((bitField0_ & 0x00000002) != 0);
   }
-
   /**
    *
    *
@@ -6340,7 +6172,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         ? com.google.apps.card.v1.Card.CardFixedFooter.getDefaultInstance()
         : fixedFooter_;
   }
-
   /**
    *
    *
@@ -6369,7 +6200,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
   public static final int DISPLAY_STYLE_FIELD_NUMBER = 6;
   private int displayStyle_ = 0;
-
   /**
    *
    *
@@ -6389,7 +6219,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
   public int getDisplayStyleValue() {
     return displayStyle_;
   }
-
   /**
    *
    *
@@ -6414,7 +6243,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
 
   public static final int PEEK_CARD_HEADER_FIELD_NUMBER = 7;
   private com.google.apps.card.v1.Card.CardHeader peekCardHeader_;
-
   /**
    *
    *
@@ -6435,7 +6263,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
   public boolean hasPeekCardHeader() {
     return ((bitField0_ & 0x00000004) != 0);
   }
-
   /**
    *
    *
@@ -6458,7 +6285,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         ? com.google.apps.card.v1.Card.CardHeader.getDefaultInstance()
         : peekCardHeader_;
   }
-
   /**
    *
    *
@@ -6723,7 +6549,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -7224,7 +7049,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Card.CardHeader.Builder,
             com.google.apps.card.v1.Card.CardHeaderOrBuilder>
         headerBuilder_;
-
     /**
      *
      *
@@ -7240,7 +7064,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public boolean hasHeader() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -7262,7 +7085,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return headerBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -7286,7 +7108,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -7307,7 +7128,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -7336,7 +7156,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -7357,7 +7176,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -7373,7 +7191,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getHeaderFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -7393,7 +7210,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
             : header_;
       }
     }
-
     /**
      *
      *
@@ -7456,7 +7272,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return sectionsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -7476,7 +7291,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return sectionsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -7496,7 +7310,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return sectionsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -7522,7 +7335,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -7546,7 +7358,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -7572,7 +7383,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -7598,7 +7408,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -7621,7 +7430,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -7645,7 +7453,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -7669,7 +7476,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -7692,7 +7498,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -7715,7 +7520,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -7731,7 +7535,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Card.Section.Builder getSectionsBuilder(int index) {
       return getSectionsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -7751,7 +7554,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return sectionsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -7772,7 +7574,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(sections_);
       }
     }
-
     /**
      *
      *
@@ -7789,7 +7590,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       return getSectionsFieldBuilder()
           .addBuilder(com.google.apps.card.v1.Card.Section.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -7806,7 +7606,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       return getSectionsFieldBuilder()
           .addBuilder(index, com.google.apps.card.v1.Card.Section.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -7841,7 +7640,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int sectionDividerStyle_ = 0;
-
     /**
      *
      *
@@ -7857,7 +7655,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public int getSectionDividerStyleValue() {
       return sectionDividerStyle_;
     }
-
     /**
      *
      *
@@ -7876,7 +7673,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -7894,7 +7690,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           com.google.apps.card.v1.Card.DividerStyle.forNumber(sectionDividerStyle_);
       return result == null ? com.google.apps.card.v1.Card.DividerStyle.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -7916,7 +7711,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -8002,7 +7796,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return cardActionsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -8053,7 +7846,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return cardActionsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -8104,7 +7896,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return cardActionsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -8161,7 +7952,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -8216,7 +8006,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -8273,7 +8062,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -8330,7 +8118,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -8384,7 +8171,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -8439,7 +8225,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -8494,7 +8279,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -8548,7 +8332,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -8602,7 +8385,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -8649,7 +8431,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public com.google.apps.card.v1.Card.CardAction.Builder getCardActionsBuilder(int index) {
       return getCardActionsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -8700,7 +8481,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return cardActionsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -8752,7 +8532,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(cardActions_);
       }
     }
-
     /**
      *
      *
@@ -8800,7 +8579,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       return getCardActionsFieldBuilder()
           .addBuilder(com.google.apps.card.v1.Card.CardAction.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -8848,7 +8626,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       return getCardActionsFieldBuilder()
           .addBuilder(index, com.google.apps.card.v1.Card.CardAction.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -8915,7 +8692,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object name_ = "";
-
     /**
      *
      *
@@ -8941,7 +8717,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
-
     /**
      *
      *
@@ -8967,7 +8742,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
     /**
      *
      *
@@ -8992,7 +8766,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -9013,7 +8786,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -9046,7 +8818,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Card.CardFixedFooter.Builder,
             com.google.apps.card.v1.Card.CardFixedFooterOrBuilder>
         fixedFooterBuilder_;
-
     /**
      *
      *
@@ -9071,7 +8842,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public boolean hasFixedFooter() {
       return ((bitField0_ & 0x00000020) != 0);
     }
-
     /**
      *
      *
@@ -9102,7 +8872,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return fixedFooterBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -9135,7 +8904,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -9166,7 +8934,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -9204,7 +8971,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -9234,7 +9000,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -9259,7 +9024,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getFixedFooterFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -9288,7 +9052,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
             : fixedFooter_;
       }
     }
-
     /**
      *
      *
@@ -9326,7 +9089,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int displayStyle_ = 0;
-
     /**
      *
      *
@@ -9346,7 +9108,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public int getDisplayStyleValue() {
       return displayStyle_;
     }
-
     /**
      *
      *
@@ -9369,7 +9130,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -9391,7 +9151,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
           com.google.apps.card.v1.Card.DisplayStyle.forNumber(displayStyle_);
       return result == null ? com.google.apps.card.v1.Card.DisplayStyle.UNRECOGNIZED : result;
     }
-
     /**
      *
      *
@@ -9417,7 +9176,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -9446,7 +9204,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
             com.google.apps.card.v1.Card.CardHeader.Builder,
             com.google.apps.card.v1.Card.CardHeaderOrBuilder>
         peekCardHeaderBuilder_;
-
     /**
      *
      *
@@ -9466,7 +9223,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
     public boolean hasPeekCardHeader() {
       return ((bitField0_ & 0x00000080) != 0);
     }
-
     /**
      *
      *
@@ -9492,7 +9248,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
         return peekCardHeaderBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -9520,7 +9275,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -9546,7 +9300,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -9579,7 +9332,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
-
     /**
      *
      *
@@ -9604,7 +9356,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -9624,7 +9375,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getPeekCardHeaderFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -9648,7 +9398,6 @@ public final class Card extends com.google.protobuf.GeneratedMessageV3
             : peekCardHeader_;
       }
     }
-
     /**
      *
      *

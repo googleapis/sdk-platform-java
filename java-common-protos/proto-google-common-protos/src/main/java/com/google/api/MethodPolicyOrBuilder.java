@@ -43,7 +43,6 @@ public interface MethodPolicyOrBuilder
    * @return The selector.
    */
   java.lang.String getSelector();
-
   /**
    *
    *
@@ -74,7 +73,6 @@ public interface MethodPolicyOrBuilder
    * <code>repeated .google.api.FieldPolicy request_policies = 2;</code>
    */
   java.util.List<com.google.api.FieldPolicy> getRequestPoliciesList();
-
   /**
    *
    *
@@ -85,7 +83,6 @@ public interface MethodPolicyOrBuilder
    * <code>repeated .google.api.FieldPolicy request_policies = 2;</code>
    */
   com.google.api.FieldPolicy getRequestPolicies(int index);
-
   /**
    *
    *
@@ -96,7 +93,6 @@ public interface MethodPolicyOrBuilder
    * <code>repeated .google.api.FieldPolicy request_policies = 2;</code>
    */
   int getRequestPoliciesCount();
-
   /**
    *
    *
@@ -107,7 +103,6 @@ public interface MethodPolicyOrBuilder
    * <code>repeated .google.api.FieldPolicy request_policies = 2;</code>
    */
   java.util.List<? extends com.google.api.FieldPolicyOrBuilder> getRequestPoliciesOrBuilderList();
-
   /**
    *
    *

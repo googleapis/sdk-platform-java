@@ -37,7 +37,6 @@ public interface AdviceOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
-
   /**
    *
    *

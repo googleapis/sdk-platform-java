@@ -49,7 +49,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext)
     AttributeContextOrBuilder {
   private static final long serialVersionUID = 0L;
-
   // Use AttributeContext.newBuilder() to construct.
   private AttributeContext(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -97,7 +96,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The ip.
      */
     java.lang.String getIp();
-
     /**
      *
      *
@@ -134,7 +132,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; labels = 6;</code>
      */
     int getLabelsCount();
-
     /**
      *
      *
@@ -145,11 +142,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; labels = 6;</code>
      */
     boolean containsLabels(java.lang.String key);
-
     /** Use {@link #getLabelsMap()} instead. */
     @java.lang.Deprecated
     java.util.Map<java.lang.String, java.lang.String> getLabels();
-
     /**
      *
      *
@@ -160,7 +155,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; labels = 6;</code>
      */
     java.util.Map<java.lang.String, java.lang.String> getLabelsMap();
-
     /**
      *
      *
@@ -175,7 +169,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue);
-
     /**
      *
      *
@@ -201,7 +194,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The principal.
      */
     java.lang.String getPrincipal();
-
     /**
      *
      *
@@ -231,7 +223,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The regionCode.
      */
     java.lang.String getRegionCode();
-
     /**
      *
      *
@@ -247,7 +238,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     com.google.protobuf.ByteString getRegionCodeBytes();
   }
-
   /**
    *
    *
@@ -265,7 +255,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext.Peer)
       PeerOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use Peer.newBuilder() to construct.
     private Peer(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -314,7 +303,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object ip_ = "";
-
     /**
      *
      *
@@ -338,7 +326,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -365,7 +352,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     public static final int PORT_FIELD_NUMBER = 2;
     private long port_ = 0L;
-
     /**
      *
      *
@@ -408,7 +394,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public int getLabelsCount() {
       return internalGetLabels().getMap().size();
     }
-
     /**
      *
      *
@@ -425,14 +410,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return internalGetLabels().getMap().containsKey(key);
     }
-
     /** Use {@link #getLabelsMap()} instead. */
     @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getLabels() {
       return getLabelsMap();
     }
-
     /**
      *
      *
@@ -446,7 +429,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
       return internalGetLabels().getMap();
     }
-
     /**
      *
      *
@@ -467,7 +449,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
-
     /**
      *
      *
@@ -493,7 +474,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object principal_ = "";
-
     /**
      *
      *
@@ -519,7 +499,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -550,7 +529,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object regionCode_ = "";
-
     /**
      *
      *
@@ -576,7 +554,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -807,7 +784,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -1081,7 +1057,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       private int bitField0_;
 
       private java.lang.Object ip_ = "";
-
       /**
        *
        *
@@ -1104,7 +1079,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -1127,7 +1101,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -1149,7 +1122,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1167,7 +1139,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1192,7 +1163,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private long port_;
-
       /**
        *
        *
@@ -1208,7 +1178,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public long getPort() {
         return port_;
       }
-
       /**
        *
        *
@@ -1228,7 +1197,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1272,7 +1240,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public int getLabelsCount() {
         return internalGetLabels().getMap().size();
       }
-
       /**
        *
        *
@@ -1289,14 +1256,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         return internalGetLabels().getMap().containsKey(key);
       }
-
       /** Use {@link #getLabelsMap()} instead. */
       @java.lang.Override
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getLabels() {
         return getLabelsMap();
       }
-
       /**
        *
        *
@@ -1310,7 +1275,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
         return internalGetLabels().getMap();
       }
-
       /**
        *
        *
@@ -1331,7 +1295,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
       }
-
       /**
        *
        *
@@ -1358,7 +1321,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         internalGetMutableLabels().getMutableMap().clear();
         return this;
       }
-
       /**
        *
        *
@@ -1375,14 +1337,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         internalGetMutableLabels().getMutableMap().remove(key);
         return this;
       }
-
       /** Use alternate mutation accessors instead. */
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getMutableLabels() {
         bitField0_ |= 0x00000004;
         return internalGetMutableLabels().getMutableMap();
       }
-
       /**
        *
        *
@@ -1403,7 +1363,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         bitField0_ |= 0x00000004;
         return this;
       }
-
       /**
        *
        *
@@ -1420,7 +1379,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object principal_ = "";
-
       /**
        *
        *
@@ -1445,7 +1403,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -1470,7 +1427,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -1494,7 +1450,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1514,7 +1469,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1541,7 +1495,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object regionCode_ = "";
-
       /**
        *
        *
@@ -1566,7 +1519,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -1591,7 +1543,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -1615,7 +1566,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1635,7 +1585,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -1744,7 +1693,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The service.
      */
     java.lang.String getService();
-
     /**
      *
      *
@@ -1774,7 +1722,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The operation.
      */
     java.lang.String getOperation();
-
     /**
      *
      *
@@ -1803,7 +1750,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The protocol.
      */
     java.lang.String getProtocol();
-
     /**
      *
      *
@@ -1831,7 +1777,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The version.
      */
     java.lang.String getVersion();
-
     /**
      *
      *
@@ -1846,7 +1791,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     com.google.protobuf.ByteString getVersionBytes();
   }
-
   /**
    *
    *
@@ -1863,7 +1807,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext.Api)
       ApiOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use Api.newBuilder() to construct.
     private Api(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -1901,7 +1844,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object service_ = "";
-
     /**
      *
      *
@@ -1927,7 +1869,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -1958,7 +1899,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object operation_ = "";
-
     /**
      *
      *
@@ -1984,7 +1924,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -2015,7 +1954,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object protocol_ = "";
-
     /**
      *
      *
@@ -2040,7 +1978,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -2070,7 +2007,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object version_ = "";
-
     /**
      *
      *
@@ -2095,7 +2031,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -2308,7 +2243,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -2542,7 +2476,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       private int bitField0_;
 
       private java.lang.Object service_ = "";
-
       /**
        *
        *
@@ -2567,7 +2500,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -2592,7 +2524,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -2616,7 +2547,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2636,7 +2566,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2663,7 +2592,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object operation_ = "";
-
       /**
        *
        *
@@ -2688,7 +2616,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -2713,7 +2640,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -2737,7 +2663,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2757,7 +2682,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2784,7 +2708,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object protocol_ = "";
-
       /**
        *
        *
@@ -2808,7 +2731,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -2832,7 +2754,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -2855,7 +2776,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2874,7 +2794,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2900,7 +2819,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object version_ = "";
-
       /**
        *
        *
@@ -2924,7 +2842,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -2948,7 +2865,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -2971,7 +2887,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -2990,7 +2905,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -3100,7 +3014,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The principal.
      */
     java.lang.String getPrincipal();
-
     /**
      *
      *
@@ -3143,7 +3056,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return A list containing the audiences.
      */
     java.util.List<java.lang.String> getAudiencesList();
-
     /**
      *
      *
@@ -3169,7 +3081,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The count of audiences.
      */
     int getAudiencesCount();
-
     /**
      *
      *
@@ -3196,7 +3107,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The audiences at the given index.
      */
     java.lang.String getAudiences(int index);
-
     /**
      *
      *
@@ -3239,7 +3149,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The presenter.
      */
     java.lang.String getPresenter();
-
     /**
      *
      *
@@ -3282,7 +3191,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return Whether the claims field is set.
      */
     boolean hasClaims();
-
     /**
      *
      *
@@ -3309,7 +3217,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The claims.
      */
     com.google.protobuf.Struct getClaims();
-
     /**
      *
      *
@@ -3353,7 +3260,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return A list containing the accessLevels.
      */
     java.util.List<java.lang.String> getAccessLevelsList();
-
     /**
      *
      *
@@ -3372,7 +3278,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The count of accessLevels.
      */
     int getAccessLevelsCount();
-
     /**
      *
      *
@@ -3392,7 +3297,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The accessLevels at the given index.
      */
     java.lang.String getAccessLevels(int index);
-
     /**
      *
      *
@@ -3413,7 +3317,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     com.google.protobuf.ByteString getAccessLevelsBytes(int index);
   }
-
   /**
    *
    *
@@ -3430,7 +3333,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext.Auth)
       AuthOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use Auth.newBuilder() to construct.
     private Auth(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -3469,7 +3371,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object principal_ = "";
-
     /**
      *
      *
@@ -3497,7 +3398,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -3531,7 +3431,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @SuppressWarnings("serial")
     private com.google.protobuf.LazyStringArrayList audiences_ =
         com.google.protobuf.LazyStringArrayList.emptyList();
-
     /**
      *
      *
@@ -3559,7 +3458,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public com.google.protobuf.ProtocolStringList getAudiencesList() {
       return audiences_;
     }
-
     /**
      *
      *
@@ -3587,7 +3485,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public int getAudiencesCount() {
       return audiences_.size();
     }
-
     /**
      *
      *
@@ -3616,7 +3513,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public java.lang.String getAudiences(int index) {
       return audiences_.get(index);
     }
-
     /**
      *
      *
@@ -3650,7 +3546,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object presenter_ = "";
-
     /**
      *
      *
@@ -3677,7 +3572,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -3707,7 +3601,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     public static final int CLAIMS_FIELD_NUMBER = 4;
     private com.google.protobuf.Struct claims_;
-
     /**
      *
      *
@@ -3737,7 +3630,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasClaims() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -3767,7 +3659,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public com.google.protobuf.Struct getClaims() {
       return claims_ == null ? com.google.protobuf.Struct.getDefaultInstance() : claims_;
     }
-
     /**
      *
      *
@@ -3801,7 +3692,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @SuppressWarnings("serial")
     private com.google.protobuf.LazyStringArrayList accessLevels_ =
         com.google.protobuf.LazyStringArrayList.emptyList();
-
     /**
      *
      *
@@ -3822,7 +3712,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public com.google.protobuf.ProtocolStringList getAccessLevelsList() {
       return accessLevels_;
     }
-
     /**
      *
      *
@@ -3843,7 +3732,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public int getAccessLevelsCount() {
       return accessLevels_.size();
     }
-
     /**
      *
      *
@@ -3865,7 +3753,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public java.lang.String getAccessLevels(int index) {
       return accessLevels_.get(index);
     }
-
     /**
      *
      *
@@ -4103,7 +3990,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -4380,7 +4266,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       private int bitField0_;
 
       private java.lang.Object principal_ = "";
-
       /**
        *
        *
@@ -4407,7 +4292,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -4434,7 +4318,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -4460,7 +4343,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4482,7 +4364,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4519,7 +4400,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         bitField0_ |= 0x00000002;
       }
-
       /**
        *
        *
@@ -4548,7 +4428,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         audiences_.makeImmutable();
         return audiences_;
       }
-
       /**
        *
        *
@@ -4576,7 +4455,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public int getAudiencesCount() {
         return audiences_.size();
       }
-
       /**
        *
        *
@@ -4605,7 +4483,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public java.lang.String getAudiences(int index) {
         return audiences_.get(index);
       }
-
       /**
        *
        *
@@ -4634,7 +4511,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public com.google.protobuf.ByteString getAudiencesBytes(int index) {
         return audiences_.getByteString(index);
       }
-
       /**
        *
        *
@@ -4671,7 +4547,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4707,7 +4582,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4740,7 +4614,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4772,7 +4645,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4811,7 +4683,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object presenter_ = "";
-
       /**
        *
        *
@@ -4837,7 +4708,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -4863,7 +4733,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -4888,7 +4757,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4909,7 +4777,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -4942,7 +4809,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
               com.google.protobuf.Struct.Builder,
               com.google.protobuf.StructOrBuilder>
           claimsBuilder_;
-
       /**
        *
        *
@@ -4971,7 +4837,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public boolean hasClaims() {
         return ((bitField0_ & 0x00000008) != 0);
       }
-
       /**
        *
        *
@@ -5004,7 +4869,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return claimsBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -5041,7 +4905,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -5075,7 +4938,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -5117,7 +4979,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         return this;
       }
-
       /**
        *
        *
@@ -5151,7 +5012,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -5180,7 +5040,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return getClaimsFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -5211,7 +5070,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return claims_ == null ? com.google.protobuf.Struct.getDefaultInstance() : claims_;
         }
       }
-
       /**
        *
        *
@@ -5261,7 +5119,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         bitField0_ |= 0x00000010;
       }
-
       /**
        *
        *
@@ -5283,7 +5140,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         accessLevels_.makeImmutable();
         return accessLevels_;
       }
-
       /**
        *
        *
@@ -5304,7 +5160,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public int getAccessLevelsCount() {
         return accessLevels_.size();
       }
-
       /**
        *
        *
@@ -5326,7 +5181,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public java.lang.String getAccessLevels(int index) {
         return accessLevels_.get(index);
       }
-
       /**
        *
        *
@@ -5348,7 +5202,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public com.google.protobuf.ByteString getAccessLevelsBytes(int index) {
         return accessLevels_.getByteString(index);
       }
-
       /**
        *
        *
@@ -5378,7 +5231,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -5407,7 +5259,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -5433,7 +5284,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -5458,7 +5308,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -5572,7 +5421,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The id.
      */
     java.lang.String getId();
-
     /**
      *
      *
@@ -5600,7 +5448,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The method.
      */
     java.lang.String getMethod();
-
     /**
      *
      *
@@ -5626,7 +5473,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
     int getHeadersCount();
-
     /**
      *
      *
@@ -5639,11 +5485,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
     boolean containsHeaders(java.lang.String key);
-
     /** Use {@link #getHeadersMap()} instead. */
     @java.lang.Deprecated
     java.util.Map<java.lang.String, java.lang.String> getHeaders();
-
     /**
      *
      *
@@ -5656,7 +5500,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
     java.util.Map<java.lang.String, java.lang.String> getHeadersMap();
-
     /**
      *
      *
@@ -5673,7 +5516,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue);
-
     /**
      *
      *
@@ -5699,7 +5541,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The path.
      */
     java.lang.String getPath();
-
     /**
      *
      *
@@ -5725,7 +5566,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The host.
      */
     java.lang.String getHost();
-
     /**
      *
      *
@@ -5751,7 +5591,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The scheme.
      */
     java.lang.String getScheme();
-
     /**
      *
      *
@@ -5778,7 +5617,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The query.
      */
     java.lang.String getQuery();
-
     /**
      *
      *
@@ -5806,7 +5644,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return Whether the time field is set.
      */
     boolean hasTime();
-
     /**
      *
      *
@@ -5820,7 +5657,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The time.
      */
     com.google.protobuf.Timestamp getTime();
-
     /**
      *
      *
@@ -5861,7 +5697,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The protocol.
      */
     java.lang.String getProtocol();
-
     /**
      *
      *
@@ -5891,7 +5726,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The reason.
      */
     java.lang.String getReason();
-
     /**
      *
      *
@@ -5919,7 +5753,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return Whether the auth field is set.
      */
     boolean hasAuth();
-
     /**
      *
      *
@@ -5933,7 +5766,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The auth.
      */
     com.google.rpc.context.AttributeContext.Auth getAuth();
-
     /**
      *
      *
@@ -5946,7 +5778,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     com.google.rpc.context.AttributeContext.AuthOrBuilder getAuthOrBuilder();
   }
-
   /**
    *
    *
@@ -5963,7 +5794,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext.Request)
       RequestOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use Request.newBuilder() to construct.
     private Request(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -6018,7 +5848,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object id_ = "";
-
     /**
      *
      *
@@ -6044,7 +5873,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -6075,7 +5903,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object method_ = "";
-
     /**
      *
      *
@@ -6099,7 +5926,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -6150,7 +5976,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public int getHeadersCount() {
       return internalGetHeaders().getMap().size();
     }
-
     /**
      *
      *
@@ -6169,14 +5994,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return internalGetHeaders().getMap().containsKey(key);
     }
-
     /** Use {@link #getHeadersMap()} instead. */
     @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getHeaders() {
       return getHeadersMap();
     }
-
     /**
      *
      *
@@ -6192,7 +6015,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public java.util.Map<java.lang.String, java.lang.String> getHeadersMap() {
       return internalGetHeaders().getMap();
     }
-
     /**
      *
      *
@@ -6215,7 +6037,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
-
     /**
      *
      *
@@ -6243,7 +6064,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object path_ = "";
-
     /**
      *
      *
@@ -6267,7 +6087,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -6296,7 +6115,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object host_ = "";
-
     /**
      *
      *
@@ -6320,7 +6138,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -6349,7 +6166,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object scheme_ = "";
-
     /**
      *
      *
@@ -6373,7 +6189,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -6402,7 +6217,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object query_ = "";
-
     /**
      *
      *
@@ -6427,7 +6241,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -6455,7 +6268,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     public static final int TIME_FIELD_NUMBER = 9;
     private com.google.protobuf.Timestamp time_;
-
     /**
      *
      *
@@ -6472,7 +6284,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasTime() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -6489,7 +6300,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public com.google.protobuf.Timestamp getTime() {
       return time_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : time_;
     }
-
     /**
      *
      *
@@ -6507,7 +6317,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     public static final int SIZE_FIELD_NUMBER = 10;
     private long size_ = 0L;
-
     /**
      *
      *
@@ -6528,7 +6337,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object protocol_ = "";
-
     /**
      *
      *
@@ -6555,7 +6363,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -6587,7 +6394,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object reason_ = "";
-
     /**
      *
      *
@@ -6612,7 +6418,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -6640,7 +6445,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     public static final int AUTH_FIELD_NUMBER = 13;
     private com.google.rpc.context.AttributeContext.Auth auth_;
-
     /**
      *
      *
@@ -6657,7 +6461,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasAuth() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -6676,7 +6479,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           ? com.google.rpc.context.AttributeContext.Auth.getDefaultInstance()
           : auth_;
     }
-
     /**
      *
      *
@@ -6971,7 +6773,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -7368,7 +7169,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       private int bitField0_;
 
       private java.lang.Object id_ = "";
-
       /**
        *
        *
@@ -7393,7 +7193,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -7418,7 +7217,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -7442,7 +7240,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -7462,7 +7259,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -7489,7 +7285,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object method_ = "";
-
       /**
        *
        *
@@ -7512,7 +7307,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -7535,7 +7329,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -7557,7 +7350,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -7575,7 +7367,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -7626,7 +7417,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public int getHeadersCount() {
         return internalGetHeaders().getMap().size();
       }
-
       /**
        *
        *
@@ -7645,14 +7435,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         return internalGetHeaders().getMap().containsKey(key);
       }
-
       /** Use {@link #getHeadersMap()} instead. */
       @java.lang.Override
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getHeaders() {
         return getHeadersMap();
       }
-
       /**
        *
        *
@@ -7668,7 +7456,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public java.util.Map<java.lang.String, java.lang.String> getHeadersMap() {
         return internalGetHeaders().getMap();
       }
-
       /**
        *
        *
@@ -7691,7 +7478,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
       }
-
       /**
        *
        *
@@ -7720,7 +7506,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         internalGetMutableHeaders().getMutableMap().clear();
         return this;
       }
-
       /**
        *
        *
@@ -7739,14 +7524,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         internalGetMutableHeaders().getMutableMap().remove(key);
         return this;
       }
-
       /** Use alternate mutation accessors instead. */
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getMutableHeaders() {
         bitField0_ |= 0x00000004;
         return internalGetMutableHeaders().getMutableMap();
       }
-
       /**
        *
        *
@@ -7769,7 +7552,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         bitField0_ |= 0x00000004;
         return this;
       }
-
       /**
        *
        *
@@ -7788,7 +7570,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object path_ = "";
-
       /**
        *
        *
@@ -7811,7 +7592,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -7834,7 +7614,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -7856,7 +7635,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -7874,7 +7652,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -7899,7 +7676,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object host_ = "";
-
       /**
        *
        *
@@ -7922,7 +7698,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -7945,7 +7720,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -7967,7 +7741,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -7985,7 +7758,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8010,7 +7782,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object scheme_ = "";
-
       /**
        *
        *
@@ -8033,7 +7804,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -8056,7 +7826,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -8078,7 +7847,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8096,7 +7864,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8121,7 +7888,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object query_ = "";
-
       /**
        *
        *
@@ -8145,7 +7911,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -8169,7 +7934,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -8192,7 +7956,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8211,7 +7974,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8242,7 +8004,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
               com.google.protobuf.Timestamp.Builder,
               com.google.protobuf.TimestampOrBuilder>
           timeBuilder_;
-
       /**
        *
        *
@@ -8258,7 +8019,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public boolean hasTime() {
         return ((bitField0_ & 0x00000080) != 0);
       }
-
       /**
        *
        *
@@ -8278,7 +8038,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return timeBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -8302,7 +8061,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8323,7 +8081,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8352,7 +8109,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         return this;
       }
-
       /**
        *
        *
@@ -8373,7 +8129,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8389,7 +8144,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return getTimeFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -8407,7 +8161,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return time_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : time_;
         }
       }
-
       /**
        *
        *
@@ -8436,7 +8189,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private long size_;
-
       /**
        *
        *
@@ -8452,7 +8204,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public long getSize() {
         return size_;
       }
-
       /**
        *
        *
@@ -8472,7 +8223,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8492,7 +8242,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object protocol_ = "";
-
       /**
        *
        *
@@ -8518,7 +8267,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -8544,7 +8292,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -8569,7 +8316,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8590,7 +8336,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8618,7 +8363,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object reason_ = "";
-
       /**
        *
        *
@@ -8642,7 +8386,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -8666,7 +8409,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -8689,7 +8431,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8708,7 +8449,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8739,7 +8479,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
               com.google.rpc.context.AttributeContext.Auth.Builder,
               com.google.rpc.context.AttributeContext.AuthOrBuilder>
           authBuilder_;
-
       /**
        *
        *
@@ -8755,7 +8494,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public boolean hasAuth() {
         return ((bitField0_ & 0x00000800) != 0);
       }
-
       /**
        *
        *
@@ -8777,7 +8515,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return authBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -8801,7 +8538,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8822,7 +8558,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8851,7 +8586,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         return this;
       }
-
       /**
        *
        *
@@ -8872,7 +8606,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -8888,7 +8621,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return getAuthFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -8908,7 +8640,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
               : auth_;
         }
       }
-
       /**
        *
        *
@@ -9043,7 +8774,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
     int getHeadersCount();
-
     /**
      *
      *
@@ -9056,11 +8786,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
     boolean containsHeaders(java.lang.String key);
-
     /** Use {@link #getHeadersMap()} instead. */
     @java.lang.Deprecated
     java.util.Map<java.lang.String, java.lang.String> getHeaders();
-
     /**
      *
      *
@@ -9073,7 +8801,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
     java.util.Map<java.lang.String, java.lang.String> getHeadersMap();
-
     /**
      *
      *
@@ -9090,7 +8817,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue);
-
     /**
      *
      *
@@ -9117,7 +8843,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return Whether the time field is set.
      */
     boolean hasTime();
-
     /**
      *
      *
@@ -9131,7 +8856,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The time.
      */
     com.google.protobuf.Timestamp getTime();
-
     /**
      *
      *
@@ -9159,7 +8883,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return Whether the backendLatency field is set.
      */
     boolean hasBackendLatency();
-
     /**
      *
      *
@@ -9175,7 +8898,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The backendLatency.
      */
     com.google.protobuf.Duration getBackendLatency();
-
     /**
      *
      *
@@ -9190,7 +8912,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     com.google.protobuf.DurationOrBuilder getBackendLatencyOrBuilder();
   }
-
   /**
    *
    *
@@ -9206,7 +8927,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext.Response)
       ResponseOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use Response.newBuilder() to construct.
     private Response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -9250,7 +8970,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     private int bitField0_;
     public static final int CODE_FIELD_NUMBER = 1;
     private long code_ = 0L;
-
     /**
      *
      *
@@ -9269,7 +8988,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     public static final int SIZE_FIELD_NUMBER = 2;
     private long size_ = 0L;
-
     /**
      *
      *
@@ -9312,7 +9030,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public int getHeadersCount() {
       return internalGetHeaders().getMap().size();
     }
-
     /**
      *
      *
@@ -9331,14 +9048,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return internalGetHeaders().getMap().containsKey(key);
     }
-
     /** Use {@link #getHeadersMap()} instead. */
     @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getHeaders() {
       return getHeadersMap();
     }
-
     /**
      *
      *
@@ -9354,7 +9069,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public java.util.Map<java.lang.String, java.lang.String> getHeadersMap() {
       return internalGetHeaders().getMap();
     }
-
     /**
      *
      *
@@ -9377,7 +9091,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
-
     /**
      *
      *
@@ -9403,7 +9116,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     public static final int TIME_FIELD_NUMBER = 4;
     private com.google.protobuf.Timestamp time_;
-
     /**
      *
      *
@@ -9420,7 +9132,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasTime() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -9437,7 +9148,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public com.google.protobuf.Timestamp getTime() {
       return time_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : time_;
     }
-
     /**
      *
      *
@@ -9455,7 +9165,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     public static final int BACKEND_LATENCY_FIELD_NUMBER = 5;
     private com.google.protobuf.Duration backendLatency_;
-
     /**
      *
      *
@@ -9474,7 +9183,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasBackendLatency() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -9495,7 +9203,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           ? com.google.protobuf.Duration.getDefaultInstance()
           : backendLatency_;
     }
-
     /**
      *
      *
@@ -9729,7 +9436,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -10020,7 +9726,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       private int bitField0_;
 
       private long code_;
-
       /**
        *
        *
@@ -10036,7 +9741,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public long getCode() {
         return code_;
       }
-
       /**
        *
        *
@@ -10056,7 +9760,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -10076,7 +9779,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private long size_;
-
       /**
        *
        *
@@ -10092,7 +9794,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public long getSize() {
         return size_;
       }
-
       /**
        *
        *
@@ -10112,7 +9813,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -10158,7 +9858,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public int getHeadersCount() {
         return internalGetHeaders().getMap().size();
       }
-
       /**
        *
        *
@@ -10177,14 +9876,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         return internalGetHeaders().getMap().containsKey(key);
       }
-
       /** Use {@link #getHeadersMap()} instead. */
       @java.lang.Override
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getHeaders() {
         return getHeadersMap();
       }
-
       /**
        *
        *
@@ -10200,7 +9897,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public java.util.Map<java.lang.String, java.lang.String> getHeadersMap() {
         return internalGetHeaders().getMap();
       }
-
       /**
        *
        *
@@ -10223,7 +9919,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.util.Map<java.lang.String, java.lang.String> map = internalGetHeaders().getMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
       }
-
       /**
        *
        *
@@ -10252,7 +9947,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         internalGetMutableHeaders().getMutableMap().clear();
         return this;
       }
-
       /**
        *
        *
@@ -10271,14 +9965,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         internalGetMutableHeaders().getMutableMap().remove(key);
         return this;
       }
-
       /** Use alternate mutation accessors instead. */
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getMutableHeaders() {
         bitField0_ |= 0x00000004;
         return internalGetMutableHeaders().getMutableMap();
       }
-
       /**
        *
        *
@@ -10301,7 +9993,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         bitField0_ |= 0x00000004;
         return this;
       }
-
       /**
        *
        *
@@ -10325,7 +10016,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
               com.google.protobuf.Timestamp.Builder,
               com.google.protobuf.TimestampOrBuilder>
           timeBuilder_;
-
       /**
        *
        *
@@ -10341,7 +10031,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public boolean hasTime() {
         return ((bitField0_ & 0x00000008) != 0);
       }
-
       /**
        *
        *
@@ -10361,7 +10050,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return timeBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -10385,7 +10073,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -10406,7 +10093,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -10435,7 +10121,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         return this;
       }
-
       /**
        *
        *
@@ -10456,7 +10141,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -10472,7 +10156,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return getTimeFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -10490,7 +10173,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return time_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : time_;
         }
       }
-
       /**
        *
        *
@@ -10524,7 +10206,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
               com.google.protobuf.Duration.Builder,
               com.google.protobuf.DurationOrBuilder>
           backendLatencyBuilder_;
-
       /**
        *
        *
@@ -10542,7 +10223,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public boolean hasBackendLatency() {
         return ((bitField0_ & 0x00000010) != 0);
       }
-
       /**
        *
        *
@@ -10566,7 +10246,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return backendLatencyBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -10592,7 +10271,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -10615,7 +10293,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -10646,7 +10323,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         return this;
       }
-
       /**
        *
        *
@@ -10669,7 +10345,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -10687,7 +10362,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return getBackendLatencyFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -10709,7 +10383,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
               : backendLatency_;
         }
       }
-
       /**
        *
        *
@@ -10822,7 +10495,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The service.
      */
     java.lang.String getService();
-
     /**
      *
      *
@@ -10861,7 +10533,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The name.
      */
     java.lang.String getName();
-
     /**
      *
      *
@@ -10902,7 +10573,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The type.
      */
     java.lang.String getType();
-
     /**
      *
      *
@@ -10931,7 +10601,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; labels = 4;</code>
      */
     int getLabelsCount();
-
     /**
      *
      *
@@ -10943,11 +10612,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; labels = 4;</code>
      */
     boolean containsLabels(java.lang.String key);
-
     /** Use {@link #getLabelsMap()} instead. */
     @java.lang.Deprecated
     java.util.Map<java.lang.String, java.lang.String> getLabels();
-
     /**
      *
      *
@@ -10959,7 +10626,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; labels = 4;</code>
      */
     java.util.Map<java.lang.String, java.lang.String> getLabelsMap();
-
     /**
      *
      *
@@ -10975,7 +10641,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue);
-
     /**
      *
      *
@@ -11004,7 +10669,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The uid.
      */
     java.lang.String getUid();
-
     /**
      *
      *
@@ -11036,7 +10700,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; annotations = 6;</code>
      */
     int getAnnotationsCount();
-
     /**
      *
      *
@@ -11051,11 +10714,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; annotations = 6;</code>
      */
     boolean containsAnnotations(java.lang.String key);
-
     /** Use {@link #getAnnotationsMap()} instead. */
     @java.lang.Deprecated
     java.util.Map<java.lang.String, java.lang.String> getAnnotations();
-
     /**
      *
      *
@@ -11070,7 +10731,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <code>map&lt;string, string&gt; annotations = 6;</code>
      */
     java.util.Map<java.lang.String, java.lang.String> getAnnotationsMap();
-
     /**
      *
      *
@@ -11089,7 +10749,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.lang.String key,
         /* nullable */
         java.lang.String defaultValue);
-
     /**
      *
      *
@@ -11117,7 +10776,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The displayName.
      */
     java.lang.String getDisplayName();
-
     /**
      *
      *
@@ -11144,7 +10802,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return Whether the createTime field is set.
      */
     boolean hasCreateTime();
-
     /**
      *
      *
@@ -11158,7 +10815,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The createTime.
      */
     com.google.protobuf.Timestamp getCreateTime();
-
     /**
      *
      *
@@ -11185,7 +10841,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return Whether the updateTime field is set.
      */
     boolean hasUpdateTime();
-
     /**
      *
      *
@@ -11200,7 +10855,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The updateTime.
      */
     com.google.protobuf.Timestamp getUpdateTime();
-
     /**
      *
      *
@@ -11227,7 +10881,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return Whether the deleteTime field is set.
      */
     boolean hasDeleteTime();
-
     /**
      *
      *
@@ -11241,7 +10894,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The deleteTime.
      */
     com.google.protobuf.Timestamp getDeleteTime();
-
     /**
      *
      *
@@ -11268,7 +10920,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The etag.
      */
     java.lang.String getEtag();
-
     /**
      *
      *
@@ -11303,7 +10954,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * @return The location.
      */
     java.lang.String getLocation();
-
     /**
      *
      *
@@ -11324,7 +10974,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      */
     com.google.protobuf.ByteString getLocationBytes();
   }
-
   /**
    *
    *
@@ -11341,7 +10990,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       // @@protoc_insertion_point(message_implements:google.rpc.context.AttributeContext.Resource)
       ResourceOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use Resource.newBuilder() to construct.
     private Resource(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -11397,7 +11045,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object service_ = "";
-
     /**
      *
      *
@@ -11423,7 +11070,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -11454,7 +11100,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object name_ = "";
-
     /**
      *
      *
@@ -11489,7 +11134,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -11529,7 +11173,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object type_ = "";
-
     /**
      *
      *
@@ -11557,7 +11200,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -11612,7 +11254,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public int getLabelsCount() {
       return internalGetLabels().getMap().size();
     }
-
     /**
      *
      *
@@ -11630,14 +11271,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return internalGetLabels().getMap().containsKey(key);
     }
-
     /** Use {@link #getLabelsMap()} instead. */
     @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getLabels() {
       return getLabelsMap();
     }
-
     /**
      *
      *
@@ -11652,7 +11291,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
       return internalGetLabels().getMap();
     }
-
     /**
      *
      *
@@ -11674,7 +11312,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
-
     /**
      *
      *
@@ -11701,7 +11338,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object uid_ = "";
-
     /**
      *
      *
@@ -11729,7 +11365,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -11786,7 +11421,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public int getAnnotationsCount() {
       return internalGetAnnotations().getMap().size();
     }
-
     /**
      *
      *
@@ -11807,14 +11441,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return internalGetAnnotations().getMap().containsKey(key);
     }
-
     /** Use {@link #getAnnotationsMap()} instead. */
     @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getAnnotations() {
       return getAnnotationsMap();
     }
-
     /**
      *
      *
@@ -11832,7 +11464,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public java.util.Map<java.lang.String, java.lang.String> getAnnotationsMap() {
       return internalGetAnnotations().getMap();
     }
-
     /**
      *
      *
@@ -11857,7 +11488,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
-
     /**
      *
      *
@@ -11887,7 +11517,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object displayName_ = "";
-
     /**
      *
      *
@@ -11911,7 +11540,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -11938,7 +11566,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     public static final int CREATE_TIME_FIELD_NUMBER = 8;
     private com.google.protobuf.Timestamp createTime_;
-
     /**
      *
      *
@@ -11955,7 +11582,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasCreateTime() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -11972,7 +11598,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public com.google.protobuf.Timestamp getCreateTime() {
       return createTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : createTime_;
     }
-
     /**
      *
      *
@@ -11990,7 +11615,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     public static final int UPDATE_TIME_FIELD_NUMBER = 9;
     private com.google.protobuf.Timestamp updateTime_;
-
     /**
      *
      *
@@ -12008,7 +11632,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasUpdateTime() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -12026,7 +11649,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public com.google.protobuf.Timestamp getUpdateTime() {
       return updateTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : updateTime_;
     }
-
     /**
      *
      *
@@ -12045,7 +11667,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     public static final int DELETE_TIME_FIELD_NUMBER = 10;
     private com.google.protobuf.Timestamp deleteTime_;
-
     /**
      *
      *
@@ -12062,7 +11683,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasDeleteTime() {
       return ((bitField0_ & 0x00000004) != 0);
     }
-
     /**
      *
      *
@@ -12079,7 +11699,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public com.google.protobuf.Timestamp getDeleteTime() {
       return deleteTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : deleteTime_;
     }
-
     /**
      *
      *
@@ -12099,7 +11718,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object etag_ = "";
-
     /**
      *
      *
@@ -12125,7 +11743,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -12156,7 +11773,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     @SuppressWarnings("serial")
     private volatile java.lang.Object location_ = "";
-
     /**
      *
      *
@@ -12187,7 +11803,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return s;
       }
     }
-
     /**
      *
      *
@@ -12509,7 +12124,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      *
      *
@@ -12923,7 +12537,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       private int bitField0_;
 
       private java.lang.Object service_ = "";
-
       /**
        *
        *
@@ -12948,7 +12561,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -12973,7 +12585,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -12997,7 +12608,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -13017,7 +12627,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -13044,7 +12653,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object name_ = "";
-
       /**
        *
        *
@@ -13078,7 +12686,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -13112,7 +12719,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -13145,7 +12751,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -13174,7 +12779,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -13210,7 +12814,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object type_ = "";
-
       /**
        *
        *
@@ -13237,7 +12840,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -13264,7 +12866,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -13290,7 +12891,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -13312,7 +12912,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -13365,7 +12964,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public int getLabelsCount() {
         return internalGetLabels().getMap().size();
       }
-
       /**
        *
        *
@@ -13383,14 +12981,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         return internalGetLabels().getMap().containsKey(key);
       }
-
       /** Use {@link #getLabelsMap()} instead. */
       @java.lang.Override
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getLabels() {
         return getLabelsMap();
       }
-
       /**
        *
        *
@@ -13405,7 +13001,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
         return internalGetLabels().getMap();
       }
-
       /**
        *
        *
@@ -13427,7 +13022,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
       }
-
       /**
        *
        *
@@ -13455,7 +13049,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         internalGetMutableLabels().getMutableMap().clear();
         return this;
       }
-
       /**
        *
        *
@@ -13473,14 +13066,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         internalGetMutableLabels().getMutableMap().remove(key);
         return this;
       }
-
       /** Use alternate mutation accessors instead. */
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getMutableLabels() {
         bitField0_ |= 0x00000008;
         return internalGetMutableLabels().getMutableMap();
       }
-
       /**
        *
        *
@@ -13502,7 +13093,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         bitField0_ |= 0x00000008;
         return this;
       }
-
       /**
        *
        *
@@ -13520,7 +13110,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object uid_ = "";
-
       /**
        *
        *
@@ -13547,7 +13136,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -13574,7 +13162,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -13600,7 +13187,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -13622,7 +13208,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -13678,7 +13263,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public int getAnnotationsCount() {
         return internalGetAnnotations().getMap().size();
       }
-
       /**
        *
        *
@@ -13699,14 +13283,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         return internalGetAnnotations().getMap().containsKey(key);
       }
-
       /** Use {@link #getAnnotationsMap()} instead. */
       @java.lang.Override
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getAnnotations() {
         return getAnnotationsMap();
       }
-
       /**
        *
        *
@@ -13724,7 +13306,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public java.util.Map<java.lang.String, java.lang.String> getAnnotationsMap() {
         return internalGetAnnotations().getMap();
       }
-
       /**
        *
        *
@@ -13749,7 +13330,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         java.util.Map<java.lang.String, java.lang.String> map = internalGetAnnotations().getMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
       }
-
       /**
        *
        *
@@ -13780,7 +13360,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         internalGetMutableAnnotations().getMutableMap().clear();
         return this;
       }
-
       /**
        *
        *
@@ -13801,14 +13380,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         internalGetMutableAnnotations().getMutableMap().remove(key);
         return this;
       }
-
       /** Use alternate mutation accessors instead. */
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getMutableAnnotations() {
         bitField0_ |= 0x00000020;
         return internalGetMutableAnnotations().getMutableMap();
       }
-
       /**
        *
        *
@@ -13833,7 +13410,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         bitField0_ |= 0x00000020;
         return this;
       }
-
       /**
        *
        *
@@ -13854,7 +13430,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object displayName_ = "";
-
       /**
        *
        *
@@ -13877,7 +13452,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -13900,7 +13474,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -13922,7 +13495,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -13940,7 +13512,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -13970,7 +13541,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
               com.google.protobuf.Timestamp.Builder,
               com.google.protobuf.TimestampOrBuilder>
           createTimeBuilder_;
-
       /**
        *
        *
@@ -13986,7 +13556,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public boolean hasCreateTime() {
         return ((bitField0_ & 0x00000080) != 0);
       }
-
       /**
        *
        *
@@ -14008,7 +13577,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return createTimeBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -14032,7 +13600,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -14053,7 +13620,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -14082,7 +13648,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         return this;
       }
-
       /**
        *
        *
@@ -14103,7 +13668,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -14119,7 +13683,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return getCreateTimeFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -14139,7 +13702,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
               : createTime_;
         }
       }
-
       /**
        *
        *
@@ -14173,7 +13735,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
               com.google.protobuf.Timestamp.Builder,
               com.google.protobuf.TimestampOrBuilder>
           updateTimeBuilder_;
-
       /**
        *
        *
@@ -14190,7 +13751,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public boolean hasUpdateTime() {
         return ((bitField0_ & 0x00000100) != 0);
       }
-
       /**
        *
        *
@@ -14213,7 +13773,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return updateTimeBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -14238,7 +13797,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -14260,7 +13818,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -14290,7 +13847,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         return this;
       }
-
       /**
        *
        *
@@ -14312,7 +13868,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -14329,7 +13884,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return getUpdateTimeFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -14350,7 +13904,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
               : updateTime_;
         }
       }
-
       /**
        *
        *
@@ -14385,7 +13938,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
               com.google.protobuf.Timestamp.Builder,
               com.google.protobuf.TimestampOrBuilder>
           deleteTimeBuilder_;
-
       /**
        *
        *
@@ -14401,7 +13953,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public boolean hasDeleteTime() {
         return ((bitField0_ & 0x00000200) != 0);
       }
-
       /**
        *
        *
@@ -14423,7 +13974,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return deleteTimeBuilder_.getMessage();
         }
       }
-
       /**
        *
        *
@@ -14447,7 +13997,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -14468,7 +14017,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -14497,7 +14045,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         return this;
       }
-
       /**
        *
        *
@@ -14518,7 +14065,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -14534,7 +14080,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return getDeleteTimeFieldBuilder().getBuilder();
       }
-
       /**
        *
        *
@@ -14554,7 +14099,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
               : deleteTime_;
         }
       }
-
       /**
        *
        *
@@ -14583,7 +14127,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object etag_ = "";
-
       /**
        *
        *
@@ -14608,7 +14151,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -14633,7 +14175,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -14657,7 +14198,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -14677,7 +14217,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -14704,7 +14243,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       private java.lang.Object location_ = "";
-
       /**
        *
        *
@@ -14734,7 +14272,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (java.lang.String) ref;
         }
       }
-
       /**
        *
        *
@@ -14764,7 +14301,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        *
        *
@@ -14793,7 +14329,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -14818,7 +14353,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         onChanged();
         return this;
       }
-
       /**
        *
        *
@@ -14916,7 +14450,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   private int bitField0_;
   public static final int ORIGIN_FIELD_NUMBER = 7;
   private com.google.rpc.context.AttributeContext.Peer origin_;
-
   /**
    *
    *
@@ -14934,7 +14467,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   public boolean hasOrigin() {
     return ((bitField0_ & 0x00000001) != 0);
   }
-
   /**
    *
    *
@@ -14954,7 +14486,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
         : origin_;
   }
-
   /**
    *
    *
@@ -14975,7 +14506,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
   public static final int SOURCE_FIELD_NUMBER = 1;
   private com.google.rpc.context.AttributeContext.Peer source_;
-
   /**
    *
    *
@@ -14993,7 +14523,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   public boolean hasSource() {
     return ((bitField0_ & 0x00000002) != 0);
   }
-
   /**
    *
    *
@@ -15013,7 +14542,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
         : source_;
   }
-
   /**
    *
    *
@@ -15034,7 +14562,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
   public static final int DESTINATION_FIELD_NUMBER = 2;
   private com.google.rpc.context.AttributeContext.Peer destination_;
-
   /**
    *
    *
@@ -15052,7 +14579,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   public boolean hasDestination() {
     return ((bitField0_ & 0x00000004) != 0);
   }
-
   /**
    *
    *
@@ -15072,7 +14598,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
         : destination_;
   }
-
   /**
    *
    *
@@ -15093,7 +14618,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
   public static final int REQUEST_FIELD_NUMBER = 3;
   private com.google.rpc.context.AttributeContext.Request request_;
-
   /**
    *
    *
@@ -15109,7 +14633,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   public boolean hasRequest() {
     return ((bitField0_ & 0x00000008) != 0);
   }
-
   /**
    *
    *
@@ -15127,7 +14650,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         ? com.google.rpc.context.AttributeContext.Request.getDefaultInstance()
         : request_;
   }
-
   /**
    *
    *
@@ -15146,7 +14668,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
   public static final int RESPONSE_FIELD_NUMBER = 4;
   private com.google.rpc.context.AttributeContext.Response response_;
-
   /**
    *
    *
@@ -15162,7 +14683,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   public boolean hasResponse() {
     return ((bitField0_ & 0x00000010) != 0);
   }
-
   /**
    *
    *
@@ -15180,7 +14700,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         ? com.google.rpc.context.AttributeContext.Response.getDefaultInstance()
         : response_;
   }
-
   /**
    *
    *
@@ -15199,7 +14718,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
   public static final int RESOURCE_FIELD_NUMBER = 5;
   private com.google.rpc.context.AttributeContext.Resource resource_;
-
   /**
    *
    *
@@ -15217,7 +14735,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   public boolean hasResource() {
     return ((bitField0_ & 0x00000020) != 0);
   }
-
   /**
    *
    *
@@ -15237,7 +14754,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         ? com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()
         : resource_;
   }
-
   /**
    *
    *
@@ -15258,7 +14774,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
   public static final int API_FIELD_NUMBER = 6;
   private com.google.rpc.context.AttributeContext.Api api_;
-
   /**
    *
    *
@@ -15274,7 +14789,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   public boolean hasApi() {
     return ((bitField0_ & 0x00000040) != 0);
   }
-
   /**
    *
    *
@@ -15290,7 +14804,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   public com.google.rpc.context.AttributeContext.Api getApi() {
     return api_ == null ? com.google.rpc.context.AttributeContext.Api.getDefaultInstance() : api_;
   }
-
   /**
    *
    *
@@ -15309,7 +14822,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.protobuf.Any> extensions_;
-
   /**
    *
    *
@@ -15323,7 +14835,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   public java.util.List<com.google.protobuf.Any> getExtensionsList() {
     return extensions_;
   }
-
   /**
    *
    *
@@ -15337,7 +14848,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getExtensionsOrBuilderList() {
     return extensions_;
   }
-
   /**
    *
    *
@@ -15351,7 +14861,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   public int getExtensionsCount() {
     return extensions_.size();
   }
-
   /**
    *
    *
@@ -15365,7 +14874,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   public com.google.protobuf.Any getExtensions(int index) {
     return extensions_.get(index);
   }
-
   /**
    *
    *
@@ -15638,7 +15146,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     Builder builder = new Builder(parent);
     return builder;
   }
-
   /**
    *
    *
@@ -16032,7 +15539,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             com.google.rpc.context.AttributeContext.Peer.Builder,
             com.google.rpc.context.AttributeContext.PeerOrBuilder>
         originBuilder_;
-
     /**
      *
      *
@@ -16049,7 +15555,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasOrigin() {
       return ((bitField0_ & 0x00000001) != 0);
     }
-
     /**
      *
      *
@@ -16072,7 +15577,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return originBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -16097,7 +15601,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16119,7 +15622,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16149,7 +15651,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -16171,7 +15672,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16188,7 +15688,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return getOriginFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -16209,7 +15708,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             : origin_;
       }
     }
-
     /**
      *
      *
@@ -16244,7 +15742,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             com.google.rpc.context.AttributeContext.Peer.Builder,
             com.google.rpc.context.AttributeContext.PeerOrBuilder>
         sourceBuilder_;
-
     /**
      *
      *
@@ -16261,7 +15758,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasSource() {
       return ((bitField0_ & 0x00000002) != 0);
     }
-
     /**
      *
      *
@@ -16284,7 +15780,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return sourceBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -16309,7 +15804,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16331,7 +15825,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16361,7 +15854,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -16383,7 +15875,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16400,7 +15891,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return getSourceFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -16421,7 +15911,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             : source_;
       }
     }
-
     /**
      *
      *
@@ -16456,7 +15945,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             com.google.rpc.context.AttributeContext.Peer.Builder,
             com.google.rpc.context.AttributeContext.PeerOrBuilder>
         destinationBuilder_;
-
     /**
      *
      *
@@ -16473,7 +15961,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasDestination() {
       return ((bitField0_ & 0x00000004) != 0);
     }
-
     /**
      *
      *
@@ -16496,7 +15983,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return destinationBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -16521,7 +16007,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16544,7 +16029,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16574,7 +16058,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -16596,7 +16079,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16613,7 +16095,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return getDestinationFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -16634,7 +16115,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             : destination_;
       }
     }
-
     /**
      *
      *
@@ -16669,7 +16149,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             com.google.rpc.context.AttributeContext.Request.Builder,
             com.google.rpc.context.AttributeContext.RequestOrBuilder>
         requestBuilder_;
-
     /**
      *
      *
@@ -16684,7 +16163,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasRequest() {
       return ((bitField0_ & 0x00000008) != 0);
     }
-
     /**
      *
      *
@@ -16705,7 +16183,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return requestBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -16728,7 +16205,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16749,7 +16225,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16777,7 +16252,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -16797,7 +16271,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16812,7 +16285,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return getRequestFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -16831,7 +16303,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             : request_;
       }
     }
-
     /**
      *
      *
@@ -16864,7 +16335,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             com.google.rpc.context.AttributeContext.Response.Builder,
             com.google.rpc.context.AttributeContext.ResponseOrBuilder>
         responseBuilder_;
-
     /**
      *
      *
@@ -16879,7 +16349,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasResponse() {
       return ((bitField0_ & 0x00000010) != 0);
     }
-
     /**
      *
      *
@@ -16900,7 +16369,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return responseBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -16923,7 +16391,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16944,7 +16411,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -16972,7 +16438,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -16992,7 +16457,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -17007,7 +16471,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return getResponseFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -17026,7 +16489,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             : response_;
       }
     }
-
     /**
      *
      *
@@ -17059,7 +16521,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             com.google.rpc.context.AttributeContext.Resource.Builder,
             com.google.rpc.context.AttributeContext.ResourceOrBuilder>
         resourceBuilder_;
-
     /**
      *
      *
@@ -17076,7 +16537,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasResource() {
       return ((bitField0_ & 0x00000020) != 0);
     }
-
     /**
      *
      *
@@ -17099,7 +16559,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return resourceBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -17124,7 +16583,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -17147,7 +16605,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -17177,7 +16634,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -17199,7 +16655,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -17216,7 +16671,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return getResourceFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -17237,7 +16691,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             : resource_;
       }
     }
-
     /**
      *
      *
@@ -17272,7 +16725,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             com.google.rpc.context.AttributeContext.Api.Builder,
             com.google.rpc.context.AttributeContext.ApiOrBuilder>
         apiBuilder_;
-
     /**
      *
      *
@@ -17287,7 +16739,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public boolean hasApi() {
       return ((bitField0_ & 0x00000040) != 0);
     }
-
     /**
      *
      *
@@ -17308,7 +16759,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return apiBuilder_.getMessage();
       }
     }
-
     /**
      *
      *
@@ -17331,7 +16781,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -17351,7 +16800,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -17379,7 +16827,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -17399,7 +16846,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return this;
     }
-
     /**
      *
      *
@@ -17414,7 +16860,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       onChanged();
       return getApiFieldBuilder().getBuilder();
     }
-
     /**
      *
      *
@@ -17433,7 +16878,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
             : api_;
       }
     }
-
     /**
      *
      *
@@ -17491,7 +16935,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return extensionsBuilder_.getMessageList();
       }
     }
-
     /**
      *
      *
@@ -17508,7 +16951,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return extensionsBuilder_.getCount();
       }
     }
-
     /**
      *
      *
@@ -17525,7 +16967,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return extensionsBuilder_.getMessage(index);
       }
     }
-
     /**
      *
      *
@@ -17548,7 +16989,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -17568,7 +17008,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -17591,7 +17030,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -17614,7 +17052,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -17634,7 +17071,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -17654,7 +17090,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -17674,7 +17109,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -17694,7 +17128,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -17714,7 +17147,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
-
     /**
      *
      *
@@ -17727,7 +17159,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public com.google.protobuf.Any.Builder getExtensionsBuilder(int index) {
       return getExtensionsFieldBuilder().getBuilder(index);
     }
-
     /**
      *
      *
@@ -17744,7 +17175,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return extensionsBuilder_.getMessageOrBuilder(index);
       }
     }
-
     /**
      *
      *
@@ -17761,7 +17191,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return java.util.Collections.unmodifiableList(extensions_);
       }
     }
-
     /**
      *
      *
@@ -17774,7 +17203,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public com.google.protobuf.Any.Builder addExtensionsBuilder() {
       return getExtensionsFieldBuilder().addBuilder(com.google.protobuf.Any.getDefaultInstance());
     }
-
     /**
      *
      *
@@ -17788,7 +17216,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       return getExtensionsFieldBuilder()
           .addBuilder(index, com.google.protobuf.Any.getDefaultInstance());
     }
-
     /**
      *
      *

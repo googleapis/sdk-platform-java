@@ -36,7 +36,6 @@ public interface RoutingParameterOrBuilder
    * @return The field.
    */
   java.lang.String getField();
-
   /**
    *
    *
@@ -115,7 +114,6 @@ public interface RoutingParameterOrBuilder
    * @return The pathTemplate.
    */
   java.lang.String getPathTemplate();
-
   /**
    *
    *
