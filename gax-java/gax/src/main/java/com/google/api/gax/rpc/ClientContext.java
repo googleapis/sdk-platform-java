@@ -43,6 +43,7 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
+import com.google.auth.ApiKeyCredentials;
 import com.google.auth.CredentialTypeForMetrics;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GdchCredentials;
@@ -203,7 +204,6 @@ public abstract class ClientContext {
       credentials = new QuotaProjectIdHidingCredentials(credentials);
     }
 
-    CredentialTypeForMetrics credentialTypeForMetrics = credentials.getMetricsCredentialType();
     TransportChannelProvider transportChannelProvider = settings.getTransportChannelProvider();
     // After needsExecutor and StubSettings#setExecutorProvider are deprecated, transport channel
     // executor can only be set from TransportChannelProvider#withExecutor directly, and a provider
@@ -211,6 +211,10 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsExecutor() && settings.getExecutorProvider() != null) {
       transportChannelProvider = transportChannelProvider.withExecutor(backgroundExecutor);
     }
+    CredentialTypeForMetrics credentialTypeForMetrics =
+        credentials == null
+            ? CredentialTypeForMetrics.DO_NOT_SEND
+            : credentials.getMetricsCredentialType();
     Map<String, String> headers =
         getHeadersFromSettingsAndAppendCredentialType(settings, credentialTypeForMetrics);
     if (transportChannelProvider.needsHeaders()) {
