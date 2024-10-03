@@ -82,6 +82,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   // Track if deprecated setExecutorProvider is called
   private boolean deprecatedExecutorProviderSet;
   @Nonnull private final EndpointContext endpointContext;
+  private final String apiKey;
 
   /**
    * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -107,6 +108,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
     this.gdchApiAudience = builder.gdchApiAudience;
     this.endpointContext = buildEndpointContext(builder);
+    this.apiKey = builder.apiKey;
   }
 
   /**
@@ -234,6 +236,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return gdchApiAudience;
   }
 
+  /** Gets the API Key that should be used for authentication. */
+  public final String getApiKey() {
+    return apiKey;
+  }
+
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
@@ -252,6 +259,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         .add("streamWatchdogCheckInterval", streamWatchdogCheckInterval)
         .add("tracerFactory", tracerFactory)
         .add("gdchApiAudience", gdchApiAudience)
+        .add("apiKey", apiKey)
         .toString();
   }
 
@@ -277,6 +285,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     private boolean deprecatedExecutorProviderSet;
     private String universeDomain;
     private final EndpointContext endpointContext;
+    private String apiKey;
 
     /**
      * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -301,6 +310,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.tracerFactory = settings.tracerFactory;
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
       this.gdchApiAudience = settings.gdchApiAudience;
+      this.apiKey = settings.apiKey;
 
       // The follow settings will be set to the original user configurations as the
       // EndpointContext will be rebuilt in the constructor.
@@ -353,6 +363,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.mtlsEndpoint = null;
         this.switchToMtlsEndpointAllowed = false;
         this.universeDomain = null;
+        this.apiKey = null;
         // Attempt to create an empty, non-functioning EndpointContext by default. The client will
         // have
         // a valid EndpointContext with user configurations after the client has been initialized.
@@ -574,6 +585,21 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return self();
     }
 
+    /**
+     * Sets the API key. The API key will get translated to an {@link
+     * com.google.auth.ApiKeyCredentials} and stored in {@link ClientContext}.
+     *
+     * <p>API Key authorization is not supported for every product. Please check the documentation
+     * for each product to confirm if it is supported.
+     *
+     * <p>Note: If you set an API key and {@link CredentialsProvider} in the same ClientSettings the
+     * API key will override any credentials provided.
+     */
+    public B setApiKey(String apiKey) {
+      this.apiKey = apiKey;
+      return self();
+    }
+
     /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
     @Deprecated
     public ExecutorProvider getExecutorProvider() {
@@ -614,6 +640,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     /** Gets the ApiClock that was previously set on this Builder. */
     public ApiClock getClock() {
       return clock;
+    }
+
+    /** Gets the API Key that was previously set on this Builder. */
+    public final String getApiKey() {
+      return apiKey;
     }
 
     /**

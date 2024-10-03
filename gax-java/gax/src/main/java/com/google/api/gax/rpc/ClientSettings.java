@@ -112,6 +112,11 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getStreamWatchdogProvider();
   }
 
+  /** Gets the API Key that should be used for authentication. */
+  public final String getApiKey() {
+    return stubSettings.getApiKey();
+  }
+
   /** This method is obsolete. Use {@link #getWatchdogCheckIntervalDuration()} instead. */
   @Nonnull
   @ObsoleteApi("Use getWatchdogCheckIntervalDuration() instead")
@@ -144,6 +149,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
         .add("watchdogProvider", getWatchdogProvider())
         .add("watchdogCheckInterval", getWatchdogCheckInterval())
         .add("gdchApiAudience", getGdchApiAudience())
+        .add("apiKey", getApiKey())
         .toString();
   }
 
@@ -303,6 +309,21 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     /**
+     * Sets the API key. The API key will get translated to an {@link
+     * com.google.auth.ApiKeyCredentials} and stored in {@link ClientContext}.
+     *
+     * <p>API Key authorization is not supported for every product. Please check the documentation
+     * for each product to confirm if it is supported.
+     *
+     * <p>Note: If you set an API key and {@link CredentialsProvider} in the same ClientSettings the
+     * API key will override any credentials provided.
+     */
+    public B setApiKey(String apiKey) {
+      stubSettings.setApiKey(apiKey);
+      return self();
+    }
+
+    /**
      * Gets the ExecutorProvider that was previously set on this Builder. This ExecutorProvider is
      * to use for running asynchronous API call logic (such as retries and long-running operations),
      * and also to pass to the transport settings if an executor is needed for the transport and it
@@ -364,6 +385,11 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return stubSettings.getStreamWatchdogProvider();
     }
 
+    /** Gets the API Key that was previously set on this Builder. */
+    public String getApiKey() {
+      return stubSettings.getApiKey();
+    }
+
     /** This method is obsolete. Use {@link #getWatchdogCheckIntervalDuration()} instead */
     @Nullable
     @ObsoleteApi("Use getWatchdogCheckIntervalDuration() instead")
@@ -405,6 +431,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
           .add("watchdogProvider", getWatchdogProvider())
           .add("watchdogCheckInterval", getWatchdogCheckIntervalDuration())
           .add("gdchApiAudience", getGdchApiAudience())
+          .add("apiKey", getApiKey())
           .toString();
     }
   }

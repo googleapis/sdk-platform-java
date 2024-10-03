@@ -89,4 +89,9 @@ public class QuotaProjectIdHidingCredentials extends Credentials {
   public void refresh() throws IOException {
     this.wrappedCredentials.refresh();
   }
+
+  @Override
+  public String getUniverseDomain() throws IOException {
+    return this.wrappedCredentials.getUniverseDomain();
+  }
 }
