@@ -39,6 +39,6 @@ do
 done
 
 # use formatter downloaded in the Dockerfile.
-cat $tmp_file | xargs java -jar "/tools/google-java-format.jar" --replace
+cat $tmp_file | xargs java -jar "/src/google-java-format.jar" --replace
 
 rm $tmp_file
