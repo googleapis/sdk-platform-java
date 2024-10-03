@@ -40,6 +40,7 @@ public interface UsageRuleOrBuilder
    * @return The selector.
    */
   java.lang.String getSelector();
+
   /**
    *
    *

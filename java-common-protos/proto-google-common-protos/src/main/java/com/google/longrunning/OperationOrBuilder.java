@@ -38,6 +38,7 @@ public interface OperationOrBuilder
    * @return The name.
    */
   java.lang.String getName();
+
   /**
    *
    *
@@ -68,6 +69,7 @@ public interface OperationOrBuilder
    * @return Whether the metadata field is set.
    */
   boolean hasMetadata();
+
   /**
    *
    *
@@ -83,6 +85,7 @@ public interface OperationOrBuilder
    * @return The metadata.
    */
   com.google.protobuf.Any getMetadata();
+
   /**
    *
    *
@@ -124,6 +127,7 @@ public interface OperationOrBuilder
    * @return Whether the error field is set.
    */
   boolean hasError();
+
   /**
    *
    *
@@ -136,6 +140,7 @@ public interface OperationOrBuilder
    * @return The error.
    */
   com.google.rpc.Status getError();
+
   /**
    *
    *
@@ -166,6 +171,7 @@ public interface OperationOrBuilder
    * @return Whether the response field is set.
    */
   boolean hasResponse();
+
   /**
    *
    *
@@ -185,6 +191,7 @@ public interface OperationOrBuilder
    * @return The response.
    */
   com.google.protobuf.Any getResponse();
+
   /**
    *
    *

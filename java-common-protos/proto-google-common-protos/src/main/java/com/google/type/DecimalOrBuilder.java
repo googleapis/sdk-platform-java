@@ -95,6 +95,7 @@ public interface DecimalOrBuilder
    * @return The value.
    */
   java.lang.String getValue();
+
   /**
    *
    *

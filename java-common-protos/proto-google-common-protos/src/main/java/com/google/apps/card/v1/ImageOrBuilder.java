@@ -42,6 +42,7 @@ public interface ImageOrBuilder
    * @return The imageUrl.
    */
   java.lang.String getImageUrl();
+
   /**
    *
    *
@@ -73,6 +74,7 @@ public interface ImageOrBuilder
    * @return Whether the onClick field is set.
    */
   boolean hasOnClick();
+
   /**
    *
    *
@@ -85,6 +87,7 @@ public interface ImageOrBuilder
    * @return The onClick.
    */
   com.google.apps.card.v1.OnClick getOnClick();
+
   /**
    *
    *
@@ -108,6 +111,7 @@ public interface ImageOrBuilder
    * @return The altText.
    */
   java.lang.String getAltText();
+
   /**
    *
    *

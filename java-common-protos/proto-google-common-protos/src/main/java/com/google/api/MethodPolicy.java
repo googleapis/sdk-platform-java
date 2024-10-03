@@ -33,6 +33,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.MethodPolicy)
     MethodPolicyOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use MethodPolicy.newBuilder() to construct.
   private MethodPolicy(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -65,6 +66,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object selector_ = "";
+
   /**
    *
    *
@@ -95,6 +97,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
+
   /**
    *
    *
@@ -130,6 +133,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.api.FieldPolicy> requestPolicies_;
+
   /**
    *
    *
@@ -143,6 +147,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.api.FieldPolicy> getRequestPoliciesList() {
     return requestPolicies_;
   }
+
   /**
    *
    *
@@ -157,6 +162,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       getRequestPoliciesOrBuilderList() {
     return requestPolicies_;
   }
+
   /**
    *
    *
@@ -170,6 +176,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
   public int getRequestPoliciesCount() {
     return requestPolicies_.size();
   }
+
   /**
    *
    *
@@ -183,6 +190,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.FieldPolicy getRequestPolicies(int index) {
     return requestPolicies_.get(index);
   }
+
   /**
    *
    *
@@ -365,6 +373,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -602,6 +611,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object selector_ = "";
+
     /**
      *
      *
@@ -631,6 +641,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -660,6 +671,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -688,6 +700,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -712,6 +725,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -774,6 +788,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
         return requestPoliciesBuilder_.getMessageList();
       }
     }
+
     /**
      *
      *
@@ -790,6 +805,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
         return requestPoliciesBuilder_.getCount();
       }
     }
+
     /**
      *
      *
@@ -806,6 +822,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
         return requestPoliciesBuilder_.getMessage(index);
       }
     }
+
     /**
      *
      *
@@ -828,6 +845,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -848,6 +866,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -870,6 +889,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -892,6 +912,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -911,6 +932,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -931,6 +953,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -951,6 +974,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -970,6 +994,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -989,6 +1014,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1001,6 +1027,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
     public com.google.api.FieldPolicy.Builder getRequestPoliciesBuilder(int index) {
       return getRequestPoliciesFieldBuilder().getBuilder(index);
     }
+
     /**
      *
      *
@@ -1017,6 +1044,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
         return requestPoliciesBuilder_.getMessageOrBuilder(index);
       }
     }
+
     /**
      *
      *
@@ -1034,6 +1062,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(requestPolicies_);
       }
     }
+
     /**
      *
      *
@@ -1047,6 +1076,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       return getRequestPoliciesFieldBuilder()
           .addBuilder(com.google.api.FieldPolicy.getDefaultInstance());
     }
+
     /**
      *
      *
@@ -1060,6 +1090,7 @@ public final class MethodPolicy extends com.google.protobuf.GeneratedMessageV3
       return getRequestPoliciesFieldBuilder()
           .addBuilder(index, com.google.api.FieldPolicy.getDefaultInstance());
     }
+
     /**
      *
      *

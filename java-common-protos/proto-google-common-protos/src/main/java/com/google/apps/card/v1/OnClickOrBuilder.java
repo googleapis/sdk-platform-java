@@ -36,6 +36,7 @@ public interface OnClickOrBuilder
    * @return Whether the action field is set.
    */
   boolean hasAction();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface OnClickOrBuilder
    * @return The action.
    */
   com.google.apps.card.v1.Action getAction();
+
   /**
    *
    *
@@ -71,6 +73,7 @@ public interface OnClickOrBuilder
    * @return Whether the openLink field is set.
    */
   boolean hasOpenLink();
+
   /**
    *
    *
@@ -83,6 +86,7 @@ public interface OnClickOrBuilder
    * @return The openLink.
    */
   com.google.apps.card.v1.OpenLink getOpenLink();
+
   /**
    *
    *
@@ -112,6 +116,7 @@ public interface OnClickOrBuilder
    * @return Whether the openDynamicLinkAction field is set.
    */
   boolean hasOpenDynamicLinkAction();
+
   /**
    *
    *
@@ -130,6 +135,7 @@ public interface OnClickOrBuilder
    * @return The openDynamicLinkAction.
    */
   com.google.apps.card.v1.Action getOpenDynamicLinkAction();
+
   /**
    *
    *
@@ -162,6 +168,7 @@ public interface OnClickOrBuilder
    * @return Whether the card field is set.
    */
   boolean hasCard();
+
   /**
    *
    *
@@ -177,6 +184,7 @@ public interface OnClickOrBuilder
    * @return The card.
    */
   com.google.apps.card.v1.Card getCard();
+
   /**
    *
    *

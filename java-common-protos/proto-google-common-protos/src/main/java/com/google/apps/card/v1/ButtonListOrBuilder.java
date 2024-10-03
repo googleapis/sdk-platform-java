@@ -34,6 +34,7 @@ public interface ButtonListOrBuilder
    * <code>repeated .google.apps.card.v1.Button buttons = 1;</code>
    */
   java.util.List<com.google.apps.card.v1.Button> getButtonsList();
+
   /**
    *
    *
@@ -44,6 +45,7 @@ public interface ButtonListOrBuilder
    * <code>repeated .google.apps.card.v1.Button buttons = 1;</code>
    */
   com.google.apps.card.v1.Button getButtons(int index);
+
   /**
    *
    *
@@ -54,6 +56,7 @@ public interface ButtonListOrBuilder
    * <code>repeated .google.apps.card.v1.Button buttons = 1;</code>
    */
   int getButtonsCount();
+
   /**
    *
    *
@@ -64,6 +67,7 @@ public interface ButtonListOrBuilder
    * <code>repeated .google.apps.card.v1.Button buttons = 1;</code>
    */
   java.util.List<? extends com.google.apps.card.v1.ButtonOrBuilder> getButtonsOrBuilderList();
+
   /**
    *
    *
