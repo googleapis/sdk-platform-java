@@ -86,7 +86,7 @@ fi
 cp "${generator_jar_path}" "${well_known_generator_jar_location}"
 # transfer java formatter to its well-known location
 download_from \
-  "https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/1.7.0/google-java-format-1.7.0-all-deps.jar" \
+  "https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/1.7/google-java-format-1.7-all-deps.jar" \
   "google-java-format.jar"
 cp "google-java-format.jar" "${well_known_formatter_jar_location}"
 gapic_additional_protos="google/iam/v1/iam_policy.proto google/cloud/location/locations.proto"
