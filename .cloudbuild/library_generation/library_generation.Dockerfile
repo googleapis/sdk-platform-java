@@ -104,8 +104,8 @@ RUN ln -sf ${NODE_PATH}/* /usr/local/bin
 
 # download the Java formatter
 WORKDIR /tools
-ADD https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar google-java-format.jar
-COPY google-java-format.jar /src/google-java-format.jar
+ADD https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar /tools/google-java-format.jar
+COPY /tools/google-java-format.jar /src
 
 # allow users to access the script folders
 RUN chmod -R o+rx /src
