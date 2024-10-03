@@ -712,7 +712,39 @@ class ClientContextTest {
   }
 
   @Test
-  void testApiClientHeaderDoNotAppendsCredTypeWhenUnknown() throws Exception {
+  void testApiClientHeaderDoNotAppendsCredType_whenNoApiClientHeader() throws Exception {
+    TransportChannelProvider transportChannelProvider =
+        new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()),
+            null,
+            true,
+            null,
+            null,
+            DEFAULT_ENDPOINT);
+    GoogleCredentials googleCredentials = Mockito.mock(GoogleCredentials.class);
+    when(googleCredentials.getMetricsCredentialType())
+        .thenReturn(CredentialTypeForMetrics.USER_CREDENTIALS);
+
+    ClientSettings.Builder builder =
+        new FakeClientSettings.Builder()
+            .setExecutorProvider(
+                FixedExecutorProvider.create(Mockito.mock(ScheduledExecutorService.class)))
+            .setTransportChannelProvider(transportChannelProvider)
+            .setCredentialsProvider(FixedCredentialsProvider.create(googleCredentials));
+
+    builder.setInternalHeaderProvider(
+        FixedHeaderProvider.create("some-other-header", "internal-agent"));
+
+    ClientContext clientContext = ClientContext.create(builder.build());
+    FakeTransportChannel transportChannel =
+        (FakeTransportChannel) clientContext.getTransportChannel();
+
+    assertThat(transportChannel.getHeaders()).doesNotContainKey("x-goog-api-client");
+    assertThat(transportChannel.getHeaders()).containsEntry("some-other-header", "internal-agent");
+  }
+
+  @Test
+  void testApiClientHeaderDoNotAppendsCredType_whenCredTypeDoNotSend() throws Exception {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()),
