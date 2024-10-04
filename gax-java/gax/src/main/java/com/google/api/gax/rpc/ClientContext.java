@@ -44,6 +44,7 @@ import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
 import com.google.auth.ApiKeyCredentials;
+import com.google.auth.CredentialTypeForMetrics;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GdchCredentials;
 import com.google.auto.value.AutoValue;
@@ -210,7 +211,8 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsExecutor() && settings.getExecutorProvider() != null) {
       transportChannelProvider = transportChannelProvider.withExecutor(backgroundExecutor);
     }
-    Map<String, String> headers = getHeadersFromSettings(settings);
+
+    Map<String, String> headers = getHeaders(settings, credentials);
     if (transportChannelProvider.needsHeaders()) {
       transportChannelProvider = transportChannelProvider.withHeaders(headers);
     }
@@ -318,8 +320,11 @@ public abstract class ClientContext {
   /**
    * Getting a header map from HeaderProvider and InternalHeaderProvider from settings with Quota
    * Project Id.
+   *
+   * <p>Then if credentials is present and its type for metrics is not {@code
+   * CredentialTypeForMetrics.DO_NOT_SEND}, append this type info to x-goog-api-client header.
    */
-  private static Map<String, String> getHeadersFromSettings(StubSettings settings) {
+  private static Map<String, String> getHeaders(StubSettings settings, Credentials credentials) {
     // Resolve conflicts when merging headers from multiple sources
     Map<String, String> userHeaders = settings.getHeaderProvider().getHeaders();
     Map<String, String> internalHeaders = settings.getInternalHeaderProvider().getHeaders();
@@ -346,6 +351,20 @@ public abstract class ClientContext {
     effectiveHeaders.putAll(userHeaders);
     effectiveHeaders.putAll(conflictResolution);
 
+    return appendCredentialTypeToHeaderIfPresent(effectiveHeaders, credentials);
+  }
+
+  private static Map<String, String> appendCredentialTypeToHeaderIfPresent(
+      Map<String, String> effectiveHeaders, Credentials credentials) {
+    CredentialTypeForMetrics credentialTypeForMetrics =
+        credentials == null
+            ? CredentialTypeForMetrics.DO_NOT_SEND
+            : credentials.getMetricsCredentialType();
+    if (credentialTypeForMetrics != CredentialTypeForMetrics.DO_NOT_SEND) {
+      effectiveHeaders.computeIfPresent(
+          ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+          (key, value) -> value + " cred-type/" + credentialTypeForMetrics.getLabel());
+    }
     return ImmutableMap.copyOf(effectiveHeaders);
   }
 
