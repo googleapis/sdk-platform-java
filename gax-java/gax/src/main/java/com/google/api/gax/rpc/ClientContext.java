@@ -348,6 +348,11 @@ public abstract class ClientContext {
     effectiveHeaders.putAll(userHeaders);
     effectiveHeaders.putAll(conflictResolution);
 
+    return appendCredentialTypeToHeaderIfPresent(effectiveHeaders, credentials);
+  }
+
+  private static Map<String, String> appendCredentialTypeToHeaderIfPresent(
+      Map<String, String> effectiveHeaders, Credentials credentials) {
     CredentialTypeForMetrics credentialTypeForMetrics =
         credentials == null
             ? CredentialTypeForMetrics.DO_NOT_SEND
