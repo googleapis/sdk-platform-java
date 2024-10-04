@@ -211,12 +211,8 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsExecutor() && settings.getExecutorProvider() != null) {
       transportChannelProvider = transportChannelProvider.withExecutor(backgroundExecutor);
     }
-    CredentialTypeForMetrics credentialTypeForMetrics =
-        credentials == null
-            ? CredentialTypeForMetrics.DO_NOT_SEND
-            : credentials.getMetricsCredentialType();
-    Map<String, String> headers =
-        getHeadersFromSettingsAndAppendCredentialType(settings, credentialTypeForMetrics);
+
+    Map<String, String> headers = getHeaders(settings, credentials);
     if (transportChannelProvider.needsHeaders()) {
       transportChannelProvider = transportChannelProvider.withHeaders(headers);
     }
@@ -325,8 +321,7 @@ public abstract class ClientContext {
    * Getting a header map from HeaderProvider and InternalHeaderProvider from settings with Quota
    * Project Id. Then append credential type for metrics to x-goog-api-client header.
    */
-  private static Map<String, String> getHeadersFromSettingsAndAppendCredentialType(
-      StubSettings settings, CredentialTypeForMetrics credentialTypeForMetrics) {
+  private static Map<String, String> getHeaders(StubSettings settings, Credentials credentials) {
     // Resolve conflicts when merging headers from multiple sources
     Map<String, String> userHeaders = settings.getHeaderProvider().getHeaders();
     Map<String, String> internalHeaders = settings.getInternalHeaderProvider().getHeaders();
@@ -353,6 +348,10 @@ public abstract class ClientContext {
     effectiveHeaders.putAll(userHeaders);
     effectiveHeaders.putAll(conflictResolution);
 
+    CredentialTypeForMetrics credentialTypeForMetrics =
+        credentials == null
+            ? CredentialTypeForMetrics.DO_NOT_SEND
+            : credentials.getMetricsCredentialType();
     if (credentialTypeForMetrics != CredentialTypeForMetrics.DO_NOT_SEND) {
       effectiveHeaders.computeIfPresent(
           ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
