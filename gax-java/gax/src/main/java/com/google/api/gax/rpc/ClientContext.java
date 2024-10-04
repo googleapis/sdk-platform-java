@@ -319,7 +319,10 @@ public abstract class ClientContext {
 
   /**
    * Getting a header map from HeaderProvider and InternalHeaderProvider from settings with Quota
-   * Project Id. Then append credential type for metrics to x-goog-api-client header.
+   * Project Id.
+   *
+   * <p>Then if credentials is present and its type for metrics is not {@code
+   * CredentialTypeForMetrics.DO_NOT_SEND}, append this type info to x-goog-api-client header.
    */
   private static Map<String, String> getHeaders(StubSettings settings, Credentials credentials) {
     // Resolve conflicts when merging headers from multiple sources
