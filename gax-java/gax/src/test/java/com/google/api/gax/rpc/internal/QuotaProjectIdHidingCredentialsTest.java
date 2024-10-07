@@ -101,4 +101,15 @@ class QuotaProjectIdHidingCredentialsTest {
 
     Mockito.verify(credentials, Mockito.atLeastOnce()).refresh();
   }
+
+  @Test
+  void quotaProjectIdHidingCredentials_getUniverseDomain() throws IOException {
+    Credentials credentials = Mockito.mock(GoogleCredentials.class);
+    Mockito.when(credentials.getUniverseDomain()).thenReturn("example.com");
+
+    QuotaProjectIdHidingCredentials quotaProjectIdHidingCredentials =
+        new QuotaProjectIdHidingCredentials(credentials);
+
+    assertEquals(quotaProjectIdHidingCredentials.getUniverseDomain(), "example.com");
+  }
 }

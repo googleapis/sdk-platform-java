@@ -171,42 +171,6 @@ def prepare_repo(
     )
 
 
-def pull_api_definition(
-    config: GenerationConfig, library: LibraryConfig, output_folder: str
-) -> None:
-    """
-    Pull APIs definition from googleapis/googleapis repository.
-    To avoid duplicated pulling, only perform pulling if the library uses a
-    different commitish than in generation config.
-    :param config: a GenerationConfig object representing a parsed configuration
-    yaml
-    :param library: a LibraryConfig object contained inside config, passed here
-    for convenience and to prevent all libraries to be processed
-    :param output_folder: the folder to which APIs definition (proto files) goes
-    :return: None
-    """
-    googleapis_commitish = config.googleapis_commitish
-    if library.googleapis_commitish:
-        googleapis_commitish = library.googleapis_commitish
-        print(f"using library-specific googleapis commitish: {googleapis_commitish}")
-    else:
-        print(f"using common googleapis_commitish: {config.googleapis_commitish}")
-
-    if googleapis_commitish != config.googleapis_commitish:
-        print("removing existing APIs definition")
-        shutil.rmtree(f"{output_folder}/google", ignore_errors=True)
-        shutil.rmtree(f"{output_folder}/grafeas", ignore_errors=True)
-
-    if not (
-        os.path.exists(f"{output_folder}/google")
-        and os.path.exists(f"{output_folder}/grafeas")
-    ):
-        print("downloading googleapis")
-        sh_util(
-            f"download_googleapis_files_and_folders {output_folder} {googleapis_commitish}"
-        )
-
-
 def generate_postprocessing_prerequisite_files(
     config: GenerationConfig,
     library: LibraryConfig,
