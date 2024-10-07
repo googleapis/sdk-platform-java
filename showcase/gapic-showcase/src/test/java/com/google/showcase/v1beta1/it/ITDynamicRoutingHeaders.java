@@ -18,14 +18,6 @@ package com.google.showcase.v1beta1.it;
 import static com.google.api.gax.rpc.internal.Headers.DYNAMIC_ROUTING_HEADER_KEY;
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.api.gax.httpjson.ApiMethodDescriptor;
-import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall;
-import com.google.api.gax.httpjson.ForwardingHttpJsonClientCallListener;
-import com.google.api.gax.httpjson.HttpJsonCallOptions;
-import com.google.api.gax.httpjson.HttpJsonChannel;
-import com.google.api.gax.httpjson.HttpJsonClientCall;
-import com.google.api.gax.httpjson.HttpJsonClientInterceptor;
-import com.google.api.gax.httpjson.HttpJsonMetadata;
 import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.ComplianceClient;
 import com.google.showcase.v1beta1.ComplianceData;
@@ -33,14 +25,10 @@ import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.RepeatRequest;
 import com.google.showcase.v1beta1.RepeatResponse;
+import com.google.showcase.v1beta1.it.util.GrpcCapturingClientInterceptor;
+import com.google.showcase.v1beta1.it.util.HttpJsonCapturingClientInterceptor;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
-import io.grpc.CallOptions;
-import io.grpc.Channel;
-import io.grpc.ClientCall;
-import io.grpc.ClientInterceptor;
-import io.grpc.ForwardingClientCall;
 import io.grpc.Metadata;
-import io.grpc.MethodDescriptor;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -54,69 +42,6 @@ class ITDynamicRoutingHeaders {
   private static final String SPLIT_TOKEN = "&";
   private static final Metadata.Key<String> REQUEST_PARAMS_HEADER_KEY =
       Metadata.Key.of(DYNAMIC_ROUTING_HEADER_KEY, Metadata.ASCII_STRING_MARSHALLER);
-
-  // Implement a request interceptor to retrieve the headers being sent on the request.
-  // The headers being set are part of the Metadata
-  private static class GrpcCapturingClientInterceptor implements ClientInterceptor {
-    private Metadata metadata;
-
-    @Override
-    public <RequestT, ResponseT> ClientCall<RequestT, ResponseT> interceptCall(
-        MethodDescriptor<RequestT, ResponseT> method, final CallOptions callOptions, Channel next) {
-      ClientCall<RequestT, ResponseT> call = next.newCall(method, callOptions);
-      return new ForwardingClientCall.SimpleForwardingClientCall<RequestT, ResponseT>(call) {
-        @Override
-        public void start(ClientCall.Listener<ResponseT> responseListener, Metadata headers) {
-          metadata = headers;
-          super.start(responseListener, headers);
-        }
-      };
-    }
-  }
-
-  // Implement a request interceptor to retrieve the headers being sent on the request
-  // The headers being set are part of the CallOptions
-  private static class HttpJsonCapturingClientInterceptor implements HttpJsonClientInterceptor {
-    private String requestParam;
-
-    @Override
-    public <RequestT, ResponseT> HttpJsonClientCall<RequestT, ResponseT> interceptCall(
-        ApiMethodDescriptor<RequestT, ResponseT> method,
-        HttpJsonCallOptions callOptions,
-        HttpJsonChannel next) {
-      HttpJsonClientCall<RequestT, ResponseT> call = next.newCall(method, callOptions);
-      return new ForwardingHttpJsonClientCall.SimpleForwardingHttpJsonClientCall<
-          RequestT, ResponseT>(call) {
-        @Override
-        public void start(Listener<ResponseT> responseListener, HttpJsonMetadata requestHeaders) {
-          Listener<ResponseT> forwardingResponseListener =
-              new ForwardingHttpJsonClientCallListener.SimpleForwardingHttpJsonClientCallListener<
-                  ResponseT>(responseListener) {
-                @Override
-                public void onHeaders(HttpJsonMetadata responseHeaders) {
-                  super.onHeaders(responseHeaders);
-                }
-
-                @Override
-                public void onMessage(ResponseT message) {
-                  super.onMessage(message);
-                }
-
-                @Override
-                public void onClose(int statusCode, HttpJsonMetadata trailers) {
-                  super.onClose(statusCode, trailers);
-                }
-              };
-
-          super.start(forwardingResponseListener, requestHeaders);
-          if (requestHeaders.getHeaders().containsKey(DYNAMIC_ROUTING_HEADER_KEY)) {
-            requestParam =
-                String.valueOf(requestHeaders.getHeaders().get(DYNAMIC_ROUTING_HEADER_KEY));
-          }
-        }
-      };
-    }
-  }
 
   private static HttpJsonCapturingClientInterceptor httpJsonInterceptor;
   private static HttpJsonCapturingClientInterceptor httpJsonComplianceInterceptor;
@@ -158,8 +83,8 @@ class ITDynamicRoutingHeaders {
   void cleanUpParams() {
     grpcInterceptor.metadata = null;
     grpcComplianceInterceptor.metadata = null;
-    httpJsonInterceptor.requestParam = null;
-    httpJsonComplianceInterceptor.requestParam = null;
+    httpJsonInterceptor.requestMetadata = null;
+    httpJsonComplianceInterceptor.requestMetadata = null;
   }
 
   @AfterAll
@@ -190,7 +115,7 @@ class ITDynamicRoutingHeaders {
   @Test
   void testHttpJson_noRoutingHeaderUsed() {
     httpJsonClient.echo(EchoRequest.newBuilder().build());
-    String headerValue = httpJsonInterceptor.requestParam;
+    String headerValue = getDynamicRoutingHeaderValueFromInterceptor(httpJsonInterceptor);
     assertThat(headerValue).isNull();
   }
 
@@ -204,7 +129,7 @@ class ITDynamicRoutingHeaders {
   @Test
   void testHttpJson_emptyHeader() {
     httpJsonClient.echo(EchoRequest.newBuilder().setHeader("").build());
-    String headerValue = httpJsonInterceptor.requestParam;
+    String headerValue = getDynamicRoutingHeaderValueFromInterceptor(httpJsonInterceptor);
     assertThat(headerValue).isNull();
   }
 
@@ -249,7 +174,7 @@ class ITDynamicRoutingHeaders {
                     .setFKingdomValue(3))
             .build();
     RepeatResponse actualResponse = httpJsonComplianceClient.repeatDataSimplePath(request);
-    String headerValue = httpJsonComplianceInterceptor.requestParam;
+    String headerValue = getDynamicRoutingHeaderValueFromInterceptor(httpJsonComplianceInterceptor);
     assertThat(headerValue).isNotNull();
     List<String> requestHeaders =
         Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
@@ -267,7 +192,7 @@ class ITDynamicRoutingHeaders {
   @Test
   void testHttpJson_matchesHeaderName() {
     httpJsonClient.echo(EchoRequest.newBuilder().setHeader("potato").build());
-    String headerValue = httpJsonInterceptor.requestParam;
+    String headerValue = getDynamicRoutingHeaderValueFromInterceptor(httpJsonInterceptor);
     assertThat(headerValue).isNotNull();
     List<String> requestHeaders =
         Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
@@ -289,7 +214,7 @@ class ITDynamicRoutingHeaders {
   @Test
   void testHttpJson_matchesOtherHeaderName() {
     httpJsonClient.echo(EchoRequest.newBuilder().setOtherHeader("instances/456").build());
-    String headerValue = httpJsonInterceptor.requestParam;
+    String headerValue = getDynamicRoutingHeaderValueFromInterceptor(httpJsonInterceptor);
     assertThat(headerValue).isNotNull();
     List<String> requestHeaders =
         Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
@@ -317,7 +242,7 @@ class ITDynamicRoutingHeaders {
   @Test
   void testHttpJson_matchesMultipleOfSameRoutingHeader_usesHeader() {
     httpJsonClient.echo(EchoRequest.newBuilder().setHeader("projects/123/instances/456").build());
-    String headerValue = httpJsonInterceptor.requestParam;
+    String headerValue = getDynamicRoutingHeaderValueFromInterceptor(httpJsonInterceptor);
     assertThat(headerValue).isNotNull();
     List<String> requestHeaders =
         Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
@@ -347,7 +272,7 @@ class ITDynamicRoutingHeaders {
   void testHttpJson_matchesMultipleOfSameRoutingHeader_usesOtherHeader() {
     httpJsonClient.echo(
         EchoRequest.newBuilder().setOtherHeader("projects/123/instances/456").build());
-    String headerValue = httpJsonInterceptor.requestParam;
+    String headerValue = getDynamicRoutingHeaderValueFromInterceptor(httpJsonInterceptor);
     assertThat(headerValue).isNotNull();
     List<String> requestHeaders =
         Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
@@ -384,7 +309,7 @@ class ITDynamicRoutingHeaders {
             .setHeader("regions/123/zones/456")
             .setOtherHeader("projects/123/instances/456")
             .build());
-    String headerValue = httpJsonInterceptor.requestParam;
+    String headerValue = getDynamicRoutingHeaderValueFromInterceptor(httpJsonInterceptor);
     assertThat(headerValue).isNotNull();
     List<String> requestHeaders =
         Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
@@ -396,5 +321,18 @@ class ITDynamicRoutingHeaders {
             "header=regions%2F123%2Fzones%2F456",
             "routing_id=regions%2F123%2Fzones%2F456");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
+  }
+
+  private String getDynamicRoutingHeaderValueFromInterceptor(
+      HttpJsonCapturingClientInterceptor httpJsonInterceptor) {
+    if (httpJsonInterceptor.requestMetadata != null
+        && httpJsonInterceptor
+            .requestMetadata
+            .getHeaders()
+            .containsKey(DYNAMIC_ROUTING_HEADER_KEY)) {
+      return String.valueOf(
+          httpJsonInterceptor.requestMetadata.getHeaders().get(DYNAMIC_ROUTING_HEADER_KEY));
+    }
+    return null;
   }
 }

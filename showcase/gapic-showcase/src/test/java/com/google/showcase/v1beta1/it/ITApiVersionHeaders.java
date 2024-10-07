@@ -115,7 +115,8 @@ class ITApiVersionHeaders {
   void testHttpJson_matchesHeaderName() {
     httpJsonClient.echo(EchoRequest.newBuilder().build());
     ArrayList headerValues =
-        (ArrayList) httpJsonInterceptor.metadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
+        (ArrayList)
+            httpJsonInterceptor.responseMetadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
     String headerValue = (String) headerValues.get(0);
     assertThat(headerValue).isEqualTo(EXPECTED_ECHO_API_VERSION);
   }
@@ -134,7 +135,7 @@ class ITApiVersionHeaders {
         RepeatRequest.newBuilder().setInfo(ComplianceData.newBuilder().setFString("test")).build();
     httpJsonComplianceClient.repeatDataSimplePath(request);
     assertThat(API_VERSION_HEADER_KEY)
-        .isNotIn(httpJsonComplianceInterceptor.metadata.getHeaders().keySet());
+        .isNotIn(httpJsonComplianceInterceptor.responseMetadata.getHeaders().keySet());
   }
 
   @Test
@@ -224,7 +225,10 @@ class ITApiVersionHeaders {
 
       ArrayList headerValues =
           (ArrayList)
-              httpJsonComplianceInterceptor.metadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
+              httpJsonComplianceInterceptor
+                  .responseMetadata
+                  .getHeaders()
+                  .get(HTTP_RESPONSE_HEADER_STRING);
       String headerValue = (String) headerValues.get(0);
       assertThat(headerValue).isEqualTo(CUSTOM_API_VERSION);
     }

@@ -47,7 +47,8 @@ import io.grpc.Status;
 
 /** Implements a client interceptor to retrieve the response headers from a HTTP client request. */
 public class HttpJsonCapturingClientInterceptor implements HttpJsonClientInterceptor {
-    public HttpJsonMetadata metadata;
+    public HttpJsonMetadata responseMetadata;
+    public HttpJsonMetadata requestMetadata;
 
     @Override
     public <RequestT, ResponseT> HttpJsonClientCall<RequestT, ResponseT> interceptCall(
@@ -64,7 +65,7 @@ public class HttpJsonCapturingClientInterceptor implements HttpJsonClientInterce
                                 ResponseT>(responseListener) {
                             @Override
                             public void onHeaders(HttpJsonMetadata responseHeaders) {
-                                metadata = responseHeaders;
+                                responseMetadata = responseHeaders;
                                 super.onHeaders(responseHeaders);
                             }
 
@@ -80,6 +81,7 @@ public class HttpJsonCapturingClientInterceptor implements HttpJsonClientInterce
                         };
 
                 super.start(forwardingResponseListener, requestHeaders);
+                requestMetadata = requestHeaders;
             }
         };
     }
