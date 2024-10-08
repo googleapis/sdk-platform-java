@@ -26,20 +26,20 @@ If you are using Maven, add this to your pom.xml file:
 <dependency>
   <groupId>com.google.cloud</groupId>
   <artifactId>google-cloud-asset</artifactId>
-  <version>None</version>
+  <version>1.2.3</version>
 </dependency>
 ```
 
 If you are using Gradle without BOM, add this to your dependencies:
 
 ```Groovy
-implementation 'com.google.cloud:google-cloud-asset:None'
+implementation 'com.google.cloud:google-cloud-asset:1.2.3'
 ```
 
 If you are using SBT, add this to your dependencies:
 
 ```Scala
-libraryDependencies += "com.google.cloud" % "google-cloud-asset" % "None"
+libraryDependencies += "com.google.cloud" % "google-cloud-asset" % "1.2.3"
 ```
 
 ## Authentication
@@ -178,7 +178,7 @@ Java is a registered trademark of Oracle and/or its affiliates.
 [kokoro-badge-link-5]: http://storage.googleapis.com/cloud-devrel-public/java/badges/java-asset/java11.html
 [stability-image]: https://img.shields.io/badge/stability-stable-green
 [maven-version-image]: https://img.shields.io/maven-central/v/com.google.cloud/google-cloud-asset.svg
-[maven-version-link]: https://central.sonatype.com/artifact/com.google.cloud/google-cloud-asset/None
+[maven-version-link]: https://central.sonatype.com/artifact/com.google.cloud/google-cloud-asset/1.2.3
 [authentication]: https://github.com/googleapis/google-cloud-java#authentication
 [auth-scopes]: https://developers.google.com/identity/protocols/oauth2/scopes
 [predefined-iam-roles]: https://cloud.google.com/iam/docs/understanding-roles#predefined_roles
