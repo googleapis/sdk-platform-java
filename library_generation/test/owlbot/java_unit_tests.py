@@ -282,18 +282,6 @@ releaseType: java-yoshi
     def test_render_readme_success(self):
         with util.copied_fixtures_dir(FIXTURES / "java_templates" / "render-readme"):
             java.common_templates(
-                # excludes=[
-                #     ".github/**",
-                #     ".kokoro/**",
-                #     "samples/**",
-                #     "CODE_OF_CONDUCT.md",
-                #     "CONTRIBUTING.md",
-                #     "java.header",
-                #     "LICENSE",
-                #     "license-checks.xml",
-                #     "renovate.json",
-                #     "SECURITY.md",
-                # ],
                 template_path=TEMPLATES_PATH,
             )
             self.assertTrue(os.path.isfile("README.md"))
