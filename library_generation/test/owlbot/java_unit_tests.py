@@ -286,6 +286,7 @@ releaseType: java-yoshi
         },
     )
     def test_render_readme_success(self):
+        golden_path = os.path.abspath(f"{TEST_OWLBOT}/testdata/README-golden.md")
         with util.copied_fixtures_dir(FIXTURES / "java_templates" / "render-readme"):
             # This method needs read .repo-metadata.json to render templates.
             # The file is located in FIXTURES/java_templates/render-readme.
@@ -293,7 +294,7 @@ releaseType: java-yoshi
                 template_path=TEMPLATES_PATH,
             )
             self.assertTrue(os.path.isfile("README.md"))
-            self.assert_matches_golden("README-golden.md", "README.md")
+            self.assert_matches_golden(golden_path, "README.md")
 
     def assert_matches_golden(self, expected, actual):
         matching_lines = 0
