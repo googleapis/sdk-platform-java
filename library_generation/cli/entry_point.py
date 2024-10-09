@@ -13,7 +13,7 @@
 # limitations under the License.
 import os
 import sys
-
+from typing import Optional
 import click as click
 from library_generation.generate_pr_description import generate_pr_descriptions
 from library_generation.generate_repo import generate_from_yaml
@@ -52,6 +52,15 @@ def main(ctx):
     """,
 )
 @click.option(
+    "--includes",
+    type=str,
+    default=None,
+    show_default=True,
+    help="""
+    A list of library names that will be generated, separated by comma.
+    """,
+)
+@click.option(
     "--repository-path",
     type=str,
     default=".",
@@ -77,6 +86,7 @@ def main(ctx):
 def generate(
     baseline_generation_config_path: str,
     current_generation_config_path: str,
+    includes: Optional[str],
     repository_path: str,
     api_definitions_path: str,
 ):
@@ -84,10 +94,14 @@ def generate(
     Compare baseline generation config and current generation config and
     generate changed libraries based on current generation config with commit
     history.
+    If `includes` is specified, libraries whose name can be found in the current
+    generation config will *also* be generated.
 
     If baseline generation config is not specified but current generation
-    config is specified, generate all libraries based on current generation
-    config without commit history.
+    config is specified, generate all libraries if `includes` is not specified,
+    based on current generation config without commit history.
+    If `includes` is specified, only libraries whose name can be found in the
+    current generation config will be generated.
 
     If current generation config is not specified but baseline generation
     config is specified, raise FileNotFoundError because current generation
@@ -95,8 +109,10 @@ def generate(
 
     If both baseline generation config and current generation config are not
     specified, generate all libraries based on the default generation config,
-    which is generation_config.yaml in the current working directory. Raise
-    FileNotFoundError if the default config does not exist.
+    which is generation_config.yaml in the current working directory.
+    If `includes` is specified, only libraries whose name can be found in the
+    default generation config will be generated.
+    Raise FileNotFoundError if the default config does not exist.
 
     The commit history, if generated, will be available in
     repository_path/pr_description.txt.
@@ -104,6 +120,7 @@ def generate(
     __generate_repo_and_pr_description_impl(
         baseline_generation_config_path=baseline_generation_config_path,
         current_generation_config_path=current_generation_config_path,
+        includes=includes,
         repository_path=repository_path,
         api_definitions_path=api_definitions_path,
     )
@@ -112,6 +129,7 @@ def generate(
 def __generate_repo_and_pr_description_impl(
     baseline_generation_config_path: str,
     current_generation_config_path: str,
+    includes: Optional[str],
     repository_path: str,
     api_definitions_path: str,
 ):
@@ -146,14 +164,17 @@ def __generate_repo_and_pr_description_impl(
     current_generation_config_path = os.path.abspath(current_generation_config_path)
     repository_path = os.path.abspath(repository_path)
     api_definitions_path = os.path.abspath(api_definitions_path)
+    include_libraries = _parse_library_name_from(includes)
+
     if not baseline_generation_config_path:
-        # Execute full generation based on current_generation_config if
+        # Execute selective generation based on current_generation_config if
         # baseline_generation_config is not specified.
         # Do not generate pull request description.
         generate_from_yaml(
             config=from_yaml(current_generation_config_path),
             repository_path=repository_path,
             api_definitions_path=api_definitions_path,
+            target_library_names=include_libraries,
         )
         return
 
@@ -164,12 +185,17 @@ def __generate_repo_and_pr_description_impl(
         baseline_config=from_yaml(baseline_generation_config_path),
         current_config=from_yaml(current_generation_config_path),
     )
-    # pass None if we want to fully generate the repository.
+    # Pass None if we want to fully generate the repository.
     target_library_names = (
         config_change.get_changed_libraries()
         if not _needs_full_repo_generation(config_change=config_change)
         else None
     )
+    # Generate the union of two library lists if neither of the library list
+    # indicates a full generation.
+    # The deduplication is done in `generate_from_yaml`.
+    if (target_library_names is not None) and (include_libraries is not None):
+        target_library_names.extend(include_libraries)
     generate_from_yaml(
         config=config_change.current_config,
         repository_path=repository_path,
@@ -189,6 +215,12 @@ def _needs_full_repo_generation(config_change: ConfigChange) -> bool:
     """
     current_config = config_change.current_config
     return not current_config.is_monorepo() or current_config.contains_common_protos()
+
+
+def _parse_library_name_from(includes: str) -> Optional[list[str]]:
+    if includes is None:
+        return None
+    return includes.split(",")
 
 
 @main.command()
