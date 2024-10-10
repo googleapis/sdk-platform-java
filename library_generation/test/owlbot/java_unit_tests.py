@@ -278,6 +278,24 @@ releaseType: java-yoshi
 """,
                 )
 
+    @mock.patch.dict(
+        os.environ,
+        {
+            "SYNTHTOOL_TEMPLATES": f"{TEMPLATES_PATH}",
+            "SYNTHTOOL_LIBRARY_VERSION": "1.2.3",
+        },
+    )
+    def test_render_readme_success(self):
+        golden_path = os.path.abspath(f"{TEST_OWLBOT}/testdata/README-golden.md")
+        with util.copied_fixtures_dir(FIXTURES / "java_templates" / "render-readme"):
+            # This method needs read .repo-metadata.json to render templates.
+            # The file is located in FIXTURES/java_templates/render-readme.
+            java.common_templates(
+                template_path=TEMPLATES_PATH,
+            )
+            self.assertTrue(os.path.isfile("README.md"))
+            self.assert_matches_golden(golden_path, "README.md")
+
     def assert_matches_golden(self, expected, actual):
         matching_lines = 0
         with open(actual, "rt") as fp:

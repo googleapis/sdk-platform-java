@@ -64,7 +64,6 @@ If you are using Maven without the BOM, add this to your dependencies:
 {% else %}
 If you are using Maven, add this to your pom.xml file:
 {% endif %}
-<!-- {x-version-update-start:{{ artifact_id }}:released} -->
 
 ```xml
 {% if 'snippets' in metadata and metadata['snippets'][metadata['repo']['api_shortname'] + '_install_without_bom'] -%}
@@ -99,7 +98,6 @@ If you are using SBT, add this to your dependencies:
 ```Scala
 libraryDependencies += "{{ group_id }}" % "{{ artifact_id }}" % "{{ version }}"
 ```
-<!-- {x-version-update-end} -->
 
 ## Authentication
 
