@@ -383,9 +383,9 @@ get_java_formatter_location() {
 error_if_not_exists() {
   local required_tool=$1
   if [[ ! -f "${required_tool}" ]]; then
-    >&2 echo "File ${required_tool} not found in the "
-    >&2 echo "filesystem. Please configure your environment and store the "
-    >&2 echo "generator jar in this location"
+    >&2 echo "File ${required_tool} not found in the filesystem. "
+    >&2 echo "Please configure your environment and store the "
+    >&2 echo "required tools in this location."
     exit 1
   fi
 }
