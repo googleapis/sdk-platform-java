@@ -12,6 +12,7 @@ source "${script_dir}"/test_utilities.sh
 readonly SIMULATED_HOME=$(mktemp -d)
 mkdir "${SIMULATED_HOME}/.library_generation"
 touch "${SIMULATED_HOME}/.library_generation/gapic-generator-java.jar"
+touch "${SIMULATED_HOME}/.library_generation/google-java-format.jar"
 HOME="${SIMULATED_HOME}" source "${script_dir}"/../utils/utilities.sh
 
 # Unit tests

@@ -4,6 +4,7 @@ set -eo pipefail
 utilities_script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 # The $HOME variable is always set in the OS env as per POSIX specification.
 GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
+JAVA_FORMATTER_LOCATION="${HOME}/.library_generation/google-java-format.jar"
 
 # Utility functions used in `generate_library.sh` and showcase generation.
 extract_folder_name() {
@@ -137,10 +138,11 @@ get_protoc_version() {
 # and "grpc_path" to DOCKER_PROTOC_PATH and DOCKER_GRPC_PATH respectively (no
 # download), since the docker image will have downloaded these tools beforehand.
 #
-# For the case of gapic-generator-java, no env var will be exported for the
-# upstream flow. Instead, the jar must be located in the well-known location
-# (${HOME}/.library_generation/gapic-generator-java.jar). More information in
-# `library_generation/DEVELOPMENT.md`
+# For the case of generator and formatter, no env var will be exported for the
+# upstream flow.
+# Instead, the jar must be located in the well-known location
+# (${HOME}/.library_generation/).
+# More information in `library_generation/DEVELOPMENT.md`.
 download_tools() {
   local protoc_version=$1
   local grpc_version=$2
@@ -166,18 +168,11 @@ download_tools() {
     export grpc_path=$(download_grpc_plugin "${grpc_version}" "${os_architecture}")
   fi
 
-  # Here we check whether the jar is stored in the expected location.
-  # The docker image will prepare the jar in this location. Developers must
-  # prepare their environment by creating
-  # $HOME/.library_generation/gapic_generator_java.jar
-  # This check is meant to ensure integrity of the downstream workflow. (i.e.
-  # ensure the generator wrapper succeeds)
-  if [[ ! -f "${GAPIC_GENERATOR_LOCATION}" ]]; then
-    >&2 echo "File ${GAPIC_GENERATOR_LOCATION} not found in the "
-    >&2 echo "filesystem. Please configure your environment and store the "
-    >&2 echo "generator jar in this location"
-    exit 1
-  fi
+  # Here we check whether required tools is stored in the expected location.
+  # The docker image will prepare jar files in this location.
+  # This check is meant to ensure integrity of the downstream workflow.
+  error_if_not_exists "${GAPIC_GENERATOR_LOCATION}"
+  error_if_not_exists "${JAVA_FORMATTER_LOCATION}"
   popd
 }
 
@@ -379,4 +374,18 @@ download_googleapis_files_and_folders() {
 
 get_gapic_generator_location() {
   echo "${GAPIC_GENERATOR_LOCATION}"
+}
+
+get_java_formatter_location() {
+  echo "${JAVA_FORMATTER_LOCATION}"
+}
+
+error_if_not_exists() {
+  local required_tool=$1
+  if [[ ! -f "${required_tool}" ]]; then
+    >&2 echo "File ${required_tool} not found in the filesystem. "
+    >&2 echo "Please configure your environment and store the "
+    >&2 echo "required tools in this location."
+    exit 1
+  fi
 }
