@@ -16,17 +16,17 @@
 
 package com.google.cloud.asset.v1.samples;
 
-// [START cloudasset_v1_generated_AssetService_Create_SetCredentialsProvider1_sync]
+// [START cloudasset_v1_generated_AssetService_Create_UseHttpJsonTransport_sync]
 import com.google.cloud.asset.v1.AssetServiceClient;
 import com.google.cloud.asset.v1.AssetServiceSettings;
 
-public class SyncCreateSetCredentialsProvider1 {
+public class SyncCreateUseHttpJsonTransport {
 
   public static void main(String[] args) throws Exception {
-    syncCreateSetCredentialsProvider1();
+    syncCreateUseHttpJsonTransport();
   }
 
-  public static void syncCreateSetCredentialsProvider1() throws Exception {
+  public static void syncCreateUseHttpJsonTransport() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
@@ -36,4 +36,4 @@ public class SyncCreateSetCredentialsProvider1 {
     AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
   }
 }
-// [END cloudasset_v1_generated_AssetService_Create_SetCredentialsProvider1_sync]
+// [END cloudasset_v1_generated_AssetService_Create_UseHttpJsonTransport_sync]
