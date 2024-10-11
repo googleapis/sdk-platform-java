@@ -22,9 +22,11 @@ set -e
 
 # Find all the java files relative to the current directory and format them
 # using google-java-format
-list="$(find . -name '*.java' -not -path ".*/samples/snippets/generated/**/*" )"
 scripts_root=$1
-tmpfile=$(mktemp)
+
+source "${scripts_root}/utils/utilities.sh"
+list="$(find . -name '*.java' -not -path ".*/samples/snippets/generated/**/*" )"
+tmp_file=$(mktemp)
 
 for file in $list;
 do
@@ -35,19 +37,11 @@ do
   then
     echo "File skipped formatting: $file"
   else
-   echo $file >> $tmpfile
+   echo $file >> $tmp_file
   fi
 done
 
-# download the google-java-format tool
-if [ ! -f "${scripts_root}/owlbot/google-java-format.jar" ]; then
-  echo 'downloading google-java-format'
-  java_format_version=$(cat "${scripts_root}/configuration/java-format-version")
-  wget -O "${scripts_root}/owlbot/google-java-format.jar" https://repo1.maven.org/maven2/com/google/googlejavaformat/google-java-format/${java_format_version}/google-java-format-${java_format_version}-all-deps.jar
+# use formatter downloaded in the Dockerfile.
+cat $tmp_file | xargs java -jar "$(get_java_formatter_location)" --replace
 
-fi
-
-# format the source
-cat $tmpfile | xargs java -jar "${scripts_root}/owlbot/google-java-format.jar" --replace
-
-rm $tmpfile
+rm $tmp_file
