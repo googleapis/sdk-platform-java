@@ -169,7 +169,7 @@ class ITApiKeyCredentials {
 
     ArrayList<String> headerValues =
         (ArrayList<String>)
-            httpJsonInterceptor.metadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
+            httpJsonInterceptor.responseMetadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
     String headerValue = headerValues.get(0);
     assertThat(headerValue).isEqualTo(API_KEY);
   }
@@ -211,7 +211,7 @@ class ITApiKeyCredentials {
 
     ArrayList<String> headerValues =
         (ArrayList<String>)
-            httpJsonInterceptor.metadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
+            httpJsonInterceptor.responseMetadata.getHeaders().get(HTTP_RESPONSE_HEADER_STRING);
     String headerValue = headerValues.get(0);
     assertThat(headerValue).isEqualTo(API_KEY);
     assertThat(headerValues.size()).isEqualTo(1);
