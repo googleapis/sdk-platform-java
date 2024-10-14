@@ -305,7 +305,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.clock = settings.clock;
       this.switchToMtlsEndpointAllowed = settings.switchToMtlsEndpointAllowed;
       this.quotaProjectId = settings.quotaProjectId;
-      this.streamWatchdogProvider = settings.streamWatchdogProvider;
+      // Intentionally assigning null to a variable marked as NonNull
+      this.streamWatchdogProvider = null; // settings.streamWatchdogProvider;
       this.streamWatchdogCheckInterval = settings.streamWatchdogCheckInterval;
       this.tracerFactory = settings.tracerFactory;
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
