@@ -32,6 +32,7 @@ package com.google.api.gax.rpc;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.Credentials;
+import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
@@ -145,6 +146,11 @@ public abstract class EndpointContext {
       Credentials credentials, StatusCode invalidUniverseDomainStatusCode) throws IOException {
     if (usingGDCH()) {
       // GDC-H has no universe domain, return
+      return;
+    }
+    // (TODO: b/349488459) - Disable automatic requests to MDS until 01/2025
+    // If MDS is required for Universe Domain, do not do any validation
+    if (credentials instanceof ComputeEngineCredentials) {
       return;
     }
     String credentialsUniverseDomain = Credentials.GOOGLE_DEFAULT_UNIVERSE;

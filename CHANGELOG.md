@@ -1,5 +1,35 @@
 # Changelog
 
+## [2.47.0](https://github.com/googleapis/sdk-platform-java/compare/v2.46.1...v2.47.0) (2024-10-04)
+
+
+### Features
+
+* **gax:** add API key authentication to ClientSettings ([#3137](https://github.com/googleapis/sdk-platform-java/issues/3137)) ([df08956](https://github.com/googleapis/sdk-platform-java/commit/df08956a26fa63b287241f3a37058c689c34d245))
+* **gax:** append cred-type header for auth metrics ([#3186](https://github.com/googleapis/sdk-platform-java/issues/3186)) ([ca3ec24](https://github.com/googleapis/sdk-platform-java/commit/ca3ec24f506f0d43623a92ba0eed908f874fe488))
+
+
+### Bug Fixes
+
+* address incorrect universe domain validation when quota project id is set ([#3257](https://github.com/googleapis/sdk-platform-java/issues/3257)) ([6e70c37](https://github.com/googleapis/sdk-platform-java/commit/6e70c3705280576278a790a4228476ac996ef9da)), closes [#3256](https://github.com/googleapis/sdk-platform-java/issues/3256)
+* Disable automatically retrieving Universe Domain from Metadata Server ([#3272](https://github.com/googleapis/sdk-platform-java/issues/3272)) ([f4402bf](https://github.com/googleapis/sdk-platform-java/commit/f4402bfa717831507e9e54d057d11ff69594e46b))
+
+
+### Dependencies
+
+* update dependency com.fasterxml.jackson:jackson-bom to v2.18.0 ([#3248](https://github.com/googleapis/sdk-platform-java/issues/3248)) ([821e83d](https://github.com/googleapis/sdk-platform-java/commit/821e83d8cef94594f8c8e832c40e319c232cb1b9))
+* update dependency com.google.errorprone:error_prone_annotations to v2.33.0 ([#3265](https://github.com/googleapis/sdk-platform-java/issues/3265)) ([94450a9](https://github.com/googleapis/sdk-platform-java/commit/94450a9699d94a078e5f5fa106f4d1ce4282a605))
+* update dependency com.google.errorprone:error_prone_annotations to v2.33.0 ([#3266](https://github.com/googleapis/sdk-platform-java/issues/3266)) ([8235463](https://github.com/googleapis/sdk-platform-java/commit/8235463dc2bc05382359d09702be55e2063f4908))
+* update dependency com.google.guava:guava to v33.3.1-jre ([#3228](https://github.com/googleapis/sdk-platform-java/issues/3228)) ([4e76207](https://github.com/googleapis/sdk-platform-java/commit/4e762078a59e6fd92453bb5a1395730f6f442524))
+* update dependency net.bytebuddy:byte-buddy to v1.15.3 ([#3246](https://github.com/googleapis/sdk-platform-java/issues/3246)) ([2aad71d](https://github.com/googleapis/sdk-platform-java/commit/2aad71dda5fe2bb0cdbe823392cccb36cfea6abb))
+* update google api dependencies ([#3242](https://github.com/googleapis/sdk-platform-java/issues/3242)) ([02aae9d](https://github.com/googleapis/sdk-platform-java/commit/02aae9d919b5c7170eb88d08d0ee79f71a0c5762))
+* update google auth library dependencies to v1.28.0 ([#3267](https://github.com/googleapis/sdk-platform-java/issues/3267)) ([6d85864](https://github.com/googleapis/sdk-platform-java/commit/6d85864779ae61cecddc3eaa9d8991ed4053a253))
+* update googleapis/java-cloud-bom digest to 0cd97b7 ([#3260](https://github.com/googleapis/sdk-platform-java/issues/3260)) ([2d54a5d](https://github.com/googleapis/sdk-platform-java/commit/2d54a5d2825e0956c76f68e22426bbb7665fdb12))
+* update grpc dependencies to v1.67.1 ([#3258](https://github.com/googleapis/sdk-platform-java/issues/3258)) ([e08906c](https://github.com/googleapis/sdk-platform-java/commit/e08906cd86146bfa4f62bbc5e507bf04a0956a37))
+* update grpc dependencies to v1.67.1 in dependencies.properties ([#3279](https://github.com/googleapis/sdk-platform-java/issues/3279)) ([5b46e70](https://github.com/googleapis/sdk-platform-java/commit/5b46e7036d65f350c21a5c922997b4d38532f994))
+* update junit5 monorepo to v5.11.2 ([#3276](https://github.com/googleapis/sdk-platform-java/issues/3276)) ([6b10f94](https://github.com/googleapis/sdk-platform-java/commit/6b10f94c56e8769ff41bb58c77b8c45dafeacc45))
+* update netty dependencies to v4.1.114.final ([#3263](https://github.com/googleapis/sdk-platform-java/issues/3263)) ([8bd83d9](https://github.com/googleapis/sdk-platform-java/commit/8bd83d9ed0794f2aa2f771d6f28d492ecb98500f))
+
 ## [2.46.1](https://github.com/googleapis/sdk-platform-java/compare/v2.46.0...v2.46.1) (2024-09-25)
 
 

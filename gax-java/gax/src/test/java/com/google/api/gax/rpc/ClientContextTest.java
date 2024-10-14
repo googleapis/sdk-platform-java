@@ -39,6 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.google.api.core.ApiClock;
 import com.google.api.gax.core.BackgroundResource;
@@ -52,6 +53,8 @@ import com.google.api.gax.rpc.testing.FakeChannel;
 import com.google.api.gax.rpc.testing.FakeClientSettings;
 import com.google.api.gax.rpc.testing.FakeStubSettings;
 import com.google.api.gax.rpc.testing.FakeTransportChannel;
+import com.google.auth.ApiKeyCredentials;
+import com.google.auth.CredentialTypeForMetrics;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auth.oauth2.GdchCredentials;
@@ -205,9 +208,6 @@ class ClientContextTest {
 
     @Override
     public TransportChannel getTransportChannel() throws IOException {
-      if (needsCredentials()) {
-        throw new IllegalStateException("Needs Credentials");
-      }
       transport.setExecutor(executor);
       return transport;
     }
@@ -679,6 +679,86 @@ class ClientContextTest {
         .containsEntry("user-agent", "user-supplied-agent internal-agent");
   }
 
+  @Test
+  void testApiClientHeaderAppendsCredType() throws Exception {
+    GoogleCredentials googleCredentials = Mockito.mock(GoogleCredentials.class);
+    when(googleCredentials.getMetricsCredentialType())
+        .thenReturn(CredentialTypeForMetrics.USER_CREDENTIALS);
+
+    Map<String, String> headers =
+        setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+            FixedCredentialsProvider.create(googleCredentials),
+            FixedHeaderProvider.create("x-goog-api-client", "internal-agent"));
+
+    assertThat(headers).containsEntry("x-goog-api-client", "internal-agent cred-type/u");
+  }
+
+  @Test
+  void testApiClientHeaderDoNotAppendsCredType_whenNoApiClientHeader() throws Exception {
+    GoogleCredentials googleCredentials = Mockito.mock(GoogleCredentials.class);
+    when(googleCredentials.getMetricsCredentialType())
+        .thenReturn(CredentialTypeForMetrics.USER_CREDENTIALS);
+
+    Map<String, String> headers =
+        setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+            FixedCredentialsProvider.create(googleCredentials),
+            FixedHeaderProvider.create("some-other-header", "internal-agent"));
+
+    assertThat(headers).doesNotContainKey("x-goog-api-client");
+    assertThat(headers).containsEntry("some-other-header", "internal-agent");
+  }
+
+  @Test
+  void testApiClientHeaderDoNotAppendsCredType_whenNullCredentials() throws IOException {
+    Map<String, String> headers =
+        setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+            NoCredentialsProvider.create(),
+            FixedHeaderProvider.create("x-goog-api-client", "internal-agent"));
+
+    assertThat(headers).containsKey("x-goog-api-client");
+    assertThat(headers.get("x-goog-api-client")).doesNotContain("cred-type/");
+  }
+
+  @Test
+  void testApiClientHeaderDoNotAppendsCredType_whenCredTypeDoNotSend() throws Exception {
+    GoogleCredentials googleCredentials = Mockito.mock(GoogleCredentials.class);
+    when(googleCredentials.getMetricsCredentialType())
+        .thenReturn(CredentialTypeForMetrics.DO_NOT_SEND);
+
+    Map<String, String> headers =
+        setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+            FixedCredentialsProvider.create(googleCredentials),
+            FixedHeaderProvider.create("x-goog-api-client", "internal-agent"));
+
+    assertThat(headers).containsKey("x-goog-api-client");
+    assertThat(headers.get("x-goog-api-client")).doesNotContain("cred-type/");
+  }
+
+  private Map<String, String> setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+      CredentialsProvider credentialsProvider, HeaderProvider headerProvider) throws IOException {
+    TransportChannelProvider transportChannelProvider =
+        new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()),
+            null,
+            true,
+            null,
+            null,
+            DEFAULT_ENDPOINT);
+
+    ClientSettings.Builder builder =
+        new FakeClientSettings.Builder()
+            .setExecutorProvider(
+                FixedExecutorProvider.create(Mockito.mock(ScheduledExecutorService.class)))
+            .setTransportChannelProvider(transportChannelProvider)
+            .setCredentialsProvider(credentialsProvider)
+            .setInternalHeaderProvider(headerProvider);
+
+    ClientContext clientContext = ClientContext.create(builder.build());
+    FakeTransportChannel transportChannel =
+        (FakeTransportChannel) clientContext.getTransportChannel();
+    return transportChannel.getHeaders();
+  }
+
   private static String endpoint = "https://foo.googleapis.com";
   private static String mtlsEndpoint = "https://foo.mtls.googleapis.com";
 
@@ -1073,5 +1153,47 @@ class ClientContextTest {
         tt -> builder.setStreamWatchdogCheckInterval(tt).build(),
         ct -> ct.getStreamWatchdogCheckIntervalDuration(),
         ct -> ct.getStreamWatchdogCheckInterval());
+  }
+
+  @Test
+  void testSetApiKey_createsApiCredentials() throws IOException {
+    String apiKey = "key";
+    FakeStubSettings.Builder builder = new FakeStubSettings.Builder();
+    InterceptingExecutor executor = new InterceptingExecutor(1);
+    FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
+    FakeTransportProvider transportProvider =
+        new FakeTransportProvider(
+            transportChannel, executor, true, ImmutableMap.of(), null, DEFAULT_ENDPOINT);
+    builder.setTransportChannelProvider(transportProvider);
+    HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
+    Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of());
+    builder.setHeaderProvider(headerProvider);
+    builder.setApiKey(apiKey);
+
+    ClientContext context = ClientContext.create(builder.build());
+
+    FakeCallContext fakeCallContext = (FakeCallContext) context.getDefaultCallContext();
+    assertThat(fakeCallContext.getCredentials()).isInstanceOf(ApiKeyCredentials.class);
+  }
+
+  @Test
+  void testSetApiKey_withDefaultCredentials_overridesCredentials() throws IOException {
+    String apiKey = "key";
+    FakeStubSettings.Builder builder = FakeStubSettings.newBuilder();
+    InterceptingExecutor executor = new InterceptingExecutor(1);
+    FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
+    FakeTransportProvider transportProvider =
+        new FakeTransportProvider(
+            transportChannel, executor, true, ImmutableMap.of(), null, DEFAULT_ENDPOINT);
+    builder.setTransportChannelProvider(transportProvider);
+    HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
+    Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of());
+    builder.setHeaderProvider(headerProvider);
+    builder.setApiKey(apiKey);
+
+    ClientContext context = ClientContext.create(builder.build());
+
+    FakeCallContext fakeCallContext = (FakeCallContext) context.getDefaultCallContext();
+    assertThat(fakeCallContext.getCredentials()).isInstanceOf(ApiKeyCredentials.class);
   }
 }

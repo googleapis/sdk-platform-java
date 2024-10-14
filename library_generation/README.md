@@ -8,7 +8,6 @@ google-cloud-java) from a configuration file.
 
 - OS: Linux
 - Java runtime environment (8 or above)
-- Apache Maven (used in formatting source code)
 - Python (3.11.6 or above)
 - Docker 
 - Git
