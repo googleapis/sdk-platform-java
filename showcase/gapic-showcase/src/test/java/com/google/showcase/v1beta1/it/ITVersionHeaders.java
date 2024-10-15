@@ -17,6 +17,7 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.gax.httpjson.*;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
@@ -33,6 +34,7 @@ import io.grpc.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -41,12 +43,18 @@ import org.junit.jupiter.api.Test;
 //  https://github.com/googleapis/gapic-showcase/pull/1456
 // TODO: watch for showcase gRPC trailer changes suggested in
 // https://github.com/googleapis/gapic-showcase/pull/1509#issuecomment-2089147103
-class ITApiVersionHeaders {
+class ITVersionHeaders {
   private static final String HTTP_RESPONSE_HEADER_STRING =
       "x-showcase-request-" + ApiClientHeaderProvider.API_VERSION_HEADER_KEY;
+  private static final String HTTP_CLIENT_API_HEADER_KEY =
+      "x-showcase-request-" + ApiClientHeaderProvider.getDefaultApiClientHeaderKey();
   private static final Metadata.Key<String> API_VERSION_HEADER_KEY =
       Metadata.Key.of(
           ApiClientHeaderProvider.API_VERSION_HEADER_KEY, Metadata.ASCII_STRING_MARSHALLER);
+
+  private static final Metadata.Key<String> API_CLIENT_HEADER_KEY =
+      Metadata.Key.of(
+          ApiClientHeaderProvider.getDefaultApiClientHeaderKey(), Metadata.ASCII_STRING_MARSHALLER);
 
   private static final String EXPECTED_ECHO_API_VERSION = "v1_20240408";
   private static final String CUSTOM_API_VERSION = "user-supplied-version";
@@ -228,5 +236,26 @@ class ITApiVersionHeaders {
       String headerValue = (String) headerValues.get(0);
       assertThat(headerValue).isEqualTo(CUSTOM_API_VERSION);
     }
+  }
+
+  @Test
+  void testGrpcCall_sendsCorrectApiClientHeader() {
+    Pattern defautlGrpcHeaderPattern =
+        Pattern.compile("gl-java/.* gapic/.*?--protobuf-.* gax/.* grpc/.* protobuf/.*");
+    grpcClient.echo(EchoRequest.newBuilder().build());
+    String headerValue = grpcInterceptor.metadata.get(API_CLIENT_HEADER_KEY);
+    assertTrue(defautlGrpcHeaderPattern.matcher(headerValue).matches());
+  }
+
+  @Test
+  void testHttpJson_sendsCorrectApiClientHeader() {
+    Pattern defautlHttpHeaderPattern =
+        Pattern.compile("gl-java/.* gapic/.*?--protobuf-.* gax/.* rest/ protobuf/.*");
+    httpJsonClient.echo(EchoRequest.newBuilder().build());
+    ArrayList<String> headerValues =
+        (ArrayList<String>)
+            httpJsonInterceptor.metadata.getHeaders().get(HTTP_CLIENT_API_HEADER_KEY);
+    String headerValue = headerValues.get(0);
+    assertTrue(defautlHttpHeaderPattern.matcher(headerValue).matches());
   }
 }

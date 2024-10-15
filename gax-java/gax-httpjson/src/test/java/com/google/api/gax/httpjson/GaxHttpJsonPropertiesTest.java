@@ -41,7 +41,7 @@ class GaxHttpJsonPropertiesTest {
   void testDefaultHeaderPattern() {
     assertTrue(
         GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
-            .matcher("gl-java/1.8_00 gapic/1.2.3-alpha gax/1.5.0 rest/1.7.0")
+            .matcher("gl-java/1.8_00 gapic/1.2.3-alpha--protobuf-1.5.0 gax/1.5.0 rest/1.7.0")
             .matches());
   }
 }
