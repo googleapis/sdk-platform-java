@@ -51,9 +51,8 @@ This section explains how to run the entrypoint script
 ## Assumptions made by the scripts
 ### The Hermetic Build's well-known folder
 Located in `${HOME}/.library_generation`, this folder is assumed by the scripts
-to contain the generator JAR. 
-Please note that this is a recent feature and only this jar is expected to be
-there. 
+to contain certain tools.
+
 Developers must make sure this folder is properly configured before running the
 scripts locally.
 Note that this relies on the `HOME` en var which is always defined as per
@@ -73,7 +72,16 @@ The generation scripts will assume the jar is there.
 mv /path/to/jar "${HOME}/.library_generation/gapic-generator-java.jar"
 ```
 
+#### Put the java formatter jar in its well-known location
 
+Download google-java-format-{version}-all-deps.jar from [Maven Central](https://central.sonatype.com/artifact/com.google.googlejavaformat/google-java-format)
+or [GitHub releases](https://github.com/google/google-java-format/releases).
+Then `mv` the jar into the well-known location of the jar.
+The generation scripts will assume the jar is there.
+
+```shell
+mv /path/to/jar "${HOME}/.library_generation/google-java-format.jar"
+```
 
 ## Installing prerequisites
 
