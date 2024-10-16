@@ -40,6 +40,20 @@ class GenerateRepoTest(unittest.TestCase):
         target_libraries = get_target_libraries(config)
         self.assertEqual([one_library, another_library], target_libraries)
 
+    def test_get_target_library_given_an_non_existent_library_returns_only_existing_libraries(
+        self,
+    ):
+        one_library = GenerateRepoTest.__get_an_empty_library_config()
+        one_library.api_shortname = "one_library"
+        another_library = GenerateRepoTest.__get_an_empty_library_config()
+        another_library.api_shortname = "another_library"
+        config = GenerateRepoTest.__get_an_empty_generation_config()
+        config.libraries.extend([one_library, another_library])
+        target_libraries = get_target_libraries(
+            config, ["one_library", "another_library", "non_existent_library"]
+        )
+        self.assertEqual([one_library, another_library], target_libraries)
+
     @staticmethod
     def __get_an_empty_generation_config() -> GenerationConfig:
         return GenerationConfig(
