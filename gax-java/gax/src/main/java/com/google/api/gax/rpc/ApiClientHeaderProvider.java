@@ -33,6 +33,8 @@ import com.google.api.gax.core.GaxProperties;
 import com.google.common.collect.ImmutableMap;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Implementation of HeaderProvider that provides headers describing the API client library making
@@ -41,6 +43,7 @@ import java.util.Map;
 public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
   private static final long serialVersionUID = -8876627296793342119L;
   static final String QUOTA_PROJECT_ID_HEADER_KEY = "x-goog-user-project";
+  static final String PROTOBUF_HEADER_VERSION_KEY = "protobuf";
 
   public static final String API_VERSION_HEADER_KEY = "x-goog-api-version";
 
@@ -57,8 +60,12 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
       appendToken(apiClientHeaderValue, builder.getGeneratedLibToken());
       appendToken(apiClientHeaderValue, builder.getGeneratedRuntimeToken());
       appendToken(apiClientHeaderValue, builder.getTransportToken());
+      appendToken(apiClientHeaderValue, builder.protobufRuntimeToken);
+
       if (apiClientHeaderValue.length() > 0) {
-        headersBuilder.put(builder.getApiClientHeaderKey(), apiClientHeaderValue.toString());
+        headersBuilder.put(
+            builder.getApiClientHeaderKey(),
+            checkAndAppendProtobufVersionIfNecessary(apiClientHeaderValue));
       }
     }
 
@@ -74,6 +81,22 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
       headersBuilder.put(API_VERSION_HEADER_KEY, builder.getApiVersionToken());
     }
     this.headers = headersBuilder.build();
+  }
+
+  private static String checkAndAppendProtobufVersionIfNecessary(
+      StringBuilder apiClientHeaderValue) {
+    // TODO(b/366417603): appending protobuf version to existing client library token until resolved
+    Pattern pattern = Pattern.compile("(gccl|gapic)\\S*");
+    Matcher matcher = pattern.matcher(apiClientHeaderValue);
+    if (matcher.find()) {
+      return apiClientHeaderValue.substring(0, matcher.end())
+          + "--"
+          + PROTOBUF_HEADER_VERSION_KEY
+          + "-"
+          + GaxProperties.getProtobufVersion()
+          + apiClientHeaderValue.substring(matcher.end());
+    }
+    return apiClientHeaderValue.toString();
   }
 
   @Override
@@ -110,6 +133,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     private String generatedRuntimeToken;
     private String transportToken;
     private String quotaProjectIdToken;
+    private final String protobufRuntimeToken;
 
     private String resourceHeaderKey;
     private String resourceToken;
@@ -125,11 +149,11 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
       setClientRuntimeToken(GaxProperties.getGaxVersion());
       transportToken = null;
       quotaProjectIdToken = null;
-
       resourceHeaderKey = getDefaultResourceHeaderKey();
       resourceToken = null;
-
       apiVersionToken = null;
+      protobufRuntimeToken =
+          constructToken(PROTOBUF_HEADER_VERSION_KEY, GaxProperties.getProtobufVersion());
     }
 
     public String getApiClientHeaderKey() {
