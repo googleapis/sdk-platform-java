@@ -30,7 +30,7 @@
 package com.google.api.gax.httpjson;
 
 import com.google.auto.value.AutoValue;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @AutoValue
 /* Method descriptor for messages to be transmitted over HTTP. */

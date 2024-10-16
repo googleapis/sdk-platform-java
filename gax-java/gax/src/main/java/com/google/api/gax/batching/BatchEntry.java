@@ -32,7 +32,7 @@ package com.google.api.gax.batching;
 import com.google.api.core.InternalApi;
 import com.google.api.core.SettableApiFuture;
 import com.google.auto.value.AutoValue;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * This class contains the element and its corresponding unresolved future, which would be resolved

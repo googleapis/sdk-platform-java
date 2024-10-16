@@ -16,7 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @AutoValue
 public abstract class ThrowExpr implements Expr {

@@ -18,7 +18,7 @@ package com.google.cloud;
 
 import com.google.api.core.BetaApi;
 import com.google.auto.value.AutoValue;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Class for Identity and Access Management (IAM) policies. IAM policies are used to specify access

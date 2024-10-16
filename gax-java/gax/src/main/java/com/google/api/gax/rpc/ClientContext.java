@@ -61,8 +61,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Encapsulates client state, including executor, credentials, and transport channel.
@@ -104,14 +104,12 @@ public abstract class ClientContext {
   public abstract Watchdog getStreamWatchdog();
 
   /** This method is obsolete. Use {@link #getStreamWatchdogCheckIntervalDuration()} instead. */
-  @Nonnull
   @ObsoleteApi("Use getStreamWatchdogCheckIntervalDuration() instead")
-  public final org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
+  public final org.threeten.bp.@NonNull Duration getStreamWatchdogCheckInterval() {
     return toThreetenDuration(getStreamWatchdogCheckIntervalDuration());
   }
 
-  @Nonnull
-  public abstract java.time.Duration getStreamWatchdogCheckIntervalDuration();
+  public abstract java.time.@NonNull Duration getStreamWatchdogCheckIntervalDuration();
 
   @Nullable
   public abstract String getUniverseDomain();
@@ -127,7 +125,7 @@ public abstract class ClientContext {
 
   /** Gets the {@link ApiTracerFactory} that will be used to generate traces for operations. */
   @BetaApi("The surface for tracing is not stable yet and may change in the future.")
-  @Nonnull
+  @NonNull
   public abstract ApiTracerFactory getTracerFactory();
 
   /**

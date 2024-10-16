@@ -119,7 +119,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.threeten.bp.Duration;
 
 public abstract class AbstractServiceStubSettingsClassComposer implements ClassComposer {

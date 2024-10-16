@@ -27,6 +27,7 @@
     <animal-sniffer.version>1.24</animal-sniffer.version>
     <opencensus.version>0.31.1</opencensus.version>
     <findbugs.version>3.0.2</findbugs.version>
+    <jspecify.version>1.0.0</jspecify.version>
     <jackson.version>2.18.0</jackson.version>
     <errorprone.version>2.33.0</errorprone.version>
     <codec.version>1.17.1</codec.version>
@@ -97,6 +98,11 @@
         <groupId>com.google.code.findbugs</groupId>
         <artifactId>jsr305</artifactId>
         <version>${findbugs.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jspecify</groupId>
+        <artifactId>jspecify</artifactId>
+        <version>${jspecify.version}</version>
       </dependency>
       <dependency>
         <groupId>com.google.errorprone</groupId>

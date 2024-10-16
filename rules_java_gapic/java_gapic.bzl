@@ -294,7 +294,7 @@ def java_gapic_library(
         "@com_google_api_api_common//jar",
         "@com_google_api_gax_java//gax:gax",
         "@com_google_guava_guava//jar",
-        "@com_google_code_findbugs_jsr305//jar",
+        "@org_jspecify_jspecify//jar",
         "@org_threeten_threetenbp//jar",
         "@io_opencensus_opencensus_api//jar",
         "@com_google_auth_google_auth_library_credentials//jar",

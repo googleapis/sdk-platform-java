@@ -34,7 +34,7 @@ import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.StreamController;
 import com.google.common.base.Preconditions;
 import java.util.concurrent.atomic.AtomicBoolean;
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * A {@link ResponseObserver} to mark a started operation trace as finished.
@@ -50,14 +50,14 @@ class TracedResponseObserver<ResponseT> implements ResponseObserver<ResponseT> {
   private AtomicBoolean wasCancelled;
 
   TracedResponseObserver(
-      @Nonnull ApiTracer tracer, @Nonnull ResponseObserver<ResponseT> innerObserver) {
+      @NonNull ApiTracer tracer, @NonNull ResponseObserver<ResponseT> innerObserver) {
     this(tracer, innerObserver, new AtomicBoolean());
   }
 
   TracedResponseObserver(
-      @Nonnull ApiTracer tracer,
-      @Nonnull ResponseObserver<ResponseT> innerObserver,
-      @Nonnull AtomicBoolean wasCancelled) {
+      @NonNull ApiTracer tracer,
+      @NonNull ResponseObserver<ResponseT> innerObserver,
+      @NonNull AtomicBoolean wasCancelled) {
     this.tracer = Preconditions.checkNotNull(tracer, "tracer");
     this.innerObserver = Preconditions.checkNotNull(innerObserver, "innerObserver");
     this.wasCancelled = Preconditions.checkNotNull(wasCancelled, "wasCancelled");

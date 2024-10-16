@@ -28,7 +28,7 @@ import com.google.common.collect.Lists;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Class for Identity and Access Management (IAM) policies. IAM policies are used to specify access

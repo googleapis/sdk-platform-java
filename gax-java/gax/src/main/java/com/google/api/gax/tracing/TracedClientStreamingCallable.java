@@ -38,7 +38,7 @@ import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import com.google.common.base.Preconditions;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.atomic.AtomicReference;
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * A wrapper callable that will wrap a callable chain in a trace.
@@ -57,9 +57,9 @@ public class TracedClientStreamingCallable<RequestT, ResponseT>
   private final SpanName spanName;
 
   public TracedClientStreamingCallable(
-      @Nonnull ClientStreamingCallable<RequestT, ResponseT> innerCallable,
-      @Nonnull ApiTracerFactory tracerFactory,
-      @Nonnull SpanName spanName) {
+      @NonNull ClientStreamingCallable<RequestT, ResponseT> innerCallable,
+      @NonNull ApiTracerFactory tracerFactory,
+      @NonNull SpanName spanName) {
     this.tracerFactory = Preconditions.checkNotNull(tracerFactory, "tracerFactory can't be null");
     this.spanName = Preconditions.checkNotNull(spanName, "spanName can't be null");
     this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");
@@ -98,9 +98,9 @@ public class TracedClientStreamingCallable<RequestT, ResponseT>
     private final AtomicReference<Throwable> cancellationCauseHolder;
 
     TracedRequestObserver(
-        @Nonnull ApiTracer tracer,
-        @Nonnull ApiStreamObserver<RequestT> innerObserver,
-        @Nonnull AtomicReference<Throwable> cancellationCauseHolder) {
+        @NonNull ApiTracer tracer,
+        @NonNull ApiStreamObserver<RequestT> innerObserver,
+        @NonNull AtomicReference<Throwable> cancellationCauseHolder) {
       this.tracer = Preconditions.checkNotNull(tracer, "tracer can't be null");
       this.innerObserver = Preconditions.checkNotNull(innerObserver, "innerObserver can't be null");
       this.cancellationCauseHolder =
@@ -137,14 +137,14 @@ public class TracedClientStreamingCallable<RequestT, ResponseT>
    * close the current trace upon completion of the RPC.
    */
   private static class TracedResponseObserver<RequestT> implements ApiStreamObserver<RequestT> {
-    @Nonnull private final ApiTracer tracer;
-    @Nonnull private final ApiStreamObserver<RequestT> innerObserver;
-    @Nonnull private final AtomicReference<Throwable> cancellationCauseHolder;
+    @NonNull private final ApiTracer tracer;
+    @NonNull private final ApiStreamObserver<RequestT> innerObserver;
+    @NonNull private final AtomicReference<Throwable> cancellationCauseHolder;
 
     TracedResponseObserver(
-        @Nonnull ApiTracer tracer,
-        @Nonnull ApiStreamObserver<RequestT> innerObserver,
-        @Nonnull AtomicReference<Throwable> cancellationCauseHolder) {
+        @NonNull ApiTracer tracer,
+        @NonNull ApiStreamObserver<RequestT> innerObserver,
+        @NonNull AtomicReference<Throwable> cancellationCauseHolder) {
       this.tracer = Preconditions.checkNotNull(tracer, "tracer can't be null");
       this.innerObserver = Preconditions.checkNotNull(innerObserver, "innerObserver can't be null");
       this.cancellationCauseHolder = cancellationCauseHolder;

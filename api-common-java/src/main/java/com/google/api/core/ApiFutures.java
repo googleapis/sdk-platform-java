@@ -39,7 +39,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.List;
 import java.util.concurrent.Executor;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /** Static utility methods for the {@link ApiFuture} interface. */
 public final class ApiFutures {

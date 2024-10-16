@@ -16,7 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public interface Reference extends AstNode {
   @Override

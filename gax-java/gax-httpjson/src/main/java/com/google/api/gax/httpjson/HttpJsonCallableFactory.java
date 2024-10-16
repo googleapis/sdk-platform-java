@@ -48,7 +48,7 @@ import com.google.api.gax.tracing.TracedUnaryCallable;
 import com.google.common.base.Preconditions;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /** Class with utility methods to create http/json-based direct callables. */
 public class HttpJsonCallableFactory {
@@ -228,7 +228,7 @@ public class HttpJsonCallableFactory {
   }
 
   @InternalApi("Visible for testing")
-  static SpanName getSpanName(@Nonnull ApiMethodDescriptor<?, ?> methodDescriptor) {
+  static SpanName getSpanName(@NonNull ApiMethodDescriptor<?, ?> methodDescriptor) {
     Matcher matcher = FULL_METHOD_NAME_REGEX.matcher(methodDescriptor.getFullMethodName());
 
     Preconditions.checkArgument(matcher.matches(), "Invalid fullMethodName");

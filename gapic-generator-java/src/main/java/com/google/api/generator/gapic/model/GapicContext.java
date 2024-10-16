@@ -25,7 +25,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @AutoValue
 public abstract class GapicContext {
@@ -67,8 +67,7 @@ public abstract class GapicContext {
   @Nullable
   public abstract GapicServiceConfig serviceConfig();
 
-  @Nullable
-  public abstract com.google.api.Service serviceYamlProto();
+  public abstract com.google.api.@Nullable Service serviceYamlProto();
 
   public boolean containsServices() {
     return !services().isEmpty();

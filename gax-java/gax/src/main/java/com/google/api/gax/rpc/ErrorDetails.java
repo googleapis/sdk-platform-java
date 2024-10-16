@@ -45,7 +45,7 @@ import com.google.rpc.RequestInfo;
 import com.google.rpc.ResourceInfo;
 import com.google.rpc.RetryInfo;
 import java.util.List;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /** This class contains a list of standard error messages that returns from server. */
 @AutoValue

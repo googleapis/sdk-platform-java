@@ -29,8 +29,8 @@
  */
 package com.google.api.gax.retrying;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * This is part of the server streaming retry api. Its implementers are responsible for tracking the
@@ -41,7 +41,7 @@ import javax.annotation.Nullable;
 public interface StreamResumptionStrategy<RequestT, ResponseT> {
 
   /** Creates a new instance of this StreamResumptionStrategy without accumulated state */
-  @Nonnull
+  @NonNull
   StreamResumptionStrategy<RequestT, ResponseT> createNew();
 
   /**
@@ -58,7 +58,7 @@ public interface StreamResumptionStrategy<RequestT, ResponseT> {
    *       through this method.
    * </ol>
    */
-  @Nonnull
+  @NonNull
   ResponseT processResponse(ResponseT response);
 
   /**

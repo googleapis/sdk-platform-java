@@ -33,7 +33,7 @@ import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /** Settings for {@link FlowController}. */
 @AutoValue
@@ -88,11 +88,13 @@ public abstract class FlowControlSettings {
       Preconditions.checkArgument(
           settings.getMaxOutstandingElementCount() == null
               || settings.getMaxOutstandingElementCount() > 0,
-          "maxOutstandingElementCount limit is disabled by default, but if set it must be set to a value greater than 0.");
+          "maxOutstandingElementCount limit is disabled by default, but if set it must be set to a"
+              + " value greater than 0.");
       Preconditions.checkArgument(
           settings.getMaxOutstandingRequestBytes() == null
               || settings.getMaxOutstandingRequestBytes() > 0,
-          "maxOutstandingRequestBytes limit is disabled by default, but if set it must be set to a value greater than 0.");
+          "maxOutstandingRequestBytes limit is disabled by default, but if set it must be set to a"
+              + " value greater than 0.");
       return settings;
     }
   }
