@@ -12,9 +12,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
 import shutil
-
+from typing import Optional
 import library_generation.utils.utilities as util
 from library_generation.generate_composed_library import generate_composed_library
 from library_generation.model.generation_config import GenerationConfig
@@ -26,7 +25,7 @@ def generate_from_yaml(
     config: GenerationConfig,
     repository_path: str,
     api_definitions_path: str,
-    target_library_names: list[str] = None,
+    target_library_names: Optional[list[str]],
 ) -> None:
     """
     Based on the generation config, generates libraries via
