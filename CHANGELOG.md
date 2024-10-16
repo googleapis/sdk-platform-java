@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.48.0](https://github.com/googleapis/sdk-platform-java/compare/v2.47.0...v2.48.0) (2024-10-16)
+
+
+### Features
+
+* **gax:** add protobuf version tracking to headers ([#3199](https://github.com/googleapis/sdk-platform-java/issues/3199)) ([40c19b1](https://github.com/googleapis/sdk-platform-java/commit/40c19b1aad71da176aeafbba32a0a4b51b5a4366))
+* selectively generate libraries ([#3290](https://github.com/googleapis/sdk-platform-java/issues/3290)) ([dfe1a50](https://github.com/googleapis/sdk-platform-java/commit/dfe1a50ec857cc2998bcbfbc2d8af6801f0ae260))
+
+
+### Bug Fixes
+
+* generator setting incorrect name/class for sample due to region tag (2nd attempt) ([#3293](https://github.com/googleapis/sdk-platform-java/issues/3293)) ([771bd0e](https://github.com/googleapis/sdk-platform-java/commit/771bd0e9cb306e430dc15e79a189648830101865))
+
+
+### Dependencies
+
+* update google api dependencies ([#3282](https://github.com/googleapis/sdk-platform-java/issues/3282)) ([a9eac85](https://github.com/googleapis/sdk-platform-java/commit/a9eac851c57989ab45c4e1b28171ea043506bcd9))
+
 ## [2.47.0](https://github.com/googleapis/sdk-platform-java/compare/v2.46.1...v2.47.0) (2024-10-04)
 
 
