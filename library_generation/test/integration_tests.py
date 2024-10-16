@@ -311,7 +311,7 @@ class IntegrationTest(unittest.TestCase):
                 "-u",
                 f"{user_id}:{group_id}",
                 "--rm",
-                "--quite",
+                "--quiet",
                 "-v",
                 f"{repo_location}:/workspace/repo",
                 "-v",
