@@ -27,6 +27,8 @@ import com.google.api.gax.rpc.WatchdogTimeoutException;
 import com.google.common.collect.ImmutableList;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoErrorDetailsRequest;
+import com.google.showcase.v1beta1.EchoErrorDetailsResponse;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.ExpandRequest;
@@ -81,6 +83,18 @@ class ITServerSideStreaming {
             ImmutableList.of(
                 "The", "rain", "in", "Spain", "stays", "mainly", "on", "the", "plain!"))
         .inOrder();
+  }
+
+  @Test
+  void name() {
+    EchoErrorDetailsResponse response = httpjsonClient.echoErrorDetails(
+        EchoErrorDetailsRequest
+            .newBuilder()
+            .setSingleDetailText("singleDetailText1774380934")
+            .addAllMultiDetailText(new ArrayList<>())
+            .build());
+    System.out.println(response.toString());
+    assertThat(response.hasSingleDetail()).isEqualTo(true);
   }
 
   @Test

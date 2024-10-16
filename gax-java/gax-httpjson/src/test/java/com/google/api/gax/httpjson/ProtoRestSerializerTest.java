@@ -31,6 +31,7 @@
 package com.google.api.gax.httpjson;
 
 import com.google.common.truth.Truth;
+import com.google.protobuf.Any;
 import com.google.protobuf.Duration;
 import com.google.protobuf.Field;
 import com.google.protobuf.Field.Cardinality;
@@ -40,6 +41,7 @@ import com.google.protobuf.Int32Value;
 import com.google.protobuf.Option;
 import com.google.protobuf.Timestamp;
 import com.google.protobuf.TypeRegistry;
+import com.google.rpc.ErrorInfo;
 import com.google.rpc.RetryInfo;
 import com.google.type.Interval;
 import java.io.IOException;
@@ -119,6 +121,14 @@ class ProtoRestSerializerTest {
   void toJson_numericEnumTrue() {
     String fieldToJson = requestSerializer.toJson(field, true);
     Truth.assertThat(fieldToJson).isEqualTo(fieldJsonNumericEnum);
+  }
+
+  @Test
+  void toJson_Any() {
+    ErrorInfo errorInfo = ErrorInfo.newBuilder().setReason("Does not matter").build();
+    Any message = Any.pack(errorInfo);
+    String fieldToJson = requestSerializer.toJson(message, true);
+    Truth.assertThat(fieldToJson).isNotNull();
   }
 
   @Test
