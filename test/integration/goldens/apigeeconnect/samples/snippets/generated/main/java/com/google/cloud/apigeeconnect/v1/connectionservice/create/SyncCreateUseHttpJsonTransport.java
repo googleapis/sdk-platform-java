@@ -14,27 +14,28 @@
  * limitations under the License.
  */
 
-package com.google.cloud.example.library.v1.samples;
+package com.google.cloud.apigeeconnect.v1.samples;
 
-// [START example_v1_generated_LibraryService_Create_SetCredentialsProvider1_sync]
-import com.google.cloud.example.library.v1.LibraryServiceClient;
-import com.google.cloud.example.library.v1.LibraryServiceSettings;
+// [START apigeeconnect_v1_generated_ConnectionService_Create_UseHttpJsonTransport_sync]
+import com.google.cloud.apigeeconnect.v1.ConnectionServiceClient;
+import com.google.cloud.apigeeconnect.v1.ConnectionServiceSettings;
 
-public class SyncCreateSetCredentialsProvider1 {
+public class SyncCreateUseHttpJsonTransport {
 
   public static void main(String[] args) throws Exception {
-    syncCreateSetCredentialsProvider1();
+    syncCreateUseHttpJsonTransport();
   }
 
-  public static void syncCreateSetCredentialsProvider1() throws Exception {
+  public static void syncCreateUseHttpJsonTransport() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    LibraryServiceSettings libraryServiceSettings =
-        LibraryServiceSettings.newHttpJsonBuilder().build();
-    LibraryServiceClient libraryServiceClient = LibraryServiceClient.create(libraryServiceSettings);
+    ConnectionServiceSettings connectionServiceSettings =
+        ConnectionServiceSettings.newHttpJsonBuilder().build();
+    ConnectionServiceClient connectionServiceClient =
+        ConnectionServiceClient.create(connectionServiceSettings);
   }
 }
-// [END example_v1_generated_LibraryService_Create_SetCredentialsProvider1_sync]
+// [END apigeeconnect_v1_generated_ConnectionService_Create_UseHttpJsonTransport_sync]
