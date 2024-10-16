@@ -95,6 +95,7 @@ popd
 # run hermetic code generation docker image.
 docker run \
   --rm \
+  --quite \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):${workspace_name}" \
   -v "${m2_folder}":/home/.m2 \
