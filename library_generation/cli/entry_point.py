@@ -224,7 +224,7 @@ def _needs_full_repo_generation(config_change: ConfigChange) -> bool:
 def _parse_library_name_from(includes: str) -> Optional[list[str]]:
     if includes is None:
         return None
-    return includes.strip().split(",")
+    return [library_name.strip() for library_name in includes.split(",")]
 
 
 @main.command()
