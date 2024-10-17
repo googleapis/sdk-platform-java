@@ -1,8 +1,8 @@
 # Generate a repository containing GAPIC Client Libraries
 
 The script, `entry_point.py`, allows you to generate a repository containing
-GAPIC client libraries with change history (a monorepo, for example, 
-google-cloud-java) from a configuration file.
+GAPIC client libraries (a monorepo, for example, google-cloud-java) from a
+configuration file.
 
 ## Environment
 
@@ -23,7 +23,7 @@ Please refer to [Repository path](#repository-path--repositorypath---optional) f
 ### Baseline generation configuration yaml (`baseline_generation_config`)
 
 An absolute or relative path to a generation_config.yaml.
-This config file is used for commit history generation, not library
+This config file is used for computing changed libraries, not library
 generation.
 
 ### Current generation configuration yaml (`current_generation_config`)
@@ -88,14 +88,6 @@ will be created/modified:
 | gapic-libraries-bom/pom.xml         | Always generated from inputs                                             |
 | pom.xml (repo root dir)             | Always generated from inputs                                             |
 | versions.txt                        | New entries will be added if they don’t exist                            |
-
-### Change history
-
-If both `baseline_generation_config` and `current_generation_config` are
-specified and the contents are different, the changed contents will be generated
-into `pr_description.txt` in the `repository_path`.
-In addition, if the `googleapis_commitish` is different, the googleapis commit
-history will be generated.
 
 ## Configuration to generate a repository
 
@@ -201,7 +193,7 @@ The virtual environment can be installed to any folder, usually it is recommende
 Run the following command under the root folder of `sdk-platform-java` to install the dependencies of `library_generation`
 
    ```bash
-   python -m pip install -r library_generation/requirements.txt
+   python -m pip install --require-hashes -r library_generation/requirements.txt
    ```
 
 3. Run the following command to install `library_generation` as a module, which allows the `library_generation` module to be imported from anywhere

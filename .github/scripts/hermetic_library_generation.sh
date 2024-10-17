@@ -105,6 +105,20 @@ docker run \
   --current-generation-config-path="${workspace_name}/${generation_config}" \
   --api-definitions-path="${workspace_name}/googleapis"
 
+# generate pr description
+docker run \
+  --rm \
+  --quiet \
+  -u "$(id -u):$(id -g)" \
+  -v "$(pwd):${workspace_name}" \
+  -e GENERATOR_VERSION="${image_tag}" \
+  --entrypoint python \
+  gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
+  /src/cli/generate_release_note.py generate \
+  --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
+  --current-generation-config-path="${workspace_name}/${generation_config}" \
+  --repository-path="${workspace_name}"
+
 # remove api definitions after generation
 rm -rf "${api_def_dir}"
 

@@ -79,7 +79,7 @@ RUN python -m pip install --upgrade pip
 
 # install main scripts as a python package
 WORKDIR /src
-RUN python -m pip install -r requirements.txt
+RUN python -m pip install --require-hashes -r requirements.txt
 RUN python -m pip install .
 
 # Install nvm with node and npm
