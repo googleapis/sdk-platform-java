@@ -86,7 +86,7 @@ jobs:
       run: |
         set -ex
         pushd library_generation
-        pip install -r requirements.txt
+        pip install --require-hashes -r requirements.txt
         pip install .
         popd
     - name: Run shell unit tests
