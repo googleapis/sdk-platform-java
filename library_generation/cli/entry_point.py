@@ -15,7 +15,6 @@ import os
 import sys
 from typing import Optional
 import click as click
-from library_generation.generate_pr_description import generate_pr_descriptions
 from library_generation.generate_repo import generate_from_yaml
 from library_generation.model.config_change import ConfigChange
 from library_generation.model.generation_config import from_yaml
@@ -116,9 +115,6 @@ def generate(
     specified.
 
     Raise FileNotFoundError if the default config does not exist.
-
-    The commit history, if generated, will be available in
-    repository_path/pr_description.txt.
     """
     __generate_repo_and_pr_description_impl(
         baseline_generation_config_path=baseline_generation_config_path,
@@ -205,10 +201,6 @@ def __generate_repo_and_pr_description_impl(
         repository_path=repository_path,
         api_definitions_path=api_definitions_path,
         target_library_names=target_library_names,
-    )
-    generate_pr_descriptions(
-        config_change=config_change,
-        description_path=repository_path,
     )
 
 
