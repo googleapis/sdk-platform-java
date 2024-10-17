@@ -104,8 +104,8 @@ class IntegrationTest(unittest.TestCase):
             result = CliRunner().invoke(
                 generate_pr_description,
                 [
-                    f"--baseline-generation-config-path={baseline_config_name}",
-                    f"--current-generation-config-path={current_config_name}",
+                    f"--baseline-generation-config-path={config_location}/{baseline_config_name}",
+                    f"--current-generation-config-path={config_location}/{current_config_name}",
                     f"--repository-path={repo_location}",
                 ],
             )
