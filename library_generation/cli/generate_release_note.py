@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
-
+from typing import Optional
 import click as click
-
 from library_generation.generate_pr_description import generate_pr_descriptions
 from library_generation.model.generation_config import from_yaml
 from library_generation.utils.generation_config_comparator import compare_config
@@ -55,25 +54,35 @@ def main(ctx):
     default=".",
     show_default=True,
     help="""
-    The repository path to which the generated files
-    will be sent.
+    The repository path to which the generated files will be sent.
     If not specified, the repository will be generated to the current working
     directory.
     """,
 )
 def generate(
-    baseline_generation_config_path: str,
-    current_generation_config_path: str,
+    baseline_generation_config_path: Optional[str],
+    current_generation_config_path: Optional[str],
     repository_path: str,
 ) -> None:
+    if (
+        baseline_generation_config_path is None
+        or current_generation_config_path is None
+    ):
+        print(
+            "One of the generation configs is not specified, do not generate "
+            "the description."
+        )
+        return
     baseline_generation_config_path = os.path.abspath(baseline_generation_config_path)
     current_generation_config_path = os.path.abspath(current_generation_config_path)
     if not (
         os.path.isfile(baseline_generation_config_path)
         and os.path.isfile(current_generation_config_path)
     ):
-        # One of the generation configs does not exist, do not generate
-        # the description.
+        print(
+            "One of the generation configs does not exist, do not generate "
+            "the description."
+        )
         return
     config_change = compare_config(
         baseline_config=from_yaml(baseline_generation_config_path),

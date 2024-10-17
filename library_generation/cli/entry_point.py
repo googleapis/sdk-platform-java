@@ -93,12 +93,11 @@ def generate(
 ):
     """
     Compare baseline generation config and current generation config and
-    generate changed libraries based on current generation config with commit
-    history.
+    generate changed libraries based on current generation config.
 
     If baseline generation config is not specified but current generation
     config is specified, generate all libraries if `library_names` is not
-    specified, based on current generation config without commit history.
+    specified, based on current generation config.
 
     If current generation config is not specified but baseline generation
     config is specified, raise FileNotFoundError because current generation
@@ -168,7 +167,6 @@ def __generate_repo_and_pr_description_impl(
     if not baseline_generation_config_path:
         # Execute selective generation based on current_generation_config if
         # baseline_generation_config is not specified.
-        # Do not generate pull request description.
         generate_from_yaml(
             config=from_yaml(current_generation_config_path),
             repository_path=repository_path,
@@ -178,7 +176,6 @@ def __generate_repo_and_pr_description_impl(
         return
 
     # Compare two generation configs to get changed libraries.
-    # Generate pull request description.
     baseline_generation_config_path = os.path.abspath(baseline_generation_config_path)
     config_change = compare_config(
         baseline_config=from_yaml(baseline_generation_config_path),
