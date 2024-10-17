@@ -86,10 +86,8 @@ class EntryPointTest(unittest.TestCase):
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
-    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
     def test_generate_non_monorepo_without_changes_triggers_full_generation(
         self,
-        generate_pr_descriptions,
         generate_from_yaml,
     ):
         """
@@ -116,10 +114,8 @@ class EntryPointTest(unittest.TestCase):
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
-    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
     def test_generate_non_monorepo_without_changes_with_includes_triggers_selective_generation(
         self,
-        generate_pr_descriptions,
         generate_from_yaml,
     ):
         """
@@ -147,10 +143,8 @@ class EntryPointTest(unittest.TestCase):
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
-    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
     def test_generate_non_monorepo_with_changes_triggers_full_generation(
         self,
-        generate_pr_descriptions,
         generate_from_yaml,
     ):
         """
@@ -181,10 +175,8 @@ class EntryPointTest(unittest.TestCase):
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
-    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
     def test_generate_non_monorepo_with_changes_with_includes_triggers_selective_generation(
         self,
-        generate_pr_descriptions,
         generate_from_yaml,
     ):
         """
@@ -216,10 +208,8 @@ class EntryPointTest(unittest.TestCase):
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
-    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
     def test_generate_monorepo_with_common_protos_triggers_full_generation(
         self,
-        generate_pr_descriptions,
         generate_from_yaml,
     ):
         """
@@ -247,10 +237,8 @@ class EntryPointTest(unittest.TestCase):
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
-    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
     def test_generate_monorepo_with_common_protos_with_includes_triggers_selective_generation(
         self,
-        generate_pr_descriptions,
         generate_from_yaml,
     ):
         """
@@ -277,10 +265,8 @@ class EntryPointTest(unittest.TestCase):
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
-    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
     def test_generate_monorepo_without_change_does_not_trigger_generation(
         self,
-        generate_pr_descriptions,
         generate_from_yaml,
     ):
         """
@@ -309,10 +295,8 @@ class EntryPointTest(unittest.TestCase):
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
-    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
     def test_generate_monorepo_without_change_with_includes_trigger_selective_generation(
         self,
-        generate_pr_descriptions,
         generate_from_yaml,
     ):
         """
@@ -341,10 +325,8 @@ class EntryPointTest(unittest.TestCase):
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
-    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
     def test_generate_monorepo_with_changed_config_without_includes_trigger_changed_generation(
         self,
-        generate_pr_descriptions,
         generate_from_yaml,
     ):
         """
@@ -374,10 +356,8 @@ class EntryPointTest(unittest.TestCase):
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
-    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
     def test_generate_monorepo_with_changed_config_and_includes_trigger_selective_generation(
         self,
-        generate_pr_descriptions,
         generate_from_yaml,
     ):
         """
@@ -407,10 +387,8 @@ class EntryPointTest(unittest.TestCase):
         )
 
     @patch("library_generation.cli.entry_point.generate_from_yaml")
-    @patch("library_generation.cli.entry_point.generate_pr_descriptions")
     def test_generate_monorepo_without_changed_config_without_includes_does_not_trigger_generation(
         self,
-        generate_pr_descriptions,
         generate_from_yaml,
     ):
         """
