@@ -90,7 +90,7 @@ def generate(
     )
     generate_pr_descriptions(
         config_change=config_change,
-        description_path=repository_path,
+        description_path=os.path.abspath(repository_path),
     )
 
 
