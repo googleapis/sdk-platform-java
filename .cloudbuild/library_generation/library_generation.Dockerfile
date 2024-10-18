@@ -45,8 +45,8 @@ RUN apt-get update && apt-get install -y \
 	&& apt-get clean
 
 # copy source code
-COPY hermetic_build/library_generation /src/library_generation
 COPY hermetic_build/common /src/common
+COPY hermetic_build/library_generation /src/library_generation
 
 # install protoc
 WORKDIR /protoc
@@ -72,16 +72,16 @@ ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
 RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
 
-#  use python 3.11 (the base image has several python versions; here we define the default one)
+#  use python 3.12 (the base image has several python versions; here we define the default one)
 RUN rm $(which python3)
-RUN ln -s $(which python3.11) /usr/local/bin/python
-RUN ln -s $(which python3.11) /usr/local/bin/python3
+RUN ln -s $(which python3.12) /usr/local/bin/python
+RUN ln -s $(which python3.12) /usr/local/bin/python3
 RUN python -m pip install --upgrade pip
 
 # install main scripts as a python package
-WORKDIR /src
-RUN python -m pip install common
-RUN python -m pip install library_generation
+WORKDIR /
+RUN python -m pip install src/common
+RUN python -m pip install src/library_generation
 
 # Install nvm with node and npm
 ENV NODE_VERSION 20.12.0
