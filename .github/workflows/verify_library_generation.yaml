@@ -88,11 +88,9 @@ jobs:
         set -ex
         python -m venv .venv
         source .venv/bin/activate
-        pushd hermetic_build
-        pip install common
-        pip install library_generation
-        pip install release_note_generation
-        popd
+        pip install hermetic_build/common
+        pip install hermetic_build/library_generation
+        pip install hermetic_build/release_note_generation
     - name: Run shell unit tests
       run: |
         set -x
