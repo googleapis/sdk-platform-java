@@ -86,8 +86,7 @@ jobs:
       shell: bash
       run: |
         set -ex
-        python -m venv .venv
-        source .venv/bin/activate
+        pip install --upgrade pip
         pip install hermetic_build/common
         pip install hermetic_build/library_generation
         pip install hermetic_build/release_note_generation
@@ -124,13 +123,10 @@ jobs:
       shell: bash
       run: |
         set -ex
-        python -m venv .venv
-        source .venv/bin/activate
-        pushd hermetic_build
-        pip install common
-        pip install library_generation
-        pip install release_note_generation
-        popd
+        pip install --upgrade pip
+        pip install hermetic_build/common
+        pip install hermetic_build/library_generation
+        pip install hermetic_build/release_note_generation
     - name: Lint
       shell: bash
       run: |
