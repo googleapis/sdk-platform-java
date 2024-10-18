@@ -22,7 +22,7 @@ set -e
 # The parameters of this script is:
 # 1. target_branch, the branch into which the pull request is merged.
 # 2. current_branch, the branch with which the pull request is associated.
-# 3. [optional] image_tag, the tag of gcr.io/cloud-devrel-public-resources/java-library-generation.
+# 3. [optional] image_tag, the tag of us-docker.pkg.dev/java-hermetic-build-prod/private-resources/java-library-generation.
 # 4. [optional] generation_config, the path to the generation configuration,
 # the default value is generation_config.yaml in the repository root.
 while [[ $# -gt 0 ]]; do
@@ -100,7 +100,7 @@ docker run \
   -v "${m2_folder}":/home/.m2 \
   -v "${api_def_dir}:${workspace_name}/googleapis" \
   -e GENERATOR_VERSION="${image_tag}" \
-  gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
+  us-docker.pkg.dev/java-hermetic-build-prod/private-resources/java-library-generation:"${image_tag}" \
   --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
   --current-generation-config-path="${workspace_name}/${generation_config}" \
   --api-definitions-path="${workspace_name}/googleapis"

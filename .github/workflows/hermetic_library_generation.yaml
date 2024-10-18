@@ -53,7 +53,7 @@ jobs:
         echo "GENERATOR_VERSION=${GENERATOR_VERSION}" >> "$GITHUB_ENV"
         docker build \
           -f .cloudbuild/library_generation/library_generation.Dockerfile \
-          -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${GENERATOR_VERSION}" \
+          -t us-docker.pkg.dev/java-hermetic-build-prod/private-resources/java-library-generation:"${GENERATOR_VERSION}" \
           .
     - uses: ./.github/scripts
       if: env.SHOULD_RUN == 'true'
