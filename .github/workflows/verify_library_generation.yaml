@@ -80,23 +80,24 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
       with:
-        python-version: 3.11
+        python-version: 3.12
     - name: install python dependencies
       shell: bash
       run: |
         set -ex
-        pushd library_generation
-        pip install --require-hashes -r requirements.txt
-        pip install .
+        pushd hermetic_build
+        pip install common
+        pip install library_generation
+        pip install release_note_generation
         popd
     - name: Run shell unit tests
       run: |
         set -x
-        library_generation/test/generate_library_unit_tests.sh
+        hermetic_build/library_generation/tests/generate_library_unit_tests.sh
     - name: Run python unit tests
       run: |
         set -x
-        python -m unittest discover -s library_generation/test/ -p "*unit_tests.py"
+        python -m unittest discover -s hermetic_build -p "*unit_tests.py"
   library-generation-lint-shell:
     runs-on: ubuntu-22.04
     needs: should-run-library-generation-tests
@@ -106,7 +107,7 @@ jobs:
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@2.0.0
       with:
-        scandir: 'library_generation'
+        scandir: 'hermetic_build'
         format: tty
         severity: error
   library-generation-lint-python:
@@ -119,12 +120,14 @@ jobs:
       shell: bash
       run: |
         set -ex
-        pushd library_generation
-        pip install --require-hashes -r requirements.txt
+        pushd hermetic_build
+        pip install common
+        pip install library_generation
+        pip install release_note_generation
         popd
     - name: Lint
       shell: bash
       run: |
         # exclude generated golden files
         # exclude owlbot until further refaction
-        black --check library_generation --exclude "(library_generation/test/resources/goldens)"
+        black --check hermetic_build --exclude "(library_generation/tests/resources/goldens)"
