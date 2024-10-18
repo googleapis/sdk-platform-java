@@ -14,8 +14,8 @@
 # limitations under the License.
 from hashlib import sha256
 from typing import Optional
-from library_generation.model.gapic_config import GapicConfig
-from library_generation.model.gapic_inputs import GapicInputs
+from common.model.gapic_config import GapicConfig
+from common.model.gapic_inputs import GapicInputs
 
 
 MAVEN_COORDINATE_SEPARATOR = ":"

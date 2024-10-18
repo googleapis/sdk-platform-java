@@ -16,8 +16,8 @@ import os
 
 import yaml
 from typing import Optional
-from library_generation.model.library_config import LibraryConfig
-from library_generation.model.gapic_config import GapicConfig
+from common.model.library_config import LibraryConfig
+from common.model.gapic_config import GapicConfig
 
 REPO_LEVEL_PARAMETER = "Repo level parameter"
 LIBRARY_LEVEL_PARAMETER = "Library level parameter"

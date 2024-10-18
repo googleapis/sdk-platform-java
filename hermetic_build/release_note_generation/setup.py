@@ -12,7 +12,6 @@ setup(
         "common": ".",
     },
     install_requires=[
-        "parameterized==0.9.0",
         "PyYAML==6.0.2",
     ],
 )
