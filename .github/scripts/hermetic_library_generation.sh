@@ -115,7 +115,7 @@ docker run \
   -e GENERATOR_VERSION="${image_tag}" \
   --entrypoint python \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
-  /src/cli/generate_release_note.py generate \
+  /src/release_note_generation/cli/generate_release_note.py generate \
   --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
   --current-generation-config-path="${workspace_name}/${generation_config}" \
   --repository-path="${workspace_name}"
