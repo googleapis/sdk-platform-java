@@ -14,7 +14,7 @@
 import os
 import unittest
 from click.testing import CliRunner
-from library_generation.cli.generate_release_note import generate
+from release_note_generation.cli.generate_release_note import generate
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resource_dir = os.path.join(script_dir, "..", "resources", "test_generate_release_note")

@@ -13,20 +13,19 @@
 # limitations under the License.
 import unittest
 from unittest.mock import patch
-
 from library_generation.model.config_change import (
     ConfigChange,
     ChangeType,
     LibraryChange,
 )
-from library_generation.model.generation_config import GenerationConfig
-from library_generation.utils.commit_message_formatter import (
+from common.model.generation_config import GenerationConfig
+from release_note_generation.commit_message_formatter import (
     format_commit_message,
     commit_link,
     format_repo_level_change,
+    wrap_googleapis_commit,
+    wrap_override_commit
 )
-from library_generation.utils.commit_message_formatter import wrap_googleapis_commit
-from library_generation.utils.commit_message_formatter import wrap_override_commit
 
 gen_config = GenerationConfig(
     gapic_generator_version="1.2.3", googleapis_commitish="123abc", libraries=[]

@@ -14,8 +14,7 @@
 import os
 import unittest
 from filecmp import cmp
-
-from library_generation.generate_pr_description import (
+from release_note_generation.generate_pr_description import (
     get_repo_level_commit_messages,
     generate_pr_descriptions,
 )
@@ -24,9 +23,9 @@ from library_generation.model.config_change import (
     ChangeType,
     LibraryChange,
 )
-from library_generation.model.gapic_config import GapicConfig
-from library_generation.model.generation_config import GenerationConfig
-from library_generation.model.library_config import LibraryConfig
+from common.model.gapic_config import GapicConfig
+from common.model.generation_config import GenerationConfig
+from common.model.library_config import LibraryConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources", "goldens")
