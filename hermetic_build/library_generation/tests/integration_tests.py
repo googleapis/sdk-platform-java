@@ -281,7 +281,9 @@ class IntegrationTest(unittest.TestCase):
     ):
         for library_name in library_names:
             if config.is_monorepo():
-                shutil.copytree(f"{repo_dest}/{library_name}", f"{golden_dir}/{library_name}")
+                shutil.copytree(
+                    f"{repo_dest}/{library_name}", f"{golden_dir}/{library_name}"
+                )
                 shutil.copytree(
                     f"{repo_dest}/gapic-libraries-bom",
                     f"{golden_dir}/gapic-libraries-bom",
