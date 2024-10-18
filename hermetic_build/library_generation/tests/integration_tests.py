@@ -14,7 +14,6 @@
 import difflib
 import json
 import tempfile
-from filecmp import cmp
 from filecmp import dircmp
 from git import Repo
 import os
