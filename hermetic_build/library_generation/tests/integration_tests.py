@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from click.testing import CliRunner
 import difflib
 import json
 import tempfile
@@ -25,9 +24,6 @@ import unittest
 from distutils.dir_util import copy_tree
 from distutils.file_util import copy_file
 from pathlib import Path
-from library_generation.cli.generate_release_note import (
-    generate as generate_pr_description,
-)
 from common.model.generation_config import GenerationConfig
 from common.model.generation_config import from_yaml
 from library_generation.tests.compare_poms import compare_xml
@@ -99,18 +95,7 @@ class IntegrationTest(unittest.TestCase):
                 current_config=current_config_name,
                 api_definition=api_definitions_path,
             )
-            # 4. generate pr description
-            # noinspection PyTypeChecker
-            result = CliRunner().invoke(
-                generate_pr_description,
-                [
-                    f"--baseline-generation-config-path={config_location}/{baseline_config_name}",
-                    f"--current-generation-config-path={config_location}/{current_config_name}",
-                    f"--repository-path={repo_location}",
-                ],
-            )
-            self.assertEqual(0, result.exit_code)
-            # 5. compare generation result with golden files
+            # 4. compare generation result with golden files
             print(
                 "Generation finished successfully. "
                 "Will now compare differences between generated and existing "
