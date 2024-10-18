@@ -73,7 +73,7 @@ import java.util.function.Function;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -626,7 +626,9 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     createAndCloseTransportChannel(provider);
     assertThat(logHandler.getAllMessages())
         .contains(
-            "DirectPath is misconfigured. The DirectPath XDS option was set, but the attemptDirectPath option was not. Please set both the attemptDirectPath and attemptDirectPathXds options.");
+            "DirectPath is misconfigured. The DirectPath XDS option was set, but the"
+                + " attemptDirectPath option was not. Please set both the attemptDirectPath and"
+                + " attemptDirectPathXds options.");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
   }
 
@@ -641,8 +643,10 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     createAndCloseTransportChannel(provider);
     assertThat(logHandler.getAllMessages())
         .contains(
-            "Env var GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
-                + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
+            "Env var GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS was found and set to TRUE, but DirectPath"
+                + " was not enabled for this client. If this is intended for this client, please"
+                + " note that this is a misconfiguration and set the attemptDirectPath option as"
+                + " well.");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
   }
 

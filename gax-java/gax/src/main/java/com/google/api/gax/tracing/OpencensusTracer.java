@@ -49,7 +49,7 @@ import io.opencensus.trace.Tracer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Implementation of {@link ApiTracer} that uses OpenCensus.
@@ -222,7 +222,7 @@ public class OpencensusTracer extends BaseApiTracer {
   private long totalReceivedMessages = 0;
 
   OpencensusTracer(
-      @Nonnull Tracer tracer, @Nonnull Span span, @Nonnull OperationType operationType) {
+      @NonNull Tracer tracer, @NonNull Span span, @NonNull OperationType operationType) {
     this.tracer = Preconditions.checkNotNull(tracer, "tracer can't be null");
     this.span = Preconditions.checkNotNull(span, "span can't be null");
     this.operationType = Preconditions.checkNotNull(operationType, "operationType can't be null");

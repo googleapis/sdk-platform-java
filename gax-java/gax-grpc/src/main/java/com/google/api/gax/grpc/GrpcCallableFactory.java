@@ -61,7 +61,7 @@ import com.google.longrunning.stub.OperationsStub;
 import io.grpc.MethodDescriptor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /** Class with utility methods to create grpc-based direct callables. */
 public class GrpcCallableFactory {
@@ -329,7 +329,7 @@ public class GrpcCallableFactory {
   }
 
   @InternalApi("Visible for testing")
-  static SpanName getSpanName(@Nonnull MethodDescriptor<?, ?> methodDescriptor) {
+  static SpanName getSpanName(@NonNull MethodDescriptor<?, ?> methodDescriptor) {
     Matcher matcher = FULL_METHOD_NAME_REGEX.matcher(methodDescriptor.getFullMethodName());
 
     Preconditions.checkArgument(matcher.matches(), "Invalid fullMethodName");

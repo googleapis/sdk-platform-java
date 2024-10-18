@@ -52,8 +52,8 @@ import io.grpc.stub.StreamObserver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
@@ -68,13 +68,13 @@ class GrpcDirectStreamControllerTest {
         ManagedChannelBuilder.forAddress("localhost", 1234).usePlaintext().build();
     StreamResumptionStrategy<Color, Money> resumptionStrategy =
         new StreamResumptionStrategy<Color, Money>() {
-          @Nonnull
+          @NonNull
           @Override
           public StreamResumptionStrategy<Color, Money> createNew() {
             return this;
           }
 
-          @Nonnull
+          @NonNull
           @Override
           public Money processResponse(Money response) {
             return response;

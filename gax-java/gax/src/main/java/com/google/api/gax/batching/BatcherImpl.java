@@ -64,8 +64,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Queues up the elements until {@link #flush()} is called; once batching is over, returned future
@@ -500,7 +500,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
       totalThrottledTimeMs += throttledTimeMs;
     }
 
-    void setResponseFuture(@Nonnull ApiFuture<ResponseT> responseFuture) {
+    void setResponseFuture(@NonNull ApiFuture<ResponseT> responseFuture) {
       Preconditions.checkNotNull(responseFuture);
       this.responseFuture = responseFuture;
     }

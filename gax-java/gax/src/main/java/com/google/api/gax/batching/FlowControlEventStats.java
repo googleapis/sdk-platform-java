@@ -36,7 +36,7 @@ import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import java.util.concurrent.TimeUnit;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Record the statistics of flow control events.

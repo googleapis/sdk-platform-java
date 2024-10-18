@@ -28,7 +28,7 @@ import io.opencensus.trace.SpanContext;
 import io.opencensus.trace.Tracer;
 import io.opencensus.trace.propagation.TextFormat;
 import java.io.IOException;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Provides utilities for Open Census to record http stats/trace information and propagate tracing
@@ -46,7 +46,7 @@ public final class CensusHttpModule {
   @Nullable private final TextFormat propagationTextFormat;
 
   /** {@link TextFormat.Setter} for {@link #propagationTextFormat}. */
-  @Nullable private final TextFormat.Setter<HttpHeaders> propagationTextFormatSetter;
+  private final TextFormat.@Nullable Setter<HttpHeaders> propagationTextFormatSetter;
 
   /** Whether spans are stored locally. */
   private final boolean isRecordEvents;

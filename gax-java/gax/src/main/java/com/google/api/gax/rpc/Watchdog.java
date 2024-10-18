@@ -49,7 +49,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Prevents the streams from hanging indefinitely. This middleware garbage collects idle streams in
@@ -120,16 +120,17 @@ public final class Watchdog implements Runnable, BackgroundResource {
       "Use watchDuration(ResponseObserver, java.time.Duration, java.time.Duration) instead")
   public <ResponseT> ResponseObserver<ResponseT> watch(
       ResponseObserver<ResponseT> innerObserver,
-      @Nonnull org.threeten.bp.Duration waitTimeout,
-      @Nonnull org.threeten.bp.Duration idleTimeout) {
+      org.threeten.bp.@NonNull Duration waitTimeout,
+      org.threeten.bp.@NonNull Duration idleTimeout) {
     return watchDuration(
         innerObserver, toJavaTimeDuration(waitTimeout), toJavaTimeDuration(idleTimeout));
   }
+
   /** Wraps the target observer with timing constraints. */
   public <ResponseT> ResponseObserver<ResponseT> watchDuration(
       ResponseObserver<ResponseT> innerObserver,
-      @Nonnull java.time.Duration waitTimeout,
-      @Nonnull java.time.Duration idleTimeout) {
+      java.time.@NonNull Duration waitTimeout,
+      java.time.@NonNull Duration idleTimeout) {
     Preconditions.checkNotNull(innerObserver, "innerObserver can't be null");
     Preconditions.checkNotNull(waitTimeout, "waitTimeout can't be null");
     Preconditions.checkNotNull(idleTimeout, "idleTimeout can't be null");

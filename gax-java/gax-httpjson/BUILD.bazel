@@ -10,7 +10,7 @@ _JAVA_COPTS = [
 _COMPILE_DEPS = [
     "@com_google_code_gson_gson//jar",
     "@com_google_guava_guava//jar",
-    "@com_google_code_findbugs_jsr305//jar",
+    "@org_jspecify_jspecify//jar",
     "@com_google_errorprone_error_prone_annotations//jar",
     "@org_threeten_threetenbp//jar",
     "@com_google_http_client_google_http_client//jar",

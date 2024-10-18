@@ -40,7 +40,7 @@ import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
 import com.google.common.base.Preconditions;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.atomic.AtomicBoolean;
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * A wrapper callable that will wrap a callable chain in a trace.
@@ -52,14 +52,14 @@ import javax.annotation.Nonnull;
 public class TracedBidiCallable<RequestT, ResponseT>
     extends BidiStreamingCallable<RequestT, ResponseT> {
 
-  @Nonnull private final ApiTracerFactory tracerFactory;
-  @Nonnull private final SpanName spanName;
-  @Nonnull private final BidiStreamingCallable<RequestT, ResponseT> innerCallable;
+  @NonNull private final ApiTracerFactory tracerFactory;
+  @NonNull private final SpanName spanName;
+  @NonNull private final BidiStreamingCallable<RequestT, ResponseT> innerCallable;
 
   public TracedBidiCallable(
-      @Nonnull BidiStreamingCallable<RequestT, ResponseT> innerCallable,
-      @Nonnull ApiTracerFactory tracerFactory,
-      @Nonnull SpanName spanName) {
+      @NonNull BidiStreamingCallable<RequestT, ResponseT> innerCallable,
+      @NonNull ApiTracerFactory tracerFactory,
+      @NonNull SpanName spanName) {
     this.tracerFactory = Preconditions.checkNotNull(tracerFactory, "tracerFactory can't be null");
     this.spanName = Preconditions.checkNotNull(spanName, "spanName can't be null");
     this.innerCallable = Preconditions.checkNotNull(innerCallable, "innerCallable can't be null");

@@ -31,7 +31,7 @@ package com.google.api.gax.core;
 
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /** FixedCredentialsProvider is a CredentialsProvider which always provides the same credentials. */
 @AutoValue
