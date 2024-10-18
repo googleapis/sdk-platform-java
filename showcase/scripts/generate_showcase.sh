@@ -106,7 +106,7 @@ include_samples="false"
 rm -rdf output/showcase-output
 mkdir output/showcase-output
 set +e
-bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
+bash "${SCRIPT_DIR}/../../hermetic_build/library_generation/generate_library.sh" \
   --protoc_version "${protoc_version}" \
   --grpc_version "${grpc_version}" \
   --proto_path "schema/google/showcase/v1beta1" \
