@@ -13,7 +13,7 @@
 # limitations under the License.
 import unittest
 
-from library_generation.model.gapic_config import GapicConfig
+from common.model.gapic_config import GapicConfig
 
 
 class GapicConfigTest(unittest.TestCase):

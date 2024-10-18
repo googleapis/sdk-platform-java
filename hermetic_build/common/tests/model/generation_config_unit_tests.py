@@ -14,8 +14,8 @@
 import os
 import unittest
 from pathlib import Path
-from library_generation.model.generation_config import from_yaml, GenerationConfig
-from library_generation.model.library_config import LibraryConfig
+from common.model.generation_config import from_yaml, GenerationConfig
+from common.model.library_config import LibraryConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "..", "resources")
