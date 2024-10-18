@@ -24,7 +24,7 @@ from release_note_generation.commit_message_formatter import (
     commit_link,
     format_repo_level_change,
     wrap_googleapis_commit,
-    wrap_override_commit
+    wrap_override_commit,
 )
 
 gen_config = GenerationConfig(

@@ -66,7 +66,6 @@ SAMPLE_METADATA = """
 
 
 class JavaUnitTests(unittest.TestCase):
-
     def test_version_from_maven_metadata(self):
         self.assertEqual("3.3.0", java.version_from_maven_metadata(SAMPLE_METADATA))
 

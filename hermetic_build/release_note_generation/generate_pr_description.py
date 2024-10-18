@@ -24,7 +24,7 @@ from release_note_generation.commit_message_formatter import (
     format_commit_message,
     format_repo_level_change,
     commit_link,
-    wrap_override_commit
+    wrap_override_commit,
 )
 
 EMPTY_MESSAGE = ""

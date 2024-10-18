@@ -257,7 +257,6 @@ class UtilitiesTest(unittest.TestCase):
     def test_create__library_invalid_transport__fails(
         self,
     ):
-
         with self.assertRaises(ValueError):
             test_library_with_invalid_transport = LibraryConfig(
                 api_shortname="secretmanager",
