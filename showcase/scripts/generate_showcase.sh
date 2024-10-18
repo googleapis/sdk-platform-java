@@ -6,8 +6,8 @@
 set -ex
 
 readonly SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-readonly LIB_GEN_SCRIPTS_DIR="${SCRIPT_DIR}/../../library_generation/"
-source "${LIB_GEN_SCRIPTS_DIR}/test/test_utilities.sh"
+readonly LIB_GEN_SCRIPTS_DIR="${SCRIPT_DIR}/../../hermetic_build/library_generation/"
+source "${LIB_GEN_SCRIPTS_DIR}/tests/test_utilities.sh"
 source "${LIB_GEN_SCRIPTS_DIR}/utils/utilities.sh"
 readonly perform_cleanup=$1
 
