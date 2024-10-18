@@ -45,7 +45,8 @@ RUN apt-get update && apt-get install -y \
 	&& apt-get clean
 
 # copy source code
-COPY library_generation /src
+COPY hermetic_build/library_generation /src/library_generation
+COPY hermetic_build/common /src/common
 
 # install protoc
 WORKDIR /protoc
@@ -79,8 +80,8 @@ RUN python -m pip install --upgrade pip
 
 # install main scripts as a python package
 WORKDIR /src
-RUN python -m pip install --require-hashes -r requirements.txt
-RUN python -m pip install .
+RUN python -m pip install common
+RUN python -m pip install library_generation
 
 # Install nvm with node and npm
 ENV NODE_VERSION 20.12.0
