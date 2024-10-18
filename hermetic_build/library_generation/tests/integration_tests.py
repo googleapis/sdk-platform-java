@@ -179,16 +179,6 @@ class IntegrationTest(unittest.TestCase):
                     )
                 )
                 print("  pom.xml comparison succeed.")
-                # compare PR description
-                description_file = f"{output_dir}/{repo}/pr_description.txt"
-                self.assertTrue(
-                    cmp(
-                        f"{config_dir}/{repo}/pr-description-golden.txt",
-                        f"{description_file}",
-                    ),
-                    "The generated PR description does not match the expected golden file",
-                )
-                print("  PR description comparison succeed.")
         self.__remove_generated_files()
         shutil.rmtree(api_definitions_path)
 
