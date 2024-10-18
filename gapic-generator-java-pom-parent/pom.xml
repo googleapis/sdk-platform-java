@@ -199,17 +199,57 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>airlock-l0</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <name>Maven Central remote repository</name>
+          <url>artifactregistry://us-maven.pkg.dev/artifact-foundry-prod/ah-3p-staging-maven</url>
+          <layout>default</layout>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+    </profile>
+    <profile>
+      <id>airlock-trusted</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <name>Maven Central remote repository</name>
+          <url>artifactregistry://us-maven.pkg.dev/artifact-foundry-prod/maven-3p-trusted</url>
+          <layout>default</layout>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+    </profile>
+    <profile>
+      <id>default-repositories</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <repositories>
+        <repository>
+          <id>google-maven-central-copy</id>
+          <name>Google Maven Central copy</name>
+          <url>https://maven-central.storage-download.googleapis.com/maven2</url>
+        </repository>
+        <repository>
+          <id>maven-central</id>
+          <name>Maven Central</name>
+          <url>https://repo1.maven.org/maven2</url>
+        </repository>
+      </repositories>
+    </profile>
   </profiles>
-  <repositories>
-    <repository>
-      <id>google-maven-central-copy</id>
-      <name>Google Maven Central copy</name>
-      <url>https://maven-central.storage-download.googleapis.com/maven2</url>
-    </repository>
-    <repository>
-      <id>maven-central</id>
-      <name>Maven Central</name>
-      <url>https://repo1.maven.org/maven2</url>
-    </repository>
-  </repositories>
 </project>
