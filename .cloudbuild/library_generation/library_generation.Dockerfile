@@ -50,7 +50,7 @@ COPY hermetic_build/common /src/common
 
 # install protoc
 WORKDIR /protoc
-RUN source /src/utils/utilities.sh \
+RUN source /src/library_generation/utils/utilities.sh \
 	&& download_protoc "${PROTOC_VERSION}" "${OS_ARCHITECTURE}"
 # we indicate protoc is available in the container via env vars
 ENV DOCKER_PROTOC_LOCATION=/protoc
@@ -58,7 +58,7 @@ ENV DOCKER_PROTOC_VERSION="${PROTOC_VERSION}"
 
 # install grpc
 WORKDIR /grpc
-RUN source /src/utils/utilities.sh \
+RUN source /src/library_generation/utils/utilities.sh \
 	&& download_grpc_plugin "${GRPC_VERSION}" "${OS_ARCHITECTURE}"
 # similar to protoc, we indicate grpc is available in the container via env vars
 ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java-${GRPC_VERSION}-${OS_ARCHITECTURE}.exe"
@@ -121,4 +121,4 @@ RUN chmod -R a+rw /home
 RUN chmod -R a+rx /home/.nvm
 
 WORKDIR /workspace
-ENTRYPOINT [ "python", "/src/cli/entry_point.py", "generate" ]
+ENTRYPOINT [ "python", "/src/library_generation/cli/entry_point.py", "generate" ]
