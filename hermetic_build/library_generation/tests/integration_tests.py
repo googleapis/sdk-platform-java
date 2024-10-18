@@ -287,6 +287,7 @@ class IntegrationTest(unittest.TestCase):
                 shutil.copytree(
                     f"{repo_dest}/gapic-libraries-bom",
                     f"{golden_dir}/gapic-libraries-bom",
+                    dirs_exist_ok=True,
                 )
                 shutil.copyfile(f"{repo_dest}/pom.xml", f"{golden_dir}/pom.xml")
             else:
