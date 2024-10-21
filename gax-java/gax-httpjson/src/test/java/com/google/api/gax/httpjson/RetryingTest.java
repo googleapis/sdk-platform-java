@@ -94,9 +94,9 @@ class RetryingTest {
           .setTypeRegistry(TypeRegistry.newBuilder().build())
           .build();
 
-  private AtomicInteger tracerAttemptsFailed = new AtomicInteger();
-  private AtomicInteger tracerAttempts = new AtomicInteger();
-  private AtomicBoolean tracerOperationFailed = new AtomicBoolean(false);
+  private AtomicInteger tracerAttempts;
+  private AtomicInteger tracerAttemptsFailed;
+  private AtomicBoolean tracerOperationFailed;
   private RecordingScheduler executor;
   private FakeApiClock fakeClock;
   private ClientContext clientContext;
@@ -122,6 +122,9 @@ class RetryingTest {
 
   @BeforeEach
   void resetClock() {
+    tracerAttempts = new AtomicInteger();
+    tracerAttemptsFailed = new AtomicInteger();
+    tracerOperationFailed = new AtomicBoolean(false);
     fakeClock = new FakeApiClock(System.nanoTime());
     executor = RecordingScheduler.create(fakeClock);
     clientContext =
