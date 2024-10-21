@@ -57,7 +57,6 @@ import com.google.api.gax.rpc.UnknownException;
 import com.google.api.gax.tracing.ApiTracer;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracer;
-import com.google.api.gax.tracing.SpanName;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.UncheckedExecutionException;
@@ -138,22 +137,8 @@ class RetryingTest {
   void retry() {
     // we use a custom tracer to confirm whether the retrials are being recorded.
     AtomicInteger tracerFailedAttempts = new AtomicInteger();
-    ApiTracer tracer =
-        new BaseApiTracer() {
-          @Override
-          public void attemptFailed(Throwable error, Duration delay) {
-            tracerFailedAttempts.incrementAndGet();
-            super.attemptFailed(error, delay);
-          }
-        };
-    ApiTracerFactory tracerFactory =
-        new ApiTracerFactory() {
-          @Override
-          public ApiTracer newTracer(
-              ApiTracer parent, SpanName spanName, OperationType operationType) {
-            return tracer;
-          }
-        };
+    AtomicInteger tracerAttempts = new AtomicInteger();
+    ApiTracerFactory tracerFactory = getApiTracerFactory(tracerFailedAttempts, tracerAttempts);
     clientContext = clientContext.toBuilder().setTracerFactory(tracerFactory).build();
 
     // set a retriable that will fail 3 times before returning "2"
@@ -171,6 +156,7 @@ class RetryingTest {
             callInt, callSettings, httpJsonCallSettings, clientContext);
     assertThat(callable.call(initialRequest)).isEqualTo(2);
     assertThat(tracerFailedAttempts.get()).isEqualTo(3);
+    assertThat(tracerAttempts.get()).isEqualTo(4);
 
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -424,5 +410,25 @@ class RetryingTest {
         .setRetryableCodes(retryableCodes)
         .setRetrySettings(retrySettings)
         .build();
+  }
+
+  private static ApiTracerFactory getApiTracerFactory(
+      AtomicInteger tracerFailedAttempts, AtomicInteger tracerAttempts) {
+    ApiTracer tracer =
+        new BaseApiTracer() {
+          @Override
+          public void attemptFailed(Throwable error, Duration delay) {
+            tracerFailedAttempts.incrementAndGet();
+            super.attemptFailed(error, delay);
+          }
+
+          @Override
+          public void attemptStarted(int attemptNumber) {
+            tracerAttempts.incrementAndGet();
+            super.attemptStarted(attemptNumber);
+          }
+        };
+    ApiTracerFactory tracerFactory = (parent, spanName, operationType) -> tracer;
+    return tracerFactory;
   }
 }
