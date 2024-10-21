@@ -45,7 +45,7 @@ runs:
     run: |
       # repository root
       cd ${{ github.action_path }}/../../
-      rsync -av \
+      rsync -a \
         --exclude=hermetic_build/library_generation \
         --exclude=hermetic_build/common/tests \
         --exclude=hermetic_build/release_note_generation/tests \
