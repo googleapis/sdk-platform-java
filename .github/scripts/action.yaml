@@ -40,6 +40,12 @@ runs:
   - uses: actions/setup-python@v5
     with:
       python-version: 3.12
+  - name: Install dependency
+    shell: bash
+    run: |
+      cd ${{ github.action_path }}/../../hermetic_build
+      pip install common
+      pip install release_note_generation
   - name: Copy shell script
     shell: bash
     run: |
