@@ -22,8 +22,7 @@ It requires docker and python 3.x to be installed.
 
 ```
 python -m pip install .
-python -m pip install -r requirements.txt
-python -m unittest test/integration_tests.py
+python -m unittest tests/integration_tests.py
 ```
 
 # Running the unit tests
@@ -34,7 +33,7 @@ Every unit test script ends with `unit_tests.py`.
 To avoid them specifying them individually, we can use the following command:
 
 ```bash
-python -m unittest discover -s test/ -p "*unit_tests.py"
+python -m unittest discover -s tests/ -p "*unit_tests.py"
 ```
 
 > [!NOTE]

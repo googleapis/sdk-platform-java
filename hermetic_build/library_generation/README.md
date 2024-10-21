@@ -8,7 +8,7 @@ configuration file.
 
 - OS: Linux
 - Java runtime environment (8 or above)
-- Python (3.11.6 or above)
+- Python (3.12 or above)
 - Docker 
 - Git
 
@@ -190,27 +190,23 @@ libraries:
 1. Assuming Python 3 is installed, follow official guide from [Python.org](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments) to create a virtual environment. 
 The virtual environment can be installed to any folder, usually it is recommended to be installed under the root folder of the project(`sdk-platform-java` in this case).
 2. Assuming the virtual environment is installed under `sdk-platform-java`. 
-Run the following command under the root folder of `sdk-platform-java` to install the dependencies of `library_generation`
+Run the following command under the root folder of `sdk-platform-java` to install `library_generation` and its dependencies.
 
    ```bash
-   python -m pip install --require-hashes -r library_generation/requirements.txt
+   python -m pip install hermetic_build/common
+   python -m pip install hermetic_build/library_generation
    ```
 
-3. Run the following command to install `library_generation` as a module, which allows the `library_generation` module to be imported from anywhere
-    ```bash
-    python -m pip install library_generation/
-    ```
-
-4. Download api definition to a local directory
+3. Download api definition to a local directory
 
 ## An example to generate a repository using `entry_point.py`
 
 ```bash
-python library_generation/entry_point.py generate \
---baseline-generation-config-path=/path/to/baseline_config_file \
---current-generation-config-path=/path/to/current_config_file \
---repository-path=path/to/repository \
---api-definitions-path=path/to/api_definition
+python hermetic_build/library_generation/cli/entry_point.py generate \
+  --baseline-generation-config-path=/path/to/baseline_config_file \
+  --current-generation-config-path=/path/to/current_config_file \
+  --repository-path=path/to/repository \
+  --api-definitions-path=path/to/api_definition
 ```
 If you run `entry_point.py` with the example [configuration](#an-example-of-generation-configuration)
 shown above, the repository structure is:
@@ -290,9 +286,7 @@ $repository_path
 
 We have transferred the
 [implementation](https://github.com/googleapis/synthtool/tree/59fe44fde9866a26e7ee4e4450fd79f67f8cf599/docker/owlbot/java)
-of Java Owlbot Postprocessor into `sdk-platform-java/library_generation`. The
-implementation in synthtool is still valid and used by other services, so we
-have two versions during a transition period.
+of Java Owlbot Postprocessor into `sdk-platform-java/hermetic_build/library_generation`.
 
 ## Reflecting changes in synthtool/docker/owlbot/java into this repository
 The transfer was not a verbatim copy, it rather had modifications:
