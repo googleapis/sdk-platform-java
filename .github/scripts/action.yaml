@@ -43,6 +43,7 @@ runs:
   - name: Copy python script
     shell: bash
     run: |
+      set -x
       # repository root
       cd ${{ github.action_path }}/../../
       rsync -a \
@@ -50,6 +51,7 @@ runs:
         --exclude=hermetic_build/common/tests/ \
         --exclude=hermetic_build/release_note_generation/tests/ \
         hermetic_build/ "${GITHUB_WORKSPACE}/"
+      ls -l "${GITHUB_WORKSPACE}/hermetic_build"
   - name: Copy shell script
     shell: bash
     run: |
