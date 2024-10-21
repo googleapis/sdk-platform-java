@@ -444,4 +444,23 @@ class ITEndpointContext {
     echoStubSettingsBuilder = echoStubSettings.toBuilder();
     Truth.assertThat(echoStubSettingsBuilder.getEndpoint()).isEqualTo(customEndpoint);
   }
+
+  @Test
+  void universeDomainValidation_quotaProjectId_credentialsNonGDUMatchesUserConfiguration()
+      throws IOException {
+    String universeDomain = "random.com";
+    EchoSettings echoSettings =
+        ExtendedEchoSettings.newBuilder()
+            .setQuotaProjectId("exampleProject")
+            .setCredentialsProvider(UniverseDomainCredentialsProvider.create(universeDomain))
+            .setEndpoint(TestClientInitializer.DEFAULT_GRPC_ENDPOINT)
+            .setUniverseDomain(universeDomain)
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
+    echoClient = EchoClient.create(echoSettings);
+    Truth.assertThat(echoClient.echo(DEFAULT_REQUEST).getContent()).isEqualTo("echo");
+  }
 }

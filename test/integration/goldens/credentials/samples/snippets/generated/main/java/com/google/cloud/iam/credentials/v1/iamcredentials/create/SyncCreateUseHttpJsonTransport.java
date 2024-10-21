@@ -14,26 +14,27 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1beta1.samples;
+package com.google.cloud.iam.credentials.v1.samples;
 
-// [START redis_v1beta1_generated_CloudRedis_Create_SetCredentialsProvider1_sync]
-import com.google.cloud.redis.v1beta1.CloudRedisClient;
-import com.google.cloud.redis.v1beta1.CloudRedisSettings;
+// [START iamcredentials_v1_generated_IAMCredentials_Create_UseHttpJsonTransport_sync]
+import com.google.cloud.iam.credentials.v1.IamCredentialsClient;
+import com.google.cloud.iam.credentials.v1.IamCredentialsSettings;
 
-public class SyncCreateSetCredentialsProvider1 {
+public class SyncCreateUseHttpJsonTransport {
 
   public static void main(String[] args) throws Exception {
-    syncCreateSetCredentialsProvider1();
+    syncCreateUseHttpJsonTransport();
   }
 
-  public static void syncCreateSetCredentialsProvider1() throws Exception {
+  public static void syncCreateUseHttpJsonTransport() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    CloudRedisSettings cloudRedisSettings = CloudRedisSettings.newHttpJsonBuilder().build();
-    CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
+    IamCredentialsSettings iamCredentialsSettings =
+        IamCredentialsSettings.newHttpJsonBuilder().build();
+    IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create(iamCredentialsSettings);
   }
 }
-// [END redis_v1beta1_generated_CloudRedis_Create_SetCredentialsProvider1_sync]
+// [END iamcredentials_v1_generated_IAMCredentials_Create_UseHttpJsonTransport_sync]

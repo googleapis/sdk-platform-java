@@ -17,6 +17,7 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.gax.httpjson.*;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
@@ -24,6 +25,8 @@ import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.*;
+import com.google.showcase.v1beta1.it.util.GrpcCapturingClientInterceptor;
+import com.google.showcase.v1beta1.it.util.HttpJsonCapturingClientInterceptor;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import com.google.showcase.v1beta1.stub.ComplianceStubSettings;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
@@ -31,6 +34,7 @@ import io.grpc.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -39,114 +43,24 @@ import org.junit.jupiter.api.Test;
 //  https://github.com/googleapis/gapic-showcase/pull/1456
 // TODO: watch for showcase gRPC trailer changes suggested in
 // https://github.com/googleapis/gapic-showcase/pull/1509#issuecomment-2089147103
-class ITApiVersionHeaders {
+class ITVersionHeaders {
   private static final String HTTP_RESPONSE_HEADER_STRING =
       "x-showcase-request-" + ApiClientHeaderProvider.API_VERSION_HEADER_KEY;
+  private static final String HTTP_CLIENT_API_HEADER_KEY =
+      "x-showcase-request-" + ApiClientHeaderProvider.getDefaultApiClientHeaderKey();
   private static final Metadata.Key<String> API_VERSION_HEADER_KEY =
       Metadata.Key.of(
           ApiClientHeaderProvider.API_VERSION_HEADER_KEY, Metadata.ASCII_STRING_MARSHALLER);
+
+  private static final Metadata.Key<String> API_CLIENT_HEADER_KEY =
+      Metadata.Key.of(
+          ApiClientHeaderProvider.getDefaultApiClientHeaderKey(), Metadata.ASCII_STRING_MARSHALLER);
 
   private static final String EXPECTED_ECHO_API_VERSION = "v1_20240408";
   private static final String CUSTOM_API_VERSION = "user-supplied-version";
   private static final String EXPECTED_EXCEPTION_MESSAGE =
       "Header provider can't override the header: "
           + ApiClientHeaderProvider.API_VERSION_HEADER_KEY;
-
-  // Implement a client interceptor to retrieve the trailing metadata from response.
-  private static class GrpcCapturingClientInterceptor implements ClientInterceptor {
-    private Metadata metadata;
-
-    @Override
-    public <RequestT, ResponseT> ClientCall<RequestT, ResponseT> interceptCall(
-        MethodDescriptor<RequestT, ResponseT> method, final CallOptions callOptions, Channel next) {
-      ClientCall<RequestT, ResponseT> call = next.newCall(method, callOptions);
-      return new ForwardingClientCall.SimpleForwardingClientCall<RequestT, ResponseT>(call) {
-        @Override
-        public void start(Listener<ResponseT> responseListener, Metadata headers) {
-          Listener<ResponseT> wrappedListener =
-              new SimpleForwardingClientCallListener<ResponseT>(responseListener) {
-                @Override
-                public void onClose(Status status, Metadata trailers) {
-                  if (status.isOk()) {
-                    metadata = trailers;
-                  }
-                  super.onClose(status, trailers);
-                }
-              };
-
-          super.start(wrappedListener, headers);
-        }
-      };
-    }
-  }
-
-  private static class SimpleForwardingClientCallListener<RespT>
-      extends ClientCall.Listener<RespT> {
-    private final ClientCall.Listener<RespT> delegate;
-
-    SimpleForwardingClientCallListener(ClientCall.Listener<RespT> delegate) {
-      this.delegate = delegate;
-    }
-
-    @Override
-    public void onHeaders(Metadata headers) {
-      delegate.onHeaders(headers);
-    }
-
-    @Override
-    public void onMessage(RespT message) {
-      delegate.onMessage(message);
-    }
-
-    @Override
-    public void onClose(Status status, Metadata trailers) {
-      delegate.onClose(status, trailers);
-    }
-
-    @Override
-    public void onReady() {
-      delegate.onReady();
-    }
-  }
-  // Implement a client interceptor to retrieve the response headers
-  private static class HttpJsonCapturingClientInterceptor implements HttpJsonClientInterceptor {
-    private HttpJsonMetadata metadata;
-
-    @Override
-    public <RequestT, ResponseT> HttpJsonClientCall<RequestT, ResponseT> interceptCall(
-        ApiMethodDescriptor<RequestT, ResponseT> method,
-        HttpJsonCallOptions callOptions,
-        HttpJsonChannel next) {
-      HttpJsonClientCall<RequestT, ResponseT> call = next.newCall(method, callOptions);
-      return new ForwardingHttpJsonClientCall.SimpleForwardingHttpJsonClientCall<
-          RequestT, ResponseT>(call) {
-        @Override
-        public void start(Listener<ResponseT> responseListener, HttpJsonMetadata requestHeaders) {
-          Listener<ResponseT> forwardingResponseListener =
-              new ForwardingHttpJsonClientCallListener.SimpleForwardingHttpJsonClientCallListener<
-                  ResponseT>(responseListener) {
-                @Override
-                public void onHeaders(HttpJsonMetadata responseHeaders) {
-                  metadata = responseHeaders;
-                  super.onHeaders(responseHeaders);
-                }
-
-                @Override
-                public void onMessage(ResponseT message) {
-                  super.onMessage(message);
-                }
-
-                @Override
-                public void onClose(int statusCode, HttpJsonMetadata trailers) {
-                  super.onClose(statusCode, trailers);
-                }
-              };
-
-          super.start(forwardingResponseListener, requestHeaders);
-        }
-      };
-    }
-  }
 
   private static HttpJsonCapturingClientInterceptor httpJsonInterceptor;
   private static GrpcCapturingClientInterceptor grpcInterceptor;
@@ -322,5 +236,26 @@ class ITApiVersionHeaders {
       String headerValue = (String) headerValues.get(0);
       assertThat(headerValue).isEqualTo(CUSTOM_API_VERSION);
     }
+  }
+
+  @Test
+  void testGrpcCall_sendsCorrectApiClientHeader() {
+    Pattern defautlGrpcHeaderPattern =
+        Pattern.compile("gl-java/.* gapic/.*?--protobuf-.* gax/.* grpc/.* protobuf/.*");
+    grpcClient.echo(EchoRequest.newBuilder().build());
+    String headerValue = grpcInterceptor.metadata.get(API_CLIENT_HEADER_KEY);
+    assertTrue(defautlGrpcHeaderPattern.matcher(headerValue).matches());
+  }
+
+  @Test
+  void testHttpJson_sendsCorrectApiClientHeader() {
+    Pattern defautlHttpHeaderPattern =
+        Pattern.compile("gl-java/.* gapic/.*?--protobuf-.* gax/.* rest/ protobuf/.*");
+    httpJsonClient.echo(EchoRequest.newBuilder().build());
+    ArrayList<String> headerValues =
+        (ArrayList<String>)
+            httpJsonInterceptor.metadata.getHeaders().get(HTTP_CLIENT_API_HEADER_KEY);
+    String headerValue = headerValues.get(0);
+    assertTrue(defautlHttpHeaderPattern.matcher(headerValue).matches());
   }
 }

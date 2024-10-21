@@ -120,6 +120,7 @@ class ClientSettingsTest {
     Truth.assertThat(builder.getWatchdogCheckIntervalDuration())
         .isGreaterThan(java.time.Duration.ZERO);
     Truth.assertThat(builder.getQuotaProjectId()).isNull();
+    Truth.assertThat(builder.getApiKey()).isNull();
 
     FakeClientSettings settings = builder.build();
     Truth.assertThat(settings.getExecutorProvider())
@@ -150,6 +151,7 @@ class ClientSettingsTest {
     Truth.assertThat(settingsString).contains("watchdogProvider");
     Truth.assertThat(settingsString).contains("watchdogCheckInterval");
     Truth.assertThat(settingsString).contains(("quotaProjectId"));
+    Truth.assertThat(settingsString).contains(("apiKey"));
   }
 
   @Test
@@ -165,6 +167,7 @@ class ClientSettingsTest {
     WatchdogProvider watchdogProvider = Mockito.mock(WatchdogProvider.class);
     java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(13);
     String quotaProjectId = "test_quota_project_id";
+    String apiKey = "api_key";
 
     builder.setExecutorProvider(executorProvider);
     builder.setTransportChannelProvider(transportProvider);
@@ -175,6 +178,7 @@ class ClientSettingsTest {
     builder.setWatchdogProvider(watchdogProvider);
     builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
     builder.setQuotaProjectId(quotaProjectId);
+    builder.setApiKey(apiKey);
 
     // For backward compatibility, backgroundExecutorProvider is set to executorProvider
     Truth.assertThat(builder.getExecutorProvider()).isSameInstanceAs(executorProvider);
@@ -188,6 +192,7 @@ class ClientSettingsTest {
     Truth.assertThat(builder.getWatchdogCheckIntervalDuration())
         .isSameInstanceAs(watchdogCheckInterval);
     Truth.assertThat(builder.getQuotaProjectId()).isEqualTo(quotaProjectId);
+    Truth.assertThat(builder.getApiKey()).isEqualTo(apiKey);
 
     String builderString = builder.toString();
     Truth.assertThat(builderString).contains("executorProvider");
@@ -200,6 +205,7 @@ class ClientSettingsTest {
     Truth.assertThat(builderString).contains("watchdogProvider");
     Truth.assertThat(builderString).contains("watchdogCheckInterval");
     Truth.assertThat(builderString).contains("quotaProjectId");
+    Truth.assertThat(builderString).contains("apiKey");
   }
 
   @Test

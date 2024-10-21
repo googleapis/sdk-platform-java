@@ -1,14 +1,13 @@
 # Generate a repository containing GAPIC Client Libraries
 
 The script, `entry_point.py`, allows you to generate a repository containing
-GAPIC client libraries with googleapis commit history (a monorepo, for example,
+GAPIC client libraries with change history (a monorepo, for example, 
 google-cloud-java) from a configuration file.
 
 ## Environment
 
 - OS: Linux
 - Java runtime environment (8 or above)
-- Apache Maven (used in formatting source code)
 - Python (3.11.6 or above)
 - Docker 
 - Git
@@ -48,6 +47,22 @@ right version for each library.
 Please refer [here](go/java-client-releasing#versionstxt-manifest) for more info
 of versions.txt.
 
+### Api definitions path (`api_definitions_path`), optional
+
+The path to where the api definition (proto, service yaml) resides.
+
+The default value is the current working directory when running the script.
+
+Note that you need not only the protos defined the service, but also the transitive
+dependencies of those protos.
+Any missing dependencies will cause `File not found` error.
+
+For example, if your service is defined in `example_service.proto` and it imports
+`google/api/annotations.proto`, you need the `annotations.proto` resides in a
+folder that has the exact structure of the import statement (`google/api` in this
+case), and set `api_definitions_path` to the path contains the root folder (`google`
+in this case).
+
 ## Output of `entry_point.py`
 
 ### GAPIC libraries
@@ -74,11 +89,13 @@ will be created/modified:
 | pom.xml (repo root dir)             | Always generated from inputs                                             |
 | versions.txt                        | New entries will be added if they don’t exist                            |
 
-### googleapis commit history
+### Change history
 
 If both `baseline_generation_config` and `current_generation_config` are
-specified, and they contain different googleapis commit, the commit history will
-be generated into `pr_description.txt` in the `repository_path`.
+specified and the contents are different, the changed contents will be generated
+into `pr_description.txt` in the `repository_path`.
+In addition, if the `googleapis_commitish` is different, the googleapis commit
+history will be generated.
 
 ## Configuration to generate a repository
 
@@ -96,7 +113,7 @@ They are shared by library level parameters.
 | gapic_generator_version |    No    | set through env variable if not specified    |
 | protoc_version          |    No    | inferred from the generator if not specified |
 | grpc_version            |    No    | inferred from the generator if not specified |
-| googleapis-commitish    |   Yes    |                                              |
+| googleapis_commitish    |   Yes    |                                              |
 | libraries_bom_version   |    No    | empty string if not specified                |
 
 ### Library level parameters
@@ -183,14 +200,16 @@ The virtual environment can be installed to any folder, usually it is recommende
 2. Assuming the virtual environment is installed under `sdk-platform-java`. 
 Run the following command under the root folder of `sdk-platform-java` to install the dependencies of `library_generation`
 
-```bash
-python -m pip install -r library_generation/requirements.txt
-```
+   ```bash
+   python -m pip install -r library_generation/requirements.txt
+   ```
 
 3. Run the following command to install `library_generation` as a module, which allows the `library_generation` module to be imported from anywhere
-```bash
-python -m pip install library_generation/
-```
+    ```bash
+    python -m pip install library_generation/
+    ```
+
+4. Download api definition to a local directory
 
 ## An example to generate a repository using `entry_point.py`
 
@@ -198,7 +217,8 @@ python -m pip install library_generation/
 python library_generation/entry_point.py generate \
 --baseline-generation-config-path=/path/to/baseline_config_file \
 --current-generation-config-path=/path/to/current_config_file \
---repository-path=path/to/repository
+--repository-path=path/to/repository \
+--api-definitions-path=path/to/api_definition
 ```
 If you run `entry_point.py` with the example [configuration](#an-example-of-generation-configuration)
 shown above, the repository structure is:

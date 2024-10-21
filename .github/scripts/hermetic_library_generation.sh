@@ -84,29 +84,43 @@ git show "${target_branch}":"${generation_config}" > "${baseline_generation_conf
 # get .m2 folder so it's mapped into the docker container
 m2_folder=$(dirname "$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)")
 
+# download api definitions from googleapis repository
+googleapis_commitish=$(grep googleapis_commitish "${generation_config}" | cut -d ":" -f 2 | xargs)
+api_def_dir=$(mktemp -d)
+git clone https://github.com/googleapis/googleapis.git "${api_def_dir}"
+pushd "${api_def_dir}"
+git checkout "${googleapis_commitish}"
+popd
+
 # run hermetic code generation docker image.
 docker run \
   --rm \
+  --quiet \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):${workspace_name}" \
   -v "${m2_folder}":/home/.m2 \
+  -v "${api_def_dir}:${workspace_name}/googleapis" \
   -e GENERATOR_VERSION="${image_tag}" \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
   --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
-  --current-generation-config-path="${workspace_name}/${generation_config}"
+  --current-generation-config-path="${workspace_name}/${generation_config}" \
+  --api-definitions-path="${workspace_name}/googleapis"
+
+# remove api definitions after generation
+rm -rf "${api_def_dir}"
 
 # commit the change to the pull request.
 rm -rdf output googleapis "${baseline_generation_config}"
 git add --all -- ':!pr_description.txt' ':!hermetic_library_generation.sh'
 changed_files=$(git diff --cached --name-only)
-if [[ "${changed_files}" == "" ]]; then
-    echo "There is no generated code change."
-    echo "Skip committing to the pull request."
-    exit 0
+if [[ "${changed_files}" != "" ]]; then
+    echo "Commit changes..."
+    git commit -m "${message}"
+    git push
+else
+    echo "There is no generated code change, skip commit."
 fi
 
-git commit -m "${message}"
-git push
 # set pr body if pr_description.txt is generated.
 if [[ -f "pr_description.txt" ]]; then
   pr_num=$(gh pr list -s open -H "${current_branch}" -q . --json number | jq ".[] | .number")
