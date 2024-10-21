@@ -59,6 +59,7 @@ runs:
     shell: bash
     run: |
       cd "${GITHUB_WORKSPACE}"
+      ls -l hermetic_build
       pip install hermetic_build/common
       pip install hermetic_build/release_note_generation
   - name: Generate changed libraries
