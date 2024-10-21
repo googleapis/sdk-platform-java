@@ -46,11 +46,10 @@ runs:
       set -x
       # repository root
       cd ${{ github.action_path }}/../../
-      rsync -a \
-        --exclude=hermetic_build/library_generation/ \
-        --exclude=hermetic_build/common/tests/ \
-        --exclude=hermetic_build/release_note_generation/tests/ \
-        hermetic_build/ "${GITHUB_WORKSPACE}/"
+      rsync -vR \
+        --exclude=library_generation \
+        --exclude=tests \
+        hermetic_build "${GITHUB_WORKSPACE}"
       ls -l "${GITHUB_WORKSPACE}/hermetic_build"
   - name: Copy shell script
     shell: bash
