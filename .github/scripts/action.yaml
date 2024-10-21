@@ -46,7 +46,7 @@ runs:
       set -x
       # repository root
       cd ${{ github.action_path }}/../../
-      rsync -vR \
+      rsync -rvR \
         --exclude=library_generation \
         --exclude=tests \
         hermetic_build "${GITHUB_WORKSPACE}"
