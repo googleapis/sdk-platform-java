@@ -40,18 +40,27 @@ runs:
   - uses: actions/setup-python@v5
     with:
       python-version: 3.12
-  - name: Install dependency
+  - name: Copy python script
     shell: bash
     run: |
       # repository root
       cd ${{ github.action_path }}/../../
-      pip install hermetic_build/common
-      pip install hermetic_build/release_note_generation
+      rsync -av \
+        --exclude=hermetic_build/library_generation \
+        --exclude=hermetic_build/common/tests \
+        --exclude=hermetic_build/release_note_generation/tests \
+        hermetic_build/ "${GITHUB_WORKSPACE}"
   - name: Copy shell script
     shell: bash
     run: |
       cd ${{ github.action_path }}
-      cp hermetic_library_generation.sh $GITHUB_WORKSPACE
+      cp hermetic_library_generation.sh "${GITHUB_WORKSPACE}"
+  - name: Install python package
+    shell: bash
+    run: |
+      cd "${GITHUB_WORKSPACE}"
+      pip install hermetic_build/common
+      pip install hermetic_build/release_note_generation
   - name: Generate changed libraries
     shell: bash
     run: |
