@@ -54,16 +54,22 @@ import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.UnknownException;
+import com.google.api.gax.tracing.ApiTracer;
+import com.google.api.gax.tracing.ApiTracerFactory;
+import com.google.api.gax.tracing.BaseApiTracer;
+import com.google.api.gax.tracing.SpanName;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import com.google.protobuf.TypeRegistry;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import org.threeten.bp.Duration;
 
 class RetryingTest {
 
@@ -130,6 +136,27 @@ class RetryingTest {
 
   @Test
   void retry() {
+    // we use a custom tracer to confirm whether the retrials are being recorded.
+    AtomicInteger tracerFailedAttempts = new AtomicInteger();
+    ApiTracer tracer =
+        new BaseApiTracer() {
+          @Override
+          public void attemptFailed(Throwable error, Duration delay) {
+            tracerFailedAttempts.incrementAndGet();
+            super.attemptFailed(error, delay);
+          }
+        };
+    ApiTracerFactory tracerFactory =
+        new ApiTracerFactory() {
+          @Override
+          public ApiTracer newTracer(
+              ApiTracer parent, SpanName spanName, OperationType operationType) {
+            return tracer;
+          }
+        };
+    clientContext = clientContext.toBuilder().setTracerFactory(tracerFactory).build();
+
+    // set a retriable that will fail 3 times before returning "2"
     ImmutableSet<StatusCode.Code> retryable = ImmutableSet.of(Code.UNAVAILABLE);
     Mockito.when(callInt.futureCall((Integer) any(), (ApiCallContext) any()))
         .thenReturn(ApiFutures.<Integer>immediateFailedFuture(HTTP_SERVICE_UNAVAILABLE_EXCEPTION))
@@ -143,6 +170,7 @@ class RetryingTest {
         HttpJsonCallableFactory.createUnaryCallable(
             callInt, callSettings, httpJsonCallSettings, clientContext);
     assertThat(callable.call(initialRequest)).isEqualTo(2);
+    assertThat(tracerFailedAttempts.get()).isEqualTo(3);
 
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -263,7 +291,8 @@ class RetryingTest {
     UnaryCallable<Integer, Integer> callable =
         HttpJsonCallableFactory.createUnaryCallable(
             callInt, callSettings, httpJsonCallSettings, clientContext);
-    ApiException exception = assertThrows(ApiException.class, () -> callable.call(initialRequest));
+    UnknownException exception =
+        assertThrows(UnknownException.class, () -> callable.call(initialRequest));
     assertThat(exception).hasCauseThat().isSameInstanceAs(throwable);
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
