@@ -97,6 +97,8 @@ class RetryingTest {
   private AtomicInteger tracerAttempts;
   private AtomicInteger tracerAttemptsFailed;
   private AtomicBoolean tracerOperationFailed;
+  private AtomicBoolean tracerFailedRetriesExhausted;
+
   private RecordingScheduler executor;
   private FakeApiClock fakeClock;
   private ClientContext clientContext;
@@ -125,6 +127,7 @@ class RetryingTest {
     tracerAttempts = new AtomicInteger();
     tracerAttemptsFailed = new AtomicInteger();
     tracerOperationFailed = new AtomicBoolean(false);
+    tracerFailedRetriesExhausted = new AtomicBoolean(false);
     fakeClock = new FakeApiClock(System.nanoTime());
     executor = RecordingScheduler.create(fakeClock);
     clientContext =
@@ -161,6 +164,7 @@ class RetryingTest {
     assertThat(tracerAttemptsFailed.get()).isEqualTo(3);
     assertThat(tracerAttempts.get()).isEqualTo(4);
     assertThat(tracerOperationFailed.get()).isEqualTo(false);
+    assertThat(tracerFailedRetriesExhausted.get()).isEqualTo(false);
 
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -223,7 +227,7 @@ class RetryingTest {
     assertThrows(ApiException.class, () -> callable.call(initialRequest));
     assertThat(tracerAttempts.get()).isEqualTo(2);
     assertThat(tracerAttemptsFailed.get()).isEqualTo(1);
-    assertThat(tracerOperationFailed.get()).isEqualTo(true);
+    assertThat(tracerFailedRetriesExhausted.get()).isEqualTo(true);
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(callInt, atLeastOnce()).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));
@@ -362,7 +366,7 @@ class RetryingTest {
     // attempts and that the operation was considered as failed.
     assertThat(tracerAttemptsFailed.get()).isGreaterThan(0);
     assertThat(tracerAttemptsFailed.get()).isEqualTo(tracerAttempts.get() - 1);
-    assertThat(tracerOperationFailed.get()).isEqualTo(true);
+    assertThat(tracerFailedRetriesExhausted.get()).isEqualTo(true);
     assertThat(exception).hasCauseThat().isInstanceOf(ApiException.class);
     assertThat(exception).hasCauseThat().hasMessageThat().contains("Unavailable");
     // Capture the argument passed to futureCall
@@ -466,6 +470,12 @@ class RetryingTest {
           public void operationFailed(Throwable error) {
             tracerOperationFailed.set(true);
             super.operationFailed(error);
+          }
+
+          @Override
+          public void attemptFailedRetriesExhausted(Throwable error) {
+            tracerFailedRetriesExhausted.set(true);
+            super.attemptFailedRetriesExhausted(error);
           }
         };
     ApiTracerFactory tracerFactory = (parent, spanName, operationType) -> tracer;
