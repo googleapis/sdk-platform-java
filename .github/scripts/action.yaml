@@ -45,18 +45,17 @@ runs:
     run: |
       # repository root
       cd ${{ github.action_path }}/../../
-      ls -l hermetic_build
       rsync -a \
-        --exclude=hermetic_build/library_generation \
-        --exclude=hermetic_build/common/tests \
-        --exclude=hermetic_build/release_note_generation/tests \
-        hermetic_build/ "${GITHUB_WORKSPACE}"
+        --exclude=hermetic_build/library_generation/ \
+        --exclude=hermetic_build/common/tests/ \
+        --exclude=hermetic_build/release_note_generation/tests/ \
+        hermetic_build/ "${GITHUB_WORKSPACE}/"
   - name: Copy shell script
     shell: bash
     run: |
       cd ${{ github.action_path }}
       cp hermetic_library_generation.sh "${GITHUB_WORKSPACE}"
-  - name: Install python package
+  - name: Install python packages
     shell: bash
     run: |
       cd "${GITHUB_WORKSPACE}"
