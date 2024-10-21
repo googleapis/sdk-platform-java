@@ -43,9 +43,10 @@ runs:
   - name: Install dependency
     shell: bash
     run: |
-      cd ${{ github.action_path }}/../../hermetic_build
-      pip install common
-      pip install release_note_generation
+      # repository root
+      cd ${{ github.action_path }}/../../
+      pip install hermetic_build/common
+      pip install hermetic_build/release_note_generation
   - name: Copy shell script
     shell: bash
     run: |
