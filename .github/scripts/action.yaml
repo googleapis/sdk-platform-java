@@ -58,8 +58,12 @@ runs:
     shell: bash
     run: |
       cd "${GITHUB_WORKSPACE}"
+      pip install --upgrade pip
+      pip install --require-hashes -r hermetic_build/common/requirements.txt
       pip install hermetic_build/common
+      pip install --require-hashes -r hermetic_build/library_generation/requirements.txt
       pip install hermetic_build/library_generation
+      pip install --require-hashes -r hermetic_build/release_note_generation/requirements.txt
       pip install hermetic_build/release_note_generation
   - name: Generate changed libraries
     shell: bash
