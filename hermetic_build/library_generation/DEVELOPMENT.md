@@ -21,6 +21,7 @@ code declared in a "golden branch" of the repo.
 It requires docker and python 3.x to be installed.
 
 ```
+python -m pip install --require-hashes -r requirements.txt
 python -m pip install .
 python -m unittest tests/integration_tests.py
 ```

@@ -193,7 +193,9 @@ The virtual environment can be installed to any folder, usually it is recommende
 Run the following command under the root folder of `sdk-platform-java` to install `library_generation` and its dependencies.
 
    ```bash
+   python -m pip install --require-hashes -r hermetic_build/common/requirements.txt
    python -m pip install hermetic_build/common
+   python -m pip install --require-hashes -r hermetic_build/library_generation/requirements.txt
    python -m pip install hermetic_build/library_generation
    ```
 
