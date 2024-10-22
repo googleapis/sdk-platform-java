@@ -14,7 +14,7 @@
 
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
-FROM ggcr.io/cloud-devrel-public-resources/java21@sha256:2ceff5eeea72260258df56d42e44ed413e52ee421c1b77393c5f2c9c4d7c41da AS ggj-build
+FROM gcr.io/cloud-devrel-public-resources/java21@sha256:2ceff5eeea72260258df56d42e44ed413e52ee421c1b77393c5f2c9c4d7c41da AS ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
