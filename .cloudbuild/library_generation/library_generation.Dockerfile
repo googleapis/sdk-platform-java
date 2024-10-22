@@ -80,9 +80,9 @@ RUN python -m pip install --upgrade pip
 
 # install main scripts as a python package
 WORKDIR /
-RUN pip install --require-hashes -r src/common/requirements.txt
+RUN python -m pip install --require-hashes -r src/common/requirements.txt
 RUN python -m pip install src/common
-RUN pip install --require-hashes -r src/library_generation/requirements.txt
+RUN python -m pip install --require-hashes -r src/library_generation/requirements.txt
 RUN python -m pip install src/library_generation
 
 # Install nvm with node and npm
