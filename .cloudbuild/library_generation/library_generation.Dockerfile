@@ -14,12 +14,12 @@
 
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
-FROM gcr.io/cloud-devrel-public-resources/java21 AS ggj-build
+FROM gcr.io/cloud-devrel-public-resources/java21@sha256:2ceff5eeea72260258df56d42e44ed413e52ee421c1b77393c5f2c9c4d7c41da AS ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.47.1-SNAPSHOT" 
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.48.0" 
 # {x-version-update-end}
 
 RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
@@ -27,7 +27,7 @@ RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_
   "./gapic-generator-java.jar"
 
 # build from the root of this repo:
-FROM gcr.io/cloud-devrel-public-resources/python
+FROM gcr.io/cloud-devrel-public-resources/python@sha256:9c5ea427632f195ad164054831968389d86fdde4a15abca651f3fcb2a71268cb
 
 SHELL [ "/bin/bash", "-c" ]
 
