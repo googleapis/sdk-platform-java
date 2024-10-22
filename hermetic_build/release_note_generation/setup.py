@@ -10,5 +10,5 @@ setup(
     python_requires=">=3.12",
     package_dir={
         "release_note_generation": ".",
-    }
+    },
 )
