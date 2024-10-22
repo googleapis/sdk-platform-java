@@ -1,4 +1,4 @@
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=googleapis_gapic-generator-java&metric=coverage)](https://sonarcloud.io/summary/new_code?id=googleapis_gapic-generator-java)
+#sudo su && [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=googleapis_gapic-generator-java&metric=coverage)](https://sonarcloud.io/summary/new_code?id=googleapis_gapic-generator-java)
 
 This repository has been renamed to `sdk-platfom-java`. 
 For developers, please update the repo's URL in repository clones (this is not actually strictly required because redirection works).
