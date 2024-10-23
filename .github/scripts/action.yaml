@@ -37,6 +37,17 @@ inputs:
 runs:
   using: "composite"
   steps:
+  - name: Authenticate
+    uses: google-github-actions/auth@v2
+    with:
+      workload_identity_provider: projects/122457793624/locations/us-central1/workloadIdentityPools/github_actions_pool/providers/github_provider
+      service_account: wif-github-actions@java-hermetic-build-prod.iam.gserviceaccount.com
+  - name: Set up Cloud SDK
+    uses: google-github-actions/setup-gcloud@v2
+  - name: Configure Artifact registry
+    shell: bash
+    run: |
+      gcloud auth configure-docker us-docker.pkg.dev
   - name: Copy shell script
     shell: bash
     run: |
