@@ -1,5 +1,5 @@
 > [!IMPORTANT]
-> All examples assume you are inside the `library_generation` folder.
+> All examples assume you are inside the `hermetic_build` folder.
 
 
 # Linting
@@ -21,9 +21,9 @@ code declared in a "golden branch" of the repo.
 It requires docker and python 3.x to be installed.
 
 ```
-python -m pip install --require-hashes -r requirements.txt
-python -m pip install .
-python -m unittest tests/integration_tests.py
+python -m pip install --require-hashes -r library_generation/requirements.txt
+python -m pip install library_generation
+python -m unittest library_generation/tests/integration_tests.py
 ```
 
 # Running the unit tests
@@ -34,7 +34,7 @@ Every unit test script ends with `unit_tests.py`.
 To avoid them specifying them individually, we can use the following command:
 
 ```bash
-python -m unittest discover -s tests/ -p "*unit_tests.py"
+python -m unittest discover -s library_generation/tests/ -p "*unit_tests.py"
 ```
 
 > [!NOTE]
@@ -132,7 +132,7 @@ python -m pip install .
 
 ### Run the script
 ```
-python cli/entry_point.py generate \
+python library_generation/cli/entry_point.py generate \
    --repository-path="${path_to_repo}" \
    --api-definitions-path="${api_definitions_path}"
 ```
