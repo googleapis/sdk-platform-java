@@ -45,11 +45,12 @@ RUN apt-get update && apt-get install -y \
 	&& apt-get clean
 
 # copy source code
-COPY library_generation /src
+COPY hermetic_build/common /src/common
+COPY hermetic_build/library_generation /src/library_generation
 
 # install protoc
 WORKDIR /protoc
-RUN source /src/utils/utilities.sh \
+RUN source /src/library_generation/utils/utilities.sh \
 	&& download_protoc "${PROTOC_VERSION}" "${OS_ARCHITECTURE}"
 # we indicate protoc is available in the container via env vars
 ENV DOCKER_PROTOC_LOCATION=/protoc
@@ -57,7 +58,7 @@ ENV DOCKER_PROTOC_VERSION="${PROTOC_VERSION}"
 
 # install grpc
 WORKDIR /grpc
-RUN source /src/utils/utilities.sh \
+RUN source /src/library_generation/utils/utilities.sh \
 	&& download_grpc_plugin "${GRPC_VERSION}" "${OS_ARCHITECTURE}"
 # similar to protoc, we indicate grpc is available in the container via env vars
 ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java-${GRPC_VERSION}-${OS_ARCHITECTURE}.exe"
@@ -71,16 +72,18 @@ ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
 RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
 
-#  use python 3.11 (the base image has several python versions; here we define the default one)
+#  use python 3.12 (the base image has several python versions; here we define the default one)
 RUN rm $(which python3)
-RUN ln -s $(which python3.11) /usr/local/bin/python
-RUN ln -s $(which python3.11) /usr/local/bin/python3
+RUN ln -s $(which python3.12) /usr/local/bin/python
+RUN ln -s $(which python3.12) /usr/local/bin/python3
 RUN python -m pip install --upgrade pip
 
 # install main scripts as a python package
-WORKDIR /src
-RUN python -m pip install -r requirements.txt
-RUN python -m pip install .
+WORKDIR /
+RUN python -m pip install --require-hashes -r src/common/requirements.txt
+RUN python -m pip install src/common
+RUN python -m pip install --require-hashes -r src/library_generation/requirements.txt
+RUN python -m pip install src/library_generation
 
 # Install nvm with node and npm
 ENV NODE_VERSION 20.12.0
@@ -120,4 +123,4 @@ RUN chmod -R a+rw /home
 RUN chmod -R a+rx /home/.nvm
 
 WORKDIR /workspace
-ENTRYPOINT [ "python", "/src/cli/entry_point.py", "generate" ]
+ENTRYPOINT [ "python", "/src/library_generation/cli/entry_point.py", "generate" ]
