@@ -11,12 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
-import shutil
+import tempfile
 from enum import Enum
 from typing import Optional
 from git import Commit, Repo
-
 from common.model.gapic_inputs import parse_build_str
 from common.model.generation_config import GenerationConfig
 from common.model.library_config import LibraryConfig
@@ -108,25 +106,22 @@ class ConfigChange:
         :param repo_url: the repository contains the commit history.
         :return: QualifiedCommit objects.
         """
-        tmp_dir = sh_util("get_output_folder")
-        shutil.rmtree(tmp_dir, ignore_errors=True)
-        os.mkdir(tmp_dir)
-        # we only need commit history, thus shadow clone is enough.
-        repo = Repo.clone_from(url=repo_url, to_path=tmp_dir, filter=["blob:none"])
-        commit = repo.commit(self.current_config.googleapis_commitish)
-        proto_paths = self.current_config.get_proto_path_to_library_name()
-        qualified_commits = []
-        while str(commit.hexsha) != self.baseline_config.googleapis_commitish:
-            qualified_commit = ConfigChange.__create_qualified_commit(
-                proto_paths=proto_paths, commit=commit
-            )
-            if qualified_commit is not None:
-                qualified_commits.append(qualified_commit)
-            commit_parents = commit.parents
-            if len(commit_parents) == 0:
-                break
-            commit = commit_parents[0]
-        shutil.rmtree(tmp_dir, ignore_errors=True)
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            # we only need commit history, thus shadow clone is enough.
+            repo = Repo.clone_from(url=repo_url, to_path=tmp_dir, filter=["blob:none"])
+            commit = repo.commit(self.current_config.googleapis_commitish)
+            proto_paths = self.current_config.get_proto_path_to_library_name()
+            qualified_commits = []
+            while str(commit.hexsha) != self.baseline_config.googleapis_commitish:
+                qualified_commit = ConfigChange.__create_qualified_commit(
+                    proto_paths=proto_paths, commit=commit
+                )
+                if qualified_commit is not None:
+                    qualified_commits.append(qualified_commit)
+                commit_parents = commit.parents
+                if len(commit_parents) == 0:
+                    break
+                commit = commit_parents[0]
         return qualified_commits
 
     def __get_library_names_from_qualified_commits(self) -> list[str]:
