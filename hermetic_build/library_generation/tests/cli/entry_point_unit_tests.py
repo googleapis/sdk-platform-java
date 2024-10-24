@@ -18,7 +18,7 @@ from click.testing import CliRunner
 from library_generation.cli.entry_point import (
     generate,
     validate_generation_config,
-    __generate_repo_and_pr_description_impl as generate_impl,
+    __generate_repo_impl as generate_impl,
 )
 from common.model.generation_config import from_yaml
 

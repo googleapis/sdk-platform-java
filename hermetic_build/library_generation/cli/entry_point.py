@@ -16,9 +16,9 @@ import sys
 from typing import Optional
 import click as click
 from library_generation.generate_repo import generate_from_yaml
-from library_generation.model.config_change import ConfigChange
+from common.model.config_change import ConfigChange
 from common.model.generation_config import from_yaml
-from library_generation.utils.generation_config_comparator import compare_config
+from common.utils.generation_config_comparator import compare_config
 
 
 @click.group(invoke_without_command=False)
@@ -115,7 +115,7 @@ def generate(
 
     Raise FileNotFoundError if the default config does not exist.
     """
-    __generate_repo_and_pr_description_impl(
+    __generate_repo_impl(
         baseline_generation_config_path=baseline_generation_config_path,
         current_generation_config_path=current_generation_config_path,
         library_names=library_names,
@@ -124,7 +124,7 @@ def generate(
     )
 
 
-def __generate_repo_and_pr_description_impl(
+def __generate_repo_impl(
     baseline_generation_config_path: str,
     current_generation_config_path: str,
     library_names: Optional[str],
@@ -133,7 +133,7 @@ def __generate_repo_and_pr_description_impl(
 ):
     """
     Implementation method for generate().
-    The decoupling of generate and __generate_repo_and_pr_description_impl is
+    The decoupling of generate and __generate_repo_impl is
     meant to allow testing of this implementation function.
     """
 
