@@ -763,7 +763,7 @@ class ITOtelMetrics {
             .setSuccess(BlockResponse.newBuilder().setContent("httpjsonBlockResponse"))
             .build();
 
-    grpcClient.block(blockRequest);
+    httpClient.block(blockRequest);
 
     List<MetricData> actualMetricDataList = getMetricDataList();
     verifyPointDataSum(actualMetricDataList, attemptCount);
