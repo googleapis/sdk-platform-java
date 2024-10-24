@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from click.testing import CliRunner
 import difflib
 import json
 import tempfile
@@ -22,7 +21,6 @@ import shutil
 import subprocess
 import unittest
 from pathlib import Path
-from common.cli.config_change import create
 from common.model.generation_config import GenerationConfig
 from common.model.generation_config import from_yaml
 from library_generation.tests.compare_poms import compare_xml
@@ -87,20 +85,21 @@ class IntegrationTest(unittest.TestCase):
                 config=config, library_names=library_names, repo_dest=repo_dest
             )
 
-            # noinspection PyTypeChecker
-            result = CliRunner().invoke(
-                create,
+            changed_libraries = subprocess.check_output(
                 [
+                    "python",
+                    f"{repo_root_dir}/hermetic_build/common/cli/config_change.py",
+                    "create",
                     f"--baseline-generation-config-path={config_location}/{baseline_config_name}",
                     f"--current-generation-config-path={config_location}/{current_config_name}",
-                ],
-            )
+                ]
+            ).decode()
             # 3. run entry_point.py in docker container
             self.__run_entry_point_in_docker_container(
                 repo_location=repo_location,
                 config_location=config_location,
-                baseline_config=baseline_config_name,
-                current_config=current_config_name,
+                generation_config=current_config_name,
+                library_names=changed_libraries,
                 api_definition=api_definitions_path,
             )
             # 4. compare generation result with golden files
@@ -298,8 +297,8 @@ class IntegrationTest(unittest.TestCase):
         cls,
         repo_location: str,
         config_location: str,
-        baseline_config: str,
-        current_config: str,
+        generation_config: str,
+        library_names: str,
         api_definition: str,
     ):
         # we use the calling user to prevent the mapped volumes from changing
@@ -325,8 +324,8 @@ class IntegrationTest(unittest.TestCase):
                 "-w",
                 "/workspace/repo",
                 image_tag,
-                f"--baseline-generation-config-path=/workspace/config/{baseline_config}",
-                f"--current-generation-config-path=/workspace/config/{current_config}",
+                f"--generation-config-path=/workspace/config/{generation_config}",
+                f"--library-names={library_names}",
                 f"--api-definitions-path=/workspace/api",
             ],
         )

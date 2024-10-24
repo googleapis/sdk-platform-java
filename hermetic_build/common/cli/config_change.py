@@ -49,7 +49,7 @@ def main(ctx):
 def create(
     baseline_generation_config_path: str,
     current_generation_config_path: str,
-) -> str:
+) -> None:
     """
     Compare baseline generation config and current generation config and
     generate changed library names (a comma separated string) based on current
@@ -73,8 +73,11 @@ def create(
         baseline_config=from_yaml(baseline_generation_config_path),
         current_config=from_yaml(current_generation_config_path),
     )
-
-    return ",".join(config_change.get_changed_libraries())
+    changed_libraries = config_change.get_changed_libraries()
+    if changed_libraries is None:
+        print("No changed library.")
+        return
+    click.echo(",".join(config_change.get_changed_libraries()))
 
 
 if __name__ == "__main__":

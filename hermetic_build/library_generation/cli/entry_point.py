@@ -16,9 +16,7 @@ import sys
 from typing import Optional
 import click as click
 from library_generation.generate_repo import generate_from_yaml
-from common.model.config_change import ConfigChange
-from common.model.generation_config import from_yaml
-from common.utils.generation_config_comparator import compare_config
+from common.model.generation_config import from_yaml, GenerationConfig
 
 
 @click.group(invoke_without_command=False)
@@ -30,18 +28,7 @@ def main(ctx):
 
 @main.command()
 @click.option(
-    "--baseline-generation-config-path",
-    required=False,
-    default=None,
-    type=str,
-    help="""
-    Absolute or relative path to a generation_config.yaml.
-    This config file is used for commit history generation, not library
-    generation.
-    """,
-)
-@click.option(
-    "--current-generation-config-path",
+    "--generation-config-path",
     required=False,
     default=None,
     type=str,
@@ -85,8 +72,7 @@ def main(ctx):
     """,
 )
 def generate(
-    baseline_generation_config_path: str,
-    current_generation_config_path: str,
+    generation_config_path: Optional[str],
     library_names: Optional[str],
     repository_path: str,
     api_definitions_path: str,
@@ -116,8 +102,7 @@ def generate(
     Raise FileNotFoundError if the default config does not exist.
     """
     __generate_repo_impl(
-        baseline_generation_config_path=baseline_generation_config_path,
-        current_generation_config_path=current_generation_config_path,
+        generation_config_path=generation_config_path,
         library_names=library_names,
         repository_path=repository_path,
         api_definitions_path=api_definitions_path,
@@ -125,8 +110,7 @@ def generate(
 
 
 def __generate_repo_impl(
-    baseline_generation_config_path: str,
-    current_generation_config_path: str,
+    generation_config_path: Optional[str],
     library_names: Optional[str],
     repository_path: str,
     api_definitions_path: str,
@@ -138,80 +122,42 @@ def __generate_repo_impl(
     """
 
     default_generation_config_path = f"{os.getcwd()}/generation_config.yaml"
-
-    if (
-        baseline_generation_config_path is None
-        and current_generation_config_path is None
-    ):
-        if not os.path.isfile(default_generation_config_path):
-            raise FileNotFoundError(
-                f"{default_generation_config_path} does not exist. "
-                "A valid generation config has to be passed in as "
-                "current_generation_config or exist in the current working "
-                "directory."
-            )
-        current_generation_config_path = default_generation_config_path
-    elif current_generation_config_path is None:
+    if generation_config_path is None:
+        generation_config_path = default_generation_config_path
+    generation_config_path = os.path.abspath(generation_config_path)
+    if not os.path.isfile(generation_config_path):
         raise FileNotFoundError(
-            "current_generation_config is not specified when "
-            "baseline_generation_config is specified. "
-            "current_generation_config should be the source of truth of "
-            "library generation."
+            f"Generation config {generation_config_path} does not exist."
         )
-
-    current_generation_config_path = os.path.abspath(current_generation_config_path)
     repository_path = os.path.abspath(repository_path)
     api_definitions_path = os.path.abspath(api_definitions_path)
-    include_library_names = _parse_library_name_from(library_names)
-
-    if not baseline_generation_config_path:
-        # Execute selective generation based on current_generation_config if
-        # baseline_generation_config is not specified.
-        generate_from_yaml(
-            config=from_yaml(current_generation_config_path),
-            repository_path=repository_path,
-            api_definitions_path=api_definitions_path,
-            target_library_names=include_library_names,
-        )
-        return
-
-    # Compare two generation configs to get changed libraries.
-    baseline_generation_config_path = os.path.abspath(baseline_generation_config_path)
-    config_change = compare_config(
-        baseline_config=from_yaml(baseline_generation_config_path),
-        current_config=from_yaml(current_generation_config_path),
-    )
-    # Pass None if we want to fully generate the repository.
-    changed_library_names = (
-        config_change.get_changed_libraries()
-        if not _needs_full_repo_generation(config_change=config_change)
-        else None
-    )
-    # Include library names takes preference if specified.
-    target_library_names = (
-        include_library_names
-        if include_library_names is not None
-        else changed_library_names
+    generation_config = from_yaml(generation_config_path)
+    include_library_names = _parse_library_name_from(
+        includes=library_names, generation_config=generation_config
     )
     generate_from_yaml(
-        config=config_change.current_config,
+        config=generation_config,
         repository_path=repository_path,
         api_definitions_path=api_definitions_path,
-        target_library_names=target_library_names,
+        target_library_names=include_library_names,
     )
 
 
-def _needs_full_repo_generation(config_change: ConfigChange) -> bool:
+def _needs_full_repo_generation(generation_config: GenerationConfig) -> bool:
     """
     Whether you should need a full repo generation, i.e., generate all
     libraries in the generation configuration.
     """
-    current_config = config_change.current_config
-    return not current_config.is_monorepo() or current_config.contains_common_protos()
+    return (
+        not generation_config.is_monorepo()
+        or generation_config.contains_common_protos()
+    )
 
 
-def _parse_library_name_from(includes: str) -> Optional[list[str]]:
-    if includes is None:
+def _parse_library_name_from(
+    includes: str, generation_config: GenerationConfig
+) -> Optional[list[str]]:
+    if includes is None or _needs_full_repo_generation(generation_config):
         return None
     return [library_name.strip() for library_name in includes.split(",")]
 
