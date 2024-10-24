@@ -16,7 +16,7 @@ from typing import Optional
 import click as click
 from release_note_generation.generate_pr_description import generate_pr_descriptions
 from common.model.generation_config import from_yaml
-from library_generation.utils.generation_config_comparator import compare_config
+from common.utils.generation_config_comparator import compare_config
 
 
 @click.group(invoke_without_command=False)
