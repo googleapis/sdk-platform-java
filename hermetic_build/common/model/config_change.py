@@ -20,8 +20,7 @@ from git import Commit, Repo
 from common.model.gapic_inputs import parse_build_str
 from common.model.generation_config import GenerationConfig
 from common.model.library_config import LibraryConfig
-from library_generation.utils.utilities import sh_util
-from library_generation.utils.proto_path_utils import find_versioned_proto_path
+from common.utils.proto_path_utils import find_versioned_proto_path
 
 INSERTIONS = "insertions"
 LINES = "lines"

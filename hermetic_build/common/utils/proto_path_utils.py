@@ -15,15 +15,19 @@
 import re
 
 
-def remove_version_from(proto_path: str) -> str:
+def find_versioned_proto_path(proto_path: str) -> str:
     """
-    Remove the version of a proto_path
-    :param proto_path: versioned proto_path
-    :return: the proto_path without version
+    Returns a versioned proto_path from a given proto_path; or proto_path itself
+    if it doesn't contain a versioned proto_path.
+    :param proto_path: a proto file path
+    :return: the versioned proto_path
     """
-    version_pattern = "^v[1-9]"
-    index = proto_path.rfind("/")
-    version = proto_path[index + 1 :]
-    if re.match(version_pattern, version):
-        return proto_path[:index]
+    version_regex = re.compile(r"^v[1-9].*")
+    directories = proto_path.split("/")
+    for directory in directories:
+        result = version_regex.search(directory)
+        if result:
+            version = result[0]
+            idx = proto_path.find(version)
+            return proto_path[:idx] + version
     return proto_path
