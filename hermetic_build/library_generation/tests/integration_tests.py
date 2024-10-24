@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from click.testing import CliRunner
 import difflib
 import json
 import tempfile
@@ -21,6 +22,7 @@ import shutil
 import subprocess
 import unittest
 from pathlib import Path
+from common.cli.config_change import create
 from common.model.generation_config import GenerationConfig
 from common.model.generation_config import from_yaml
 from library_generation.tests.compare_poms import compare_xml
@@ -83,6 +85,15 @@ class IntegrationTest(unittest.TestCase):
             library_names = self.__get_library_names_from_config(config)
             self.__prepare_golden_files(
                 config=config, library_names=library_names, repo_dest=repo_dest
+            )
+
+            # noinspection PyTypeChecker
+            result = CliRunner().invoke(
+                create,
+                [
+                    f"--baseline-generation-config-path={config_location}/{baseline_config_name}",
+                    f"--current-generation-config-path={config_location}/{current_config_name}",
+                ],
             )
             # 3. run entry_point.py in docker container
             self.__run_entry_point_in_docker_container(
