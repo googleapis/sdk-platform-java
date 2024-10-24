@@ -297,9 +297,7 @@ class RetryingTest {
     UnaryCallable<Integer, Integer> callable =
         HttpJsonCallableFactory.createUnaryCallable(
             callInt, callSettings, httpJsonCallSettings, clientContext);
-    // Should an unexpected RuntimeException be received as an UnknownException?
-    UnknownException exception =
-        assertThrows(UnknownException.class, () -> callable.call(initialRequest));
+    ApiException exception = assertThrows(ApiException.class, () -> callable.call(initialRequest));
     assertThat(tracerAttempts.get()).isEqualTo(1);
     assertThat(tracerAttemptsFailed.get()).isEqualTo(0);
     assertThat(tracerOperationFailed.get()).isEqualTo(true);
