@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.49.0](https://github.com/googleapis/sdk-platform-java/compare/v2.48.0...v2.49.0) (2024-10-24)
+
+
+### Features
+
+* Move release note generation to a sub module ([#3299](https://github.com/googleapis/sdk-platform-java/issues/3299)) ([7d6d66a](https://github.com/googleapis/sdk-platform-java/commit/7d6d66a161db5edc538aec065405954acf4434c5))
+
 ## [2.48.0](https://github.com/googleapis/sdk-platform-java/compare/v2.47.0...v2.48.0) (2024-10-22)
 
 
