@@ -16,8 +16,8 @@ import unittest
 from common.model.gapic_config import GapicConfig
 from common.model.generation_config import GenerationConfig
 from common.model.library_config import LibraryConfig
-from library_generation.utils.generation_config_comparator import ChangeType
-from library_generation.utils.generation_config_comparator import compare_config
+from common.utils.generation_config_comparator import ChangeType
+from common.utils.generation_config_comparator import compare_config
 
 
 class GenerationConfigComparatorTest(unittest.TestCase):

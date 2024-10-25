@@ -13,7 +13,7 @@
 # limitations under the License.
 import unittest
 from unittest.mock import patch
-from library_generation.model.config_change import (
+from common.model.config_change import (
     ConfigChange,
     ChangeType,
     LibraryChange,

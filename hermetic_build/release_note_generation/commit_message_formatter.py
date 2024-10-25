@@ -14,7 +14,7 @@
 import re
 from git import Commit
 
-from library_generation.model.config_change import ConfigChange, ChangeType
+from common.model.config_change import ConfigChange, ChangeType
 from common.model.generation_config import (
     GAPIC_GENERATOR_VERSION,
     LIBRARIES_BOM_VERSION,
