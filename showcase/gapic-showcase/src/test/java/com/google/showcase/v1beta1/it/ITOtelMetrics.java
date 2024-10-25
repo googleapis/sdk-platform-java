@@ -729,7 +729,7 @@ class ITOtelMetrics {
 
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     httpJsonEchoSettingsBuilder
-        .echoSettings()
+        .blockSettings()
         .setRetrySettings(retrySettings)
         .setRetryableCodes(ImmutableSet.of(Code.DEADLINE_EXCEEDED));
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
