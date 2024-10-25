@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.49.0](https://github.com/googleapis/sdk-platform-java/compare/v2.48.0...v2.49.0) (2024-10-25)
+
+
+### Features
+
+* Move release note generation to a sub module ([#3299](https://github.com/googleapis/sdk-platform-java/issues/3299)) ([7d6d66a](https://github.com/googleapis/sdk-platform-java/commit/7d6d66a161db5edc538aec065405954acf4434c5))
+
+
+### Bug Fixes
+
+* add additional potential exceptions when retrieving protobuf manifest file to get version ([#3315](https://github.com/googleapis/sdk-platform-java/issues/3315)) ([ef9e518](https://github.com/googleapis/sdk-platform-java/commit/ef9e5189740ea5be46ad0d51c2ff554cd99ac162))
+
+
+### Dependencies
+
+* update dependency com.google.errorprone:error_prone_annotations to v2.35.1 ([#3316](https://github.com/googleapis/sdk-platform-java/issues/3316)) ([d7c290f](https://github.com/googleapis/sdk-platform-java/commit/d7c290f3e49c8ec7c480229e2c8ae38fcdcd99f6))
+
 ## [2.48.0](https://github.com/googleapis/sdk-platform-java/compare/v2.47.0...v2.48.0) (2024-10-22)
 
 
