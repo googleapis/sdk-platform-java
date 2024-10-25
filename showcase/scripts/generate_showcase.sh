@@ -6,8 +6,8 @@
 set -ex
 
 readonly SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-readonly LIB_GEN_SCRIPTS_DIR="${SCRIPT_DIR}/../../library_generation/"
-source "${LIB_GEN_SCRIPTS_DIR}/test/test_utilities.sh"
+readonly LIB_GEN_SCRIPTS_DIR="${SCRIPT_DIR}/../../hermetic_build/library_generation/"
+source "${LIB_GEN_SCRIPTS_DIR}/tests/test_utilities.sh"
 source "${LIB_GEN_SCRIPTS_DIR}/utils/utilities.sh"
 readonly perform_cleanup=$1
 
@@ -106,7 +106,7 @@ include_samples="false"
 rm -rdf output/showcase-output
 mkdir output/showcase-output
 set +e
-bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
+bash "${SCRIPT_DIR}/../../hermetic_build/library_generation/generate_library.sh" \
   --protoc_version "${protoc_version}" \
   --grpc_version "${grpc_version}" \
   --proto_path "schema/google/showcase/v1beta1" \
