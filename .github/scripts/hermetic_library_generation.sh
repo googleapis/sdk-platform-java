@@ -106,12 +106,16 @@ docker run \
   --current-generation-config-path="${workspace_name}/${generation_config}" \
   --api-definitions-path="${workspace_name}/googleapis"
 
+python hermetic_build/release_note_generation/cli/generate_release_note.py generate \
+  --baseline-generation-config-path="${baseline_generation_config}" \
+  --current-generation-config-path="${generation_config}"
+
 # remove api definitions after generation
 rm -rf "${api_def_dir}"
 
 # commit the change to the pull request.
 rm -rdf output googleapis "${baseline_generation_config}"
-git add --all -- ':!pr_description.txt' ':!hermetic_library_generation.sh'
+git add --all -- ':!pr_description.txt' ':!hermetic_library_generation.sh' ':!hermetic_build'
 changed_files=$(git diff --cached --name-only)
 if [[ "${changed_files}" != "" ]]; then
     echo "Commit changes..."

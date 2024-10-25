@@ -729,7 +729,7 @@ class ITOtelMetrics {
 
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     httpJsonEchoSettingsBuilder
-        .echoSettings()
+        .blockSettings()
         .setRetrySettings(retrySettings)
         .setRetryableCodes(ImmutableSet.of(Code.DEADLINE_EXCEEDED));
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
@@ -763,7 +763,7 @@ class ITOtelMetrics {
             .setSuccess(BlockResponse.newBuilder().setContent("httpjsonBlockResponse"))
             .build();
 
-    grpcClient.block(blockRequest);
+    httpClient.block(blockRequest);
 
     List<MetricData> actualMetricDataList = getMetricDataList();
     verifyPointDataSum(actualMetricDataList, attemptCount);
