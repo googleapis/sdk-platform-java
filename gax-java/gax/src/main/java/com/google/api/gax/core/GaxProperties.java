@@ -144,7 +144,7 @@ public class GaxProperties {
         Attributes attributes = jar.getManifest().getMainAttributes();
         return Optional.ofNullable(attributes.getValue("Bundle-Version"));
       }
-    } catch (URISyntaxException | IOException e) {
+    } catch (URISyntaxException | IOException | IllegalArgumentException | SecurityException | NullPointerException e) {
       // Unable to read Bundle-Version from manifest. Recover gracefully.
       return Optional.empty();
     }
