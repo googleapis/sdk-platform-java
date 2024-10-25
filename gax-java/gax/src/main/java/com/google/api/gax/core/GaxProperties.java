@@ -36,7 +36,6 @@ import com.google.protobuf.Any;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.jar.Attributes;
@@ -144,11 +143,7 @@ public class GaxProperties {
         Attributes attributes = jar.getManifest().getMainAttributes();
         return Optional.ofNullable(attributes.getValue("Bundle-Version"));
       }
-    } catch (URISyntaxException
-        | IOException
-        | IllegalArgumentException
-        | SecurityException
-        | NullPointerException e) {
+    } catch (Exception e) {
       // Unable to read Bundle-Version from manifest. Recover gracefully.
       return Optional.empty();
     }
