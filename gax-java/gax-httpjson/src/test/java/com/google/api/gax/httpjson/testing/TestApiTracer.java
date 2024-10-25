@@ -5,6 +5,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.threeten.bp.Duration;
 
+/**
+ * Test tracer that keeps count of different events. See {@link TestApiTracerFactory} for more
+ * details.
+ */
 public class TestApiTracer extends BaseApiTracer {
 
   private final AtomicInteger tracerAttempts;

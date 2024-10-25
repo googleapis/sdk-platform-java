@@ -6,6 +6,11 @@ import com.google.api.gax.tracing.SpanName;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Produces a {@link TestApiTracer}, which keeps count of the attempts made and attempts
+ * made-and-failed. It also keeps count of the operations failed and when the retries have been
+ * exhausted.
+ */
 public class TestApiTracerFactory implements ApiTracerFactory {
   private final AtomicInteger tracerAttempts = new AtomicInteger();
   private final AtomicInteger tracerAttemptsFailed = new AtomicInteger();
