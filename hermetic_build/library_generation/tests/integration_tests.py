@@ -43,7 +43,6 @@ commitish_map = {
     "google-cloud-java": "chore/test-hermetic-build",
     "java-bigtable": "chore/test-hermetic-build",
 }
-baseline_config_name = "baseline_generation_config.yaml"
 current_config_name = "current_generation_config.yaml"
 googleapis_commitish = "113a378d5aad5018876ec0a8cbfd4d6a4f746809"
 # This variable is used to override the jar created by building the image
@@ -84,22 +83,11 @@ class IntegrationTest(unittest.TestCase):
             self.__prepare_golden_files(
                 config=config, library_names=library_names, repo_dest=repo_dest
             )
-
-            changed_libraries = subprocess.check_output(
-                [
-                    "python",
-                    f"{repo_root_dir}/hermetic_build/common/cli/config_change.py",
-                    "create",
-                    f"--baseline-generation-config-path={config_location}/{baseline_config_name}",
-                    f"--current-generation-config-path={config_location}/{current_config_name}",
-                ]
-            ).decode()
             # 3. run entry_point.py in docker container
             self.__run_entry_point_in_docker_container(
                 repo_location=repo_location,
                 config_location=config_location,
                 generation_config=current_config_name,
-                library_names=changed_libraries,
                 api_definition=api_definitions_path,
             )
             # 4. compare generation result with golden files
@@ -298,7 +286,6 @@ class IntegrationTest(unittest.TestCase):
         repo_location: str,
         config_location: str,
         generation_config: str,
-        library_names: str,
         api_definition: str,
     ):
         # we use the calling user to prevent the mapped volumes from changing
@@ -325,7 +312,6 @@ class IntegrationTest(unittest.TestCase):
                 "/workspace/repo",
                 image_tag,
                 f"--generation-config-path=/workspace/config/{generation_config}",
-                f"--library-names={library_names}",
                 f"--api-definitions-path=/workspace/api",
             ],
         )
