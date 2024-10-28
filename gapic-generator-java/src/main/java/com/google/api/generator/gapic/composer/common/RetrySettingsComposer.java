@@ -705,7 +705,7 @@ public class RetrySettingsComposer {
 
   private static MethodInvocationExpr createDurationOfMillisExpr(ValueExpr valExpr) {
     return MethodInvocationExpr.builder()
-        .setStaticReferenceType(FIXED_TYPESTORE.get("DurationDuration"))
+        .setStaticReferenceType(FIXED_TYPESTORE.get("Duration"))
         .setMethodName("ofMillis")
         .setArguments(valExpr)
         .build();
