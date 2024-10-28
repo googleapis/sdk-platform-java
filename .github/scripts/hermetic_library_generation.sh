@@ -96,7 +96,7 @@ popd
 changed_libraries=$(python hermetic_build/common/cli/changed_library_generation.py create \
   --baseline-generation-config-path="${baseline_generation_config}" \
   --current-generation-config-path="${generation_config}")
-echo "Changed libraries are: ${changed_libraries:-"No changed library."}."
+echo "Changed libraries are: ${changed_libraries:-"No changed library"}."
 
 # run hermetic code generation docker image.
 docker run \
