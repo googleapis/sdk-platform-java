@@ -25,4 +25,4 @@ target/
 **/build/
 **/dist/
 library_generation/**/*.jar
-
+**/google-java-format.jar
