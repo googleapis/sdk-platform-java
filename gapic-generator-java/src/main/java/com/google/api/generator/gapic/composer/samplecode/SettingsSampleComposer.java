@@ -364,7 +364,7 @@ public final class SettingsSampleComposer {
     retrySettingsArgExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(retrySettingsArgExpr)
-            .setMethodName("setMaxRetryDelay")
+            .setMethodName("setMaxRetryDelayDuration")
             .setArguments(ofFiveThousandMillisMethodInvocationExpr)
             .build();
     retrySettingsArgExpr =
