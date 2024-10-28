@@ -390,7 +390,7 @@ public class RetrySettingsComposer {
     batchingSettingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(batchingSettingsBuilderExpr)
-            .setMethodName("setDelayThreshold")
+            .setMethodName("setDelayThresholdDuration")
             .setArguments(
                 createDurationOfMillisExpr(toValExpr(batchingSettings.delayThresholdMillis())))
             .build();
@@ -511,7 +511,7 @@ public class RetrySettingsComposer {
       settingsBuilderExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(settingsBuilderExpr)
-              .setMethodName("setInitialRetryDelay")
+              .setMethodName("setInitialRetryDelayDuration")
               .setArguments(createDurationOfMillisExpr(toValExpr(retryPolicy.getInitialBackoff())))
               .build();
 
@@ -528,7 +528,7 @@ public class RetrySettingsComposer {
       settingsBuilderExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(settingsBuilderExpr)
-              .setMethodName("setMaxRetryDelay")
+              .setMethodName("setMaxRetryDelayDuration")
               .setArguments(createDurationOfMillisExpr(toValExpr(retryPolicy.getMaxBackoff())))
               .build();
     }
@@ -537,7 +537,7 @@ public class RetrySettingsComposer {
       settingsBuilderExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(settingsBuilderExpr)
-              .setMethodName("setInitialRpcTimeout")
+              .setMethodName("setInitialRpcTimeoutDuration")
               .setArguments(createDurationOfMillisExpr(toValExpr(settings.timeout())))
               .build();
     }
@@ -553,7 +553,8 @@ public class RetrySettingsComposer {
             .build();
 
     if (!settings.kind().equals(GapicRetrySettings.Kind.NONE)) {
-      for (String setterMethodName : Arrays.asList("setMaxRpcTimeout", "setTotalTimeout")) {
+      for (String setterMethodName :
+          Arrays.asList("setMaxRpcTimeoutDuration", "setTotalTimeoutDuration")) {
         settingsBuilderExpr =
             MethodInvocationExpr.builder()
                 .setExprReferenceExpr(settingsBuilderExpr)
@@ -614,7 +615,7 @@ public class RetrySettingsComposer {
     lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(lroRetrySettingsExpr)
-            .setMethodName("setInitialRetryDelay")
+            .setMethodName("setInitialRetryDelayDuration")
             .setArguments(createDurationOfMillisExpr(toValExpr(initialPollDelayMillis)))
             .build();
 
@@ -628,7 +629,7 @@ public class RetrySettingsComposer {
     lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(lroRetrySettingsExpr)
-            .setMethodName("setMaxRetryDelay")
+            .setMethodName("setMaxRetryDelayDuration")
             .setArguments(createDurationOfMillisExpr(toValExpr(maxPollDelayMillis)))
             .build();
 
@@ -638,7 +639,7 @@ public class RetrySettingsComposer {
     lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(lroRetrySettingsExpr)
-            .setMethodName("setInitialRpcTimeout")
+            .setMethodName("setInitialRpcTimeoutDuration")
             .setArguments(zeroDurationExpr)
             .build();
 
@@ -654,14 +655,14 @@ public class RetrySettingsComposer {
     lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(lroRetrySettingsExpr)
-            .setMethodName("setMaxRpcTimeout")
+            .setMethodName("setMaxRpcTimeoutDuration")
             .setArguments(zeroDurationExpr)
             .build();
 
     lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(lroRetrySettingsExpr)
-            .setMethodName("setTotalTimeout")
+            .setMethodName("setTotalTimeoutDuration")
             .setArguments(createDurationOfMillisExpr(toValExpr(totalPollTimeoutMillis)))
             .build();
 
@@ -704,7 +705,7 @@ public class RetrySettingsComposer {
 
   private static MethodInvocationExpr createDurationOfMillisExpr(ValueExpr valExpr) {
     return MethodInvocationExpr.builder()
-        .setStaticReferenceType(FIXED_TYPESTORE.get("Duration"))
+        .setStaticReferenceType(FIXED_TYPESTORE.get("DurationDuration"))
         .setMethodName("ofMillis")
         .setArguments(valExpr)
         .build();
@@ -714,7 +715,7 @@ public class RetrySettingsComposer {
     List<Class<?>> concreteClazzes =
         Arrays.asList(
             BatchingSettings.class,
-            org.threeten.bp.Duration.class,
+            java.time.Duration.class,
             FlowControlSettings.class,
             FlowController.LimitExceededBehavior.class,
             ImmutableMap.class,

@@ -70,15 +70,15 @@ public final class SettingsSampleComposer {
             .build();
 
     // Builder with set value method
-    // e.g foobarSettingBuilder.fooSetting().setRetrySettings(
-    // echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder().setTotalTimeout(Duration.ofSeconds(30)).build());
+    // e.g. foobarSettingBuilder.fooSetting().setRetrySettings(
+    //        echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder()
+    //        .setTotalTimeoutDuration(Duration.ofSeconds(30)).build());
     MethodInvocationExpr settingBuilderMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(localSettingsVarExpr)
             .setMethodName(
                 JavaStyle.toLowerCamelCase(String.format("%sSettings", methodNameOpt.get())))
             .build();
-    String disambiguation = "Settings";
     MethodInvocationExpr retrySettingsArgExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(settingBuilderMethodInvocationExpr)
