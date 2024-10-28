@@ -220,6 +220,8 @@ class IntegrationTest(unittest.TestCase):
             [
                 "mvn",
                 "dependency:copy",
+                "-B",
+                "-ntp",
                 f"-Dartifact={coordinates}",
                 f"-DoutputDirectory={config_dir}",
             ]
