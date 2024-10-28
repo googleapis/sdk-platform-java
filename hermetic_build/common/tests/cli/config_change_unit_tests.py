@@ -53,7 +53,7 @@ class ConfigChangeTest(unittest.TestCase):
         )
         self.assertEqual(1, result.exit_code)
         self.assertEqual(FileNotFoundError, result.exc_info[0])
-        self.assertRegex(result.exception.args[0], "baseline_generation_config_path")
+        self.assertRegex(result.exception.args[0], "baseline-generation-config-path")
 
     def test_entry_point_with_invalid_current_config_raise_file_exception(self):
         os.chdir(script_dir)
@@ -68,4 +68,4 @@ class ConfigChangeTest(unittest.TestCase):
         )
         self.assertEqual(1, result.exit_code)
         self.assertEqual(FileNotFoundError, result.exc_info[0])
-        self.assertRegex(result.exception.args[0], "current_generation_config_path")
+        self.assertRegex(result.exception.args[0], "current-generation-config-path")
