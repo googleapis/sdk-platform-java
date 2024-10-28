@@ -33,8 +33,7 @@ def main(ctx):
     type=str,
     help="""
     Absolute or relative path to a generation_config.yaml.
-    This config file is used for commit history generation, not library
-    generation.
+    This config file is used for computing changed library list.
     """,
 )
 @click.option(
@@ -51,7 +50,7 @@ def create(
     current_generation_config_path: str,
 ) -> None:
     """
-    Compare baseline generation config and current generation config and
+    Compare baseline generation config with current generation config and
     generate changed library names (a comma separated string) based on current
     generation config.
     """
@@ -60,14 +59,14 @@ def create(
         raise FileNotFoundError(
             f"{baseline_generation_config_path} does not exist. "
             "A valid generation config has to be passed in as "
-            "baseline_generation_config_path."
+            "baseline-generation-config-path."
         )
     current_generation_config_path = os.path.abspath(current_generation_config_path)
     if not os.path.isfile(current_generation_config_path):
         raise FileNotFoundError(
             f"{current_generation_config_path} does not exist. "
             "A valid generation config has to be passed in as "
-            "current_generation_config_path."
+            "current-generation-config-path."
         )
     config_change = compare_config(
         baseline_config=from_yaml(baseline_generation_config_path),
