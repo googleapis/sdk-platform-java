@@ -92,6 +92,13 @@ pushd "${api_def_dir}"
 git checkout "${googleapis_commitish}"
 popd
 
+# generate changed libraries
+changed_libraries=$(python hermetic_build/common/cli/changed_library_generation.py create \
+  --baseline-generation-config-path="${baseline_generation_config}" \
+  --current-generation-config-path="${generation_config}")
+
+echo "Changed libraries are: ${changed_libraries}."
+
 # run hermetic code generation docker image.
 docker run \
   --rm \
@@ -102,8 +109,8 @@ docker run \
   -v "${api_def_dir}:${workspace_name}/googleapis" \
   -e GENERATOR_VERSION="${image_tag}" \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
-  --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
-  --current-generation-config-path="${workspace_name}/${generation_config}" \
+  --generation-config-path="${workspace_name}/${generation_config}" \
+  --library-names="${changed_libraries}" \
   --api-definitions-path="${workspace_name}/googleapis"
 
 python hermetic_build/release_note_generation/cli/generate_release_note.py generate \

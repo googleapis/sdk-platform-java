@@ -15,7 +15,7 @@ import os
 from click.testing import CliRunner
 import unittest
 
-from common.cli.config_change import create
+from common.cli.changed_library_generation import create
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 test_resource_dir = os.path.join(script_dir, "..", "resources", "cli")
