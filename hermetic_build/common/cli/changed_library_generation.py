@@ -50,8 +50,8 @@ def create(
     current_generation_config_path: str,
 ) -> None:
     """
-    Compare baseline generation config with current generation config and
-    generate changed library names (a comma separated string) based on current
+    Compares baseline generation config with current generation config and
+    generates changed library names (a comma separated string) based on current
     generation config.
     """
     baseline_generation_config_path = os.path.abspath(baseline_generation_config_path)

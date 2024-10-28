@@ -107,7 +107,7 @@ class ConfigChange:
         :return: QualifiedCommit objects.
         """
         with tempfile.TemporaryDirectory() as tmp_dir:
-            # we only need commit history, thus shadow clone is enough.
+            # we only need commit history, thus a shadow clone is enough.
             repo = Repo.clone_from(url=repo_url, to_path=tmp_dir, filter=["blob:none"])
             commit = repo.commit(self.current_config.googleapis_commitish)
             proto_paths = self.current_config.get_proto_path_to_library_name()
