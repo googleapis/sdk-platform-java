@@ -92,8 +92,8 @@ pushd "${api_def_dir}"
 git checkout "${googleapis_commitish}"
 popd
 
-# generate changed libraries
-changed_libraries=$(python hermetic_build/common/cli/changed_library_generation.py create \
+# get changed library list.
+changed_libraries=$(python hermetic_build/common/cli/get_changed_libraries.py create \
   --baseline-generation-config-path="${baseline_generation_config}" \
   --current-generation-config-path="${generation_config}")
 echo "Changed libraries are: ${changed_libraries:-"No changed library"}."

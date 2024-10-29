@@ -15,13 +15,13 @@ import os
 from click.testing import CliRunner
 import unittest
 
-from common.cli.changed_library_generation import create
+from common.cli.get_changed_libraries import create
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 test_resource_dir = os.path.join(script_dir, "..", "resources", "cli")
 
 
-class ConfigChangeTest(unittest.TestCase):
+class GetChangedLibrariesTest(unittest.TestCase):
     def test_entry_point_without_baseline_config_raise_system_exception(self):
         os.chdir(script_dir)
         runner = CliRunner()
