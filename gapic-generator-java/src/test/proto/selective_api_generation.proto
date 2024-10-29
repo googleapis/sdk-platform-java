@@ -92,7 +92,9 @@ message Foobar {
   string info = 2;
 }
 
-// resource name used for message EchoRequestWithFoobarbaz.
+// resource name used only for message EchoRequestWithFoobarbaz.
+// should not be generated with selective generation when
+// AnExcludedMethod is not config as included.
 message Foobarbaz {
   option (google.api.resource) = {
     type: "showcase.googleapis.com/Foobarbaz"

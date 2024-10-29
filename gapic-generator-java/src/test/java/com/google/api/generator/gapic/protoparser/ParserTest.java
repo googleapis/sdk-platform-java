@@ -760,6 +760,9 @@ class ParserTest {
     assertEquals(1, services.size());
     assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
     assertEquals(3, services.get(0).methods().size());
+    for (Method method : services.get(0).methods()) {
+      assertTrue(method.name().contains("ShouldInclude"));
+    }
   }
 
   @Test
