@@ -40,7 +40,7 @@ WORKDIR /home
 # Install compatibility layer to run glibc-based programs (such as the
 # grpc plugin).
 # Alpine, by default, only supports musl-based binaries, and there is no public
-# downloadable distribution of the grpc that is Alpine (musl) compatible.
+# downloadable distribution of the grpc plugin that is Alpine (musl) compatible.
 # This is one of the recommended approaches to ensure glibc-compatibility
 # as per https://wiki.alpinelinux.org/wiki/Running_glibc_programs
 RUN git clone https://gitlab.com/manoel-linux1/GlibMus-HQ.git
