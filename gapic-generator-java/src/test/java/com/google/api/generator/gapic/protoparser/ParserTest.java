@@ -22,8 +22,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-import com.google.api.*;
+import com.google.api.ClientLibrarySettings;
+import com.google.api.CommonLanguageSettings;
+import com.google.api.CppSettings;
 import com.google.api.FieldInfo.Format;
+import com.google.api.MethodSettings;
+import com.google.api.Publishing;
+import com.google.api.SelectiveGapicGeneration;
+import com.google.api.Service;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;

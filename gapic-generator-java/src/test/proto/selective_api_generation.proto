@@ -39,7 +39,7 @@ option (google.api.resource_definition) = {
 // This proto is used to test selective api generation
 // covered scenarios:
 //  - A service with several rpcs, part of them should be generated
-//  - A service with several rpcs, non of them should be generated
+//  - A service with several rpcs, none of them should be generated
 // This proto should be tested side-by-side with yaml file:
 //  - selective_api_generation_v1beta1.yaml
 
@@ -51,10 +51,7 @@ service EchoServiceShouldGeneratePartial {
       post: "/v1beta1/echo:echo"
       body: "*"
     };
-    option (google.api.method_signature) = "content";
-    option (google.api.method_signature) = "error";
     option (google.api.method_signature) = "name";
-    option (google.api.method_signature) = "parent";
     option (google.api.method_signature) = "";
   }
 
@@ -71,13 +68,10 @@ service EchoServiceShouldGeneratePartial {
 }
 
 service EchoServiceShouldGenerateNone {
-  // This service is meant to only run locally on the port 7469 (keypad digits
-  // for "show").
   option (google.api.default_host) = "localhost:7469";
   option (google.api.oauth_scopes) =
     "https://www.googleapis.com/auth/cloud-platform";
 
-  // This method simply echos the request. This method is showcases unary rpcs.
   rpc Echo(EchoRequest) returns (EchoResponse) {
     option (google.api.method_signature) = "content";
   }
@@ -110,7 +104,7 @@ message Foobarbaz {
   string info = 2;
 }
 
-// The request message used both RPCs in inclusion list and not.
+// RPCs in inclusion list and not in the list both relies on this request message.
 message EchoRequest {
   string name = 5 [
     (google.api.resource_reference).type = "showcase.googleapis.com/Foobar",
@@ -134,10 +128,10 @@ message EchoRequest {
   Foobar foobar = 4;
 }
 
-// The request message used for ShouldNotGenerateChat method.
-// To demonstrate that if ShouldNotGenerateChat is not included in generation,
+// This request message is used by AnExcludedMethod rpc.
+// To demonstrate that if AnExcludedMethod is not included in generation,
 // then the resource name Foobarbaz, which is only used by this method,
-// should also not be generated.
+// should not be generated.
 message EchoRequestWithFoobarbaz {
   string name = 5 [
     (google.api.resource_reference).type = "showcase.googleapis.com/Foobarbaz",
