@@ -38,7 +38,6 @@
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
     <threetenbp.version>1.7.0</threetenbp.version>
     <junit.version>5.11.2</junit.version>
-    <mockito.version>4.11.0</mockito.version>
   </properties>
 
   <developers>

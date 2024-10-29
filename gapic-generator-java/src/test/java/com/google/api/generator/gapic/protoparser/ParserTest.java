@@ -20,15 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
 
 import com.google.api.ClientLibrarySettings;
-import com.google.api.CommonLanguageSettings;
-import com.google.api.CppSettings;
 import com.google.api.FieldInfo.Format;
 import com.google.api.MethodSettings;
 import com.google.api.Publishing;
-import com.google.api.SelectiveGapicGeneration;
+import com.google.api.PythonSettings;
 import com.google.api.Service;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
@@ -68,7 +65,6 @@ import java.util.stream.Collectors;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 class ParserTest {
   private static final String ECHO_PACKAGE = "com.google.showcase.v1beta1";
@@ -767,61 +763,73 @@ class ParserTest {
 
   @Test
   void selectiveGenerationTest_shouldGenerateAllIfNoPublishingSectionInServiceYaml() {
+    Service service =
+        Service.newBuilder()
+            .setTitle("Selective generation testing with no publishing section")
+            .build();
+    Publishing publishing = service.getPublishing();
+    Assert.assertEquals(0, publishing.getLibrarySettingsCount());
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    List<MethodDescriptor> methods = fileDescriptor.getServices().get(0).getMethods();
     String protoPackage = "google.selective.generate.v1beta1";
 
-    Optional<com.google.api.Service> serviceYamlOpt =
-        Optional.of(Mockito.mock(com.google.api.Service.class));
-    Publishing publishing = Mockito.mock(Publishing.class);
-    when(serviceYamlOpt.get().getPublishing()).thenReturn(publishing);
-    when(publishing.getLibrarySettingsCount()).thenReturn(0);
-
     assertTrue(
-        Parser.shouldIncludeMethodInGeneration(
-            Mockito.mock(MethodDescriptor.class), serviceYamlOpt, protoPackage));
+        Parser.shouldIncludeMethodInGeneration(methods.get(0), Optional.of(service), protoPackage));
   }
 
   @Test
   void selectiveGenerationTest_shouldIncludeMethodInGenerationWhenProtoPackageMismatch() {
     String protoPackage = "google.selective.generate.v1beta1";
 
-    Optional<com.google.api.Service> serviceYamlOpt =
-        Optional.of(Mockito.mock(com.google.api.Service.class));
-    Publishing publishing = Mockito.mock(Publishing.class);
-    when(serviceYamlOpt.get().getPublishing()).thenReturn(publishing);
-    when(publishing.getLibrarySettingsCount()).thenReturn(3);
-    List<ClientLibrarySettings> librarySettingsList =
-        ImmutableList.of(Mockito.mock(ClientLibrarySettings.class));
-    when(publishing.getLibrarySettingsList()).thenReturn(librarySettingsList);
-    when(librarySettingsList.get(0).getVersion()).thenReturn("google.selective.generate.v1");
+    // mock situation where service yaml has different version stated
+    ClientLibrarySettings clientLibrarySettings =
+        ClientLibrarySettings.newBuilder().setVersion("google.selective.generate.v1").build();
+    Publishing publishing =
+        Publishing.newBuilder().addLibrarySettings(clientLibrarySettings).build();
+    Service service =
+        Service.newBuilder()
+            .setTitle(
+                "Selective generation test when proto package "
+                    + "does not match library_settings version from service yaml")
+            .setPublishing(publishing)
+            .build();
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    List<MethodDescriptor> methods = fileDescriptor.getServices().get(0).getMethods();
 
     assertTrue(
-        Parser.shouldIncludeMethodInGeneration(
-            Mockito.mock(MethodDescriptor.class), serviceYamlOpt, protoPackage));
+        Parser.shouldIncludeMethodInGeneration(methods.get(0), Optional.of(service), protoPackage));
   }
 
   @Test
   void selectiveGenerationTest_shouldGenerateAllIfNoJavaSectionInServiceYaml() {
     String protoPackage = "google.selective.generate.v1beta1";
-    Publishing publishing = Mockito.mock(Publishing.class);
-    when(publishing.getLibrarySettingsCount()).thenReturn(3);
-    when(publishing.getLibrarySettingsList())
-        .thenReturn(
-            Collections.singletonList(
-                ClientLibrarySettings.newBuilder()
-                    .setCppSettings(
-                        CppSettings.newBuilder()
-                            .setCommon(
-                                CommonLanguageSettings.newBuilder()
-                                    .setSelectiveGapicGeneration(
-                                        SelectiveGapicGeneration.newBuilder()
-                                            .addMethods("included.cppMethod")))
-                            .build())
-                    .build()));
-    Service service = Service.getDefaultInstance().toBuilder().setPublishing(publishing).build();
+
+    // mock situation where service yaml has other language settings but no
+    // java settings in library_settings.
+    ClientLibrarySettings clientLibrarySettings =
+        ClientLibrarySettings.newBuilder()
+            .setVersion(protoPackage)
+            .setPythonSettings(PythonSettings.newBuilder().build())
+            .build();
+    Publishing publishing =
+        Publishing.newBuilder().addLibrarySettings(clientLibrarySettings).build();
+    Service service =
+        Service.newBuilder()
+            .setTitle(
+                "Selective generation test when no java section in "
+                    + "library_settings from service yaml")
+            .setPublishing(publishing)
+            .build();
+
+    Assert.assertEquals(1, publishing.getLibrarySettingsCount());
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    List<MethodDescriptor> methods = fileDescriptor.getServices().get(0).getMethods();
 
     assertTrue(
-        Parser.shouldIncludeMethodInGeneration(
-            Mockito.mock(MethodDescriptor.class), Optional.of(service), protoPackage));
+        Parser.shouldIncludeMethodInGeneration(methods.get(0), Optional.of(service), protoPackage));
   }
 
   private void assertMethodArgumentEquals(
