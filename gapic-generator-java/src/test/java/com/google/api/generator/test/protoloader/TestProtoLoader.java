@@ -39,11 +39,11 @@ import com.google.logging.v2.LoggingProto;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.pubsub.v1.PubsubProto;
+import com.google.selective.generate.v1beta1.SelectiveApiGenerationOuterClass;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.IdentityOuterClass;
 import com.google.showcase.v1beta1.MessagingOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
-import com.google.test.callablenamingtype.CallableNameType;
 import com.google.testdata.v1.DeprecatedServiceOuterClass;
 import com.google.testgapic.v1beta1.NestedMessageProto;
 import com.google.types.testing.TypesTestingProto;
@@ -51,7 +51,6 @@ import google.cloud.CommonResources;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -361,6 +360,49 @@ public class TestProtoLoader {
         .build();
   }
 
+  public GapicContext parseSelectiveGenerationTesting() {
+    FileDescriptor selectiveGenerationFileDescriptor =
+        SelectiveApiGenerationOuterClass.getDescriptor();
+    ServiceDescriptor selectiveGenerationServiceDescriptor =
+        selectiveGenerationFileDescriptor.getServices().get(0);
+    assertEquals(
+        selectiveGenerationServiceDescriptor.getName(), "EchoServiceShouldGeneratePartial");
+
+    String serviceYamlFilename = "selective_api_generation_v1beta1.yaml";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    assertTrue(serviceYamlOpt.isPresent());
+
+    Map<String, Message> messageTypes = Parser.parseMessages(selectiveGenerationFileDescriptor);
+    Map<String, ResourceName> resourceNames =
+        Parser.parseResourceNames(selectiveGenerationFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            selectiveGenerationFileDescriptor,
+            messageTypes,
+            resourceNames,
+            serviceYamlOpt,
+            outputResourceNames);
+
+    String jsonFilename = "selective_api_generation_grpc_service_config.json";
+    Path jsonPath = Paths.get(testFilesDirectory, jsonFilename);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(configOpt.isPresent());
+    GapicServiceConfig config = configOpt.get();
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setHelperResourceNames(outputResourceNames)
+        .setServiceYamlProto(serviceYamlOpt.orElse(null))
+        .setGapicMetadataEnabled(true)
+        .setServiceConfig(config)
+        .setTransport(transport)
+        .build();
+  }
+
   public GapicContext parsePubSubPublisher() {
     FileDescriptor serviceFileDescriptor = PubsubProto.getDescriptor();
     FileDescriptor commonResourcesFileDescriptor = CommonResources.getDescriptor();
@@ -454,42 +496,6 @@ public class TestProtoLoader {
         .setResourceNames(resourceNames)
         .setServices(services)
         .setServiceConfig(config)
-        .setHelperResourceNames(outputResourceNames)
-        .setTransport(transport)
-        .build();
-  }
-
-  public GapicContext parseCallabeNameType() {
-    FileDescriptor serviceFileDescriptor = CallableNameType.getDescriptor();
-    ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
-    assertEquals(serviceDescriptor.getName(), "CallableNameTypeService");
-
-    List<FileDescriptor> protoFiles = Collections.singletonList(serviceFileDescriptor);
-
-    Map<String, ResourceName> resourceNames = new HashMap<>();
-    Map<String, Message> messageTypes = new HashMap<>();
-    for (FileDescriptor fileDescriptor : protoFiles) {
-      resourceNames.putAll(Parser.parseResourceNames(fileDescriptor));
-      messageTypes.putAll(Parser.parseMessages(fileDescriptor));
-    }
-
-    // Additional resource names.
-    FileDescriptor commonResourcesFileDescriptor = CommonResources.getDescriptor();
-    resourceNames.putAll(Parser.parseResourceNames(commonResourcesFileDescriptor));
-
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-    List<Service> services =
-        Parser.parseService(
-            serviceFileDescriptor,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
-
-    return GapicContext.builder()
-        .setMessages(messageTypes)
-        .setResourceNames(resourceNames)
-        .setServices(services)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(transport)
         .build();
