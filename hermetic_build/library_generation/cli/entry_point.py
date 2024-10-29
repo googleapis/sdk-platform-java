@@ -155,7 +155,7 @@ def _needs_full_repo_generation(generation_config: GenerationConfig) -> bool:
 
 
 def _parse_library_name_from(
-    includes: str, generation_config: GenerationConfig
+    includes: Optional[str], generation_config: GenerationConfig
 ) -> Optional[list[str]]:
     if includes is None or _needs_full_repo_generation(generation_config):
         return None
