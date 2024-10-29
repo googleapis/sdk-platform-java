@@ -6,8 +6,8 @@
 set -ex
 
 readonly SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-readonly LIB_GEN_SCRIPTS_DIR="${SCRIPT_DIR}/../../library_generation/"
-source "${LIB_GEN_SCRIPTS_DIR}/test/test_utilities.sh"
+readonly LIB_GEN_SCRIPTS_DIR="${SCRIPT_DIR}/../../hermetic_build/library_generation/"
+source "${LIB_GEN_SCRIPTS_DIR}/tests/test_utilities.sh"
 source "${LIB_GEN_SCRIPTS_DIR}/utils/utilities.sh"
 readonly perform_cleanup=$1
 
@@ -55,10 +55,14 @@ if [ ! -d google ];then
   rm -rdf googleapis
 fi
 
-# copy the generator into its well-known location. For more details,
+# copy the generator and formatter into its well-known location.
+# For more details,
 # refer to library_generation/DEVELOPMENT.md
+java_formatter_name="google-java-format.jar"
+java_formatter_version="1.7"
 well_known_folder="${HOME}/.library_generation"
 well_known_generator_jar_location="${well_known_folder}/gapic-generator-java.jar"
+well_known_formatter_jar_location="${well_known_folder}/${java_formatter_name}"
 if [[ ! -d "${well_known_folder}" ]]; then
   mkdir "${well_known_folder}"
 fi
@@ -66,19 +70,27 @@ if [[ -f "${well_known_generator_jar_location}" ]]; then
   echo "replacing well-known generator jar with the latest one"
   rm "${well_known_generator_jar_location}"
 fi
+if [[ -f "${well_known_formatter_jar_location}" ]]; then
+  echo "replacing well-known formatter jar with the latest one"
+  rm "${well_known_formatter_jar_location}"
+fi
 maven_repository="$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)"
 generator_version=$(get_version_from_versions_txt "gapic-generator-java")
-source_jar_path="${maven_repository}/com/google/api/gapic-generator-java/${generator_version}/gapic-generator-java-${generator_version}.jar"
+generator_jar_path="${maven_repository}/com/google/api/gapic-generator-java/${generator_version}/gapic-generator-java-${generator_version}.jar"
 
-if [[ ! -f "${source_jar_path}" ]]; then
+if [[ ! -f "${generator_jar_path}" ]]; then
   echo "generator jar not found in its assumed location"
-  echo "in the local repository: ${source_jar_path}"
+  echo "in the local repository: ${generator_jar_path}"
   echo "(did you run mvn install in this repository's root?)"
   exit 1
 fi
 # transfer the snapshot jar into its well-known location
-cp "${source_jar_path}" "${well_known_generator_jar_location}"
-
+cp "${generator_jar_path}" "${well_known_generator_jar_location}"
+# transfer java formatter to its well-known location
+download_from \
+  "https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${java_formatter_version}/google-java-format-${java_formatter_version}-all-deps.jar" \
+  "${java_formatter_name}"
+cp "${java_formatter_name}" "${well_known_formatter_jar_location}"
 gapic_additional_protos="google/iam/v1/iam_policy.proto google/cloud/location/locations.proto"
 
 path_to_generator_parent_pom="${SCRIPT_DIR}/../../gapic-generator-java-pom-parent/pom.xml"
@@ -94,7 +106,7 @@ include_samples="false"
 rm -rdf output/showcase-output
 mkdir output/showcase-output
 set +e
-bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
+bash "${SCRIPT_DIR}/../../hermetic_build/library_generation/generate_library.sh" \
   --protoc_version "${protoc_version}" \
   --grpc_version "${grpc_version}" \
   --proto_path "schema/google/showcase/v1beta1" \

@@ -42,7 +42,8 @@ class ApiClientHeaderProviderTest {
   void testServiceHeaderDefault() {
     ApiClientHeaderProvider provider = ApiClientHeaderProvider.newBuilder().build();
     assertThat(provider.getHeaders().size()).isEqualTo(1);
-    assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT)).matches("^gl-java/.* gax/.*$");
+    assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
+        .matches("^gl-java/.* gax/.* protobuf/.*");
   }
 
   @Test
@@ -51,7 +52,7 @@ class ApiClientHeaderProviderTest {
         ApiClientHeaderProvider.newBuilder().setClientLibToken("gccl", "1.2.3").build();
     assertThat(provider.getHeaders().size()).isEqualTo(1);
     assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
-        .matches("^gl-java/.* gccl/1\\.2\\.3 gax/.*$");
+        .matches("^gl-java/.* gccl/1\\.2\\.3--protobuf-.* gax/.* protobuf/.*");
   }
 
   @Test
@@ -64,7 +65,8 @@ class ApiClientHeaderProviderTest {
             .build();
     assertThat(provider.getHeaders().size()).isEqualTo(1);
     assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
-        .matches("^gl-java/.* gccl/4\\.5\\.6 gapic/7\\.8\\.9 gax/.* grpc/1\\.2\\.3$");
+        .matches(
+            "^gl-java/.* gccl/4\\.5\\.6--protobuf-.* gapic/7\\.8\\.9 gax/.* grpc/1\\.2\\.3 protobuf/.*");
   }
 
   @Test
@@ -76,7 +78,7 @@ class ApiClientHeaderProviderTest {
             .build();
     assertThat(provider.getHeaders().size()).isEqualTo(1);
     assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
-        .matches("^gl-java/.* gccl/4\\.5\\.6 gax/.* grpc/1\\.2\\.3$");
+        .matches("^gl-java/.* gccl/4\\.5\\.6--protobuf-.* gax/.* grpc/1\\.2\\.3 protobuf/.*");
   }
 
   @Test
@@ -88,7 +90,7 @@ class ApiClientHeaderProviderTest {
             .build();
     assertThat(provider.getHeaders().size()).isEqualTo(1);
     assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
-        .matches("^gl-java/.* gapic/4\\.5\\.6 gax/.* grpc/1\\.2\\.3$");
+        .matches("^gl-java/.* gapic/4\\.5\\.6--protobuf-.* gax/.* grpc/1\\.2\\.3 protobuf/.*");
   }
 
   @Test
@@ -101,7 +103,7 @@ class ApiClientHeaderProviderTest {
             .build();
     assertThat(provider.getHeaders().size()).isEqualTo(2);
     assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
-        .matches("^gl-java/.* gapic/4\\.5\\.6 gax/.* grpc/1\\.2\\.3$");
+        .matches("^gl-java/.* gapic/4\\.5\\.6--protobuf-.* gax/.* grpc/1\\.2\\.3 protobuf/.*");
     assertThat(provider.getHeaders().get(CLOUD_RESOURCE_PREFIX)).isEqualTo("test-prefix");
   }
 
@@ -117,7 +119,7 @@ class ApiClientHeaderProviderTest {
             .build();
     assertThat(provider.getHeaders().size()).isEqualTo(2);
     assertThat(provider.getHeaders().get("custom-header1"))
-        .matches("^gl-java/.* gapic/4\\.5\\.6 gax/.* grpc/1\\.2\\.3$");
+        .matches("^gl-java/.* gapic/4\\.5\\.6--protobuf-.* gax/.* grpc/1\\.2\\.3 protobuf/.*");
     assertThat(provider.getHeaders().get("custom-header2")).isEqualTo("test-prefix");
   }
 
@@ -131,7 +133,7 @@ class ApiClientHeaderProviderTest {
             .build();
     assertThat(provider.getHeaders().size()).isEqualTo(2);
     assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
-        .matches("^gl-java/.* gccl/1\\.2\\.3 gax/.*$");
+        .matches("^gl-java/.* gccl/1\\.2\\.3--protobuf-.* gax/.* protobuf/.*");
     assertThat(provider.getHeaders().get(ApiClientHeaderProvider.QUOTA_PROJECT_ID_HEADER_KEY))
         .matches(quotaProjectHeaderValue);
   }
@@ -148,5 +150,23 @@ class ApiClientHeaderProviderTest {
         ApiClientHeaderProvider.newBuilder().setApiVersionToken("").build();
     assertThat(
         emptyProvider.getHeaders().get(ApiClientHeaderProvider.API_VERSION_HEADER_KEY).isEmpty());
+  }
+
+  @Test
+  void testNonGapicGeneratedLibToken_doesNotAppendProtobufVersion() {
+    ApiClientHeaderProvider provider =
+        ApiClientHeaderProvider.newBuilder().setGeneratedLibToken("other-token", "1.2.3").build();
+
+    assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
+        .matches("^gl-java/.* other-token/1.2.3 gax/.* protobuf/.*");
+  }
+
+  @Test
+  void testNonGcclGeneratedLibToken_doesNotAppendProtobufVersion() {
+    ApiClientHeaderProvider provider =
+        ApiClientHeaderProvider.newBuilder().setClientLibToken("other-token", "1.2.3").build();
+
+    assertThat(provider.getHeaders().get(X_GOOG_API_CLIENT))
+        .matches("^gl-java/.* other-token/1.2.3 gax/.* protobuf/.*");
   }
 }

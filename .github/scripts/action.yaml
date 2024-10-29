@@ -37,11 +37,33 @@ inputs:
 runs:
   using: "composite"
   steps:
+  - uses: actions/setup-python@v5
+    with:
+      python-version: 3.12
+  - name: Copy python script
+    shell: bash
+    run: |
+      set -x
+      # repository root
+      cd ${{ github.action_path }}/../../
+      rsync -rv \
+        --exclude=tests \
+        hermetic_build "${GITHUB_WORKSPACE}"
   - name: Copy shell script
     shell: bash
     run: |
       cd ${{ github.action_path }}
-      cp hermetic_library_generation.sh $GITHUB_WORKSPACE
+      cp hermetic_library_generation.sh "${GITHUB_WORKSPACE}"
+  - name: Install python packages
+    shell: bash
+    run: |
+      cd "${GITHUB_WORKSPACE}"
+      pip install --require-hashes -r hermetic_build/common/requirements.txt
+      pip install hermetic_build/common
+      pip install --require-hashes -r hermetic_build/library_generation/requirements.txt
+      pip install hermetic_build/library_generation
+      pip install --require-hashes -r hermetic_build/release_note_generation/requirements.txt
+      pip install hermetic_build/release_note_generation
   - name: Generate changed libraries
     shell: bash
     run: |

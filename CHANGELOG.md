@@ -1,5 +1,43 @@
 # Changelog
 
+## [2.49.0](https://github.com/googleapis/sdk-platform-java/compare/v2.48.0...v2.49.0) (2024-10-25)
+
+
+### Features
+
+* Move release note generation to a sub module ([#3299](https://github.com/googleapis/sdk-platform-java/issues/3299)) ([7d6d66a](https://github.com/googleapis/sdk-platform-java/commit/7d6d66a161db5edc538aec065405954acf4434c5))
+
+
+### Bug Fixes
+
+* add additional potential exceptions when retrieving protobuf manifest file to get version ([#3315](https://github.com/googleapis/sdk-platform-java/issues/3315)) ([ef9e518](https://github.com/googleapis/sdk-platform-java/commit/ef9e5189740ea5be46ad0d51c2ff554cd99ac162))
+
+
+### Dependencies
+
+* update dependency com.google.errorprone:error_prone_annotations to v2.35.1 ([#3316](https://github.com/googleapis/sdk-platform-java/issues/3316)) ([d7c290f](https://github.com/googleapis/sdk-platform-java/commit/d7c290f3e49c8ec7c480229e2c8ae38fcdcd99f6))
+
+## [2.48.0](https://github.com/googleapis/sdk-platform-java/compare/v2.47.0...v2.48.0) (2024-10-22)
+
+
+### Features
+
+* **gax:** add protobuf version tracking to headers ([#3199](https://github.com/googleapis/sdk-platform-java/issues/3199)) ([40c19b1](https://github.com/googleapis/sdk-platform-java/commit/40c19b1aad71da176aeafbba32a0a4b51b5a4366))
+* selectively generate libraries ([#3290](https://github.com/googleapis/sdk-platform-java/issues/3290)) ([dfe1a50](https://github.com/googleapis/sdk-platform-java/commit/dfe1a50ec857cc2998bcbfbc2d8af6801f0ae260))
+
+
+### Bug Fixes
+
+* generator setting incorrect name/class for sample due to region tag (2nd attempt) ([#3293](https://github.com/googleapis/sdk-platform-java/issues/3293)) ([771bd0e](https://github.com/googleapis/sdk-platform-java/commit/771bd0e9cb306e430dc15e79a189648830101865))
+
+
+### Dependencies
+
+* update dependency com.google.errorprone:error_prone_annotations to v2.34.0 ([#3303](https://github.com/googleapis/sdk-platform-java/issues/3303)) ([5b01274](https://github.com/googleapis/sdk-platform-java/commit/5b0127480ac1358b183d971e432939779f1238ad))
+* update dependency com.google.errorprone:error_prone_annotations to v2.34.0 ([#3304](https://github.com/googleapis/sdk-platform-java/issues/3304)) ([5bd6c9c](https://github.com/googleapis/sdk-platform-java/commit/5bd6c9ceaab11f96c6e50ca8ce9c66c1c1369d5c))
+* update google api dependencies ([#3282](https://github.com/googleapis/sdk-platform-java/issues/3282)) ([a9eac85](https://github.com/googleapis/sdk-platform-java/commit/a9eac851c57989ab45c4e1b28171ea043506bcd9))
+* update google auth library dependencies to v1.29.0 ([#3302](https://github.com/googleapis/sdk-platform-java/issues/3302)) ([e64eda2](https://github.com/googleapis/sdk-platform-java/commit/e64eda231bc3a1a32d56eb5269ae8d3c53ed26de))
+
 ## [2.47.0](https://github.com/googleapis/sdk-platform-java/compare/v2.46.1...v2.47.0) (2024-10-04)
 
 
