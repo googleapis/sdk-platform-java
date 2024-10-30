@@ -24,9 +24,8 @@ COPY . .
 ENV DOCKER_GAPIC_GENERATOR_VERSION="2.49.1-SNAPSHOT"
 # {x-version-update-end}
 
-RUN --mount=type=cache,target=/root/.m2 mvn dependency:go-offline -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
-RUN --mount=type=cache,target=/root/.m2 mvn install -B -nsu -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
-RUN --mount=type=cache,target=/root/.m2 cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
+RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
 # alpine:3.20.3
