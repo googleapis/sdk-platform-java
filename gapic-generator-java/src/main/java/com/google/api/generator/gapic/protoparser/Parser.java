@@ -14,8 +14,17 @@
 
 package com.google.api.generator.gapic.protoparser;
 
-import com.google.api.*;
+import com.google.api.ClientLibrarySettings;
+import com.google.api.ClientProto;
+import com.google.api.DocumentationRule;
+import com.google.api.FieldBehavior;
+import com.google.api.FieldBehaviorProto;
 import com.google.api.FieldInfo.Format;
+import com.google.api.FieldInfoProto;
+import com.google.api.HttpRule;
+import com.google.api.MethodSettings;
+import com.google.api.ResourceDescriptor;
+import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
