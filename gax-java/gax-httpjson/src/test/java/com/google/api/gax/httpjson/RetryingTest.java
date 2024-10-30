@@ -151,8 +151,8 @@ class RetryingTest {
     assertThat(callable.call(initialRequest)).isEqualTo(2);
     assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(3);
     assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(4);
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isEqualTo(false);
-    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isEqualTo(false);
+    assertThat(tracerFactory.getTracerOperationFailed().get()).isFalse();
+    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
 
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -192,7 +192,8 @@ class RetryingTest {
     assertThrows(ApiException.class, () -> callable.call(initialRequest));
     assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(1);
     assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(0);
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isEqualTo(true);
+    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(callInt, atLeastOnce()).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));
@@ -215,7 +216,8 @@ class RetryingTest {
     assertThrows(ApiException.class, () -> callable.call(initialRequest));
     assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(2);
     assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(1);
-    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isEqualTo(true);
+    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isTrue();
+    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(callInt, atLeastOnce()).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));
@@ -238,7 +240,8 @@ class RetryingTest {
     assertThat(callable.call(initialRequest)).isEqualTo(2);
     assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(3);
     assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(2);
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isEqualTo(false);
+    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getTracerOperationFailed().get()).isFalse();
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(callInt, atLeastOnce()).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));
@@ -267,7 +270,8 @@ class RetryingTest {
     assertThat(callable.call(initialRequest)).isEqualTo(2);
     assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(4);
     assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(3);
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isEqualTo(false);
+    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getTracerOperationFailed().get()).isFalse();
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(callInt, atLeastOnce()).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));
@@ -288,7 +292,8 @@ class RetryingTest {
     ApiException exception = assertThrows(ApiException.class, () -> callable.call(initialRequest));
     assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(1);
     assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(0);
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isEqualTo(true);
+    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
     assertThat(exception).hasCauseThat().isSameInstanceAs(throwable);
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -320,7 +325,8 @@ class RetryingTest {
     ApiException exception = assertThrows(ApiException.class, () -> callable.call(initialRequest));
     assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(1);
     assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(0);
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isEqualTo(true);
+    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
     assertThat(exception).isSameInstanceAs(apiException);
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -353,7 +359,8 @@ class RetryingTest {
     assertThat(tracerFactory.getTracerAttemptsFailed().get()).isGreaterThan(0);
     assertThat(tracerFactory.getTracerAttemptsFailed().get())
         .isEqualTo(tracerFactory.getTracerAttempts().get() - 1);
-    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isEqualTo(true);
+    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isTrue();
+    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
     assertThat(exception).hasCauseThat().isInstanceOf(ApiException.class);
     assertThat(exception).hasCauseThat().hasMessageThat().contains("Unavailable");
     // Capture the argument passed to futureCall
@@ -396,7 +403,8 @@ class RetryingTest {
         assertThrows(FailedPreconditionException.class, () -> callable.call(initialRequest));
     assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(1);
     assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(0);
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isEqualTo(true);
+    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
     assertThat(exception.getStatusCode().getTransportCode())
         .isEqualTo(HTTP_CODE_PRECONDITION_FAILED);
     assertThat(exception).hasMessageThat().contains("precondition failed");
@@ -423,7 +431,8 @@ class RetryingTest {
     assertThat(exception).hasMessageThat().isEqualTo("java.lang.RuntimeException: unknown");
     assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(1);
     assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(0);
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isEqualTo(true);
+    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(callInt, atLeastOnce()).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));
