@@ -98,7 +98,6 @@ docker run \
   --quiet \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):${workspace_name}" \
-  -v "${m2_folder}":/home/.m2 \
   -v "${api_def_dir}:${workspace_name}/googleapis" \
   -e GENERATOR_VERSION="${image_tag}" \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
