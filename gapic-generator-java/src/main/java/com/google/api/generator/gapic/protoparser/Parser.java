@@ -156,24 +156,17 @@ public class Parser {
     // While this takes an extra pass through the protobufs, the extra time is relatively trivial
     // and is worth the larger reduced maintenance cost.
 
-    // Note that if selective api generation is configured via service yaml, resource names
-    // and messages corresponding to RPC's methods excluded for generation are not removed.
-    // However, these resource names will not be composed.
-    // refer to ComposerTest.testComposeSelectively_shouldComposeOnlyOneHelperResource for
-    // verification.
-    // TODO: remove messages and resource names that's only used by excluded RPCs configured
-    // via selective api generation from parsed GapicContext.
     Map<String, Message> messages = parseMessages(request, outputResourceReferencesSeen);
 
     Map<String, ResourceName> resourceNames = parseResourceNames(request);
     messages = updateResourceNamesInMessages(messages, resourceNames.values());
 
     // Contains only resource names that are actually used. Usage refers to the presence of a
-    // request message's field in an RPC's method_signature annotation. That is,  resource name
-    // definitions
-    // or references that are simply defined, but not used in such a manner, will not have
-    // corresponding Java helper
-    // classes generated.
+    // request message's field in an RPC's method_signature annotation. That is, resource name
+    // definitions or references that are simply defined, but not used in such a manner,
+    // will not have corresponding Java helper classes generated.
+    // If selective api generation is configured via service yaml, Java helper classes are only
+    // generated if resource names are actually used by methods selected to generate.
     Set<ResourceName> outputArgResourceNames = new HashSet<>();
     List<Service> mixinServices = new ArrayList<>();
     Transport transport = Transport.parse(transportOpt.orElse(Transport.GRPC.toString()));
@@ -465,7 +458,8 @@ public class Parser {
             .getCommon()
             .getSelectiveGapicGeneration()
             .getMethodsList();
-    // default to include all when nothing specified
+    // default to include all when nothing specified, this could be no java section
+    // specified in library setting, or the method list is empty
     if (includeMethodsList.isEmpty()) {
       return true;
     }
