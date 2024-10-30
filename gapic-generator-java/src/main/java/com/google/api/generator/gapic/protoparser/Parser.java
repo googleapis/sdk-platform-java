@@ -467,6 +467,26 @@ public class Parser {
     return includeMethodsList.contains(method.getFullName());
   }
 
+  private static boolean isEmptyService(
+      ServiceDescriptor serviceDescriptor,
+      Optional<com.google.api.Service> serviceYamlProtoOpt,
+      String protoPackage) {
+    List<MethodDescriptor> methodsList = serviceDescriptor.getMethods();
+    List<MethodDescriptor> methodListSelected =
+        methodsList.stream()
+            .filter(
+                method ->
+                    shouldIncludeMethodInGeneration(method, serviceYamlProtoOpt, protoPackage))
+            .collect(Collectors.toList());
+    if (methodListSelected.isEmpty()) {
+      LOGGER.warning(
+          String.format(
+              "Service %s has no RPC methods and will not be generated",
+              serviceDescriptor.getName()));
+    }
+    return methodListSelected.isEmpty();
+  }
+
   public static List<Service> parseService(
       FileDescriptor fileDescriptor,
       Map<String, Message> messageTypes,
@@ -478,23 +498,8 @@ public class Parser {
     String protoPackage = fileDescriptor.getPackage();
     return fileDescriptor.getServices().stream()
         .filter(
-            serviceDescriptor -> {
-              List<MethodDescriptor> methodsList = serviceDescriptor.getMethods();
-              List<MethodDescriptor> methodListSelected =
-                  methodsList.stream()
-                      .filter(
-                          method ->
-                              shouldIncludeMethodInGeneration(
-                                  method, serviceYamlProtoOpt, protoPackage))
-                      .collect(Collectors.toList());
-              if (methodListSelected.isEmpty()) {
-                LOGGER.warning(
-                    String.format(
-                        "Service %s has no RPC methods and will not be generated",
-                        serviceDescriptor.getName()));
-              }
-              return !methodListSelected.isEmpty();
-            })
+            serviceDescriptor ->
+                !isEmptyService(serviceDescriptor, serviceYamlProtoOpt, protoPackage))
         .map(
             s -> {
               // Workaround for a missing default_host and oauth_scopes annotation from a service
