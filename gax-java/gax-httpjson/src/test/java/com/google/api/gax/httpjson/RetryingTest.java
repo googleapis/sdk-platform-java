@@ -149,10 +149,10 @@ class RetryingTest {
         HttpJsonCallableFactory.createUnaryCallable(
             callInt, callSettings, httpJsonCallSettings, clientContext);
     assertThat(callable.call(initialRequest)).isEqualTo(2);
-    assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(3);
-    assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(4);
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isFalse();
-    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getInstance().getAttemptsFailed().get()).isEqualTo(3);
+    assertThat(tracerFactory.getInstance().getAttemptsStarted().get()).isEqualTo(4);
+    assertThat(tracerFactory.getInstance().getOperationFailed().get()).isFalse();
+    assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isFalse();
 
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -190,10 +190,10 @@ class RetryingTest {
         HttpJsonCallableFactory.createUnaryCallable(
             callInt, callSettings, httpJsonCallSettings, clientContext);
     assertThrows(ApiException.class, () -> callable.call(initialRequest));
-    assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(1);
-    assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(0);
-    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
+    assertThat(tracerFactory.getInstance().getAttemptsStarted().get()).isEqualTo(1);
+    assertThat(tracerFactory.getInstance().getAttemptsFailed().get()).isEqualTo(0);
+    assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getInstance().getOperationFailed().get()).isTrue();
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(callInt, atLeastOnce()).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));
@@ -214,10 +214,10 @@ class RetryingTest {
         HttpJsonCallableFactory.createUnaryCallable(
             callInt, callSettings, httpJsonCallSettings, clientContext);
     assertThrows(ApiException.class, () -> callable.call(initialRequest));
-    assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(2);
-    assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(1);
-    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isTrue();
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
+    assertThat(tracerFactory.getInstance().getAttemptsStarted().get()).isEqualTo(2);
+    assertThat(tracerFactory.getInstance().getAttemptsFailed().get()).isEqualTo(1);
+    assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isTrue();
+    assertThat(tracerFactory.getInstance().getOperationFailed().get()).isTrue();
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(callInt, atLeastOnce()).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));
@@ -238,10 +238,10 @@ class RetryingTest {
         HttpJsonCallableFactory.createUnaryCallable(
             callInt, callSettings, httpJsonCallSettings, clientContext);
     assertThat(callable.call(initialRequest)).isEqualTo(2);
-    assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(3);
-    assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(2);
-    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isFalse();
+    assertThat(tracerFactory.getInstance().getAttemptsStarted().get()).isEqualTo(3);
+    assertThat(tracerFactory.getInstance().getAttemptsFailed().get()).isEqualTo(2);
+    assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getInstance().getOperationFailed().get()).isFalse();
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(callInt, atLeastOnce()).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));
@@ -268,10 +268,10 @@ class RetryingTest {
         HttpJsonCallableFactory.createUnaryCallable(
             callInt, callSettings, httpJsonCallSettings, clientContext);
     assertThat(callable.call(initialRequest)).isEqualTo(2);
-    assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(4);
-    assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(3);
-    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isFalse();
+    assertThat(tracerFactory.getInstance().getAttemptsStarted().get()).isEqualTo(4);
+    assertThat(tracerFactory.getInstance().getAttemptsFailed().get()).isEqualTo(3);
+    assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getInstance().getOperationFailed().get()).isFalse();
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(callInt, atLeastOnce()).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));
@@ -290,10 +290,10 @@ class RetryingTest {
         HttpJsonCallableFactory.createUnaryCallable(
             callInt, callSettings, httpJsonCallSettings, clientContext);
     ApiException exception = assertThrows(ApiException.class, () -> callable.call(initialRequest));
-    assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(1);
-    assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(0);
-    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
+    assertThat(tracerFactory.getInstance().getAttemptsStarted().get()).isEqualTo(1);
+    assertThat(tracerFactory.getInstance().getAttemptsFailed().get()).isEqualTo(0);
+    assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getInstance().getOperationFailed().get()).isTrue();
     assertThat(exception).hasCauseThat().isSameInstanceAs(throwable);
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -323,10 +323,10 @@ class RetryingTest {
         HttpJsonCallableFactory.createUnaryCallable(
             callInt, callSettings, httpJsonCallSettings, clientContext);
     ApiException exception = assertThrows(ApiException.class, () -> callable.call(initialRequest));
-    assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(1);
-    assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(0);
-    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
+    assertThat(tracerFactory.getInstance().getAttemptsStarted().get()).isEqualTo(1);
+    assertThat(tracerFactory.getInstance().getAttemptsFailed().get()).isEqualTo(0);
+    assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getInstance().getOperationFailed().get()).isTrue();
     assertThat(exception).isSameInstanceAs(apiException);
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -356,11 +356,11 @@ class RetryingTest {
     // the number of attempts varies. Here we just make sure that all of them except the last are
     // considered as failed
     // attempts and that the operation was considered as failed.
-    assertThat(tracerFactory.getTracerAttemptsFailed().get()).isGreaterThan(0);
-    assertThat(tracerFactory.getTracerAttemptsFailed().get())
-        .isEqualTo(tracerFactory.getTracerAttempts().get() - 1);
-    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isTrue();
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
+    assertThat(tracerFactory.getInstance().getAttemptsFailed().get()).isGreaterThan(0);
+    assertThat(tracerFactory.getInstance().getAttemptsFailed().get())
+        .isEqualTo(tracerFactory.getInstance().getAttemptsStarted().get() - 1);
+    assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isTrue();
+    assertThat(tracerFactory.getInstance().getOperationFailed().get()).isTrue();
     assertThat(exception).hasCauseThat().isInstanceOf(ApiException.class);
     assertThat(exception).hasCauseThat().hasMessageThat().contains("Unavailable");
     // Capture the argument passed to futureCall
@@ -401,10 +401,10 @@ class RetryingTest {
             callInt, callSettings, httpJsonCallSettings, clientContext);
     ApiException exception =
         assertThrows(FailedPreconditionException.class, () -> callable.call(initialRequest));
-    assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(1);
-    assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(0);
-    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
+    assertThat(tracerFactory.getInstance().getAttemptsStarted().get()).isEqualTo(1);
+    assertThat(tracerFactory.getInstance().getAttemptsFailed().get()).isEqualTo(0);
+    assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getInstance().getOperationFailed().get()).isTrue();
     assertThat(exception.getStatusCode().getTransportCode())
         .isEqualTo(HTTP_CODE_PRECONDITION_FAILED);
     assertThat(exception).hasMessageThat().contains("precondition failed");
@@ -429,10 +429,10 @@ class RetryingTest {
     UnknownException exception =
         assertThrows(UnknownException.class, () -> callable.call(initialRequest));
     assertThat(exception).hasMessageThat().isEqualTo("java.lang.RuntimeException: unknown");
-    assertThat(tracerFactory.getTracerAttempts().get()).isEqualTo(1);
-    assertThat(tracerFactory.getTracerAttemptsFailed().get()).isEqualTo(0);
-    assertThat(tracerFactory.getTracerFailedRetriesExhausted().get()).isFalse();
-    assertThat(tracerFactory.getTracerOperationFailed().get()).isTrue();
+    assertThat(tracerFactory.getInstance().getAttemptsStarted().get()).isEqualTo(1);
+    assertThat(tracerFactory.getInstance().getAttemptsFailed().get()).isEqualTo(0);
+    assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isFalse();
+    assertThat(tracerFactory.getInstance().getOperationFailed().get()).isTrue();
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(callInt, atLeastOnce()).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));

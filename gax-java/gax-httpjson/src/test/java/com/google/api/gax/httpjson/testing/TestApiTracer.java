@@ -40,20 +40,27 @@ import org.threeten.bp.Duration;
  */
 public class TestApiTracer implements ApiTracer {
 
-  private final AtomicInteger attemptsStarted;
-  private final AtomicInteger attemptsFailed;
-  private final AtomicBoolean operationFailed;
-  private final AtomicBoolean retriesExhausted;
+  private final AtomicInteger attemptsStarted = new AtomicInteger();
+  private final AtomicInteger attemptsFailed = new AtomicInteger();
+  private final AtomicBoolean operationFailed = new AtomicBoolean(false);
+  private final AtomicBoolean retriesExhausted = new AtomicBoolean(false);
 
-  public TestApiTracer(
-      AtomicInteger tracerAttempts,
-      AtomicInteger tracerAttemptsFailed,
-      AtomicBoolean tracerOperationFailed,
-      AtomicBoolean tracerFailedRetriesExhausted) {
-    this.attemptsStarted = tracerAttempts;
-    this.attemptsFailed = tracerAttemptsFailed;
-    this.operationFailed = tracerOperationFailed;
-    this.retriesExhausted = tracerFailedRetriesExhausted;
+  public TestApiTracer() {}
+
+  public AtomicInteger getAttemptsStarted() {
+    return attemptsStarted;
+  }
+
+  public AtomicInteger getAttemptsFailed() {
+    return attemptsFailed;
+  }
+
+  public AtomicBoolean getOperationFailed() {
+    return operationFailed;
+  }
+
+  public AtomicBoolean getRetriesExhausted() {
+    return retriesExhausted;
   }
 
   @Override
@@ -63,6 +70,11 @@ public class TestApiTracer implements ApiTracer {
 
   @Override
   public void attemptStarted(int attemptNumber) {
+    attemptsStarted.incrementAndGet();
+  }
+
+  @Override
+  public void attemptStarted(Object request, int attemptNumber) {
     attemptsStarted.incrementAndGet();
   }
 
