@@ -64,11 +64,6 @@ public class TestApiTracer implements ApiTracer {
   }
 
   @Override
-  public void attemptFailed(Throwable error, Duration delay) {
-    attemptsFailed.incrementAndGet();
-  }
-
-  @Override
   public void attemptStarted(int attemptNumber) {
     attemptsStarted.incrementAndGet();
   }
@@ -76,6 +71,11 @@ public class TestApiTracer implements ApiTracer {
   @Override
   public void attemptStarted(Object request, int attemptNumber) {
     attemptsStarted.incrementAndGet();
+  }
+
+  @Override
+  public void attemptFailed(Throwable error, Duration delay) {
+    attemptsFailed.incrementAndGet();
   }
 
   @Override
