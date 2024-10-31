@@ -20,6 +20,7 @@ import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.api.core.BetaApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.retrying.RetrySettings;
 import java.io.Serializable;
 
@@ -51,22 +52,24 @@ public class RetryOption implements Serializable {
     this.value = checkNotNull(value);
   }
 
-  /** See {@link RetrySettings#getTotalTimeout()}. */
+  /** This method is obsolete. Use {@link #totalTimeoutDuration(java.time.Duration)} instead */
+  @ObsoleteApi("Use totalTimeouDuration() instead")
   public static RetryOption totalTimeout(org.threeten.bp.Duration totalTimeout) {
     return totalTimeoutDuration(toJavaTimeDuration(totalTimeout));
   }
 
-  /** See {@link RetrySettings#getTotalTimeout()}. */
+  /** See {@link RetrySettings#getTotalTimeoutDuration()}. */
   public static RetryOption totalTimeoutDuration(java.time.Duration totalTimeout) {
     return new RetryOption(OptionType.TOTAL_TIMEOUT, totalTimeout);
   }
 
-  /** See {@link RetrySettings#getInitialRetryDelay()}. */
+  /** This method is obsolete. Use {@link #initialRetryDelayDuration(java.time.Duration)} instead */
+  @ObsoleteApi("Use initialRetryDelayDuration() instead")
   public static RetryOption initialRetryDelay(org.threeten.bp.Duration initialRetryDelay) {
     return initialRetryDelayDuration(toJavaTimeDuration(initialRetryDelay));
   }
 
-  /** See {@link RetrySettings#getInitialRetryDelay()}. */
+  /** See {@link RetrySettings#getInitialRetryDelayDuration()}. */
   public static RetryOption initialRetryDelayDuration(java.time.Duration initialRetryDelay) {
     return new RetryOption(OptionType.INITIAL_RETRY_DELAY, initialRetryDelay);
   }
@@ -76,12 +79,13 @@ public class RetryOption implements Serializable {
     return new RetryOption(OptionType.RETRY_DELAY_MULTIPLIER, retryDelayMultiplier);
   }
 
-  /** See {@link RetrySettings#getMaxRetryDelay()}. */
+  /** This method is obsolete. Use {@link #maxRetryDelayDuration(java.time.Duration)} instead */
+  @ObsoleteApi("Use maxRetryDelayDuration() instead")
   public static RetryOption maxRetryDelay(org.threeten.bp.Duration maxRetryDelay) {
     return maxRetryDelayDuration(toJavaTimeDuration(maxRetryDelay));
   }
 
-  /** See {@link RetrySettings#getMaxRetryDelay()}. */
+  /** See {@link RetrySettings#getMaxRetryDelayDuration()}. */
   public static RetryOption maxRetryDelayDuration(java.time.Duration maxRetryDelay) {
     return new RetryOption(OptionType.MAX_RETRY_DELAY, maxRetryDelay);
   }
