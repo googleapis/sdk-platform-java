@@ -450,6 +450,9 @@ public class Parser {
               librarySettingsList.get(0).getVersion(), protoPackage));
       return true;
     }
+    // librarySettingsList is technically a list, but is processed upstream and
+    // only leave with 1 element. Otherwise, it is a misconfiguration and
+    // should be caught upstream.
     List<String> includeMethodsList =
         librarySettingsList
             .get(0)

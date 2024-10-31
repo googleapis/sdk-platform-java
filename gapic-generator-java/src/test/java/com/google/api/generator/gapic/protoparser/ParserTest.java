@@ -743,6 +743,8 @@ class ParserTest {
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
 
+    // test with service yaml file to show usage of this feature, test itself
+    // can be done without this file and build a Service object from code.
     String serviceYamlFilename = "selective_api_generation_v1beta1.yaml";
     String testFilesDirectory = "src/test/resources/";
     Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
@@ -782,7 +784,7 @@ class ParserTest {
   void selectiveGenerationTest_shouldIncludeMethodInGenerationWhenProtoPackageMismatch() {
     String protoPackage = "google.selective.generate.v1beta1";
 
-    // mock situation where service yaml has different version stated
+    // situation where service yaml has different version stated
     ClientLibrarySettings clientLibrarySettings =
         ClientLibrarySettings.newBuilder().setVersion("google.selective.generate.v1").build();
     Publishing publishing =
@@ -806,7 +808,7 @@ class ParserTest {
   void selectiveGenerationTest_shouldGenerateAllIfNoJavaSectionInServiceYaml() {
     String protoPackage = "google.selective.generate.v1beta1";
 
-    // mock situation where service yaml has other language settings but no
+    // situation where service yaml has other language settings but no
     // java settings in library_settings.
     ClientLibrarySettings clientLibrarySettings =
         ClientLibrarySettings.newBuilder()
