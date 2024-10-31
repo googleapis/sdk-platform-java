@@ -322,7 +322,7 @@ allows you to generate release note from api definition changes in
 ## Environment
 
 - OS: Linux
-- Python (3.12 or above)
+- Python (3.12.0 or above)
 
 ## Parameters to generate a release note
 
@@ -352,9 +352,27 @@ The path to which the file, `pr_description.txt` containing the release note
 will be sent.
 If not specified, the file will be generated to the current working directory.
 
-### An example of generating release note
+## Generate a release note in local environment
 
+1. Install python (>= 3.12.0), it is recommended to create a python virtual
+environment through [official guide](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments).
 
+2. Running the following commands to install python packages
+   ```shell
+   cd /path/to/sdk-platform-java 
+   pip install --require-hashes -r hermetic_build/common/requirements.txt
+   pip install hermetic_build/common
+   pip install --require-hashes -r hermetic_build/release_note_generation/requirements.txt
+   pip install hermetic_build/release_note_generation
+   ```
+3. Running the following commands to generate a release note
+   ```shell
+   cd /path/to/sdk-platform-java 
+   python hermetic_build/release_note_generation/cli/generate_release_note.py generate \
+     --baseline-generation-config-path=/path/to/baseline_generation_config \
+     --current-generation-config-path=/path/to/current_generation_config \
+     --repository-path=/path/to/send/release_note
+   ```
 
 # OwlBot Java Postprocessor
 
