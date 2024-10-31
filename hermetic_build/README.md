@@ -113,7 +113,7 @@ They are shared by library level parameters.
 | gapic_generator_version |    No    | set through env variable if not specified    |
 | protoc_version          |    No    | inferred from the generator if not specified |
 | grpc_version            |    No    | inferred from the generator if not specified |
-| googleapis_committish   |   Yes    |                                              |
+| googleapis_commitish    |   Yes    |                                              |
 | libraries_bom_version   |    No    | empty string if not specified                |
 
 ### Library level parameters
@@ -137,7 +137,7 @@ They are shared by all GAPICs of a library.
 | distribution_name     |    No    | `{group_id}:google-{cloud_prefix}{library_name}` if not specified                                                                         |
 | excluded_poms         |    No    |                                                                                                                                           |
 | excluded_dependencies |    No    |                                                                                                                                           |
-| googleapis_committish |    No    | use repository level `googleapis_committish` if not specified.                                                                            |
+| googleapis_commitish  |    No    | use repository level `googleapis_committish` if not specified.                                                                            |
 | group_id              |    No    | `com.google.cloud` if not specified                                                                                                       |
 | issue_tracker         |    No    |                                                                                                                                           |
 | library_name          |    No    | `api_shortname` is not specified. This value should be unique among all libraries.                                                        |
