@@ -28,12 +28,12 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 import org.easymock.EasyMock;
 import org.junit.jupiter.api.Test;
-import org.threeten.bp.Duration;
 
 class BaseEmulatorHelperTest {
 

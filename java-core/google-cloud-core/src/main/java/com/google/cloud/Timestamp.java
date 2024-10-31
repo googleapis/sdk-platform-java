@@ -20,16 +20,16 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import com.google.protobuf.util.Timestamps;
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import org.threeten.bp.Instant;
-import org.threeten.bp.LocalDateTime;
-import org.threeten.bp.ZoneOffset;
-import org.threeten.bp.format.DateTimeFormatter;
-import org.threeten.bp.format.DateTimeFormatterBuilder;
-import org.threeten.bp.format.DateTimeParseException;
-import org.threeten.bp.temporal.TemporalAccessor;
 
 /**
  * Represents a timestamp with nanosecond precision. Timestamps cover the range [0001-01-01,
