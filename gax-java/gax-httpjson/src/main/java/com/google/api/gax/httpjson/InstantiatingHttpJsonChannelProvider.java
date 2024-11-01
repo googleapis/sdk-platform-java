@@ -125,6 +125,11 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   }
 
   @Override
+  public boolean needsEndpointOverride() {
+    return false;
+  }
+
+  @Override
   public TransportChannelProvider withEndpoint(String endpoint) {
     return toBuilder().setEndpoint(endpoint).build();
   }
@@ -133,6 +138,12 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
     throw new UnsupportedOperationException(
         "InstantiatingHttpJsonChannelProvider doesn't need an mtlsEndpoint");
+  }
+
+  @Override
+  public TransportChannelProvider withEndpointOverride(String endpointOverride) {
+    throw new UnsupportedOperationException(
+        "InstantiatingHttpJsonChannelProvider doesn't need an endpointOverride");
   }
 
   /** @deprecated REST transport channel doesn't support channel pooling */

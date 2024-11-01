@@ -122,6 +122,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private final HeaderProvider headerProvider;
   private final String endpoint;
   private final String mtlsEndpoint;
+  private final String endpointOverride;
   // TODO: remove.
   // envProvider currently provides DirectPath and S2A environment variables, and is only used
   // during initial rollout for DirectPath and S2A. This provider will be removed once the
@@ -153,6 +154,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.headerProvider = builder.headerProvider;
     this.endpoint = builder.endpoint;
     this.mtlsEndpoint = builder.mtlsEndpoint;
+    this.endpointOverride = builder.endpointOverride;
     this.mtlsProvider = builder.mtlsProvider;
     this.envProvider = builder.envProvider;
     this.interceptorProvider = builder.interceptorProvider;
@@ -228,8 +230,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return endpoint == null;
   }
 
+  @Override
   public boolean needsMtlsEndpoint() {
     return mtlsEndpoint == null;
+  }
+
+  @Override
+  public boolean needsEndpointOverride() {
+    return endpointOverride == null;
   }
 
   /**
@@ -255,9 +263,29 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    * @return A new {@link InstantiatingGrpcChannelProvider} with the specified MTLS endpoint
    *     configured
    */
+  @Override
   public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
-    validateEndpoint(mtlsEndpoint);
+    if (!mtlsEndpoint.isEmpty()) {
+      validateEndpoint(mtlsEndpoint);
+    }
     return toBuilder().setMtlsEndpoint(mtlsEndpoint).build();
+  }
+
+  /**
+   * Specify the endpoint override.
+   *
+   * <p>The value of {@code endpointOverride} must be of the form {@code host:port}.
+   *
+   * @param endpointOverride
+   * @return A new {@link InstantiatingGrpcChannelProvider} with the specified endpoint Override
+   *     configured
+   */
+  @Override
+  public TransportChannelProvider withEndpointOverride(String endpointOverride) {
+    if (!endpointOverride.isEmpty()) {
+      validateEndpoint(endpointOverride);
+    }
+    return toBuilder().setEndpointOverride(endpointOverride).build();
   }
 
   /** @deprecated Please modify pool settings via {@link #toBuilder()} */
@@ -462,15 +490,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return false;
     }
 
-    // If {@link mtlsEndpoint} is not set, skip S2A. S2A is also skipped when there is endpoint
-    // override. Endpoint override is respected when the {@link endpoint} is resolved via AIP#4114,
-    // see EndpointContext.java
-    if (endpoint != mtlsEndpoint) {
+    // If {@code mtlsEndpoint} is not set, or {@code endpointOverride} is specified, skip S2A.
+    if (mtlsEndpoint.isEmpty() || !endpointOverride.isEmpty()) {
       return false;
     }
 
     // mTLS via S2A is not supported in any universe other than googleapis.com.
-    if (!endpoint.contains(Credentials.GOOGLE_DEFAULT_UNIVERSE)) {
+    if (!mtlsEndpoint.contains(Credentials.GOOGLE_DEFAULT_UNIVERSE)) {
       return false;
     }
 
@@ -686,6 +712,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return mtlsEndpoint;
   }
 
+  /** The endpoint override */
+  public String getEndpointOverride() {
+    return endpointOverride;
+  }
+
   /** This method is obsolete. Use {@link #getKeepAliveTimeDuration()} instead. */
   @ObsoleteApi("Use getKeepAliveTimeDuration() instead")
   public org.threeten.bp.Duration getKeepAliveTime() {
@@ -744,6 +775,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private HeaderProvider headerProvider;
     private String endpoint;
     private String mtlsEndpoint;
+    private String endpointOverride;
     private EnvironmentProvider envProvider;
     private MtlsProvider mtlsProvider = new MtlsProvider();
     @Nullable private GrpcInterceptorProvider interceptorProvider;
@@ -773,6 +805,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.headerProvider = provider.headerProvider;
       this.endpoint = provider.endpoint;
       this.mtlsEndpoint = provider.mtlsEndpoint;
+      this.endpointOverride = provider.endpointOverride;
       this.envProvider = provider.envProvider;
       this.interceptorProvider = provider.interceptorProvider;
       this.maxInboundMessageSize = provider.maxInboundMessageSize;
@@ -842,8 +875,18 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     public Builder setMtlsEndpoint(String mtlsEndpoint) {
-      validateEndpoint(mtlsEndpoint);
+      if (!mtlsEndpoint.isEmpty()) {
+        validateEndpoint(mtlsEndpoint);
+      }
       this.mtlsEndpoint = mtlsEndpoint;
+      return this;
+    }
+
+    public Builder setEndpointOverride(String endpointOverride) {
+      if (!endpointOverride.isEmpty()) {
+        validateEndpoint(endpointOverride);
+      }
+      this.endpointOverride = endpointOverride;
       return this;
     }
 
@@ -871,6 +914,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     public String getMtlsEndpoint() {
       return mtlsEndpoint;
+    }
+
+    public String getEndpointOverride() {
+      return endpointOverride;
     }
 
     /** The maximum message size allowed to be received on the channel. */

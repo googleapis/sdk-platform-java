@@ -89,6 +89,11 @@ public class FixedTransportChannelProvider implements TransportChannelProvider {
   }
 
   @Override
+  public boolean needsEndpointOverride() {
+    return false;
+  }
+
+  @Override
   public TransportChannelProvider withEndpoint(String endpoint) {
     throw new UnsupportedOperationException(
         "FixedTransportChannelProvider doesn't need an endpoint");
@@ -98,6 +103,12 @@ public class FixedTransportChannelProvider implements TransportChannelProvider {
   public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
     throw new UnsupportedOperationException(
         "FixedTransportChannelProvider doesn't need an mtlsEndpoint");
+  }
+
+  @Override
+  public TransportChannelProvider withEndpointOverride(String endpointOverride) {
+    throw new UnsupportedOperationException(
+        "FixedTransportChannelProvider doesn't need an endpointOverride");
   }
 
   /** @deprecated FixedTransportChannelProvider doesn't support ChannelPool configuration */

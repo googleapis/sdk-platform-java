@@ -75,6 +75,7 @@ import org.mockito.Mockito;
 class ClientContextTest {
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com";
   private static final String DEFAULT_MTLS_ENDPOINT = "test.mtls.googleapis.com";
+  private static final String DEFAULT_ENDPOINT_OVERRIDE = "transport.endpoint.com";
   private static final String DEFAULT_UNIVERSE_DOMAIN = "googleapis.com";
 
   private static class InterceptingExecutor extends ScheduledThreadPoolExecutor {
@@ -117,6 +118,7 @@ class ClientContextTest {
     final Credentials credentials;
     final String endpoint;
     final String mtlsEndpoint;
+    final String endpointOverride;
 
     FakeTransportProvider(
         FakeTransportChannel transport,
@@ -125,7 +127,8 @@ class ClientContextTest {
         Map<String, String> headers,
         Credentials credentials,
         String endpoint,
-        String mtlsEndpoint) {
+        String mtlsEndpoint,
+        String endpointOverride) {
       this.transport = transport;
       this.executor = executor;
       this.shouldAutoClose = shouldAutoClose;
@@ -134,6 +137,7 @@ class ClientContextTest {
       this.credentials = credentials;
       this.endpoint = endpoint;
       this.mtlsEndpoint = mtlsEndpoint;
+      this.endpointOverride = endpointOverride;
     }
 
     @Override
@@ -160,7 +164,8 @@ class ClientContextTest {
           this.headers,
           this.credentials,
           this.endpoint,
-          this.mtlsEndpoint);
+          this.mtlsEndpoint,
+          this.endpointOverride);
     }
 
     @Override
@@ -177,7 +182,8 @@ class ClientContextTest {
           headers,
           this.credentials,
           this.endpoint,
-          this.mtlsEndpoint);
+          this.mtlsEndpoint,
+          this.endpointOverride);
     }
 
     @Override
@@ -187,6 +193,11 @@ class ClientContextTest {
 
     @Override
     public boolean needsMtlsEndpoint() {
+      return true;
+    }
+
+    @Override
+    public boolean needsEndpointOverride() {
       return true;
     }
 
@@ -204,7 +215,8 @@ class ClientContextTest {
           this.headers,
           this.credentials,
           endpoint,
-          this.mtlsEndpoint);
+          this.mtlsEndpoint,
+          this.endpointOverride);
     }
 
     @Override
@@ -216,7 +228,21 @@ class ClientContextTest {
           this.headers,
           this.credentials,
           this.endpoint,
-          mtlsEndpoint);
+          mtlsEndpoint,
+          this.endpointOverride);
+    }
+
+    @Override
+    public TransportChannelProvider withEndpointOverride(String endpointOverride) {
+      return new FakeTransportProvider(
+          this.transport,
+          this.executor,
+          this.shouldAutoClose,
+          this.headers,
+          this.credentials,
+          this.endpoint,
+          this.mtlsEndpoint,
+          endpointOverride);
     }
 
     @Override
@@ -255,7 +281,8 @@ class ClientContextTest {
           this.headers,
           credentials,
           this.endpoint,
-          this.mtlsEndpoint);
+          this.mtlsEndpoint,
+          this.endpointOverride);
     }
   }
 
@@ -304,7 +331,8 @@ class ClientContextTest {
             needHeaders ? null : headers,
             null,
             DEFAULT_ENDPOINT,
-            DEFAULT_MTLS_ENDPOINT);
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
     Credentials credentials = Mockito.mock(Credentials.class);
     ApiClock clock = Mockito.mock(ApiClock.class);
     Watchdog watchdog =
@@ -379,7 +407,14 @@ class ClientContextTest {
     FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
     FakeTransportProvider transportProvider =
         new FakeTransportProvider(
-            transportChannel, executor, true, null, null, DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT);
+            transportChannel,
+            executor,
+            true,
+            null,
+            null,
+            DEFAULT_ENDPOINT,
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
     ApiClock clock = Mockito.mock(ApiClock.class);
 
     builder.setClock(clock);
@@ -419,7 +454,14 @@ class ClientContextTest {
     FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
     FakeTransportProvider transportProvider =
         new FakeTransportProvider(
-            transportChannel, executor, true, null, null, DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT);
+            transportChannel,
+            executor,
+            true,
+            null,
+            null,
+            DEFAULT_ENDPOINT,
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
 
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of("header_k1", "v1"));
@@ -456,7 +498,14 @@ class ClientContextTest {
     FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
     FakeTransportProvider transportProvider =
         new FakeTransportProvider(
-            transportChannel, executor, true, null, null, DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT);
+            transportChannel,
+            executor,
+            true,
+            null,
+            null,
+            DEFAULT_ENDPOINT,
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
 
     HeaderProvider headerProvider =
         new HeaderProvider() {
@@ -503,7 +552,14 @@ class ClientContextTest {
     FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
     FakeTransportProvider transportProvider =
         new FakeTransportProvider(
-            transportChannel, executor, true, null, null, DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT);
+            transportChannel,
+            executor,
+            true,
+            null,
+            null,
+            DEFAULT_ENDPOINT,
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
 
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of("header_k1", "v1"));
@@ -535,7 +591,14 @@ class ClientContextTest {
     FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
     FakeTransportProvider transportProvider =
         new FakeTransportProvider(
-            transportChannel, executor, true, null, null, DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT);
+            transportChannel,
+            executor,
+            true,
+            null,
+            null,
+            DEFAULT_ENDPOINT,
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
     Map<String, List<String>> metaDataWithQuota =
         ImmutableMap.of(
             "k1",
@@ -577,7 +640,14 @@ class ClientContextTest {
     FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
     FakeTransportProvider transportProvider =
         new FakeTransportProvider(
-            transportChannel, executor, true, null, null, DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT);
+            transportChannel,
+            executor,
+            true,
+            null,
+            null,
+            DEFAULT_ENDPOINT,
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
     Map<String, List<String>> metaData = ImmutableMap.of("k1", Collections.singletonList("v1"));
     final Credentials credentialsWithoutQuotaProjectId = Mockito.mock(GoogleCredentials.class);
     Mockito.when(credentialsWithoutQuotaProjectId.getRequestMetadata(null)).thenReturn(metaData);
@@ -614,7 +684,8 @@ class ClientContextTest {
             null,
             Mockito.mock(Credentials.class),
             DEFAULT_ENDPOINT,
-            DEFAULT_MTLS_ENDPOINT);
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
 
     final FakeClientSettings.Builder settingsBuilder = new FakeClientSettings.Builder();
 
@@ -636,7 +707,8 @@ class ClientContextTest {
             null,
             null,
             DEFAULT_ENDPOINT,
-            DEFAULT_MTLS_ENDPOINT);
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
 
     ClientSettings.Builder builder =
         new FakeClientSettings.Builder()
@@ -665,7 +737,8 @@ class ClientContextTest {
             null,
             null,
             DEFAULT_ENDPOINT,
-            DEFAULT_MTLS_ENDPOINT);
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
 
     ClientSettings.Builder builder =
         new FakeClientSettings.Builder()
@@ -694,7 +767,8 @@ class ClientContextTest {
             null,
             null,
             DEFAULT_ENDPOINT,
-            DEFAULT_MTLS_ENDPOINT);
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
 
     ClientSettings.Builder builder =
         new FakeClientSettings.Builder()
@@ -780,7 +854,8 @@ class ClientContextTest {
             null,
             null,
             DEFAULT_ENDPOINT,
-            DEFAULT_MTLS_ENDPOINT);
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
 
     ClientSettings.Builder builder =
         new FakeClientSettings.Builder()
@@ -833,7 +908,8 @@ class ClientContextTest {
             null,
             null,
             DEFAULT_ENDPOINT,
-            DEFAULT_MTLS_ENDPOINT);
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
 
     ClientSettings.Builder builder =
         new FakeClientSettings.Builder()
@@ -881,7 +957,8 @@ class ClientContextTest {
             null,
             null,
             DEFAULT_ENDPOINT,
-            DEFAULT_MTLS_ENDPOINT));
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE));
     context = ClientContext.create(builder.build());
     transportChannel = (FakeTransportChannel) context.getTransportChannel();
     assertThat(transportChannel.getExecutor()).isSameInstanceAs(executorProvider.getExecutor());
@@ -909,7 +986,8 @@ class ClientContextTest {
         null,
         null,
         DEFAULT_ENDPOINT,
-        DEFAULT_MTLS_ENDPOINT);
+        DEFAULT_MTLS_ENDPOINT,
+        DEFAULT_ENDPOINT_OVERRIDE);
   }
 
   // EndpointContext will construct a valid endpoint if nothing is provided
@@ -917,7 +995,14 @@ class ClientContextTest {
   void testCreateClientContext_withGdchCredentialNoAudienceNoEndpoint() throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
-            FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null, null);
+            FakeTransportChannel.create(new FakeChannel()),
+            null,
+            true,
+            null,
+            null,
+            null,
+            null,
+            null);
     Credentials creds = getMockGdchCredentials();
 
     CredentialsProvider provider = FixedCredentialsProvider.create(creds);
@@ -944,7 +1029,14 @@ class ClientContextTest {
       throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
-            FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null, null);
+            FakeTransportChannel.create(new FakeChannel()),
+            null,
+            true,
+            null,
+            null,
+            null,
+            null,
+            null);
     Credentials creds = getMockGdchCredentials();
 
     CredentialsProvider provider = FixedCredentialsProvider.create(creds);
@@ -967,7 +1059,14 @@ class ClientContextTest {
       throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
-            FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null, null);
+            FakeTransportChannel.create(new FakeChannel()),
+            null,
+            true,
+            null,
+            null,
+            null,
+            null,
+            null);
     Credentials creds = getMockGdchCredentials();
 
     // it should correctly create a client context with gdch creds and null audience
@@ -1079,7 +1178,14 @@ class ClientContextTest {
   void testCreateClientContext_SetEndpointViaClientSettings() throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
-            FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null, null);
+            FakeTransportChannel.create(new FakeChannel()),
+            null,
+            true,
+            null,
+            null,
+            null,
+            null,
+            null);
     StubSettings settings =
         new FakeStubSettings.Builder()
             .setEndpoint(DEFAULT_ENDPOINT)
@@ -1106,6 +1212,7 @@ class ClientContextTest {
             null,
             null,
             transportChannelProviderEndpoint,
+            null,
             null);
     StubSettings settings =
         new FakeStubSettings.Builder()
@@ -1135,6 +1242,7 @@ class ClientContextTest {
             null,
             null,
             transportChannelProviderEndpoint,
+            null,
             null);
     StubSettings settings =
         new FakeStubSettings.Builder()
@@ -1158,7 +1266,14 @@ class ClientContextTest {
   void testCreateClientContext_doNotSetUniverseDomain() throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
-            FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null, null);
+            FakeTransportChannel.create(new FakeChannel()),
+            null,
+            true,
+            null,
+            null,
+            null,
+            null,
+            null);
     StubSettings settings =
         new FakeStubSettings.Builder()
             .setEndpoint(null)
@@ -1177,7 +1292,14 @@ class ClientContextTest {
   void testCreateClientContext_setUniverseDomain() throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
-            FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null, null);
+            FakeTransportChannel.create(new FakeChannel()),
+            null,
+            true,
+            null,
+            null,
+            null,
+            null,
+            null);
     String universeDomain = "testdomain.com";
     StubSettings settings =
         new FakeStubSettings.Builder().setEndpoint(null).setUniverseDomain(universeDomain).build();
@@ -1216,7 +1338,8 @@ class ClientContextTest {
             ImmutableMap.of(),
             null,
             DEFAULT_ENDPOINT,
-            DEFAULT_MTLS_ENDPOINT);
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
     builder.setTransportChannelProvider(transportProvider);
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of());
@@ -1243,7 +1366,8 @@ class ClientContextTest {
             ImmutableMap.of(),
             null,
             DEFAULT_ENDPOINT,
-            DEFAULT_MTLS_ENDPOINT);
+            DEFAULT_MTLS_ENDPOINT,
+            DEFAULT_ENDPOINT_OVERRIDE);
     builder.setTransportChannelProvider(transportProvider);
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of());

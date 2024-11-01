@@ -107,6 +107,11 @@ public class LocalChannelProvider implements TransportChannelProvider {
   }
 
   @Override
+  public boolean needsEndpointOverride() {
+    return false;
+  }
+
+  @Override
   public TransportChannelProvider withEndpoint(String endpoint) {
     throw new UnsupportedOperationException("LocalChannelProvider doesn't need an endpoint");
   }
@@ -114,6 +119,12 @@ public class LocalChannelProvider implements TransportChannelProvider {
   @Override
   public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
     throw new UnsupportedOperationException("LocalChannelProvider doesn't need an mtlsEndpoint");
+  }
+
+  @Override
+  public TransportChannelProvider withEndpointOverride(String endpointOverride) {
+    throw new UnsupportedOperationException(
+        "LocalChannelProvider doesn't need an endpointOverride");
   }
 
   @Override

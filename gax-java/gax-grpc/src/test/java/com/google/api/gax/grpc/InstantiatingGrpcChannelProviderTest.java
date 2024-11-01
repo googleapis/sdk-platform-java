@@ -86,6 +86,7 @@ import org.mockito.Mockito;
 class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelTest {
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com:443";
   private static final String DEFAULT_MTLS_ENDPOINT = "test.mtls.googleapis.com:443";
+  private static final String DEFAULT_ENDPOINT_OVERRIDE = "test.endpoint.com:443";
   private static final String API_KEY_HEADER_VALUE = "fake_api_key_2";
   private static final String API_KEY_AUTH_HEADER_KEY = "x-goog-api-key";
   private static String originalOSName;
@@ -159,6 +160,32 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         () ->
             InstantiatingGrpcChannelProvider.newBuilder()
                 .setEndpoint("test.mtls.googleapis.com:abcd"));
+  }
+
+  @Test
+  void testEndpointOverrideEndpoint() {
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder();
+    builder.setEndpointOverride(DEFAULT_ENDPOINT_OVERRIDE);
+    assertEquals(builder.getEndpointOverride(), DEFAULT_ENDPOINT_OVERRIDE);
+
+    InstantiatingGrpcChannelProvider provider = builder.build();
+    assertEquals(provider.getEndpointOverride(), DEFAULT_ENDPOINT_OVERRIDE);
+  }
+
+  @Test
+  void testEndpointOverrideNoPort() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () ->
+            InstantiatingGrpcChannelProvider.newBuilder().setEndpointOverride("test.endpoint.com"));
+  }
+
+  @Test
+  void testEndpointOverrideBadPort() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("test.endpoint.com:abcd"));
   }
 
   @Test
@@ -1041,8 +1068,9 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .thenReturn("false");
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
-            .setEndpoint(DEFAULT_MTLS_ENDPOINT)
+            .setEndpoint(DEFAULT_ENDPOINT)
             .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT)
+            .setEndpointOverride("")
             .setEnvProvider(envProvider)
             .build();
     Truth.assertThat(provider.shouldUseS2A()).isFalse();
@@ -1056,6 +1084,8 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setEndpoint(DEFAULT_ENDPOINT)
+            .setMtlsEndpoint("")
+            .setEndpointOverride("")
             .setEnvProvider(envProvider)
             .build();
     Truth.assertThat(provider.shouldUseS2A()).isFalse();
@@ -1070,6 +1100,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         InstantiatingGrpcChannelProvider.newBuilder()
             .setEndpoint(DEFAULT_ENDPOINT)
             .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT)
+            .setEndpointOverride(DEFAULT_ENDPOINT_OVERRIDE)
             .setEnvProvider(envProvider)
             .build();
     Truth.assertThat(provider.shouldUseS2A()).isFalse();
@@ -1082,8 +1113,9 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .thenReturn("true");
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
-            .setEndpoint("test.mtls.abcd.com:443")
+            .setEndpoint("test.abcd.com:443")
             .setMtlsEndpoint("test.mtls.abcd.com:443")
+            .setEndpointOverride("")
             .setEnvProvider(envProvider)
             .build();
     Truth.assertThat(provider.shouldUseS2A()).isFalse();
@@ -1096,8 +1128,9 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         .thenReturn("true");
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
-            .setEndpoint(DEFAULT_MTLS_ENDPOINT)
+            .setEndpoint(DEFAULT_ENDPOINT)
             .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT)
+            .setEndpointOverride("")
             .setEnvProvider(envProvider)
             .build();
     Truth.assertThat(provider.shouldUseS2A()).isTrue();

@@ -93,6 +93,9 @@ public interface TransportChannelProvider {
   /** True if the TransportProvider has no mtlsEndpoint set. */
   boolean needsMtlsEndpoint();
 
+  /** True if the TransportProvider has no endpointOverride set */
+  boolean needsEndpointOverride();
+
   /**
    * Sets the endpoint to use when constructing a new {@link TransportChannel}.
    *
@@ -106,6 +109,13 @@ public interface TransportChannelProvider {
    * <p>This method should only be called if {@link #needsMtlsEndpoint()} returns true.
    */
   TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint);
+
+  /**
+   * Sets the endpoint override when constructing a new {@link TransportChannel}.
+   *
+   * <p>This method should only be called if {@link #needsEndpointOverride()} returns true.
+   */
+  TransportChannelProvider withEndpointOverride(String endpointOverride);
 
   /**
    * Reports whether this provider allows pool size customization.
