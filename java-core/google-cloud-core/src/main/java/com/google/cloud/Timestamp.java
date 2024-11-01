@@ -54,7 +54,7 @@ public final class Timestamp implements Comparable<Timestamp>, Serializable {
       new DateTimeFormatterBuilder()
           .appendOptional(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
           .optionalStart()
-          .appendOffsetId()
+          .appendZoneOrOffsetId()
           .optionalEnd()
           .toFormatter()
           .withZone(ZoneOffset.UTC);
