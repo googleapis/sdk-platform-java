@@ -16,8 +16,12 @@
 
 package com.google.cloud.testing;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.core.CurrentMillisClock;
 import com.google.api.core.InternalApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.cloud.ExceptionHandler;
 import com.google.cloud.RetryHelper;
 import com.google.cloud.ServiceOptions;
@@ -45,7 +49,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -112,14 +115,21 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
     }
   }
 
+  /** This method is obsolete. Use {@link #waitForProcessDuration(java.time.Duration)} instead */
+  @ObsoleteApi("Use waitForProcessDuration() instead")
+  protected final int waitForProcess(org.threeten.bp.Duration timeout)
+      throws IOException, InterruptedException, TimeoutException {
+    return waitForProcessDuration(toJavaTimeDuration(timeout));
+  }
+
   /**
    * Waits for the local service's subprocess to terminate, and stop any possible thread listening
    * for its output.
    */
-  protected final int waitForProcess(Duration timeout)
+  protected final int waitForProcessDuration(java.time.Duration timeout)
       throws IOException, InterruptedException, TimeoutException {
     if (activeRunner != null) {
-      int exitCode = activeRunner.waitFor(timeout);
+      int exitCode = activeRunner.waitForDuration(timeout);
       activeRunner = null;
       return exitCode;
     }
@@ -130,7 +140,14 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
     return 0;
   }
 
-  private static int waitForProcess(final Process process, Duration timeout)
+  /** This method is obsolete. Use {@link #waitForProcessDuration(java.time.Duration)} instead */
+  @ObsoleteApi("Use waitForProcessDuration() instead")
+  private static int waitForProcess(final Process process, org.threeten.bp.Duration timeout)
+      throws InterruptedException, TimeoutException {
+    return waitForProcessDuration(process, toJavaTimeDuration(timeout));
+  }
+
+  private static int waitForProcessDuration(final Process process, java.time.Duration timeout)
       throws InterruptedException, TimeoutException {
     if (process == null) {
       return 0;
@@ -180,9 +197,16 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
   /** Starts the local emulator. */
   public abstract void start() throws IOException, InterruptedException;
 
-  /** Stops the local emulator. */
-  public abstract void stop(Duration timeout)
+  /** This method is obsolete. Use {@link #stopDuration(java.time.Duration)} instead */
+  @ObsoleteApi("Use stopDuration() instead")
+  public abstract void stop(org.threeten.bp.Duration timeout)
       throws IOException, InterruptedException, TimeoutException;
+
+  /** Stops the local emulator. */
+  public void stopDuration(java.time.Duration timeout)
+      throws IOException, InterruptedException, TimeoutException {
+    stop(toThreetenDuration(timeout));
+  }
 
   /** Resets the internal state of the emulator. */
   public abstract void reset() throws IOException;
@@ -226,8 +250,15 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
     /** Starts the emulator associated to this runner. */
     void start() throws IOException;
 
+    /** This method is obsolete. Use {@link #waitForDuration(java.time.Duration)} instead */
+    @ObsoleteApi("Use waitForDuration() instead")
+    int waitFor(org.threeten.bp.Duration timeout) throws InterruptedException, TimeoutException;
+
     /** Wait for the emulator associated to this runner to terminate, returning the exit status. */
-    int waitFor(Duration timeout) throws InterruptedException, TimeoutException;
+    default int waitForDuration(java.time.Duration timeout)
+        throws InterruptedException, TimeoutException {
+      return waitFor(toThreetenDuration(timeout));
+    }
 
     /** Returns the process associated to the emulator, if any. */
     Process getProcess();
@@ -263,10 +294,18 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
       log.fine("Starting emulator via Google Cloud SDK");
       process = CommandWrapper.create().setCommand(commandText).setRedirectErrorStream().start();
     }
+    /** This method is obsolete. Use {@link #waitForDuration(java.time.Duration)} instead */
+    @ObsoleteApi("Use waitForDuration() instead")
+    @Override
+    public int waitFor(org.threeten.bp.Duration timeout)
+        throws InterruptedException, TimeoutException {
+      return waitForProcess(process, timeout);
+    }
 
     @Override
-    public int waitFor(Duration timeout) throws InterruptedException, TimeoutException {
-      return waitForProcess(process, timeout);
+    public int waitForDuration(java.time.Duration timeout)
+        throws InterruptedException, TimeoutException {
+      return waitForProcessDuration(process, timeout);
     }
 
     @Override
@@ -374,9 +413,17 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
               .start();
     }
 
+    /** This method is obsolete. Use {@link #waitForDuration(java.time.Duration)} instead */
+    @ObsoleteApi("Use waitForDuration() instead")
     @Override
-    public int waitFor(Duration timeout) throws InterruptedException, TimeoutException {
+    public int waitFor(org.threeten.bp.Duration timeout)
+        throws InterruptedException, TimeoutException {
       return waitForProcess(process, timeout);
+    }
+
+    public int waitForDuration(java.time.Duration timeout)
+        throws InterruptedException, TimeoutException {
+      return waitForProcessDuration(process, timeout);
     }
 
     @Override
