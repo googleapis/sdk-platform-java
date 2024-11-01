@@ -63,7 +63,10 @@ import io.grpc.alts.GoogleDefaultChannelCredentials;
 import io.grpc.auth.MoreCallCredentials;
 import io.grpc.s2a.S2AChannelCredentials;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
@@ -102,7 +105,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting
   static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
 
-  private static final String S2A_ENV_ENABLE_USE_S2A = "EXPERIMENTAL_GOOGLE_API_USE_S2A";
+  @VisibleForTesting static final String S2A_ENV_ENABLE_USE_S2A = "EXPERIMENTAL_GOOGLE_API_USE_S2A";
+
   private static final String MTLS_MDS_ROOT = "/run/google-mds-mtls/root.crt";
   // The mTLS MDS credentials are formatted as the concatenation of a PEM-encoded certificate chain
   // followed by a PEM-encoded private key.
@@ -118,9 +122,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private final HeaderProvider headerProvider;
   private final String endpoint;
   private final String mtlsEndpoint;
-  // TODO: remove. envProvider currently provides DirectPath environment variable, and is only used
-  // during initial rollout for DirectPath. This provider will be removed once the DirectPath
-  // environment is not used.
+  // TODO: remove.
+  // envProvider currently provides DirectPath and S2A environment variables, and is only used
+  // during initial rollout for DirectPath and S2A. This provider will be removed once the
+  // DirectPath
+  // and S2A environment variables are not used.
   private final EnvironmentProvider envProvider;
   @Nullable private final GrpcInterceptorProvider interceptorProvider;
   @Nullable private final Integer maxInboundMessageSize;
@@ -472,21 +478,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   @VisibleForTesting
-  ChannelCredentials createMtlsToS2AChannelCredentials() throws IOException {
-    if (!isOnComputeEngine()) {
-      // Currently, MTLS to MDS is only available on GCE. See:
-      // https://cloud.google.com/compute/docs/metadata/overview#https-mds
-      return null;
-    }
-    File privateKeyFile = new File(MTLS_MDS_CERT_CHAIN_AND_KEY);
-    File certChainFile = new File(MTLS_MDS_CERT_CHAIN_AND_KEY);
-    File trustBundleFile = new File(MTLS_MDS_ROOT);
-    if (!privateKeyFile.isFile() || !certChainFile.isFile() || !trustBundleFile.isFile()) {
+  ChannelCredentials createMtlsToS2AChannelCredentials(
+      InputStream trustBundle, InputStream privateKey, InputStream certChain) throws IOException {
+    if (trustBundle == null || privateKey == null || certChain == null) {
       return null;
     }
     return TlsChannelCredentials.newBuilder()
-        .keyManager(privateKeyFile, certChainFile)
-        .trustManager(trustBundleFile)
+        .keyManager(privateKey, certChain)
+        .trustManager(trustBundle)
         .build();
   }
 
@@ -496,14 +495,29 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     String plaintextAddress = s2aUtils.getPlaintextS2AAddress();
     String mtlsAddress = s2aUtils.getMtlsS2AAddress();
     if (!mtlsAddress.isEmpty()) {
+      // Currently, MTLS to MDS is only available on GCE. See:
+      // https://cloud.google.com/compute/docs/metadata/overview#https-mds
+      // Try to load MTLS-MDS creds.
+      InputStream trustBundle = null;
+      InputStream privateKey = null;
+      InputStream certChain = null;
+      try {
+        trustBundle = new FileInputStream(MTLS_MDS_ROOT);
+        privateKey = new FileInputStream(MTLS_MDS_CERT_CHAIN_AND_KEY);
+        certChain = new FileInputStream(MTLS_MDS_CERT_CHAIN_AND_KEY);
+      } catch (FileNotFoundException ignore) {
+        // Fallback to plaintext-to-S2A connection.
+      }
+      ChannelCredentials mtlsToS2AChannelCredentials = null;
       try {
         // Try to connect to S2A using mTLS.
-        ChannelCredentials mtlsToS2AChannelCredentials = createMtlsToS2AChannelCredentials();
-        if (mtlsToS2AChannelCredentials != null) {
-          return S2AChannelCredentials.newBuilder(mtlsAddress, mtlsToS2AChannelCredentials).build();
-        }
+        mtlsToS2AChannelCredentials =
+            createMtlsToS2AChannelCredentials(trustBundle, privateKey, certChain);
       } catch (IOException ignore) {
-        // Fallback to plaintext connection to S2A.
+        // Fallback to plaintext-to-S2A connection.
+      }
+      if (mtlsToS2AChannelCredentials != null) {
+        return S2AChannelCredentials.newBuilder(mtlsAddress, mtlsToS2AChannelCredentials).build();
       }
     }
 

@@ -56,8 +56,10 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.TlsChannelCredentials;
 import io.grpc.alts.ComputeEngineChannelBuilder;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -83,6 +85,7 @@ import org.mockito.Mockito;
 
 class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelTest {
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com:443";
+  private static final String DEFAULT_MTLS_ENDPOINT = "test.mtls.googleapis.com:443";
   private static final String API_KEY_HEADER_VALUE = "fake_api_key_2";
   private static final String API_KEY_AUTH_HEADER_KEY = "x-goog-api-key";
   private static String originalOSName;
@@ -127,6 +130,35 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     assertThrows(
         IllegalArgumentException.class,
         () -> InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("localhost:abcd"));
+  }
+
+  @Test
+  void testMtlsEndpoint() {
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder();
+    builder.setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT);
+    assertEquals(builder.getMtlsEndpoint(), DEFAULT_MTLS_ENDPOINT);
+
+    InstantiatingGrpcChannelProvider provider = builder.build();
+    assertEquals(provider.getMtlsEndpoint(), DEFAULT_MTLS_ENDPOINT);
+  }
+
+  @Test
+  void testMtlsEndpointNoPort() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () ->
+            InstantiatingGrpcChannelProvider.newBuilder()
+                .setMtlsEndpoint("test.mtls.googleapis.com"));
+  }
+
+  @Test
+  void testMtlsEndpointBadPort() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () ->
+            InstantiatingGrpcChannelProvider.newBuilder()
+                .setEndpoint("test.mtls.googleapis.com:abcd"));
   }
 
   @Test
@@ -230,6 +262,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         InstantiatingGrpcChannelProvider.newBuilder()
             .setProcessorCount(2)
             .setEndpoint("fake.endpoint:443")
+            .setMtlsEndpoint("fake.endpoint:443")
             .setMaxInboundMessageSize(12345678)
             .setMaxInboundMetadataSize(4096)
             .setKeepAliveTimeDuration(keepaliveTime)
@@ -243,6 +276,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     InstantiatingGrpcChannelProvider.Builder builder = provider.toBuilder();
 
     assertThat(builder.getEndpoint()).isEqualTo("fake.endpoint:443");
+    assertThat(builder.getMtlsEndpoint()).isEqualTo("fake.endpoint:443");
     assertThat(builder.getMaxInboundMessageSize()).isEqualTo(12345678);
     assertThat(builder.getMaxInboundMetadataSize()).isEqualTo(4096);
     assertThat(builder.getKeepAliveTimeDuration()).isEqualTo(keepaliveTime);
@@ -978,6 +1012,142 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     Map<String, String> header = new HashMap<>();
     header.put(API_KEY_AUTH_HEADER_KEY, API_KEY_HEADER_VALUE);
     return FixedHeaderProvider.create(header);
+  }
+
+  @Test
+  void isGoogleS2AEnabled_envVarNotSet_returnsFalse() {
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    Truth.assertThat(provider.isGoogleS2AEnabled()).isFalse();
+  }
+
+  @Test
+  void isGoogleS2AEnabled_envVarNotSet_returnsTrue() {
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
+        .thenReturn("true");
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    Truth.assertThat(provider.isGoogleS2AEnabled()).isFalse();
+  }
+
+  @Test
+  void shouldUseS2A_envVarNotSet_returnsFalse() {
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setEndpoint(DEFAULT_MTLS_ENDPOINT)
+            .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT)
+            .setEnvProvider(envProvider)
+            .build();
+    Truth.assertThat(provider.shouldUseS2A()).isFalse();
+  }
+
+  @Test
+  void shouldUseS2A_mtlsEndpointNotSet_returnsFalse() {
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
+        .thenReturn("true");
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEnvProvider(envProvider)
+            .build();
+    Truth.assertThat(provider.shouldUseS2A()).isFalse();
+  }
+
+  @Test
+  void shouldUseS2A_endpointOverrideIsSet_returnsFalse() {
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
+        .thenReturn("true");
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT)
+            .setEnvProvider(envProvider)
+            .build();
+    Truth.assertThat(provider.shouldUseS2A()).isFalse();
+  }
+
+  @Test
+  void shouldUseS2A_nonGDUUniverse_returnsFalse() {
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
+        .thenReturn("true");
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setEndpoint("test.mtls.abcd.com:443")
+            .setMtlsEndpoint("test.mtls.abcd.com:443")
+            .setEnvProvider(envProvider)
+            .build();
+    Truth.assertThat(provider.shouldUseS2A()).isFalse();
+  }
+
+  @Test
+  void shouldUseS2A_returnsTrue() {
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
+        .thenReturn("true");
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setEndpoint(DEFAULT_MTLS_ENDPOINT)
+            .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT)
+            .setEnvProvider(envProvider)
+            .build();
+    Truth.assertThat(provider.shouldUseS2A()).isTrue();
+  }
+
+  @Test
+  void createMtlsToS2AChannelCredentials_missingAllFiles_throws() throws IOException {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    assertThat(provider.createMtlsToS2AChannelCredentials(null, null, null)).isNull();
+  }
+
+  @Test
+  void createMtlsToS2AChannelCredentials_missingRootFile_throws() throws IOException {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    InputStream privateKey = this.getClass().getClassLoader().getResourceAsStream("client_key.pem");
+    InputStream certChain = this.getClass().getClassLoader().getResourceAsStream("client_cert.pem");
+    assertThat(provider.createMtlsToS2AChannelCredentials(null, privateKey, certChain)).isNull();
+  }
+
+  @Test
+  void createMtlsToS2AChannelCredentials_missingKeyFile_throws() throws IOException {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    InputStream trustBundle = this.getClass().getClassLoader().getResourceAsStream("root_cert.pem");
+    InputStream certChain = this.getClass().getClassLoader().getResourceAsStream("client_cert.pem");
+    assertThat(provider.createMtlsToS2AChannelCredentials(trustBundle, null, certChain)).isNull();
+  }
+
+  @Test
+  void createMtlsToS2AChannelCredentials_missingCertChainFile_throws() throws IOException {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    InputStream trustBundle = this.getClass().getClassLoader().getResourceAsStream("root_cert.pem");
+    InputStream privateKey = this.getClass().getClassLoader().getResourceAsStream("client_key.pem");
+    assertThat(provider.createMtlsToS2AChannelCredentials(trustBundle, privateKey, null)).isNull();
+  }
+
+  @Test
+  void createMtlsToS2AChannelCredentials_success() throws IOException {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    InputStream trustBundle = this.getClass().getClassLoader().getResourceAsStream("root_cert.pem");
+    InputStream privateKey = this.getClass().getClassLoader().getResourceAsStream("client_key.pem");
+    InputStream certChain = this.getClass().getClassLoader().getResourceAsStream("client_cert.pem");
+    assertThat(trustBundle).isNotNull();
+    assertEquals(
+        provider.createMtlsToS2AChannelCredentials(trustBundle, privateKey, certChain).getClass(),
+        TlsChannelCredentials.class);
   }
 
   private static class FakeLogHandler extends Handler {
