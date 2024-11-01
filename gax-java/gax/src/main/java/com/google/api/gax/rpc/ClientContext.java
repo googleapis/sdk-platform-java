@@ -232,7 +232,7 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsMtlsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withMtlsEndpoint(mtlsEndpoint);
     }
-    if (transportChannelProvider.needsMtlsEndpoint()) {
+    if (transportChannelProvider.needsEndpointOverride()) {
       transportChannelProvider = transportChannelProvider.withEndpointOverride(endpointOverride);
     }
     TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
