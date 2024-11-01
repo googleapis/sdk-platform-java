@@ -178,6 +178,7 @@ public abstract class ClientContext {
     // A valid EndpointContext should have been created in the StubSettings
     EndpointContext endpointContext = settings.getEndpointContext();
     String endpoint = endpointContext.resolvedEndpoint();
+    String mtlsEndpoint = settings.getMtlsEndpoint();
     Credentials credentials = getCredentials(settings);
     // check if need to adjust credentials/endpoint/endpointContext for GDC-H
     String settingsGdchApiAudience = settings.getGdchApiAudience();
@@ -221,6 +222,9 @@ public abstract class ClientContext {
     }
     if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
+    }
+    if (transportChannelProvider.needsMtlsEndpoint()) {
+      transportChannelProvider = transportChannelProvider.withMtlsEndpoint(mtlsEndpoint);
     }
     TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
 

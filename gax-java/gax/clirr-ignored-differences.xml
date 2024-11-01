@@ -106,4 +106,9 @@
     <className>com/google/api/gax/batching/Batcher</className>
     <method>*</method>
   </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/TransportChannelProvider</className>
+    <method>*</method>
+  </difference>
 </differences>
