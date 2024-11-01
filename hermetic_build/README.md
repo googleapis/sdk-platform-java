@@ -8,7 +8,7 @@ directory, you can generate a repository containing GAPIC client libraries (a
 monorepo, for example, google-cloud-java) from a configuration file.
 
 Instead of running docker image, if you prefer running the underlying python
-script directly, please refer to [development guide](DEVELOPMENT.md) for
+script directly, please refer to [development guide](DEVELOPMENT.md#run-the-script) for
 additional instructions.
 
 ## Environment
@@ -52,7 +52,7 @@ A list of library names that will be generated, separated by comma.
 The library name of a library is the value of `library_name` or `api_shortname`,
 if `library_name` is not specified, in the generation configuration.
 
-If `library_names` is not specified, all libraries in the generation
+If not specified, all libraries in the generation
 configuration will be generated.
 
 ### Api definitions path (`api-definitions-path`), optional
@@ -228,14 +228,33 @@ libraries:
      --quiet \
      -u "$(id -u):$(id -g)" \
      -v "$(pwd):/workspace" \
-     -v "${api_def_dir}:/workspace/googleapis" \
+     -v "${api_def_dir}:/workspace/apis" \
      -e GENERATOR_VERSION="${LOCAL_GENERATOR_VERSION}" \
      local:image-tag \
      --generation-config-path=/workspace/generation_config_file \
      --library-names=apigee-connect,asset \
      --repository-path=/workspace \
-     --api-definitions-path=/workspace/googleapis
+     --api-definitions-path=/workspace/apis
    ```
+
+* `-u "$(id -u)":"$(id -g)"` makes docker run the container impersonating
+  yourself. 
+  This avoids folder ownership changes since it runs as root by default.
+* `-v "$(pwd):/workspace"` maps the host machine's current working directory to
+  the /workspace folder. 
+  The image is configured to perform changes in this directory.
+* `-v "${api_def_dir}:/workspace/apis"` maps the host machine's api-definition
+  folder to /workspace/apis folder.
+* `-e GENERATOR_VERSION="${LOCAL_GENERATOR_VERSION}"` set environment variable
+  `GENERATOR_VERSION` in the docker container to use the generator we built in
+  the previous step.
+* `--generation-config-path=/workspace/generation_config_file` set the
+  generation configuration to `/workspace/generation_config_file`.
+* `--api-definitions-path=/workspace/apis` set the API definition path to
+  `/workspace/apis`.
+
+To debug the image, please refer to [development guide](DEVELOPMENT.md#debug-the-library-generation-container)
+for more info.
 
 ## An example to generate a repository using the docker image
 
