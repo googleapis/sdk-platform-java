@@ -207,7 +207,6 @@ libraries:
      -u "$(id -u):$(id -g)" \
      -v "$(pwd):/workspace" \
      -v /path/to/api_definition:/workspace \
-     -e GENERATOR_VERSION=image-tag \
      gcr.io/cloud-devrel-public-resources/java-library-generation:image-tag
    ```
 
@@ -219,11 +218,6 @@ libraries:
   The image is configured to perform changes in this directory.
 * `-v /path/to/api_definition:/workspace` maps the host machine's API 
   definitions folder to `/workspace/apis` folder.
-* `-e GENERATOR_VERSION=image-tag` set environment variable `GENERATOR_VERSION`
-  in the docker container to use the generator with the same version of the
-  image tag.
-  Note that this is intentional because we tag the image with the underlying
-  generator version.
 
 To debug the image, please refer to [development guide](DEVELOPMENT.md#debug-the-library-generation-container)
 for more info.
