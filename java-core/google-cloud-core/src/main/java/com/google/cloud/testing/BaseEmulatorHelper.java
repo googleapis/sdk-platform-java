@@ -115,11 +115,17 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
     }
   }
 
+  /** This method is obsolete. Use {@link #waitForProcessDuration(java.time.Duration)} instead */
+  protected final int waitForProcess(org.threeten.bp.Duration timeout)
+      throws IOException, InterruptedException, TimeoutException {
+    return waitForProcessDuration(toJavaTimeDuration(timeout));
+  }
+
   /**
    * Waits for the local service's subprocess to terminate, and stop any possible thread listening
    * for its output.
    */
-  protected final int waitForProcess(java.time.Duration timeout)
+  protected final int waitForProcessDuration(java.time.Duration timeout)
       throws IOException, InterruptedException, TimeoutException {
     if (activeRunner != null) {
       int exitCode = activeRunner.waitForDuration(timeout);

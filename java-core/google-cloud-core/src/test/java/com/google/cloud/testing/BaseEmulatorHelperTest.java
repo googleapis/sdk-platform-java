@@ -81,7 +81,7 @@ class BaseEmulatorHelperTest {
     @Override
     public void stopDuration(Duration timeout)
         throws IOException, InterruptedException, TimeoutException {
-      waitForProcess(timeout);
+      waitForProcessDuration(timeout);
     }
 
     @Override
