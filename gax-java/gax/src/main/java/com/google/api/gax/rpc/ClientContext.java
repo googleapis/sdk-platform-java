@@ -181,7 +181,7 @@ public abstract class ClientContext {
     String mtlsEndpoint = "";
     mtlsEndpoint = settings.getMtlsEndpoint();
     String endpointOverride = "";
-    endpointOverride = settings.getEndpointContext().transportChannelProviderEndpoint();
+    endpointOverride = settings.getEndpointContext().customEndpoint();
     Credentials credentials = getCredentials(settings);
     // check if need to adjust credentials/endpoint/endpointContext for GDC-H
     String settingsGdchApiAudience = settings.getGdchApiAudience();

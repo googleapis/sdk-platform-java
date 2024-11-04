@@ -101,6 +101,9 @@ public abstract class EndpointContext {
   public abstract String transportChannelProviderEndpoint();
 
   @Nullable
+  public abstract String customEndpoint();
+
+  @Nullable
   public abstract String mtlsEndpoint();
 
   public abstract boolean switchToMtlsEndpointAllowed();
@@ -196,6 +199,8 @@ public abstract class EndpointContext {
      */
     public abstract Builder setTransportChannelProviderEndpoint(String transportChannelEndpoint);
 
+    public abstract Builder setCustomEndpoint(String customEndpoint);
+
     public abstract Builder setMtlsEndpoint(String mtlsEndpoint);
 
     public abstract Builder setSwitchToMtlsEndpointAllowed(boolean switchToMtlsEndpointAllowed);
@@ -215,6 +220,8 @@ public abstract class EndpointContext {
     abstract String clientSettingsEndpoint();
 
     abstract String transportChannelProviderEndpoint();
+
+    abstract String customEndpoint();
 
     abstract String mtlsEndpoint();
 
@@ -255,11 +262,7 @@ public abstract class EndpointContext {
     /** Determines the fully resolved endpoint and universe domain values */
     private String determineEndpoint() throws IOException {
       MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
-      // TransportChannelProvider's endpoint will override the ClientSettings' endpoint
-      String customEndpoint =
-          transportChannelProviderEndpoint() == null
-              ? clientSettingsEndpoint()
-              : transportChannelProviderEndpoint();
+      String customEndpoint = customEndpoint();
 
       // GDC-H has a separate flow
       if (usingGDCH()) {
@@ -286,6 +289,13 @@ public abstract class EndpointContext {
       }
 
       return endpoint;
+    }
+
+    private String determineCustomEndpoint() {
+      // TransportChannelProvider's endpoint will override the ClientSettings' endpoint.
+      return transportChannelProviderEndpoint() == null
+          ? clientSettingsEndpoint()
+          : transportChannelProviderEndpoint();
     }
 
     // Default to port 443 for HTTPS. Using HTTP requires explicitly setting the endpoint
@@ -320,6 +330,7 @@ public abstract class EndpointContext {
     public EndpointContext build() throws IOException {
       // The Universe Domain is used to resolve the Endpoint. It should be resolved first
       setResolvedUniverseDomain(determineUniverseDomain());
+      setCustomEndpoint(determineCustomEndpoint());
       setResolvedEndpoint(determineEndpoint());
       return autoBuild();
     }
