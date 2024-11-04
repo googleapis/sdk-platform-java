@@ -53,7 +53,7 @@ class GenerateLibraryUnitTests(unittest.TestCase):
         bash_call(f"mkdir {self.output_folder}")
 
     def tearDown(self):
-        bash_call(f"rm -rdf {self.simulated_home}")
+        bash_call(f"rm -rf {self.simulated_home}")
 
     def _run_command(self, command, **kwargs):
         env = os.environ.copy()

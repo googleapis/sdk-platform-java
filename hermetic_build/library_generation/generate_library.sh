@@ -119,7 +119,7 @@ temp_destination_path="${output_folder}/temp_preprocessed"
 mkdir -p "${output_folder}/${destination_path}"
 if [ -d "${temp_destination_path}" ]; then
   # we don't want the preprocessed sources of a previous run
-  rm -rd "${temp_destination_path}"
+  rm -r "${temp_destination_path}"
 fi
 mkdir -p "${temp_destination_path}"
 ##################### Section 0 #####################
@@ -274,5 +274,5 @@ rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_pro
 popd # destination path
 
 cp -r ${temp_destination_path}/* "${output_folder}/${destination_path}"
-rm -rdf "${temp_destination_path}"
+rm -rf "${temp_destination_path}"
 exit 0

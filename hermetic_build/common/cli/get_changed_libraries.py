@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
-from typing import Optional
+
 import click as click
-from release_note_generation.generate_pr_description import generate_pr_descriptions
+
 from common.model.generation_config import from_yaml
 from common.utils.generation_config_comparator import compare_config
 
@@ -29,69 +29,54 @@ def main(ctx):
 @main.command()
 @click.option(
     "--baseline-generation-config-path",
-    required=False,
-    default=None,
+    required=True,
     type=str,
     help="""
     Absolute or relative path to a generation_config.yaml.
-    This config file is used for commit history generation, not library
-    generation.
+    This config file is used for computing changed library list.
     """,
 )
 @click.option(
     "--current-generation-config-path",
-    required=False,
-    default=None,
+    required=True,
     type=str,
     help="""
     Absolute or relative path to a generation_config.yaml that contains the
     metadata about library generation.
     """,
 )
-@click.option(
-    "--repository-path",
-    type=str,
-    default=".",
-    show_default=True,
-    help="""
-    The repository path to which the generated files will be sent.
-    If not specified, the repository will be generated to the current working
-    directory.
-    """,
-)
-def generate(
-    baseline_generation_config_path: Optional[str],
-    current_generation_config_path: Optional[str],
-    repository_path: str,
+def create(
+    baseline_generation_config_path: str,
+    current_generation_config_path: str,
 ) -> None:
-    if (
-        baseline_generation_config_path is None
-        or current_generation_config_path is None
-    ):
-        print(
-            "One of the generation configs is not specified, do not generate "
-            "the description."
-        )
-        return
+    """
+    Compares baseline generation config with current generation config and
+    generates changed library names (a comma separated string) based on current
+    generation config.
+    """
     baseline_generation_config_path = os.path.abspath(baseline_generation_config_path)
-    current_generation_config_path = os.path.abspath(current_generation_config_path)
-    if not (
-        os.path.isfile(baseline_generation_config_path)
-        and os.path.isfile(current_generation_config_path)
-    ):
-        print(
-            "One of the generation configs does not exist, do not generate "
-            "the description."
+    if not os.path.isfile(baseline_generation_config_path):
+        raise FileNotFoundError(
+            f"{baseline_generation_config_path} does not exist. "
+            "A valid generation config has to be passed in as "
+            "baseline-generation-config-path."
         )
-        return
+    current_generation_config_path = os.path.abspath(current_generation_config_path)
+    if not os.path.isfile(current_generation_config_path):
+        raise FileNotFoundError(
+            f"{current_generation_config_path} does not exist. "
+            "A valid generation config has to be passed in as "
+            "current-generation-config-path."
+        )
     config_change = compare_config(
         baseline_config=from_yaml(baseline_generation_config_path),
         current_config=from_yaml(current_generation_config_path),
     )
-    generate_pr_descriptions(
-        config_change=config_change,
-        description_path=os.path.abspath(repository_path),
-    )
+    changed_libraries = config_change.get_changed_libraries()
+    if changed_libraries is None:
+        print("No changed library.")
+        return
+    click.echo(",".join(config_change.get_changed_libraries()))
 
 
 if __name__ == "__main__":
