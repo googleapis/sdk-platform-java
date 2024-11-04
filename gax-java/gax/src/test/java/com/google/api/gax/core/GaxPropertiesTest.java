@@ -30,11 +30,14 @@
 package com.google.api.gax.core;
 
 import static com.google.api.gax.core.GaxProperties.getBundleVersion;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import com.google.api.gax.util.*;
 import com.google.common.base.Strings;
+import com.google.protobuf.*;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -160,12 +163,8 @@ class GaxPropertiesTest {
 
   @Test
   public void testGetProtobufVersion() throws IOException {
-    Version version = readVersion(GaxProperties.getProtobufVersion());
-
-    assertTrue(version.major >= 3);
-    if (version.major == 3) {
-      assertTrue(version.minor >= 25);
-    }
+    assertTrue(
+        Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(GaxProperties.getProtobufVersion()).find());
   }
 
   @Test
@@ -173,6 +172,56 @@ class GaxPropertiesTest {
     Optional<String> version = getBundleVersion(GaxProperties.class);
 
     assertFalse(version.isPresent());
+  }
+
+  @Test
+  void testGetProtobufVersion_success() throws Exception {
+    IClassLoaderWrapper mockClassLoader =
+        mock(IClassLoaderWrapper.class);
+    when(mockClassLoader.loadClass("com.google.protobuf.RuntimeVersion"))
+        .thenAnswer(invocationOnMock -> Class.class);
+    when(mockClassLoader.getFieldValue(Class.class, "MAJOR")).thenReturn("2");
+    when(mockClassLoader.getFieldValue(Class.class, "MINOR")).thenReturn("3");
+    when(mockClassLoader.getFieldValue(Class.class, "PATCH")).thenReturn("4");
+
+    String version = GaxProperties.getProtobufVersion(mockClassLoader, Any.class);
+
+    assertEquals("2.3.4", version);
+  }
+
+  @Test
+  void testGetProtobufVersion_classNotFoundException() throws Exception {
+    IClassLoaderWrapper mockClassLoader =
+        mock(IClassLoaderWrapper.class);
+    when(mockClassLoader.loadClass("com.google.protobuf.RuntimeVersion"))
+        .thenThrow(new ClassNotFoundException(""));
+
+    String version = GaxProperties.getProtobufVersion(mockClassLoader, Any.class);
+
+    assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
+  }
+
+  @Test
+  void testgetProtobufVersion_noSuchFieldException() throws Exception {
+    IClassLoaderWrapper mockClassLoader =
+        mock(IClassLoaderWrapper.class);
+    when(mockClassLoader.getFieldValue(any(), any())).thenThrow(NoSuchFieldException.class);
+
+    String version = GaxProperties.getProtobufVersion(mockClassLoader, Any.class);
+
+    assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
+  }
+
+  @Test
+  void testGetProtobufVersion_noManifest() throws Exception {
+    IClassLoaderWrapper mockClassLoader =
+        mock(IClassLoaderWrapper.class);
+    when(mockClassLoader.loadClass("com.google.protobuf.RuntimeVersion"))
+        .thenThrow(new ClassNotFoundException(""));
+
+    String version = GaxProperties.getProtobufVersion(mockClassLoader, GaxProperties.class);
+
+    assertEquals("3", version);
   }
 
   private Version readVersion(String version) {
