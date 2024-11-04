@@ -7,16 +7,16 @@ Running the docker image built from `hermetic_build/library_generation`
 directory, you can generate a repository containing GAPIC client libraries (a
 monorepo, for example, google-cloud-java) from a configuration file.
 
-Instead of running docker image, if you prefer running the underlying python
-script directly, please refer to [development guide](DEVELOPMENT.md#run-the-script) for
-additional instructions.
+Instead of running the docker image, if you prefer running the underlying python
+scripts directly, please refer to the [development guide](DEVELOPMENT.md#run-the-script)
+for additional instructions.
 
 ## Environment
 
 - OS: Linux
 - Docker
 
-## Prerequisite
+## Prerequisites
 
 In order to generate a version for each library, a versions.txt has to exist
 in `repository-path`.
@@ -29,7 +29,7 @@ for more information.
 
 An absolute or relative path to a configuration file containing parameters to
 generate the repository.
-Please refer [Configuration to generate a repository](#configuration-to-generate-a-repository)
+Please refer to [Configuration to generate a repository](#configuration-to-generate-a-repository)
 for more information.
 
 ### Repository path (`repository-path`), optional
@@ -204,7 +204,7 @@ libraries:
      .
    ```
 
-2. Download api definition to a local directory
+2. Download the API definitions to a local directory
    ```shell
    api_def_dir=/path/to/api_definition
    ```
@@ -332,10 +332,10 @@ $repository_path
 |_versions.txt
 ```
 
-# Generate release note from api definition changes
+# Generate release note from API definition changes
 
 The script, `hermetic_build/release_note_generation/cli/generate_release_note.py`
-allows you to generate release note from api definition changes in
+allows you to generate release notes from API definition changes in
 [googleapis](https://github.com/googleapis/googleapis) GitHub repository.
 
 ## Environment
@@ -348,35 +348,36 @@ allows you to generate release note from api definition changes in
 ### Baseline generation configuration path (`baseline-generation-config-path`)
 
 Absolute or relative path to a generation configuration.
-Please refer [Configuration to generate a repository](#configuration-to-generate-a-repository)
+Please refer to [Configuration to generate a repository](#configuration-to-generate-a-repository)
 for more information.
 
 Note that the `googleapis_commitish` in this configuration is used to retrieve
-the first commit, exclusively, to generate the release note.
+the first commit, exclusively, to generate the release notes.
 
 ### Current generation configuration path (`current-generation-config-path`)
 
 Absolute or relative path to a generation configuration.
-The release note will be generated from commits that related to the libraries
-specified in this configuration.
-Please refer [Configuration to generate a repository](#configuration-to-generate-a-repository)
+The release notes will be generated from commits that are related to the
+libraries specified in this configuration.
+Please refer to [Configuration to generate a repository](#configuration-to-generate-a-repository)
 for more information.
 
-Note that the `googleapis_commitish` in this configuration is used to retrieve
-the last commit, inclusively, to generate the release note.
+Note that the `googleapis_commitish` entry in this configuration is used to
+retrieve the last commit, inclusively, to generate the release notes.
 
 ### Repository path (`repository-path`), optional
 
-The path to which the file, `pr_description.txt` containing the release note
+The path to which the file, `pr_description.txt` containing the release notes
 will be sent.
 If not specified, the file will be generated to the current working directory.
 
-## Generate a release note in local environment
+## Generate a release notes file in a local environment
 
-1. Install python (>= 3.12.0), it is recommended to create a python virtual
-environment through [official guide](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments).
+1. Install python (>= 3.12.0).
+It is recommended to create a python virtual environment through the
+[official guide](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments).
 
-2. Running the following commands to install python packages
+2. Run the following commands to install python packages
    ```shell
    cd /path/to/sdk-platform-java 
    pip install --require-hashes -r hermetic_build/common/requirements.txt
@@ -384,7 +385,7 @@ environment through [official guide](https://packaging.python.org/en/latest/guid
    pip install --require-hashes -r hermetic_build/release_note_generation/requirements.txt
    pip install hermetic_build/release_note_generation
    ```
-3. Running the following commands to generate a release note
+3. Run the following commands to generate a release note
    ```shell
    cd /path/to/sdk-platform-java 
    python hermetic_build/release_note_generation/cli/generate_release_note.py generate \

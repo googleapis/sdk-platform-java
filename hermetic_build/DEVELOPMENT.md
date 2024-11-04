@@ -26,7 +26,7 @@ python -m pip install hermetic_build/release_note_generation
 
 The integration tests build the docker image declared in
 `.cloudbuild/library_generation/library_generation.Dockerfile`, pull GAPIC
-repositories, generate the libraries and compares the results with the source
+repositories, generate the libraries and compare the results with the source
 code declared in a "golden branch" of the repo.
 
 It requires docker and python (>= 3.12.0) to be installed.
@@ -40,7 +40,7 @@ python -m unittest hermetic_build/library_generation/tests/integration_tests.py
 The unit tests of the hermetic build scripts are contained in several scripts,
 corresponding to a specific component.
 Every unit test script ends with `unit_tests.py`.
-To avoid them specifying them individually, we can use the following command:
+To avoid specifying them individually, we can use the following command:
 
 ```shell
 python -m unittest discover -s hermetic_build -p "*unit_tests.py"
@@ -52,7 +52,7 @@ python -m unittest discover -s hermetic_build -p "*unit_tests.py"
 
 # Run the library generation scripts in your local environment
 
-Although the scripts are designed to be run in a Docker container, you can also
+Although the scripts are designed to run in a Docker container, you can also
 run them directly.
 This section explains how to run the entrypoint script
 (`hermetic_build/library_generation/cli/entry_point.py`).
@@ -77,8 +77,7 @@ as per [POSIX env var definition](https://pubs.opengroup.org/onlinepubs/96999197
    ```
    This will generate a jar located in `~/.m2/repository/com/google/api/gapic-generator-java/{version}/gapic-generator-java-{version}.jar`
 
-2. Move the jar into the well-known location of the jar. 
-   The generation scripts will assume the jar is there.
+2. Move the jar into its well-known location.
 
    ```shell
    mv /path/to/jar "${HOME}/.library_generation/gapic-generator-java.jar"
@@ -88,8 +87,7 @@ as per [POSIX env var definition](https://pubs.opengroup.org/onlinepubs/96999197
 
 1. Download google-java-format-{version}-all-deps.jar from [Maven Central](https://central.sonatype.com/artifact/com.google.googlejavaformat/google-java-format)
 or [GitHub releases](https://github.com/google/google-java-format/releases).
-2. Move the jar into the well-known location of the jar.
-   The generation scripts will assume the jar is there.
+2. Move the jar into its well-known location.
 
    ```shell
    mv /path/to/jar "${HOME}/.library_generation/google-java-format.jar"
@@ -102,8 +100,9 @@ need to install beforehand.
 
 ### Install the owl-bot CLI
 
-Requires node.js to be installed.
-Check this [installation guide](https://github.com/nvm-sh/nvm?tab=readme-ov-file#install--update-script) for NVM, Node.js's version manager.
+This requires node.js to be installed.
+Check this [installation guide](https://github.com/nvm-sh/nvm?tab=readme-ov-file#install--update-script)
+for NVM, Node.js's version manager.
 
 After you install it, you can install the owl-bot CLI with the following
 commands:

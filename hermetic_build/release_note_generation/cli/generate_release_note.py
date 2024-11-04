@@ -54,8 +54,8 @@ def main(ctx):
     default=".",
     show_default=True,
     help="""
-    The path to which the file, `pr_description.txt` containing the release note
-    will be sent.
+    The path where the file, `pr_description.txt`, which contains the release
+    notes will be sent.
     If not specified, the file will be generated to the current working
     directory.
     """,
