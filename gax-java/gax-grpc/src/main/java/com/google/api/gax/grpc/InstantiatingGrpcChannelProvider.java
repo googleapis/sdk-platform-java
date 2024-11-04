@@ -476,11 +476,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting
   boolean isGoogleS2AEnabled() {
     String S2AEnv = envProvider.getenv(S2A_ENV_ENABLE_USE_S2A);
-    boolean isS2AEnv = Boolean.parseBoolean(S2AEnv);
-    if (isS2AEnv) {
-      return true;
-    }
-    return false;
+    return Boolean.parseBoolean(S2AEnv);
   }
 
   @VisibleForTesting
@@ -515,7 +511,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         .build();
   }
 
-  @VisibleForTesting
   ChannelCredentials createS2ASecuredChannelCredentials() {
     S2A s2aUtils = S2A.newBuilder().build();
     String plaintextAddress = s2aUtils.getPlaintextS2AAddress();

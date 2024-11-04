@@ -290,6 +290,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setProcessorCount(2)
             .setEndpoint("fake.endpoint:443")
             .setMtlsEndpoint("fake.endpoint:443")
+            .setEndpointOverride("fake.endpoint.override:443")
             .setMaxInboundMessageSize(12345678)
             .setMaxInboundMetadataSize(4096)
             .setKeepAliveTimeDuration(keepaliveTime)
@@ -304,6 +305,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
     assertThat(builder.getEndpoint()).isEqualTo("fake.endpoint:443");
     assertThat(builder.getMtlsEndpoint()).isEqualTo("fake.endpoint:443");
+    assertThat(builder.getEndpointOverride()).isEqualTo("fake.endpoint.override:443");
     assertThat(builder.getMaxInboundMessageSize()).isEqualTo(12345678);
     assertThat(builder.getMaxInboundMetadataSize()).isEqualTo(4096);
     assertThat(builder.getKeepAliveTimeDuration()).isEqualTo(keepaliveTime);
@@ -1047,18 +1049,18 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
         .thenReturn("false");
     InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder().build();
+        InstantiatingGrpcChannelProvider.newBuilder().setEnvProvider(envProvider).build();
     Truth.assertThat(provider.isGoogleS2AEnabled()).isFalse();
   }
 
   @Test
-  void isGoogleS2AEnabled_envVarNotSet_returnsTrue() {
+  void isGoogleS2AEnabled_envVarSet_returnsTrue() {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
         .thenReturn("true");
     InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder().build();
-    Truth.assertThat(provider.isGoogleS2AEnabled()).isFalse();
+        InstantiatingGrpcChannelProvider.newBuilder().setEnvProvider(envProvider).build();
+    Truth.assertThat(provider.isGoogleS2AEnabled()).isTrue();
   }
 
   @Test
