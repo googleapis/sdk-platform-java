@@ -176,8 +176,7 @@ class GaxPropertiesTest {
 
   @Test
   void testGetProtobufVersion_success() throws Exception {
-    IClassLoaderWrapper mockClassLoader =
-        mock(IClassLoaderWrapper.class);
+    IClassLoaderWrapper mockClassLoader = mock(IClassLoaderWrapper.class);
     when(mockClassLoader.loadClass("com.google.protobuf.RuntimeVersion"))
         .thenAnswer(invocationOnMock -> Class.class);
     when(mockClassLoader.getFieldValue(Class.class, "MAJOR")).thenReturn("2");
@@ -191,8 +190,7 @@ class GaxPropertiesTest {
 
   @Test
   void testGetProtobufVersion_classNotFoundException() throws Exception {
-    IClassLoaderWrapper mockClassLoader =
-        mock(IClassLoaderWrapper.class);
+    IClassLoaderWrapper mockClassLoader = mock(IClassLoaderWrapper.class);
     when(mockClassLoader.loadClass("com.google.protobuf.RuntimeVersion"))
         .thenThrow(new ClassNotFoundException(""));
 
@@ -203,8 +201,7 @@ class GaxPropertiesTest {
 
   @Test
   void testgetProtobufVersion_noSuchFieldException() throws Exception {
-    IClassLoaderWrapper mockClassLoader =
-        mock(IClassLoaderWrapper.class);
+    IClassLoaderWrapper mockClassLoader = mock(IClassLoaderWrapper.class);
     when(mockClassLoader.getFieldValue(any(), any())).thenThrow(NoSuchFieldException.class);
 
     String version = GaxProperties.getProtobufVersion(mockClassLoader, Any.class);
@@ -214,8 +211,7 @@ class GaxPropertiesTest {
 
   @Test
   void testGetProtobufVersion_noManifest() throws Exception {
-    IClassLoaderWrapper mockClassLoader =
-        mock(IClassLoaderWrapper.class);
+    IClassLoaderWrapper mockClassLoader = mock(IClassLoaderWrapper.class);
     when(mockClassLoader.loadClass("com.google.protobuf.RuntimeVersion"))
         .thenThrow(new ClassNotFoundException(""));
 
