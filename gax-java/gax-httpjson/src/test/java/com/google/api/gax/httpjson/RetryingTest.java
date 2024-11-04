@@ -353,12 +353,9 @@ class RetryingTest {
 
     UncheckedExecutionException exception =
         assertThrows(UncheckedExecutionException.class, () -> Futures.getUnchecked(future));
-    // the number of attempts varies. Here we just make sure that all of them except the last are
-    // considered as failed
-    // attempts and that the operation was considered as failed.
     assertThat(tracerFactory.getInstance().getAttemptsFailed().get()).isGreaterThan(0);
     assertThat(tracerFactory.getInstance().getAttemptsFailed().get())
-        .isEqualTo(tracerFactory.getInstance().getAttemptsStarted().get() - 1);
+        .isEqualTo(tracerFactory.getInstance().getAttemptsStarted().get());
     assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isTrue();
     assertThat(tracerFactory.getInstance().getOperationFailed().get()).isTrue();
     assertThat(exception).hasCauseThat().isInstanceOf(ApiException.class);

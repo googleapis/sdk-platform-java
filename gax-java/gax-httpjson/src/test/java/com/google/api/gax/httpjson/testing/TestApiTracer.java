@@ -85,6 +85,7 @@ public class TestApiTracer implements ApiTracer {
 
   @Override
   public void attemptFailedRetriesExhausted(Throwable error) {
+    attemptsFailed.incrementAndGet();
     retriesExhausted.set(true);
   }
 };
