@@ -189,6 +189,16 @@ public final class Timestamp implements Comparable<Timestamp>, Serializable {
     return com.google.protobuf.Timestamp.newBuilder().setSeconds(seconds).setNanos(nanos).build();
   }
 
+  /** This method is obsolete. Use {@link #parseTimestampDuration(String)} instead */
+  public static Timestamp parseTimestamp(String timestamp) {
+    try {
+      return parseTimestampDuration(timestamp);
+    } catch (DateTimeParseException ex) {
+      throw new org.threeten.bp.format.DateTimeParseException(
+          ex.getMessage(), ex.getParsedString(), ex.getErrorIndex());
+    }
+  }
+
   /**
    * Creates a Timestamp instance from the given string. Input string should be in the RFC 3339
    * format, like '2020-12-01T10:15:30.000Z' or with the timezone offset, such as
@@ -198,7 +208,7 @@ public final class Timestamp implements Comparable<Timestamp>, Serializable {
    * @return created Timestamp
    * @throws DateTimeParseException if unable to parse
    */
-  public static Timestamp parseTimestamp(String timestamp) {
+  public static Timestamp parseTimestampDuration(String timestamp) {
     TemporalAccessor temporalAccessor = timestampParser.parse(timestamp);
     Instant instant = Instant.from(temporalAccessor);
     return ofTimeSecondsAndNanos(instant.getEpochSecond(), instant.getNano());

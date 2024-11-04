@@ -115,18 +115,11 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
     }
   }
 
-  /** This method is obsolete. Use {@link #waitForProcessDuration(java.time.Duration)} instead */
-  @ObsoleteApi("Use waitForProcessDuration() instead")
-  protected final int waitForProcess(org.threeten.bp.Duration timeout)
-      throws IOException, InterruptedException, TimeoutException {
-    return waitForProcessDuration(toJavaTimeDuration(timeout));
-  }
-
   /**
    * Waits for the local service's subprocess to terminate, and stop any possible thread listening
    * for its output.
    */
-  protected final int waitForProcessDuration(java.time.Duration timeout)
+  protected final int waitForProcess(java.time.Duration timeout)
       throws IOException, InterruptedException, TimeoutException {
     if (activeRunner != null) {
       int exitCode = activeRunner.waitForDuration(timeout);
@@ -140,14 +133,7 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
     return 0;
   }
 
-  /** This method is obsolete. Use {@link #waitForProcessDuration(java.time.Duration)} instead */
-  @ObsoleteApi("Use waitForProcessDuration() instead")
-  private static int waitForProcess(final Process process, org.threeten.bp.Duration timeout)
-      throws InterruptedException, TimeoutException {
-    return waitForProcessDuration(process, toJavaTimeDuration(timeout));
-  }
-
-  private static int waitForProcessDuration(final Process process, java.time.Duration timeout)
+  private static int waitForProcess(final Process process, java.time.Duration timeout)
       throws InterruptedException, TimeoutException {
     if (process == null) {
       return 0;
@@ -299,13 +285,13 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
     @Override
     public int waitFor(org.threeten.bp.Duration timeout)
         throws InterruptedException, TimeoutException {
-      return waitForProcess(process, timeout);
+      return waitForDuration(toJavaTimeDuration(timeout));
     }
 
     @Override
     public int waitForDuration(java.time.Duration timeout)
         throws InterruptedException, TimeoutException {
-      return waitForProcessDuration(process, timeout);
+      return waitForProcess(process, timeout);
     }
 
     @Override
@@ -418,12 +404,12 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
     @Override
     public int waitFor(org.threeten.bp.Duration timeout)
         throws InterruptedException, TimeoutException {
-      return waitForProcess(process, timeout);
+      return waitForDuration(toJavaTimeDuration(timeout));
     }
 
     public int waitForDuration(java.time.Duration timeout)
         throws InterruptedException, TimeoutException {
-      return waitForProcessDuration(process, timeout);
+      return waitForProcess(process, timeout);
     }
 
     @Override

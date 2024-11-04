@@ -13,6 +13,7 @@
         <method>long limit()</method>
     </difference>
     <difference>
+        <!-- Default method added to interface -->
         <differenceType>7012</differenceType>
         <className>com/google/cloud/testing/BaseEmulatorHelper$EmulatorRunner</className>
         <method>int waitForDuration(java.time.Duration)</method>
