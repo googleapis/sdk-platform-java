@@ -486,8 +486,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return false;
     }
 
-    // If {@code mtlsEndpoint} is not set, or {@code endpointOverride} is specified, skip S2A.
-    if (mtlsEndpoint.isEmpty() || !endpointOverride.isEmpty()) {
+    // If {@code mtlsEndpoint} is not set, skip S2A.
+    if (mtlsEndpoint.isEmpty()) {
+      return false;
+    }
+
+    // If {@code endpointOverride} is specified, skip S2A.
+    if (!endpointOverride.isEmpty()) {
       return false;
     }
 
