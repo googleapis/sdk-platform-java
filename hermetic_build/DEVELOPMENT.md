@@ -156,7 +156,7 @@ python hermetic_build/library_generation/cli/entry_point.py generate \
    --api-definitions-path="${api_definitions_path}"
 ```
 
-# Build and run the image from source
+# Build the image from source
 
 1. Run the following command to build the image from source
 
@@ -197,7 +197,7 @@ python hermetic_build/library_generation/cli/entry_point.py generate \
         --api-definitions-path=/workspace/apis
       ```
 
-## Debug the library generation container
+# Debug the library generation container
 If you are working on changing the way the containers are created, you may want
 to inspect the containers to check the setup.
 It would be convenient in such case to have a text editor/viewer available. 
