@@ -528,6 +528,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         certChain = new FileInputStream(MTLS_MDS_CERT_CHAIN_AND_KEY);
       } catch (FileNotFoundException ignore) {
         // Fallback to plaintext-to-S2A connection.
+        LOG.log(
+            Level.INFO,
+            "Cannot establish an mTLS connection to S2A due to error loading MTLS to MDS credentials, falling back to plaintext connection to S2A: "
+                + ignore.getMessage());
       }
       ChannelCredentials mtlsToS2AChannelCredentials = null;
       try {
@@ -536,6 +540,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             createMtlsToS2AChannelCredentials(trustBundle, privateKey, certChain);
       } catch (IOException ignore) {
         // Fallback to plaintext-to-S2A connection.
+        LOG.log(
+            Level.INFO,
+            "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS TlsChannelCredentials credentials, falling back to plaintext connection to S2A: "
+                + ignore.getMessage());
       }
       if (mtlsToS2AChannelCredentials != null) {
         return S2AChannelCredentials.newBuilder(mtlsAddress, mtlsToS2AChannelCredentials).build();
