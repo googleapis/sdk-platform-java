@@ -61,8 +61,8 @@ The path to where the api definition (proto, service yaml) resides.
 
 The default value is the current working directory when running the script.
 
-Note that you need not only the protos defined the service, but also the
-transitive dependencies of those protos.
+**Note that you need not only the protos defined the service, but also the
+transitive dependencies of those protos.**
 Any missing dependencies will cause `File not found` error.
 
 For example, if your service is defined in `example_service.proto` and it
@@ -206,13 +206,9 @@ libraries:
      --quiet \
      -u "$(id -u):$(id -g)" \
      -v "$(pwd):/workspace" \
-     -v /path/to/api_definition:/workspace/apis \
+     -v /path/to/api_definition:/workspace \
      -e GENERATOR_VERSION=image-tag \
-     gcr.io/cloud-devrel-public-resources/java-library-generation:image-tag \
-     --generation-config-path=/workspace/generation_config_file \
-     --library-names=apigee-connect,asset \
-     --repository-path=/workspace \
-     --api-definitions-path=/workspace/apis
+     gcr.io/cloud-devrel-public-resources/java-library-generation:image-tag
    ```
 
 * `-u "$(id -u)":"$(id -g)"` makes docker run the container impersonating
@@ -221,17 +217,13 @@ libraries:
 * `-v "$(pwd):/workspace"` maps the host machine's current working directory to
   the /workspace folder. 
   The image is configured to perform changes in this directory.
-* `-v /path/to/api_definition:/workspace/apis` maps the host machine's API
+* `-v /path/to/api_definition:/workspace` maps the host machine's API 
   definitions folder to `/workspace/apis` folder.
 * `-e GENERATOR_VERSION=image-tag` set environment variable `GENERATOR_VERSION`
   in the docker container to use the generator with the same version of the
   image tag.
   Note that this is intentional because we tag the image with the underlying
   generator version.
-* `--generation-config-path=/workspace/generation_config_file` set the
-  generation configuration to `/workspace/generation_config_file`.
-* `--api-definitions-path=/workspace/apis` set the API definition path to
-  `/workspace/apis`.
 
 To debug the image, please refer to [development guide](DEVELOPMENT.md#debug-the-library-generation-container)
 for more info.
