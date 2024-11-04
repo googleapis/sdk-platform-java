@@ -37,8 +37,7 @@ python -m unittest hermetic_build/library_generation/tests/integration_tests.py
 
 # Run the unit tests
 
-The unit tests of the hermetic build scripts are contained in several scripts,
-corresponding to a specific component.
+There is one unit test file per component.
 Every unit test script ends with `unit_tests.py`.
 To avoid specifying them individually, we can use the following command:
 

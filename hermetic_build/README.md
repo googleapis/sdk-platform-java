@@ -304,7 +304,7 @@ $repository_path
 |_versions.txt
 ```
 
-# Generate release note from API definition changes
+# Generate release notes from API definition changes
 
 The script, `hermetic_build/release_note_generation/cli/generate_release_note.py`
 allows you to generate a file containing release notes from API definition
