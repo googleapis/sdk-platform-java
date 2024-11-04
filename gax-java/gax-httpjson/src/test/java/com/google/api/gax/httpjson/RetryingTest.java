@@ -215,7 +215,7 @@ class RetryingTest {
             callInt, callSettings, httpJsonCallSettings, clientContext);
     assertThrows(ApiException.class, () -> callable.call(initialRequest));
     assertThat(tracerFactory.getInstance().getAttemptsStarted().get()).isEqualTo(2);
-    assertThat(tracerFactory.getInstance().getAttemptsFailed().get()).isEqualTo(1);
+    assertThat(tracerFactory.getInstance().getAttemptsFailed().get()).isEqualTo(2);
     assertThat(tracerFactory.getInstance().getRetriesExhausted().get()).isTrue();
     assertThat(tracerFactory.getInstance().getOperationFailed().get()).isTrue();
     // Capture the argument passed to futureCall
