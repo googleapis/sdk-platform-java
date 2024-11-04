@@ -156,6 +156,47 @@ python hermetic_build/library_generation/cli/entry_point.py generate \
    --api-definitions-path="${api_definitions_path}"
 ```
 
+# Build and run the image from source
+
+1. Run the following command to build the image from source
+
+   ```shell
+   docker build \
+     -f .cloudbuild/library_generation/library_generation.Dockerfile \
+     -t local:image-tag \
+     .
+   ```
+   
+2. Set the version of gapic-generator-java
+
+   ```shell
+   LOCAL_GENERATOR_VERSION=$(mvn \
+     org.apache.maven.plugins:maven-help-plugin:evaluate \
+     -Dexpression=project.version \
+     -pl gapic-generator-java \
+     -DforceStdout \
+     -q)
+   ```
+
+3. Run the image
+
+   ```shell
+      # Assume you want to generate the library in the current working directory
+      # and the generation configuration is in the same directory.
+      docker run \
+        --rm \
+        --quiet \
+        -u "$(id -u):$(id -g)" \
+        -v "$(pwd):/workspace" \
+        -v /path/to/api-definitions:/workspace/apis \
+        -e GENERATOR_VERSION="${LOCAL_GENERATOR_VERSION}" \
+        local:image-tag \
+        --generation-config-path=/workspace/generation_config_file \
+        --library-names=apigee-connect,asset \
+        --repository-path=/workspace \
+        --api-definitions-path=/workspace/apis
+      ```
+
 ## Debug the library generation container
 If you are working on changing the way the containers are created, you may want
 to inspect the containers to check the setup.

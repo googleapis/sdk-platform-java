@@ -193,33 +193,11 @@ libraries:
       - proto_path: google/cloud/asset/v1p7beta1
 ```
 
-# Build the image from source
+# Run the library generation image
 
-1. Run the following command to build the image from source
+1. Download the API definitions to a local directory, e.g., from [googleapis](https://github.com/googleapis/googleapis).
 
-   ```shell
-   docker build \
-     -f .cloudbuild/library_generation/library_generation.Dockerfile \
-     -t local:image-tag \
-     .
-   ```
-
-2. Download the API definitions to a local directory
-   ```shell
-   api_def_dir=/path/to/api_definition
-   ```
-
-3. Set the version of gapic-generator-java
-   ```shell
-   LOCAL_GENERATOR_VERSION=$(mvn \
-     org.apache.maven.plugins:maven-help-plugin:evaluate \
-     -Dexpression=project.version \
-     -pl gapic-generator-java \
-     -DforceStdout \
-     -q)
-   ```
-
-4. Run the docker image
+2. Run the docker image.
    ```shell
    # Assume you want to generate the library in the current working directory
    # and the generation configuration is in the same directory.
@@ -228,9 +206,9 @@ libraries:
      --quiet \
      -u "$(id -u):$(id -g)" \
      -v "$(pwd):/workspace" \
-     -v "${api_def_dir}:/workspace/apis" \
-     -e GENERATOR_VERSION="${LOCAL_GENERATOR_VERSION}" \
-     local:image-tag \
+     -v /path/to/api_definition:/workspace/apis \
+     -e GENERATOR_VERSION=image-tag \
+     gcr.io/cloud-devrel-public-resources/java-library-generation:image-tag \
      --generation-config-path=/workspace/generation_config_file \
      --library-names=apigee-connect,asset \
      --repository-path=/workspace \
@@ -243,11 +221,13 @@ libraries:
 * `-v "$(pwd):/workspace"` maps the host machine's current working directory to
   the /workspace folder. 
   The image is configured to perform changes in this directory.
-* `-v "${api_def_dir}:/workspace/apis"` maps the host machine's api-definition
-  folder to /workspace/apis folder.
-* `-e GENERATOR_VERSION="${LOCAL_GENERATOR_VERSION}"` set environment variable
-  `GENERATOR_VERSION` in the docker container to use the generator we built in
-  the previous step.
+* `-v /path/to/api_definition:/workspace/apis` maps the host machine's API
+  definitions folder to `/workspace/apis` folder.
+* `-e GENERATOR_VERSION=image-tag` set environment variable `GENERATOR_VERSION`
+  in the docker container to use the generator with the same version of the
+  image tag.
+  Note that this is intentional because we tag the image with the underlying
+  generator version.
 * `--generation-config-path=/workspace/generation_config_file` set the
   generation configuration to `/workspace/generation_config_file`.
 * `--api-definitions-path=/workspace/apis` set the API definition path to
