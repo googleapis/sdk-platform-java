@@ -14,35 +14,72 @@
 
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
-FROM gcr.io/cloud-devrel-public-resources/java21@sha256:2ceff5eeea72260258df56d42e44ed413e52ee421c1b77393c5f2c9c4d7c41da AS ggj-build
+
+# 3.9.9-eclipse-temurin-11-alpine
+FROM docker.io/library/maven@sha256:006d25558f9d5244ed55b5d2bd8eaf34d883e447d0c4b940e67b9f44d21167bf AS ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.49.1-SNAPSHOT" 
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.49.1-SNAPSHOT"
 # {x-version-update-end}
 
 RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
-# build from the root of this repo:
-FROM gcr.io/cloud-devrel-public-resources/python@sha256:9c5ea427632f195ad164054831968389d86fdde4a15abca651f3fcb2a71268cb
+# alpine:3.20.3
+FROM docker.io/library/alpine@sha256:beefdbd8a1da6d2915566fde36db9db0b524eb737fc57cd1367effd16dc0d06d as glibc-compat
 
-SHELL [ "/bin/bash", "-c" ]
+RUN apk add git sudo
+# This SHA is the latest known-to-work version of this binary compatibility tool
+ARG GLIB_MUS_SHA=7717dd4dc26377dd9cedcc92b72ebf35f9e68a2d
+WORKDIR /home
+
+# Install compatibility layer to run glibc-based programs (such as the
+# grpc plugin).
+# Alpine, by default, only supports musl-based binaries, and there is no public
+# downloadable distribution of the grpc plugin that is Alpine (musl) compatible.
+# This is one of the recommended approaches to ensure glibc-compatibility
+# as per https://wiki.alpinelinux.org/wiki/Running_glibc_programs
+RUN git clone https://gitlab.com/manoel-linux1/GlibMus-HQ.git
+WORKDIR /home/GlibMus-HQ
+# We lock the tool to the latest known-to-work version
+RUN git checkout "${GLIB_MUS_SHA}"
+RUN chmod a+x compile-x86_64-alpine-linux.sh
+RUN sh compile-x86_64-alpine-linux.sh
+
+# python:3.12.7-alpine3.20
+FROM docker.io/library/python@sha256:38e179a0f0436c97ecc76bcd378d7293ab3ee79e4b8c440fdc7113670cb6e204 as final
+
 
 
 ARG OWLBOT_CLI_COMMITTISH=38fe6f89a2339ee75c77739b31b371f601b01bb3
 ARG PROTOC_VERSION=25.5
-ARG GRPC_VERSION=1.67.1
+ARG GRPC_VERSION=1.68.1
 ARG JAVA_FORMAT_VERSION=1.7
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
-RUN apt-get update && apt-get install -y \
-	unzip openjdk-17-jdk rsync maven jq \
-	&& apt-get clean
+RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git
+
+SHELL [ "/bin/bash", "-c" ]
+
+# Copy glibc shared objects to enable execution of the grpc plugin.
+# This list was obtained via `libtree -pvvv /grpc/*` in the final container as
+# well as inspecting the modifications done by compile-x86_64-alpine-linux.sh
+# in the glibc-compat stage using the `dive` command.
+COPY --from=glibc-compat /etc/libgcc* /etc/
+COPY --from=glibc-compat /lib64/ld-linux-x86-64.so.2 /lib64/
+COPY --from=glibc-compat /lib/GLIBCFAKE.so.0 /lib/
+COPY --from=glibc-compat /lib/ld-linux-x86-64.so.2 /lib/
+COPY --from=glibc-compat /lib/libpthread* /lib/
+COPY --from=glibc-compat /lib/libucontext* /lib/
+COPY --from=glibc-compat /lib/libc.* /lib/
+COPY --from=glibc-compat /usr/lib/libgcc* /usr/lib/
+COPY --from=glibc-compat /usr/lib/libstdc* /usr/lib/
+COPY --from=glibc-compat /usr/lib/libobstack* /usr/lib/
 
 # copy source code
 COPY hermetic_build/common /src/common
@@ -72,10 +109,6 @@ ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
 RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
 
-#  use python 3.12 (the base image has several python versions; here we define the default one)
-RUN rm $(which python3)
-RUN ln -s $(which python3.12) /usr/local/bin/python
-RUN ln -s $(which python3.12) /usr/local/bin/python3
 RUN python -m pip install --upgrade pip
 
 # install main scripts as a python package
@@ -85,16 +118,6 @@ RUN python -m pip install src/common
 RUN python -m pip install --require-hashes -r src/library_generation/requirements.txt
 RUN python -m pip install src/library_generation
 
-# Install nvm with node and npm
-ENV NODE_VERSION 20.12.0
-WORKDIR /home
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-RUN chmod o+rx /home/.nvm
-ENV NODE_PATH=/home/.nvm/versions/node/v${NODE_VERSION}/bin
-ENV PATH=${PATH}:${NODE_PATH}
-RUN node --version
-RUN npm --version
-
 # install the owl-bot CLI
 WORKDIR /tools
 RUN git clone https://github.com/googleapis/repo-automation-bots
@@ -102,8 +125,7 @@ WORKDIR /tools/repo-automation-bots/packages/owl-bot
 RUN git checkout "${OWLBOT_CLI_COMMITTISH}"
 RUN npm i && npm run compile && npm link
 RUN owl-bot copy-code --version
-RUN chmod -R o+rx ${NODE_PATH}
-RUN ln -sf ${NODE_PATH}/* /usr/local/bin
+RUN chmod o+rx $(which owl-bot)
 
 # download the Java formatter
 ADD https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar \
@@ -120,7 +142,6 @@ RUN git config --system user.name "Cloud Java Bot"
 
 # allow read-write for /home and execution for binaries in /home/.nvm
 RUN chmod -R a+rw /home
-RUN chmod -R a+rx /home/.nvm
 
 WORKDIR /workspace
 ENTRYPOINT [ "python", "/src/library_generation/cli/entry_point.py", "generate" ]

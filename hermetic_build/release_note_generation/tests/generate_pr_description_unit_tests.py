@@ -18,7 +18,7 @@ from release_note_generation.generate_pr_description import (
     get_repo_level_commit_messages,
     generate_pr_descriptions,
 )
-from library_generation.model.config_change import (
+from common.model.config_change import (
     ConfigChange,
     ChangeType,
     LibraryChange,
