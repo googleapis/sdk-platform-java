@@ -103,6 +103,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getEndpoint();
   }
 
+  /** Gets the MTLS endpoint for the service */
   public final String getMtlsEndpoint() {
     return stubSettings.getMtlsEndpoint();
   }
@@ -277,6 +278,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
+    /** Sets the MTLS endpoint for the service */
     public B setMtlsEndpoint(String mtlsEndpoint) {
       stubSettings.setMtlsEndpoint(mtlsEndpoint);
       return self();
@@ -385,6 +387,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return stubSettings.getEndpoint();
     }
 
+    /** Gets the MTLS endpoint for the service that was previously set on this Builder. */
     public String getMtlsEndpoint() {
       return stubSettings.getMtlsEndpoint();
     }
