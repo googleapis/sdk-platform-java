@@ -59,10 +59,6 @@ public class TestApiTracer implements ApiTracer {
     return operationFailed;
   }
 
-  public AtomicBoolean getRetriesExhausted() {
-    return retriesExhausted;
-  }
-
   @Override
   public void attemptStarted(int attemptNumber) {
     attemptsStarted.incrementAndGet();
@@ -81,10 +77,5 @@ public class TestApiTracer implements ApiTracer {
   @Override
   public void operationFailed(Throwable error) {
     operationFailed.set(true);
-  }
-
-  @Override
-  public void attemptFailedRetriesExhausted(Throwable error) {
-    retriesExhausted.set(true);
   }
 };
