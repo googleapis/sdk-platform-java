@@ -203,7 +203,7 @@ to inspect the containers to check the setup.
 It would be convenient in such case to have a text editor/viewer available. 
 You can achieve this by modifying the Dockerfile as follows:
 
-```docker
+```dockerfile
 # install OS tools
 RUN apk update && apk add \
 	unzip curl rsync openjdk11 jq bash nodejs npm git less vim
