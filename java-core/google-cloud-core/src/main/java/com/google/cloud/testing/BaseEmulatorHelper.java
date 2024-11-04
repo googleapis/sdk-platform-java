@@ -116,6 +116,7 @@ public abstract class BaseEmulatorHelper<T extends ServiceOptions> {
   }
 
   /** This method is obsolete. Use {@link #waitForProcessDuration(java.time.Duration)} instead */
+  @ObsoleteApi("Use waitForProcessDuration(java.time.Duration) instead")
   protected final int waitForProcess(org.threeten.bp.Duration timeout)
       throws IOException, InterruptedException, TimeoutException {
     return waitForProcessDuration(toJavaTimeDuration(timeout));

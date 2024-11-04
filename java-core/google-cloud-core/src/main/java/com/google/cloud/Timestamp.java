@@ -18,6 +18,7 @@ package com.google.cloud;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+import com.google.api.core.ObsoleteApi;
 import com.google.protobuf.util.Timestamps;
 import java.io.Serializable;
 import java.time.Instant;
@@ -190,6 +191,7 @@ public final class Timestamp implements Comparable<Timestamp>, Serializable {
   }
 
   /** This method is obsolete. Use {@link #parseTimestampDuration(String)} instead */
+  @ObsoleteApi("Use parseTimestampDuration(String) instead")
   public static Timestamp parseTimestamp(String timestamp) {
     try {
       return parseTimestampDuration(timestamp);
