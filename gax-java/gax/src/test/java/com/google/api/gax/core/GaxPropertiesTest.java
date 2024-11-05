@@ -176,46 +176,46 @@ class GaxPropertiesTest {
 
   @Test
   void testGetProtobufVersion_success() throws Exception {
-    IClassLoaderWrapper mockClassLoader = mock(IClassLoaderWrapper.class);
-    when(mockClassLoader.loadClass("com.google.protobuf.RuntimeVersion"))
+    ClassWrapper mockClassWrapper = mock(ClassWrapper.class);
+    when(mockClassWrapper.forName("com.google.protobuf.RuntimeVersion"))
         .thenAnswer(invocationOnMock -> Class.class);
-    when(mockClassLoader.getFieldValue(Class.class, "MAJOR")).thenReturn("2");
-    when(mockClassLoader.getFieldValue(Class.class, "MINOR")).thenReturn("3");
-    when(mockClassLoader.getFieldValue(Class.class, "PATCH")).thenReturn("4");
+    when(mockClassWrapper.getFieldValue(Class.class, "MAJOR")).thenReturn("2");
+    when(mockClassWrapper.getFieldValue(Class.class, "MINOR")).thenReturn("3");
+    when(mockClassWrapper.getFieldValue(Class.class, "PATCH")).thenReturn("4");
 
-    String version = GaxProperties.getProtobufVersion(mockClassLoader, Any.class);
+    String version = GaxProperties.getProtobufVersion(mockClassWrapper, Any.class);
 
     assertEquals("2.3.4", version);
   }
 
   @Test
   void testGetProtobufVersion_classNotFoundException() throws Exception {
-    IClassLoaderWrapper mockClassLoader = mock(IClassLoaderWrapper.class);
-    when(mockClassLoader.loadClass("com.google.protobuf.RuntimeVersion"))
+    ClassWrapper mockClassWrapper = mock(ClassWrapper.class);
+    when(mockClassWrapper.forName("com.google.protobuf.RuntimeVersion"))
         .thenThrow(new ClassNotFoundException(""));
 
-    String version = GaxProperties.getProtobufVersion(mockClassLoader, Any.class);
+    String version = GaxProperties.getProtobufVersion(mockClassWrapper, Any.class);
 
     assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
   }
 
   @Test
   void testgetProtobufVersion_noSuchFieldException() throws Exception {
-    IClassLoaderWrapper mockClassLoader = mock(IClassLoaderWrapper.class);
-    when(mockClassLoader.getFieldValue(any(), any())).thenThrow(NoSuchFieldException.class);
+    ClassWrapper mockClassWrapper = mock(ClassWrapper.class);
+    when(mockClassWrapper.getFieldValue(any(), any())).thenThrow(NoSuchFieldException.class);
 
-    String version = GaxProperties.getProtobufVersion(mockClassLoader, Any.class);
+    String version = GaxProperties.getProtobufVersion(mockClassWrapper, Any.class);
 
     assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
   }
 
   @Test
   void testGetProtobufVersion_noManifest() throws Exception {
-    IClassLoaderWrapper mockClassLoader = mock(IClassLoaderWrapper.class);
-    when(mockClassLoader.loadClass("com.google.protobuf.RuntimeVersion"))
+    ClassWrapper mockClassWrapper = mock(ClassWrapper.class);
+    when(mockClassWrapper.forName("com.google.protobuf.RuntimeVersion"))
         .thenThrow(new ClassNotFoundException(""));
 
-    String version = GaxProperties.getProtobufVersion(mockClassLoader, GaxProperties.class);
+    String version = GaxProperties.getProtobufVersion(mockClassWrapper, GaxProperties.class);
 
     assertEquals("3", version);
   }

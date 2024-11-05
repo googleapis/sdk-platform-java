@@ -30,13 +30,14 @@
 package com.google.api.gax.util;
 
 /* Wrapper class for reflection Class methods to enable unit testing. */
-public class ClassLoaderWrapper implements IClassLoaderWrapper {
-  @Override
-  public Class<?> loadClass(String name) throws ClassNotFoundException {
+public class ClassWrapper {
+
+  /* Wraps {@link java.lang.Class#forName} method  */
+  public Class<?> forName(String name) throws ClassNotFoundException {
     return Class.forName(name);
   }
 
-  @Override
+  /* Consolidates retrieving a field on a Class object via reflection and retrieving the value of that field */
   public Object getFieldValue(Class<?> clazz, String fieldName)
       throws NoSuchFieldException, IllegalAccessException {
     return clazz.getField(fieldName).get(null);

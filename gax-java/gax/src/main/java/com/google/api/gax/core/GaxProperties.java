@@ -30,8 +30,7 @@
 package com.google.api.gax.core;
 
 import com.google.api.core.InternalApi;
-import com.google.api.gax.util.ClassLoaderWrapper;
-import com.google.api.gax.util.IClassLoaderWrapper;
+import com.google.api.gax.util.ClassWrapper;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import com.google.protobuf.Any;
@@ -51,7 +50,7 @@ public class GaxProperties {
   private static final String GAX_VERSION = getLibraryVersion(GaxProperties.class, "version.gax");
   private static final String JAVA_VERSION = getRuntimeVersion();
   private static final String PROTOBUF_VERSION =
-      getProtobufVersion(new ClassLoaderWrapper(), Any.class);
+      getProtobufVersion(new ClassWrapper(), Any.class);
 
   private GaxProperties() {}
 
@@ -157,24 +156,19 @@ public class GaxProperties {
    * protobuf version 3 as RuntimeVersion class is available in protobuf version 4+
    */
   @VisibleForTesting
-  static String getProtobufVersion(IClassLoaderWrapper classLoader, Class clazz) {
+  static String getProtobufVersion(ClassWrapper classWrapper, Class clazz) {
     try {
       Class<?> protobufRuntimeVersionClass =
-          classLoader.loadClass("com.google.protobuf.RuntimeVersion");
-      return classLoader.getFieldValue(protobufRuntimeVersionClass, "MAJOR")
+          classWrapper.forName("com.google.protobuf.RuntimeVersion");
+      return classWrapper.getFieldValue(protobufRuntimeVersionClass, "MAJOR")
           + "."
-          + classLoader.getFieldValue(protobufRuntimeVersionClass, "MINOR")
+          + classWrapper.getFieldValue(protobufRuntimeVersionClass, "MINOR")
           + "."
-          + classLoader.getFieldValue(protobufRuntimeVersionClass, "PATCH");
-    } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException e) {
-      Optional<String> protobufVersionFromManifest = getBundleVersion(clazz);
-      if (protobufVersionFromManifest.isPresent()) {
-        return protobufVersionFromManifest.get();
-      } else {
-        // If manifest file is not available default to protobuf generic version 3 as we know RuntimeVersion class is
-        // available in protobuf jar 4+.
-        return "3";
-      }
+          + classWrapper.getFieldValue(protobufRuntimeVersionClass, "PATCH");
+    } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException | SecurityException e) {
+      // If manifest file is not available default to protobuf generic version 3 as we know RuntimeVersion class is
+      // available in protobuf jar 4+.
+      return getBundleVersion(clazz).orElse("3");
     }
   }
 }
