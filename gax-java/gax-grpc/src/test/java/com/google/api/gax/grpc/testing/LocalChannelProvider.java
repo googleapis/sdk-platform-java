@@ -32,6 +32,7 @@ package com.google.api.gax.grpc.testing;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.grpc.GrpcHeaderInterceptor;
 import com.google.api.gax.grpc.GrpcTransportChannel;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannel;
@@ -80,6 +81,11 @@ public class LocalChannelProvider implements TransportChannelProvider {
     return false;
   }
 
+  @Override
+  public boolean needsEndpointContext() {
+    return false;
+  }
+
   @Deprecated
   @Override
   public TransportChannelProvider withExecutor(ScheduledExecutorService executor) {
@@ -102,29 +108,13 @@ public class LocalChannelProvider implements TransportChannelProvider {
   }
 
   @Override
-  public boolean needsMtlsEndpoint() {
-    return false;
-  }
-
-  @Override
-  public boolean needsEndpointOverride() {
-    return false;
-  }
-
-  @Override
   public TransportChannelProvider withEndpoint(String endpoint) {
     throw new UnsupportedOperationException("LocalChannelProvider doesn't need an endpoint");
   }
 
   @Override
-  public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
-    throw new UnsupportedOperationException("LocalChannelProvider doesn't need an mtlsEndpoint");
-  }
-
-  @Override
-  public TransportChannelProvider withEndpointOverride(String endpointOverride) {
-    throw new UnsupportedOperationException(
-        "LocalChannelProvider doesn't need an endpointOverride");
+  public TransportChannelProvider withEndpointContext(EndpointContext endpointContext) {
+    throw new UnsupportedOperationException("LocalChannelProvider doesn't need an endpointContext");
   }
 
   @Override

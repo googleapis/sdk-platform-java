@@ -103,11 +103,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getEndpoint();
   }
 
-  /** Gets the MTLS endpoint for the service */
-  public final String getMtlsEndpoint() {
-    return stubSettings.getMtlsEndpoint();
-  }
-
   public final String getQuotaProjectId() {
     return stubSettings.getQuotaProjectId();
   }
@@ -150,7 +145,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
         .add("clock", getClock())
         .add("universeDomain", getUniverseDomain())
         .add("endpoint", getEndpoint())
-        .add("mtlsEndpoint", getMtlsEndpoint())
         .add("quotaProjectId", getQuotaProjectId())
         .add("watchdogProvider", getWatchdogProvider())
         .add("watchdogCheckInterval", getWatchdogCheckInterval())
@@ -278,12 +272,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
-    /** Sets the MTLS endpoint for the service */
-    public B setMtlsEndpoint(String mtlsEndpoint) {
-      stubSettings.setMtlsEndpoint(mtlsEndpoint);
-      return self();
-    }
-
     public B setQuotaProjectId(String quotaProjectId) {
       stubSettings.setQuotaProjectId(quotaProjectId);
       return self();
@@ -387,11 +375,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return stubSettings.getEndpoint();
     }
 
-    /** Gets the MTLS endpoint for the service that was previously set on this Builder. */
-    public String getMtlsEndpoint() {
-      return stubSettings.getMtlsEndpoint();
-    }
-
     /** Gets the QuotaProjectId that was previously set on this Builder. */
     public String getQuotaProjectId() {
       return stubSettings.getQuotaProjectId();
@@ -444,7 +427,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
           .add("internalHeaderProvider", getInternalHeaderProvider())
           .add("clock", getClock())
           .add("endpoint", getEndpoint())
-          .add("mtlsEndpoint", getMtlsEndpoint())
           .add("quotaProjectId", getQuotaProjectId())
           .add("watchdogProvider", getWatchdogProvider())
           .add("watchdogCheckInterval", getWatchdogCheckIntervalDuration())

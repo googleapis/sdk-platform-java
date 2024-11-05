@@ -84,12 +84,7 @@ public class FixedTransportChannelProvider implements TransportChannelProvider {
   }
 
   @Override
-  public boolean needsMtlsEndpoint() {
-    return false;
-  }
-
-  @Override
-  public boolean needsEndpointOverride() {
+  public boolean needsEndpointContext() {
     return false;
   }
 
@@ -100,15 +95,9 @@ public class FixedTransportChannelProvider implements TransportChannelProvider {
   }
 
   @Override
-  public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
+  public TransportChannelProvider withEndpointContext(EndpointContext endpointContext) {
     throw new UnsupportedOperationException(
-        "FixedTransportChannelProvider doesn't need an mtlsEndpoint");
-  }
-
-  @Override
-  public TransportChannelProvider withEndpointOverride(String endpointOverride) {
-    throw new UnsupportedOperationException(
-        "FixedTransportChannelProvider doesn't need an endpointOverride");
+        "FixedTransportChannelProvider doesn't need an endpointContext");
   }
 
   /** @deprecated FixedTransportChannelProvider doesn't support ChannelPool configuration */

@@ -37,6 +37,7 @@ import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.ExecutorProvider;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannel;
@@ -49,7 +50,6 @@ import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auth.oauth2.S2A;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
@@ -106,8 +106,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting
   static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
 
-  @VisibleForTesting static final String S2A_ENV_ENABLE_USE_S2A = "EXPERIMENTAL_GOOGLE_API_USE_S2A";
-
   private static final String MTLS_MDS_ROOT = "/run/google-mds-mtls/root.crt";
   // The mTLS MDS credentials are formatted as the concatenation of a PEM-encoded certificate chain
   // followed by a PEM-encoded private key.
@@ -121,14 +119,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private final int processorCount;
   private final Executor executor;
   private final HeaderProvider headerProvider;
+  private final EndpointContext endpointContext;
   private final String endpoint;
-  private final String mtlsEndpoint;
-  private final String endpointOverride;
-  // TODO: remove.
-  // envProvider currently provides DirectPath and S2A environment variables, and is only used
-  // during initial rollout for DirectPath and S2A. This provider will be removed once the
-  // DirectPath
-  // and S2A environment variables are not used.
+  // TODO: remove. envProvider currently provides DirectPath environment variable, and is only used
+  // during initial rollout for DirectPath. This provider will be removed once the DirectPath
+  // environment is not used.
   private final EnvironmentProvider envProvider;
   @Nullable private final GrpcInterceptorProvider interceptorProvider;
   @Nullable private final Integer maxInboundMessageSize;
@@ -154,8 +149,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.executor = builder.executor;
     this.headerProvider = builder.headerProvider;
     this.endpoint = builder.endpoint;
-    this.mtlsEndpoint = builder.mtlsEndpoint;
-    this.endpointOverride = builder.endpointOverride;
+    this.endpointContext = builder.endpointContext;
     this.mtlsProvider = builder.mtlsProvider;
     this.envProvider = builder.envProvider;
     this.interceptorProvider = builder.interceptorProvider;
@@ -232,13 +226,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   @Override
-  public boolean needsMtlsEndpoint() {
-    return mtlsEndpoint == null;
-  }
-
-  @Override
-  public boolean needsEndpointOverride() {
-    return endpointOverride == null;
+  public boolean needsEndpointContext() {
+    return endpointContext == null;
   }
 
   /**
@@ -256,35 +245,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   /**
-   * Specify the MTLS endpoint.
+   * Specify the {@link EndpointContext}.
    *
-   * <p>The value of {@code mtlsEndpoint} must be of the form {@code host:port}.
-   *
-   * @param mtlsEndpoint
-   * @return A new {@link InstantiatingGrpcChannelProvider} with the specified MTLS endpoint
-   *     configured
+   * @param endpointContext
+   * @return A new {@link InstantiatingGrpcChannelProvider} with the endpointContext
    */
   @Override
-  public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
-    validateEndpoint(mtlsEndpoint);
-    return toBuilder().setMtlsEndpoint(mtlsEndpoint).build();
-  }
-
-  /**
-   * Specify the endpoint override.
-   *
-   * <p>The value of {@code endpointOverride} must be of the form {@code host:port}.
-   *
-   * @param endpointOverride
-   * @return A new {@link InstantiatingGrpcChannelProvider} with the specified endpoint Override
-   *     configured
-   */
-  @Override
-  public TransportChannelProvider withEndpointOverride(String endpointOverride) {
-    if (!endpointOverride.isEmpty()) {
-      validateEndpoint(endpointOverride);
-    }
-    return toBuilder().setEndpointOverride(endpointOverride).build();
+  public TransportChannelProvider withEndpointContext(EndpointContext endpointContext) {
+    return toBuilder().setEndpointContext(endpointContext).build();
   }
 
   /** @deprecated Please modify pool settings via {@link #toBuilder()} */
@@ -473,40 +441,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   @VisibleForTesting
-  boolean isS2AEnabled() {
-    String S2AEnv = envProvider.getenv(S2A_ENV_ENABLE_USE_S2A);
-    return Boolean.parseBoolean(S2AEnv);
-  }
-
-  @VisibleForTesting
-  boolean shouldUseS2A() {
-    // If EXPERIMENTAL_GOOGLE_API_USE_S2A is not set to true, skip S2A.
-    if (!isS2AEnabled()) {
-      return false;
-    }
-
-    // If {@code mtlsEndpoint} is not set, skip S2A. GAPIC clients have
-    // an auto-populated default mTLS endpoint, so this check is technically
-    // not needed. It is kept to ensure that initialization code
-    // sets the {@code mtlsEndpoint} needed to use S2A.
-    if (Strings.isNullOrEmpty(mtlsEndpoint)) {
-      return false;
-    }
-
-    // If {@code endpointOverride} is specified, skip S2A.
-    if (!Strings.isNullOrEmpty(endpointOverride)) {
-      return false;
-    }
-
-    // mTLS via S2A is not supported in any universe other than googleapis.com.
-    if (!mtlsEndpoint.contains(Credentials.GOOGLE_DEFAULT_UNIVERSE)) {
-      return false;
-    }
-
-    return true;
-  }
-
-  @VisibleForTesting
   ChannelCredentials createMtlsToS2AChannelCredentials(
       InputStream trustBundle, InputStream privateKey, InputStream certChain) throws IOException {
     if (trustBundle == null || privateKey == null || certChain == null) {
@@ -617,12 +551,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         // Could not create channel credentials via DCA. In accordance with
         // https://google.aip.dev/auth/4115, if credentials not available through
         // DCA, try mTLS with credentials held by the S2A (Secure Session Agent).
-        if (shouldUseS2A()) {
+        if ((endpointContext != null) && endpointContext.useS2A()) {
           channelCredentials = createS2ASecuredChannelCredentials();
         }
         if (channelCredentials != null) {
           // Create the channel using S2A-secured channel credentials.
-          builder = Grpc.newChannelBuilder(mtlsEndpoint, channelCredentials);
+          builder = Grpc.newChannelBuilder(endpointContext.mtlsEndpoint(), channelCredentials);
         } else {
           // Use default if we cannot initialize channel credentials via DCA or S2A.
           builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
@@ -717,14 +651,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return endpoint;
   }
 
-  /** The mTLS endpoint. */
-  public String getMtlsEndpoint() {
-    return mtlsEndpoint;
-  }
-
-  /** The endpoint override */
-  public String getEndpointOverride() {
-    return endpointOverride;
+  /** The endpoint context. */
+  public EndpointContext getEndpointContext() {
+    return endpointContext;
   }
 
   /** This method is obsolete. Use {@link #getKeepAliveTimeDuration()} instead. */
@@ -784,8 +713,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private Executor executor;
     private HeaderProvider headerProvider;
     private String endpoint;
-    private String mtlsEndpoint;
-    private String endpointOverride;
+    private EndpointContext endpointContext;
     private EnvironmentProvider envProvider;
     private MtlsProvider mtlsProvider = new MtlsProvider();
     @Nullable private GrpcInterceptorProvider interceptorProvider;
@@ -814,8 +742,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.executor = provider.executor;
       this.headerProvider = provider.headerProvider;
       this.endpoint = provider.endpoint;
-      this.mtlsEndpoint = provider.mtlsEndpoint;
-      this.endpointOverride = provider.endpointOverride;
+      this.endpointContext = provider.endpointContext;
       this.envProvider = provider.envProvider;
       this.interceptorProvider = provider.interceptorProvider;
       this.maxInboundMessageSize = provider.maxInboundMessageSize;
@@ -884,17 +811,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    public Builder setMtlsEndpoint(String mtlsEndpoint) {
-      validateEndpoint(mtlsEndpoint);
-      this.mtlsEndpoint = mtlsEndpoint;
-      return this;
-    }
-
-    public Builder setEndpointOverride(String endpointOverride) {
-      if (!endpointOverride.isEmpty()) {
-        validateEndpoint(endpointOverride);
-      }
-      this.endpointOverride = endpointOverride;
+    public Builder setEndpointContext(EndpointContext endpointContext) {
+      this.endpointContext = endpointContext;
       return this;
     }
 
@@ -920,12 +838,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return endpoint;
     }
 
-    public String getMtlsEndpoint() {
-      return mtlsEndpoint;
-    }
-
-    public String getEndpointOverride() {
-      return endpointOverride;
+    public EndpointContext getEndpointContext() {
+      return endpointContext;
     }
 
     /** The maximum message size allowed to be received on the channel. */

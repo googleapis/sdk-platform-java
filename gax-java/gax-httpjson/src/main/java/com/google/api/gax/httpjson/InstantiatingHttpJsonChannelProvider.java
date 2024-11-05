@@ -33,6 +33,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.api.gax.core.ExecutorProvider;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
@@ -120,12 +121,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   }
 
   @Override
-  public boolean needsMtlsEndpoint() {
-    return false;
-  }
-
-  @Override
-  public boolean needsEndpointOverride() {
+  public boolean needsEndpointContext() {
     return false;
   }
 
@@ -135,15 +131,9 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   }
 
   @Override
-  public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
+  public TransportChannelProvider withEndpointContext(EndpointContext endpointContext) {
     throw new UnsupportedOperationException(
-        "InstantiatingHttpJsonChannelProvider doesn't need an mtlsEndpoint");
-  }
-
-  @Override
-  public TransportChannelProvider withEndpointOverride(String endpointOverride) {
-    throw new UnsupportedOperationException(
-        "InstantiatingHttpJsonChannelProvider doesn't need an endpointOverride");
+        "InstantiatingHttpJsonChannelProvider doesn't need an endpointContext");
   }
 
   /** @deprecated REST transport channel doesn't support channel pooling */

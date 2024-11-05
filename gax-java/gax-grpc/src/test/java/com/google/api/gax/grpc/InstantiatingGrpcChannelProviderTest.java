@@ -85,8 +85,6 @@ import org.mockito.Mockito;
 
 class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelTest {
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com:443";
-  private static final String DEFAULT_MTLS_ENDPOINT = "test.mtls.googleapis.com:443";
-  private static final String DEFAULT_ENDPOINT_OVERRIDE = "test.endpoint.com:443";
   private static final String API_KEY_HEADER_VALUE = "fake_api_key_2";
   private static final String API_KEY_AUTH_HEADER_KEY = "x-goog-api-key";
   private static String originalOSName;
@@ -131,61 +129,6 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     assertThrows(
         IllegalArgumentException.class,
         () -> InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("localhost:abcd"));
-  }
-
-  @Test
-  void testMtlsEndpoint() {
-    InstantiatingGrpcChannelProvider.Builder builder =
-        InstantiatingGrpcChannelProvider.newBuilder();
-    builder.setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT);
-    assertEquals(builder.getMtlsEndpoint(), DEFAULT_MTLS_ENDPOINT);
-
-    InstantiatingGrpcChannelProvider provider = builder.build();
-    assertEquals(provider.getMtlsEndpoint(), DEFAULT_MTLS_ENDPOINT);
-  }
-
-  @Test
-  void testMtlsEndpointNoPort() {
-    assertThrows(
-        IllegalArgumentException.class,
-        () ->
-            InstantiatingGrpcChannelProvider.newBuilder()
-                .setMtlsEndpoint("test.mtls.googleapis.com"));
-  }
-
-  @Test
-  void testMtlsEndpointBadPort() {
-    assertThrows(
-        IllegalArgumentException.class,
-        () ->
-            InstantiatingGrpcChannelProvider.newBuilder()
-                .setEndpoint("test.mtls.googleapis.com:abcd"));
-  }
-
-  @Test
-  void testEndpointOverrideEndpoint() {
-    InstantiatingGrpcChannelProvider.Builder builder =
-        InstantiatingGrpcChannelProvider.newBuilder();
-    builder.setEndpointOverride(DEFAULT_ENDPOINT_OVERRIDE);
-    assertEquals(builder.getEndpointOverride(), DEFAULT_ENDPOINT_OVERRIDE);
-
-    InstantiatingGrpcChannelProvider provider = builder.build();
-    assertEquals(provider.getEndpointOverride(), DEFAULT_ENDPOINT_OVERRIDE);
-  }
-
-  @Test
-  void testEndpointOverrideNoPort() {
-    assertThrows(
-        IllegalArgumentException.class,
-        () ->
-            InstantiatingGrpcChannelProvider.newBuilder().setEndpointOverride("test.endpoint.com"));
-  }
-
-  @Test
-  void testEndpointOverrideBadPort() {
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("test.endpoint.com:abcd"));
   }
 
   @Test
@@ -289,8 +232,6 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         InstantiatingGrpcChannelProvider.newBuilder()
             .setProcessorCount(2)
             .setEndpoint("fake.endpoint:443")
-            .setMtlsEndpoint("fake.endpoint:443")
-            .setEndpointOverride("fake.endpoint.override:443")
             .setMaxInboundMessageSize(12345678)
             .setMaxInboundMetadataSize(4096)
             .setKeepAliveTimeDuration(keepaliveTime)
@@ -304,8 +245,6 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     InstantiatingGrpcChannelProvider.Builder builder = provider.toBuilder();
 
     assertThat(builder.getEndpoint()).isEqualTo("fake.endpoint:443");
-    assertThat(builder.getMtlsEndpoint()).isEqualTo("fake.endpoint:443");
-    assertThat(builder.getEndpointOverride()).isEqualTo("fake.endpoint.override:443");
     assertThat(builder.getMaxInboundMessageSize()).isEqualTo(12345678);
     assertThat(builder.getMaxInboundMetadataSize()).isEqualTo(4096);
     assertThat(builder.getKeepAliveTimeDuration()).isEqualTo(keepaliveTime);
@@ -1041,102 +980,6 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     Map<String, String> header = new HashMap<>();
     header.put(API_KEY_AUTH_HEADER_KEY, API_KEY_HEADER_VALUE);
     return FixedHeaderProvider.create(header);
-  }
-
-  @Test
-  void isS2AEnabled_envVarNotSet_returnsFalse() {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
-        .thenReturn("false");
-    InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder().setEnvProvider(envProvider).build();
-    Truth.assertThat(provider.isS2AEnabled()).isFalse();
-  }
-
-  @Test
-  void isS2AEnabled_envVarSet_returnsTrue() {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
-        .thenReturn("true");
-    InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder().setEnvProvider(envProvider).build();
-    Truth.assertThat(provider.isS2AEnabled()).isTrue();
-  }
-
-  @Test
-  void shouldUseS2A_envVarNotSet_returnsFalse() {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
-        .thenReturn("false");
-    InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder()
-            .setEndpoint(DEFAULT_ENDPOINT)
-            .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT)
-            .setEndpointOverride("")
-            .setEnvProvider(envProvider)
-            .build();
-    Truth.assertThat(provider.shouldUseS2A()).isFalse();
-  }
-
-  @Test
-  void shouldUseS2A_mtlsEndpointNotSet_throws() {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
-        .thenReturn("true");
-    assertThrows(
-        IllegalArgumentException.class,
-        () ->
-            InstantiatingGrpcChannelProvider.newBuilder()
-                .setEndpoint(DEFAULT_ENDPOINT)
-                .setMtlsEndpoint("")
-                .setEndpointOverride("")
-                .setEnvProvider(envProvider)
-                .build());
-  }
-
-  @Test
-  void shouldUseS2A_endpointOverrideIsSet_returnsFalse() {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
-        .thenReturn("true");
-    InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder()
-            .setEndpoint(DEFAULT_ENDPOINT)
-            .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT)
-            .setEndpointOverride(DEFAULT_ENDPOINT_OVERRIDE)
-            .setEnvProvider(envProvider)
-            .build();
-    Truth.assertThat(provider.shouldUseS2A()).isFalse();
-  }
-
-  @Test
-  void shouldUseS2A_nonGDUUniverse_returnsFalse() {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
-        .thenReturn("true");
-    InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder()
-            .setEndpoint("test.abcd.com:443")
-            .setMtlsEndpoint("test.mtls.abcd.com:443")
-            .setEndpointOverride("")
-            .setEnvProvider(envProvider)
-            .build();
-    Truth.assertThat(provider.shouldUseS2A()).isFalse();
-  }
-
-  @Test
-  void shouldUseS2A_returnsTrue() {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
-        .thenReturn("true");
-    InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder()
-            .setEndpoint(DEFAULT_ENDPOINT)
-            .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT)
-            .setEndpointOverride("")
-            .setEnvProvider(envProvider)
-            .build();
-    Truth.assertThat(provider.shouldUseS2A()).isTrue();
   }
 
   @Test

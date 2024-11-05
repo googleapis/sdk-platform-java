@@ -178,10 +178,6 @@ public abstract class ClientContext {
     // A valid EndpointContext should have been created in the StubSettings
     EndpointContext endpointContext = settings.getEndpointContext();
     String endpoint = endpointContext.resolvedEndpoint();
-    String mtlsEndpoint = "";
-    mtlsEndpoint = settings.getMtlsEndpoint();
-    String endpointOverride = "";
-    endpointOverride = settings.getEndpointContext().customEndpoint();
     Credentials credentials = getCredentials(settings);
     // check if need to adjust credentials/endpoint/endpointContext for GDC-H
     String settingsGdchApiAudience = settings.getGdchApiAudience();
@@ -193,9 +189,6 @@ public abstract class ClientContext {
       endpointContext = endpointContext.withGDCH();
       // Resolve the new endpoint with the GDC-H flow
       endpoint = endpointContext.resolvedEndpoint();
-      // Skip S2A in GDC-H.
-      mtlsEndpoint = "";
-      endpointOverride = "";
       // We recompute the GdchCredentials with the audience
       credentials = getGdchCredentials(settingsGdchApiAudience, endpoint, credentials);
     } else if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
@@ -229,11 +222,8 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
     }
-    if (transportChannelProvider.needsMtlsEndpoint()) {
-      transportChannelProvider = transportChannelProvider.withMtlsEndpoint(mtlsEndpoint);
-    }
-    if (transportChannelProvider.needsEndpointOverride()) {
-      transportChannelProvider = transportChannelProvider.withEndpointOverride(endpointOverride);
+    if (transportChannelProvider.needsEndpointContext()) {
+      transportChannelProvider = transportChannelProvider.withEndpointContext(endpointContext);
     }
     TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
 
