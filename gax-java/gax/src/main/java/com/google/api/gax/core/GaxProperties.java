@@ -30,7 +30,8 @@
 package com.google.api.gax.core;
 
 import com.google.api.core.InternalApi;
-import com.google.api.gax.util.*;
+import com.google.api.gax.util.ClassLoaderWrapper;
+import com.google.api.gax.util.IClassLoaderWrapper;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import com.google.protobuf.Any;
@@ -145,14 +146,15 @@ public class GaxProperties {
         return Optional.ofNullable(attributes.getValue("Bundle-Version"));
       }
     } catch (Exception e) {
+      // Unable to read Bundle-Version from manifest. Recover gracefully.
       return Optional.empty();
     }
   }
 
   /**
-   * Returns the current Protobuf runtime version as reported by com.google.protobuf.RuntimeVersion
-   * if available, otherwise by reading from MANIFEST file, and if not available defaulting to
-   * generic protobuf 3 as RuntimeVersion class is available in protobuf version 4+
+   * Returns the Protobuf runtime version as reported by com.google.protobuf.RuntimeVersion,
+   * if class is available, otherwise by reading from MANIFEST file. If niether option is available defaults to
+   * protobuf version 3 as RuntimeVersion class is available in protobuf version 4+
    */
   @VisibleForTesting
   static String getProtobufVersion(IClassLoaderWrapper classLoader, Class clazz) {
@@ -169,7 +171,7 @@ public class GaxProperties {
       if (protobufVersionFromManifest.isPresent()) {
         return protobufVersionFromManifest.get();
       } else {
-        // If manifest file is not available default to generic 3 as we know RuntimeVersion class is
+        // If manifest file is not available default to protobuf generic version 3 as we know RuntimeVersion class is
         // available in protobuf jar 4+.
         return "3";
       }

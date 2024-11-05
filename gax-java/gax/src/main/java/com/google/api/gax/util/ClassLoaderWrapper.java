@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.util;
 
-/* Wrapper class for Final Class methods that can not be mocked */
+/* Wrapper class for reflection Class methods to enable unit testing. */
 public class ClassLoaderWrapper implements IClassLoaderWrapper {
   @Override
   public Class<?> loadClass(String name) throws ClassNotFoundException {
