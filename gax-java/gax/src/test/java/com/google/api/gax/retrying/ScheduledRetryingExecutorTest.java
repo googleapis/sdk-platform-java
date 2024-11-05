@@ -41,8 +41,6 @@ import com.google.api.core.ApiFuture;
 import com.google.api.core.NanoClock;
 import com.google.api.gax.retrying.FailingCallable.CustomException;
 import com.google.api.gax.rpc.testing.FakeCallContext;
-
-import java.util.Optional;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
