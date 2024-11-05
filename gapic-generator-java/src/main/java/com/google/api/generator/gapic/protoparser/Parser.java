@@ -79,14 +79,18 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Parser {
+
+  private static final Logger LOGGER = Logger.getLogger(Parser.class.getName());
   private static final String COMMA = ",";
   private static final String COLON = ":";
   private static final String DEFAULT_PORT = "443";
@@ -175,7 +179,10 @@ public class Parser {
             mixinServices,
             transport);
 
-    Preconditions.checkState(!services.isEmpty(), "No services found to generate");
+    if (services.isEmpty()) {
+      LOGGER.warning("No services found to generate. This will cause a no-op (no files generated)");
+      return GapicContext.EMPTY;
+    }
 
     // TODO(vam-google): Figure out whether we should keep this allowlist or bring
     // back the unused resource names for all APIs.
@@ -428,6 +435,17 @@ public class Parser {
       Transport transport) {
 
     return fileDescriptor.getServices().stream()
+        .filter(
+            serviceDescriptor -> {
+              List<MethodDescriptor> methodsList = serviceDescriptor.getMethods();
+              if (methodsList.isEmpty()) {
+                LOGGER.warning(
+                    String.format(
+                        "Service %s has no RPC methods and will not be generated",
+                        serviceDescriptor.getName()));
+              }
+              return !methodsList.isEmpty();
+            })
         .map(
             s -> {
               // Workaround for a missing default_host and oauth_scopes annotation from a service
@@ -1063,12 +1081,10 @@ public class Parser {
         .setType(TypeParser.parseType(fieldDescriptor))
         .setIsMessage(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.MESSAGE)
         .setIsEnum(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.ENUM)
-        .setIsContainedInOneof(
-            fieldDescriptor.getContainingOneof() != null
-                && !fieldDescriptor.getContainingOneof().isSynthetic())
+        .setIsContainedInOneof(fieldDescriptor.getRealContainingOneof() != null)
         .setIsProto3Optional(
             fieldDescriptor.getContainingOneof() != null
-                && fieldDescriptor.getContainingOneof().isSynthetic())
+                && fieldDescriptor.getRealContainingOneof() == null)
         .setIsRepeated(fieldDescriptor.isRepeated())
         .setIsRequired(isRequired)
         .setFieldInfoFormat(fieldInfoFormat)
@@ -1104,7 +1120,8 @@ public class Parser {
     return fileDescriptors;
   }
 
-  private static String parseServiceJavaPackage(CodeGeneratorRequest request) {
+  @VisibleForTesting
+  static String parseServiceJavaPackage(CodeGeneratorRequest request) {
     Map<String, Integer> javaPackageCount = new HashMap<>();
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     for (String fileToGenerate : request.getFileToGenerateList()) {
@@ -1137,13 +1154,12 @@ public class Parser {
       processedJavaPackageCount = javaPackageCount;
     }
 
-    String finalJavaPackage =
-        processedJavaPackageCount.entrySet().stream()
-            .max(Map.Entry.comparingByValue())
-            .get()
-            .getKey();
-    Preconditions.checkState(
-        !Strings.isNullOrEmpty(finalJavaPackage), "No service Java package found");
+    String finalJavaPackage = "";
+    Optional<Entry<String, Integer>> finalPackageEntry =
+        processedJavaPackageCount.entrySet().stream().max(Map.Entry.comparingByValue());
+    if (finalPackageEntry.isPresent()) {
+      finalJavaPackage = finalPackageEntry.get().getKey();
+    }
     return finalJavaPackage;
   }
 

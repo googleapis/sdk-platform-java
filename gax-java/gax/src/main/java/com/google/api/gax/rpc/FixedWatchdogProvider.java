@@ -31,10 +31,11 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.InternalApi;
+import com.google.api.core.ObsoleteApi;
+import java.time.Duration;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * A watchdog provider which always returns the same watchdog instance provided to the provider
@@ -70,8 +71,15 @@ public final class FixedWatchdogProvider implements WatchdogProvider {
     return false;
   }
 
+  /** This method is obsolete. Use {@link #withCheckIntervalDuration(Duration)} instead. */
   @Override
-  public WatchdogProvider withCheckInterval(Duration checkInterval) {
+  @ObsoleteApi("Use withCheckIntervalDuration(java.time.Duration) instead")
+  public WatchdogProvider withCheckInterval(org.threeten.bp.Duration checkInterval) {
+    throw new UnsupportedOperationException("FixedWatchdogProvider doesn't need a checkInterval");
+  }
+
+  @Override
+  public WatchdogProvider withCheckIntervalDuration(java.time.Duration checkInterval) {
     throw new UnsupportedOperationException("FixedWatchdogProvider doesn't need a checkInterval");
   }
 

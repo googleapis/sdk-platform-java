@@ -19,11 +19,11 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.protoloader.GrpcTestProtoLoader;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class GrpcServiceStubClassComposerTest {
+class GrpcServiceStubClassComposerTest {
   @Test
-  public void generateGrpcServiceStubClass_simple() {
+  void generateGrpcServiceStubClass_simple() {
     GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
     Service echoProtoService = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, echoProtoService);
@@ -33,7 +33,7 @@ public class GrpcServiceStubClassComposerTest {
   }
 
   @Test
-  public void generateGrpcServiceStubClass_deprecated() {
+  void generateGrpcServiceStubClass_deprecated() {
     GapicContext context = GrpcTestProtoLoader.instance().parseDeprecatedService();
     Service protoService = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, protoService);
@@ -43,7 +43,7 @@ public class GrpcServiceStubClassComposerTest {
   }
 
   @Test
-  public void generateGrpcServiceStubClass_httpBindings() {
+  void generateGrpcServiceStubClass_httpBindings() {
     GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseTesting();
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
@@ -53,7 +53,7 @@ public class GrpcServiceStubClassComposerTest {
   }
 
   @Test
-  public void generateGrpcServiceStubClass_routingHeaders() {
+  void generateGrpcServiceStubClass_routingHeaders() {
     GapicContext context =
         GrpcTestProtoLoader.instance().parseExplicitDynamicRoutingHeaderTesting();
     Service service = context.services().get(0);
@@ -64,7 +64,7 @@ public class GrpcServiceStubClassComposerTest {
   }
 
   @Test
-  public void generateGrpcServiceStubClass_httpBindingsWithSubMessageFields() {
+  void generateGrpcServiceStubClass_httpBindingsWithSubMessageFields() {
     GapicContext context = GrpcTestProtoLoader.instance().parsePubSubPublisher();
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
@@ -74,7 +74,7 @@ public class GrpcServiceStubClassComposerTest {
   }
 
   @Test
-  public void generateGrpcServiceStubClass_createBatchingCallable() {
+  void generateGrpcServiceStubClass_createBatchingCallable() {
     GapicContext context = GrpcTestProtoLoader.instance().parseLogging();
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
@@ -84,12 +84,21 @@ public class GrpcServiceStubClassComposerTest {
   }
 
   @Test
-  public void generateGrpcServiceStubClass_autopopulateField() {
+  void generateGrpcServiceStubClass_autopopulateField() {
     GapicContext context = GrpcTestProtoLoader.instance().parseAutoPopulateFieldTesting();
     Service service = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
 
     Assert.assertGoldenClass(this.getClass(), clazz, "GrpcAutoPopulateFieldStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
+  }
+
+  @Test
+  void generateGrpcServiceStubClass_callableNameType() {
+    GapicContext context = GrpcTestProtoLoader.instance().parseCallabeNameType();
+    Service service = context.services().get(0);
+    GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
+    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcCallableNameTypeStub.golden");
     Assert.assertEmptySamples(clazz.samples());
   }
 }

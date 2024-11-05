@@ -30,35 +30,34 @@
 package com.google.api.gax.rpc;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.verify;
 
 import com.google.api.core.SettableApiFuture;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.RetryingFuture;
 import com.google.api.gax.retrying.TimedAttemptSettings;
 import com.google.api.gax.rpc.testing.FakeCallContext;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
-import org.threeten.bp.Duration;
 
-@RunWith(MockitoJUnitRunner.class)
-public class CheckingAttemptCallableTest {
+@ExtendWith(MockitoExtension.class)
+class CheckingAttemptCallableTest {
   @Mock UnaryCallable<String, String> mockInnerCallable;
   ArgumentCaptor<ApiCallContext> capturedCallContext;
   @Mock RetryingFuture<String> mockExternalFuture;
   TimedAttemptSettings currentAttemptSettings;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     capturedCallContext = ArgumentCaptor.forClass(ApiCallContext.class);
-    Mockito.when(mockInnerCallable.futureCall(Mockito.<String>any(), capturedCallContext.capture()))
-        .thenReturn(SettableApiFuture.<String>create());
 
     currentAttemptSettings =
         TimedAttemptSettings.newBuilder()
@@ -66,9 +65,9 @@ public class CheckingAttemptCallableTest {
             .setAttemptCount(0)
             .setOverallAttemptCount(0)
             .setFirstAttemptStartTimeNanos(0)
-            .setRetryDelay(Duration.ofSeconds(1))
-            .setRandomizedRetryDelay(Duration.ofSeconds(1))
-            .setRpcTimeout(Duration.ZERO)
+            .setRetryDelayDuration(java.time.Duration.ofSeconds(1))
+            .setRandomizedRetryDelayDuration(java.time.Duration.ofSeconds(1))
+            .setRpcTimeoutDuration(java.time.Duration.ZERO)
             .build();
 
     Mockito.when(mockExternalFuture.getAttemptSettings())
@@ -82,24 +81,45 @@ public class CheckingAttemptCallableTest {
   }
 
   @Test
-  public void testRpcTimeout() {
+  void testRpcTimeout_gtZero_succeeds() {
+    Mockito.when(mockInnerCallable.futureCall(Mockito.<String>any(), capturedCallContext.capture()))
+        .thenReturn(SettableApiFuture.<String>create());
     CheckingAttemptCallable<String, String> callable =
         new CheckingAttemptCallable<>(mockInnerCallable, FakeCallContext.createDefault());
     callable.setExternalFuture(mockExternalFuture);
 
     // Make sure that the rpc timeout is set
-    Duration timeout = Duration.ofSeconds(10);
-    currentAttemptSettings = currentAttemptSettings.toBuilder().setRpcTimeout(timeout).build();
-
-    callable.call();
-
-    assertThat(capturedCallContext.getValue().getTimeout()).isEqualTo(timeout);
-
-    // Make sure that subsequent attempts can extend the time out
-    Duration longerTimeout = Duration.ofSeconds(20);
+    java.time.Duration timeout = java.time.Duration.ofSeconds(10);
     currentAttemptSettings =
-        currentAttemptSettings.toBuilder().setRpcTimeout(longerTimeout).build();
+        currentAttemptSettings.toBuilder().setRpcTimeoutDuration(timeout).build();
+
     callable.call();
-    assertThat(capturedCallContext.getValue().getTimeout()).isEqualTo(longerTimeout);
+
+    assertThat(capturedCallContext.getValue().getTimeoutDuration()).isEqualTo(timeout);
+
+    // Make sure that subsequent attempts can extend the timeout
+    java.time.Duration longerTimeout = java.time.Duration.ofSeconds(20);
+    currentAttemptSettings =
+        currentAttemptSettings.toBuilder().setRpcTimeoutDuration(longerTimeout).build();
+    callable.call();
+    assertThat(capturedCallContext.getValue().getTimeoutDuration()).isEqualTo(longerTimeout);
+  }
+
+  @Test
+  void testRpcTimeout_gtZero_callsWithTimeoutDuration() {
+    FakeCallContext callContext = Mockito.spy(FakeCallContext.createDefault());
+    Mockito.doReturn(callContext).when(callContext).withTimeoutDuration(ArgumentMatchers.any());
+    CheckingAttemptCallable<String, String> callable =
+        new CheckingAttemptCallable<>(Mockito.mock(UnaryCallable.class), callContext);
+    callable.setExternalFuture(mockExternalFuture);
+
+    // Make sure that the rpc timeout is set
+    java.time.Duration timeout = java.time.Duration.ofSeconds(10);
+    currentAttemptSettings =
+        currentAttemptSettings.toBuilder().setRpcTimeoutDuration(timeout).build();
+
+    callable.call();
+
+    verify(callContext).withTimeoutDuration(timeout);
   }
 }

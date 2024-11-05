@@ -16,11 +16,11 @@ package com.google.api.generator.engine.lexicon;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class SeparatorTest {
+class SeparatorTest {
   @Test
-  public void separatorTest() {
+  void separatorTest() {
     assertThat(Separator.containsSeparator("foo")).isFalse();
 
     assertThat(Separator.containsSeparator("foo.foo")).isTrue();

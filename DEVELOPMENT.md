@@ -51,9 +51,9 @@ Based on where the code changes are, we should add different tests, in general
 
 - If the changes are in `gax` or `api-common` only, you _must_ add traditional unit tests, you _may_ add showcase integration tests if you are modifying a public setting.
 - If the changes are in `gapic-generator-java` only, showcase integration tests are most likely not needed
-  - If it is in the `composer` module, you _must_ add golden unit tests, you _may_ add traditional unit tests for better coverage and easier testing.  
-  - If it is in the `parser` module, you _may_ add traditional unit tests with a test proto. For example, [routing_rule_parser_testing](https://github.com/googleapis/sdk-platform-java/blob/main/gapic-generator-java/src/test/proto/routing_rule_parser_testing.proto) that is only used for testing [RoutingRuleParser](https://github.com/googleapis/sdk-platform-java/blob/main/gapic-generator-java/src/main/java/com/google/api/generator/gapic/protoparser/RoutingRuleParser.java). 
-  - If it is in `other modules(ast, model, writer etc.)`, you _must_ add traditional unit tests, you _may_ add golden unit tests to easily see the changes.
+  - If they are in the `composer` module, you _must_ add golden unit tests, you _may_ add traditional unit tests for better coverage and easier testing.  
+  - If they are in the `parser` module, you _should_ add traditional unit tests with a test proto if possible, you _may_ add golden unit tests to easily see the changes. For example, [routing_rule_parser_testing](https://github.com/googleapis/sdk-platform-java/blob/main/gapic-generator-java/src/test/proto/routing_rule_parser_testing.proto) that is only used for testing [RoutingRuleParser](https://github.com/googleapis/sdk-platform-java/blob/main/gapic-generator-java/src/main/java/com/google/api/generator/gapic/protoparser/RoutingRuleParser.java). 
+  - If they are in `other modules(ast, model, writer etc.)`, you _must_ add traditional unit tests, you _may_ add golden unit tests to easily see the changes.
 - If the changes are in both `gax` and `gapic-generator-java`, you _must_ add all test layers, including traditional unit tests, golden unit tests and showcase integration tests. 
 
 ### How to run tests?

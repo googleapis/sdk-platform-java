@@ -29,10 +29,13 @@
  */
 package com.google.api.gax.grpc;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import com.google.api.core.InternalExtensionOnly;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
@@ -40,6 +43,7 @@ import com.google.api.gax.rpc.TransportChannel;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.common.annotations.VisibleForTesting;
@@ -60,6 +64,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
@@ -68,7 +74,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.net.ssl.KeyManagerFactory;
-import org.threeten.bp.Duration;
 
 /**
  * InstantiatingGrpcChannelProvider is a TransportChannelProvider which constructs a gRPC
@@ -82,14 +87,18 @@ import org.threeten.bp.Duration;
  * <p>The client lib header and generator header values are used to form a value that goes into the
  * http header of requests to the service.
  */
-@InternalExtensionOnly
 public final class InstantiatingGrpcChannelProvider implements TransportChannelProvider {
+
+  private static String systemProductName;
+
   @VisibleForTesting
   static final Logger LOG = Logger.getLogger(InstantiatingGrpcChannelProvider.class.getName());
 
-  private static final String DIRECT_PATH_ENV_DISABLE_DIRECT_PATH =
-      "GOOGLE_CLOUD_DISABLE_DIRECT_PATH";
-  private static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
+  static final String DIRECT_PATH_ENV_DISABLE_DIRECT_PATH = "GOOGLE_CLOUD_DISABLE_DIRECT_PATH";
+
+  @VisibleForTesting
+  static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
+
   static final long DIRECT_PATH_KEEP_ALIVE_TIME_SECONDS = 3600;
   static final long DIRECT_PATH_KEEP_ALIVE_TIMEOUT_SECONDS = 20;
   static final String GCE_PRODUCTION_NAME_PRIOR_2016 = "Google";
@@ -106,8 +115,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final GrpcInterceptorProvider interceptorProvider;
   @Nullable private final Integer maxInboundMessageSize;
   @Nullable private final Integer maxInboundMetadataSize;
-  @Nullable private final Duration keepAliveTime;
-  @Nullable private final Duration keepAliveTimeout;
+  @Nullable private final java.time.Duration keepAliveTime;
+  @Nullable private final java.time.Duration keepAliveTimeout;
   @Nullable private final Boolean keepAliveWithoutCalls;
   private final ChannelPoolSettings channelPoolSettings;
   @Nullable private final Credentials credentials;
@@ -117,6 +126,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Boolean allowNonDefaultServiceAccount;
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
+  @VisibleForTesting final Map<String, String> headersWithDuplicatesRemoved = new HashMap<>();
 
   @Nullable
   private final ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
@@ -145,6 +155,19 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         builder.directPathServiceConfig == null
             ? getDefaultDirectPathServiceConfig()
             : builder.directPathServiceConfig;
+  }
+
+  /**
+   * Package-Private constructor that is only visible for testing DirectPath functionality inside
+   * tests. This overrides the computed systemProductName when the class is initialized to help
+   * configure the result of {@link #isOnComputeEngine()} check.
+   *
+   * <p>If productName is null, that represents the result of an IOException
+   */
+  @VisibleForTesting
+  InstantiatingGrpcChannelProvider(Builder builder, String productName) {
+    this(builder);
+    systemProductName = productName;
   }
 
   /**
@@ -239,9 +262,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   private TransportChannel createChannel() throws IOException {
-    return GrpcTransportChannel.create(
-        ChannelPool.create(
-            channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel));
+    return GrpcTransportChannel.newBuilder()
+        .setManagedChannel(
+            ChannelPool.create(
+                channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel))
+        .setDirectPath(this.canUseDirectPath())
+        .build();
   }
 
   private boolean isDirectPathEnabled() {
@@ -257,19 +283,25 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return false;
   }
 
-  @VisibleForTesting
-  boolean isDirectPathXdsEnabled() {
-    // Method 1: Enable DirectPath xDS by option.
-    if (Boolean.TRUE.equals(attemptDirectPathXds)) {
-      return true;
-    }
-    // Method 2: Enable DirectPath xDS by env.
+  private boolean isDirectPathXdsEnabledViaBuilderOption() {
+    return Boolean.TRUE.equals(attemptDirectPathXds);
+  }
+
+  private boolean isDirectPathXdsEnabledViaEnv() {
     String directPathXdsEnv = envProvider.getenv(DIRECT_PATH_ENV_ENABLE_XDS);
-    boolean isDirectPathXdsEnv = Boolean.parseBoolean(directPathXdsEnv);
-    if (isDirectPathXdsEnv) {
-      return true;
-    }
-    return false;
+    return Boolean.parseBoolean(directPathXdsEnv);
+  }
+
+  /**
+   * This method tells if Direct Path xDS was enabled. There are two ways of enabling it: via
+   * environment variable (by setting GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS=true) or when building
+   * this channel provider (via the {@link Builder#setAttemptDirectPathXds()} method).
+   *
+   * @return true if Direct Path xDS was either enabled via env var or via builder option
+   */
+  @InternalApi
+  public boolean isDirectPathXdsEnabled() {
+    return isDirectPathXdsEnabledViaEnv() || isDirectPathXdsEnabledViaBuilderOption();
   }
 
   // This method should be called once per client initialization, hence can not be called in the
@@ -277,14 +309,29 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   // for a client.
   private void logDirectPathMisconfig() {
     if (isDirectPathXdsEnabled()) {
-      // Case 1: does not enable DirectPath
       if (!isDirectPathEnabled()) {
-        LOG.log(
-            Level.WARNING,
-            "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
-                + " attemptDirectPathXds option.");
+        // This misconfiguration occurs when Direct Path xDS is enabled, but Direct Path is not
+        // Direct Path xDS can be enabled two ways: via environment variable or via builder.
+        // Case 1: Direct Path is only enabled via xDS env var. We will _warn_ the user that this is
+        // a misconfiguration if they intended to set the env var.
+        if (isDirectPathXdsEnabledViaEnv()) {
+          LOG.log(
+              Level.WARNING,
+              "Env var "
+                  + DIRECT_PATH_ENV_ENABLE_XDS
+                  + " was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
+                  + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
+        }
+        // Case 2: Direct Path xDS was enabled via Builder. Direct Path Traffic Director must be set
+        // (enabled with `setAttemptDirectPath(true)`) along with xDS.
+        // Here we warn the user about this.
+        else if (isDirectPathXdsEnabledViaBuilderOption()) {
+          LOG.log(
+              Level.WARNING,
+              "DirectPath is misconfigured. The DirectPath XDS option was set, but the attemptDirectPath option was not. Please set both the attemptDirectPath and attemptDirectPathXds options.");
+        }
       } else {
-        // Case 2: credential is not correctly set
+        // Case 3: credential is not correctly set
         if (!isCredentialDirectPathCompatible()) {
           LOG.log(
               Level.WARNING,
@@ -292,7 +339,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
                   + ComputeEngineCredentials.class.getName()
                   + " .");
         }
-        // Case 3: not running on GCE
+        // Case 4: not running on GCE
         if (!isOnComputeEngine()) {
           LOG.log(
               Level.WARNING,
@@ -320,17 +367,27 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   static boolean isOnComputeEngine() {
     String osName = System.getProperty("os.name");
     if ("Linux".equals(osName)) {
-      try {
-        String result =
-            Files.asCharSource(new File("/sys/class/dmi/id/product_name"), StandardCharsets.UTF_8)
-                .readFirstLine();
-        return result.contains(GCE_PRODUCTION_NAME_PRIOR_2016)
-            || result.contains(GCE_PRODUCTION_NAME_AFTER_2016);
-      } catch (IOException ignored) {
-        return false;
-      }
+      String systemProductName = getSystemProductName();
+      // systemProductName will be empty string if not on Compute Engine
+      return systemProductName.contains(GCE_PRODUCTION_NAME_PRIOR_2016)
+          || systemProductName.contains(GCE_PRODUCTION_NAME_AFTER_2016);
     }
     return false;
+  }
+
+  private static String getSystemProductName() {
+    // The static field systemProductName should only be set in tests
+    if (systemProductName != null) {
+      return systemProductName;
+    }
+    try {
+      return Files.asCharSource(new File("/sys/class/dmi/id/product_name"), StandardCharsets.UTF_8)
+          .readFirstLine();
+    } catch (IOException e) {
+      // If not on Compute Engine, FileNotFoundException will be thrown. Use empty string
+      // as it won't match with the GCE_PRODUCTION_NAME constants
+      return "";
+    }
   }
 
   // Universe Domain configuration is currently only supported in the GDU
@@ -355,7 +412,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   private ManagedChannel createSingleChannel() throws IOException {
     GrpcHeaderInterceptor headerInterceptor =
-        new GrpcHeaderInterceptor(headerProvider.getHeaders());
+        new GrpcHeaderInterceptor(headersWithDuplicatesRemoved);
+
     GrpcMetadataHandlerInterceptor metadataHandlerInterceptor =
         new GrpcMetadataHandlerInterceptor();
 
@@ -370,10 +428,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
-    if (isDirectPathEnabled()
-        && isCredentialDirectPathCompatible()
-        && isOnComputeEngine()
-        && canUseDirectPathWithUniverseDomain()) {
+    if (canUseDirectPath()) {
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       ChannelCredentials channelCreds =
           GoogleDefaultChannelCredentials.newBuilder().callCredentials(callCreds).build();
@@ -446,19 +501,71 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return managedChannel;
   }
 
+  /* Remove provided headers that will also get set by {@link com.google.auth.ApiKeyCredentials}. They will be added as part of the grpc call when performing auth
+   * {@link io.grpc.auth.GoogleAuthLibraryCallCredentials#applyRequestMetadata}.  GRPC does not dedup headers {@link https://github.com/grpc/grpc-java/blob/a140e1bb0cfa662bcdb7823d73320eb8d49046f1/api/src/main/java/io/grpc/Metadata.java#L504} so we must before initiating the call.
+   *
+   * Note: This is specific for ApiKeyCredentials as duplicate API key headers causes a failure on the back end.  At this time we are not sure of the behavior for other credentials.
+   */
+  private void removeApiKeyCredentialDuplicateHeaders() {
+    if (headerProvider != null) {
+      headersWithDuplicatesRemoved.putAll(headerProvider.getHeaders());
+    }
+    if (credentials != null && credentials instanceof ApiKeyCredentials) {
+      try {
+        Map<String, List<String>> credentialRequestMetatData = credentials.getRequestMetadata();
+        if (credentialRequestMetatData != null) {
+          headersWithDuplicatesRemoved.keySet().removeAll(credentialRequestMetatData.keySet());
+        }
+      } catch (IOException e) {
+        // unreachable, there is no scenario that getRequestMetatData for ApiKeyCredentials will
+        // throw an IOException
+      }
+    }
+  }
+
+  /**
+   * Marked as Internal Api and intended for internal use. DirectPath must be enabled via the
+   * settings and a few other configurations/settings must also be valid for the request to go
+   * through DirectPath.
+   *
+   * <p>Checks: 1. Credentials are compatible 2.Running on Compute Engine 3. Universe Domain is
+   * configured to for the Google Default Universe
+   *
+   * @return if DirectPath is enabled for the client AND if the configurations are valid
+   */
+  @InternalApi
+  public boolean canUseDirectPath() {
+    return isDirectPathEnabled()
+        && isCredentialDirectPathCompatible()
+        && isOnComputeEngine()
+        && canUseDirectPathWithUniverseDomain();
+  }
+
   /** The endpoint to be used for the channel. */
   @Override
   public String getEndpoint() {
     return endpoint;
   }
 
+  /** This method is obsolete. Use {@link #getKeepAliveTimeDuration()} instead. */
+  @ObsoleteApi("Use getKeepAliveTimeDuration() instead")
+  public org.threeten.bp.Duration getKeepAliveTime() {
+    return toThreetenDuration(getKeepAliveTimeDuration());
+  }
+
   /** The time without read activity before sending a keepalive ping. */
-  public Duration getKeepAliveTime() {
+  public java.time.Duration getKeepAliveTimeDuration() {
     return keepAliveTime;
   }
 
+  /** This method is obsolete. Use {@link #getKeepAliveTimeoutDuration()} instead */
+  @ObsoleteApi("Use getKeepAliveTimeoutDuration() instead")
+  public org.threeten.bp.Duration getKeepAliveTimeout() {
+    return toThreetenDuration(getKeepAliveTimeoutDuration());
+  }
+
   /** The time without read activity after sending a keepalive ping. */
-  public Duration getKeepAliveTimeout() {
+  public java.time.Duration getKeepAliveTimeoutDuration() {
     return keepAliveTimeout;
   }
 
@@ -502,8 +609,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private GrpcInterceptorProvider interceptorProvider;
     @Nullable private Integer maxInboundMessageSize;
     @Nullable private Integer maxInboundMetadataSize;
-    @Nullable private Duration keepAliveTime;
-    @Nullable private Duration keepAliveTimeout;
+    @Nullable private java.time.Duration keepAliveTime;
+    @Nullable private java.time.Duration keepAliveTimeout;
     @Nullable private Boolean keepAliveWithoutCalls;
     @Nullable private ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
     @Nullable private Credentials credentials;
@@ -641,25 +748,53 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return maxInboundMetadataSize;
     }
 
+    /**
+     * This method is obsolete. Use {@link #setKeepAliveTimeDuration(java.time.Duration)} instead.
+     */
+    @ObsoleteApi("Use setKeepAliveTimeDuration(java.time.Duration) instead")
+    public Builder setKeepAliveTime(org.threeten.bp.Duration duration) {
+      return setKeepAliveTimeDuration(toJavaTimeDuration(duration));
+    }
     /** The time without read activity before sending a keepalive ping. */
-    public Builder setKeepAliveTime(Duration duration) {
+    public Builder setKeepAliveTimeDuration(java.time.Duration duration) {
       this.keepAliveTime = duration;
       return this;
     }
 
+    /** This method is obsolete. Use {@link #getKeepAliveTimeDuration()} instead. */
+    @ObsoleteApi("Use getKeepAliveTimeDuration() instead")
+    public org.threeten.bp.Duration getKeepAliveTime() {
+      return toThreetenDuration(getKeepAliveTimeDuration());
+    }
+
     /** The time without read activity before sending a keepalive ping. */
-    public Duration getKeepAliveTime() {
+    public java.time.Duration getKeepAliveTimeDuration() {
       return keepAliveTime;
     }
 
+    /**
+     * This method is obsolete. Use {@link #setKeepAliveTimeoutDuration(java.time.Duration)}
+     * instead.
+     */
+    @ObsoleteApi("Use setKeepAliveTimeoutDuration(java.time.Duration) instead")
+    public Builder setKeepAliveTimeout(org.threeten.bp.Duration duration) {
+      return setKeepAliveTimeoutDuration(toJavaTimeDuration(duration));
+    }
+
     /** The time without read activity after sending a keepalive ping. */
-    public Builder setKeepAliveTimeout(Duration duration) {
+    public Builder setKeepAliveTimeoutDuration(java.time.Duration duration) {
       this.keepAliveTimeout = duration;
       return this;
     }
 
+    /** This method is obsolete. Use {@link #getKeepAliveTimeoutDuration()} instead */
+    @ObsoleteApi("Use getKeepAliveTimeoutDuration() instead")
+    public org.threeten.bp.Duration getKeepAliveTimeout() {
+      return toThreetenDuration(getKeepAliveTimeoutDuration());
+    }
+
     /** The time without read activity after sending a keepalive ping. */
-    public Duration getKeepAliveTimeout() {
+    public java.time.Duration getKeepAliveTimeoutDuration() {
       return keepAliveTimeout;
     }
 
@@ -753,6 +888,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
+    @VisibleForTesting
+    Builder setEnvProvider(EnvironmentProvider envProvider) {
+      this.envProvider = envProvider;
+      return this;
+    }
+
     /**
      * Sets a service config for direct path. If direct path is not enabled, the provided service
      * config will be ignored.
@@ -769,7 +910,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     public InstantiatingGrpcChannelProvider build() {
-      return new InstantiatingGrpcChannelProvider(this);
+      InstantiatingGrpcChannelProvider instantiatingGrpcChannelProvider =
+          new InstantiatingGrpcChannelProvider(this);
+      instantiatingGrpcChannelProvider.removeApiKeyCredentialDuplicateHeaders();
+      return instantiatingGrpcChannelProvider;
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.google.showcase.v1beta1.it;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * This IT tests the different user configurations allowed and their effects on endpoint and
@@ -38,7 +38,7 @@ import org.junit.Test;
  * only use the gRPC transport for testing. HttpJson functionality exists inside the wrapper
  * classes, but is not being used.
  */
-public class ITEndpointContext {
+class ITEndpointContext {
   /**
    * Inside the test cases below, we must explicitly configure serviceName. Normally this should not
    * be configured at all, but showcase clients do not have a serviceName. The ExtendStubSettings
@@ -221,8 +221,8 @@ public class ITEndpointContext {
 
   private EchoClient echoClient;
 
-  @After
-  public void cleanup() throws InterruptedException {
+  @AfterEach
+  void cleanup() throws InterruptedException {
     if (echoClient != null) {
       echoClient.close();
       echoClient.awaitTermination(
@@ -232,7 +232,7 @@ public class ITEndpointContext {
 
   // Default (no configuration)
   @Test
-  public void endpointResolution_default() throws IOException {
+  void endpointResolution_default() throws IOException {
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
             .setCredentialsProvider(UniverseDomainCredentialsProvider.create())
@@ -245,7 +245,7 @@ public class ITEndpointContext {
 
   // User configuration
   @Test
-  public void endpointResolution_userSetEndpoint() throws IOException {
+  void endpointResolution_userSetEndpoint() throws IOException {
     String customEndpoint = "test.com:123";
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
@@ -259,7 +259,7 @@ public class ITEndpointContext {
   }
 
   @Test
-  public void endpointResolution_userSetUniverseDomainAndNoUserSetEndpoint() throws IOException {
+  void endpointResolution_userSetUniverseDomainAndNoUserSetEndpoint() throws IOException {
     String customUniverseDomain = "random.com";
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
@@ -273,7 +273,7 @@ public class ITEndpointContext {
   }
 
   @Test
-  public void endpointResolution_userSetEndpointAndUniverseDomain() throws IOException {
+  void endpointResolution_userSetEndpointAndUniverseDomain() throws IOException {
     String customEndpoint = "custom.endpoint.com:443";
     String customUniverseDomain = "random.com";
     EchoSettings echoSettings =
@@ -291,7 +291,7 @@ public class ITEndpointContext {
   }
 
   @Test
-  public void universeDomainValidation_credentialsGDU_noUserConfiguration() throws IOException {
+  void universeDomainValidation_credentialsGDU_noUserConfiguration() throws IOException {
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
             .setCredentialsProvider(UniverseDomainCredentialsProvider.create())
@@ -308,7 +308,7 @@ public class ITEndpointContext {
   }
 
   @Test
-  public void universeDomainValidation_credentialsNonGDU_noUserConfiguration() throws IOException {
+  void universeDomainValidation_credentialsNonGDU_noUserConfiguration() throws IOException {
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
             .setCredentialsProvider(UniverseDomainCredentialsProvider.create("random.com"))
@@ -328,8 +328,7 @@ public class ITEndpointContext {
   }
 
   @Test
-  public void universeDomainValidation_credentialsNonGDUMatchesUserConfiguration()
-      throws IOException {
+  void universeDomainValidation_credentialsNonGDUMatchesUserConfiguration() throws IOException {
     String universeDomain = "random.com";
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
@@ -348,7 +347,7 @@ public class ITEndpointContext {
   }
 
   @Test
-  public void universeDomainValidation_credentialsNonGDUDoesNotMatchUserConfiguration()
+  void universeDomainValidation_credentialsNonGDUDoesNotMatchUserConfiguration()
       throws IOException {
     String universeDomain = "random.com";
     String userConfigurationUniverseDomain = "test.com";
@@ -373,7 +372,7 @@ public class ITEndpointContext {
 
   // This test uses NoCredentialsProvider (will default to GDU)
   @Test
-  public void universeDomainValidation_noCredentials_noUserSetUniverseDomain() throws IOException {
+  void universeDomainValidation_noCredentials_noUserSetUniverseDomain() throws IOException {
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
@@ -391,7 +390,7 @@ public class ITEndpointContext {
 
   // This test uses NoCredentialsProvider (will default to GDU)
   @Test
-  public void universeDomainValidation_noCredentials_userSetUniverseDomain() throws IOException {
+  void universeDomainValidation_noCredentials_userSetUniverseDomain() throws IOException {
     String universeDomain = "random.com";
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
@@ -414,19 +413,54 @@ public class ITEndpointContext {
 
   // Default in Builder (no configuration)
   @Test
-  public void endpointResolution_defaultViaBuilder() {
+  void endpointResolution_defaultViaBuilder() {
     EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();
-    // The getter in the builder returns the user set value. No configuration
-    // means the getter will return null
+    // `StubSettings.newBuilder()` will return the clientSettingsEndpoint
     Truth.assertThat(echoSettingsBuilder.getEndpoint()).isEqualTo(null);
   }
 
   // User configuration in Builder
   @Test
-  public void endpointResolution_userConfigurationViaBuilder() {
-    String customEndpoint = "test.com:123";
+  void endpointResolution_userConfigurationViaBuilder() {
     EchoSettings.Builder echoSettingsBuilder =
-        EchoSettings.newBuilder().setEndpoint(customEndpoint);
-    Truth.assertThat(echoSettingsBuilder.getEndpoint()).isEqualTo(customEndpoint);
+        EchoSettings.newBuilder().setEndpoint("test.com:123");
+    // `StubSettings.newBuilder()` will return the clientSettingsEndpoint
+    Truth.assertThat(echoSettingsBuilder.getEndpoint()).isEqualTo("test.com:123");
+  }
+
+  @Test
+  void endpointResolution_builderBuilderBackToBuilder() throws IOException {
+    String customEndpoint = "test.com:123";
+    EchoStubSettings.Builder echoStubSettingsBuilder =
+        EchoStubSettings.newBuilder().setEndpoint(customEndpoint);
+    // `StubSettings.newBuilder()` will return the clientSettingsEndpoint
+    Truth.assertThat(echoStubSettingsBuilder.getEndpoint()).isEqualTo(customEndpoint);
+
+    // EndpointContext is recomputed when the Builder is re-built
+    EchoStubSettings echoStubSettings = echoStubSettingsBuilder.build();
+    Truth.assertThat(echoStubSettings.getEndpoint()).isEqualTo(customEndpoint);
+
+    // Calling toBuilder on StubSettings keeps the configurations the same
+    echoStubSettingsBuilder = echoStubSettings.toBuilder();
+    Truth.assertThat(echoStubSettingsBuilder.getEndpoint()).isEqualTo(customEndpoint);
+  }
+
+  @Test
+  void universeDomainValidation_quotaProjectId_credentialsNonGDUMatchesUserConfiguration()
+      throws IOException {
+    String universeDomain = "random.com";
+    EchoSettings echoSettings =
+        ExtendedEchoSettings.newBuilder()
+            .setQuotaProjectId("exampleProject")
+            .setCredentialsProvider(UniverseDomainCredentialsProvider.create(universeDomain))
+            .setEndpoint(TestClientInitializer.DEFAULT_GRPC_ENDPOINT)
+            .setUniverseDomain(universeDomain)
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
+    echoClient = EchoClient.create(echoSettings);
+    Truth.assertThat(echoClient.echo(DEFAULT_REQUEST).getContent()).isEqualTo("echo");
   }
 }

@@ -31,12 +31,12 @@ package com.google.api.gax.retrying;
 
 import static com.google.api.gax.retrying.FailingCallable.FAILING_RETRY_SETTINGS;
 import static com.google.api.gax.retrying.FailingCallable.FAST_RETRY_SETTINGS;
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
@@ -50,36 +50,25 @@ import com.google.api.gax.retrying.FailingCallable.CustomException;
 import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.tracing.ApiTracer;
 import com.google.common.base.Stopwatch;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.threeten.bp.Duration;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(Parameterized.class)
+@ExtendWith(MockitoExtension.class)
 public abstract class AbstractRetryingExecutorTest {
 
-  @Parameters(name = "Custom retry settings: {0}")
-  public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {{false}, {true}});
+  public static Stream<Arguments> data() {
+    return Stream.of(Arguments.of(false), Arguments.of(true));
   }
-
-  @Parameter public boolean withCustomRetrySettings;
-
-  @Rule public final MockitoRule mockitoRule = MockitoJUnit.rule();
 
   @Mock protected ApiTracer tracer;
   protected RetryingContext retryingContext;
@@ -90,7 +79,7 @@ public abstract class AbstractRetryingExecutorTest {
   protected abstract RetryAlgorithm<String> getAlgorithm(
       RetrySettings retrySettings, int apocalypseCountDown, RuntimeException apocalypseException);
 
-  protected <T> void busyWaitForInitialResult(RetryingFuture<T> future, Duration timeout)
+  protected <T> void busyWaitForInitialResult(RetryingFuture<T> future, java.time.Duration timeout)
       throws TimeoutException {
     Stopwatch watch = Stopwatch.createStarted();
     while (future.peekAttemptResult() == null) {
@@ -100,8 +89,7 @@ public abstract class AbstractRetryingExecutorTest {
     }
   }
 
-  @Before
-  public void setUp() {
+  void setUp(boolean withCustomRetrySettings) {
     if (withCustomRetrySettings) {
       retryingContext =
           FakeCallContext.createDefault().withTracer(tracer).withRetrySettings(FAST_RETRY_SETTINGS);
@@ -110,15 +98,15 @@ public abstract class AbstractRetryingExecutorTest {
     }
   }
 
-  private RetrySettings getDefaultRetrySettings() {
-    return withCustomRetrySettings ? FAILING_RETRY_SETTINGS : FAST_RETRY_SETTINGS;
-  }
-
-  @Test
-  public void testSuccess() throws Exception {
+  @ParameterizedTest
+  @MethodSource("data")
+  void testSuccess(boolean withCustomRetrySettings) throws Exception {
+    setUp(withCustomRetrySettings);
     FailingCallable callable = new FailingCallable(0, "request", "SUCCESS", tracer);
     RetryingExecutorWithContext<String> executor =
-        getExecutor(getAlgorithm(getDefaultRetrySettings(), 0, null));
+        getExecutor(
+            getAlgorithm(
+                withCustomRetrySettings ? FAILING_RETRY_SETTINGS : FAST_RETRY_SETTINGS, 0, null));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
     callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
@@ -131,11 +119,15 @@ public abstract class AbstractRetryingExecutorTest {
     verifyNoMoreInteractions(tracer);
   }
 
-  @Test
-  public void testSuccessWithFailures() throws Exception {
+  @ParameterizedTest
+  @MethodSource("data")
+  void testSuccessWithFailures(boolean withCustomRetrySettings) throws Exception {
+    setUp(withCustomRetrySettings);
     FailingCallable callable = new FailingCallable(5, "request", "SUCCESS", tracer);
     RetryingExecutorWithContext<String> executor =
-        getExecutor(getAlgorithm(getDefaultRetrySettings(), 0, null));
+        getExecutor(
+            getAlgorithm(
+                withCustomRetrySettings ? FAILING_RETRY_SETTINGS : FAST_RETRY_SETTINGS, 0, null));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
     callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
@@ -144,16 +136,21 @@ public abstract class AbstractRetryingExecutorTest {
     assertEquals(5, future.getAttemptSettings().getAttemptCount());
 
     verify(tracer, times(6)).attemptStarted(eq("request"), anyInt());
-    verify(tracer, times(5)).attemptFailed(any(Throwable.class), any(Duration.class));
+    verify(tracer, times(5))
+        .attemptFailedDuration(any(Throwable.class), any(java.time.Duration.class));
     verify(tracer, times(1)).attemptSucceeded();
     verifyNoMoreInteractions(tracer);
   }
 
-  @Test
-  public void testSuccessWithFailuresPeekGetAttempt() throws Exception {
+  @ParameterizedTest
+  @MethodSource("data")
+  void testSuccessWithFailuresPeekGetAttempt(boolean withCustomRetrySettings) throws Exception {
+    setUp(withCustomRetrySettings);
     FailingCallable callable = new FailingCallable(5, "request", "SUCCESS", tracer);
     RetryingExecutorWithContext<String> executor =
-        getExecutor(getAlgorithm(getDefaultRetrySettings(), 0, null));
+        getExecutor(
+            getAlgorithm(
+                withCustomRetrySettings ? FAILING_RETRY_SETTINGS : FAST_RETRY_SETTINGS, 0, null));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
     callable.setExternalFuture(future);
 
@@ -176,11 +173,15 @@ public abstract class AbstractRetryingExecutorTest {
     assertEquals(5, future.getAttemptSettings().getAttemptCount());
   }
 
-  @Test
-  public void testMaxRetriesExceeded() throws Exception {
+  @ParameterizedTest
+  @MethodSource("data")
+  void testMaxRetriesExceeded(boolean withCustomRetrySettings) throws Exception {
+    setUp(withCustomRetrySettings);
     FailingCallable callable = new FailingCallable(6, "request", "FAILURE", tracer);
     RetryingExecutorWithContext<String> executor =
-        getExecutor(getAlgorithm(getDefaultRetrySettings(), 0, null));
+        getExecutor(
+            getAlgorithm(
+                withCustomRetrySettings ? FAILING_RETRY_SETTINGS : FAST_RETRY_SETTINGS, 0, null));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
     callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
@@ -189,24 +190,31 @@ public abstract class AbstractRetryingExecutorTest {
     assertEquals(5, future.getAttemptSettings().getAttemptCount());
 
     verify(tracer, times(6)).attemptStarted(eq("request"), anyInt());
-    verify(tracer, times(5)).attemptFailed(any(Throwable.class), any(Duration.class));
+    verify(tracer, times(5))
+        .attemptFailedDuration(any(Throwable.class), any(java.time.Duration.class));
     verify(tracer, times(1)).attemptFailedRetriesExhausted(any(Throwable.class));
     verifyNoMoreInteractions(tracer);
   }
 
-  @Test
-  public void testTotalTimeoutExceeded() throws Exception {
+  @ParameterizedTest
+  @MethodSource("data")
+  void testTotalTimeoutExceeded(boolean withCustomRetrySettings) throws Exception {
+    setUp(withCustomRetrySettings);
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(Integer.MAX_VALUE))
-            .setMaxRetryDelay(Duration.ofMillis(Integer.MAX_VALUE))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .build();
     boolean useContextRetrySettings = retryingContext.getRetrySettings() != null;
     RetryingExecutorWithContext<String> executor =
         getExecutor(
             getAlgorithm(
-                useContextRetrySettings ? getDefaultRetrySettings() : retrySettings, 0, null));
+                useContextRetrySettings
+                    ? withCustomRetrySettings ? FAILING_RETRY_SETTINGS : FAST_RETRY_SETTINGS
+                    : retrySettings,
+                0,
+                null));
     FailingCallable callable = new FailingCallable(6, "request", "FAILURE", tracer);
     RetryingContext context;
     if (useContextRetrySettings) {
@@ -226,16 +234,18 @@ public abstract class AbstractRetryingExecutorTest {
     verifyNoMoreInteractions(tracer);
   }
 
-  @Test
-  public void testCancelOuterFutureBeforeStart() {
+  @ParameterizedTest
+  @MethodSource("data")
+  void testCancelOuterFutureBeforeStart(boolean withCustomRetrySettings) {
+    setUp(withCustomRetrySettings);
     FailingCallable callable = new FailingCallable(0, "request", "FAILURE", tracer);
 
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(1_000L))
-            .setMaxRetryDelay(Duration.ofMillis(1_000L))
-            .setTotalTimeout(Duration.ofMillis(10_000L))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(1_000L))
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1_000L))
+            .setTotalTimeoutDuration(java.time.Duration.ofMillis(10_000L))
             .build();
     RetryingExecutorWithContext<String> executor =
         getExecutor(getAlgorithm(retrySettings, 0, null));
@@ -253,11 +263,17 @@ public abstract class AbstractRetryingExecutorTest {
     verifyNoMoreInteractions(tracer);
   }
 
-  @Test
-  public void testCancelByRetryingAlgorithm() throws Exception {
+  @ParameterizedTest
+  @MethodSource("data")
+  void testCancelByRetryingAlgorithm(boolean withCustomRetrySettings) throws Exception {
+    setUp(withCustomRetrySettings);
     FailingCallable callable = new FailingCallable(6, "request", "FAILURE", tracer);
     RetryingExecutorWithContext<String> executor =
-        getExecutor(getAlgorithm(getDefaultRetrySettings(), 5, new CancellationException()));
+        getExecutor(
+            getAlgorithm(
+                withCustomRetrySettings ? FAILING_RETRY_SETTINGS : FAST_RETRY_SETTINGS,
+                5,
+                new CancellationException()));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
     callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
@@ -267,17 +283,24 @@ public abstract class AbstractRetryingExecutorTest {
 
     verify(tracer, times(5)).attemptStarted(eq("request"), anyInt());
     // Pre-apocalypse failures
-    verify(tracer, times(4)).attemptFailed(any(Throwable.class), any(Duration.class));
+    verify(tracer, times(4))
+        .attemptFailedDuration(any(Throwable.class), any(java.time.Duration.class));
     // Apocalypse failure
     verify(tracer, times(1)).attemptFailedRetriesExhausted(any(CancellationException.class));
     verifyNoMoreInteractions(tracer);
   }
 
-  @Test
-  public void testUnexpectedExceptionFromRetryAlgorithm() throws Exception {
+  @ParameterizedTest
+  @MethodSource("data")
+  void testUnexpectedExceptionFromRetryAlgorithm(boolean withCustomRetrySettings) throws Exception {
+    setUp(withCustomRetrySettings);
     FailingCallable callable = new FailingCallable(6, "request", "FAILURE", tracer);
     RetryingExecutorWithContext<String> executor =
-        getExecutor(getAlgorithm(getDefaultRetrySettings(), 5, new RuntimeException()));
+        getExecutor(
+            getAlgorithm(
+                withCustomRetrySettings ? FAILING_RETRY_SETTINGS : FAST_RETRY_SETTINGS,
+                5,
+                new RuntimeException()));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
     callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
@@ -287,19 +310,22 @@ public abstract class AbstractRetryingExecutorTest {
 
     verify(tracer, times(5)).attemptStarted(eq("request"), anyInt());
     // Pre-apocalypse failures
-    verify(tracer, times(4)).attemptFailed(any(Throwable.class), any(Duration.class));
+    verify(tracer, times(4))
+        .attemptFailedDuration(any(Throwable.class), any(java.time.Duration.class));
     // Apocalypse failure
     verify(tracer, times(1)).attemptPermanentFailure(any(RuntimeException.class));
     verifyNoMoreInteractions(tracer);
   }
 
-  @Test
-  public void testPollExceptionByPollAlgorithm() throws Exception {
+  @ParameterizedTest
+  @MethodSource("data")
+  void testPollExceptionByPollAlgorithm(boolean withCustomRetrySettings) throws Exception {
+    setUp(withCustomRetrySettings);
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(Integer.MAX_VALUE))
-            .setMaxRetryDelay(Duration.ofMillis(Integer.MAX_VALUE))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .build();
     boolean useContextRetrySettings = retryingContext.getRetrySettings() != null;
 
@@ -307,7 +333,9 @@ public abstract class AbstractRetryingExecutorTest {
         new RetryAlgorithm<>(
             new TestResultRetryAlgorithm<String>(0, null),
             new ExponentialPollAlgorithm(
-                useContextRetrySettings ? getDefaultRetrySettings() : retrySettings,
+                useContextRetrySettings
+                    ? withCustomRetrySettings ? FAILING_RETRY_SETTINGS : FAST_RETRY_SETTINGS
+                    : retrySettings,
                 NanoClock.getDefaultClock()));
 
     RetryingExecutorWithContext<String> executor = getExecutor(retryAlgorithm);
@@ -332,6 +360,7 @@ public abstract class AbstractRetryingExecutorTest {
 
   protected static class TestResultRetryAlgorithm<ResponseT>
       extends BasicResultRetryAlgorithm<ResponseT> {
+
     private AtomicInteger apocalypseCountDown;
     private RuntimeException apocalypseException;
 

@@ -29,25 +29,37 @@
  */
 package com.google.api.gax.grpc;
 
+import static com.google.api.gax.grpc.InstantiatingGrpcChannelProvider.GCE_PRODUCTION_NAME_AFTER_2016;
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider.Builder;
+import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
+import com.google.api.gax.rpc.TransportChannel;
 import com.google.api.gax.rpc.TransportChannelProvider;
+import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.api.gax.rpc.mtls.AbstractMtlsTransportChannelTest;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.auth.ApiKeyCredentials;
+import com.google.auth.Credentials;
+import com.google.auth.http.AuthHttpConstants;
 import com.google.auth.oauth2.CloudShellCredentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.truth.Truth;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.alts.ComputeEngineChannelBuilder;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -56,22 +68,43 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelTest {
+class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelTest {
+  private static final String DEFAULT_ENDPOINT = "test.googleapis.com:443";
+  private static final String API_KEY_HEADER_VALUE = "fake_api_key_2";
+  private static final String API_KEY_AUTH_HEADER_KEY = "x-goog-api-key";
+  private static String originalOSName;
+  private ComputeEngineCredentials computeEngineCredentials;
+
+  @BeforeAll
+  public static void setupClass() {
+    originalOSName = System.getProperty("os.name");
+  }
+
+  @BeforeEach
+  public void setup() throws IOException {
+    computeEngineCredentials = Mockito.mock(ComputeEngineCredentials.class);
+  }
+
+  @AfterEach
+  public void cleanup() {
+    System.setProperty("os.name", originalOSName);
+  }
 
   @Test
-  public void testEndpoint() {
+  void testEndpoint() {
     String endpoint = "localhost:8080";
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder();
@@ -82,43 +115,72 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     assertEquals(provider.getEndpoint(), endpoint);
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testEndpointNoPort() {
-    InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("localhost");
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testEndpointBadPort() {
-    InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("localhost:abcd");
+  @Test
+  void testEndpointNoPort() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("localhost"));
   }
 
   @Test
-  public void testKeepAlive() {
-    Duration keepaliveTime = Duration.ofSeconds(1);
-    Duration keepaliveTimeout = Duration.ofSeconds(2);
-    boolean keepaliveWithoutCalls = true;
-
-    InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder()
-            .setKeepAliveTime(keepaliveTime)
-            .setKeepAliveTimeout(keepaliveTimeout)
-            .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
-            .build();
-
-    assertEquals(provider.getKeepAliveTime(), keepaliveTime);
-    assertEquals(provider.getKeepAliveTimeout(), keepaliveTimeout);
-    assertEquals(provider.getKeepAliveWithoutCalls(), keepaliveWithoutCalls);
+  void testEndpointBadPort() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("localhost:abcd"));
   }
 
   @Test
-  public void testMaxInboundMetadataSize() {
+  void testKeepAlive() {
+    final long millis = 15;
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder();
+    Function<Duration, InstantiatingGrpcChannelProvider> javaTimeProviderSupplier =
+        jt ->
+            builder
+                .setKeepAliveTimeDuration(jt)
+                .setKeepAliveTimeoutDuration(jt)
+                .setKeepAliveWithoutCalls(Boolean.TRUE)
+                .build();
+    Function<org.threeten.bp.Duration, InstantiatingGrpcChannelProvider> threetenProviderSupplier =
+        tt ->
+            builder
+                .setKeepAliveTime(tt)
+                .setKeepAliveTimeout(tt)
+                .setKeepAliveWithoutCalls(Boolean.TRUE)
+                .build();
+    testDurationMethod(
+        millis,
+        javaTimeProviderSupplier,
+        threetenProviderSupplier,
+        c -> c.getKeepAliveTimeDuration(),
+        c -> c.getKeepAliveTime());
+    testDurationMethod(
+        millis,
+        javaTimeProviderSupplier,
+        threetenProviderSupplier,
+        c -> c.getKeepAliveTimeoutDuration(),
+        c -> c.getKeepAliveTimeout());
+    assertEquals(
+        Boolean.TRUE,
+        javaTimeProviderSupplier
+            .apply(java.time.Duration.ofMillis(millis))
+            .getKeepAliveWithoutCalls());
+    assertEquals(
+        Boolean.TRUE,
+        threetenProviderSupplier
+            .apply(org.threeten.bp.Duration.ofMillis(millis))
+            .getKeepAliveWithoutCalls());
+  }
+
+  @Test
+  void testMaxInboundMetadataSize() {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().setMaxInboundMetadataSize(4096).build();
     assertThat(provider.getMaxInboundMetadataSize()).isEqualTo(4096);
   }
 
   @Test
-  public void testCpuPoolSize() {
+  void testCpuPoolSize() {
     // happy path
     Builder builder = InstantiatingGrpcChannelProvider.newBuilder().setProcessorCount(2);
     builder.setChannelsPerCpu(2.5);
@@ -135,7 +197,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithPoolSize() throws IOException {
+  void testWithPoolSize() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
@@ -155,9 +217,9 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testToBuilder() {
-    Duration keepaliveTime = Duration.ofSeconds(1);
-    Duration keepaliveTimeout = Duration.ofSeconds(2);
+  void testToBuilder() {
+    java.time.Duration keepaliveTime = java.time.Duration.ofSeconds(1);
+    java.time.Duration keepaliveTimeout = java.time.Duration.ofSeconds(2);
     ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator =
         builder -> {
           throw new UnsupportedOperationException();
@@ -170,9 +232,9 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
             .setEndpoint("fake.endpoint:443")
             .setMaxInboundMessageSize(12345678)
             .setMaxInboundMetadataSize(4096)
-            .setKeepAliveTime(keepaliveTime)
-            .setKeepAliveTimeout(keepaliveTimeout)
-            .setKeepAliveWithoutCalls(true)
+            .setKeepAliveTimeDuration(keepaliveTime)
+            .setKeepAliveTimeoutDuration(keepaliveTimeout)
+            .setKeepAliveWithoutCalls(Boolean.TRUE)
             .setChannelConfigurator(channelConfigurator)
             .setChannelsPerCpu(2.5)
             .setDirectPathServiceConfig(directPathServiceConfig)
@@ -183,20 +245,20 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     assertThat(builder.getEndpoint()).isEqualTo("fake.endpoint:443");
     assertThat(builder.getMaxInboundMessageSize()).isEqualTo(12345678);
     assertThat(builder.getMaxInboundMetadataSize()).isEqualTo(4096);
-    assertThat(builder.getKeepAliveTime()).isEqualTo(keepaliveTime);
-    assertThat(builder.getKeepAliveTimeout()).isEqualTo(keepaliveTimeout);
+    assertThat(builder.getKeepAliveTimeDuration()).isEqualTo(keepaliveTime);
+    assertThat(builder.getKeepAliveTimeoutDuration()).isEqualTo(keepaliveTimeout);
     assertThat(builder.getChannelConfigurator()).isEqualTo(channelConfigurator);
     assertThat(builder.getPoolSize()).isEqualTo(5);
     assertThat(builder.build().directPathServiceConfig).isEqualTo(directPathServiceConfig);
   }
 
   @Test
-  public void testWithInterceptors() throws Exception {
+  void testWithInterceptors() throws Exception {
     testWithInterceptors(1);
   }
 
   @Test
-  public void testWithInterceptorsAndMultipleChannels() throws Exception {
+  void testWithInterceptorsAndMultipleChannels() throws Exception {
     testWithInterceptors(5);
   }
 
@@ -218,7 +280,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testChannelConfigurator() throws IOException {
+  void testChannelConfigurator() throws IOException {
     final int numChannels = 5;
 
     // Create a mock configurator that will insert mock channels
@@ -253,7 +315,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithGCECredentials() throws IOException {
+  void testWithGCECredentials() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
@@ -277,7 +339,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testDirectPathXdsDisableByDefault() throws IOException {
+  void testDirectPathXdsDisableByDefault() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().setAttemptDirectPath(true).build();
 
@@ -285,7 +347,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testDirectPathDisallowNullCredentials() throws IOException {
+  void testDirectPathDisallowNullCredentials() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().build();
 
@@ -293,18 +355,18 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testDirectPathWithGDUEndpoint() {
+  void testDirectPathWithGDUEndpoint() {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setAttemptDirectPathXds()
-            .setEndpoint("test.googleapis.com:443")
+            .setEndpoint(DEFAULT_ENDPOINT)
             .build();
     assertThat(provider.canUseDirectPathWithUniverseDomain()).isTrue();
   }
 
   @Test
-  public void testDirectPathWithNonGDUEndpoint() {
+  void testDirectPathWithNonGDUEndpoint() {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
@@ -315,19 +377,19 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testDirectPathXdsEnabled() throws IOException {
+  void testDirectPathXdsEnabled() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setAttemptDirectPathXds()
-            .setEndpoint("test.googleapis.com:443")
+            .setEndpoint(DEFAULT_ENDPOINT)
             .build();
 
     assertThat(provider.isDirectPathXdsEnabled()).isTrue();
   }
 
   @Test
-  public void testWithNonGCECredentials() throws IOException {
+  void testWithNonGCECredentials() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
@@ -355,7 +417,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithDirectPathDisabled() throws IOException {
+  void testWithDirectPathDisabled() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
@@ -383,7 +445,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithNoDirectPathFlagSet() throws IOException {
+  void testWithNoDirectPathFlagSet() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
@@ -410,7 +472,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithIPv6Address() throws IOException {
+  void testWithIPv6Address() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
@@ -428,7 +490,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
 
   // Test that if ChannelPrimer is provided, it is called during creation
   @Test
-  public void testWithPrimeChannel() throws IOException {
+  void testWithPrimeChannel() throws IOException {
     // create channelProvider with different pool sizes to verify ChannelPrimer is called the
     // correct number of times
     for (int poolSize = 1; poolSize < 5; poolSize++) {
@@ -452,7 +514,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithDefaultDirectPathServiceConfig() {
+  void testWithDefaultDirectPathServiceConfig() {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().build();
 
@@ -505,7 +567,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testWithCustomDirectPathServiceConfig() {
+  void testWithCustomDirectPathServiceConfig() {
     ImmutableMap<String, Object> pickFirstStrategy =
         ImmutableMap.<String, Object>of("round_robin", ImmutableMap.of());
     ImmutableMap<String, Object> childPolicy =
@@ -538,29 +600,54 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     return channelProvider.createMtlsChannelCredentials();
   }
 
+  private InstantiatingGrpcChannelProvider.Builder
+      createChannelProviderBuilderForDirectPathLogTests() {
+    return InstantiatingGrpcChannelProvider.newBuilder()
+        .setHeaderProvider(Mockito.mock(HeaderProvider.class))
+        .setExecutor(Mockito.mock(Executor.class))
+        .setEndpoint("localhost:8080");
+  }
+
+  private void createAndCloseTransportChannel(InstantiatingGrpcChannelProvider provider)
+      throws Exception {
+    TransportChannel transportChannel = provider.getTransportChannel();
+    transportChannel.close();
+    transportChannel.awaitTermination(10, TimeUnit.SECONDS);
+  }
+
   @Test
-  public void testLogDirectPathMisconfigAttrempDirectPathNotSet() throws Exception {
+  void
+      testLogDirectPathMisconfig_AttemptDirectPathNotSetAndAttemptDirectPathXdsSetViaBuilder_warns()
+          throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder()
-            .setAttemptDirectPathXds()
-            .setHeaderProvider(Mockito.mock(HeaderProvider.class))
-            .setExecutor(Mockito.mock(Executor.class))
-            .setEndpoint("localhost:8080")
-            .build();
-
-    provider.getTransportChannel();
-
+        createChannelProviderBuilderForDirectPathLogTests().setAttemptDirectPathXds().build();
+    createAndCloseTransportChannel(provider);
     assertThat(logHandler.getAllMessages())
         .contains(
-            "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
-                + " attemptDirectPathXds option.");
+            "DirectPath is misconfigured. The DirectPath XDS option was set, but the attemptDirectPath option was not. Please set both the attemptDirectPath and attemptDirectPathXds options.");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
   }
 
   @Test
-  public void testLogDirectPathMisconfig_shouldNotLogInTheBuilder() {
+  void testLogDirectPathMisconfig_AttemptDirectPathNotSetAndAttemptDirectPathXdsSetViaEnv_warns()
+      throws Exception {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+
+    InstantiatingGrpcChannelProvider provider =
+        createChannelProviderBuilderForDirectPathLogTests().build();
+    createAndCloseTransportChannel(provider);
+    assertThat(logHandler.getAllMessages())
+        .contains(
+            "Env var GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
+                + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
+
+  @Test
+  void testLogDirectPathMisconfig_shouldNotLogInTheBuilder() {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider.newBuilder()
@@ -573,7 +660,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testLogDirectPathMisconfigWrongCredential() throws Exception {
+  void testLogDirectPathMisconfigWrongCredential() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
@@ -582,20 +669,23 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
             .setAttemptDirectPath(true)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class))
             .setExecutor(Mockito.mock(Executor.class))
-            .setEndpoint("test.googleapis.com:443")
+            .setEndpoint(DEFAULT_ENDPOINT)
             .build();
 
-    provider.getTransportChannel();
+    TransportChannel transportChannel = provider.getTransportChannel();
 
     assertThat(logHandler.getAllMessages())
         .contains(
             "DirectPath is misconfigured. Please make sure the credential is an instance of"
                 + " com.google.auth.oauth2.ComputeEngineCredentials .");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+
+    transportChannel.close();
+    transportChannel.awaitTermination(10, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testLogDirectPathMisconfigNotOnGCE() throws Exception {
+  void testLogDirectPathMisconfigNotOnGCE() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
@@ -605,10 +695,10 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
             .setAllowNonDefaultServiceAccount(true)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class))
             .setExecutor(Mockito.mock(Executor.class))
-            .setEndpoint("test.googleapis.com:443")
+            .setEndpoint(DEFAULT_ENDPOINT)
             .build();
 
-    provider.getTransportChannel();
+    TransportChannel transportChannel = provider.getTransportChannel();
 
     if (!InstantiatingGrpcChannelProvider.isOnComputeEngine()) {
       assertThat(logHandler.getAllMessages())
@@ -616,9 +706,282 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
               "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
     }
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+
+    transportChannel.close();
+    transportChannel.awaitTermination(10, TimeUnit.SECONDS);
+  }
+
+  @Test
+  public void canUseDirectPath_happyPath() throws IOException {
+    System.setProperty("os.name", "Linux");
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setCredentials(computeEngineCredentials)
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEnvProvider(envProvider)
+            .setHeaderProvider(Mockito.mock(HeaderProvider.class));
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
+    Truth.assertThat(provider.canUseDirectPath()).isTrue();
+
+    // verify this info is passed correctly to transport channel
+    TransportChannel transportChannel = provider.getTransportChannel();
+    Truth.assertThat(((GrpcTransportChannel) transportChannel).isDirectPath()).isTrue();
+    transportChannel.shutdownNow();
+  }
+
+  @Test
+  public void canUseDirectPath_directPathEnvVarDisabled() throws IOException {
+    System.setProperty("os.name", "Linux");
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("true");
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setCredentials(computeEngineCredentials)
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEnvProvider(envProvider)
+            .setHeaderProvider(Mockito.mock(HeaderProvider.class));
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
+    Truth.assertThat(provider.canUseDirectPath()).isFalse();
+
+    // verify this info is passed correctly to transport channel
+    TransportChannel transportChannel = provider.getTransportChannel();
+    Truth.assertThat(((GrpcTransportChannel) transportChannel).isDirectPath()).isFalse();
+    transportChannel.shutdownNow();
+  }
+
+  @Test
+  public void canUseDirectPath_directPathEnvVarNotSet_attemptDirectPathIsTrue() {
+    System.setProperty("os.name", "Linux");
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setCredentials(computeEngineCredentials)
+            .setEndpoint(DEFAULT_ENDPOINT);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
+    Truth.assertThat(provider.canUseDirectPath()).isTrue();
+  }
+
+  @Test
+  public void canUseDirectPath_directPathEnvVarNotSet_attemptDirectPathIsFalse() {
+    System.setProperty("os.name", "Linux");
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(false)
+            .setCredentials(computeEngineCredentials)
+            .setEndpoint(DEFAULT_ENDPOINT);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
+    Truth.assertThat(provider.canUseDirectPath()).isFalse();
+  }
+
+  @Test
+  public void canUseDirectPath_nonComputeCredentials() {
+    System.setProperty("os.name", "Linux");
+    Credentials credentials = Mockito.mock(Credentials.class);
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setCredentials(credentials)
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEnvProvider(envProvider);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
+    Truth.assertThat(provider.canUseDirectPath()).isFalse();
+  }
+
+  @Test
+  public void canUseDirectPath_isNotOnComputeEngine_invalidOsNameSystemProperty() {
+    System.setProperty("os.name", "Not Linux");
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setCredentials(computeEngineCredentials)
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEnvProvider(envProvider);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
+    Truth.assertThat(provider.canUseDirectPath()).isFalse();
+  }
+
+  @Test
+  public void canUseDirectPath_isNotOnComputeEngine_invalidSystemProductName() {
+    System.setProperty("os.name", "Linux");
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setCredentials(computeEngineCredentials)
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEnvProvider(envProvider);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, "testing");
+    Truth.assertThat(provider.canUseDirectPath()).isFalse();
+  }
+
+  @Test
+  public void canUseDirectPath_isNotOnComputeEngine_unableToGetSystemProductName() {
+    System.setProperty("os.name", "Linux");
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setCredentials(computeEngineCredentials)
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEnvProvider(envProvider);
+    InstantiatingGrpcChannelProvider provider = new InstantiatingGrpcChannelProvider(builder, "");
+    Truth.assertThat(provider.canUseDirectPath()).isFalse();
+  }
+
+  @Test
+  public void canUseDirectPath_nonGDUUniverseDomain() {
+    System.setProperty("os.name", "Linux");
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    String nonGDUEndpoint = "test.random.com:443";
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setCredentials(computeEngineCredentials)
+            .setEndpoint(nonGDUEndpoint)
+            .setEnvProvider(envProvider);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
+    Truth.assertThat(provider.canUseDirectPath()).isFalse();
+  }
+
+  @Test
+  void providerInitializedWithNonConflictingHeaders_retainsHeaders() {
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
+            .setEndpoint("test.random.com:443");
+
+    InstantiatingGrpcChannelProvider provider = builder.build();
+
+    assertEquals(1, provider.headersWithDuplicatesRemoved.size());
+    assertEquals(
+        API_KEY_HEADER_VALUE, provider.headersWithDuplicatesRemoved.get(API_KEY_AUTH_HEADER_KEY));
+  }
+
+  @Test
+  void providersInitializedWithConflictingApiKeyCredentialHeaders_removesDuplicates() {
+    String correctApiKey = "fake_api_key";
+    ApiKeyCredentials apiKeyCredentials = ApiKeyCredentials.create(correctApiKey);
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setCredentials(apiKeyCredentials)
+            .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
+            .setEndpoint("test.random.com:443");
+
+    InstantiatingGrpcChannelProvider provider = builder.build();
+
+    assertEquals(0, provider.headersWithDuplicatesRemoved.size());
+    assertNull(provider.headersWithDuplicatesRemoved.get(API_KEY_AUTH_HEADER_KEY));
+  }
+
+  @Test
+  void providersInitializedWithConflictingNonApiKeyCredentialHeaders_doesNotRemoveDuplicates() {
+    String authProvidedHeader = "Bearer token";
+    Map<String, String> header = new HashMap<>();
+    header.put(AuthHttpConstants.AUTHORIZATION, authProvidedHeader);
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setCredentials(computeEngineCredentials)
+            .setHeaderProvider(FixedHeaderProvider.create(header))
+            .setEndpoint("test.random.com:443");
+
+    InstantiatingGrpcChannelProvider provider = builder.build();
+
+    assertEquals(1, provider.headersWithDuplicatesRemoved.size());
+    assertEquals(
+        authProvidedHeader,
+        provider.headersWithDuplicatesRemoved.get(AuthHttpConstants.AUTHORIZATION));
+  }
+
+  @Test
+  void buildProvider_handlesNullHeaderProvider() {
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder().setEndpoint("test.random.com:443");
+
+    InstantiatingGrpcChannelProvider provider = builder.build();
+
+    assertEquals(0, provider.headersWithDuplicatesRemoved.size());
+  }
+
+  @Test
+  void buildProvider_handlesNullCredentialsMetadataRequest() throws IOException {
+    Credentials credentials = Mockito.mock(Credentials.class);
+    Mockito.when(credentials.getRequestMetadata()).thenReturn(null);
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
+            .setEndpoint("test.random.com:443");
+
+    InstantiatingGrpcChannelProvider provider = builder.build();
+
+    assertEquals(1, provider.headersWithDuplicatesRemoved.size());
+    assertEquals(
+        API_KEY_HEADER_VALUE, provider.headersWithDuplicatesRemoved.get(API_KEY_AUTH_HEADER_KEY));
+  }
+
+  @Test
+  void buildProvider_handlesErrorRetrievingCredentialsMetadataRequest() throws IOException {
+    Credentials credentials = Mockito.mock(Credentials.class);
+    Mockito.when(credentials.getRequestMetadata())
+        .thenThrow(new IOException("Error getting request metadata"));
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setHeaderProvider(getHeaderProviderWithApiKeyHeader())
+            .setEndpoint("test.random.com:443");
+    InstantiatingGrpcChannelProvider provider = builder.build();
+
+    assertEquals(1, provider.headersWithDuplicatesRemoved.size());
+    assertEquals(
+        API_KEY_HEADER_VALUE, provider.headersWithDuplicatesRemoved.get(API_KEY_AUTH_HEADER_KEY));
+  }
+
+  private FixedHeaderProvider getHeaderProviderWithApiKeyHeader() {
+    Map<String, String> header = new HashMap<>();
+    header.put(API_KEY_AUTH_HEADER_KEY, API_KEY_HEADER_VALUE);
+    return FixedHeaderProvider.create(header);
   }
 
   private static class FakeLogHandler extends Handler {
+
     List<LogRecord> records = new ArrayList<>();
 
     @Override

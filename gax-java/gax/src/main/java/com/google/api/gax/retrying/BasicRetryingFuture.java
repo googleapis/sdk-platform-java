@@ -35,6 +35,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.gax.tracing.ApiTracer;
+import com.google.common.base.MoreObjects;
 import com.google.common.util.concurrent.AbstractFuture;
 import com.google.common.util.concurrent.MoreExecutors;
 import java.util.concurrent.Callable;
@@ -183,11 +184,12 @@ class BasicRetryingFuture<ResponseT> extends AbstractFuture<ResponseT>
                           ? callable.getClass().getEnclosingMethod().getName()
                           : ""),
                   "attemptCount: " + attemptSettings.getAttemptCount(),
-                  "delay: " + attemptSettings.getRetryDelay(),
+                  "delay: " + attemptSettings.getRetryDelayDuration(),
                   "retriableException: " + throwable
                 });
           }
-          tracer.attemptFailed(throwable, nextAttemptSettings.getRandomizedRetryDelay());
+          tracer.attemptFailedDuration(
+              throwable, nextAttemptSettings.getRandomizedRetryDelayDuration());
           attemptSettings = nextAttemptSettings;
           setAttemptResult(throwable, response, true);
           // a new attempt will be (must be) scheduled by an external executor
@@ -262,6 +264,16 @@ class BasicRetryingFuture<ResponseT> extends AbstractFuture<ResponseT>
       // way) the exception will be thrown in a separate thread and will not be swallowed by this
       // catch block anyways.
     }
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this.getClass())
+        .add("super", pendingToString())
+        .add("latestCompletedAttemptResult", this.latestCompletedAttemptResult)
+        .add("attemptResult", this.attemptResult)
+        .add("attemptSettings", this.attemptSettings)
+        .toString();
   }
 
   private class CompletionListener implements Runnable {

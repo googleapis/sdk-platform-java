@@ -17,7 +17,7 @@
 package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.rpc.CancelledException;
@@ -34,30 +34,30 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import io.grpc.ManagedChannelBuilder;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.threeten.bp.Duration;
 
-public class ITServerSideStreaming {
+class ITServerSideStreaming {
 
   private static EchoClient grpcClient;
   private static EchoClient httpjsonClient;
 
-  @BeforeClass
-  public static void createClients() throws Exception {
+  @BeforeAll
+  static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
-  @AfterClass
-  public static void destroyClients() throws InterruptedException {
+  @AfterAll
+  static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();
 
@@ -67,7 +67,7 @@ public class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_receiveStreamedContent() {
+  void testGrpc_receiveStreamedContent() {
     String content = "The rain in Spain stays mainly on the plain!";
     ServerStream<EchoResponse> responseStream =
         grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
@@ -84,7 +84,7 @@ public class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_receiveStreamedContentStreamAPI() {
+  void testGrpc_receiveStreamedContentStreamAPI() {
     String content = "The rain in Spain stays mainly on the plain!";
     ServerStream<EchoResponse> responseStream =
         grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
@@ -96,7 +96,7 @@ public class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_serverError_receiveErrorAfterLastWordInStream() {
+  void testGrpc_serverError_receiveErrorAfterLastWordInStream() {
     String content = "The rain in Spain";
     Status cancelledStatus =
         Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build();
@@ -116,7 +116,7 @@ public class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_serverWaitTimeout_watchdogCancelsStream() throws Exception {
+  void testGrpc_serverWaitTimeout_watchdogCancelsStream() throws Exception {
     EchoSettings.Builder settings =
         EchoSettings.newBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
@@ -146,21 +146,20 @@ public class ITServerSideStreaming {
                     .setStreamWaitTime(
                         com.google.protobuf.Duration.newBuilder().setSeconds(1).build())
                     .build());
-    ArrayList<String> responses = new ArrayList<>();
-    try {
-      for (EchoResponse response : responseStream) {
-        responses.add(response.getContent());
-      }
-      Assert.fail("No exception was thrown");
-    } catch (WatchdogTimeoutException e) {
-      assertThat(e).hasMessageThat().contains("Canceled due to timeout waiting for next response");
-    } finally {
-      echoClient.close();
-    }
+    List<String> responses = new ArrayList<>();
+    WatchdogTimeoutException exception =
+        assertThrows(
+            WatchdogTimeoutException.class,
+            () -> responseStream.forEach(x -> responses.add(x.getContent())));
+    assertThat(exception)
+        .hasMessageThat()
+        .contains("Canceled due to timeout waiting for next response");
+    echoClient.close();
+    echoClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testHttpJson_receiveStreamedContent() {
+  void testHttpJson_receiveStreamedContent() {
     String content = "The rain in Spain stays mainly on the plain!";
     ServerStream<EchoResponse> responseStream =
         httpjsonClient
@@ -178,10 +177,10 @@ public class ITServerSideStreaming {
         .inOrder();
   }
 
-  @Ignore(
+  @Disabled(
       value = "Ignore until https://github.com/googleapis/gapic-showcase/issues/1286 is resolved")
   @Test
-  public void testHttpJson_serverError_receiveErrorAfterLastWordInStream() {
+  void testHttpJson_serverError_receiveErrorAfterLastWordInStream() {
     String content = "The rain in Spain";
     Status cancelledStatus =
         Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build();

@@ -30,16 +30,34 @@
 package com.google.api.core;
 
 import com.google.common.truth.Truth;
+import com.google.common.util.concurrent.AbstractFuture;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ListenableFutureToApiFutureTest {
+class ListenableFutureToApiFutureTest {
 
   @Test
-  public void testGet() throws Exception {
+  void testGet() throws Exception {
     SettableFuture<Integer> future = SettableFuture.create();
     ListenableFutureToApiFuture<Integer> apiFuture = new ListenableFutureToApiFuture<>(future);
     future.set(3);
     Truth.assertThat(apiFuture.get()).isEqualTo(3);
+  }
+
+  @Test
+  void testToStringShowsUnderlyingFutureToString() {
+    String customInnerFutureDesc = "my-custom-toString-impl";
+    ListenableFuture<String> listenableFuture =
+        new AbstractFuture<String>() {
+          @Override
+          public String toString() {
+            return customInnerFutureDesc;
+          }
+        };
+
+    ListenableFutureToApiFuture<String> apiFuture =
+        new ListenableFutureToApiFuture<>(listenableFuture);
+    Truth.assertThat(apiFuture.toString()).contains(customInnerFutureDesc);
   }
 }

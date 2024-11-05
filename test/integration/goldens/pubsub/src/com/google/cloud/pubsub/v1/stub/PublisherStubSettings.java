@@ -22,6 +22,7 @@ import static com.google.cloud.pubsub.v1.TopicAdminClient.ListTopicsPagedRespons
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.batching.BatchingSettings;
 import com.google.api.gax.batching.FlowControlSettings;
 import com.google.api.gax.batching.FlowController;
@@ -74,11 +75,11 @@ import com.google.pubsub.v1.PublishResponse;
 import com.google.pubsub.v1.Topic;
 import com.google.pubsub.v1.UpdateTopicRequest;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.annotation.Generated;
-import org.threeten.bp.Duration;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
@@ -95,7 +96,9 @@ import org.threeten.bp.Duration;
  * <p>The builder of this class is recursive, so contained classes are themselves builders. When
  * build() is called, the tree of builders is called to create the complete settings object.
  *
- * <p>For example, to set the total timeout of createTopic to 30 seconds:
+ * <p>For example, to set the
+ * [RetrySettings](https://cloud.google.com/java/docs/reference/gax/latest/com.google.api.gax.retrying.RetrySettings)
+ * of createTopic:
  *
  * <pre>{@code
  * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -111,10 +114,21 @@ import org.threeten.bp.Duration;
  *             .createTopicSettings()
  *             .getRetrySettings()
  *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .setInitialRetryDelayDuration(Duration.ofSeconds(1))
+ *             .setInitialRpcTimeoutDuration(Duration.ofSeconds(5))
+ *             .setMaxAttempts(5)
+ *             .setMaxRetryDelayDuration(Duration.ofSeconds(30))
+ *             .setMaxRpcTimeoutDuration(Duration.ofSeconds(60))
+ *             .setRetryDelayMultiplier(1.3)
+ *             .setRpcTimeoutMultiplier(1.5)
+ *             .setTotalTimeoutDuration(Duration.ofSeconds(300))
  *             .build());
  * PublisherStubSettings topicAdminSettings = topicAdminSettingsBuilder.build();
  * }</pre>
+ *
+ * Please refer to the [Client Side Retry
+ * Guide](https://github.com/googleapis/google-cloud-java/blob/main/docs/client_retries.md) for
+ * additional support in setting retries.
  */
 @Generated("by gapic-generator-java")
 public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
@@ -177,9 +191,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
             @Override
             public Iterable<Topic> extractResources(ListTopicsResponse payload) {
-              return payload.getTopicsList() == null
-                  ? ImmutableList.<Topic>of()
-                  : payload.getTopicsList();
+              return payload.getTopicsList();
             }
           };
 
@@ -219,9 +231,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
             @Override
             public Iterable<String> extractResources(ListTopicSubscriptionsResponse payload) {
-              return payload.getSubscriptionsList() == null
-                  ? ImmutableList.<String>of()
-                  : payload.getSubscriptionsList();
+              return payload.getSubscriptionsList();
             }
           };
 
@@ -258,9 +268,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
             @Override
             public Iterable<String> extractResources(ListTopicSnapshotsResponse payload) {
-              return payload.getSnapshotsList() == null
-                  ? ImmutableList.<String>of()
-                  : payload.getSnapshotsList();
+              return payload.getSnapshotsList();
             }
           };
 
@@ -483,6 +491,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
   }
 
   /** Returns the default service endpoint. */
+  @ObsoleteApi("Use getEndpoint() instead")
   public static String getDefaultEndpoint() {
     return "pubsub.googleapis.com:443";
   }
@@ -613,35 +622,35 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
       RetrySettings settings = null;
       settings =
           RetrySettings.newBuilder()
-              .setInitialRetryDelay(Duration.ofMillis(100L))
+              .setInitialRetryDelayDuration(Duration.ofMillis(100L))
               .setRetryDelayMultiplier(1.3)
-              .setMaxRetryDelay(Duration.ofMillis(60000L))
-              .setInitialRpcTimeout(Duration.ofMillis(60000L))
+              .setMaxRetryDelayDuration(Duration.ofMillis(60000L))
+              .setInitialRpcTimeoutDuration(Duration.ofMillis(60000L))
               .setRpcTimeoutMultiplier(1.0)
-              .setMaxRpcTimeout(Duration.ofMillis(60000L))
-              .setTotalTimeout(Duration.ofMillis(60000L))
+              .setMaxRpcTimeoutDuration(Duration.ofMillis(60000L))
+              .setTotalTimeoutDuration(Duration.ofMillis(60000L))
               .build();
       definitions.put("retry_policy_0_params", settings);
       settings =
           RetrySettings.newBuilder()
-              .setInitialRetryDelay(Duration.ofMillis(100L))
+              .setInitialRetryDelayDuration(Duration.ofMillis(100L))
               .setRetryDelayMultiplier(1.3)
-              .setMaxRetryDelay(Duration.ofMillis(60000L))
-              .setInitialRpcTimeout(Duration.ofMillis(60000L))
+              .setMaxRetryDelayDuration(Duration.ofMillis(60000L))
+              .setInitialRpcTimeoutDuration(Duration.ofMillis(60000L))
               .setRpcTimeoutMultiplier(1.0)
-              .setMaxRpcTimeout(Duration.ofMillis(60000L))
-              .setTotalTimeout(Duration.ofMillis(60000L))
+              .setMaxRpcTimeoutDuration(Duration.ofMillis(60000L))
+              .setTotalTimeoutDuration(Duration.ofMillis(60000L))
               .build();
       definitions.put("retry_policy_1_params", settings);
       settings =
           RetrySettings.newBuilder()
-              .setInitialRetryDelay(Duration.ofMillis(100L))
+              .setInitialRetryDelayDuration(Duration.ofMillis(100L))
               .setRetryDelayMultiplier(1.3)
-              .setMaxRetryDelay(Duration.ofMillis(60000L))
-              .setInitialRpcTimeout(Duration.ofMillis(60000L))
+              .setMaxRetryDelayDuration(Duration.ofMillis(60000L))
+              .setInitialRpcTimeoutDuration(Duration.ofMillis(60000L))
               .setRpcTimeoutMultiplier(1.0)
-              .setMaxRpcTimeout(Duration.ofMillis(60000L))
-              .setTotalTimeout(Duration.ofMillis(60000L))
+              .setMaxRpcTimeoutDuration(Duration.ofMillis(60000L))
+              .setTotalTimeoutDuration(Duration.ofMillis(60000L))
               .build();
       definitions.put("retry_policy_2_params", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();
@@ -748,7 +757,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
               BatchingSettings.newBuilder()
                   .setElementCountThreshold(100L)
                   .setRequestByteThreshold(1048576L)
-                  .setDelayThreshold(Duration.ofMillis(10L))
+                  .setDelayThresholdDuration(Duration.ofMillis(10L))
                   .setFlowControlSettings(
                       FlowControlSettings.newBuilder()
                           .setLimitExceededBehavior(FlowController.LimitExceededBehavior.Ignore)

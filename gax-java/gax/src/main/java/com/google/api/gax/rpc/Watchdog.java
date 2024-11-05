@@ -29,8 +29,13 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.core.ApiClock;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.BackgroundResource;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.errorprone.annotations.concurrent.GuardedBy;
 import java.util.Iterator;
@@ -45,7 +50,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
-import org.threeten.bp.Duration;
 
 /**
  * Prevents the streams from hanging indefinitely. This middleware garbage collects idle streams in
@@ -71,19 +75,32 @@ public final class Watchdog implements Runnable, BackgroundResource {
   private final ConcurrentHashMap<WatchdogStream, Object> openStreams = new ConcurrentHashMap<>();
 
   private final ApiClock clock;
-  private final Duration scheduleInterval;
+  private final java.time.Duration scheduleInterval;
   private final ScheduledExecutorService executor;
   private ScheduledFuture<?> future;
 
-  /** returns a Watchdog which is scheduled at the provided interval. */
+  /**
+   * This method is obsolete. Use {@link #createDuration(ApiClock, java.time.Duration,
+   * ScheduledExecutorService)} instead.
+   */
+  @ObsoleteApi("Use create(ApiClock, java.time.Duration, ScheduledExecutorService) instead")
   public static Watchdog create(
-      ApiClock clock, Duration scheduleInterval, ScheduledExecutorService executor) {
+      ApiClock clock,
+      org.threeten.bp.Duration scheduleInterval,
+      ScheduledExecutorService executor) {
+    return createDuration(clock, toJavaTimeDuration(scheduleInterval), executor);
+  }
+
+  /** returns a Watchdog which is scheduled at the provided interval. */
+  public static Watchdog createDuration(
+      ApiClock clock, java.time.Duration scheduleInterval, ScheduledExecutorService executor) {
     Watchdog watchdog = new Watchdog(clock, scheduleInterval, executor);
     watchdog.start();
     return watchdog;
   }
 
-  private Watchdog(ApiClock clock, Duration scheduleInterval, ScheduledExecutorService executor) {
+  private Watchdog(
+      ApiClock clock, java.time.Duration scheduleInterval, ScheduledExecutorService executor) {
     this.clock = Preconditions.checkNotNull(clock, "clock can't be null");
     this.scheduleInterval = scheduleInterval;
     this.executor = executor;
@@ -95,11 +112,24 @@ public final class Watchdog implements Runnable, BackgroundResource {
             this, scheduleInterval.toMillis(), scheduleInterval.toMillis(), TimeUnit.MILLISECONDS);
   }
 
-  /** Wraps the target observer with timing constraints. */
+  /**
+   * This method is obsolete. Use {@link #watchDuration(ResponseObserver, java.time.Duration,
+   * java.time.Duration)} instead.
+   */
+  @ObsoleteApi(
+      "Use watchDuration(ResponseObserver, java.time.Duration, java.time.Duration) instead")
   public <ResponseT> ResponseObserver<ResponseT> watch(
       ResponseObserver<ResponseT> innerObserver,
-      @Nonnull Duration waitTimeout,
-      @Nonnull Duration idleTimeout) {
+      @Nonnull org.threeten.bp.Duration waitTimeout,
+      @Nonnull org.threeten.bp.Duration idleTimeout) {
+    return watchDuration(
+        innerObserver, toJavaTimeDuration(waitTimeout), toJavaTimeDuration(idleTimeout));
+  }
+  /** Wraps the target observer with timing constraints. */
+  public <ResponseT> ResponseObserver<ResponseT> watchDuration(
+      ResponseObserver<ResponseT> innerObserver,
+      @Nonnull java.time.Duration waitTimeout,
+      @Nonnull java.time.Duration idleTimeout) {
     Preconditions.checkNotNull(innerObserver, "innerObserver can't be null");
     Preconditions.checkNotNull(waitTimeout, "waitTimeout can't be null");
     Preconditions.checkNotNull(idleTimeout, "idleTimeout can't be null");
@@ -171,6 +201,16 @@ public final class Watchdog implements Runnable, BackgroundResource {
     shutdown();
   }
 
+  @VisibleForTesting
+  java.time.Duration getScheduleIntervalDuration() {
+    return this.scheduleInterval;
+  }
+
+  @VisibleForTesting
+  org.threeten.bp.Duration getScheduleInterval() {
+    return toThreetenDuration(this.scheduleInterval);
+  }
+
   enum State {
     /** Stream has been started, but doesn't have any outstanding requests. */
     IDLE,
@@ -185,8 +225,8 @@ public final class Watchdog implements Runnable, BackgroundResource {
   class WatchdogStream<ResponseT> extends StateCheckingResponseObserver<ResponseT> {
     private final Object lock = new Object();
 
-    private final Duration waitTimeout;
-    private final Duration idleTimeout;
+    private final java.time.Duration waitTimeout;
+    private final java.time.Duration idleTimeout;
     private boolean hasStarted;
     private boolean autoAutoFlowControl = true;
 
@@ -208,7 +248,9 @@ public final class Watchdog implements Runnable, BackgroundResource {
     private volatile Throwable error;
 
     WatchdogStream(
-        ResponseObserver<ResponseT> responseObserver, Duration waitTimeout, Duration idleTimeout) {
+        ResponseObserver<ResponseT> responseObserver,
+        java.time.Duration waitTimeout,
+        java.time.Duration idleTimeout) {
       this.waitTimeout = waitTimeout;
       this.idleTimeout = idleTimeout;
       this.outerResponseObserver = responseObserver;

@@ -52,10 +52,6 @@ public class ServiceClientHeaderSampleComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
-    if (service.methods().isEmpty()) {
-      return ServiceClientMethodSampleComposer.composeEmptyServiceSample(clientType, service);
-    }
-
     // Use the first pure unary RPC method's sample code as showcase, if no such method exists, use
     // the first method in the service's methods list.
     Method method =
@@ -342,7 +338,7 @@ public class ServiceClientHeaderSampleComposer {
         RegionTag.builder()
             .setServiceName(service.name())
             .setRpcName(rpcName)
-            .setOverloadDisambiguation("setCredentialsProvider")
+            .setOverloadDisambiguation("useHttpJsonTransport")
             .build();
     return Sample.builder().setBody(sampleBody).setRegionTag(regionTag).build();
   }

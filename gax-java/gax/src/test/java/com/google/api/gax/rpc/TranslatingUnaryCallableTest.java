@@ -33,15 +33,12 @@ import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.common.truth.Truth;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class TranslatingUnaryCallableTest {
+class TranslatingUnaryCallableTest {
 
   @Test
-  public void translate() throws Exception {
+  void translate() throws Exception {
     TranslatingUnaryCallable<Integer, Integer, String, String> callable =
         TranslatingUnaryCallable.create(
             new UnaryCallable<Integer, Integer>() {

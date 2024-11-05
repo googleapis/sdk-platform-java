@@ -29,10 +29,10 @@
  */
 package com.google.api.gax.rpc;
 
-import static org.junit.Assert.fail;
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.api.core.ApiClock;
-import com.google.api.core.ApiFunction;
 import com.google.api.core.NanoClock;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
@@ -54,14 +54,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class ClientSettingsTest {
+class ClientSettingsTest {
   private static final String QUOTA_PROJECT_ID_KEY = "x-goog-user-project";
   private static final String QUOTA_PROJECT_ID_FROM_HEADER_VALUE = "quota_project_id_from_headers";
   private static final String QUOTA_PROJECT_ID_FROM_BUILDERS = "quota_project_id_from_builders";
@@ -107,7 +105,7 @@ public class ClientSettingsTest {
       loadCredentials(JSON_KEY_QUOTA_PROJECT_ID);
 
   @Test
-  public void testEmptyBuilder() throws Exception {
+  void testEmptyBuilder() throws Exception {
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
     Truth.assertThat(builder.getExecutorProvider()).isNull();
     Truth.assertThat(builder.getBackgroundExecutorProvider())
@@ -119,8 +117,10 @@ public class ClientSettingsTest {
     Truth.assertThat(builder.getInternalHeaderProvider()).isInstanceOf(NoHeaderProvider.class);
     Truth.assertThat(builder.getWatchdogProvider())
         .isInstanceOf(InstantiatingWatchdogProvider.class);
-    Truth.assertThat(builder.getWatchdogCheckInterval()).isGreaterThan(Duration.ZERO);
+    Truth.assertThat(builder.getWatchdogCheckIntervalDuration())
+        .isGreaterThan(java.time.Duration.ZERO);
     Truth.assertThat(builder.getQuotaProjectId()).isNull();
+    Truth.assertThat(builder.getApiKey()).isNull();
 
     FakeClientSettings settings = builder.build();
     Truth.assertThat(settings.getExecutorProvider())
@@ -137,7 +137,8 @@ public class ClientSettingsTest {
         .isSameInstanceAs(builder.getInternalHeaderProvider());
     Truth.assertThat(settings.getWatchdogProvider())
         .isInstanceOf(InstantiatingWatchdogProvider.class);
-    Truth.assertThat(settings.getWatchdogCheckInterval()).isGreaterThan(Duration.ZERO);
+    Truth.assertThat(settings.getWatchdogCheckIntervalDuration())
+        .isGreaterThan(java.time.Duration.ZERO);
     Truth.assertThat((settings.getQuotaProjectId())).isSameInstanceAs(builder.getQuotaProjectId());
 
     String settingsString = settings.toString();
@@ -150,10 +151,11 @@ public class ClientSettingsTest {
     Truth.assertThat(settingsString).contains("watchdogProvider");
     Truth.assertThat(settingsString).contains("watchdogCheckInterval");
     Truth.assertThat(settingsString).contains(("quotaProjectId"));
+    Truth.assertThat(settingsString).contains(("apiKey"));
   }
 
   @Test
-  public void testBuilder() throws Exception {
+  void testBuilder() throws Exception {
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
 
     ExecutorProvider executorProvider = Mockito.mock(ExecutorProvider.class);
@@ -163,8 +165,9 @@ public class ClientSettingsTest {
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     HeaderProvider internalHeaderProvider = Mockito.mock(HeaderProvider.class);
     WatchdogProvider watchdogProvider = Mockito.mock(WatchdogProvider.class);
-    Duration watchdogCheckInterval = Duration.ofSeconds(13);
+    java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(13);
     String quotaProjectId = "test_quota_project_id";
+    String apiKey = "api_key";
 
     builder.setExecutorProvider(executorProvider);
     builder.setTransportChannelProvider(transportProvider);
@@ -173,8 +176,9 @@ public class ClientSettingsTest {
     builder.setInternalHeaderProvider(internalHeaderProvider);
     builder.setClock(clock);
     builder.setWatchdogProvider(watchdogProvider);
-    builder.setWatchdogCheckInterval(watchdogCheckInterval);
+    builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
     builder.setQuotaProjectId(quotaProjectId);
+    builder.setApiKey(apiKey);
 
     // For backward compatibility, backgroundExecutorProvider is set to executorProvider
     Truth.assertThat(builder.getExecutorProvider()).isSameInstanceAs(executorProvider);
@@ -185,8 +189,10 @@ public class ClientSettingsTest {
     Truth.assertThat(builder.getHeaderProvider()).isSameInstanceAs(headerProvider);
     Truth.assertThat(builder.getInternalHeaderProvider()).isSameInstanceAs(internalHeaderProvider);
     Truth.assertThat(builder.getWatchdogProvider()).isSameInstanceAs(watchdogProvider);
-    Truth.assertThat(builder.getWatchdogCheckInterval()).isSameInstanceAs(watchdogCheckInterval);
+    Truth.assertThat(builder.getWatchdogCheckIntervalDuration())
+        .isSameInstanceAs(watchdogCheckInterval);
     Truth.assertThat(builder.getQuotaProjectId()).isEqualTo(quotaProjectId);
+    Truth.assertThat(builder.getApiKey()).isEqualTo(apiKey);
 
     String builderString = builder.toString();
     Truth.assertThat(builderString).contains("executorProvider");
@@ -199,10 +205,11 @@ public class ClientSettingsTest {
     Truth.assertThat(builderString).contains("watchdogProvider");
     Truth.assertThat(builderString).contains("watchdogCheckInterval");
     Truth.assertThat(builderString).contains("quotaProjectId");
+    Truth.assertThat(builderString).contains("apiKey");
   }
 
   @Test
-  public void testBuilderFromClientContext() throws Exception {
+  void testBuilderFromClientContext() throws Exception {
     final String QUOTA_PROJECT_ID_FROM_CONTEXT = "some_quota_project_id_from_context";
     ApiClock clock = Mockito.mock(ApiClock.class);
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
@@ -210,11 +217,11 @@ public class ClientSettingsTest {
         FakeCallContext.createDefault().withEndpointContext(endpointContext);
     Map<String, String> headers = Collections.singletonMap("spiffykey", "spiffyvalue");
     Watchdog watchdog =
-        Watchdog.create(
+        Watchdog.createDuration(
             Mockito.mock(ApiClock.class),
-            Duration.ZERO,
+            java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));
-    Duration watchdogCheckInterval = Duration.ofSeconds(12);
+    java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(12);
 
     ClientContext clientContext =
         ClientContext.newBuilder()
@@ -225,7 +232,7 @@ public class ClientSettingsTest {
             .setDefaultCallContext(callContext)
             .setHeaders(headers)
             .setStreamWatchdog(watchdog)
-            .setStreamWatchdogCheckInterval(watchdogCheckInterval)
+            .setStreamWatchdogCheckIntervalDuration(watchdogCheckInterval)
             .setQuotaProjectId(QUOTA_PROJECT_ID_FROM_CONTEXT)
             .build();
 
@@ -244,12 +251,12 @@ public class ClientSettingsTest {
         .containsEntry("spiffykey", "spiffyvalue");
     Truth.assertThat(builder.getWatchdogProvider()).isInstanceOf(FixedWatchdogProvider.class);
     Truth.assertThat(builder.getWatchdogProvider().getWatchdog()).isSameInstanceAs(watchdog);
-    Truth.assertThat(builder.getWatchdogCheckInterval()).isEqualTo(watchdogCheckInterval);
+    Truth.assertThat(builder.getWatchdogCheckIntervalDuration()).isEqualTo(watchdogCheckInterval);
     Truth.assertThat(builder.getQuotaProjectId()).isEqualTo(QUOTA_PROJECT_ID_FROM_CONTEXT);
   }
 
   @Test
-  public void testBuilderFromSettings() throws Exception {
+  void testBuilderFromSettings() throws Exception {
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
 
     ExecutorProvider executorProvider = Mockito.mock(ExecutorProvider.class);
@@ -259,7 +266,7 @@ public class ClientSettingsTest {
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     HeaderProvider internalHeaderProvider = Mockito.mock(HeaderProvider.class);
     WatchdogProvider watchdogProvider = Mockito.mock(WatchdogProvider.class);
-    Duration watchdogCheckInterval = Duration.ofSeconds(14);
+    java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(14);
     String quotaProjectId = "test_builder_from_settings_quotaProjectId";
 
     builder.setExecutorProvider(executorProvider);
@@ -269,7 +276,7 @@ public class ClientSettingsTest {
     builder.setHeaderProvider(headerProvider);
     builder.setInternalHeaderProvider(internalHeaderProvider);
     builder.setWatchdogProvider(watchdogProvider);
-    builder.setWatchdogCheckInterval(watchdogCheckInterval);
+    builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
     builder.setQuotaProjectId(quotaProjectId);
 
     FakeClientSettings settings = builder.build();
@@ -284,12 +291,13 @@ public class ClientSettingsTest {
     Truth.assertThat(newBuilder.getInternalHeaderProvider())
         .isSameInstanceAs(internalHeaderProvider);
     Truth.assertThat(newBuilder.getWatchdogProvider()).isSameInstanceAs(watchdogProvider);
-    Truth.assertThat(newBuilder.getWatchdogCheckInterval()).isEqualTo(watchdogCheckInterval);
+    Truth.assertThat(newBuilder.getWatchdogCheckIntervalDuration())
+        .isEqualTo(watchdogCheckInterval);
     Truth.assertThat(newBuilder.getQuotaProjectId()).isEqualTo(quotaProjectId);
   }
 
   @Test
-  public void testApplyToAllUnaryMethods() throws Exception {
+  void testApplyToAllUnaryMethods() throws Exception {
     List<UnaryCallSettings.Builder<?, ?>> builders = new ArrayList<>();
     builders.add(UnaryCallSettings.newUnaryCallSettingsBuilder());
     builders.add(UnaryCallSettings.newUnaryCallSettingsBuilder());
@@ -297,17 +305,14 @@ public class ClientSettingsTest {
     final int[] count = {0};
     ClientSettings.Builder.applyToAllUnaryMethods(
         builders,
-        new ApiFunction<UnaryCallSettings.Builder<?, ?>, Void>() {
-          @Override
-          public Void apply(UnaryCallSettings.Builder<?, ?> input) {
-            if (count[0] == 0) {
-              input.setRetryableCodes(StatusCode.Code.UNAVAILABLE);
-            } else {
-              input.setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED);
-            }
-            count[0] += 1;
-            return null;
+        input -> {
+          if (count[0] == 0) {
+            input.setRetryableCodes(StatusCode.Code.UNAVAILABLE);
+          } else {
+            input.setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED);
           }
+          count[0] += 1;
+          return null;
         });
 
     Truth.assertThat(builders.get(0).getRetryableCodes())
@@ -327,7 +332,7 @@ public class ClientSettingsTest {
   }
 
   @Test
-  public void testBuilderFromSettings_QuotaProjectId() {
+  void testBuilderFromSettings_QuotaProjectId() {
 
     CredentialsProvider credentialsProvider_no_quota = Mockito.mock(CredentialsProvider.class);
     HeaderProvider headerProvider_no_quota = Mockito.mock(HeaderProvider.class);
@@ -443,7 +448,7 @@ public class ClientSettingsTest {
   }
 
   @Test
-  public void testBuilderFromClientContext_QuotaProjectId() {
+  void testBuilderFromClientContext_QuotaProjectId() {
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
     ApiCallContext callContext =
         FakeCallContext.createDefault().withEndpointContext(endpointContext);
@@ -545,5 +550,26 @@ public class ClientSettingsTest {
         .isEqualTo(QUOTA_PROJECT_ID_FROM_CONTEXT);
     Truth.assertThat(builderQuotaFromAllSources.getQuotaProjectId())
         .isEqualTo(QUOTA_PROJECT_ID_FROM_CONTEXT);
+  }
+
+  @Test
+  public void testWatchdogCheckInterval_backportMethodsBehaveCorrectly() {
+    final ClientSettings.Builder builder = new FakeClientSettings.Builder();
+    // this helper lambda goes around the possible IOException thrown by
+    // ClientSettings.Builder.build()
+    final Function<Supplier<ClientSettings.Builder>, ClientSettings> createClientSettings =
+        fn -> {
+          try {
+            return fn.get().build();
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        };
+    testDurationMethod(
+        123l,
+        jt -> createClientSettings.apply(() -> builder.setWatchdogCheckIntervalDuration(jt)),
+        tt -> createClientSettings.apply(() -> builder.setWatchdogCheckInterval(tt)),
+        cs -> cs.getWatchdogCheckIntervalDuration(),
+        cs -> cs.getWatchdogCheckInterval());
   }
 }

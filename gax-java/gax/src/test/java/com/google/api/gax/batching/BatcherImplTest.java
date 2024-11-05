@@ -33,8 +33,14 @@ import static com.google.api.gax.rpc.testing.FakeBatchableApi.SQUARER_BATCHING_D
 import static com.google.api.gax.rpc.testing.FakeBatchableApi.callLabeledIntSquarer;
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.google.api.core.AbstractApiFuture;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.core.SettableApiFuture;
@@ -50,11 +56,13 @@ import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Queues;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
@@ -71,19 +79,14 @@ import java.util.logging.Filter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.function.ThrowingRunnable;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class BatcherImplTest {
+class BatcherImplTest {
 
   private static final Logger logger = Logger.getLogger(BatcherImplTest.class.getName());
 
@@ -96,11 +99,11 @@ public class BatcherImplTest {
       BatchingSettings.newBuilder()
           .setElementCountThreshold(1000L)
           .setRequestByteThreshold(1000L)
-          .setDelayThreshold(Duration.ofSeconds(1000))
+          .setDelayThresholdDuration(java.time.Duration.ofSeconds(1000))
           .build();
 
-  @After
-  public void tearDown() throws InterruptedException {
+  @AfterEach
+  void tearDown() throws InterruptedException {
     if (underTest != null) {
       try {
         // Close the batcher to avoid warnings of orphaned batchers
@@ -111,14 +114,14 @@ public class BatcherImplTest {
     }
   }
 
-  @AfterClass
+  @AfterAll
   public static void tearDownExecutor() throws InterruptedException {
     EXECUTOR.shutdown();
     EXECUTOR.awaitTermination(100, TimeUnit.MILLISECONDS);
   }
   /** The accumulated results in the test are resolved when {@link Batcher#flush()} is called. */
   @Test
-  public void testResultsAreResolvedAfterFlush() throws Exception {
+  void testResultsAreResolvedAfterFlush() throws Exception {
     underTest = createDefaultBatcherImpl(batchingSettings, null);
     Future<Integer> result = underTest.add(4);
     assertThat(result.isDone()).isFalse();
@@ -131,8 +134,22 @@ public class BatcherImplTest {
   }
 
   @Test
-  public void testSendOutstanding() {
+  void testSendOutstanding() {
     final AtomicInteger callableCounter = new AtomicInteger();
+    ScheduledExecutorService mockExecutor = mock(ScheduledExecutorService.class);
+    BatchingSettings mockBatchingSettings = mock(BatchingSettings.class);
+    java.time.Duration mockDelayThresholdDuration = java.time.Duration.ofSeconds(1000L);
+    when(mockBatchingSettings.getDelayThresholdDuration()).thenReturn(mockDelayThresholdDuration);
+    when(mockBatchingSettings.getRequestByteThreshold()).thenReturn(1000L);
+    when(mockBatchingSettings.getElementCountThreshold()).thenReturn(1000L);
+    when(mockBatchingSettings.getFlowControlSettings())
+        .thenReturn(batchingSettings.getFlowControlSettings());
+    when(mockExecutor.scheduleWithFixedDelay(
+            any(Runnable.class),
+            eq(mockDelayThresholdDuration.toMillis()),
+            eq(mockDelayThresholdDuration.toMillis()),
+            any(TimeUnit.class)))
+        .thenReturn(mock(ScheduledFuture.class));
 
     underTest =
         new BatcherImpl<>(
@@ -146,8 +163,8 @@ public class BatcherImplTest {
               }
             },
             labeledIntList,
-            batchingSettings,
-            EXECUTOR);
+            mockBatchingSettings,
+            mockExecutor);
 
     // Empty Batcher
     underTest.sendOutstanding();
@@ -158,11 +175,17 @@ public class BatcherImplTest {
     underTest.add(4);
     underTest.sendOutstanding();
     assertThat(callableCounter.get()).isEqualTo(1);
+    verify(mockExecutor)
+        .scheduleWithFixedDelay(
+            any(Runnable.class),
+            eq(mockDelayThresholdDuration.toMillis()),
+            eq(mockDelayThresholdDuration.toMillis()),
+            any(TimeUnit.class));
   }
 
   /** Element results are resolved after batch is closed. */
   @Test
-  public void testWhenBatcherIsClose() throws Exception {
+  void testWhenBatcherIsClose() throws Exception {
     Future<Integer> result;
     try (Batcher<Integer, Integer> batcher = createDefaultBatcherImpl(batchingSettings, null)) {
       result = batcher.add(5);
@@ -173,7 +196,7 @@ public class BatcherImplTest {
 
   /** Validates exception when batch is called after {@link Batcher#close()}. */
   @Test
-  public void testNoElementAdditionAfterClose() throws Exception {
+  void testNoElementAdditionAfterClose() throws Exception {
     underTest = createDefaultBatcherImpl(batchingSettings, null);
     underTest.close();
     Throwable addOnClosedError = null;
@@ -190,26 +213,18 @@ public class BatcherImplTest {
 
   /** Validates exception when batch is called after {@link Batcher#close()}. */
   @Test
-  public void testNoElementAdditionAfterCloseAsync() throws Exception {
+  void testNoElementAdditionAfterCloseAsync() throws Exception {
     underTest = createDefaultBatcherImpl(batchingSettings, null);
     underTest.add(1);
     underTest.closeAsync();
 
-    IllegalStateException e =
-        Assert.assertThrows(
-            IllegalStateException.class,
-            new ThrowingRunnable() {
-              @Override
-              public void run() throws Throwable {
-                underTest.add(1);
-              }
-            });
+    IllegalStateException e = assertThrows(IllegalStateException.class, () -> underTest.add(1));
 
     assertThat(e).hasMessageThat().matches("Cannot add elements on a closed batcher");
   }
 
   @Test
-  public void testCloseAsyncNonblocking() throws ExecutionException, InterruptedException {
+  void testCloseAsyncNonblocking() throws ExecutionException, InterruptedException {
     final SettableApiFuture<List<Integer>> innerFuture = SettableApiFuture.create();
 
     UnaryCallable<LabeledIntList, List<Integer>> unaryCallable =
@@ -237,9 +252,110 @@ public class BatcherImplTest {
     closeFuture.get();
   }
 
+  @Test
+  void testCloseTimeout() throws ExecutionException, InterruptedException {
+    final String futureToStringMsg = "some descriptive message about this future";
+    MySettableApiFuture<List<Integer>> innerFuture = new MySettableApiFuture<>(futureToStringMsg);
+
+    UnaryCallable<LabeledIntList, List<Integer>> unaryCallable =
+        new UnaryCallable<LabeledIntList, List<Integer>>() {
+          @Override
+          public ApiFuture<List<Integer>> futureCall(
+              LabeledIntList request, ApiCallContext context) {
+            return innerFuture;
+          }
+        };
+    underTest =
+        new BatcherImpl<>(
+            SQUARER_BATCHING_DESC_V2, unaryCallable, labeledIntList, batchingSettings, EXECUTOR);
+
+    underTest.add(1);
+
+    Stopwatch stopwatch = Stopwatch.createStarted();
+
+    TimeoutException closeException =
+        assertThrows(TimeoutException.class, () -> underTest.close(Duration.ofMillis(10)));
+
+    // resolve the future to allow batcher to close
+    innerFuture.set(ImmutableList.of(1));
+
+    assertThat(stopwatch.elapsed()).isAtMost(java.time.Duration.ofSeconds(1));
+    System.out.println();
+    assertThat(closeException)
+        .hasMessageThat()
+        .matches(".*Outstanding batches.*" + futureToStringMsg + ".*elements=1.*");
+  }
+
+  @Test
+  void testCloseTimeoutPreventsAdd() throws ExecutionException, InterruptedException {
+    final String futureToStringMsg = "some descriptive message about this future";
+    MySettableApiFuture<List<Integer>> innerFuture = new MySettableApiFuture<>(futureToStringMsg);
+
+    UnaryCallable<LabeledIntList, List<Integer>> unaryCallable =
+        new UnaryCallable<LabeledIntList, List<Integer>>() {
+          @Override
+          public ApiFuture<List<Integer>> futureCall(
+              LabeledIntList request, ApiCallContext context) {
+            return innerFuture;
+          }
+        };
+    underTest =
+        new BatcherImpl<>(
+            SQUARER_BATCHING_DESC_V2, unaryCallable, labeledIntList, batchingSettings, EXECUTOR);
+
+    underTest.add(1);
+
+    try {
+      underTest.close(Duration.ofMillis(10));
+    } catch (TimeoutException ignored) {
+      // ignored
+    }
+
+    // Even though the close operation timed out, the batcher should be in a closed state
+    // and reject new additions
+    assertThrows(IllegalStateException.class, () -> underTest.add(2));
+
+    // resolve the future to allow batcher to close
+    innerFuture.set(ImmutableList.of(1));
+  }
+
+  @Test
+  void testCancelOutstanding() throws ExecutionException, InterruptedException {
+    SettableApiFuture<List<Integer>> innerFuture = SettableApiFuture.create();
+
+    UnaryCallable<LabeledIntList, List<Integer>> unaryCallable =
+        new UnaryCallable<LabeledIntList, List<Integer>>() {
+          @Override
+          public ApiFuture<List<Integer>> futureCall(
+              LabeledIntList request, ApiCallContext context) {
+            return innerFuture;
+          }
+        };
+    underTest =
+        new BatcherImpl<>(
+            SQUARER_BATCHING_DESC_V2, unaryCallable, labeledIntList, batchingSettings, EXECUTOR);
+
+    ApiFuture<Integer> elementF = underTest.add(1);
+
+    // Initial close will timeout
+    TimeoutException firstCloseException =
+        assertThrows(TimeoutException.class, () -> underTest.close(Duration.ofMillis(10)));
+    assertThat(firstCloseException).hasMessageThat().contains("Timed out");
+
+    underTest.cancelOutstanding();
+
+    BatchingException finalCloseException =
+        assertThrows(BatchingException.class, () -> underTest.close(Duration.ofSeconds(1)));
+    assertThat(finalCloseException).hasMessageThat().contains("Batching finished");
+
+    // element future should resolve to a cancelled future
+    ExecutionException elementException = assertThrows(ExecutionException.class, elementF::get);
+    assertThat(elementException).hasCauseThat().isInstanceOf(CancellationException.class);
+  }
+
   /** Verifies exception occurred at RPC is propagated to element results */
   @Test
-  public void testResultFailureAfterRPCFailure() throws Exception {
+  void testResultFailureAfterRPCFailure() throws Exception {
     final Exception fakeError = new RuntimeException();
     UnaryCallable<LabeledIntList, List<Integer>> unaryCallable =
         new UnaryCallable<LabeledIntList, List<Integer>>() {
@@ -280,7 +396,7 @@ public class BatcherImplTest {
 
   /** Resolves future results when {@link BatchingDescriptor#splitResponse} throws exception. */
   @Test
-  public void testExceptionInDescriptor() throws InterruptedException {
+  void testExceptionInDescriptor() throws InterruptedException {
     final RuntimeException fakeError = new RuntimeException("internal exception");
     BatchingDescriptor<Integer, Integer, LabeledIntList, List<Integer>> descriptor =
         new SquarerBatchingDescriptorV2() {
@@ -319,7 +435,7 @@ public class BatcherImplTest {
 
   /** Resolves future results when {@link BatchingDescriptor#splitException} throws exception */
   @Test
-  public void testExceptionInDescriptorErrorHandling() throws InterruptedException {
+  void testExceptionInDescriptorErrorHandling() throws InterruptedException {
     final RuntimeException fakeError = new RuntimeException("internal exception");
     BatchingDescriptor<Integer, Integer, LabeledIntList, List<Integer>> descriptor =
         new SquarerBatchingDescriptorV2() {
@@ -358,24 +474,24 @@ public class BatcherImplTest {
   }
 
   @Test
-  public void testWhenElementCountExceeds() throws Exception {
+  void testWhenElementCountExceeds() throws Exception {
     BatchingSettings settings = batchingSettings.toBuilder().setElementCountThreshold(2L).build();
     testElementTriggers(settings);
   }
 
   @Test
-  public void testWhenElementBytesExceeds() throws Exception {
+  void testWhenElementBytesExceeds() throws Exception {
     BatchingSettings settings = batchingSettings.toBuilder().setRequestByteThreshold(2L).build();
     testElementTriggers(settings);
   }
 
   @Test
-  public void testWhenThresholdIsDisabled() throws Exception {
+  void testWhenThresholdIsDisabled() throws Exception {
     BatchingSettings settings =
         BatchingSettings.newBuilder()
             .setElementCountThreshold(null)
             .setRequestByteThreshold(null)
-            .setDelayThreshold(null)
+            .setDelayThresholdDuration(null)
             .build();
     underTest = createDefaultBatcherImpl(settings, null);
     Future<Integer> result = underTest.add(2);
@@ -385,9 +501,12 @@ public class BatcherImplTest {
   }
 
   @Test
-  public void testWhenDelayThresholdExceeds() throws Exception {
+  void testWhenDelayThresholdExceeds() throws Exception {
     BatchingSettings settings =
-        batchingSettings.toBuilder().setDelayThreshold(Duration.ofMillis(100)).build();
+        batchingSettings
+            .toBuilder()
+            .setDelayThresholdDuration(java.time.Duration.ofMillis(100))
+            .build();
     underTest = createDefaultBatcherImpl(settings, null);
     Future<Integer> result = underTest.add(6);
     assertThat(result.isDone()).isFalse();
@@ -395,8 +514,9 @@ public class BatcherImplTest {
   }
 
   /** Validates that the elements are not leaking to multiple batches */
-  @Test(timeout = 500)
-  public void testElementsNotLeaking() throws Exception {
+  @Test
+  @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
+  void testElementsNotLeaking() throws Exception {
     ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
     ScheduledExecutorService multiThreadExecutor = Executors.newScheduledThreadPool(20);
 
@@ -418,29 +538,26 @@ public class BatcherImplTest {
           }
         };
     BatchingSettings settings =
-        batchingSettings.toBuilder().setDelayThreshold(Duration.ofMillis(50)).build();
+        batchingSettings
+            .toBuilder()
+            .setDelayThresholdDuration(java.time.Duration.ofMillis(50))
+            .build();
 
     try (final BatcherImpl<Integer, Integer, LabeledIntList, List<Integer>> batcherTest =
         new BatcherImpl<>(SQUARER_BATCHING_DESC_V2, callable, labeledIntList, settings, EXECUTOR)) {
 
       final Callable<Void> addElement =
-          new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-              int counter = 0;
-              while (!isDuplicateElement.get() && counter < 10_000) {
-                batcherTest.add(counter++);
-              }
-              return null;
+          () -> {
+            int counter = 0;
+            while (!isDuplicateElement.get() && counter < 10_000) {
+              batcherTest.add(counter++);
             }
+            return null;
           };
       final Callable<Void> sendBatch =
-          new Callable<Void>() {
-            @Override
-            public Void call() throws InterruptedException {
-              batcherTest.flush();
-              return null;
-            }
+          () -> {
+            batcherTest.flush();
+            return null;
           };
 
       // Started sequential element addition
@@ -459,10 +576,13 @@ public class BatcherImplTest {
 
   /** Validates ongoing runnable is cancelled once Batcher is GCed. */
   @Test
-  public void testPushCurrentBatchRunnable() throws Exception {
+  void testPushCurrentBatchRunnable() throws Exception {
     long DELAY_TIME = 50L;
     BatchingSettings settings =
-        batchingSettings.toBuilder().setDelayThreshold(Duration.ofMillis(DELAY_TIME)).build();
+        batchingSettings
+            .toBuilder()
+            .setDelayThresholdDuration(java.time.Duration.ofMillis(DELAY_TIME))
+            .build();
     BatcherImpl<Integer, Integer, LabeledIntList, List<Integer>> batcher =
         createDefaultBatcherImpl(settings, null);
 
@@ -495,7 +615,7 @@ public class BatcherImplTest {
   }
 
   @Test
-  public void testEmptyBatchesAreNeverSent() throws Exception {
+  void testEmptyBatchesAreNeverSent() throws Exception {
     UnaryCallable<LabeledIntList, List<Integer>> callable =
         new UnaryCallable<LabeledIntList, List<Integer>>() {
           @Override
@@ -512,7 +632,7 @@ public class BatcherImplTest {
 
   /** To confirm the partial failures in Batching does not mark whole batch failed */
   @Test
-  public void testPartialFailureWithSplitResponse() throws Exception {
+  void testPartialFailureWithSplitResponse() throws Exception {
     SquarerBatchingDescriptorV2 descriptor =
         new SquarerBatchingDescriptorV2() {
           @Override
@@ -558,7 +678,7 @@ public class BatcherImplTest {
   }
 
   @Test
-  public void testPartialFailureInResultProcessing() throws Exception {
+  void testPartialFailureInResultProcessing() throws Exception {
     final Queue<RuntimeException> queue = Queues.newArrayBlockingQueue(3);
     queue.add(new NullPointerException());
     queue.add(new RuntimeException());
@@ -614,7 +734,7 @@ public class BatcherImplTest {
    * <p>Note:This test cannot run concurrently with other tests that use Batchers.
    */
   @Test
-  public void testUnclosedBatchersAreLogged() throws Exception {
+  void testUnclosedBatchersAreLogged() throws Exception {
     final long DELAY_TIME = 30L;
     int actualRemaining = 0;
     for (int retry = 0; retry < 3; retry++) {
@@ -687,7 +807,7 @@ public class BatcherImplTest {
    * <p>Note:This test cannot run concurrently with other tests that use Batchers.
    */
   @Test
-  public void testClosedBatchersAreNotLogged() throws Exception {
+  void testClosedBatchersAreNotLogged() throws Exception {
     // Clean out the existing instances
     final long DELAY_TIME = 30L;
     int actualRemaining = 0;
@@ -748,7 +868,7 @@ public class BatcherImplTest {
   }
 
   @Test
-  public void testCloseRace() throws ExecutionException, InterruptedException, TimeoutException {
+  void testCloseRace() throws ExecutionException, InterruptedException, TimeoutException {
     int iterations = 1_000_000;
     ExecutorService executor = Executors.newFixedThreadPool(100);
 
@@ -772,24 +892,15 @@ public class BatcherImplTest {
 
         batcher.add(1);
 
-        executor.execute(
-            new Runnable() {
-              @Override
-              public void run() {
-                result.set(ImmutableList.of(1));
-              }
-            });
+        executor.execute(() -> result.set(ImmutableList.of(1)));
         Future<?> f =
             executor.submit(
-                new Runnable() {
-                  @Override
-                  public void run() {
-                    try {
-                      batcher.close();
-                    } catch (InterruptedException e) {
-                      Thread.currentThread().interrupt();
-                      throw new RuntimeException(e);
-                    }
+                () -> {
+                  try {
+                    batcher.close();
+                  } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new RuntimeException(e);
                   }
                 });
 
@@ -811,7 +922,7 @@ public class BatcherImplTest {
   }
 
   @Test
-  public void testConstructors() throws InterruptedException {
+  void testConstructors() throws InterruptedException {
     try (BatcherImpl batcher1 = createDefaultBatcherImpl(batchingSettings, null)) {
       assertThat(batcher1.getFlowController()).isNotNull();
       assertThat(batcher1.getFlowController().getLimitExceededBehavior())
@@ -833,8 +944,9 @@ public class BatcherImplTest {
     }
   }
 
-  @Test(timeout = 60000)
-  public void testThrottlingBlocking() throws Exception {
+  @Test
+  @Timeout(60)
+  void testThrottlingBlocking() throws Exception {
     BatchingSettings settings =
         BatchingSettings.newBuilder()
             .setElementCountThreshold(1L)
@@ -848,7 +960,7 @@ public class BatcherImplTest {
                 .build());
     ExecutorService executor = Executors.newFixedThreadPool(2);
 
-    ApiCallContext callContext = Mockito.mock(ApiCallContext.class);
+    ApiCallContext callContext = mock(ApiCallContext.class);
     ArgumentCaptor<ApiCallContext.Key<Long>> key =
         ArgumentCaptor.forClass(ApiCallContext.Key.class);
     ArgumentCaptor<Long> value = ArgumentCaptor.forClass(Long.class);
@@ -868,13 +980,10 @@ public class BatcherImplTest {
       List<Thread> batcherAddThreadHolder = Collections.synchronizedList(new ArrayList<>());
       Future future =
           executor.submit(
-              new Runnable() {
-                @Override
-                public void run() {
-                  batcherAddThreadHolder.add(Thread.currentThread());
-                  batcher.add(1);
-                  logger.fine("Called batcher.add(1)");
-                }
+              () -> {
+                batcherAddThreadHolder.add(Thread.currentThread());
+                batcher.add(1);
+                logger.fine("Called batcher.add(1)");
               });
 
       // Wait until batcher.add blocks (Thread.State.WAITING) and the batcher starts the
@@ -948,7 +1057,7 @@ public class BatcherImplTest {
   }
 
   @Test
-  public void testThrottlingNonBlocking() throws Exception {
+  void testThrottlingNonBlocking() throws Exception {
     BatchingSettings settings =
         BatchingSettings.newBuilder()
             .setElementCountThreshold(1L)
@@ -979,7 +1088,7 @@ public class BatcherImplTest {
    * response .get() should throw the exception
    */
   @Test
-  public void testAddDoesNotHangIfExceptionThrowStartingACall() {
+  void testAddDoesNotHangIfExceptionThrowStartingACall() {
     BatchingDescriptor<Object, Object, Object, Object> batchingDescriptor =
         new BatchingDescriptor<Object, Object, Object, Object>() {
           @Override
@@ -1025,7 +1134,7 @@ public class BatcherImplTest {
     Object prototype = new Object();
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(100L)
             .setRequestByteThreshold(100L)
             .setFlowControlSettings(FlowControlSettings.getDefaultInstance())
@@ -1045,13 +1154,13 @@ public class BatcherImplTest {
             callContext);
 
     ApiFuture<Object> f = batcher.add(new Object());
-    Assert.assertThrows(ExecutionException.class, f::get);
+    assertThrows(ExecutionException.class, f::get);
     // bubbles up
-    Assert.assertThrows(RuntimeException.class, batcher::close);
+    assertThrows(RuntimeException.class, batcher::close);
   }
 
   @Test
-  public void testDefaultShouldFlush() {
+  void testDefaultShouldFlush() {
     BatchResource resource =
         DefaultBatchResource.builder().setElementCount(2).setByteCount(2).build();
 
@@ -1060,7 +1169,7 @@ public class BatcherImplTest {
   }
 
   @Test
-  public void testDefaultBatchResourceAdd() {
+  void testDefaultBatchResourceAdd() {
     BatchResource resource =
         DefaultBatchResource.builder().setElementCount(1).setByteCount(1).build();
 
@@ -1096,5 +1205,28 @@ public class BatcherImplTest {
         settings,
         EXECUTOR,
         flowController);
+  }
+
+  private static class MySettableApiFuture<T> extends AbstractApiFuture<T> {
+    private final String desc;
+
+    MySettableApiFuture(String desc) {
+      this.desc = desc;
+    }
+
+    @Override
+    public boolean set(T value) {
+      return super.set(value);
+    }
+
+    @Override
+    public boolean setException(Throwable throwable) {
+      return super.setException(throwable);
+    }
+
+    @Override
+    public String toString() {
+      return desc;
+    }
   }
 }

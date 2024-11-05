@@ -32,6 +32,7 @@ package com.google.api.gax.rpc;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.Credentials;
+import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
@@ -47,11 +48,27 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+
+  private static final EndpointContext INSTANCE;
+
+  // static block initialization for exception handling
+  static {
+    try {
+      INSTANCE = EndpointContext.newBuilder().setServiceName("").build();
+    } catch (IOException e) {
+      throw new RuntimeException("Unable to create a default empty EndpointContext", e);
+    }
+  }
+
   public static final String GOOGLE_CLOUD_UNIVERSE_DOMAIN = "GOOGLE_CLOUD_UNIVERSE_DOMAIN";
   public static final String INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE =
       "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
   public static final String UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE =
       "Unable to retrieve the Universe Domain from the Credentials.";
+
+  public static EndpointContext getDefaultInstance() {
+    return INSTANCE;
+  }
 
   /**
    * ServiceName is host URI for Google Cloud Services. It follows the format of
@@ -127,6 +144,11 @@ public abstract class EndpointContext {
       Credentials credentials, StatusCode invalidUniverseDomainStatusCode) throws IOException {
     if (usingGDCH()) {
       // GDC-H has no universe domain, return
+      return;
+    }
+    // (TODO: b/349488459) - Disable automatic requests to MDS until 01/2025
+    // If MDS is required for Universe Domain, do not do any validation
+    if (credentials instanceof ComputeEngineCredentials) {
       return;
     }
     String credentialsUniverseDomain = Credentials.GOOGLE_DEFAULT_UNIVERSE;

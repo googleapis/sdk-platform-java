@@ -29,8 +29,10 @@
  */
 package com.google.api.gax.tracing;
 
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.core.InternalApi;
-import org.threeten.bp.Duration;
+import com.google.api.core.ObsoleteApi;
 
 /**
  * Implementations of this class trace the logical flow of a google cloud client.
@@ -109,12 +111,25 @@ public interface ApiTracer {
   default void attemptCancelled() {};
 
   /**
+   * This method is obsolete. Use {@link #attemptFailedDuration(Throwable, java.time.Duration)}
+   * instead.
+   */
+  @ObsoleteApi("Use attemptFailedDuration(Throwable, java.time.Duration) instead")
+  default void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {};
+
+  /**
    * Adds an annotation that the attempt failed, but another attempt will be made after the delay.
    *
    * @param error the transient error that caused the attempt to fail.
    * @param delay the amount of time to wait before the next attempt will start.
    */
-  default void attemptFailed(Throwable error, Duration delay) {};
+  default void attemptFailedDuration(Throwable error, java.time.Duration delay) {
+    // Defaults to do the same as attemptFailed(Throwable, org.threeten.bp.Duration). This
+    // is because customers may have older/legacy code that directly implements
+    // attemptFailed(Throwable, org.threeten.bp.Duration)} and their overridden logic should be
+    // invoked in gax.
+    attemptFailed(error, toThreetenDuration(delay));
+  };
 
   /**
    * Adds an annotation that the attempt failed and that no further attempts will be made because

@@ -21,11 +21,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class NewObjectExprTest {
+class NewObjectExprTest {
   @Test
-  public void validNewObjectValue_basic() {
+  void validNewObjectValue_basic() {
     // isGeneric() is true and generics() is not empty.
     // [Constructing] `new List<String>()`, no exception should be thrown.
     ConcreteReference ref =
@@ -40,7 +40,7 @@ public class NewObjectExprTest {
   }
 
   @Test
-  public void validNewObjectValue_hasArgument() {
+  void validNewObjectValue_hasArgument() {
     VaporReference ref =
         VaporReference.builder()
             .setName("Student")
@@ -58,7 +58,7 @@ public class NewObjectExprTest {
   }
 
   @Test
-  public void validNewObjectExpr_edgeCase() {
+  void validNewObjectExpr_edgeCase() {
     // isGeneric() is false, but generics() is not empty.
     // The expression is still valid, we will set isGeneric() as true for the users.
     // [Constructing] `new List<String>()`, no exception should be thrown.
@@ -74,7 +74,7 @@ public class NewObjectExprTest {
   }
 
   @Test
-  public void validNewObjectExpr_noGenericWithArgs() {
+  void validNewObjectExpr_noGenericWithArgs() {
     // isGeneric() is false, and generics() is empty.
     // [Constructing] `new Integer(123)` no exception should be thrown.
     ConcreteReference ref = ConcreteReference.builder().setClazz(Integer.class).build();
@@ -88,7 +88,7 @@ public class NewObjectExprTest {
   }
 
   @Test
-  public void validNewObjectExpr_emptyGeneric() {
+  void validNewObjectExpr_emptyGeneric() {
     // isGeneric() is true, but generics() is empty.
     // [Constructing] `new LinkedList<>()` no exception should be thrown.
     ConcreteReference ref = ConcreteReference.builder().setClazz(LinkedList.class).build();
@@ -99,7 +99,7 @@ public class NewObjectExprTest {
   }
 
   @Test
-  public void validNewObjectExpr_genericsAndArgs() {
+  void validNewObjectExpr_genericsAndArgs() {
     // isGeneric() is true, generics() is not empty, and argument list is also not empty.
     // [Constructing] `new HashMap<List<String>, Integer>>(initialCapacity, loadFactor)`.
     ConcreteReference listRef =
@@ -130,7 +130,7 @@ public class NewObjectExprTest {
   }
 
   @Test
-  public void invalidNewObjectExpr_primitiveType() {
+  void invalidNewObjectExpr_primitiveType() {
     // New object expressions should be reference types.
     assertThrows(
         IllegalStateException.class,
@@ -140,7 +140,7 @@ public class NewObjectExprTest {
   }
 
   @Test
-  public void invalidNewObjectExpr_nullType() {
+  void invalidNewObjectExpr_nullType() {
     // New object expressions cannot be null type.
     assertThrows(
         IllegalStateException.class,
@@ -150,7 +150,7 @@ public class NewObjectExprTest {
   }
 
   @Test
-  public void invalidNewObjectValue_nullArgument() {
+  void invalidNewObjectValue_nullArgument() {
     VaporReference ref =
         VaporReference.builder()
             .setName("Student")

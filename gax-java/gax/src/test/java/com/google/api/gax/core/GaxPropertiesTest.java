@@ -29,32 +29,27 @@
  */
 package com.google.api.gax.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static com.google.api.gax.core.GaxProperties.getBundleVersion;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.common.base.Strings;
+import java.io.IOException;
+import java.util.Optional;
 import java.util.regex.Pattern;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class GaxPropertiesTest {
+class GaxPropertiesTest {
 
   @Test
-  public void testGaxVersion() {
-    String gaxVersion = GaxProperties.getGaxVersion();
-    assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(gaxVersion).find());
-    String[] versionComponents = gaxVersion.split("\\.");
-    // This test was added in version 1.56.0, so check that the major and minor numbers are greater
-    // than that.
-    int major = Integer.parseInt(versionComponents[0]);
-    int minor = Integer.parseInt(versionComponents[1]);
+  void testGaxVersion() {
+    Version version = readVersion(GaxProperties.getGaxVersion());
 
-    assertTrue(major >= 1);
-    if (major == 1) {
-      assertTrue(minor >= 56);
+    assertTrue(version.major >= 1);
+    if (version.major == 1) {
+      assertTrue(version.minor >= 56);
     }
   }
 
@@ -62,8 +57,8 @@ public class GaxPropertiesTest {
   private static String originalJavaVendor = System.getProperty("java.vendor");
   private static String originalJavaVendorVersion = System.getProperty("java.vendor.version");
 
-  @After
-  public void cleanup() {
+  @AfterEach
+  void cleanup() {
     if (Strings.isNullOrEmpty(originalJavaVersion)) {
       System.clearProperty("java.version");
     } else {
@@ -84,7 +79,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_graalVM() {
+  void testGetJavaRuntimeInfo_graalVM() {
     // This case is one of major Java vendors
     System.setProperty("java.version", "17.0.3");
     System.setProperty("java.vendor", "GraalVM Community");
@@ -95,7 +90,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_temurin() {
+  void testGetJavaRuntimeInfo_temurin() {
     // This case is one of major Java vendors
     System.setProperty("java.version", "11.0.19");
     System.setProperty("java.vendor", "Eclipse Adoptium");
@@ -106,7 +101,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_coretto() {
+  void testGetJavaRuntimeInfo_coretto() {
     // This case is one of major Java vendors
     System.setProperty("java.version", "11.0.19");
     System.setProperty("java.vendor", "Amazon.com Inc.");
@@ -117,7 +112,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_specialCharacters() {
+  void testGetJavaRuntimeInfo_specialCharacters() {
     // testing for unsupported characters and spaces
     System.setProperty("java.version", "20%^.&0~.1#45`*");
     System.setProperty("java.vendor", "A^!@#$*B()[]{} C ~%& D-E ?");
@@ -128,7 +123,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_nullVendorVersion() {
+  void testGetJavaRuntimeInfo_nullVendorVersion() {
     // testing for null java.vendor.version
     System.setProperty("java.version", "20.0.1");
     System.setProperty("java.vendor", "Oracle");
@@ -139,7 +134,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_nullVendorAndVendorVersion() {
+  void testGetJavaRuntimeInfo_nullVendorAndVendorVersion() {
     // testing for null java.vendor and java.vendor.version
     System.setProperty("java.version", "20.0.1");
     System.clearProperty("java.vendor");
@@ -150,7 +145,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_nullJavaVersion() {
+  void testGetJavaRuntimeInfo_nullJavaVersion() {
     // testing for null java.version
     // We don't expect this case to happen, however we don't want the method to fail when it really
     // happens.
@@ -161,5 +156,42 @@ public class GaxPropertiesTest {
 
     String runtimeInfo = GaxProperties.getRuntimeVersion();
     assertEquals("null__oracle__20.0.1", runtimeInfo);
+  }
+
+  @Test
+  public void testGetProtobufVersion() throws IOException {
+    Version version = readVersion(GaxProperties.getProtobufVersion());
+
+    assertTrue(version.major >= 3);
+    if (version.major == 3) {
+      assertTrue(version.minor >= 25);
+    }
+  }
+
+  @Test
+  public void testGetBundleVersion_noManifestFile() throws IOException {
+    Optional<String> version = getBundleVersion(GaxProperties.class);
+
+    assertFalse(version.isPresent());
+  }
+
+  private Version readVersion(String version) {
+    assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
+    String[] versionComponents = version.split("\\.");
+    // This test was added in version 1.56.0, so check that the major and minor numbers are greater
+    // than that.
+    int major = Integer.parseInt(versionComponents[0]);
+    int minor = Integer.parseInt(versionComponents[1]);
+    return new Version(major, minor);
+  }
+
+  private static class Version {
+    public int major;
+    public int minor;
+
+    public Version(int major, int minor) {
+      this.major = major;
+      this.minor = minor;
+    }
   }
 }

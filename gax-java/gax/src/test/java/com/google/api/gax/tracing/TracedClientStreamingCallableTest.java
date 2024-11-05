@@ -47,21 +47,15 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.concurrent.CancellationException;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.mockito.quality.Strictness;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(JUnit4.class)
-public class TracedClientStreamingCallableTest {
+@ExtendWith(MockitoExtension.class)
+class TracedClientStreamingCallableTest {
   private static final SpanName SPAN_NAME = SpanName.of("fake-client", "fake-method");
-  public @Rule MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
-
   @Mock private ApiTracerFactory tracerFactory;
   private ApiTracer parentTracer = BaseApiTracer.getInstance();
   @Mock private ApiTracer tracer;
@@ -71,8 +65,8 @@ public class TracedClientStreamingCallableTest {
   private FakeStreamObserver outerResponseObsever;
   private FakeCallContext callContext;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     when(tracerFactory.newTracer(parentTracer, SPAN_NAME, OperationType.ClientStreaming))
         .thenReturn(tracer);
     innerCallable = new FakeClientCallable();
@@ -82,7 +76,7 @@ public class TracedClientStreamingCallableTest {
   }
 
   @Test
-  public void testTracerCreated() {
+  void testTracerCreated() {
     tracedCallable.clientStreamingCall(outerResponseObsever, callContext);
 
     verify(tracerFactory, times(1))
@@ -90,7 +84,7 @@ public class TracedClientStreamingCallableTest {
   }
 
   @Test
-  public void testCallContextPropagated() {
+  void testCallContextPropagated() {
     ImmutableMap<String, List<String>> extraHeaders =
         ImmutableMap.<String, List<String>>of("header1", ImmutableList.of("value1"));
 
@@ -101,7 +95,7 @@ public class TracedClientStreamingCallableTest {
   }
 
   @Test
-  public void testOperationCancelled() {
+  void testOperationCancelled() {
     ApiStreamObserver<String> clientStream =
         tracedCallable.clientStreamingCall(outerResponseObsever, callContext);
 
@@ -117,7 +111,7 @@ public class TracedClientStreamingCallableTest {
   }
 
   @Test
-  public void testOperationFinished() {
+  void testOperationFinished() {
     tracedCallable.clientStreamingCall(outerResponseObsever, callContext);
     innerCallable.responseObserver.onNext("ignored");
     innerCallable.responseObserver.onCompleted();
@@ -126,7 +120,7 @@ public class TracedClientStreamingCallableTest {
   }
 
   @Test
-  public void testOperationFailed() {
+  void testOperationFailed() {
     RuntimeException expectedError = new RuntimeException("fake error");
     tracedCallable.clientStreamingCall(outerResponseObsever, callContext);
     innerCallable.responseObserver.onError(expectedError);
@@ -135,7 +129,7 @@ public class TracedClientStreamingCallableTest {
   }
 
   @Test
-  public void testSyncError() {
+  void testSyncError() {
     RuntimeException expectedError = new RuntimeException("fake error");
     innerCallable.syncError = expectedError;
 
@@ -149,7 +143,7 @@ public class TracedClientStreamingCallableTest {
   }
 
   @Test
-  public void testRequestNotify() {
+  void testRequestNotify() {
     ApiStreamObserver<String> requestStream =
         tracedCallable.clientStreamingCall(outerResponseObsever, callContext);
 

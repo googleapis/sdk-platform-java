@@ -53,10 +53,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class RetrySettingsComposerTest {
+class RetrySettingsComposerTest {
   private static final VariableExpr RETRY_PARAM_DEFINITIONS_VAR_EXPR =
       createRetryParamDefinitionsVarExpr();
   private static final VariableExpr RETRY_CODES_DEFINITIONS_VAR_EXPR =
@@ -64,13 +64,13 @@ public class RetrySettingsComposerTest {
 
   private JavaWriterVisitor writerVisitor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     writerVisitor = new JavaWriterVisitor();
   }
 
   @Test
-  public void paramDefinitionsBlock_noConfigsFound() {
+  void paramDefinitionsBlock_noConfigsFound() {
     GapicContext context = TestProtoLoader.instance().parseShowcaseEcho();
     Service service = context.services().get(0);
 
@@ -98,7 +98,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void paramDefinitionsBlock_basic() {
+  void paramDefinitionsBlock_basic() {
     GapicContext context = TestProtoLoader.instance().parseShowcaseEcho();
     Service service = context.services().get(0);
 
@@ -119,20 +119,20 @@ public class RetrySettingsComposerTest {
             "ImmutableMap.Builder<String, RetrySettings> definitions = ImmutableMap.builder();\n",
             "RetrySettings settings = null;\n",
             "settings ="
-                + " RetrySettings.newBuilder().setInitialRetryDelay("
+                + " RetrySettings.newBuilder().setInitialRetryDelayDuration("
                 + "Duration.ofMillis(100L)).setRetryDelayMultiplier(2.0)"
-                + ".setMaxRetryDelay(Duration.ofMillis(3000L))"
-                + ".setInitialRpcTimeout(Duration.ofMillis(10000L))"
+                + ".setMaxRetryDelayDuration(Duration.ofMillis(3000L))"
+                + ".setInitialRpcTimeoutDuration(Duration.ofMillis(10000L))"
                 + ".setRpcTimeoutMultiplier(1.0)"
-                + ".setMaxRpcTimeout(Duration.ofMillis(10000L))"
-                + ".setTotalTimeout(Duration.ofMillis(10000L)).build();\n",
+                + ".setMaxRpcTimeoutDuration(Duration.ofMillis(10000L))"
+                + ".setTotalTimeoutDuration(Duration.ofMillis(10000L)).build();\n",
             "definitions.put(\"retry_policy_1_params\", settings);\n",
             "settings ="
                 + " RetrySettings.newBuilder()"
-                + ".setInitialRpcTimeout(Duration.ofMillis(5000L))"
+                + ".setInitialRpcTimeoutDuration(Duration.ofMillis(5000L))"
                 + ".setRpcTimeoutMultiplier(1.0)"
-                + ".setMaxRpcTimeout(Duration.ofMillis(5000L))"
-                + ".setTotalTimeout(Duration.ofMillis(5000L)).build();\n",
+                + ".setMaxRpcTimeoutDuration(Duration.ofMillis(5000L))"
+                + ".setTotalTimeoutDuration(Duration.ofMillis(5000L)).build();\n",
             "definitions.put(\"no_retry_0_params\", settings);\n",
             "RETRY_PARAM_DEFINITIONS = definitions.build();\n",
             "}\n");
@@ -140,7 +140,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void codesDefinitionsBlock_noConfigsFound() {
+  void codesDefinitionsBlock_noConfigsFound() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
@@ -176,7 +176,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void codesDefinitionsBlock_basic() {
+  void codesDefinitionsBlock_basic() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
@@ -215,7 +215,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void simpleBuilderExpr_basic() {
+  void simpleBuilderExpr_basic() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
@@ -296,7 +296,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void lroBuilderExpr() {
+  void lroBuilderExpr() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
@@ -341,16 +341,16 @@ public class RetrySettingsComposerTest {
                 + "WaitResponse.class))"
                 + ".setMetadataTransformer(ProtoOperationTransformers.MetadataTransformer.create("
                 + "WaitMetadata.class)).setPollingAlgorithm(OperationTimedPollAlgorithm.create("
-                + "RetrySettings.newBuilder().setInitialRetryDelay(Duration.ofMillis(5000L))"
-                + ".setRetryDelayMultiplier(1.5).setMaxRetryDelay(Duration.ofMillis(45000L))"
-                + ".setInitialRpcTimeout(Duration.ZERO).setRpcTimeoutMultiplier(1.0)"
-                + ".setMaxRpcTimeout(Duration.ZERO).setTotalTimeout(Duration.ofMillis(300000L))"
+                + "RetrySettings.newBuilder().setInitialRetryDelayDuration(Duration.ofMillis(5000L))"
+                + ".setRetryDelayMultiplier(1.5).setMaxRetryDelayDuration(Duration.ofMillis(45000L))"
+                + ".setInitialRpcTimeoutDuration(Duration.ZERO).setRpcTimeoutMultiplier(1.0)"
+                + ".setMaxRpcTimeoutDuration(Duration.ZERO).setTotalTimeoutDuration(Duration.ofMillis(300000L))"
                 + ".build()))");
     assertEquals(expected, writerVisitor.write());
   }
 
   @Test
-  public void batchingSettings_minimalFlowControlSettings() {
+  void batchingSettings_minimalFlowControlSettings() {
     String filename = "pubsub_gapic.yaml";
     Path path = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), filename);
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
@@ -394,7 +394,7 @@ public class RetrySettingsComposerTest {
             + "BatchingSettings.newBuilder()"
             + ".setElementCountThreshold(100L)"
             + ".setRequestByteThreshold(1048576L)"
-            + ".setDelayThreshold(Duration.ofMillis(10L))"
+            + ".setDelayThresholdDuration(Duration.ofMillis(10L))"
             + ".setFlowControlSettings("
             + "FlowControlSettings.newBuilder()"
             + ".setLimitExceededBehavior(FlowController.LimitExceededBehavior.Ignore)"
@@ -404,7 +404,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void batchingSettings_fullFlowControlSettings() {
+  void batchingSettings_fullFlowControlSettings() {
     String filename = "logging_gapic.yaml";
     Path path = Paths.get(TestProtoLoader.instance().getTestFilesDirectory(), filename);
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
@@ -451,7 +451,7 @@ public class RetrySettingsComposerTest {
             + "BatchingSettings.newBuilder()"
             + ".setElementCountThreshold(1000L)"
             + ".setRequestByteThreshold(1048576L)"
-            + ".setDelayThreshold(Duration.ofMillis(50L))"
+            + ".setDelayThresholdDuration(Duration.ofMillis(50L))"
             + ".setFlowControlSettings("
             + "FlowControlSettings.newBuilder()"
             + ".setMaxOutstandingElementCount(100000L)"

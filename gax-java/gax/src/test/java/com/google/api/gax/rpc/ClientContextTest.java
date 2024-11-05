@@ -29,15 +29,17 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.google.api.core.ApiClock;
 import com.google.api.gax.core.BackgroundResource;
@@ -46,10 +48,13 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.core.FixedExecutorProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.rpc.testing.FakeChannel;
 import com.google.api.gax.rpc.testing.FakeClientSettings;
 import com.google.api.gax.rpc.testing.FakeStubSettings;
 import com.google.api.gax.rpc.testing.FakeTransportChannel;
+import com.google.auth.ApiKeyCredentials;
+import com.google.auth.CredentialTypeForMetrics;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auth.oauth2.GdchCredentials;
@@ -64,14 +69,10 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class ClientContextTest {
+class ClientContextTest {
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com";
   private static final String DEFAULT_UNIVERSE_DOMAIN = "googleapis.com";
 
@@ -207,9 +208,6 @@ public class ClientContextTest {
 
     @Override
     public TransportChannel getTransportChannel() throws IOException {
-      if (needsCredentials()) {
-        throw new IllegalStateException("Needs Credentials");
-      }
       transport.setExecutor(executor);
       return transport;
     }
@@ -237,28 +235,28 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testNoAutoCloseContextNeedsNoExecutor() throws Exception {
+  void testNoAutoCloseContextNeedsNoExecutor() throws Exception {
     runTest(false, false, false, false);
   }
 
   @Test
-  public void testWithAutoCloseContextNeedsNoExecutor() throws Exception {
+  void testWithAutoCloseContextNeedsNoExecutor() throws Exception {
     runTest(true, false, false, false);
   }
 
   @Test
-  public void testWithAutoCloseContextNeedsExecutor() throws Exception {
+  void testWithAutoCloseContextNeedsExecutor() throws Exception {
     runTest(true, true, false, false);
   }
 
   @Test
-  public void testNeedsHeaders() throws Exception {
+  void testNeedsHeaders() throws Exception {
     runTest(false, false, true, false);
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testNeedsHeadersCollision() throws Exception {
-    runTest(false, false, true, true);
+  @Test
+  void testNeedsHeadersCollision() throws Exception {
+    assertThrows(IllegalArgumentException.class, () -> runTest(false, false, true, true));
   }
 
   private void runTest(
@@ -284,17 +282,17 @@ public class ClientContextTest {
     Credentials credentials = Mockito.mock(Credentials.class);
     ApiClock clock = Mockito.mock(ApiClock.class);
     Watchdog watchdog =
-        Watchdog.create(
+        Watchdog.createDuration(
             Mockito.mock(ApiClock.class),
-            Duration.ZERO,
+            java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));
-    Duration watchdogCheckInterval = Duration.ofSeconds(11);
+    java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(11);
 
     builder.setExecutorProvider(executorProvider);
     builder.setTransportChannelProvider(transportProvider);
     builder.setCredentialsProvider(FixedCredentialsProvider.create(credentials));
     builder.setWatchdogProvider(FixedWatchdogProvider.create(watchdog));
-    builder.setWatchdogCheckInterval(watchdogCheckInterval);
+    builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
     builder.setClock(clock);
 
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
@@ -321,7 +319,7 @@ public class ClientContextTest {
     Truth.assertThat(clientContext.getCredentials()).isSameInstanceAs(credentials);
     Truth.assertThat(clientContext.getClock()).isSameInstanceAs(clock);
     Truth.assertThat(clientContext.getStreamWatchdog()).isSameInstanceAs(watchdog);
-    Truth.assertThat(clientContext.getStreamWatchdogCheckInterval())
+    Truth.assertThat(clientContext.getStreamWatchdogCheckIntervalDuration())
         .isEqualTo(watchdogCheckInterval);
 
     Truth.assertThat(clientContext.getHeaders()).isEqualTo(ImmutableMap.of("k1", "v1"));
@@ -348,7 +346,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testWatchdogProvider() throws IOException {
+  void testWatchdogProvider() throws IOException {
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
 
     InterceptingExecutor executor = new InterceptingExecutor(1);
@@ -363,13 +361,13 @@ public class ClientContextTest {
     builder.setExecutorProvider(new FakeExecutorProvider(executor, true));
     builder.setTransportChannelProvider(transportProvider);
 
-    Duration watchdogCheckInterval = Duration.ofSeconds(11);
+    java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(11);
     builder.setWatchdogProvider(
         InstantiatingWatchdogProvider.create()
             .withClock(clock)
-            .withCheckInterval(watchdogCheckInterval)
+            .withCheckIntervalDuration(watchdogCheckInterval)
             .withExecutor(executor));
-    builder.setWatchdogCheckInterval(watchdogCheckInterval);
+    builder.setWatchdogCheckIntervalDuration(watchdogCheckInterval);
 
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of("k1", "v1"));
@@ -385,7 +383,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testMergeHeaders_getQuotaProjectIdFromHeadersProvider() throws IOException {
+  void testMergeHeaders_getQuotaProjectIdFromHeadersProvider() throws IOException {
     final String QUOTA_PROJECT_ID_KEY = "x-goog-user-project";
     final String QUOTA_PROJECT_ID_FROM_SETTINGS = "quota_project_id_from_settings";
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
@@ -419,7 +417,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testMergeHeaders_getQuotaProjectIdFromSettings() throws IOException {
+  void testMergeHeaders_getQuotaProjectIdFromSettings() throws IOException {
     final String QUOTA_PROJECT_ID_KEY = "x-goog-user-project";
     final String QUOTA_PROJECT_ID_FROM_HEADERS = "quota_project_id_from_headers";
     final String QUOTA_PROJECT_ID_FROM_INTERNAL_HEADERS = "quota_project_id_from_internal_headers";
@@ -468,7 +466,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testMergeHeaders_noQuotaProjectIdSet() throws IOException {
+  void testMergeHeaders_noQuotaProjectIdSet() throws IOException {
     final String QUOTA_PROJECT_ID_KEY = "x-goog-user-project";
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
 
@@ -498,7 +496,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testHidingQuotaProjectId_quotaSetFromSetting() throws IOException {
+  void testHidingQuotaProjectId_quotaSetFromSetting() throws IOException {
     final String QUOTA_PROJECT_ID_KEY = "x-goog-user-project";
     final String QUOTA_PROJECT_ID_FROM_CREDENTIALS_VALUE = "quota_project_id_from_credentials";
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
@@ -541,7 +539,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testHidingQuotaProjectId_noQuotaSetFromSetting() throws IOException {
+  void testHidingQuotaProjectId_noQuotaSetFromSetting() throws IOException {
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
 
     InterceptingExecutor executor = new InterceptingExecutor(1);
@@ -571,7 +569,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testQuotaProjectId_worksWithNullCredentials() throws IOException {
+  void testQuotaProjectId_worksWithNullCredentials() throws IOException {
     final String QUOTA_PROJECT_ID = "quota_project_id";
 
     final InterceptingExecutor executor = new InterceptingExecutor(1);
@@ -596,7 +594,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testUserAgentInternalOnly() throws Exception {
+  void testUserAgentInternalOnly() throws Exception {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()),
@@ -624,7 +622,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testUserAgentExternalOnly() throws Exception {
+  void testUserAgentExternalOnly() throws Exception {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()),
@@ -652,7 +650,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testUserAgentConcat() throws Exception {
+  void testUserAgentConcat() throws Exception {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()),
@@ -681,11 +679,91 @@ public class ClientContextTest {
         .containsEntry("user-agent", "user-supplied-agent internal-agent");
   }
 
+  @Test
+  void testApiClientHeaderAppendsCredType() throws Exception {
+    GoogleCredentials googleCredentials = Mockito.mock(GoogleCredentials.class);
+    when(googleCredentials.getMetricsCredentialType())
+        .thenReturn(CredentialTypeForMetrics.USER_CREDENTIALS);
+
+    Map<String, String> headers =
+        setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+            FixedCredentialsProvider.create(googleCredentials),
+            FixedHeaderProvider.create("x-goog-api-client", "internal-agent"));
+
+    assertThat(headers).containsEntry("x-goog-api-client", "internal-agent cred-type/u");
+  }
+
+  @Test
+  void testApiClientHeaderDoNotAppendsCredType_whenNoApiClientHeader() throws Exception {
+    GoogleCredentials googleCredentials = Mockito.mock(GoogleCredentials.class);
+    when(googleCredentials.getMetricsCredentialType())
+        .thenReturn(CredentialTypeForMetrics.USER_CREDENTIALS);
+
+    Map<String, String> headers =
+        setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+            FixedCredentialsProvider.create(googleCredentials),
+            FixedHeaderProvider.create("some-other-header", "internal-agent"));
+
+    assertThat(headers).doesNotContainKey("x-goog-api-client");
+    assertThat(headers).containsEntry("some-other-header", "internal-agent");
+  }
+
+  @Test
+  void testApiClientHeaderDoNotAppendsCredType_whenNullCredentials() throws IOException {
+    Map<String, String> headers =
+        setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+            NoCredentialsProvider.create(),
+            FixedHeaderProvider.create("x-goog-api-client", "internal-agent"));
+
+    assertThat(headers).containsKey("x-goog-api-client");
+    assertThat(headers.get("x-goog-api-client")).doesNotContain("cred-type/");
+  }
+
+  @Test
+  void testApiClientHeaderDoNotAppendsCredType_whenCredTypeDoNotSend() throws Exception {
+    GoogleCredentials googleCredentials = Mockito.mock(GoogleCredentials.class);
+    when(googleCredentials.getMetricsCredentialType())
+        .thenReturn(CredentialTypeForMetrics.DO_NOT_SEND);
+
+    Map<String, String> headers =
+        setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+            FixedCredentialsProvider.create(googleCredentials),
+            FixedHeaderProvider.create("x-goog-api-client", "internal-agent"));
+
+    assertThat(headers).containsKey("x-goog-api-client");
+    assertThat(headers.get("x-goog-api-client")).doesNotContain("cred-type/");
+  }
+
+  private Map<String, String> setupTestForCredentialTokenUsageMetricsAndGetTransportChannelHeaders(
+      CredentialsProvider credentialsProvider, HeaderProvider headerProvider) throws IOException {
+    TransportChannelProvider transportChannelProvider =
+        new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()),
+            null,
+            true,
+            null,
+            null,
+            DEFAULT_ENDPOINT);
+
+    ClientSettings.Builder builder =
+        new FakeClientSettings.Builder()
+            .setExecutorProvider(
+                FixedExecutorProvider.create(Mockito.mock(ScheduledExecutorService.class)))
+            .setTransportChannelProvider(transportChannelProvider)
+            .setCredentialsProvider(credentialsProvider)
+            .setInternalHeaderProvider(headerProvider);
+
+    ClientContext clientContext = ClientContext.create(builder.build());
+    FakeTransportChannel transportChannel =
+        (FakeTransportChannel) clientContext.getTransportChannel();
+    return transportChannel.getHeaders();
+  }
+
   private static String endpoint = "https://foo.googleapis.com";
   private static String mtlsEndpoint = "https://foo.mtls.googleapis.com";
 
   @Test
-  public void testSwitchToMtlsEndpointAllowed() throws IOException {
+  void testSwitchToMtlsEndpointAllowed() throws IOException {
     StubSettings settings = new FakeStubSettings.Builder().setEndpoint(endpoint).build();
     assertFalse(settings.getSwitchToMtlsEndpointAllowed());
     assertEquals(endpoint, settings.getEndpoint());
@@ -709,7 +787,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testExecutorSettings() throws Exception {
+  void testExecutorSettings() throws Exception {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()),
@@ -791,7 +869,7 @@ public class ClientContextTest {
 
   // EndpointContext will construct a valid endpoint if nothing is provided
   @Test
-  public void testCreateClientContext_withGdchCredentialNoAudienceNoEndpoint() throws IOException {
+  void testCreateClientContext_withGdchCredentialNoAudienceNoEndpoint() throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
@@ -817,7 +895,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_withGdchCredentialNoAudienceEmptyEndpoint_throws()
+  void testCreateClientContext_withGdchCredentialNoAudienceEmptyEndpoint_throws()
       throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
@@ -840,7 +918,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_withGdchCredentialWithoutAudienceWithEndpoint_correct()
+  void testCreateClientContext_withGdchCredentialWithoutAudienceWithEndpoint_correct()
       throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
@@ -873,7 +951,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_withGdchCredentialAndValidAudience() throws IOException {
+  void testCreateClientContext_withGdchCredentialAndValidAudience() throws IOException {
     Credentials creds = getMockGdchCredentials();
     CredentialsProvider provider = FixedCredentialsProvider.create(creds);
     TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
@@ -902,8 +980,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_withGdchCredentialAndInvalidAudience_throws()
-      throws IOException {
+  void testCreateClientContext_withGdchCredentialAndInvalidAudience_throws() throws IOException {
     TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
     Credentials creds = getMockGdchCredentials();
     CredentialsProvider provider = FixedCredentialsProvider.create(creds);
@@ -933,8 +1010,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_withNonGdchCredentialAndAnyAudience_throws()
-      throws IOException {
+  void testCreateClientContext_withNonGdchCredentialAndAnyAudience_throws() throws IOException {
     TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
 
     // it should throw if apiAudience is set but not using GDC-H creds
@@ -955,7 +1031,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_SetEndpointViaClientSettings() throws IOException {
+  void testCreateClientContext_SetEndpointViaClientSettings() throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
@@ -975,7 +1051,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_SetEndpointViaTransportChannelProvider() throws IOException {
+  void testCreateClientContext_SetEndpointViaTransportChannelProvider() throws IOException {
     String transportChannelProviderEndpoint = "transport.endpoint.com";
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
@@ -1001,7 +1077,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_SetEndpointViaClientSettingsAndTransportChannelProvider()
+  void testCreateClientContext_SetEndpointViaClientSettingsAndTransportChannelProvider()
       throws IOException {
     String clientSettingsEndpoint = "clientSettingsEndpoint.com";
     String transportChannelProviderEndpoint = "transportChannelProviderEndpoint.com";
@@ -1032,7 +1108,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_doNotSetUniverseDomain() throws IOException {
+  void testCreateClientContext_doNotSetUniverseDomain() throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
@@ -1051,7 +1127,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_setUniverseDomain() throws IOException {
+  void testCreateClientContext_setUniverseDomain() throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
@@ -1065,5 +1141,59 @@ public class ClientContextTest {
     ClientSettings clientSettings = clientSettingsBuilder.build();
     ClientContext clientContext = ClientContext.create(clientSettings);
     assertThat(clientContext.getUniverseDomain()).isEqualTo(universeDomain);
+  }
+
+  @Test
+  public void testStreamWatchdogInterval_backportMethodsBehaveCorrectly() {
+    final ClientContext.Builder builder =
+        ClientContext.newBuilder().setDefaultCallContext(FakeCallContext.createDefault());
+    testDurationMethod(
+        123L,
+        jt -> builder.setStreamWatchdogCheckIntervalDuration(jt).build(),
+        tt -> builder.setStreamWatchdogCheckInterval(tt).build(),
+        ct -> ct.getStreamWatchdogCheckIntervalDuration(),
+        ct -> ct.getStreamWatchdogCheckInterval());
+  }
+
+  @Test
+  void testSetApiKey_createsApiCredentials() throws IOException {
+    String apiKey = "key";
+    FakeStubSettings.Builder builder = new FakeStubSettings.Builder();
+    InterceptingExecutor executor = new InterceptingExecutor(1);
+    FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
+    FakeTransportProvider transportProvider =
+        new FakeTransportProvider(
+            transportChannel, executor, true, ImmutableMap.of(), null, DEFAULT_ENDPOINT);
+    builder.setTransportChannelProvider(transportProvider);
+    HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
+    Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of());
+    builder.setHeaderProvider(headerProvider);
+    builder.setApiKey(apiKey);
+
+    ClientContext context = ClientContext.create(builder.build());
+
+    FakeCallContext fakeCallContext = (FakeCallContext) context.getDefaultCallContext();
+    assertThat(fakeCallContext.getCredentials()).isInstanceOf(ApiKeyCredentials.class);
+  }
+
+  @Test
+  void testSetApiKey_withDefaultCredentials_overridesCredentials() throws IOException {
+    String apiKey = "key";
+    FakeStubSettings.Builder builder = FakeStubSettings.newBuilder();
+    InterceptingExecutor executor = new InterceptingExecutor(1);
+    FakeTransportChannel transportChannel = FakeTransportChannel.create(new FakeChannel());
+    FakeTransportProvider transportProvider =
+        new FakeTransportProvider(
+            transportChannel, executor, true, ImmutableMap.of(), null, DEFAULT_ENDPOINT);
+    builder.setTransportChannelProvider(transportProvider);
+    HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
+    Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of());
+    builder.setHeaderProvider(headerProvider);
+    builder.setApiKey(apiKey);
+
+    ClientContext context = ClientContext.create(builder.build());
+
+    FakeCallContext fakeCallContext = (FakeCallContext) context.getDefaultCallContext();
+    assertThat(fakeCallContext.getCredentials()).isInstanceOf(ApiKeyCredentials.class);
   }
 }

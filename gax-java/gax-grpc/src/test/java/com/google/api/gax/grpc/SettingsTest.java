@@ -29,7 +29,8 @@
  */
 package com.google.api.gax.grpc;
 
-import static org.junit.Assert.assertEquals;
+import static com.google.api.gax.util.TimeConversionTestUtils.testDurationMethod;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.api.gax.batching.BatchingSettings;
 import com.google.api.gax.core.CredentialsProvider;
@@ -58,14 +59,12 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.truth.Truth;
 import java.io.IOException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class SettingsTest {
+class SettingsTest {
 
   interface FakePagedListResponse extends PagedListResponse<Integer> {}
 
@@ -112,13 +111,13 @@ public class SettingsTest {
       RetrySettings settings = null;
       settings =
           RetrySettings.newBuilder()
-              .setInitialRetryDelay(Duration.ofMillis(100L))
+              .setInitialRetryDelayDuration(java.time.Duration.ofMillis(100L))
               .setRetryDelayMultiplier(1.2)
-              .setMaxRetryDelay(Duration.ofMillis(1000L))
-              .setInitialRpcTimeout(Duration.ofMillis(2000L))
+              .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1000L))
+              .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(2000L))
               .setRpcTimeoutMultiplier(1.5)
-              .setMaxRpcTimeout(Duration.ofMillis(30000L))
-              .setTotalTimeout(Duration.ofMillis(45000L))
+              .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(30000L))
+              .setTotalTimeoutDuration(java.time.Duration.ofMillis(45000L))
               .build();
       definitions.put("default", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();
@@ -224,7 +223,7 @@ public class SettingsTest {
                 BatchingSettings.newBuilder()
                     .setElementCountThreshold(800L)
                     .setRequestByteThreshold(8388608L)
-                    .setDelayThreshold(Duration.ofMillis(100))
+                    .setDelayThresholdDuration(java.time.Duration.ofMillis(100))
                     .build());
         builder
             .fakeMethodBatching()
@@ -265,7 +264,7 @@ public class SettingsTest {
   // ====
 
   @Test
-  public void customCredentials() throws IOException {
+  void customCredentials() throws IOException {
     Credentials credentials = Mockito.mock(Credentials.class);
 
     FakeStubSettings settings =
@@ -287,7 +286,7 @@ public class SettingsTest {
   }
 
   @Test
-  public void channelCustomCredentialScopes() throws IOException {
+  void channelCustomCredentialScopes() throws IOException {
     ImmutableList<String> inputScopes =
         ImmutableList.<String>builder().add("https://www.googleapis.com/auth/fakeservice").build();
 
@@ -319,7 +318,7 @@ public class SettingsTest {
   // ====
 
   @Test
-  public void callSettingsToBuilder() {
+  void callSettingsToBuilder() {
     UnaryCallSettings.Builder<?, ?> builderA = UnaryCallSettings.newUnaryCallSettingsBuilder();
     UnaryCallSettings<?, ?> settingsA = builderA.build();
     UnaryCallSettings.Builder<?, ?> builderB = settingsA.toBuilder();
@@ -329,19 +328,19 @@ public class SettingsTest {
   }
 
   @Test
-  public void unaryCallSettingsBuilderBuildDoesNotFailUnsetProperties() {
+  void unaryCallSettingsBuilderBuildDoesNotFailUnsetProperties() {
     UnaryCallSettings.Builder<Integer, Integer> builder =
         UnaryCallSettings.newUnaryCallSettingsBuilder();
     builder.build();
   }
 
   @Test
-  public void callSettingsBuildFromTimeoutNoRetries() {
-    Duration timeout = Duration.ofMillis(60000);
+  void callSettingsBuildFromTimeoutNoRetries() {
+    java.time.Duration timeout = java.time.Duration.ofMillis(60000);
 
     UnaryCallSettings.Builder<Integer, Integer> builderA =
         UnaryCallSettings.newUnaryCallSettingsBuilder();
-    builderA.setSimpleTimeoutNoRetries(timeout);
+    builderA.setSimpleTimeoutNoRetriesDuration(timeout);
     UnaryCallSettings<Integer, Integer> settingsA = builderA.build();
 
     UnaryCallSettings.Builder<Integer, Integer> builderB =
@@ -350,17 +349,37 @@ public class SettingsTest {
         .setRetryableCodes()
         .setRetrySettings(
             RetrySettings.newBuilder()
-                .setTotalTimeout(timeout)
-                .setInitialRetryDelay(Duration.ZERO)
+                .setTotalTimeoutDuration(timeout)
+                .setInitialRetryDelayDuration(java.time.Duration.ZERO)
                 .setRetryDelayMultiplier(1)
-                .setMaxRetryDelay(Duration.ZERO)
-                .setInitialRpcTimeout(timeout)
+                .setMaxRetryDelayDuration(java.time.Duration.ZERO)
+                .setInitialRpcTimeoutDuration(timeout)
                 .setRpcTimeoutMultiplier(1)
-                .setMaxRpcTimeout(timeout)
+                .setMaxRpcTimeoutDuration(timeout)
                 .setMaxAttempts(1)
                 .build());
     UnaryCallSettings<Integer, Integer> settingsB = builderB.build();
 
-    assertEquals("UnaryCallSettings", settingsA, settingsB);
+    assertEquals(settingsA, settingsB, "UnaryCallSettings");
+  }
+
+  @Test
+  public void testWatchDogCheckInterval_backportMethodsBehaveCorrectly() {
+    final Function<Supplier<StubSettings.Builder>, StubSettings> build =
+        createBuilder -> {
+          try {
+            return createBuilder.get().build();
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        };
+    testDurationMethod(
+        123l,
+        jt ->
+            build.apply(
+                () -> FakeStubSettings.newBuilder().setStreamWatchdogCheckIntervalDuration(jt)),
+        tt -> build.apply(() -> FakeStubSettings.newBuilder().setStreamWatchdogCheckInterval(tt)),
+        ss -> ss.getStreamWatchdogCheckIntervalDuration(),
+        ss -> ss.getStreamWatchdogCheckInterval());
   }
 }

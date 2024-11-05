@@ -66,43 +66,41 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.LockSupport;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
-@RunWith(JUnit4.class)
-public class OperationCallableImplTest {
+class OperationCallableImplTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(Duration.ofMillis(2L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(2L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(Duration.ofMillis(2L))
-          .setInitialRpcTimeout(Duration.ofMillis(2L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(2L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(Duration.ofMillis(2L))
-          .setTotalTimeout(Duration.ofMillis(10L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(2L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(10L))
           .build();
 
   private static final RetrySettings FAST_RECHECKING_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(Duration.ofMillis(1L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(1L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(Duration.ofMillis(1L))
-          .setInitialRpcTimeout(
-              Duration.ZERO) // supposed to be ignored, but are not actually, so we set to zero
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1L))
+          .setInitialRpcTimeoutDuration(
+              java.time.Duration
+                  .ZERO) // supposed to be ignored, but are not actually, so we set to zero
           .setMaxAttempts(0)
           .setJittered(false)
           .setRpcTimeoutMultiplier(
               1) // supposed to be ignored, but are not actually, so we set to one
-          .setMaxRpcTimeout(
-              Duration.ZERO) // supposed to be ignored, but are not actually, so we set to zero
-          .setTotalTimeout(Duration.ofMillis(5L))
+          .setMaxRpcTimeoutDuration(
+              java.time.Duration
+                  .ZERO) // supposed to be ignored, but are not actually, so we set to zero
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(5L))
           .build();
 
   private FakeChannel initialChannel;
@@ -114,8 +112,8 @@ public class OperationCallableImplTest {
   private FakeApiClock clock;
   private OperationTimedPollAlgorithm pollingAlgorithm;
 
-  @Before
-  public void setUp() throws IOException {
+  @BeforeEach
+  void setUp() throws IOException {
     initialChannel = mock(FakeChannel.class);
     pollTransportChannel = mock(TransportChannel.class);
     TransportChannelProvider operationsChannelProvider = mock(TransportChannelProvider.class);
@@ -191,13 +189,13 @@ public class OperationCallableImplTest {
     }
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     executor.shutdown();
   }
 
   @Test
-  public void testCall() {
+  void testCall() {
     Color resp = getColor(1.0f);
     Currency meta = Currency.getInstance("UAH");
     OperationSnapshot resultOperation = getOperation("testCall", resp, null, meta, true);
@@ -215,7 +213,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testResumeFutureCall() throws Exception {
+  void testResumeFutureCall() throws Exception {
     String opName = "testResumeFutureCall";
     Color resp = getColor(0.5f);
     Currency meta = Currency.getInstance("UAH");
@@ -234,7 +232,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testCancelOperation() throws Exception {
+  void testCancelOperation() throws Exception {
     String opName = "testCancelOperation";
     LongRunningClient longRunningClient = mockCancelOperation(StatusCode.Code.OK);
 
@@ -248,7 +246,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialDone() throws Exception {
+  void testFutureCallInitialDone() throws Exception {
     String opName = "testFutureCallInitialDone";
     Color resp = getColor(0.5f);
     Currency meta = Currency.getInstance("UAH");
@@ -269,7 +267,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialError() throws Exception {
+  void testFutureCallInitialError() throws Exception {
     String opName = "testFutureCallInitialError";
     Color resp = getColor(1.0f);
     Currency meta = Currency.getInstance("UAH");
@@ -290,7 +288,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialDoneWithError() throws Exception {
+  void testFutureCallInitialDoneWithError() throws Exception {
     String opName = "testFutureCallInitialDoneWithError";
     StatusCode errorCode = FakeStatusCode.of(StatusCode.Code.ALREADY_EXISTS);
     Currency meta = Currency.getInstance("UAH");
@@ -320,7 +318,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialDoneWrongType() throws Exception {
+  void testFutureCallInitialDoneWrongType() throws Exception {
     String opName = "testFutureCallInitialDoneWrongType";
     Currency resp = Currency.getInstance("USD");
     Currency meta = Currency.getInstance("UAH");
@@ -345,7 +343,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialDoneMetaWrongType() throws Exception {
+  void testFutureCallInitialDoneMetaWrongType() throws Exception {
     String opName = "testFutureCallInitialDoneMetaWrongType";
     Color resp = getColor(1.0f);
     Color meta = getColor(1.0f);
@@ -366,7 +364,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialCancel() throws Exception {
+  void testFutureCallInitialCancel() throws Exception {
     String opName = "testFutureCallInitialCancel";
     OperationSnapshot initialOperation = getOperation(opName, null, null, null, false);
     OperationSnapshot resultOperation = getOperation(opName, null, null, null, false);
@@ -402,7 +400,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallInitialOperationUnexpectedFail() throws Exception {
+  void testFutureCallInitialOperationUnexpectedFail() throws Exception {
     String opName = "testFutureCallInitialOperationUnexpectedFail";
     OperationSnapshot initialOperation = getOperation(opName, null, null, null, false);
     OperationSnapshot resultOperation = getOperation(opName, null, null, null, false);
@@ -425,7 +423,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollDoneOnFirst() throws Exception {
+  void testFutureCallPollDoneOnFirst() throws Exception {
     String opName = "testFutureCallPollDoneOnFirst";
     Color resp = getColor(0.5f);
     Currency meta = Currency.getInstance("UAH");
@@ -447,7 +445,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollDoneOnSecond() throws Exception {
+  void testFutureCallPollDoneOnSecond() throws Exception {
     String opName = "testFutureCallPollDoneOnSecond";
     Color resp = getColor(0.5f);
     Currency meta1 = Currency.getInstance("UAH");
@@ -472,7 +470,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollRPCTimeout() throws Exception {
+  void testFutureCallPollRPCTimeout() throws Exception {
     String opName = "testFutureCallPollRPCTimeout";
     pollingAlgorithm =
         OperationTimedPollAlgorithm.create(
@@ -484,10 +482,10 @@ public class OperationCallableImplTest {
                 // for LRO polling. They are not actually ignored in code, so they changing them
                 // here has an actual affect. This test verifies that they work as such, but in
                 // practice generated clients set the RPC timeouts to 0 to be ignored.
-                .setInitialRpcTimeout(Duration.ofMillis(100))
-                .setMaxRpcTimeout(Duration.ofSeconds(1))
+                .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(100))
+                .setMaxRpcTimeoutDuration(java.time.Duration.ofSeconds(1))
                 .setRpcTimeoutMultiplier(2)
-                .setTotalTimeout(Duration.ofSeconds(5L))
+                .setTotalTimeoutDuration(java.time.Duration.ofSeconds(5L))
                 .build(),
             clock);
     callSettings = callSettings.toBuilder().setPollingAlgorithm(pollingAlgorithm).build();
@@ -521,19 +519,22 @@ public class OperationCallableImplTest {
 
     callable.futureCall(2, FakeCallContext.createDefault()).get(10, TimeUnit.SECONDS);
 
-    List<Duration> actualTimeouts = Lists.newArrayList();
+    List<java.time.Duration> actualTimeouts = Lists.newArrayList();
 
     for (ApiCallContext callContext : callContextCaptor.getAllValues()) {
-      actualTimeouts.add(callContext.getTimeout());
+      actualTimeouts.add(callContext.getTimeoutDuration());
     }
 
-    List<Duration> expectedTimeouts =
-        Lists.newArrayList(Duration.ofMillis(100), Duration.ofMillis(200), Duration.ofMillis(400));
+    List<java.time.Duration> expectedTimeouts =
+        Lists.newArrayList(
+            java.time.Duration.ofMillis(100),
+            java.time.Duration.ofMillis(200),
+            java.time.Duration.ofMillis(400));
     assertThat(actualTimeouts).isEqualTo(expectedTimeouts);
   }
 
   @Test
-  public void testFutureCallContextPropagation() throws Exception {
+  void testFutureCallContextPropagation() throws Exception {
     String opName = "testFutureCallContextPropagation";
 
     Color resp = getColor(0.5f);
@@ -558,15 +559,17 @@ public class OperationCallableImplTest {
         FakeCallableFactory.createOperationCallable(
             initialCallable, callSettings, initialContext, longRunningClient);
 
-    ApiCallContext callContext = FakeCallContext.createDefault().withTimeout(Duration.ofMillis(10));
+    ApiCallContext callContext =
+        FakeCallContext.createDefault().withTimeoutDuration(java.time.Duration.ofMillis(10));
 
     callable.futureCall(2, callContext).get(10, TimeUnit.SECONDS);
 
-    assertThat(callContextCaptor.getValue().getTimeout()).isEqualTo(Duration.ofMillis(10));
+    assertThat(callContextCaptor.getValue().getTimeoutDuration())
+        .isEqualTo(java.time.Duration.ofMillis(10));
   }
 
   @Test
-  public void testFutureCallPollDoneOnMany() throws Exception {
+  void testFutureCallPollDoneOnMany() throws Exception {
     final int iterationsCount = 1000;
     String opName = "testFutureCallPollDoneOnMany";
     Color resp = getColor(0.5f);
@@ -587,7 +590,7 @@ public class OperationCallableImplTest {
         OperationTimedPollAlgorithm.create(
             FAST_RECHECKING_SETTINGS
                 .toBuilder()
-                .setTotalTimeout(Duration.ofMillis(iterationsCount))
+                .setTotalTimeoutDuration(java.time.Duration.ofMillis(iterationsCount))
                 .build(),
             clock);
     callSettings = callSettings.toBuilder().setPollingAlgorithm(pollingAlgorithm).build();
@@ -606,7 +609,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollError() throws Exception {
+  void testFutureCallPollError() throws Exception {
     String opName = "testFutureCallPollError";
     Currency meta = Currency.getInstance("UAH");
     Color resp = getColor(1.0f);
@@ -628,7 +631,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollDoneWithError() throws Exception {
+  void testFutureCallPollDoneWithError() throws Exception {
     String opName = "testFutureCallPollDoneWithError";
     Currency meta = Currency.getInstance("UAH");
     Color resp = getColor(1.0f);
@@ -661,7 +664,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollCancelOnTimeoutExceeded() throws Exception {
+  void testFutureCallPollCancelOnTimeoutExceeded() throws Exception {
     String opName = "testFutureCallPollCancelOnPollingTimeoutExceeded";
     OperationSnapshot initialOperation = getOperation(opName, null, null, null, false);
     OperationSnapshot resultOperation = getOperation(opName, null, null, null, false);
@@ -680,7 +683,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCallPollCancelOnLongTimeoutExceeded() throws Exception {
+  void testFutureCallPollCancelOnLongTimeoutExceeded() throws Exception {
     final int iterationsCount = 1000;
     String opName = "testFutureCallPollCancelOnLongTimeoutExceeded";
     OperationSnapshot initialOperation = getOperation(opName, null, null, null, false);
@@ -695,7 +698,10 @@ public class OperationCallableImplTest {
 
     pollingAlgorithm =
         OperationTimedPollAlgorithm.create(
-            FAST_RECHECKING_SETTINGS.toBuilder().setTotalTimeout(Duration.ofMillis(1000L)).build(),
+            FAST_RECHECKING_SETTINGS
+                .toBuilder()
+                .setTotalTimeoutDuration(java.time.Duration.ofMillis(1000L))
+                .build(),
             clock);
     callSettings = callSettings.toBuilder().setPollingAlgorithm(pollingAlgorithm).build();
 
@@ -711,7 +717,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCancelImmediately() throws Exception {
+  void testFutureCancelImmediately() throws Exception {
     int iterationsCount = 3;
     String opName = "testCancelImmediately";
     Color resp = getColor(0.5f);
@@ -747,7 +753,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testFutureCancelInTheMiddle() throws Exception {
+  void testFutureCancelInTheMiddle() throws Exception {
     int iterationsCount = 1000;
     String opName = "testCancelInTheMiddle";
     Color resp = getColor(0.5f);
@@ -779,7 +785,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testInitialServerSideCancel() throws Exception {
+  void testInitialServerSideCancel() throws Exception {
     String opName = "testInitialServerSideCancel";
     StatusCode errorCode = FakeStatusCode.of(StatusCode.Code.CANCELLED);
     Currency meta = Currency.getInstance("UAH");
@@ -808,7 +814,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void testPollServerSideCancel() throws Exception {
+  void testPollServerSideCancel() throws Exception {
     String opName = "testPollServerSideCancel";
     StatusCode errorCode = FakeStatusCode.of(StatusCode.Code.CANCELLED);
     Currency meta = Currency.getInstance("UAH");
@@ -840,7 +846,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void call() {
+  void call() {
     ApiCallContext defaultCallContext = FakeCallContext.createDefault();
     OperationStashCallable stashCallable = new OperationStashCallable();
     OperationCallable<Integer, String, Long> callable =
@@ -852,7 +858,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void callWithContext() {
+  void callWithContext() {
     FakeChannel channel = new FakeChannel();
     Credentials credentials = Mockito.mock(Credentials.class);
     ApiCallContext context =
@@ -869,7 +875,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void callResume() throws Exception {
+  void callResume() throws Exception {
     ApiCallContext defaultCallContext = FakeCallContext.createDefault();
     OperationStashCallable stashCallable = new OperationStashCallable();
     OperationCallable<Integer, String, Long> callable =
@@ -883,7 +889,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void callResumeWithContext() throws Exception {
+  void callResumeWithContext() throws Exception {
     FakeChannel channel = new FakeChannel();
     Credentials credentials = Mockito.mock(Credentials.class);
     ApiCallContext context =
@@ -902,7 +908,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void callCancel() throws Exception {
+  void callCancel() throws Exception {
     ApiCallContext defaultCallContext = FakeCallContext.createDefault();
     OperationStashCallable stashCallable = new OperationStashCallable();
     OperationCallable<Integer, String, Long> callable =
@@ -916,7 +922,7 @@ public class OperationCallableImplTest {
   }
 
   @Test
-  public void callCancelWithContext() throws Exception {
+  void callCancelWithContext() throws Exception {
     FakeChannel channel = new FakeChannel();
     Credentials credentials = Mockito.mock(Credentials.class);
     ApiCallContext context =
@@ -1165,8 +1171,8 @@ public class OperationCallableImplTest {
       public ApiFuture<OperationSnapshot> futureCall(RequestT request, ApiCallContext context) {
         FakeCallContext fakeCallContext = (FakeCallContext) context;
         if (fakeCallContext != null
-            && fakeCallContext.getTimeout() != null
-            && fakeCallContext.getTimeout().isZero()) {
+            && fakeCallContext.getTimeoutDuration() != null
+            && fakeCallContext.getTimeoutDuration().isZero()) {
           throw new DeadlineExceededException(
               "Invalid timeout of 0 s",
               null,

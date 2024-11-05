@@ -39,15 +39,12 @@ import com.google.common.collect.ImmutableMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class HttpJsonCallableFactoryTest {
+class HttpJsonCallableFactoryTest {
   @Test
-  public void testGetSpanName() {
+  void testGetSpanName() {
     Map<String, SpanName> validNames =
         ImmutableMap.of(
             "compute.projects.disableXpnHost", SpanName.of("compute.projects", "disableXpnHost"),
@@ -69,7 +66,7 @@ public class HttpJsonCallableFactoryTest {
   }
 
   @Test
-  public void testGetSpanNameInvalid() {
+  void testGetSpanNameInvalid() {
     List<String> invalidNames = ImmutableList.of("no_split", ".no_client");
 
     for (String invalidName : invalidNames) {

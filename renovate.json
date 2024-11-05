@@ -6,6 +6,7 @@
   "ignoreDeps": [
     "rules_pkg"
   ],
+  "ignorePaths": ["^library_generation/requirements\\.txt$"],
   "customManagers": [
     {
       "customType": "regex",
@@ -23,17 +24,6 @@
         "^gax-java/dependencies\\.properties$"
       ],
       "matchStrings": [
-        "version\\.com_google_protobuf=(?<currentValue>.+?)\\n"
-      ],
-      "depNameTemplate": "com.google.protobuf:protobuf-java",
-      "datasourceTemplate": "maven"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^gax-java/dependencies\\.properties$"
-      ],
-      "matchStrings": [
         "version\\.google_java_format=(?<currentValue>.+?)\\n"
       ],
       "depNameTemplate": "com.google.googlejavaformat:google-java-format",
@@ -42,10 +32,12 @@
     {
       "customType": "regex",
       "fileMatch": [
-        "^gax-java/dependencies\\.properties$"
+        "^gax-java/dependencies\\.properties$",
+        "^\\.cloudbuild/library_generation/library_generation\\.Dockerfile$"
       ],
       "matchStrings": [
-        "version\\.io_grpc=(?<currentValue>.+?)\\n"
+        "version\\.io_grpc=(?<currentValue>.+?)\\n",
+        "ARG GRPC_VERSION=[\"']?(?<currentValue>.+?)[\"']?\\s+"
       ],
       "depNameTemplate": "io.grpc:grpc-core",
       "datasourceTemplate": "maven"
@@ -82,10 +74,15 @@
     },
     {
       "matchPackagePatterns": [
+        "^com.google.protobuf:"
+      ],
+      "enabled": false
+    },
+    {
+      "matchPackagePatterns": [
         "^com.google.guava:"
       ],
-      "versioning": "docker",
-      "enabled": false
+      "versioning": "docker"
     },
     {
       "matchPackagePatterns": [
@@ -141,17 +138,9 @@
     },
     {
       "matchPackagePatterns": [
-        "^com.google.protobuf"
-      ],
-      "groupName": "Protobuf dependencies",
-      "enabled": false
-    },
-    {
-      "matchPackagePatterns": [
         "^io.grpc"
       ],
-      "groupName": "gRPC dependencies",
-      "enabled": false
+      "groupName": "gRPC dependencies"
     },
     {
       "matchPackagePatterns": [
@@ -161,7 +150,11 @@
     },
     {
       "matchPackagePatterns": [
-        "^com.google.api"
+        "com.google.api.grpc:grpc-google-common-protos",
+        "com.google.api.grpc:grpc-google-iam-v1",
+        "com.google.api.grpc:proto-google-common-protos",
+        "com.google.api.grpc:proto-google-iam-v1",
+        "com.google.api:api-common"
       ],
       "groupName": "Google API dependencies"
     },

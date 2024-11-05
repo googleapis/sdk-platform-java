@@ -16,12 +16,12 @@ package com.google.api.generator.engine.ast;
 
 import static org.junit.Assert.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class SuperObjectValueTest {
+class SuperObjectValueTest {
 
   @Test
-  public void validSuperObjectValue_basic() {
+  void validSuperObjectValue_basic() {
     VaporReference ref =
         VaporReference.builder()
             .setName("Student")
@@ -33,7 +33,7 @@ public class SuperObjectValueTest {
   }
 
   @Test
-  public void invalidSuperObjectValue_nonReferenceType() {
+  void invalidSuperObjectValue_nonReferenceType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -42,7 +42,7 @@ public class SuperObjectValueTest {
   }
 
   @Test
-  public void invalidSuperObjectValue_nullType() {
+  void invalidSuperObjectValue_nullType() {
     assertThrows(
         IllegalStateException.class,
         () -> {

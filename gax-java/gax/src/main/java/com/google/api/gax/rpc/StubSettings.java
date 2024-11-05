@@ -29,11 +29,15 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.core.NanoClock;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
@@ -49,7 +53,6 @@ import java.io.IOException;
 import java.util.concurrent.Executor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * A base settings class to configure a client stub class.
@@ -74,11 +77,12 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   private final String quotaProjectId;
   @Nullable private final String gdchApiAudience;
   @Nullable private final WatchdogProvider streamWatchdogProvider;
-  @Nonnull private final Duration streamWatchdogCheckInterval;
+  @Nonnull private final java.time.Duration streamWatchdogCheckInterval;
   @Nonnull private final ApiTracerFactory tracerFactory;
   // Track if deprecated setExecutorProvider is called
   private boolean deprecatedExecutorProviderSet;
   @Nonnull private final EndpointContext endpointContext;
+  private final String apiKey;
 
   /**
    * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -104,6 +108,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
     this.gdchApiAudience = builder.gdchApiAudience;
     this.endpointContext = buildEndpointContext(builder);
+    this.apiKey = builder.apiKey;
   }
 
   /**
@@ -203,8 +208,15 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return streamWatchdogProvider;
   }
 
+  /** This method is obsolete. Use {@link #getStreamWatchdogCheckIntervalDuration()} instead. */
   @Nonnull
-  public final Duration getStreamWatchdogCheckInterval() {
+  @ObsoleteApi("Use getStreamWatchdogCheckIntervalDuration() instead")
+  public final org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
+    return toThreetenDuration(getStreamWatchdogCheckIntervalDuration());
+  }
+
+  @Nonnull
+  public final java.time.Duration getStreamWatchdogCheckIntervalDuration() {
     return streamWatchdogCheckInterval;
   }
 
@@ -222,6 +234,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   @Nullable
   public final String getGdchApiAudience() {
     return gdchApiAudience;
+  }
+
+  /** Gets the API Key that should be used for authentication. */
+  public final String getApiKey() {
+    return apiKey;
   }
 
   @Override
@@ -242,6 +259,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         .add("streamWatchdogCheckInterval", streamWatchdogCheckInterval)
         .add("tracerFactory", tracerFactory)
         .add("gdchApiAudience", gdchApiAudience)
+        .add("apiKey", apiKey)
         .toString();
   }
 
@@ -262,10 +280,12 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     private String quotaProjectId;
     @Nullable private String gdchApiAudience;
     @Nullable private WatchdogProvider streamWatchdogProvider;
-    @Nonnull private Duration streamWatchdogCheckInterval;
+    @Nonnull private java.time.Duration streamWatchdogCheckInterval;
     @Nonnull private ApiTracerFactory tracerFactory;
     private boolean deprecatedExecutorProviderSet;
     private String universeDomain;
+    private final EndpointContext endpointContext;
+    private String apiKey;
 
     /**
      * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -290,6 +310,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.tracerFactory = settings.tracerFactory;
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
       this.gdchApiAudience = settings.gdchApiAudience;
+      this.apiKey = settings.apiKey;
 
       // The follow settings will be set to the original user configurations as the
       // EndpointContext will be rebuilt in the constructor.
@@ -300,6 +321,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.switchToMtlsEndpointAllowed =
           settings.getEndpointContext().switchToMtlsEndpointAllowed();
       this.universeDomain = settings.getEndpointContext().universeDomain();
+      // Store the EndpointContext that was already created. This is used to return the state
+      // of the EndpointContext prior to any new modifications
+      this.endpointContext = settings.getEndpointContext();
     }
 
     /** Get Quota Project ID from Client Context * */
@@ -327,16 +351,23 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.headerProvider = new NoHeaderProvider();
         this.internalHeaderProvider = new NoHeaderProvider();
         this.clock = NanoClock.getDefaultClock();
-        this.clientSettingsEndpoint = null;
-        this.transportChannelProviderEndpoint = null;
-        this.mtlsEndpoint = null;
         this.quotaProjectId = null;
         this.streamWatchdogProvider = InstantiatingWatchdogProvider.create();
-        this.streamWatchdogCheckInterval = Duration.ofSeconds(10);
+        this.streamWatchdogCheckInterval = java.time.Duration.ofSeconds(10);
         this.tracerFactory = BaseApiTracerFactory.getInstance();
         this.deprecatedExecutorProviderSet = false;
         this.gdchApiAudience = null;
+
+        this.clientSettingsEndpoint = null;
+        this.transportChannelProviderEndpoint = null;
+        this.mtlsEndpoint = null;
+        this.switchToMtlsEndpointAllowed = false;
         this.universeDomain = null;
+        this.apiKey = null;
+        // Attempt to create an empty, non-functioning EndpointContext by default. The client will
+        // have
+        // a valid EndpointContext with user configurations after the client has been initialized.
+        this.endpointContext = EndpointContext.getDefaultInstance();
       } else {
         ExecutorProvider fixedExecutorProvider =
             FixedExecutorProvider.create(clientContext.getExecutor());
@@ -351,7 +382,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.clock = clientContext.getClock();
         this.streamWatchdogProvider =
             FixedWatchdogProvider.create(clientContext.getStreamWatchdog());
-        this.streamWatchdogCheckInterval = clientContext.getStreamWatchdogCheckInterval();
+        this.streamWatchdogCheckInterval = clientContext.getStreamWatchdogCheckIntervalDuration();
         this.tracerFactory = clientContext.getTracerFactory();
         this.quotaProjectId = getQuotaProjectIdFromClientContext(clientContext);
         this.gdchApiAudience = clientContext.getGdchApiAudience();
@@ -365,6 +396,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.switchToMtlsEndpointAllowed =
             clientContext.getEndpointContext().switchToMtlsEndpointAllowed();
         this.universeDomain = clientContext.getEndpointContext().universeDomain();
+        // Store the EndpointContext that was already created. This is used to return the state
+        // of the EndpointContext prior to any new modifications
+        this.endpointContext = clientContext.getEndpointContext();
       }
     }
 
@@ -509,10 +543,19 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
 
     /**
-     * Sets how often the {@link Watchdog} will check ongoing streaming RPCs. Defaults to 10 secs.
-     * Use {@link Duration#ZERO} to disable.
+     * This method is obsolete. Use {@link
+     * #setStreamWatchdogCheckIntervalDuration(java.time.Duration)} instead.
      */
-    public B setStreamWatchdogCheckInterval(@Nonnull Duration checkInterval) {
+    @ObsoleteApi("Use setStreamWatchdogCheckIntervalDuration(java.time.Duration) instead")
+    public B setStreamWatchdogCheckInterval(@Nonnull org.threeten.bp.Duration checkInterval) {
+      return setStreamWatchdogCheckIntervalDuration(toJavaTimeDuration(checkInterval));
+    }
+
+    /**
+     * Sets how often the {@link Watchdog} will check ongoing streaming RPCs. Defaults to 10 secs.
+     * Use {@link java.time.Duration#ZERO} to disable.
+     */
+    public B setStreamWatchdogCheckIntervalDuration(@Nonnull java.time.Duration checkInterval) {
       Preconditions.checkNotNull(checkInterval);
       this.streamWatchdogCheckInterval = checkInterval;
       return self();
@@ -539,6 +582,21 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     public B setTracerFactory(@Nonnull ApiTracerFactory tracerFactory) {
       Preconditions.checkNotNull(tracerFactory);
       this.tracerFactory = tracerFactory;
+      return self();
+    }
+
+    /**
+     * Sets the API key. The API key will get translated to an {@link
+     * com.google.auth.ApiKeyCredentials} and stored in {@link ClientContext}.
+     *
+     * <p>API Key authorization is not supported for every product. Please check the documentation
+     * for each product to confirm if it is supported.
+     *
+     * <p>Note: If you set an API key and {@link CredentialsProvider} in the same ClientSettings the
+     * API key will override any credentials provided.
+     */
+    public B setApiKey(String apiKey) {
+      this.apiKey = apiKey;
       return self();
     }
 
@@ -584,8 +642,24 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return clock;
     }
 
+    /** Gets the API Key that was previously set on this Builder. */
+    public final String getApiKey() {
+      return apiKey;
+    }
+
+    /**
+     * @return the resolved endpoint when the Builder was created. If invoked after
+     *     `StubSettings.newBuilder()` is called, it will return the clientSettingsEndpoint value.
+     *     If other parameters are then set in the builder, the resolved endpoint is not
+     *     automatically updated. The resolved endpoint will only be recomputed when the
+     *     StubSettings is built again.
+     */
     public String getEndpoint() {
-      return clientSettingsEndpoint;
+      // For the `StubSettings.newBuilder()` case
+      if (endpointContext.equals(EndpointContext.getDefaultInstance())) {
+        return clientSettingsEndpoint;
+      }
+      return endpointContext.resolvedEndpoint();
     }
 
     public String getMtlsEndpoint() {
@@ -597,9 +671,15 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return quotaProjectId;
     }
 
+    /** This method is obsolete. Use {@link #getStreamWatchdogCheckIntervalDuration()} instead */
+    @ObsoleteApi("Use getStreamWatchdogCheckIntervalDuration() instead")
+    public org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
+      return toThreetenDuration(getStreamWatchdogCheckIntervalDuration());
+    }
+
     @Nonnull
-    public Duration getStreamWatchdogCheckInterval() {
-      return streamWatchdogCheckInterval;
+    public java.time.Duration getStreamWatchdogCheckIntervalDuration() {
+      return Preconditions.checkNotNull(streamWatchdogCheckInterval);
     }
 
     @BetaApi("The surface for tracing is not stable yet and may change in the future.")

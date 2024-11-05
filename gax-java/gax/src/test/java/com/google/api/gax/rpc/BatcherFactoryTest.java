@@ -42,35 +42,31 @@ import com.google.common.truth.Truth;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class BatcherFactoryTest {
+class BatcherFactoryTest {
   private ScheduledExecutorService batchingExecutor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     batchingExecutor = new ScheduledThreadPoolExecutor(1);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     batchingExecutor.shutdownNow();
   }
 
   @Test
-  public void testGetPushingBatcher() {
-    BatchingSettings batchingSettings =
-        BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
-            .setElementCountThreshold(2L)
-            .setRequestByteThreshold(1000L)
-            .build();
+  void testGetPushingBatcher() {
+    final java.time.Duration delayThreshold = java.time.Duration.ofSeconds(1);
+    BatchingSettings batchingSettings = Mockito.mock(BatchingSettings.class);
+    Mockito.when(batchingSettings.getDelayThresholdDuration()).thenReturn(delayThreshold);
+    Mockito.when(batchingSettings.getElementCountThreshold()).thenReturn(2L);
+    Mockito.when(batchingSettings.getRequestByteThreshold()).thenReturn(1000L);
     FlowControlSettings flowControlSettings =
         FlowControlSettings.newBuilder()
             .setLimitExceededBehavior(LimitExceededBehavior.Ignore)
@@ -89,6 +85,8 @@ public class BatcherFactoryTest {
 
     ThresholdBatcher<Batch<LabeledIntList, List<Integer>>> batcherBar =
         batcherFactory.getPushingBatcher(new PartitionKey("bar"));
+
+    Mockito.verify(batchingSettings, Mockito.times(2)).getDelayThresholdDuration();
 
     Truth.assertThat(batcherFoo).isSameInstanceAs(batcherFoo2);
     Truth.assertThat(batcherFoo).isNotSameInstanceAs(batcherBar);

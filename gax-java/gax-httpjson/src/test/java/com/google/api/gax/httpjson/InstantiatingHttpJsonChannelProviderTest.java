@@ -30,7 +30,7 @@
 package com.google.api.gax.httpjson;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
@@ -43,19 +43,16 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChannelTest {
+class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChannelTest {
 
   private static final String DEFAULT_ENDPOINT = "localhost:8080";
   private static final Map<String, String> DEFAULT_HEADER_MAP = Collections.emptyMap();
 
   @Test
-  public void basicTest() throws IOException {
+  void basicTest() throws IOException {
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
@@ -109,7 +106,7 @@ public class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransp
   // Ensure that a default executor is created by the ManagedHttpJsonChannel even
   // if not provided by the TransportChannelProvider
   @Test
-  public void managedChannelUsesDefaultChannelExecutor() throws IOException {
+  void managedChannelUsesDefaultChannelExecutor() throws IOException {
     InstantiatingHttpJsonChannelProvider instantiatingHttpJsonChannelProvider =
         InstantiatingHttpJsonChannelProvider.newBuilder().setEndpoint(DEFAULT_ENDPOINT).build();
     instantiatingHttpJsonChannelProvider =
@@ -130,7 +127,7 @@ public class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransp
 
   // Ensure that the user's executor is used by the ManagedHttpJsonChannel
   @Test
-  public void managedChannelUsesCustomExecutor() throws IOException {
+  void managedChannelUsesCustomExecutor() throws IOException {
     // Custom executor to use -- Lifecycle must be managed by this test
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();

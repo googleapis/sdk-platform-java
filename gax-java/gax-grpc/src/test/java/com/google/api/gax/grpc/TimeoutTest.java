@@ -55,22 +55,17 @@ import io.grpc.MethodDescriptor.Marshaller;
 import io.grpc.MethodDescriptor.MethodType;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.mockito.quality.Strictness;
-import org.threeten.bp.Duration;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(JUnit4.class)
-public class TimeoutTest {
+@ExtendWith(MockitoExtension.class)
+class TimeoutTest {
   private static final String CALL_OPTIONS_AUTHORITY = "RETRYING_TEST";
   private static final int DEADLINE_IN_DAYS = 7;
   private static final int DEADLINE_IN_MINUTES = 10;
@@ -78,17 +73,19 @@ public class TimeoutTest {
   private static final ImmutableSet<StatusCode.Code> emptyRetryCodes = ImmutableSet.of();
   private static final ImmutableSet<StatusCode.Code> retryUnknownCode =
       ImmutableSet.of(StatusCode.Code.UNKNOWN);
-  private static final Duration totalTimeout = Duration.ofDays(DEADLINE_IN_DAYS);
-  private static final Duration maxRpcTimeout = Duration.ofMinutes(DEADLINE_IN_MINUTES);
-  private static final Duration initialRpcTimeout = Duration.ofSeconds(DEADLINE_IN_SECONDS);
+  private static final java.time.Duration totalTimeout =
+      java.time.Duration.ofDays(DEADLINE_IN_DAYS);
+  private static final java.time.Duration maxRpcTimeout =
+      java.time.Duration.ofMinutes(DEADLINE_IN_MINUTES);
+  private static final java.time.Duration initialRpcTimeout =
+      java.time.Duration.ofSeconds(DEADLINE_IN_SECONDS);
   private static GrpcCallContext defaultCallContext;
 
-  @Rule public MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
   @Mock private Marshaller<String> stringMarshaller;
   @Mock private RequestParamsExtractor<String> paramsExtractor;
   @Mock private ManagedChannel managedChannel;
 
-  @BeforeClass
+  @BeforeAll
   public static void setUp() throws IOException {
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
     Mockito.doNothing()
@@ -98,18 +95,18 @@ public class TimeoutTest {
   }
 
   @Test
-  public void testNonRetryUnarySettings() {
+  void testNonRetryUnarySettings() {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setTotalTimeout(totalTimeout)
-            .setInitialRetryDelay(Duration.ZERO)
+            .setTotalTimeoutDuration(totalTimeout)
+            .setInitialRetryDelayDuration(java.time.Duration.ZERO)
             .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(Duration.ZERO)
+            .setMaxRetryDelayDuration(java.time.Duration.ZERO)
             .setMaxAttempts(1)
             .setJittered(true)
-            .setInitialRpcTimeout(initialRpcTimeout)
+            .setInitialRpcTimeoutDuration(initialRpcTimeout)
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(maxRpcTimeout)
+            .setMaxRpcTimeoutDuration(maxRpcTimeout)
             .build();
     CallOptions callOptionsUsed =
         setupUnaryCallable(retrySettings, emptyRetryCodes, defaultCallContext);
@@ -124,25 +121,25 @@ public class TimeoutTest {
   }
 
   @Test
-  public void testNonRetryUnarySettingsContextWithRetry() {
+  void testNonRetryUnarySettingsContextWithRetry() {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setTotalTimeout(totalTimeout)
-            .setInitialRetryDelay(Duration.ZERO)
+            .setTotalTimeoutDuration(totalTimeout)
+            .setInitialRetryDelayDuration(java.time.Duration.ZERO)
             .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(Duration.ZERO)
+            .setMaxRetryDelayDuration(java.time.Duration.ZERO)
             .setMaxAttempts(1)
             .setJittered(true)
-            .setInitialRpcTimeout(initialRpcTimeout)
+            .setInitialRpcTimeoutDuration(initialRpcTimeout)
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(maxRpcTimeout)
+            .setMaxRpcTimeoutDuration(maxRpcTimeout)
             .build();
-    Duration newTimeout = Duration.ofSeconds(5);
+    java.time.Duration newTimeout = java.time.Duration.ofSeconds(5);
     RetrySettings contextRetrySettings =
         retrySettings
             .toBuilder()
-            .setInitialRpcTimeout(newTimeout)
-            .setMaxRpcTimeout(newTimeout)
+            .setInitialRpcTimeoutDuration(newTimeout)
+            .setMaxRpcTimeoutDuration(newTimeout)
             .setMaxAttempts(3)
             .build();
     GrpcCallContext retryingContext =
@@ -164,17 +161,17 @@ public class TimeoutTest {
   }
 
   @Test
-  public void testNonRetryUnarySettingsWithoutInitialRpcTimeout() {
+  void testNonRetryUnarySettingsWithoutInitialRpcTimeout() {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setTotalTimeout(totalTimeout)
-            .setInitialRetryDelay(Duration.ZERO)
+            .setTotalTimeoutDuration(totalTimeout)
+            .setInitialRetryDelayDuration(java.time.Duration.ZERO)
             .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(Duration.ZERO)
+            .setMaxRetryDelayDuration(java.time.Duration.ZERO)
             .setMaxAttempts(1)
             .setJittered(true)
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(maxRpcTimeout)
+            .setMaxRpcTimeoutDuration(maxRpcTimeout)
             .build();
     CallOptions callOptionsUsed =
         setupUnaryCallable(retrySettings, emptyRetryCodes, defaultCallContext);
@@ -189,13 +186,13 @@ public class TimeoutTest {
   }
 
   @Test
-  public void testNonRetryUnarySettingsWithoutIndividualRpcTimeout() {
+  void testNonRetryUnarySettingsWithoutIndividualRpcTimeout() {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setTotalTimeout(totalTimeout)
-            .setInitialRetryDelay(Duration.ZERO)
+            .setTotalTimeoutDuration(totalTimeout)
+            .setInitialRetryDelayDuration(java.time.Duration.ZERO)
             .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(Duration.ZERO)
+            .setMaxRetryDelayDuration(java.time.Duration.ZERO)
             .setMaxAttempts(1)
             .setJittered(true)
             .setRpcTimeoutMultiplier(1.0)
@@ -213,18 +210,18 @@ public class TimeoutTest {
   }
 
   @Test
-  public void testNonRetryServerStreamingSettings() {
+  void testNonRetryServerStreamingSettings() {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setTotalTimeout(totalTimeout)
-            .setInitialRetryDelay(Duration.ZERO)
+            .setTotalTimeoutDuration(totalTimeout)
+            .setInitialRetryDelayDuration(java.time.Duration.ZERO)
             .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(Duration.ZERO)
+            .setMaxRetryDelayDuration(java.time.Duration.ZERO)
             .setMaxAttempts(1)
             .setJittered(true)
-            .setInitialRpcTimeout(initialRpcTimeout)
+            .setInitialRpcTimeoutDuration(initialRpcTimeout)
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(maxRpcTimeout)
+            .setMaxRpcTimeoutDuration(maxRpcTimeout)
             .build();
     CallOptions callOptionsUsed =
         setupServerStreamingCallable(retrySettings, emptyRetryCodes, defaultCallContext);
@@ -239,25 +236,25 @@ public class TimeoutTest {
   }
 
   @Test
-  public void testNonRetryServerStreamingSettingsContextWithRetry() {
+  void testNonRetryServerStreamingSettingsContextWithRetry() {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setTotalTimeout(totalTimeout)
-            .setInitialRetryDelay(Duration.ZERO)
+            .setTotalTimeoutDuration(totalTimeout)
+            .setInitialRetryDelayDuration(java.time.Duration.ZERO)
             .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(Duration.ZERO)
+            .setMaxRetryDelayDuration(java.time.Duration.ZERO)
             .setMaxAttempts(1)
             .setJittered(true)
-            .setInitialRpcTimeout(initialRpcTimeout)
+            .setInitialRpcTimeoutDuration(initialRpcTimeout)
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(maxRpcTimeout)
+            .setMaxRpcTimeoutDuration(maxRpcTimeout)
             .build();
-    Duration newTimeout = Duration.ofSeconds(5);
+    java.time.Duration newTimeout = java.time.Duration.ofSeconds(5);
     RetrySettings contextRetrySettings =
         retrySettings
             .toBuilder()
-            .setInitialRpcTimeout(newTimeout)
-            .setMaxRpcTimeout(newTimeout)
+            .setInitialRpcTimeoutDuration(newTimeout)
+            .setMaxRpcTimeoutDuration(newTimeout)
             .setMaxAttempts(3)
             .build();
     GrpcCallContext retryingContext =
@@ -279,17 +276,17 @@ public class TimeoutTest {
   }
 
   @Test
-  public void testNonRetryServerStreamingSettingsWithoutInitialRpcTimeout() {
+  void testNonRetryServerStreamingSettingsWithoutInitialRpcTimeout() {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setTotalTimeout(totalTimeout)
-            .setInitialRetryDelay(Duration.ZERO)
+            .setTotalTimeoutDuration(totalTimeout)
+            .setInitialRetryDelayDuration(java.time.Duration.ZERO)
             .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(Duration.ZERO)
+            .setMaxRetryDelayDuration(java.time.Duration.ZERO)
             .setMaxAttempts(1)
             .setJittered(true)
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(maxRpcTimeout)
+            .setMaxRpcTimeoutDuration(maxRpcTimeout)
             .build();
     CallOptions callOptionsUsed =
         setupServerStreamingCallable(retrySettings, emptyRetryCodes, defaultCallContext);
@@ -304,13 +301,13 @@ public class TimeoutTest {
   }
 
   @Test
-  public void testNonRetryServerStreamingSettingsWithoutIndividualRpcTimeout() {
+  void testNonRetryServerStreamingSettingsWithoutIndividualRpcTimeout() {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setTotalTimeout(totalTimeout)
-            .setInitialRetryDelay(Duration.ZERO)
+            .setTotalTimeoutDuration(totalTimeout)
+            .setInitialRetryDelayDuration(java.time.Duration.ZERO)
             .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(Duration.ZERO)
+            .setMaxRetryDelayDuration(java.time.Duration.ZERO)
             .setMaxAttempts(1)
             .setJittered(true)
             .setRpcTimeoutMultiplier(1.0)
@@ -454,7 +451,7 @@ public class TimeoutTest {
    * codebase must continue to support Java 7 and up, in alignment with client libraries that depend
    * on gax-java.
    */
-  private int toSecondsPart(Duration duration) {
+  private int toSecondsPart(java.time.Duration duration) {
     return (int)
         (duration.getSeconds()
             - TimeUnit.MINUTES.toSeconds(1)

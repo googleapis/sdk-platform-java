@@ -29,18 +29,18 @@
  */
 package com.google.api.gax.httpjson;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.api.gax.rpc.StatusCode.Code;
 import java.util.ArrayList;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class HttpJsonOperationSnapshotTest {
+class HttpJsonOperationSnapshotTest {
 
   @Test
-  public void newBuilderTestNoError() {
+  void newBuilderTestNoError() {
     HttpJsonOperationSnapshot testOperationSnapshot =
         HttpJsonOperationSnapshot.newBuilder()
             .setName("snapshot0")
@@ -56,7 +56,7 @@ public class HttpJsonOperationSnapshotTest {
   }
 
   @Test
-  public void newBuilderTestWithError() {
+  void newBuilderTestWithError() {
     HttpJsonOperationSnapshot testOperationSnapshot =
         HttpJsonOperationSnapshot.newBuilder()
             .setName("snapshot1")
@@ -72,7 +72,7 @@ public class HttpJsonOperationSnapshotTest {
   }
 
   @Test
-  public void newBuilderTestNotDone() {
+  void newBuilderTestNotDone() {
     HttpJsonOperationSnapshot testOperationSnapshot =
         HttpJsonOperationSnapshot.newBuilder()
             .setName("snapshot2")

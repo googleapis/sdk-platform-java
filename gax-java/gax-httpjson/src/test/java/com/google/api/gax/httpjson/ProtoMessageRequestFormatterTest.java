@@ -39,15 +39,15 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ProtoMessageRequestFormatterTest {
+class ProtoMessageRequestFormatterTest {
   private Field field;
   private ProtoMessageRequestFormatter<Field> formatter;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     field =
         Field.newBuilder()
             .setNumber(2)
@@ -86,7 +86,7 @@ public class ProtoMessageRequestFormatterTest {
   }
 
   @Test
-  public void getQueryParamNames() {
+  void getQueryParamNames() {
     Map<String, List<String>> queryParamNames = formatter.getQueryParamNames(field);
     Map<String, List<String>> expected = new HashMap<>();
     expected.put("number", Arrays.asList("2"));
@@ -101,7 +101,7 @@ public class ProtoMessageRequestFormatterTest {
   }
 
   @Test
-  public void getRequestBody() {
+  void getRequestBody() {
     String bodyJson = formatter.getRequestBody(field);
     String expectedBodyJson =
         "{\n"
@@ -122,7 +122,7 @@ public class ProtoMessageRequestFormatterTest {
   }
 
   @Test
-  public void getPath() {
+  void getPath() {
     String path = formatter.getPath(field);
     Truth.assertThat(path).isEqualTo("api/v1/names/field_name1/aggregated");
 
@@ -132,7 +132,7 @@ public class ProtoMessageRequestFormatterTest {
   }
 
   @Test
-  public void getPath_additionalPaths() {
+  void getPath_additionalPaths() {
     Field fieldWithLongerName = field.toBuilder().setName("field_name1/random_text").build();
     String path = formatter.getPath(fieldWithLongerName);
     Truth.assertThat(path).isEqualTo("api/v1/names/field_name1/random_text/aggregated");
@@ -145,7 +145,7 @@ public class ProtoMessageRequestFormatterTest {
   }
 
   @Test
-  public void getPath_noMatches() {
+  void getPath_noMatches() {
     // If there are no valid matches, it will return with the default path's url
     Field fieldNotMatching = field.toBuilder().setName("name_does_not_match").build();
     String path = formatter.getPath(fieldNotMatching);
@@ -153,7 +153,7 @@ public class ProtoMessageRequestFormatterTest {
   }
 
   @Test
-  public void getPathTemplate() {
+  void getPathTemplate() {
     String path =
         formatter.getPathTemplate().instantiate(Collections.singletonMap("name", "field_name1"));
     Truth.assertThat(path).isEqualTo("api/v1/names/field_name1/aggregated");
@@ -169,7 +169,7 @@ public class ProtoMessageRequestFormatterTest {
   }
 
   @Test
-  public void getPathTemplates() {
+  void getPathTemplates() {
     String path =
         formatter
             .getAdditionalPathTemplates()
@@ -189,7 +189,7 @@ public class ProtoMessageRequestFormatterTest {
   }
 
   @Test
-  public void updateRawPath() {
+  void updateRawPath() {
     String path = formatter.toBuilder().updateRawPath("/v1/", "/v1beta1/").build().getPath(field);
     Truth.assertThat(path).isEqualTo("api/v1beta1/names/field_name1/aggregated");
   }

@@ -19,11 +19,11 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.api.generator.engine.ast.TypeNode;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class MethodArgumentTest {
+class MethodArgumentTest {
   @Test
-  public void compareMethodArguments() {
+  void compareMethodArguments() {
     BiFunction<String, TypeNode, MethodArgument> methodArgFn =
         (name, type) ->
             MethodArgument.builder()

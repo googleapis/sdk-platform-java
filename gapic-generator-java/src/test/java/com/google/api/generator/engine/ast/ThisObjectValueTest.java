@@ -16,11 +16,11 @@ package com.google.api.generator.engine.ast;
 
 import static org.junit.Assert.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ThisObjectValueTest {
+class ThisObjectValueTest {
   @Test
-  public void validThisObjectValue_basic() {
+  void validThisObjectValue_basic() {
     VaporReference ref =
         VaporReference.builder()
             .setName("Student")
@@ -32,7 +32,7 @@ public class ThisObjectValueTest {
   }
 
   @Test
-  public void invalidThisObjectValue_nonReferenceType() {
+  void invalidThisObjectValue_nonReferenceType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -41,7 +41,7 @@ public class ThisObjectValueTest {
   }
 
   @Test
-  public void invalidThisObjectValue_nullType() {
+  void invalidThisObjectValue_nullType() {
     assertThrows(
         IllegalStateException.class,
         () -> {

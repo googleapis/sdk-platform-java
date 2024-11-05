@@ -30,8 +30,11 @@
 
 package com.google.api.gax.tracing;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.common.annotations.VisibleForTesting;
@@ -42,7 +45,6 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * This class computes generic metrics that can be observed in the lifecycle of an RPC operation.
@@ -53,7 +55,7 @@ import org.threeten.bp.Duration;
 @BetaApi
 @InternalApi
 public class MetricsTracer implements ApiTracer {
-  public static final String METHOD_NAME_ATTRIBUTE = "method_name";
+  public static final String METHOD_ATTRIBUTE = "method";
   public static final String LANGUAGE_ATTRIBUTE = "language";
   public static final String STATUS_ATTRIBUTE = "status";
   public static final String DEFAULT_LANGUAGE = "Java";
@@ -61,12 +63,13 @@ public class MetricsTracer implements ApiTracer {
       "Operation has already been completed";
   private Stopwatch attemptTimer;
   private final Stopwatch operationTimer = Stopwatch.createStarted();
+  // These are RPC specific attributes and pertain to a specific API Trace
   private final Map<String, String> attributes = new HashMap<>();
   private final MetricsRecorder metricsRecorder;
   private final AtomicBoolean operationFinished;
 
   public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {
-    this.attributes.put(METHOD_NAME_ATTRIBUTE, methodName.toString());
+    this.attributes.put(METHOD_ATTRIBUTE, methodName.toString());
     this.attributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
     this.metricsRecorder = metricsRecorder;
     this.operationFinished = new AtomicBoolean();
@@ -171,10 +174,20 @@ public class MetricsTracer implements ApiTracer {
    *     key.
    */
   @Override
-  public void attemptFailed(Throwable error, Duration delay) {
+  public void attemptFailedDuration(Throwable error, java.time.Duration delay) {
     attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
     metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordAttemptCount(1, attributes);
+  }
+
+  /**
+   * This method is obsolete. Use {@link #attemptFailedDuration(Throwable, java.time.Duration)}
+   * instead.
+   */
+  @Override
+  @ObsoleteApi("Use attemptFailedDuration(Throwable, java.time.Duration) instead")
+  public void attemptFailed(Throwable error, org.threeten.bp.Duration delay) {
+    attemptFailedDuration(error, toJavaTimeDuration(delay));
   }
 
   /**
@@ -230,6 +243,15 @@ public class MetricsTracer implements ApiTracer {
    */
   public void addAttributes(String key, String value) {
     attributes.put(key, value);
+  };
+
+  /**
+   * Add attributes that will be attached to all metrics. This is expected to be called by
+   * handwritten client teams to add additional attributes that are not supposed be collected by
+   * Gax.
+   */
+  public void addAttributes(Map<String, String> attributes) {
+    this.attributes.putAll(attributes);
   };
 
   @VisibleForTesting

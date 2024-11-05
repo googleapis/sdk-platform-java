@@ -1,58 +1,70 @@
 package com.google.api.generator.gapic.protowriter;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.google.api.generator.engine.ast.PackageInfoDefinition;
+import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.ReflectConfig;
+import com.google.common.collect.ImmutableList;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.protobuf.ByteString;
+import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
-public class WriterTest {
+class WriterTest {
   private static final TypeToken<List<ReflectConfig>> REFLECT_CONFIG_JSON_FORMAT =
       new TypeToken<List<ReflectConfig>>() {};
 
-  @Rule public TemporaryFolder tempFolder = new TemporaryFolder();
-
+  @TempDir Path tempDir;
   private JarOutputStream jarOutputStream;
-
   private File file;
 
-  @Before
-  public void createJarOutputStream() throws IOException {
-    file = tempFolder.newFile("test.jar");
-    jarOutputStream = new JarOutputStream(Files.newOutputStream(file.toPath()));
+  @BeforeEach
+  void createJarOutputStream() throws IOException {
+    Path path = tempDir.resolve("test.jar");
+    jarOutputStream = new JarOutputStream(Files.newOutputStream(path));
+    file = path.toFile();
   }
 
-  @After
-  public void assertJarOutputStream_isClosed() {
+  private void closeJarOutputStream() throws IOException {
+    jarOutputStream.finish();
+    jarOutputStream.flush();
+    jarOutputStream.close();
+  }
+
+  @AfterEach
+  void assertJarOutputStream_isClosed() {
     assertThrows(
         IOException.class, () -> jarOutputStream.putNextEntry(new JarEntry("should.fail")));
   }
 
   @Test
-  public void reflectConfig_notWritten_ifEmptyInput() throws IOException {
+  void reflectConfig_notWritten_ifEmptyInput() throws IOException {
     Writer.writeReflectConfigFile("com.google", Collections.emptyList(), jarOutputStream);
 
-    jarOutputStream.finish();
-    jarOutputStream.flush();
-    jarOutputStream.close();
+    closeJarOutputStream();
 
     try (JarFile jarFile = new JarFile(file)) {
       assertThat(jarFile.entries().hasMoreElements()).isFalse();
@@ -60,15 +72,13 @@ public class WriterTest {
   }
 
   @Test
-  public void reflectConfig_isWritten() throws IOException {
+  void reflectConfig_isWritten() throws IOException {
     Writer.writeReflectConfigFile(
         "com.google",
         Collections.singletonList(new ReflectConfig("com.google.Class")),
         jarOutputStream);
 
-    jarOutputStream.finish();
-    jarOutputStream.flush();
-    jarOutputStream.close();
+    closeJarOutputStream();
 
     try (JarFile jarFile = new JarFile(file)) {
       Enumeration<JarEntry> entries = jarFile.entries();
@@ -85,5 +95,53 @@ public class WriterTest {
         assertEquals("com.google.Class", config.getName());
       }
     }
+  }
+
+  @Test
+  void write_emptyGapicContext_writesNoBytes() throws IOException {
+    ByteString.Output output = ByteString.newOutput();
+    CodeGeneratorResponse response =
+        Writer.write(
+            GapicContext.EMPTY,
+            Collections.emptyList(),
+            null,
+            Collections.emptyList(),
+            "temp-codegen.srcjar",
+            jarOutputStream,
+            output);
+    assertTrue(output.size() == 0);
+    closeJarOutputStream();
+  }
+
+  @Test
+  void write_emptyGapicContextAndFilledPackageInfo_succeeds() throws IOException {
+    ByteString.Output output = ByteString.newOutput();
+    CodeGeneratorResponse response =
+        Writer.write(
+            GapicContext.EMPTY,
+            ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
+            GapicPackageInfo.with(PackageInfoDefinition.builder().setPakkage("com.test").build()),
+            Collections.emptyList(),
+            "temp-codegen.srcjar",
+            jarOutputStream,
+            output);
+    assertTrue(output.size() == 0);
+    closeJarOutputStream();
+  }
+
+  @Test
+  void productionWrite_emptyGapicContext_succeeds() throws IOException {
+    // This is a special case test to confirm the production function works as expected.
+    // We don't need the output stream
+    jarOutputStream.close();
+
+    CodeGeneratorResponse result =
+        Writer.write(
+            GapicContext.EMPTY,
+            ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
+            GapicPackageInfo.with(PackageInfoDefinition.builder().setPakkage("com.test").build()),
+            Collections.emptyList(),
+            "temp-codegen.srcjar");
+    assertNull(result);
   }
 }

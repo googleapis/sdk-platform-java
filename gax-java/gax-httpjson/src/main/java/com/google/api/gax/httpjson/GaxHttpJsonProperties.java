@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
 @InternalApi
 public class GaxHttpJsonProperties {
   private static final Pattern DEFAULT_API_CLIENT_HEADER_PATTERN =
-      Pattern.compile("gl-java/.+ gapic/.* gax/.+ rest/.*");
+      Pattern.compile("gl-java/.+ gapic/.*?--protobuf-.+ gax/.+ rest/.*");
 
   /** Returns default api client header pattern (to facilitate testing) */
   public static Pattern getDefaultApiClientHeaderPattern() {

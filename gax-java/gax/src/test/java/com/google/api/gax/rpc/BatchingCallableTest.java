@@ -42,33 +42,29 @@ import com.google.common.truth.Truth;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
-public class BatchingCallableTest {
+class BatchingCallableTest {
   private ScheduledExecutorService batchingExecutor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     batchingExecutor = new ScheduledThreadPoolExecutor(2);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     batchingExecutor.shutdownNow();
   }
 
   @Test
-  public void testBatchedCall() throws Exception {
+  void testBatchedCall() throws Exception {
 
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(10))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(10))
             .setElementCountThreshold(2L)
             .setRequestByteThreshold(1000L)
             .build();
@@ -108,7 +104,7 @@ public class BatchingCallableTest {
   }
 
   @Test
-  public void testUnbatchedCall() throws Exception {
+  void testUnbatchedCall() throws Exception {
 
     BatchingSettings batchingSettings = BatchingSettings.newBuilder().setIsEnabled(false).build();
     FlowControlSettings flowControlSettings =

@@ -29,6 +29,7 @@
  */
 package com.google.api.core;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.util.concurrent.ForwardingListenableFuture.SimpleForwardingListenableFuture;
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -38,5 +39,11 @@ public class ListenableFutureToApiFuture<V> extends SimpleForwardingListenableFu
     implements ApiFuture<V> {
   public ListenableFutureToApiFuture(ListenableFuture<V> delegate) {
     super(delegate);
+  }
+
+  public String toString() {
+    return MoreObjects.toStringHelper(ListenableFutureToApiFuture.class)
+        .add("delegate", delegate())
+        .toString();
   }
 }

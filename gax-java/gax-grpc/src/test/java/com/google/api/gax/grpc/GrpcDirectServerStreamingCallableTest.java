@@ -59,16 +59,13 @@ import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@RunWith(JUnit4.class)
-public class GrpcDirectServerStreamingCallableTest {
+class GrpcDirectServerStreamingCallableTest {
   private static final Color DEFAULT_REQUEST = Color.newBuilder().setRed(0.5f).build();
   private static final Color ASYNC_REQUEST = DEFAULT_REQUEST.toBuilder().setGreen(1000).build();
   private static final Color ERROR_REQUEST = Color.newBuilder().setRed(-1).build();
@@ -81,8 +78,8 @@ public class GrpcDirectServerStreamingCallableTest {
   private ServerStreamingCallSettings<Color, Money> streamingCallSettings;
   private ServerStreamingCallable<Color, Money> streamingCallable;
 
-  @Before
-  public void setUp() throws InstantiationException, IllegalAccessException, IOException {
+  @BeforeEach
+  void setUp() throws InstantiationException, IllegalAccessException, IOException {
     String serverName = "fakeservice";
     FakeServiceImpl serviceImpl = new FakeServiceImpl();
     inprocessServer = new InProcessServer<>(serviceImpl, serverName);
@@ -109,14 +106,14 @@ public class GrpcDirectServerStreamingCallableTest {
             clientContext);
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     channel.shutdown();
     inprocessServer.stop();
   }
 
   @Test
-  public void testBadContext() {
+  void testBadContext() {
     streamingCallable =
         GrpcCallableFactory.createServerStreamingCallable(
             GrpcCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
@@ -130,7 +127,7 @@ public class GrpcDirectServerStreamingCallableTest {
     MoneyObserver observer = new MoneyObserver(true, latch);
     try {
       streamingCallable.call(DEFAULT_REQUEST, observer);
-      Assert.fail("Callable should have thrown an exception");
+      Assertions.fail("Callable should have thrown an exception");
     } catch (IllegalArgumentException expected) {
       Truth.assertThat(expected)
           .hasMessageThat()
@@ -139,7 +136,7 @@ public class GrpcDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testServerStreamingStart() {
+  void testServerStreamingStart() {
     CountDownLatch latch = new CountDownLatch(1);
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
 
@@ -149,7 +146,7 @@ public class GrpcDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testServerStreaming() throws Exception {
+  void testServerStreaming() throws Exception {
     CountDownLatch latch = new CountDownLatch(2);
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
 
@@ -161,7 +158,7 @@ public class GrpcDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testManualFlowControl() throws Exception {
+  void testManualFlowControl() throws Exception {
     CountDownLatch latch = new CountDownLatch(2);
     MoneyObserver moneyObserver = new MoneyObserver(false, latch);
 
@@ -180,7 +177,7 @@ public class GrpcDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testCancelClientCall() throws Exception {
+  void testCancelClientCall() throws Exception {
     CountDownLatch latch = new CountDownLatch(1);
     MoneyObserver moneyObserver = new MoneyObserver(false, latch);
 
@@ -195,7 +192,7 @@ public class GrpcDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testOnResponseError() throws Throwable {
+  void testOnResponseError() throws Throwable {
     CountDownLatch latch = new CountDownLatch(1);
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
 
@@ -211,7 +208,7 @@ public class GrpcDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testObserverErrorCancelsCall() throws Throwable {
+  void testObserverErrorCancelsCall() throws Throwable {
     final RuntimeException expectedCause = new RuntimeException("some error");
     final SettableApiFuture<Throwable> actualErrorF = SettableApiFuture.create();
 
@@ -250,7 +247,7 @@ public class GrpcDirectServerStreamingCallableTest {
   }
 
   @Test
-  public void testBlockingServerStreaming() {
+  void testBlockingServerStreaming() {
     Color request = Color.newBuilder().setRed(0.5f).build();
     ServerStream<Money> response = streamingCallable.call(request);
     List<Money> responseData = Lists.newArrayList(response);

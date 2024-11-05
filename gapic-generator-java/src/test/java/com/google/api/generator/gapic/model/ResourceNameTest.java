@@ -18,9 +18,9 @@ import com.google.api.generator.gapic.model.HttpBindings.HttpVerb;
 import com.google.common.truth.Truth;
 import java.util.Arrays;
 import java.util.Collections;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ResourceNameTest {
+class ResourceNameTest {
   private final ResourceName resName =
       ResourceName.builder()
           .setVariableName("topic")
@@ -31,7 +31,7 @@ public class ResourceNameTest {
           .build();
 
   @Test
-  public void getMatchingPattern() {
+  void getMatchingPattern() {
     HttpBindings bindings =
         HttpBindings.builder()
             .setHttpVerb(HttpVerb.PUT)
@@ -45,7 +45,7 @@ public class ResourceNameTest {
   }
 
   @Test
-  public void getMatchingPatternFromAdditionalPattern() {
+  void getMatchingPatternFromAdditionalPattern() {
     HttpBindings bindings =
         HttpBindings.builder()
             .setHttpVerb(HttpVerb.PUT)
@@ -59,7 +59,7 @@ public class ResourceNameTest {
   }
 
   @Test
-  public void getMatchingPatternNoMatch() {
+  void getMatchingPatternNoMatch() {
     HttpBindings bindings =
         HttpBindings.builder()
             .setHttpVerb(HttpVerb.PUT)

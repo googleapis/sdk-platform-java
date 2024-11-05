@@ -34,30 +34,29 @@ import com.google.common.base.Preconditions;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.threeten.bp.Duration;
 
 class FailingCallable implements Callable<String> {
   static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
           .setMaxAttempts(6)
-          .setInitialRetryDelay(Duration.ofMillis(8L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofMillis(8L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(Duration.ofMillis(8L))
-          .setInitialRpcTimeout(Duration.ofMillis(8L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofMillis(8L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofMillis(8L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(Duration.ofMillis(8L))
-          .setTotalTimeout(Duration.ofMillis(400L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(8L))
+          .setTotalTimeoutDuration(java.time.Duration.ofMillis(400L))
           .build();
   static final RetrySettings FAILING_RETRY_SETTINGS =
       RetrySettings.newBuilder()
           .setMaxAttempts(2)
-          .setInitialRetryDelay(Duration.ofNanos(1L))
+          .setInitialRetryDelayDuration(java.time.Duration.ofNanos(1L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(Duration.ofNanos(1L))
-          .setInitialRpcTimeout(Duration.ofNanos(1L))
+          .setMaxRetryDelayDuration(java.time.Duration.ofNanos(1L))
+          .setInitialRpcTimeoutDuration(java.time.Duration.ofNanos(1L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(Duration.ofNanos(1L))
-          .setTotalTimeout(Duration.ofNanos(1L))
+          .setMaxRpcTimeoutDuration(java.time.Duration.ofNanos(1L))
+          .setTotalTimeoutDuration(java.time.Duration.ofNanos(1L))
           .build();
 
   private AtomicInteger attemptsCount = new AtomicInteger(0);
@@ -80,7 +79,7 @@ class FailingCallable implements Callable<String> {
   // to accurately mimic the behavior of AttemptCallable. We use the external
   // future to check that the future is done and that none of the callable's
   // logic is run.
-  public void setExternalFuture(RetryingFuture<String> externalFuture) {
+  void setExternalFuture(RetryingFuture<String> externalFuture) {
     this.externalFuture = Preconditions.checkNotNull(externalFuture);
   }
 

@@ -22,6 +22,7 @@ import static com.google.showcase.v1beta1.IdentityClient.ListUsersPagedResponse;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
@@ -66,9 +67,9 @@ import com.google.showcase.v1beta1.ListUsersResponse;
 import com.google.showcase.v1beta1.UpdateUserRequest;
 import com.google.showcase.v1beta1.User;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
 import javax.annotation.Generated;
-import org.threeten.bp.Duration;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
@@ -85,7 +86,9 @@ import org.threeten.bp.Duration;
  * <p>The builder of this class is recursive, so contained classes are themselves builders. When
  * build() is called, the tree of builders is called to create the complete settings object.
  *
- * <p>For example, to set the total timeout of createUser to 30 seconds:
+ * <p>For example, to set the
+ * [RetrySettings](https://cloud.google.com/java/docs/reference/gax/latest/com.google.api.gax.retrying.RetrySettings)
+ * of createUser:
  *
  * <pre>{@code
  * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -101,10 +104,21 @@ import org.threeten.bp.Duration;
  *             .createUserSettings()
  *             .getRetrySettings()
  *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .setInitialRetryDelayDuration(Duration.ofSeconds(1))
+ *             .setInitialRpcTimeoutDuration(Duration.ofSeconds(5))
+ *             .setMaxAttempts(5)
+ *             .setMaxRetryDelayDuration(Duration.ofSeconds(30))
+ *             .setMaxRpcTimeoutDuration(Duration.ofSeconds(60))
+ *             .setRetryDelayMultiplier(1.3)
+ *             .setRpcTimeoutMultiplier(1.5)
+ *             .setTotalTimeoutDuration(Duration.ofSeconds(300))
  *             .build());
  * IdentityStubSettings identitySettings = identitySettingsBuilder.build();
  * }</pre>
+ *
+ * Please refer to the [Client Side Retry
+ * Guide](https://github.com/googleapis/google-cloud-java/blob/main/docs/client_retries.md) for
+ * additional support in setting retries.
  */
 @BetaApi
 @Generated("by gapic-generator-java")
@@ -158,9 +172,7 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
 
             @Override
             public Iterable<User> extractResources(ListUsersResponse payload) {
-              return payload.getUsersList() == null
-                  ? ImmutableList.<User>of()
-                  : payload.getUsersList();
+              return payload.getUsersList();
             }
           };
 
@@ -194,9 +206,7 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
 
             @Override
             public Iterable<Location> extractResources(ListLocationsResponse payload) {
-              return payload.getLocationsList() == null
-                  ? ImmutableList.<Location>of()
-                  : payload.getLocationsList();
+              return payload.getLocationsList();
             }
           };
 
@@ -309,6 +319,7 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
   }
 
   /** Returns the default service endpoint. */
+  @ObsoleteApi("Use getEndpoint() instead")
   public static String getDefaultEndpoint() {
     return "localhost:7469";
   }
@@ -443,13 +454,13 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
       definitions.put("no_retry_params", settings);
       settings =
           RetrySettings.newBuilder()
-              .setInitialRetryDelay(Duration.ofMillis(200L))
+              .setInitialRetryDelayDuration(Duration.ofMillis(200L))
               .setRetryDelayMultiplier(2.0)
-              .setMaxRetryDelay(Duration.ofMillis(3000L))
-              .setInitialRpcTimeout(Duration.ofMillis(5000L))
+              .setMaxRetryDelayDuration(Duration.ofMillis(3000L))
+              .setInitialRpcTimeoutDuration(Duration.ofMillis(5000L))
               .setRpcTimeoutMultiplier(1.0)
-              .setMaxRpcTimeout(Duration.ofMillis(5000L))
-              .setTotalTimeout(Duration.ofMillis(5000L))
+              .setMaxRpcTimeoutDuration(Duration.ofMillis(5000L))
+              .setTotalTimeoutDuration(Duration.ofMillis(5000L))
               .build();
       definitions.put("retry_policy_2_params", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();
