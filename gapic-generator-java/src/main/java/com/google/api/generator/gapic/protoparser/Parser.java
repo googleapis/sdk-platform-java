@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import com.google.api.ClientLibrarySettings;
 import com.google.api.ClientProto;
 import com.google.api.DocumentationRule;
 import com.google.api.FieldBehavior;
@@ -84,6 +85,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -160,11 +162,11 @@ public class Parser {
     messages = updateResourceNamesInMessages(messages, resourceNames.values());
 
     // Contains only resource names that are actually used. Usage refers to the presence of a
-    // request message's field in an RPC's method_signature annotation. That is,  resource name
-    // definitions
-    // or references that are simply defined, but not used in such a manner, will not have
-    // corresponding Java helper
-    // classes generated.
+    // request message's field in an RPC's method_signature annotation. That is, resource name
+    // definitions or references that are simply defined, but not used in such a manner,
+    // will not have corresponding Java helper classes generated.
+    // If selective api generation is configured via service yaml, Java helper classes are only
+    // generated if resource names are actually used by methods selected to generate.
     Set<ResourceName> outputArgResourceNames = new HashSet<>();
     List<Service> mixinServices = new ArrayList<>();
     Transport transport = Transport.parse(transportOpt.orElse(Transport.GRPC.toString()));
@@ -425,6 +427,71 @@ public class Parser {
         Transport.GRPC);
   }
 
+  static boolean shouldIncludeMethodInGeneration(
+      MethodDescriptor method,
+      Optional<com.google.api.Service> serviceYamlProtoOpt,
+      String protoPackage) {
+    // default to include all when no service yaml or no library setting section.
+    if (!serviceYamlProtoOpt.isPresent()
+        || serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsCount() == 0) {
+      return true;
+    }
+    List<ClientLibrarySettings> librarySettingsList =
+        serviceYamlProtoOpt.get().getPublishing().getLibrarySettingsList();
+    // Validate for logging purpose, this should be validated upstream.
+    // If library_settings.version does not match with proto package name
+    // Give warnings and disregard this config. default to include all.
+    if (!librarySettingsList.get(0).getVersion().isEmpty()
+        && !protoPackage.equals(librarySettingsList.get(0).getVersion())) {
+      if (LOGGER.isLoggable(Level.WARNING)) {
+        LOGGER.warning(
+            String.format(
+                "Service yaml config is misconfigured. Version in "
+                    + "publishing.library_settings (%s) does not match proto package (%s)."
+                    + "Disregarding selective generation settings.",
+                librarySettingsList.get(0).getVersion(), protoPackage));
+      }
+      return true;
+    }
+    // librarySettingsList is technically a list, but is processed upstream and
+    // only leave with 1 element. Otherwise, it is a misconfiguration and
+    // should be caught upstream.
+    List<String> includeMethodsList =
+        librarySettingsList
+            .get(0)
+            .getJavaSettings()
+            .getCommon()
+            .getSelectiveGapicGeneration()
+            .getMethodsList();
+    // default to include all when nothing specified, this could be no java section
+    // specified in library setting, or the method list is empty
+    if (includeMethodsList.isEmpty()) {
+      return true;
+    }
+
+    return includeMethodsList.contains(method.getFullName());
+  }
+
+  private static boolean isEmptyService(
+      ServiceDescriptor serviceDescriptor,
+      Optional<com.google.api.Service> serviceYamlProtoOpt,
+      String protoPackage) {
+    List<MethodDescriptor> methodsList = serviceDescriptor.getMethods();
+    List<MethodDescriptor> methodListSelected =
+        methodsList.stream()
+            .filter(
+                method ->
+                    shouldIncludeMethodInGeneration(method, serviceYamlProtoOpt, protoPackage))
+            .collect(Collectors.toList());
+    if (methodListSelected.isEmpty()) {
+      LOGGER.log(
+          Level.WARNING,
+          "Service {0} has no RPC methods and will not be generated",
+          serviceDescriptor.getName());
+    }
+    return methodListSelected.isEmpty();
+  }
+
   public static List<Service> parseService(
       FileDescriptor fileDescriptor,
       Map<String, Message> messageTypes,
@@ -433,19 +500,11 @@ public class Parser {
       Optional<GapicServiceConfig> serviceConfigOpt,
       Set<ResourceName> outputArgResourceNames,
       Transport transport) {
-
+    String protoPackage = fileDescriptor.getPackage();
     return fileDescriptor.getServices().stream()
         .filter(
-            serviceDescriptor -> {
-              List<MethodDescriptor> methodsList = serviceDescriptor.getMethods();
-              if (methodsList.isEmpty()) {
-                LOGGER.warning(
-                    String.format(
-                        "Service %s has no RPC methods and will not be generated",
-                        serviceDescriptor.getName()));
-              }
-              return !methodsList.isEmpty();
-            })
+            serviceDescriptor ->
+                !isEmptyService(serviceDescriptor, serviceYamlProtoOpt, protoPackage))
         .map(
             s -> {
               // Workaround for a missing default_host and oauth_scopes annotation from a service
@@ -498,6 +557,8 @@ public class Parser {
               String pakkage = TypeParser.getPackage(fileDescriptor);
               String originalJavaPackage = pakkage;
               // Override Java package with that specified in gapic.yaml.
+              // this override is deprecated and legacy support only
+              // see go/client-user-guide#configure-long-running-operation-polling-timeouts-optional
               if (serviceConfigOpt.isPresent()
                   && serviceConfigOpt.get().getLanguageSettingsOpt().isPresent()) {
                 GapicLanguageSettings languageSettings =
@@ -518,6 +579,7 @@ public class Parser {
                   .setMethods(
                       parseMethods(
                           s,
+                          protoPackage,
                           pakkage,
                           messageTypes,
                           resourceNames,
@@ -709,6 +771,7 @@ public class Parser {
   @VisibleForTesting
   static List<Method> parseMethods(
       ServiceDescriptor serviceDescriptor,
+      String protoPackage,
       String servicePackage,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
@@ -721,8 +784,10 @@ public class Parser {
     // Parse the serviceYaml for autopopulated methods and fields once and put into a map
     Map<String, List<String>> autoPopulatedMethodsWithFields =
         parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
-
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
+      if (!shouldIncludeMethodInGeneration(protoMethod, serviceYamlProtoOpt, protoPackage)) {
+        continue;
+      }
       // Parse the method.
       TypeNode inputType = TypeParser.parseType(protoMethod.getInputType());
       Method.Builder methodBuilder = Method.builder();
