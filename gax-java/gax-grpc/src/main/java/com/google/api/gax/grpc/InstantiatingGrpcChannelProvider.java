@@ -49,6 +49,7 @@ import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auth.oauth2.S2A;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
@@ -265,9 +266,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    */
   @Override
   public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
-    if (!mtlsEndpoint.isEmpty()) {
-      validateEndpoint(mtlsEndpoint);
-    }
+    validateEndpoint(mtlsEndpoint);
     return toBuilder().setMtlsEndpoint(mtlsEndpoint).build();
   }
 
@@ -486,13 +485,16 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return false;
     }
 
-    // If {@code mtlsEndpoint} is not set, skip S2A.
-    if (mtlsEndpoint.isEmpty()) {
+    // If {@code mtlsEndpoint} is not set, skip S2A. GAPIC clients have
+    // an auto-populated default mTLS endpoint, so this check is technically
+    // not needed. It is kept to ensure that initialization code
+    // sets the {@code mtlsEndpoint} needed to use S2A.
+    if (Strings.isNullOrEmpty(mtlsEndpoint)) {
       return false;
     }
 
     // If {@code endpointOverride} is specified, skip S2A.
-    if (!endpointOverride.isEmpty()) {
+    if (!Strings.isNullOrEmpty(endpointOverride)) {
       return false;
     }
 
@@ -883,9 +885,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     public Builder setMtlsEndpoint(String mtlsEndpoint) {
-      if (!mtlsEndpoint.isEmpty()) {
-        validateEndpoint(mtlsEndpoint);
-      }
+      validateEndpoint(mtlsEndpoint);
       this.mtlsEndpoint = mtlsEndpoint;
       return this;
     }

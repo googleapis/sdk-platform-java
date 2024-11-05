@@ -1079,18 +1079,19 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
-  void shouldUseS2A_mtlsEndpointNotSet_returnsFalse() {
+  void shouldUseS2A_mtlsEndpointNotSet_throws() {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
         .thenReturn("true");
-    InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder()
-            .setEndpoint(DEFAULT_ENDPOINT)
-            .setMtlsEndpoint("")
-            .setEndpointOverride("")
-            .setEnvProvider(envProvider)
-            .build();
-    Truth.assertThat(provider.shouldUseS2A()).isFalse();
+    assertThrows(
+        IllegalArgumentException.class,
+        () ->
+            InstantiatingGrpcChannelProvider.newBuilder()
+                .setEndpoint(DEFAULT_ENDPOINT)
+                .setMtlsEndpoint("")
+                .setEndpointOverride("")
+                .setEnvProvider(envProvider)
+                .build());
   }
 
   @Test
