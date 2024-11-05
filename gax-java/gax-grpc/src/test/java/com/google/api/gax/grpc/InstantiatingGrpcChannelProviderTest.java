@@ -1044,23 +1044,23 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
-  void isGoogleS2AEnabled_envVarNotSet_returnsFalse() {
+  void isS2AEnabled_envVarNotSet_returnsFalse() {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
         .thenReturn("false");
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().setEnvProvider(envProvider).build();
-    Truth.assertThat(provider.isGoogleS2AEnabled()).isFalse();
+    Truth.assertThat(provider.isS2AEnabled()).isFalse();
   }
 
   @Test
-  void isGoogleS2AEnabled_envVarSet_returnsTrue() {
+  void isS2AEnabled_envVarSet_returnsTrue() {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(envProvider.getenv(InstantiatingGrpcChannelProvider.S2A_ENV_ENABLE_USE_S2A))
         .thenReturn("true");
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().setEnvProvider(envProvider).build();
-    Truth.assertThat(provider.isGoogleS2AEnabled()).isTrue();
+    Truth.assertThat(provider.isS2AEnabled()).isTrue();
   }
 
   @Test

@@ -473,7 +473,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   @VisibleForTesting
-  boolean isGoogleS2AEnabled() {
+  boolean isS2AEnabled() {
     String S2AEnv = envProvider.getenv(S2A_ENV_ENABLE_USE_S2A);
     return Boolean.parseBoolean(S2AEnv);
   }
@@ -481,7 +481,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting
   boolean shouldUseS2A() {
     // If EXPERIMENTAL_GOOGLE_API_USE_S2A is not set to true, skip S2A.
-    if (!isGoogleS2AEnabled()) {
+    if (!isS2AEnabled()) {
       return false;
     }
 
