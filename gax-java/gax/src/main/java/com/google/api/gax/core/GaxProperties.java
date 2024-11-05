@@ -49,8 +49,7 @@ public class GaxProperties {
   private static final String DEFAULT_VERSION = "";
   private static final String GAX_VERSION = getLibraryVersion(GaxProperties.class, "version.gax");
   private static final String JAVA_VERSION = getRuntimeVersion();
-  private static final String PROTOBUF_VERSION =
-      getProtobufVersion(new ClassWrapper(), Any.class);
+  private static final String PROTOBUF_VERSION = getProtobufVersion(new ClassWrapper(), Any.class);
 
   private GaxProperties() {}
 
@@ -151,9 +150,9 @@ public class GaxProperties {
   }
 
   /**
-   * Returns the Protobuf runtime version as reported by com.google.protobuf.RuntimeVersion,
-   * if class is available, otherwise by reading from MANIFEST file. If niether option is available defaults to
-   * protobuf version 3 as RuntimeVersion class is available in protobuf version 4+
+   * Returns the Protobuf runtime version as reported by com.google.protobuf.RuntimeVersion, if
+   * class is available, otherwise by reading from MANIFEST file. If niether option is available
+   * defaults to protobuf version 3 as RuntimeVersion class is available in protobuf version 4+
    */
   @VisibleForTesting
   static String getProtobufVersion(ClassWrapper classWrapper, Class clazz) {
@@ -165,8 +164,12 @@ public class GaxProperties {
           + classWrapper.getFieldValue(protobufRuntimeVersionClass, "MINOR")
           + "."
           + classWrapper.getFieldValue(protobufRuntimeVersionClass, "PATCH");
-    } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException | SecurityException e) {
-      // If manifest file is not available default to protobuf generic version 3 as we know RuntimeVersion class is
+    } catch (ClassNotFoundException
+        | NoSuchFieldException
+        | IllegalAccessException
+        | SecurityException e) {
+      // If manifest file is not available default to protobuf generic version 3 as we know
+      // RuntimeVersion class is
       // available in protobuf jar 4+.
       return getBundleVersion(clazz).orElse("3");
     }
