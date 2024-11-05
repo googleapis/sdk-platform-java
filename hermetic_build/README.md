@@ -210,14 +210,34 @@ libraries:
      gcr.io/cloud-devrel-public-resources/java-library-generation:image-tag
    ```
 
-* `-u "$(id -u)":"$(id -g)"` makes docker run the container impersonating
-  yourself. 
-  This avoids folder ownership changes since it runs as root by default.
-* `-v "$(pwd):/workspace"` maps the host machine's current working directory to
-  the /workspace folder. 
-  The image is configured to perform changes in this directory.
-* `-v /path/to/api_definition:/workspace` maps the host machine's API 
-  definitions folder to `/workspace/apis` folder.
+   * `-u "$(id -u)":"$(id -g)"` makes docker run the container impersonating
+     yourself. 
+     This avoids folder ownership changes since it runs as root by default.
+   * `-v "$(pwd):/workspace"` maps the host machine's current working directory
+     to the /workspace folder. 
+     The image is configured to perform changes in this directory.
+   * `-v /path/to/api_definition:/workspace` maps the host machine's API 
+     definitions folder to `/workspace/apis` folder.
+ 
+3. An advanced example:
+   ```shell
+   docker run \
+     --rm \
+     --quiet \
+     -u "$(id -u):$(id -g)" \
+     -v "$(pwd):/workspace" \
+     -v /path/to/api_definition:/workspace/apis \
+     gcr.io/cloud-devrel-public-resources/java-library-generation:image-tag \
+     --generation-config-path=/workspace/generation_config_file \
+     --library-names=apigee-connect,asset \
+     --repository-path=/workspace \
+     --api-definitions-path=/workspace/apis
+   ```
+    
+   * `--generation-config-path=/workspace/generation_config_file` set the
+     generation configuration to `/workspace/generation_config_file`.
+   * `--api-definitions-path=/workspace/apis` set the API definition path to
+     `/workspace/apis`.
 
 To debug the image, please refer to [development guide](DEVELOPMENT.md#debug-the-library-generation-container)
 for more info.
