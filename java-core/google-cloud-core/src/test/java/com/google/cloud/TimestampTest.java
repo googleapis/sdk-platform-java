@@ -252,6 +252,12 @@ class TimestampTest {
   }
 
   @Test
+  void parseTimestampWithZoneString() {
+    assertThat(Timestamp.parseTimestampDuration("2020-12-06T08:51:12.123America/Toronto"))
+        .isEqualTo(Timestamp.ofTimeSecondsAndNanos(1607262672, 123000000));
+  }
+
+  @Test
   void fromProto() {
     com.google.protobuf.Timestamp proto =
         com.google.protobuf.Timestamp.newBuilder().setSeconds(1234).setNanos(567).build();
