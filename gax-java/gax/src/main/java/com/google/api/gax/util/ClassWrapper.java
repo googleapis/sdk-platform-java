@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.util;
 
-/* Wrapper class for reflection Class methods to enable unit testing. */
+/* Wrapper class for reflection {@link java.lang.Class} methods to enable unit testing. */
 public class ClassWrapper {
 
   /* Wraps {@link java.lang.Class#forName} method  */
@@ -37,7 +37,7 @@ public class ClassWrapper {
     return Class.forName(name);
   }
 
-  /* Consolidates retrieving a field on a Class object via reflection and retrieving the value of that field */
+  /* Consolidates retrieving a {@link java.lang.Field} on a {@link java.lang.Class} object via reflection and retrieving the value of that Field */
   public Object getFieldValue(Class<?> clazz, String fieldName)
       throws NoSuchFieldException, IllegalAccessException {
     return clazz.getField(fieldName).get(null);

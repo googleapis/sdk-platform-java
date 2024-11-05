@@ -30,14 +30,16 @@
 package com.google.api.gax.core;
 
 import static com.google.api.gax.core.GaxProperties.getBundleVersion;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.google.api.gax.util.*;
+import com.google.api.gax.util.ClassWrapper;
 import com.google.common.base.Strings;
-import com.google.protobuf.*;
+import com.google.protobuf.Any;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.regex.Pattern;
