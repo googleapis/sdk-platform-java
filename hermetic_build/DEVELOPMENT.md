@@ -195,6 +195,11 @@ python hermetic_build/library_generation/cli/entry_point.py generate \
         --repository-path=/workspace \
         --api-definitions-path=/workspace/apis
       ```
+   Note that if you specify the generator version using environment variable,
+   `-e GENERATOR_VERSION="${LOCAL_GENERATOR_VERSION}"` in the above example,
+   you should not set `gapic_generator_version` and `protoc_version` in the
+   generation configuration because values in the generation configuration will
+   take precedence.
 
 # Debug the library generation container
 If you are working on changing the way the containers are created, you may want
