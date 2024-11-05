@@ -259,7 +259,8 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
             .toBuilder()
             // These params were selected to ensure that future tries to run and fail (at least
             // once) but does not complete before it is cancelled. Assuming no computation time,
-            // it would take 2500 + 10000 + 10000 + 10000 = 32500ms for the future to complete, which should
+            // it would take 2500 + 10000 + 10000 + 10000 = 32500ms for the future to complete,
+            // which should
             // be more than enough time to cancel the future.
             .setInitialRetryDelayDuration(java.time.Duration.ofMillis(2500L))
             .setMaxRetryDelayDuration(java.time.Duration.ofMillis(10000L))
