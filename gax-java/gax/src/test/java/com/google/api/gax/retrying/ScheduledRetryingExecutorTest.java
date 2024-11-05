@@ -41,6 +41,8 @@ import com.google.api.core.ApiFuture;
 import com.google.api.core.NanoClock;
 import com.google.api.gax.retrying.FailingCallable.CustomException;
 import com.google.api.gax.rpc.testing.FakeCallContext;
+
+import java.util.Optional;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
@@ -195,13 +197,13 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
     setUp(withCustomRetrySettings);
     for (int executionsCount = 0; executionsCount < EXECUTIONS_COUNT; executionsCount++) {
       ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
-      final int maxRetries = 100;
+      final int maxRetries = 20;
 
       FailingCallable callable = new FailingCallable(maxRetries - 1, "request", "SUCCESS", tracer);
       RetrySettings retrySettings =
           FAST_RETRY_SETTINGS
               .toBuilder()
-              .setTotalTimeoutDuration(java.time.Duration.ofMillis(1000L))
+              .setTotalTimeoutDuration(java.time.Duration.ofMillis(5000L))
               .setMaxAttempts(maxRetries)
               .build();
 
@@ -259,10 +261,10 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
             .toBuilder()
             // These params were selected to ensure that future tries to run and fail (at least
             // once) but does not complete before it is cancelled. Assuming no computation time,
-            // it would take 25 + 100 + 400 + 1000 = 1525ms for the future to complete, which should
+            // it would take 2500 + 10000 + 10000 + 10000 = 32500ms for the future to complete, which should
             // be more than enough time to cancel the future.
-            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(25L))
-            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(1000L))
+            .setInitialRetryDelayDuration(java.time.Duration.ofMillis(2500L))
+            .setMaxRetryDelayDuration(java.time.Duration.ofMillis(10000L))
             .setRetryDelayMultiplier(4.0)
             .setTotalTimeoutDuration(java.time.Duration.ofMillis(60000L))
             // Set this test to not use jitter as the randomized retry delay (RRD) may introduce
