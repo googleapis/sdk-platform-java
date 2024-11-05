@@ -85,6 +85,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -442,12 +443,14 @@ public class Parser {
     // Give warnings and disregard this config. default to include all.
     if (!librarySettingsList.get(0).getVersion().isEmpty()
         && !protoPackage.equals(librarySettingsList.get(0).getVersion())) {
-      LOGGER.warning(
-          String.format(
-              "Service yaml config is misconfigured. Version in "
-                  + "publishing.library_settings (%s) does not match proto package (%s)."
-                  + "Disregarding selective generation settings.",
-              librarySettingsList.get(0).getVersion(), protoPackage));
+      if (LOGGER.isLoggable(Level.WARNING)) {
+        LOGGER.warning(
+            String.format(
+                "Service yaml config is misconfigured. Version in "
+                    + "publishing.library_settings (%s) does not match proto package (%s)."
+                    + "Disregarding selective generation settings.",
+                librarySettingsList.get(0).getVersion(), protoPackage));
+      }
       return true;
     }
     // librarySettingsList is technically a list, but is processed upstream and
@@ -481,10 +484,10 @@ public class Parser {
                     shouldIncludeMethodInGeneration(method, serviceYamlProtoOpt, protoPackage))
             .collect(Collectors.toList());
     if (methodListSelected.isEmpty()) {
-      LOGGER.warning(
-          String.format(
-              "Service %s has no RPC methods and will not be generated",
-              serviceDescriptor.getName()));
+      LOGGER.log(
+          Level.WARNING,
+          "Service {0} has no RPC methods and will not be generated",
+          serviceDescriptor.getName());
     }
     return methodListSelected.isEmpty();
   }
