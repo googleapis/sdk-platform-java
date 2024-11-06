@@ -1,4 +1,6 @@
 # Generating certificates and keys for testing mTLS-S2A
+Below are the commands which can be used to refresh the certs used in tests. This is the same process
+used to generate test certs for S2A client in grpc-java: https://github.com/grpc/grpc-java/blob/master/s2a/src/test/resources/README.md
 
 Create root CA
 
