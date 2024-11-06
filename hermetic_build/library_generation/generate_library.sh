@@ -115,7 +115,7 @@ if [ -z "${os_architecture}" ]; then
   os_architecture=$(detect_os_architecture)
 fi
 
-temp_destination_path="${output_folder}/temp_preprocessed"
+temp_destination_path="${output_folder}/temp_preprocessed/$(uuidgen)"
 mkdir -p "${output_folder}/${destination_path}"
 if [ -d "${temp_destination_path}" ]; then
   # we don't want the preprocessed sources of a previous run
