@@ -496,10 +496,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
               + ignore.getMessage());
       return createPlaintextToS2AChannelCredentials(plaintextAddress);
     }
-    if (mtlsToS2AChannelCredentials == null) {
-      // Fallback to plaintext-to-S2A connection.
-      return createPlaintextToS2AChannelCredentials(plaintextAddress);
-    }
     return S2AChannelCredentials.newBuilder(mtlsAddress, mtlsToS2AChannelCredentials).build();
   }
 
