@@ -662,11 +662,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return endpoint;
   }
 
-  /** The endpoint context. */
-  public EndpointContext getEndpointContext() {
-    return endpointContext;
-  }
-
   /** This method is obsolete. Use {@link #getKeepAliveTimeDuration()} instead. */
   @ObsoleteApi("Use getKeepAliveTimeDuration() instead")
   public org.threeten.bp.Duration getKeepAliveTime() {
@@ -847,10 +842,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     public String getEndpoint() {
       return endpoint;
-    }
-
-    public EndpointContext getEndpointContext() {
-      return endpointContext;
     }
 
     /** The maximum message size allowed to be received on the channel. */
