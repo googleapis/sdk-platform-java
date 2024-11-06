@@ -377,22 +377,30 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   void testDirectPathWithGDUEndpoint() {
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.when(endpointContext.resolvedEndpoint()).thenReturn(DEFAULT_ENDPOINT);
+
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setAttemptDirectPathXds()
             .setEndpoint(DEFAULT_ENDPOINT)
+            .setEndpointContext(endpointContext)
             .build();
     assertThat(provider.canUseDirectPathWithUniverseDomain()).isTrue();
   }
 
   @Test
   void testDirectPathWithNonGDUEndpoint() {
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.when(endpointContext.resolvedEndpoint()).thenReturn("test.random.com:443");
+
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setAttemptDirectPathXds()
             .setEndpoint("test.random.com:443")
+            .setEndpointContext(endpointContext)
             .build();
     assertThat(provider.canUseDirectPathWithUniverseDomain()).isFalse();
   }
@@ -830,11 +838,14 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   @Test
   public void canUseDirectPath_directPathEnvVarNotSet_attemptDirectPathIsTrue() {
     System.setProperty("os.name", "Linux");
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.when(endpointContext.resolvedEndpoint()).thenReturn(DEFAULT_ENDPOINT);
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
-            .setEndpoint(DEFAULT_ENDPOINT);
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEndpointContext(endpointContext);
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isTrue();
@@ -938,11 +949,14 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
                 InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
         .thenReturn("false");
     String nonGDUEndpoint = "test.random.com:443";
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.when(endpointContext.resolvedEndpoint()).thenReturn(nonGDUEndpoint);
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
             .setEndpoint(nonGDUEndpoint)
+            .setEndpointContext(endpointContext)
             .setEnvProvider(envProvider);
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
