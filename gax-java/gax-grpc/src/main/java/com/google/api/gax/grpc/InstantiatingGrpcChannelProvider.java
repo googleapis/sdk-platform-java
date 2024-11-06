@@ -492,7 +492,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           Level.INFO,
           "Cannot establish an mTLS connection to S2A due to error loading MTLS to MDS credentials, falling back to plaintext connection to S2A: "
               + ignore.getMessage());
-      // Fallback to plaintext connection to S2A.
       return createPlaintextToS2AChannelCredentials(plaintextAddress);
     }
     ChannelCredentials mtlsToS2AChannelCredentials = null;
@@ -817,7 +816,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    public Builder setEndpointContext(EndpointContext endpointContext) {
+    Builder setEndpointContext(EndpointContext endpointContext) {
       this.endpointContext = endpointContext;
       return this;
     }
