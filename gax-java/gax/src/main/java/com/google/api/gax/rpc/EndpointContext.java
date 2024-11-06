@@ -126,7 +126,8 @@ public abstract class EndpointContext {
   public static Builder newBuilder() {
     return new AutoValue_EndpointContext.Builder()
         .setSwitchToMtlsEndpointAllowed(false)
-        .setUsingGDCH(false);
+        .setUsingGDCH(false)
+        .setEnvProvider(System::getenv);
   }
 
   /** Configure the existing EndpointContext to be using GDC-H */
@@ -308,11 +309,7 @@ public abstract class EndpointContext {
     boolean shouldUseS2A() {
       // If EXPERIMENTAL_GOOGLE_API_USE_S2A is not set to true, skip S2A.
       String s2AEnv;
-      if (envProvider() != null) {
-        s2AEnv = envProvider().getenv(S2A_ENV_ENABLE_USE_S2A);
-      } else {
-        s2AEnv = System.getenv(S2A_ENV_ENABLE_USE_S2A);
-      }
+      s2AEnv = envProvider().getenv(S2A_ENV_ENABLE_USE_S2A);
       boolean s2AEnabled = Boolean.parseBoolean(s2AEnv);
       if (!s2AEnabled) {
         return false;
