@@ -30,7 +30,6 @@
 package com.google.api.gax.core;
 
 import com.google.api.core.InternalApi;
-import com.google.api.gax.util.ClassWrapper;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import com.google.protobuf.Any;
@@ -172,6 +171,21 @@ public class GaxProperties {
       // RuntimeVersion class is
       // available in protobuf jar 4+.
       return getBundleVersion(clazz).orElse("3");
+    }
+  }
+
+  /* Wrapper class for reflection {@link java.lang.Class} methods to enable unit testing. */
+  static class ClassWrapper {
+
+    /* Wraps {@link java.lang.Class#forName} method  */
+    public Class<?> forName(String name) throws ClassNotFoundException {
+      return Class.forName(name);
+    }
+
+    /* Consolidates retrieving a {@link java.lang.Field} on a {@link java.lang.Class} object via reflection and retrieving the value of that Field */
+    public Object getFieldValue(Class<?> clazz, String fieldName)
+        throws NoSuchFieldException, IllegalAccessException {
+      return clazz.getField(fieldName).get(null);
     }
   }
 }

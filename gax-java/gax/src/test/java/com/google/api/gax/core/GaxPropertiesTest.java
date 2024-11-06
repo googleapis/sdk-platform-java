@@ -37,7 +37,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.google.api.gax.util.ClassWrapper;
 import com.google.common.base.Strings;
 import com.google.protobuf.Any;
 import java.io.IOException;
@@ -178,7 +177,7 @@ class GaxPropertiesTest {
 
   @Test
   void testGetProtobufVersion_success() throws Exception {
-    ClassWrapper mockClassWrapper = mock(ClassWrapper.class);
+    GaxProperties.ClassWrapper mockClassWrapper = mock(GaxProperties.ClassWrapper.class);
     when(mockClassWrapper.forName("com.google.protobuf.RuntimeVersion"))
         .thenAnswer(invocationOnMock -> Class.class);
     when(mockClassWrapper.getFieldValue(Class.class, "MAJOR")).thenReturn("2");
@@ -192,7 +191,7 @@ class GaxPropertiesTest {
 
   @Test
   void testGetProtobufVersion_classNotFoundException() throws Exception {
-    ClassWrapper mockClassWrapper = mock(ClassWrapper.class);
+    GaxProperties.ClassWrapper mockClassWrapper = mock(GaxProperties.ClassWrapper.class);
     when(mockClassWrapper.forName("com.google.protobuf.RuntimeVersion"))
         .thenThrow(new ClassNotFoundException(""));
 
@@ -203,7 +202,7 @@ class GaxPropertiesTest {
 
   @Test
   void testgetProtobufVersion_noSuchFieldException() throws Exception {
-    ClassWrapper mockClassWrapper = mock(ClassWrapper.class);
+    GaxProperties.ClassWrapper mockClassWrapper = mock(GaxProperties.ClassWrapper.class);
     when(mockClassWrapper.getFieldValue(any(), any())).thenThrow(NoSuchFieldException.class);
 
     String version = GaxProperties.getProtobufVersion(mockClassWrapper, Any.class);
@@ -213,7 +212,7 @@ class GaxPropertiesTest {
 
   @Test
   void testGetProtobufVersion_noManifest() throws Exception {
-    ClassWrapper mockClassWrapper = mock(ClassWrapper.class);
+    GaxProperties.ClassWrapper mockClassWrapper = mock(GaxProperties.ClassWrapper.class);
     when(mockClassWrapper.forName("com.google.protobuf.RuntimeVersion"))
         .thenThrow(new ClassNotFoundException(""));
 
