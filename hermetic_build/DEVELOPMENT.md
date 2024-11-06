@@ -168,7 +168,7 @@ python hermetic_build/library_generation/cli/entry_point.py generate \
    Please note that the build only works when using the new
    [Docker BuildKit](https://docs.docker.com/build/buildkit/) (enabled through the `DOCKER_BUILDKIT` variable).
    
-3. Set the version of gapic-generator-java
+2. Set the version of gapic-generator-java
 
    ```shell
    LOCAL_GENERATOR_VERSION=$(mvn \
