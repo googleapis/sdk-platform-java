@@ -62,7 +62,7 @@ ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
-RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git
+RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git uuidgen
 
 SHELL [ "/bin/bash", "-c" ]
 
