@@ -456,6 +456,18 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         .build();
   }
 
+  /**
+   * This method creates gRPC {@link ChannelCredentials} configured to use S2A to estbalish a mTLS
+   * connection. First, the address of S2A is discovered by using the {@link S2A} utility to learn
+   * the {@code mtlsAddress} to reach S2A and the {@code plaintextAddress} to reach S2A. Prefer to
+   * use the {@code mtlsAddress} address to reach S2A if it is non-empty and the MTLS-MDS
+   * credentials can successfully be discovered and used to create {@link TlsChannelCredentials}. If
+   * there is any failure using mTLS-to-S2A, fallback to using a plaintext connection to S2A using
+   * the {@code plaintextAddress}.
+   *
+   * @return {@link ChannelCredentials} configured to use S2A to create mTLS connection to
+   *     mtlsEndpoint.
+   */
   ChannelCredentials createS2ASecuredChannelCredentials() {
     S2A s2aUtils = S2A.newBuilder().build();
     String plaintextAddress = s2aUtils.getPlaintextS2AAddress();
