@@ -421,7 +421,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   // Universe Domain configuration is currently only supported in the GDU
   @VisibleForTesting
   boolean canUseDirectPathWithUniverseDomain() {
-    return endpoint.contains(Credentials.GOOGLE_DEFAULT_UNIVERSE);
+    return endpointContext.resolvedEndpoint().contains(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @VisibleForTesting
@@ -542,20 +542,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     GrpcMetadataHandlerInterceptor metadataHandlerInterceptor =
         new GrpcMetadataHandlerInterceptor();
 
-    int colon = endpoint.lastIndexOf(':');
+    int colon = endpointContext.resolvedEndpoint().lastIndexOf(':');
     if (colon < 0) {
-      throw new IllegalStateException("invalid endpoint - should have been validated: " + endpoint);
-    }
-    int port = Integer.parseInt(endpoint.substring(colon + 1));
-    String serviceAddress = endpoint.substring(0, colon);
-
-    int mtlsColon = endpointContext.mtlsEndpoint().lastIndexOf(':');
-    if (mtlsColon < 0) {
       throw new IllegalStateException(
-          "invalid mtlsEndpoint - should have been validated: " + endpointContext.mtlsEndpoint());
+          "invalid endpoint - should have been validated: " + endpointContext.resolvedEndpoint());
     }
-    int mtlsPort = Integer.parseInt(endpointContext.mtlsEndpoint().substring(mtlsColon + 1));
-    String mtlsServiceAddress = endpointContext.mtlsEndpoint().substring(0, mtlsColon);
+    int port = Integer.parseInt(endpointContext.resolvedEndpoint().substring(colon + 1));
+    String serviceAddress = endpointContext.resolvedEndpoint().substring(0, colon);
 
     ManagedChannelBuilder<?> builder;
 
@@ -589,7 +582,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       }
       if (channelCredentials != null) {
         // Create the channel using channel credentials created via DCA.
-        builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
+        builder = Grpc.newChannelBuilder(endpointContext.resolvedEndpoint(), channelCredentials);
       } else {
         // Could not create channel credentials via DCA. In accordance with
         // https://google.aip.dev/auth/4115, if credentials not available through
@@ -599,7 +592,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         }
         if (channelCredentials != null) {
           // Create the channel using S2A-secured channel credentials.
-          builder = Grpc.newChannelBuilder(mtlsServiceAddress, channelCredentials);
+          builder = Grpc.newChannelBuilder(endpointContext.mtlsEndpoint(), channelCredentials);
         } else {
           // Use default if we cannot initialize channel credentials via DCA or S2A.
           builder = ManagedChannelBuilder.forAddress(serviceAddress, port);

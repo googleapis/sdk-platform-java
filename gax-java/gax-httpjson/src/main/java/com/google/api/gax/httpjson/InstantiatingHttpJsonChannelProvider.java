@@ -197,7 +197,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
     // the channel will use a default executor for the calls.
     ManagedHttpJsonChannel channel =
         ManagedHttpJsonChannel.newBuilder()
-            .setEndpoint(endpoint)
+            .setEndpoint(endpointContext.resolvedEndpoint())
             .setExecutor(executor)
             .setHttpTransport(httpTransportToUse)
             .build();

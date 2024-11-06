@@ -31,6 +31,7 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalExtensionOnly;
+import com.google.api.core.ObsoleteApi;
 import com.google.auth.Credentials;
 import java.io.IOException;
 import java.util.Map;
@@ -88,6 +89,7 @@ public interface TransportChannelProvider {
   TransportChannelProvider withHeaders(Map<String, String> headers);
 
   /** True if the TransportProvider has no endpoint set. */
+  @ObsoleteApi("Use endpointContext.resolvedEndpoint() instead")
   boolean needsEndpoint();
 
   /**
@@ -95,6 +97,7 @@ public interface TransportChannelProvider {
    *
    * <p>This method should only be called if {@link #needsEndpoint()} returns true.
    */
+  @ObsoleteApi("Use endpointContext.resolvedEndpoint() instead")
   TransportChannelProvider withEndpoint(String endpoint);
 
   /** Sets the {@link EndpointContext} when constructing a new {@link TransportChannel}. */
