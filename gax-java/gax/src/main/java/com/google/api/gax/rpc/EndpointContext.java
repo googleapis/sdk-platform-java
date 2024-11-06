@@ -203,10 +203,6 @@ public abstract class EndpointContext {
      */
     public abstract Builder setTransportChannelProviderEndpoint(String transportChannelEndpoint);
 
-    public abstract Builder setUseS2A(boolean useS2A);
-
-    public abstract Builder setEnvProvider(EnvironmentProvider envProvider);
-
     public abstract Builder setMtlsEndpoint(String mtlsEndpoint);
 
     public abstract Builder setSwitchToMtlsEndpointAllowed(boolean switchToMtlsEndpointAllowed);
@@ -218,6 +214,10 @@ public abstract class EndpointContext {
     public abstract Builder setResolvedEndpoint(String resolvedEndpoint);
 
     public abstract Builder setResolvedUniverseDomain(String resolvedUniverseDomain);
+
+    abstract Builder setUseS2A(boolean useS2A);
+
+    abstract Builder setEnvProvider(EnvironmentProvider envProvider);
 
     abstract String serviceName();
 
