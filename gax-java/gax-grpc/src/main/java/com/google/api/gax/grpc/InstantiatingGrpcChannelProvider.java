@@ -438,6 +438,19 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return null;
   }
 
+  /**
+   * This method creates {@link TlsChannelCredentials} to be used by the client to establish an mTLS
+   * connection to S2A. Returns null if any of {@param trustBundle}, {@param privateKey} or {@param
+   * certChain} are missing.
+   *
+   * @param trustBundle the trust bundle to be used to establish the client -> S2A mTLS connection
+   * @param privateKey the client's private key to be used to establish the client -> S2A mtls
+   *     connection
+   * @param certChain the client's cert chain to be used to establish the client -> S2A mtls
+   *     connection
+   * @return {@link ChannelCredentials} to use to create an mtls connection between client and S2A
+   * @throws IOException on error
+   */
   @VisibleForTesting
   ChannelCredentials createMtlsToS2AChannelCredentials(
       InputStream trustBundle, InputStream privateKey, InputStream certChain) throws IOException {
@@ -450,6 +463,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         .build();
   }
 
+  /**
+   * This method creates {@link ChannelCredentials} to be used by client to establish a plaintext
+   * connection to S2A. if {@param plaintextAddress} is not present, returns null.
+   *
+   * @param plaintextAddress the address to reach S2A which accepts plaintext connections
+   * @return {@link ChannelCredentials} to use to create a plaintext connection between client and
+   *     S2A
+   */
   ChannelCredentials createPlaintextToS2AChannelCredentials(String plaintextAddress) {
     if (Strings.isNullOrEmpty(plaintextAddress)) {
       return null;
