@@ -89,7 +89,7 @@ public interface TransportChannelProvider {
   TransportChannelProvider withHeaders(Map<String, String> headers);
 
   /** True if the TransportProvider has no endpoint set. */
-  @ObsoleteApi("Use endpointContext.resolvedEndpoint() instead")
+  @ObsoleteApi("Endpoint should be configured set in the ClientSettings")
   boolean needsEndpoint();
 
   /**
@@ -97,7 +97,7 @@ public interface TransportChannelProvider {
    *
    * <p>This method should only be called if {@link #needsEndpoint()} returns true.
    */
-  @ObsoleteApi("Use endpointContext.resolvedEndpoint() instead")
+  @ObsoleteApi("Endpoint should be configured set in the ClientSettings")
   TransportChannelProvider withEndpoint(String endpoint);
 
   /** Sets the {@link EndpointContext} when constructing a new {@link TransportChannel}. */
