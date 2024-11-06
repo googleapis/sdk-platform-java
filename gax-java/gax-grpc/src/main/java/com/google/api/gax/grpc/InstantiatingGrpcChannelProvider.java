@@ -107,6 +107,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting
   static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
 
+  // The public portion of the mTLS MDS root certificate is stored for performing
+  // cert verification when establishing an mTLS connection with the MDS.
   private static final String MTLS_MDS_ROOT = "/run/google-mds-mtls/root.crt";
   // The mTLS MDS credentials are formatted as the concatenation of a PEM-encoded certificate chain
   // followed by a PEM-encoded private key.
@@ -463,7 +465,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    * use the {@code mtlsAddress} address to reach S2A if it is non-empty and the MTLS-MDS
    * credentials can successfully be discovered and used to create {@link TlsChannelCredentials}. If
    * there is any failure using mTLS-to-S2A, fallback to using a plaintext connection to S2A using
-   * the {@code plaintextAddress}.
+   * the {@code plaintextAddress}. If {@code plaintextAddress} is not available, this function
+   * returns null; in this case S2A will not be used, and a TLS connection to the service will be
+   * established.
    *
    * @return {@link ChannelCredentials} configured to use S2A to create mTLS connection to
    *     mtlsEndpoint.
@@ -524,6 +528,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     int port = Integer.parseInt(endpoint.substring(colon + 1));
     String serviceAddress = endpoint.substring(0, colon);
 
+    int mtlsColon = endpointContext.mtlsEndpoint().lastIndexOf(':');
+    if (mtlsColon < 0) {
+      throw new IllegalStateException(
+          "invalid mtlsEndpoint - should have been validated: " + endpointContext.mtlsEndpoint());
+    }
+    int mtlsPort = Integer.parseInt(endpointContext.mtlsEndpoint().substring(mtlsColon + 1));
+    String mtlsServiceAddress = endpointContext.mtlsEndpoint().substring(0, mtlsColon);
+
     ManagedChannelBuilder<?> builder;
 
     // Check DirectPath traffic.
@@ -566,7 +578,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         }
         if (channelCredentials != null) {
           // Create the channel using S2A-secured channel credentials.
-          builder = Grpc.newChannelBuilder(endpointContext.mtlsEndpoint(), channelCredentials);
+          builder = Grpc.newChannelBuilder(mtlsServiceAddress, channelCredentials);
         } else {
           // Use default if we cannot initialize channel credentials via DCA or S2A.
           builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
