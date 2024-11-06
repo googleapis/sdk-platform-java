@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.common.testing.EqualsTester;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -237,24 +238,67 @@ class TimestampTest {
 
   @Test
   void parseTimestampWithTimeZoneOffset() {
+    // Max values
     assertThat(Timestamp.parseTimestampDuration("0001-01-01T00:00:00-00:00"))
         .isEqualTo(Timestamp.MIN_VALUE);
     assertThat(Timestamp.parseTimestampDuration("9999-12-31T23:59:59.999999999-00:00"))
         .isEqualTo(Timestamp.MAX_VALUE);
+    // Extreme values (close to min/max)
+    assertThat(Timestamp.parseTimestampDuration("0001-01-01T00:00:00.000000001Z"))
+        .isEqualTo(Timestamp.ofTimeSecondsAndNanos(Timestamp.MIN_VALUE.getSeconds(), 1));
+    assertThat(Timestamp.parseTimestampDuration("9999-12-31T23:59:59.999999998Z"))
+        .isEqualTo(Timestamp.ofTimeSecondsAndNanos(Timestamp.MAX_VALUE.getSeconds(), 999999998));
+    // Common use cases
     assertThat(Timestamp.parseTimestampDuration("2020-07-10T14:03:00-07:00"))
         .isEqualTo(Timestamp.ofTimeSecondsAndNanos(1594414980, 0));
     assertThat(Timestamp.parseTimestampDuration("2020-12-06T19:21:12.123+05:30"))
         .isEqualTo(Timestamp.ofTimeSecondsAndNanos(1607262672, 123000000));
-    // we also confirm that parsing a timestamp with nano precision will behave the same as the
+    // We also confirm that parsing a timestamp with nano precision will behave the same as the
     // threeten counterpart
     assertThat(Timestamp.parseTimestampDuration("2020-12-06T19:21:12.123+05:30"))
         .isEqualTo(Timestamp.parseTimestamp("2020-12-06T19:21:12.123+05:30"));
+    // Timestamps with fractional seconds at nanosecond level
+    assertThat(Timestamp.parseTimestampDuration("2020-12-06T19:21:12.123456789+05:30"))
+        .isEqualTo(Timestamp.ofTimeSecondsAndNanos(1607262672, 123456789));
+    // Fractional seconds beyond nanos should throw an exception
+    assertThrows(
+        DateTimeParseException.class,
+        () -> Timestamp.parseTimestampDuration("2020-12-06T19:21:12.123456789321+05:30"));
+    // Missing components (should throw exceptions)
+    assertThrows(
+        DateTimeParseException.class, () -> Timestamp.parseTimestampDuration("2020-12-06"));
+    // Whitespace should not be supported
+    assertThrows(
+        DateTimeParseException.class,
+        () -> Timestamp.parseTimestampDuration("  2020-12-06T19:21:12.123+05:30  "));
+    // It should be case-insensitive
+    assertThat(Timestamp.parseTimestampDuration("2020-07-10t14:03:00-07:00"))
+        .isEqualTo(Timestamp.ofTimeSecondsAndNanos(1594414980, 0));
+    // Invalid time zone offsets
+    assertThrows(
+        DateTimeParseException.class,
+        () -> Timestamp.parseTimestampDuration("2020-12-06T19:21:12.123+25:00"));
+    assertThrows(
+        DateTimeParseException.class,
+        () -> Timestamp.parseTimestampDuration("2020-12-06T19:21:12.123-25:00"));
+    // Int values for SecondOfMinute should be between 0 and 59
+    assertThrows(
+        DateTimeParseException.class,
+        () -> Timestamp.parseTimestampDuration("2016-12-31T23:59:60Z"));
   }
 
   @Test
   void parseTimestampWithZoneString() {
+    // Valid RFC 3339 timestamps with time zone names
     assertThat(Timestamp.parseTimestampDuration("2020-12-06T08:51:12.123America/Toronto"))
         .isEqualTo(Timestamp.ofTimeSecondsAndNanos(1607262672, 123000000));
+    assertThat(Timestamp.parseTimestampDuration("2023-04-10T22:42:10.123456789Europe/London"))
+        .isEqualTo(Timestamp.ofTimeSecondsAndNanos(1681162930, 123456789));
+
+    // Invalid time zone names
+    assertThrows(
+        DateTimeParseException.class,
+        () -> Timestamp.parseTimestampDuration("2020-12-06T19:21:12.123Invalid/TimeZone"));
   }
 
   @Test
