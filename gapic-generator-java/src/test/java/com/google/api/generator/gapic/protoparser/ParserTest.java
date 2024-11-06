@@ -21,9 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.google.api.ClientLibrarySettings;
 import com.google.api.FieldInfo.Format;
 import com.google.api.MethodSettings;
 import com.google.api.Publishing;
+import com.google.api.PythonSettings;
 import com.google.api.Service;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
@@ -46,6 +48,7 @@ import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
+import com.google.selective.generate.v1beta1.SelectiveApiGenerationOuterClass;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
@@ -58,6 +61,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -137,6 +142,7 @@ class ParserTest {
         Parser.parseMethods(
             echoService,
             ECHO_PACKAGE,
+            ECHO_PACKAGE,
             messageTypes,
             resourceNames,
             Optional.empty(),
@@ -199,6 +205,7 @@ class ParserTest {
     List<Method> methods =
         Parser.parseMethods(
             echoService,
+            ECHO_PACKAGE,
             ECHO_PACKAGE,
             messageTypes,
             resourceNames,
@@ -703,6 +710,128 @@ class ParserTest {
             fileDescriptor, messageTypes, resourceNames, Optional.empty(), new HashSet<>());
     assertEquals(1, services.size());
     assertEquals("EchoWithMethods", services.get(0).overriddenName());
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldExcludeUnusedResourceNames() {
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+
+    String serviceYamlFilename = "selective_api_generation_v1beta1.yaml";
+    String testFilesDirectory = "src/test/resources/";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    Assert.assertTrue(serviceYamlOpt.isPresent());
+
+    Set<ResourceName> helperResourceNames = new HashSet<>();
+    Parser.parseService(
+        fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, helperResourceNames);
+    // resource Name Foobarbaz is not present
+    assertEquals(2, helperResourceNames.size());
+    assertTrue(
+        helperResourceNames.stream()
+            .map(ResourceName::variableName)
+            .collect(Collectors.toSet())
+            .containsAll(ImmutableList.of("foobar", "anythingGoes")));
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateOnlySelectiveMethods() {
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+
+    // test with service yaml file to show usage of this feature, test itself
+    // can be done without this file and build a Service object from code.
+    String serviceYamlFilename = "selective_api_generation_v1beta1.yaml";
+    String testFilesDirectory = "src/test/resources/";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    Assert.assertTrue(serviceYamlOpt.isPresent());
+
+    List<com.google.api.generator.gapic.model.Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, serviceYamlOpt, new HashSet<>());
+    assertEquals(1, services.size());
+    assertEquals("EchoServiceShouldGeneratePartial", services.get(0).overriddenName());
+    assertEquals(3, services.get(0).methods().size());
+    for (Method method : services.get(0).methods()) {
+      assertTrue(method.name().contains("ShouldInclude"));
+    }
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateAllIfNoPublishingSectionInServiceYaml() {
+    Service service =
+        Service.newBuilder()
+            .setTitle("Selective generation testing with no publishing section")
+            .build();
+    Publishing publishing = service.getPublishing();
+    Assert.assertEquals(0, publishing.getLibrarySettingsCount());
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    List<MethodDescriptor> methods = fileDescriptor.getServices().get(0).getMethods();
+    String protoPackage = "google.selective.generate.v1beta1";
+
+    assertTrue(
+        Parser.shouldIncludeMethodInGeneration(methods.get(0), Optional.of(service), protoPackage));
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldIncludeMethodInGenerationWhenProtoPackageMismatch() {
+    String protoPackage = "google.selective.generate.v1beta1";
+
+    // situation where service yaml has different version stated
+    ClientLibrarySettings clientLibrarySettings =
+        ClientLibrarySettings.newBuilder().setVersion("google.selective.generate.v1").build();
+    Publishing publishing =
+        Publishing.newBuilder().addLibrarySettings(clientLibrarySettings).build();
+    Service service =
+        Service.newBuilder()
+            .setTitle(
+                "Selective generation test when proto package "
+                    + "does not match library_settings version from service yaml")
+            .setPublishing(publishing)
+            .build();
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    List<MethodDescriptor> methods = fileDescriptor.getServices().get(0).getMethods();
+
+    assertTrue(
+        Parser.shouldIncludeMethodInGeneration(methods.get(0), Optional.of(service), protoPackage));
+  }
+
+  @Test
+  void selectiveGenerationTest_shouldGenerateAllIfNoJavaSectionInServiceYaml() {
+    String protoPackage = "google.selective.generate.v1beta1";
+
+    // situation where service yaml has other language settings but no
+    // java settings in library_settings.
+    ClientLibrarySettings clientLibrarySettings =
+        ClientLibrarySettings.newBuilder()
+            .setVersion(protoPackage)
+            .setPythonSettings(PythonSettings.newBuilder().build())
+            .build();
+    Publishing publishing =
+        Publishing.newBuilder().addLibrarySettings(clientLibrarySettings).build();
+    Service service =
+        Service.newBuilder()
+            .setTitle(
+                "Selective generation test when no java section in "
+                    + "library_settings from service yaml")
+            .setPublishing(publishing)
+            .build();
+
+    Assert.assertEquals(1, publishing.getLibrarySettingsCount());
+
+    FileDescriptor fileDescriptor = SelectiveApiGenerationOuterClass.getDescriptor();
+    List<MethodDescriptor> methods = fileDescriptor.getServices().get(0).getMethods();
+
+    assertTrue(
+        Parser.shouldIncludeMethodInGeneration(methods.get(0), Optional.of(service), protoPackage));
   }
 
   private void assertMethodArgumentEquals(
