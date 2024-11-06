@@ -105,7 +105,7 @@ public abstract class EndpointContext {
   public abstract boolean useS2A();
 
   @Nullable
-  public abstract EnvironmentProvider envProvider();
+  abstract EnvironmentProvider envProvider();
 
   @Nullable
   public abstract String mtlsEndpoint();
