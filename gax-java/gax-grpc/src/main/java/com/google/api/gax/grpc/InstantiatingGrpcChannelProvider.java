@@ -550,7 +550,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         // Could not create channel credentials via DCA. In accordance with
         // https://google.aip.dev/auth/4115, if credentials not available through
         // DCA, try mTLS with credentials held by the S2A (Secure Session Agent).
-        if ((endpointContext != null) && endpointContext.useS2A()) {
+        if (endpointContext.useS2A()) {
           channelCredentials = createS2ASecuredChannelCredentials();
         }
         if (channelCredentials != null) {
