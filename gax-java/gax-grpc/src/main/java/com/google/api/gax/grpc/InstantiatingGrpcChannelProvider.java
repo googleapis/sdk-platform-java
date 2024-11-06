@@ -50,6 +50,7 @@ import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auth.oauth2.S2A;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
@@ -448,7 +449,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   ChannelCredentials createPlaintextToS2AChannelCredentials(String plaintextAddress) {
-    if (plaintextAddress.isEmpty()) {
+    if (Strings.isNullOrEmpty(plaintextAddress)) {
       return null;
     }
     return S2AChannelCredentials.newBuilder(plaintextAddress, InsecureChannelCredentials.create())
@@ -459,7 +460,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     S2A s2aUtils = S2A.newBuilder().build();
     String plaintextAddress = s2aUtils.getPlaintextS2AAddress();
     String mtlsAddress = s2aUtils.getMtlsS2AAddress();
-    if (mtlsAddress.isEmpty()) {
+    if (Strings.isNullOrEmpty(mtlsAddress)) {
       // Fallback to plaintext connection to S2A.
       return createPlaintextToS2AChannelCredentials(plaintextAddress);
     }
