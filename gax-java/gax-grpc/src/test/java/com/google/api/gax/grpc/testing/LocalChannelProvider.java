@@ -61,6 +61,7 @@ public class LocalChannelProvider implements TransportChannelProvider {
 
   private final List<LocalHeaderInterceptor> interceptors;
   private final String address;
+  private EndpointContext endpointContext;
 
   private volatile HeaderProvider headerProvider;
 
@@ -78,11 +79,6 @@ public class LocalChannelProvider implements TransportChannelProvider {
   @Deprecated
   @Override
   public boolean needsExecutor() {
-    return false;
-  }
-
-  @Override
-  public boolean needsEndpointContext() {
     return false;
   }
 
@@ -114,7 +110,8 @@ public class LocalChannelProvider implements TransportChannelProvider {
 
   @Override
   public TransportChannelProvider withEndpointContext(EndpointContext endpointContext) {
-    throw new UnsupportedOperationException("LocalChannelProvider doesn't need an endpointContext");
+    this.endpointContext = endpointContext;
+    return this;
   }
 
   @Override

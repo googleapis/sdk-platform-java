@@ -180,11 +180,6 @@ class ClientContextTest {
     }
 
     @Override
-    public boolean needsEndpointContext() {
-      return false;
-    }
-
-    @Override
     public String getEndpoint() {
       return endpoint;
     }

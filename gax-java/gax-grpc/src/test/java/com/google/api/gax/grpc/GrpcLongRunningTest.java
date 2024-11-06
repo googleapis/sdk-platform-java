@@ -101,6 +101,8 @@ class GrpcLongRunningTest {
     TransportChannel transportChannel =
         GrpcTransportChannel.newBuilder().setManagedChannel(channel).build();
     when(operationsChannelProvider.getTransportChannel()).thenReturn(transportChannel);
+    when(operationsChannelProvider.withEndpointContext(Mockito.any(EndpointContext.class)))
+        .thenReturn(operationsChannelProvider);
 
     clock = new FakeApiClock(0L);
     executor = RecordingScheduler.create(clock);

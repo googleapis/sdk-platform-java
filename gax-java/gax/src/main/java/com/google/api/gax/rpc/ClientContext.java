@@ -222,9 +222,7 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
     }
-    if (transportChannelProvider.needsEndpointContext()) {
-      transportChannelProvider = transportChannelProvider.withEndpointContext(endpointContext);
-    }
+    transportChannelProvider = transportChannelProvider.withEndpointContext(endpointContext);
     TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
 
     ApiCallContext defaultCallContext =

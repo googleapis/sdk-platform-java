@@ -66,6 +66,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   private final HeaderProvider headerProvider;
   private final HttpJsonInterceptorProvider interceptorProvider;
   private final String endpoint;
+  private final EndpointContext endpointContext;
   private final HttpTransport httpTransport;
   private final MtlsProvider mtlsProvider;
 
@@ -74,12 +75,14 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
       HeaderProvider headerProvider,
       HttpJsonInterceptorProvider interceptorProvider,
       String endpoint,
+      EndpointContext endpointContext,
       HttpTransport httpTransport,
       MtlsProvider mtlsProvider) {
     this.executor = executor;
     this.headerProvider = headerProvider;
     this.interceptorProvider = interceptorProvider;
     this.endpoint = endpoint;
+    this.endpointContext = endpointContext;
     this.httpTransport = httpTransport;
     this.mtlsProvider = mtlsProvider;
   }
@@ -121,19 +124,13 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   }
 
   @Override
-  public boolean needsEndpointContext() {
-    return false;
-  }
-
-  @Override
   public TransportChannelProvider withEndpoint(String endpoint) {
     return toBuilder().setEndpoint(endpoint).build();
   }
 
   @Override
   public TransportChannelProvider withEndpointContext(EndpointContext endpointContext) {
-    throw new UnsupportedOperationException(
-        "InstantiatingHttpJsonChannelProvider doesn't need an endpointContext");
+    return toBuilder().setEndpointContext(endpointContext).build();
   }
 
   /** @deprecated REST transport channel doesn't support channel pooling */
@@ -243,6 +240,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
     private HeaderProvider headerProvider;
     private HttpJsonInterceptorProvider interceptorProvider;
     private String endpoint;
+    private EndpointContext endpointContext;
     private HttpTransport httpTransport;
     private MtlsProvider mtlsProvider = new MtlsProvider();
 
@@ -252,6 +250,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
       this.executor = provider.executor;
       this.headerProvider = provider.headerProvider;
       this.endpoint = provider.endpoint;
+      this.endpointContext = provider.endpointContext;
       this.httpTransport = provider.httpTransport;
       this.mtlsProvider = provider.mtlsProvider;
       this.interceptorProvider = provider.interceptorProvider;
@@ -306,6 +305,12 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
       return this;
     }
 
+    /** Sets the {@link EndpointContext} */
+    public Builder setEndpointContext(EndpointContext endpointContext) {
+      this.endpointContext = endpointContext;
+      return this;
+    }
+
     /** Sets the HTTP transport to be used. */
     public Builder setHttpTransport(HttpTransport httpTransport) {
       this.httpTransport = httpTransport;
@@ -324,7 +329,13 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
 
     public InstantiatingHttpJsonChannelProvider build() {
       return new InstantiatingHttpJsonChannelProvider(
-          executor, headerProvider, interceptorProvider, endpoint, httpTransport, mtlsProvider);
+          executor,
+          headerProvider,
+          interceptorProvider,
+          endpoint,
+          endpointContext,
+          httpTransport,
+          mtlsProvider);
     }
   }
 }

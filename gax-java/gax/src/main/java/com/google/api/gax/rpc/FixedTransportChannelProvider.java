@@ -42,6 +42,7 @@ import java.util.concurrent.ScheduledExecutorService;
 public class FixedTransportChannelProvider implements TransportChannelProvider {
 
   private final TransportChannel transportChannel;
+  private EndpointContext endpointContext;
 
   private FixedTransportChannelProvider(TransportChannel transportChannel) {
     this.transportChannel = Preconditions.checkNotNull(transportChannel);
@@ -84,11 +85,6 @@ public class FixedTransportChannelProvider implements TransportChannelProvider {
   }
 
   @Override
-  public boolean needsEndpointContext() {
-    return false;
-  }
-
-  @Override
   public TransportChannelProvider withEndpoint(String endpoint) {
     throw new UnsupportedOperationException(
         "FixedTransportChannelProvider doesn't need an endpoint");
@@ -96,8 +92,8 @@ public class FixedTransportChannelProvider implements TransportChannelProvider {
 
   @Override
   public TransportChannelProvider withEndpointContext(EndpointContext endpointContext) {
-    throw new UnsupportedOperationException(
-        "FixedTransportChannelProvider doesn't need an endpointContext");
+    this.endpointContext = endpointContext;
+    return this;
   }
 
   /** @deprecated FixedTransportChannelProvider doesn't support ChannelPool configuration */

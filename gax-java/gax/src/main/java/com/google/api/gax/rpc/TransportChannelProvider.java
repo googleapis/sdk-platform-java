@@ -90,9 +90,6 @@ public interface TransportChannelProvider {
   /** True if the TransportProvider has no endpoint set. */
   boolean needsEndpoint();
 
-  /** True if the TransportProvider needs an {@link EndpointContext} */
-  boolean needsEndpointContext();
-
   /**
    * Sets the endpoint to use when constructing a new {@link TransportChannel}.
    *
