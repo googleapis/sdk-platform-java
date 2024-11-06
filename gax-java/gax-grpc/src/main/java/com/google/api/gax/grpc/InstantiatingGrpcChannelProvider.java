@@ -447,52 +447,59 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         .build();
   }
 
+  ChannelCredentials createPlaintextToS2AChannelCredentials(String plaintextAddress) {
+    if (plaintextAddress.isEmpty()) {
+      return null;
+    }
+    return S2AChannelCredentials.newBuilder(plaintextAddress, InsecureChannelCredentials.create())
+        .build();
+  }
+
   ChannelCredentials createS2ASecuredChannelCredentials() {
     S2A s2aUtils = S2A.newBuilder().build();
     String plaintextAddress = s2aUtils.getPlaintextS2AAddress();
     String mtlsAddress = s2aUtils.getMtlsS2AAddress();
-    if (!mtlsAddress.isEmpty()) {
-      // Currently, MTLS to MDS is only available on GCE. See:
-      // https://cloud.google.com/compute/docs/metadata/overview#https-mds
-      // Try to load MTLS-MDS creds.
-      InputStream trustBundle = null;
-      InputStream privateKey = null;
-      InputStream certChain = null;
-      try {
-        trustBundle = new FileInputStream(MTLS_MDS_ROOT);
-        privateKey = new FileInputStream(MTLS_MDS_CERT_CHAIN_AND_KEY);
-        certChain = new FileInputStream(MTLS_MDS_CERT_CHAIN_AND_KEY);
-      } catch (FileNotFoundException ignore) {
-        // Fallback to plaintext-to-S2A connection.
-        LOG.log(
-            Level.INFO,
-            "Cannot establish an mTLS connection to S2A due to error loading MTLS to MDS credentials, falling back to plaintext connection to S2A: "
-                + ignore.getMessage());
-      }
-      ChannelCredentials mtlsToS2AChannelCredentials = null;
-      try {
-        // Try to connect to S2A using mTLS.
-        mtlsToS2AChannelCredentials =
-            createMtlsToS2AChannelCredentials(trustBundle, privateKey, certChain);
-      } catch (IOException ignore) {
-        // Fallback to plaintext-to-S2A connection.
-        LOG.log(
-            Level.INFO,
-            "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS TlsChannelCredentials credentials, falling back to plaintext connection to S2A: "
-                + ignore.getMessage());
-      }
-      if (mtlsToS2AChannelCredentials != null) {
-        return S2AChannelCredentials.newBuilder(mtlsAddress, mtlsToS2AChannelCredentials).build();
-      }
-    }
-
-    if (!plaintextAddress.isEmpty()) {
+    if (mtlsAddress.isEmpty()) {
       // Fallback to plaintext connection to S2A.
-      return S2AChannelCredentials.newBuilder(plaintextAddress, InsecureChannelCredentials.create())
-          .build();
+      return createPlaintextToS2AChannelCredentials(plaintextAddress);
     }
-
-    return null;
+    // Currently, MTLS to MDS is only available on GCE. See:
+    // https://cloud.google.com/compute/docs/metadata/overview#https-mds
+    // Try to load MTLS-MDS creds.
+    InputStream trustBundle = null;
+    InputStream privateKey = null;
+    InputStream certChain = null;
+    try {
+      trustBundle = new FileInputStream(MTLS_MDS_ROOT);
+      privateKey = new FileInputStream(MTLS_MDS_CERT_CHAIN_AND_KEY);
+      certChain = new FileInputStream(MTLS_MDS_CERT_CHAIN_AND_KEY);
+    } catch (FileNotFoundException ignore) {
+      // Fallback to plaintext-to-S2A connection.
+      LOG.log(
+          Level.INFO,
+          "Cannot establish an mTLS connection to S2A due to error loading MTLS to MDS credentials, falling back to plaintext connection to S2A: "
+              + ignore.getMessage());
+      // Fallback to plaintext connection to S2A.
+      return createPlaintextToS2AChannelCredentials(plaintextAddress);
+    }
+    ChannelCredentials mtlsToS2AChannelCredentials = null;
+    try {
+      // Try to connect to S2A using mTLS.
+      mtlsToS2AChannelCredentials =
+          createMtlsToS2AChannelCredentials(trustBundle, privateKey, certChain);
+    } catch (IOException ignore) {
+      // Fallback to plaintext-to-S2A connection.
+      LOG.log(
+          Level.INFO,
+          "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS TlsChannelCredentials credentials, falling back to plaintext connection to S2A: "
+              + ignore.getMessage());
+      return createPlaintextToS2AChannelCredentials(plaintextAddress);
+    }
+    if (mtlsToS2AChannelCredentials == null) {
+      // Fallback to plaintext-to-S2A connection.
+      return createPlaintextToS2AChannelCredentials(plaintextAddress);
+    }
+    return S2AChannelCredentials.newBuilder(mtlsAddress, mtlsToS2AChannelCredentials).build();
   }
 
   private ManagedChannel createSingleChannel() throws IOException {
