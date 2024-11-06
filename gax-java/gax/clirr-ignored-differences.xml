@@ -106,4 +106,16 @@
     <className>com/google/api/gax/batching/Batcher</className>
     <method>*</method>
   </difference>
+    <!-- Ignore abstract method addition to an EndpointContext-->
+  <difference>
+    <differenceType>7013</differenceType>
+    <className>com/google/api/gax/rpc/EndpointContext</className>
+    <method>* useS2A()</method>
+  </difference>
+    <!-- Ignore method addition to an TransportChannelProvider interface-->
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/TransportChannelProvider</className>
+    <method>* withEndpointContext(*)</method>
+  </difference>
 </differences>
