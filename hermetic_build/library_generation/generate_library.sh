@@ -114,7 +114,7 @@ fi
 if [ -z "${os_architecture}" ]; then
   os_architecture=$(detect_os_architecture)
 fi
-random_suffix=$(LC_ALL=C tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w 10 | head -n 1)
+random_suffix=$(LC_ALL=C tr -dc 'a-zA-Z' < /dev/urandom | fold -w 20 | head -n 1)
 temp_destination_path="${output_folder}/temp_preprocessed/${random_suffix}"
 mkdir -p "${output_folder}/${destination_path}"
 if [ -d "${temp_destination_path}" ]; then
