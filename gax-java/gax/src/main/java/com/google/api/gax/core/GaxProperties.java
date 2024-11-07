@@ -166,7 +166,8 @@ public class GaxProperties {
     } catch (ClassNotFoundException
         | NoSuchFieldException
         | IllegalAccessException
-        | SecurityException e) {
+        | SecurityException
+        | NullPointerException e) {
       // If manifest file is not available default to protobuf generic version 3 as we know
       // RuntimeVersion class is available in protobuf jar 4+.
       return getBundleVersion(clazz).orElse("3");

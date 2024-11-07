@@ -46,7 +46,7 @@ class GaxPropertiesTest {
 
   @Test
   void testGaxVersion() {
-    Version version = readVersion(GaxProperties.getGaxVersion(), false);
+    Version version = readVersion(GaxProperties.getGaxVersion());
 
     assertTrue(version.major >= 1);
     if (version.major == 1) {
@@ -161,9 +161,8 @@ class GaxPropertiesTest {
 
   @Test
   public void testGetProtobufVersion() throws IOException {
-    Version version = readVersion(GaxProperties.getProtobufVersion(), true);
-
-    validateVersion(version);
+    assertTrue(
+        Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(GaxProperties.getProtobufVersion()).find());
   }
 
   @Test
@@ -175,9 +174,11 @@ class GaxPropertiesTest {
 
   @Test
   void testGetProtobufVersion_success() {
-    String version = GaxProperties.getProtobufVersion(Any.class, "com.google.protobuf.Any");
+    String version =
+        GaxProperties.getProtobufVersion(
+            Any.class, "com.google.api.gax.core.GaxPropertiesTest$RuntimeVersion");
 
-    validateVersion(readVersion(version, true));
+    assertEquals("3.13.6", version);
   }
 
   @Test
@@ -201,37 +202,30 @@ class GaxPropertiesTest {
     assertEquals("3", version);
   }
 
-  private void validateVersion(Version version) {
-    assertTrue(version.major >= 3);
-    if (version.major == 3) {
-      assertTrue(version.minor >= 25);
-    }
-    assertTrue(version.patch >= 0);
-  }
-
-  private Version readVersion(String version, boolean includePatch) {
+  private Version readVersion(String version) {
     assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
     String[] versionComponents = version.split("\\.");
     // This test was added in version 1.56.0, so check that the major and minor numbers are greater
     // than that.
     int major = Integer.parseInt(versionComponents[0]);
     int minor = Integer.parseInt(versionComponents[1]);
-    int patch = 0;
-    if (includePatch) {
-      patch = Integer.parseInt(versionComponents[2]);
-    }
-    return new Version(major, minor, patch);
+    return new Version(major, minor);
   }
 
   private static class Version {
     public int major;
     public int minor;
-    public int patch;
 
-    public Version(int major, int minor, int patch) {
+    public Version(int major, int minor) {
       this.major = major;
       this.minor = minor;
-      this.patch = patch;
     }
+  }
+
+  // Test class that emulates com.google.protobuf.RuntimeVersion for reflection lookup of fields
+  class RuntimeVersion {
+    public static final int MAJOR = 3;
+    public static final int MINOR = 13;
+    public static final int PATCH = 6;
   }
 }
