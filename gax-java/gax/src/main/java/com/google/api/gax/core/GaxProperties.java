@@ -48,7 +48,8 @@ public class GaxProperties {
   private static final String DEFAULT_VERSION = "";
   private static final String GAX_VERSION = getLibraryVersion(GaxProperties.class, "version.gax");
   private static final String JAVA_VERSION = getRuntimeVersion();
-  private static final String PROTOBUF_VERSION = getProtobufVersion(new ClassWrapper(), Any.class);
+  private static final String PROTOBUF_VERSION =
+      getProtobufVersion(Any.class, "com.google.protobuf.RuntimeVersion");;
 
   private GaxProperties() {}
 
@@ -154,38 +155,21 @@ public class GaxProperties {
    * defaults to protobuf version 3 as RuntimeVersion class is available in protobuf version 4+
    */
   @VisibleForTesting
-  static String getProtobufVersion(ClassWrapper classWrapper, Class clazz) {
+  static String getProtobufVersion(Class clazz, String protobufRuntimeVersionClassName) {
     try {
-      Class<?> protobufRuntimeVersionClass =
-          classWrapper.forName("com.google.protobuf.RuntimeVersion");
-      return classWrapper.getFieldValue(protobufRuntimeVersionClass, "MAJOR")
+      Class<?> protobufRuntimeVersionClass = Class.forName(protobufRuntimeVersionClassName);
+      return protobufRuntimeVersionClass.getField("MAJOR").get(null)
           + "."
-          + classWrapper.getFieldValue(protobufRuntimeVersionClass, "MINOR")
+          + protobufRuntimeVersionClass.getField("MINOR").get(null)
           + "."
-          + classWrapper.getFieldValue(protobufRuntimeVersionClass, "PATCH");
+          + protobufRuntimeVersionClass.getField("PATCH").get(null);
     } catch (ClassNotFoundException
         | NoSuchFieldException
         | IllegalAccessException
         | SecurityException e) {
       // If manifest file is not available default to protobuf generic version 3 as we know
-      // RuntimeVersion class is
-      // available in protobuf jar 4+.
+      // RuntimeVersion class is available in protobuf jar 4+.
       return getBundleVersion(clazz).orElse("3");
-    }
-  }
-
-  /* Wrapper class for reflection {@link java.lang.Class} methods to enable unit testing. */
-  static class ClassWrapper {
-
-    /* Wraps {@link java.lang.Class#forName} method  */
-    public Class<?> forName(String name) throws ClassNotFoundException {
-      return Class.forName(name);
-    }
-
-    /* Consolidates retrieving a {@link java.lang.Field} on a {@link java.lang.Class} object via reflection and retrieving the value of that Field */
-    public Object getFieldValue(Class<?> clazz, String fieldName)
-        throws NoSuchFieldException, IllegalAccessException {
-      return clazz.getField(fieldName).get(null);
     }
   }
 }
