@@ -35,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.common.base.Strings;
+import com.google.protobuf.Any;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -160,12 +161,8 @@ class GaxPropertiesTest {
 
   @Test
   public void testGetProtobufVersion() throws IOException {
-    Version version = readVersion(GaxProperties.getProtobufVersion());
-
-    assertTrue(version.major >= 3);
-    if (version.major == 3) {
-      assertTrue(version.minor >= 25);
-    }
+    assertTrue(
+        Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(GaxProperties.getProtobufVersion()).find());
   }
 
   @Test
@@ -173,6 +170,36 @@ class GaxPropertiesTest {
     Optional<String> version = getBundleVersion(GaxProperties.class);
 
     assertFalse(version.isPresent());
+  }
+
+  @Test
+  void testGetProtobufVersion_success() {
+    String version =
+        GaxProperties.getProtobufVersion(
+            Any.class, "com.google.api.gax.core.GaxPropertiesTest$RuntimeVersion");
+
+    assertEquals("3.13.6", version);
+  }
+
+  @Test
+  void testGetProtobufVersion_classNotFoundException() throws Exception {
+    String version = GaxProperties.getProtobufVersion(Any.class, "foo.NonExistantClass");
+
+    assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
+  }
+
+  @Test
+  void testgetProtobufVersion_noSuchFieldException() throws Exception {
+    String version = GaxProperties.getProtobufVersion(Any.class, "java.lang.Class");
+
+    assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
+  }
+
+  @Test
+  void testGetProtobufVersion_noManifest() throws Exception {
+    String version = GaxProperties.getProtobufVersion(GaxProperties.class, "foo.NonExistantClass");
+
+    assertEquals("3", version);
   }
 
   private Version readVersion(String version) {
@@ -193,5 +220,12 @@ class GaxPropertiesTest {
       this.major = major;
       this.minor = minor;
     }
+  }
+
+  // Test class that emulates com.google.protobuf.RuntimeVersion for reflection lookup of fields
+  class RuntimeVersion {
+    public static final int MAJOR = 3;
+    public static final int MINOR = 13;
+    public static final int PATCH = 6;
   }
 }
