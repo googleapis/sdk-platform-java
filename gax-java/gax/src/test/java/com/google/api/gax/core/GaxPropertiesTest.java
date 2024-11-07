@@ -46,7 +46,7 @@ class GaxPropertiesTest {
 
   @Test
   void testGaxVersion() {
-    Version version = readVersion(GaxProperties.getGaxVersion());
+    Version version = readVersion(GaxProperties.getGaxVersion(), false);
 
     assertTrue(version.major >= 1);
     if (version.major == 1) {
@@ -161,8 +161,9 @@ class GaxPropertiesTest {
 
   @Test
   public void testGetProtobufVersion() throws IOException {
-    assertTrue(
-        Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(GaxProperties.getProtobufVersion()).find());
+    Version version = readVersion(GaxProperties.getProtobufVersion(), true);
+
+    validateVersion(version);
   }
 
   @Test
@@ -176,7 +177,7 @@ class GaxPropertiesTest {
   void testGetProtobufVersion_success() {
     String version = GaxProperties.getProtobufVersion(Any.class, "com.google.protobuf.Any");
 
-    assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
+    validateVersion(readVersion(version, true));
   }
 
   @Test
@@ -200,23 +201,37 @@ class GaxPropertiesTest {
     assertEquals("3", version);
   }
 
-  private Version readVersion(String version) {
+  private void validateVersion(Version version) {
+    assertTrue(version.major >= 3);
+    if (version.major == 3) {
+      assertTrue(version.minor >= 25);
+    }
+    assertTrue(version.patch >= 0);
+  }
+
+  private Version readVersion(String version, boolean includePatch) {
     assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
     String[] versionComponents = version.split("\\.");
     // This test was added in version 1.56.0, so check that the major and minor numbers are greater
     // than that.
     int major = Integer.parseInt(versionComponents[0]);
     int minor = Integer.parseInt(versionComponents[1]);
-    return new Version(major, minor);
+    int patch = 0;
+    if (includePatch) {
+      patch = Integer.parseInt(versionComponents[2]);
+    }
+    return new Version(major, minor, patch);
   }
 
   private static class Version {
     public int major;
     public int minor;
+    public int patch;
 
-    public Version(int major, int minor) {
+    public Version(int major, int minor, int patch) {
       this.major = major;
       this.minor = minor;
+      this.patch = patch;
     }
   }
 }
