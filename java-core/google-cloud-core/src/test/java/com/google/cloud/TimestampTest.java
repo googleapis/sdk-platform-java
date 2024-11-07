@@ -249,8 +249,8 @@ class TimestampTest {
     assertThat(Timestamp.parseTimestampDuration("9999-12-31T23:59:59.999999998Z"))
         .isEqualTo(Timestamp.ofTimeSecondsAndNanos(Timestamp.MAX_VALUE.getSeconds(), 999999998));
     // Common use cases
-    assertThat(Timestamp.parseTimestampDuration("2020-07-10T14:03:00-07:00"))
-        .isEqualTo(Timestamp.ofTimeSecondsAndNanos(1594414980, 0));
+    assertThat(Timestamp.parseTimestampDuration("2020-07-10T14:03:00.123-07:00"))
+        .isEqualTo(Timestamp.ofTimeSecondsAndNanos(1594414980, 123000000));
     assertThat(Timestamp.parseTimestampDuration("2020-12-06T19:21:12.123+05:30"))
         .isEqualTo(Timestamp.ofTimeSecondsAndNanos(1607262672, 123000000));
     // We also confirm that parsing a timestamp with nano precision will behave the same as the
