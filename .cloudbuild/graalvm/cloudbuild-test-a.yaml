@@ -18,6 +18,7 @@ substitutions:
   _JAVA_SHARED_CONFIG_VERSION: '1.11.3'
 options:
   machineType: 'E2_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY
 steps:
   - name: gcr.io/cloud-builders/docker
     args: [
@@ -42,3 +43,4 @@ steps:
     args: [ './.kokoro/presubmit/showcase-native.sh' ]
     waitFor: [ "graalvm-a-build" ]
     id: native-showcase
+
