@@ -200,8 +200,9 @@ class IntegrationTest(unittest.TestCase):
         # we build the docker image without removing intermediate containers, so
         # we can re-test more quickly
         subprocess.check_call(
-            ["DOCKER_BUILDKIT=1", "docker", "build", "-f", docker_file, "-t", image_tag, "."],
+            ["docker", "build", "-f", docker_file, "-t", image_tag, "."],
             cwd=cwd,
+            env=dict(os.environ, DOCKER_BUILDKIT="1")
         )
 
     @classmethod
