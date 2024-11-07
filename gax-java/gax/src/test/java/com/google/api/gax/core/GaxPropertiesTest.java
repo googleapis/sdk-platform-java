@@ -33,18 +33,14 @@ import static com.google.api.gax.core.GaxProperties.getBundleVersion;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
-//import com.google.api.gax.core.GaxPropertiesTest.NullMajorVersionClass
 
 import com.google.common.base.Strings;
-import com.google.protobuf.*;
-
+import com.google.protobuf.Any;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.*;
 
 class GaxPropertiesTest {
 
@@ -192,10 +188,7 @@ class GaxPropertiesTest {
 
   @Test
   void testgetProtobufVersion_noSuchFieldException() throws Exception {
-    String version =
-          GaxProperties.getProtobufVersion(
-              Any.class,
-              "java.lang.Class");
+    String version = GaxProperties.getProtobufVersion(Any.class, "java.lang.Class");
 
     assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
   }
