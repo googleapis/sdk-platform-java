@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -xeo pipefail
+set -eo pipefail
 
 # parse input parameters
 while [[ $# -gt 0 ]]; do
