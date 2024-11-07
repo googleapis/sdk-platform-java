@@ -288,6 +288,18 @@ class TimestampTest {
   }
 
   @Test
+  void demoAssertion1() {
+    assertThat(Timestamp.parseTimestampDuration("2020-07-10T14:03:00.123-07:00"))
+        .isEqualTo(Timestamp.ofTimeSecondsAndNanos(1594414980, 123000000));
+  }
+
+  @Test
+  void demoAssertion2() {
+    assertThat(Timestamp.parseTimestampDuration("2020-12-06T19:21:12.123+05:30"))
+        .isEqualTo(Timestamp.ofTimeSecondsAndNanos(1607262672, 123000000));
+  }
+
+  @Test
   void parseTimestampWithZoneString() {
     // Valid RFC 3339 timestamps with time zone names
     assertThat(Timestamp.parseTimestampDuration("2020-12-06T08:51:12.123America/Toronto"))
