@@ -32,7 +32,6 @@ package com.google.api.gax.httpjson;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.mtls.AbstractMtlsTransportChannelTest;
@@ -57,12 +56,8 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
-    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.resolvedEndpoint()).thenReturn(DEFAULT_ENDPOINT);
-
     TransportChannelProvider provider = InstantiatingHttpJsonChannelProvider.newBuilder().build();
 
-    provider = provider.withEndpointContext(endpointContext);
     assertThat(provider.needsEndpoint()).isTrue();
     provider = provider.withEndpoint(DEFAULT_ENDPOINT);
     assertThat(provider.needsEndpoint()).isFalse();
@@ -112,13 +107,8 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
   // if not provided by the TransportChannelProvider
   @Test
   void managedChannelUsesDefaultChannelExecutor() throws IOException {
-    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.resolvedEndpoint()).thenReturn(DEFAULT_ENDPOINT);
     InstantiatingHttpJsonChannelProvider instantiatingHttpJsonChannelProvider =
-        InstantiatingHttpJsonChannelProvider.newBuilder()
-            .setEndpoint(DEFAULT_ENDPOINT)
-            .setEndpointContext(endpointContext)
-            .build();
+        InstantiatingHttpJsonChannelProvider.newBuilder().setEndpoint(DEFAULT_ENDPOINT).build();
     instantiatingHttpJsonChannelProvider =
         (InstantiatingHttpJsonChannelProvider)
             instantiatingHttpJsonChannelProvider.withHeaders(DEFAULT_HEADER_MAP);
@@ -142,13 +132,9 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
-    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.resolvedEndpoint()).thenReturn(DEFAULT_ENDPOINT);
-
     InstantiatingHttpJsonChannelProvider instantiatingHttpJsonChannelProvider =
         InstantiatingHttpJsonChannelProvider.newBuilder()
             .setEndpoint(DEFAULT_ENDPOINT)
-            .setEndpointContext(endpointContext)
             .setExecutor(executor)
             .build();
     instantiatingHttpJsonChannelProvider =

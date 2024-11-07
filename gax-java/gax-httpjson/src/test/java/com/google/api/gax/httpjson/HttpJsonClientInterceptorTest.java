@@ -159,12 +159,9 @@ class HttpJsonClientInterceptorTest {
   @BeforeEach
   void setUp() throws IOException {
     interceptor = new CapturingClientInterceptor();
-    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.resolvedEndpoint()).thenReturn("google.com:443");
     channel =
         InstantiatingHttpJsonChannelProvider.newBuilder()
             .setEndpoint("google.com:443")
-            .setEndpointContext(endpointContext)
             .setExecutor(executorService)
             .setHttpTransport(MOCK_SERVICE)
             .setHeaderProvider(() -> Collections.singletonMap("header-key", "headerValue"))
