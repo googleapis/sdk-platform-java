@@ -16,6 +16,8 @@
 
 package com.google.cloud.testing;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+
 import com.google.api.client.util.Charsets;
 import com.google.cloud.ServiceOptions;
 import com.google.cloud.testing.BaseEmulatorHelper.EmulatorRunner;
@@ -28,12 +30,12 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 import org.easymock.EasyMock;
 import org.junit.jupiter.api.Test;
-import org.threeten.bp.Duration;
 
 class BaseEmulatorHelperTest {
 
@@ -71,8 +73,15 @@ class BaseEmulatorHelperTest {
     }
 
     @Override
-    public void stop(Duration timeout) throws IOException, InterruptedException, TimeoutException {
-      waitForProcess(timeout);
+    public void stop(org.threeten.bp.Duration timeout)
+        throws IOException, InterruptedException, TimeoutException {
+      stopDuration(toJavaTimeDuration(timeout));
+    }
+
+    @Override
+    public void stopDuration(Duration timeout)
+        throws IOException, InterruptedException, TimeoutException {
+      waitForProcessDuration(timeout);
     }
 
     @Override
@@ -91,13 +100,13 @@ class BaseEmulatorHelperTest {
     emulatorRunner.start();
     EasyMock.expectLastCall();
     EasyMock.expect(emulatorRunner.getProcess()).andReturn(process);
-    emulatorRunner.waitFor(Duration.ofMinutes(1));
+    emulatorRunner.waitForDuration(Duration.ofMinutes(1));
     EasyMock.expectLastCall().andReturn(0);
     EasyMock.replay(process, emulatorRunner);
     TestEmulatorHelper helper =
         new TestEmulatorHelper(ImmutableList.of(emulatorRunner), BLOCK_UNTIL);
     helper.start();
-    helper.stop(Duration.ofMinutes(1));
+    helper.stopDuration(Duration.ofMinutes(1));
     EasyMock.verify();
   }
 
@@ -157,13 +166,13 @@ class BaseEmulatorHelperTest {
     secondRunner.start();
     EasyMock.expectLastCall();
     EasyMock.expect(secondRunner.getProcess()).andReturn(process);
-    secondRunner.waitFor(Duration.ofMinutes(1));
+    secondRunner.waitForDuration(Duration.ofMinutes(1));
     EasyMock.expectLastCall().andReturn(0);
     EasyMock.replay(process, secondRunner);
     TestEmulatorHelper helper =
         new TestEmulatorHelper(ImmutableList.of(firstRunner, secondRunner), BLOCK_UNTIL);
     helper.start();
-    helper.stop(Duration.ofMinutes(1));
+    helper.stopDuration(Duration.ofMinutes(1));
     EasyMock.verify();
   }
 
