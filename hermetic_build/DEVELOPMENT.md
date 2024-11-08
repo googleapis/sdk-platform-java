@@ -165,13 +165,10 @@ python hermetic_build/library_generation/cli/entry_point.py generate \
      -t local:image-tag \
      .
    ```
-   Please note that the build only works when using the new
-   [Docker BuildKit](https://docs.docker.com/build/buildkit/) (enabled through the `DOCKER_BUILDKIT` variable).
-   This is meant for local development only (in CloudTops) - GH Actions' Ubuntu-22.04 \
-   [comes with the latest Docker version](https://github.com/actions/runner-images/blob/e74605cd6d5407469cf224802f25057bafc23d70/images/ubuntu/Ubuntu2204-Readme.md?plain=1#L81-L83)
-   and is able to handle the build properly using the (updated) legacy builder.
+   Please note that the build only works when using the new [Docker BuildKit](https://docs.docker.com/build/buildkit/)
+   (enabled through the `DOCKER_BUILDKIT` variable).
    
-3. Set the version of gapic-generator-java
+2. Set the version of gapic-generator-java
 
    ```shell
    LOCAL_GENERATOR_VERSION=$(mvn \
@@ -182,7 +179,7 @@ python hermetic_build/library_generation/cli/entry_point.py generate \
      -q)
    ```
 
-4. Run the image
+3. Run the image
 
    ```shell
       # Assume you want to generate the library in the current working directory
@@ -199,7 +196,7 @@ python hermetic_build/library_generation/cli/entry_point.py generate \
         --library-names=apigee-connect,asset \
         --repository-path=/workspace \
         --api-definitions-path=/workspace/apis
-      ```
+   ```
    Note that if you specify the generator version using environment variable,
    `-e GENERATOR_VERSION="${LOCAL_GENERATOR_VERSION}"` in the above example,
    you should not set `gapic_generator_version` and `protoc_version` in the

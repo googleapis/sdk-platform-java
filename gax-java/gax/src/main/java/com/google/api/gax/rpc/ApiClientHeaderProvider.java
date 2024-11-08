@@ -88,7 +88,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     // TODO(b/366417603): appending protobuf version to existing client library token until resolved
     Pattern pattern = Pattern.compile("(gccl|gapic)\\S*");
     Matcher matcher = pattern.matcher(apiClientHeaderValue);
-    if (matcher.find()) {
+    if (matcher.find() && GaxProperties.getProtobufVersion() != null) {
       return apiClientHeaderValue.substring(0, matcher.end())
           + "--"
           + PROTOBUF_HEADER_VERSION_KEY
