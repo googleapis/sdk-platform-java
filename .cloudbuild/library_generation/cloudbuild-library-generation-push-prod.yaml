@@ -30,6 +30,8 @@ steps:
       "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
     id: library-generation-build
     waitFor: ["-"]
+    env: 
+      - 'DOCKER_BUILDKIT=1'
 
 options:
   logging: CLOUD_LOGGING_ONLY
