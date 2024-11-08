@@ -202,7 +202,7 @@ class IntegrationTest(unittest.TestCase):
         subprocess.check_call(
             ["docker", "build", "-f", docker_file, "-t", image_tag, "."],
             cwd=cwd,
-            env=dict(os.environ, DOCKER_BUILDKIT="1")
+            env=dict(os.environ, DOCKER_BUILDKIT="1"),
         )
 
     @classmethod
