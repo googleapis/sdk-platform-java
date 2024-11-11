@@ -526,7 +526,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     } catch (IOException ignore) {
       // Fallback to plaintext-to-S2A connection.
       LOG.log(
-          Level.INFO,
+          Level.WARNING,
           "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS TlsChannelCredentials credentials, falling back to plaintext connection to S2A: "
               + ignore.getMessage());
       return createPlaintextToS2AChannelCredentials(plaintextAddress);
