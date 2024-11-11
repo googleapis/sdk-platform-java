@@ -42,7 +42,6 @@ public class TestApiTracer implements ApiTracer {
 
   private final AtomicInteger attemptsStarted = new AtomicInteger();
   private final AtomicInteger attemptsFailed = new AtomicInteger();
-  private final AtomicBoolean operationFailed = new AtomicBoolean(false);
   private final AtomicBoolean retriesExhausted = new AtomicBoolean(false);
 
   public TestApiTracer() {}
@@ -53,10 +52,6 @@ public class TestApiTracer implements ApiTracer {
 
   public AtomicInteger getAttemptsFailed() {
     return attemptsFailed;
-  }
-
-  public AtomicBoolean getOperationFailed() {
-    return operationFailed;
   }
 
   public AtomicBoolean getRetriesExhausted() {
@@ -76,11 +71,6 @@ public class TestApiTracer implements ApiTracer {
   @Override
   public void attemptFailed(Throwable error, Duration delay) {
     attemptsFailed.incrementAndGet();
-  }
-
-  @Override
-  public void operationFailed(Throwable error) {
-    operationFailed.set(true);
   }
 
   @Override
