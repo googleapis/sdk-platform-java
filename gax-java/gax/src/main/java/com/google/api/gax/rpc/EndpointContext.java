@@ -66,7 +66,9 @@ public abstract class EndpointContext {
       "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
   public static final String UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE =
       "Unable to retrieve the Universe Domain from the Credentials.";
-  public static final String S2A_ENV_ENABLE_USE_S2A = "EXPERIMENTAL_GOOGLE_API_USE_S2A";
+  // This environment variable is a temporary measure. It will be removed when the feature is
+  // non-experimental.
+  static final String S2A_ENV_ENABLE_USE_S2A = "EXPERIMENTAL_GOOGLE_API_USE_S2A";
 
   public static EndpointContext getDefaultInstance() {
     return INSTANCE;
