@@ -97,8 +97,8 @@ public interface TransportChannelProvider {
    */
   TransportChannelProvider withEndpoint(String endpoint);
 
-  /** Sets the {@link EndpointContext} when constructing a new {@link TransportChannel}. */
-  TransportChannelProvider withEndpointContext(EndpointContext endpointContext);
+  /** Sets whether to use S2A when constructing a new {@link TransportChannel}. */
+  TransportChannelProvider withUseS2A(boolean useS2A);
 
   /**
    * Reports whether this provider allows pool size customization.

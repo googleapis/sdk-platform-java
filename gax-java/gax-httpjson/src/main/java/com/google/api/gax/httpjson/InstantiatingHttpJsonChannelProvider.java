@@ -33,7 +33,6 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.api.gax.core.ExecutorProvider;
-import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
@@ -66,7 +65,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   private final HeaderProvider headerProvider;
   private final HttpJsonInterceptorProvider interceptorProvider;
   private final String endpoint;
-  private final EndpointContext endpointContext;
+  private final boolean useS2A;
   private final HttpTransport httpTransport;
   private final MtlsProvider mtlsProvider;
 
@@ -75,14 +74,14 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
       HeaderProvider headerProvider,
       HttpJsonInterceptorProvider interceptorProvider,
       String endpoint,
-      EndpointContext endpointContext,
+      boolean useS2A,
       HttpTransport httpTransport,
       MtlsProvider mtlsProvider) {
     this.executor = executor;
     this.headerProvider = headerProvider;
     this.interceptorProvider = interceptorProvider;
     this.endpoint = endpoint;
-    this.endpointContext = endpointContext;
+    this.useS2A = useS2A;
     this.httpTransport = httpTransport;
     this.mtlsProvider = mtlsProvider;
   }
@@ -129,8 +128,8 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   }
 
   @Override
-  public TransportChannelProvider withEndpointContext(EndpointContext endpointContext) {
-    return toBuilder().setEndpointContext(endpointContext).build();
+  public TransportChannelProvider withUseS2A(boolean useS2A) {
+    return toBuilder().setUseS2A(useS2A).build();
   }
 
   /** @deprecated REST transport channel doesn't support channel pooling */
@@ -240,7 +239,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
     private HeaderProvider headerProvider;
     private HttpJsonInterceptorProvider interceptorProvider;
     private String endpoint;
-    private EndpointContext endpointContext;
+    private boolean useS2A;
     private HttpTransport httpTransport;
     private MtlsProvider mtlsProvider = new MtlsProvider();
 
@@ -250,7 +249,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
       this.executor = provider.executor;
       this.headerProvider = provider.headerProvider;
       this.endpoint = provider.endpoint;
-      this.endpointContext = provider.endpointContext;
+      this.useS2A = provider.useS2A;
       this.httpTransport = provider.httpTransport;
       this.mtlsProvider = provider.mtlsProvider;
       this.interceptorProvider = provider.interceptorProvider;
@@ -305,9 +304,9 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
       return this;
     }
 
-    /** Sets the {@link EndpointContext} */
-    public Builder setEndpointContext(EndpointContext endpointContext) {
-      this.endpointContext = endpointContext;
+    /** Sets whether to use S2A */
+    public Builder setUseS2A(boolean useS2A) {
+      this.useS2A = useS2A;
       return this;
     }
 
@@ -333,7 +332,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
           headerProvider,
           interceptorProvider,
           endpoint,
-          endpointContext,
+          useS2A,
           httpTransport,
           mtlsProvider);
     }

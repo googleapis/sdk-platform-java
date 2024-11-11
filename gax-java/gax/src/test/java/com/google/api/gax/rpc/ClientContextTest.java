@@ -196,7 +196,7 @@ class ClientContextTest {
     }
 
     @Override
-    public TransportChannelProvider withEndpointContext(EndpointContext endpointContext) {
+    public TransportChannelProvider withUseS2A(boolean useS2A) {
       return new FakeTransportProvider(
           this.transport,
           this.executor,

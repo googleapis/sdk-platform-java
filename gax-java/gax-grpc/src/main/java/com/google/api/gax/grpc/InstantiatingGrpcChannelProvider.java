@@ -37,7 +37,6 @@ import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.ExecutorProvider;
-import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannel;
@@ -122,7 +121,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private final int processorCount;
   private final Executor executor;
   private final HeaderProvider headerProvider;
-  private final EndpointContext endpointContext;
+  private final boolean useS2A;
   private final String endpoint;
   // TODO: remove. envProvider currently provides DirectPath environment variable, and is only used
   // during initial rollout for DirectPath. This provider will be removed once the DirectPath
@@ -152,7 +151,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.executor = builder.executor;
     this.headerProvider = builder.headerProvider;
     this.endpoint = builder.endpoint;
-    this.endpointContext = builder.endpointContext;
+    this.useS2A = builder.useS2A;
     this.mtlsProvider = builder.mtlsProvider;
     this.envProvider = builder.envProvider;
     this.interceptorProvider = builder.interceptorProvider;
@@ -243,14 +242,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   /**
-   * Specify the {@link EndpointContext}.
+   * Specify whether or not to use S2A.
    *
-   * @param endpointContext
-   * @return A new {@link InstantiatingGrpcChannelProvider} with the endpointContext
+   * @param useS2A
+   * @return A new {@link InstantiatingGrpcChannelProvider} with useS2A set.
    */
   @Override
-  public TransportChannelProvider withEndpointContext(EndpointContext endpointContext) {
-    return toBuilder().setEndpointContext(endpointContext).build();
+  public TransportChannelProvider withUseS2A(boolean useS2A) {
+    return toBuilder().setUseS2A(useS2A).build();
   }
 
   /** @deprecated Please modify pool settings via {@link #toBuilder()} */
@@ -586,12 +585,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         // Could not create channel credentials via DCA. In accordance with
         // https://google.aip.dev/auth/4115, if credentials not available through
         // DCA, try mTLS with credentials held by the S2A (Secure Session Agent).
-        if (endpointContext.useS2A()) {
+        if (useS2A) {
           channelCredentials = createS2ASecuredChannelCredentials();
         }
         if (channelCredentials != null) {
           // Create the channel using S2A-secured channel credentials.
-          builder = Grpc.newChannelBuilder(endpointContext.mtlsEndpoint(), channelCredentials);
+          // {@code endpoint} is set to mtlsEndpoint in {@link EndpointContext} when useS2A is true.
+          builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
         } else {
           // Use default if we cannot initialize channel credentials via DCA or S2A.
           builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
@@ -743,7 +743,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private Executor executor;
     private HeaderProvider headerProvider;
     private String endpoint;
-    private EndpointContext endpointContext;
+    private boolean useS2A;
     private EnvironmentProvider envProvider;
     private MtlsProvider mtlsProvider = new MtlsProvider();
     @Nullable private GrpcInterceptorProvider interceptorProvider;
@@ -772,7 +772,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.executor = provider.executor;
       this.headerProvider = provider.headerProvider;
       this.endpoint = provider.endpoint;
-      this.endpointContext = provider.endpointContext;
+      this.useS2A = provider.useS2A;
       this.envProvider = provider.envProvider;
       this.interceptorProvider = provider.interceptorProvider;
       this.maxInboundMessageSize = provider.maxInboundMessageSize;
@@ -841,8 +841,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    Builder setEndpointContext(EndpointContext endpointContext) {
-      this.endpointContext = endpointContext;
+    Builder setUseS2A(boolean useS2A) {
+      this.useS2A = useS2A;
       return this;
     }
 

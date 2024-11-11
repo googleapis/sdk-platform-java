@@ -42,7 +42,7 @@ import java.util.concurrent.ScheduledExecutorService;
 public class FixedTransportChannelProvider implements TransportChannelProvider {
 
   private final TransportChannel transportChannel;
-  private EndpointContext endpointContext;
+  private boolean useS2A;
 
   private FixedTransportChannelProvider(TransportChannel transportChannel) {
     this.transportChannel = Preconditions.checkNotNull(transportChannel);
@@ -91,8 +91,8 @@ public class FixedTransportChannelProvider implements TransportChannelProvider {
   }
 
   @Override
-  public TransportChannelProvider withEndpointContext(EndpointContext endpointContext) {
-    this.endpointContext = endpointContext;
+  public TransportChannelProvider withUseS2A(boolean useS2A) {
+    this.useS2A = useS2A;
     return this;
   }
 

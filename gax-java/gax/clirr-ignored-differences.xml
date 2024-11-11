@@ -116,6 +116,6 @@
   <difference>
     <differenceType>7012</differenceType>
     <className>com/google/api/gax/rpc/TransportChannelProvider</className>
-    <method>* withEndpointContext(*)</method>
+    <method>* withUseS2A(*)</method>
   </difference>
 </differences>
