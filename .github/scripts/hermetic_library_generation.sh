@@ -81,9 +81,6 @@ git checkout "${current_branch}"
 # copy generation configuration from target branch to current branch.
 git show "${target_branch}":"${generation_config}" > "${baseline_generation_config}"
 
-# get .m2 folder so it's mapped into the docker container
-m2_folder=$(dirname "$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)")
-
 # download api definitions from googleapis repository
 googleapis_commitish=$(grep googleapis_commitish "${generation_config}" | cut -d ":" -f 2 | xargs)
 api_def_dir=$(mktemp -d)
@@ -92,18 +89,23 @@ pushd "${api_def_dir}"
 git checkout "${googleapis_commitish}"
 popd
 
+# get changed library list.
+changed_libraries=$(python hermetic_build/common/cli/get_changed_libraries.py create \
+  --baseline-generation-config-path="${baseline_generation_config}" \
+  --current-generation-config-path="${generation_config}")
+echo "Changed libraries are: ${changed_libraries:-"No changed library"}."
+
 # run hermetic code generation docker image.
 docker run \
   --rm \
   --quiet \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):${workspace_name}" \
-  -v "${m2_folder}":/home/.m2 \
   -v "${api_def_dir}:${workspace_name}/googleapis" \
   -e GENERATOR_VERSION="${image_tag}" \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
-  --baseline-generation-config-path="${workspace_name}/${baseline_generation_config}" \
-  --current-generation-config-path="${workspace_name}/${generation_config}" \
+  --generation-config-path="${workspace_name}/${generation_config}" \
+  --library-names="${changed_libraries}" \
   --api-definitions-path="${workspace_name}/googleapis"
 
 python hermetic_build/release_note_generation/cli/generate_release_note.py generate \

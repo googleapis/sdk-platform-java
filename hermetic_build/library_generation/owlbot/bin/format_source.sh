@@ -36,6 +36,9 @@ do
   elif [[ $file =~ .*/samples/snippets/src/.*/java/com/example/spanner/.*.java ]];
   then
     echo "File skipped formatting: $file"
+  elif [[ $file =~ .*/test-jdk17/java/com/google/cloud/firestore/.*java ]];
+    then
+      echo "File skipped formatting: $file"
   else
    echo $file >> $tmp_file
   fi

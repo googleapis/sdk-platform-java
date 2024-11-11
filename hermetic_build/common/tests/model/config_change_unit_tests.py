@@ -13,9 +13,9 @@
 # limitations under the License.
 import unittest
 
-from library_generation.model.config_change import ChangeType
-from library_generation.model.config_change import ConfigChange
-from library_generation.model.config_change import LibraryChange
+from common.model.config_change import ChangeType
+from common.model.config_change import ConfigChange
+from common.model.config_change import LibraryChange
 from common.model.gapic_config import GapicConfig
 from common.model.generation_config import GenerationConfig
 from common.model.library_config import LibraryConfig

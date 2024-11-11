@@ -71,9 +71,9 @@ import com.google.showcase.v1beta1.SequenceReport;
 import com.google.showcase.v1beta1.StreamingSequence;
 import com.google.showcase.v1beta1.StreamingSequenceReport;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
 import javax.annotation.Generated;
-import org.threeten.bp.Duration;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
@@ -429,21 +429,21 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
       RetrySettings settings = null;
       settings =
           RetrySettings.newBuilder()
-              .setInitialRpcTimeout(Duration.ofMillis(5000L))
+              .setInitialRpcTimeoutDuration(Duration.ofMillis(5000L))
               .setRpcTimeoutMultiplier(1.0)
-              .setMaxRpcTimeout(Duration.ofMillis(5000L))
-              .setTotalTimeout(Duration.ofMillis(5000L))
+              .setMaxRpcTimeoutDuration(Duration.ofMillis(5000L))
+              .setTotalTimeoutDuration(Duration.ofMillis(5000L))
               .build();
       definitions.put("no_retry_0_params", settings);
       settings =
           RetrySettings.newBuilder()
-              .setInitialRetryDelay(Duration.ofMillis(100L))
+              .setInitialRetryDelayDuration(Duration.ofMillis(100L))
               .setRetryDelayMultiplier(2.0)
-              .setMaxRetryDelay(Duration.ofMillis(3000L))
-              .setInitialRpcTimeout(Duration.ofMillis(10000L))
+              .setMaxRetryDelayDuration(Duration.ofMillis(3000L))
+              .setInitialRpcTimeoutDuration(Duration.ofMillis(10000L))
               .setRpcTimeoutMultiplier(1.0)
-              .setMaxRpcTimeout(Duration.ofMillis(10000L))
-              .setTotalTimeout(Duration.ofMillis(10000L))
+              .setMaxRpcTimeoutDuration(Duration.ofMillis(10000L))
+              .setTotalTimeoutDuration(Duration.ofMillis(10000L))
               .build();
       definitions.put("retry_policy_1_params", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();
