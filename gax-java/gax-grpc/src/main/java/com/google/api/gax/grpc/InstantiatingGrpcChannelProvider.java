@@ -503,35 +503,45 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     // Currently, MTLS to MDS is only available on GCE. See:
     // https://cloud.google.com/compute/docs/metadata/overview#https-mds
     // Try to load MTLS-MDS creds.
-    InputStream trustBundle = null;
-    InputStream privateKey = null;
-    InputStream certChain = null;
-    try {
-      trustBundle = new FileInputStream(MTLS_MDS_ROOT);
-      privateKey = new FileInputStream(MTLS_MDS_CERT_CHAIN_AND_KEY);
-      certChain = new FileInputStream(MTLS_MDS_CERT_CHAIN_AND_KEY);
-    } catch (FileNotFoundException ignore) {
-      // Fallback to plaintext-to-S2A connection.
+    File rootFile = new File(MTLS_MDS_ROOT);
+    File certKeyFile = new File(MTLS_MDS_CERT_CHAIN_AND_KEY);
+    if (!rootFile.isFile() || !certKeyFile.isFile()) {
+      // Try to connect to S2A using mTLS.
+      ChannelCredentials mtlsToS2AChannelCredentials = null;
+      InputStream trustBundle = null;
+      InputStream privateKey = null;
+      InputStream certChain = null;
+      try {
+        trustBundle = new FileInputStream(MTLS_MDS_ROOT);
+        privateKey = new FileInputStream(MTLS_MDS_CERT_CHAIN_AND_KEY);
+        certChain = new FileInputStream(MTLS_MDS_CERT_CHAIN_AND_KEY);
+      } catch (FileNotFoundException ignore) {
+        // Fallback to plaintext-to-S2A connection on error.
+        LOG.log(
+            Level.INFO,
+            "Cannot establish an mTLS connection to S2A due to error loading MTLS to MDS credentials, falling back to plaintext connection to S2A: "
+                + ignore.getMessage());
+        return createPlaintextToS2AChannelCredentials(plaintextAddress);
+      }
+      try {
+        mtlsToS2AChannelCredentials =
+            createMtlsToS2AChannelCredentials(trustBundle, privateKey, certChain);
+      } catch (IOException ignore) {
+        // Fallback to plaintext-to-S2A connection on error.
+        LOG.log(
+            Level.WARNING,
+            "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS TlsChannelCredentials credentials, falling back to plaintext connection to S2A: "
+                + ignore.getMessage());
+        return createPlaintextToS2AChannelCredentials(plaintextAddress);
+      }
+      return S2AChannelCredentials.newBuilder(mtlsAddress, mtlsToS2AChannelCredentials).build();
+    } else {
+      // Fallback to plaintext-to-S2A connection if MTLS-MDS creds do not exist.
       LOG.log(
           Level.INFO,
-          "Cannot establish an mTLS connection to S2A due to error loading MTLS to MDS credentials, falling back to plaintext connection to S2A: "
-              + ignore.getMessage());
+          "Cannot establish an mTLS connection to S2A  MTLS to MDS credentials do not exist on filesystem, falling back to plaintext connection to S2A");
       return createPlaintextToS2AChannelCredentials(plaintextAddress);
     }
-    ChannelCredentials mtlsToS2AChannelCredentials = null;
-    try {
-      // Try to connect to S2A using mTLS.
-      mtlsToS2AChannelCredentials =
-          createMtlsToS2AChannelCredentials(trustBundle, privateKey, certChain);
-    } catch (IOException ignore) {
-      // Fallback to plaintext-to-S2A connection.
-      LOG.log(
-          Level.WARNING,
-          "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS TlsChannelCredentials credentials, falling back to plaintext connection to S2A: "
-              + ignore.getMessage());
-      return createPlaintextToS2AChannelCredentials(plaintextAddress);
-    }
-    return S2AChannelCredentials.newBuilder(mtlsAddress, mtlsToS2AChannelCredentials).build();
   }
 
   private ManagedChannel createSingleChannel() throws IOException {
