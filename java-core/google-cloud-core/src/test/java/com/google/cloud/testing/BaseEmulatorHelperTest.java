@@ -16,7 +16,6 @@
 
 package com.google.cloud.testing;
 
-
 import com.google.api.client.util.Charsets;
 import com.google.cloud.ServiceOptions;
 import com.google.cloud.testing.BaseEmulatorHelper.EmulatorRunner;
