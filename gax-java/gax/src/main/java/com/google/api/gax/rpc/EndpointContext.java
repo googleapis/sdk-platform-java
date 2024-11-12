@@ -104,7 +104,7 @@ public abstract class EndpointContext {
   @Nullable
   public abstract String transportChannelProviderEndpoint();
 
-  public abstract boolean useS2A();
+  abstract boolean useS2A();
 
   @Nullable
   abstract EnvironmentProvider envProvider();
