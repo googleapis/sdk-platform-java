@@ -64,10 +64,7 @@ import io.grpc.alts.GoogleDefaultChannelCredentials;
 import io.grpc.auth.MoreCallCredentials;
 import io.grpc.s2a.S2AChannelCredentials;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
@@ -452,7 +449,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    */
   @VisibleForTesting
   ChannelCredentials createMtlsToS2AChannelCredentials(
-      InputStream trustBundle, InputStream privateKey, InputStream certChain) throws IOException {
+      File trustBundle, File privateKey, File certChain) throws IOException {
     if (trustBundle == null || privateKey == null || certChain == null) {
       return null;
     }
@@ -508,24 +505,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     if (!rootFile.isFile() || !certKeyFile.isFile()) {
       // Try to connect to S2A using mTLS.
       ChannelCredentials mtlsToS2AChannelCredentials = null;
-      InputStream trustBundle = null;
-      InputStream privateKey = null;
-      InputStream certChain = null;
-      try {
-        trustBundle = new FileInputStream(MTLS_MDS_ROOT);
-        privateKey = new FileInputStream(MTLS_MDS_CERT_CHAIN_AND_KEY);
-        certChain = new FileInputStream(MTLS_MDS_CERT_CHAIN_AND_KEY);
-      } catch (FileNotFoundException ignore) {
-        // Fallback to plaintext-to-S2A connection on error.
-        LOG.log(
-            Level.WARNING,
-            "Cannot establish an mTLS connection to S2A due to error loading MTLS to MDS credentials, falling back to plaintext connection to S2A: "
-                + ignore.getMessage());
-        return createPlaintextToS2AChannelCredentials(plaintextAddress);
-      }
       try {
         mtlsToS2AChannelCredentials =
-            createMtlsToS2AChannelCredentials(trustBundle, privateKey, certChain);
+            createMtlsToS2AChannelCredentials(rootFile, certKeyFile, certKeyFile);
       } catch (IOException ignore) {
         // Fallback to plaintext-to-S2A connection on error.
         LOG.log(

@@ -58,8 +58,8 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.TlsChannelCredentials;
 import io.grpc.alts.ComputeEngineChannelBuilder;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -993,8 +993,8 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   void createMtlsToS2AChannelCredentials_missingRootFile_throws() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().build();
-    InputStream privateKey = this.getClass().getClassLoader().getResourceAsStream("client_key.pem");
-    InputStream certChain = this.getClass().getClassLoader().getResourceAsStream("client_cert.pem");
+    File privateKey = new File("src/test/resources/client_key.pem");
+    File certChain = new File("src/test/resources/client_cert.pem");
     assertThat(provider.createMtlsToS2AChannelCredentials(null, privateKey, certChain)).isNull();
   }
 
@@ -1002,8 +1002,8 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   void createMtlsToS2AChannelCredentials_missingKeyFile_throws() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().build();
-    InputStream trustBundle = this.getClass().getClassLoader().getResourceAsStream("root_cert.pem");
-    InputStream certChain = this.getClass().getClassLoader().getResourceAsStream("client_cert.pem");
+    File trustBundle = new File("src/test/resources/root_cert.pem");
+    File certChain = new File("src/test/resources/client_cert.pem");
     assertThat(provider.createMtlsToS2AChannelCredentials(trustBundle, null, certChain)).isNull();
   }
 
@@ -1011,8 +1011,8 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   void createMtlsToS2AChannelCredentials_missingCertChainFile_throws() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().build();
-    InputStream trustBundle = this.getClass().getClassLoader().getResourceAsStream("root_cert.pem");
-    InputStream privateKey = this.getClass().getClassLoader().getResourceAsStream("client_key.pem");
+    File trustBundle = new File("src/test/resources/root_cert.pem");
+    File privateKey = new File("src/test/resources/client_key.pem");
     assertThat(provider.createMtlsToS2AChannelCredentials(trustBundle, privateKey, null)).isNull();
   }
 
@@ -1020,10 +1020,9 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   void createMtlsToS2AChannelCredentials_success() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().build();
-    InputStream trustBundle = this.getClass().getClassLoader().getResourceAsStream("root_cert.pem");
-    InputStream privateKey = this.getClass().getClassLoader().getResourceAsStream("client_key.pem");
-    InputStream certChain = this.getClass().getClassLoader().getResourceAsStream("client_cert.pem");
-    assertThat(trustBundle).isNotNull();
+    File trustBundle = new File("src/test/resources/root_cert.pem");
+    File privateKey = new File("src/test/resources/client_key.pem");
+    File certChain = new File("src/test/resources/client_cert.pem");
     assertEquals(
         provider.createMtlsToS2AChannelCredentials(trustBundle, privateKey, certChain).getClass(),
         TlsChannelCredentials.class);
