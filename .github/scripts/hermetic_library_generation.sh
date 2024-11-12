@@ -81,9 +81,6 @@ git checkout "${current_branch}"
 # copy generation configuration from target branch to current branch.
 git show "${target_branch}":"${generation_config}" > "${baseline_generation_config}"
 
-# get .m2 folder so it's mapped into the docker container
-m2_folder=$(dirname "$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)")
-
 # download api definitions from googleapis repository
 googleapis_commitish=$(grep googleapis_commitish "${generation_config}" | cut -d ":" -f 2 | xargs)
 api_def_dir=$(mktemp -d)

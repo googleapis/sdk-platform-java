@@ -54,8 +54,9 @@ def main(ctx):
     default=".",
     show_default=True,
     help="""
-    The repository path to which the generated files will be sent.
-    If not specified, the repository will be generated to the current working
+    The path where the file `pr_description.txt`, which contains the release
+    notes, will be sent.
+    If not specified, the file will be generated to the current working
     directory.
     """,
 )
