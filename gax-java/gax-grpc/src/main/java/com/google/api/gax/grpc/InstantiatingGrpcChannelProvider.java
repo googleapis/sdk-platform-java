@@ -518,7 +518,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       } catch (FileNotFoundException ignore) {
         // Fallback to plaintext-to-S2A connection on error.
         LOG.log(
-            Level.INFO,
+            Level.WARNING,
             "Cannot establish an mTLS connection to S2A due to error loading MTLS to MDS credentials, falling back to plaintext connection to S2A: "
                 + ignore.getMessage());
         return createPlaintextToS2AChannelCredentials(plaintextAddress);
