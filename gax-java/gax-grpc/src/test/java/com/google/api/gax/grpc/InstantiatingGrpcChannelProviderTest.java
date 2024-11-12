@@ -983,6 +983,20 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
+  void createPlaintextToS2AChannelCredentials_emptyPlaintextAddress_returnsNull() {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    assertThat(provider.createPlaintextToS2AChannelCredentials("")).isNull();
+  }
+
+  @Test
+  void createPlaintextToS2AChannelCredentials_success() {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    assertThat(provider.createPlaintextToS2AChannelCredentials("localhost:8080")).isNotNull();
+  }
+
+  @Test
   void createMtlsToS2AChannelCredentials_missingAllFiles_throws() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder().build();
