@@ -60,7 +60,6 @@ public class LocalChannelProvider implements TransportChannelProvider {
 
   private final List<LocalHeaderInterceptor> interceptors;
   private final String address;
-  private boolean useS2A;
 
   private volatile HeaderProvider headerProvider;
 
@@ -109,7 +108,7 @@ public class LocalChannelProvider implements TransportChannelProvider {
 
   @Override
   public TransportChannelProvider withUseS2A(boolean useS2A) {
-    this.useS2A = useS2A;
+    // Overriden for technical reasons. This method is a no-op for LocalChannelProvider.
     return this;
   }
 

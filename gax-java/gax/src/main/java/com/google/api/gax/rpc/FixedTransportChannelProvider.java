@@ -42,7 +42,6 @@ import java.util.concurrent.ScheduledExecutorService;
 public class FixedTransportChannelProvider implements TransportChannelProvider {
 
   private final TransportChannel transportChannel;
-  private boolean useS2A;
 
   private FixedTransportChannelProvider(TransportChannel transportChannel) {
     this.transportChannel = Preconditions.checkNotNull(transportChannel);
@@ -91,8 +90,8 @@ public class FixedTransportChannelProvider implements TransportChannelProvider {
   }
 
   @Override
-  public TransportChannelProvider withUseS2A(boolean useS2A) {
-    this.useS2A = useS2A;
+  public TransportChannelProvider withUseS2A(boolean useS2A) throws UnsupportedOperationException {
+    // Overriden for technical reasons. This method is a no-op for FixedTransportChannelProvider.
     return this;
   }
 

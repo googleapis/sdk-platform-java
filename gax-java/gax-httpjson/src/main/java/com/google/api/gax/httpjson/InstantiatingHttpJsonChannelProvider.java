@@ -65,7 +65,6 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   private final HeaderProvider headerProvider;
   private final HttpJsonInterceptorProvider interceptorProvider;
   private final String endpoint;
-  private final boolean useS2A;
   private final HttpTransport httpTransport;
   private final MtlsProvider mtlsProvider;
 
@@ -74,14 +73,12 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
       HeaderProvider headerProvider,
       HttpJsonInterceptorProvider interceptorProvider,
       String endpoint,
-      boolean useS2A,
       HttpTransport httpTransport,
       MtlsProvider mtlsProvider) {
     this.executor = executor;
     this.headerProvider = headerProvider;
     this.interceptorProvider = interceptorProvider;
     this.endpoint = endpoint;
-    this.useS2A = useS2A;
     this.httpTransport = httpTransport;
     this.mtlsProvider = mtlsProvider;
   }
@@ -129,7 +126,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
 
   @Override
   public TransportChannelProvider withUseS2A(boolean useS2A) {
-    return toBuilder().setUseS2A(useS2A).build();
+    return this;
   }
 
   /** @deprecated REST transport channel doesn't support channel pooling */
@@ -239,7 +236,6 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
     private HeaderProvider headerProvider;
     private HttpJsonInterceptorProvider interceptorProvider;
     private String endpoint;
-    private boolean useS2A;
     private HttpTransport httpTransport;
     private MtlsProvider mtlsProvider = new MtlsProvider();
 
@@ -249,7 +245,6 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
       this.executor = provider.executor;
       this.headerProvider = provider.headerProvider;
       this.endpoint = provider.endpoint;
-      this.useS2A = provider.useS2A;
       this.httpTransport = provider.httpTransport;
       this.mtlsProvider = provider.mtlsProvider;
       this.interceptorProvider = provider.interceptorProvider;
@@ -304,12 +299,6 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
       return this;
     }
 
-    /** Sets whether to use S2A */
-    public Builder setUseS2A(boolean useS2A) {
-      this.useS2A = useS2A;
-      return this;
-    }
-
     /** Sets the HTTP transport to be used. */
     public Builder setHttpTransport(HttpTransport httpTransport) {
       this.httpTransport = httpTransport;
@@ -328,13 +317,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
 
     public InstantiatingHttpJsonChannelProvider build() {
       return new InstantiatingHttpJsonChannelProvider(
-          executor,
-          headerProvider,
-          interceptorProvider,
-          endpoint,
-          useS2A,
-          httpTransport,
-          mtlsProvider);
+          executor, headerProvider, interceptorProvider, endpoint, httpTransport, mtlsProvider);
     }
   }
 }
