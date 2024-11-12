@@ -502,7 +502,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     // Try to load MTLS-MDS creds.
     File rootFile = new File(MTLS_MDS_ROOT);
     File certKeyFile = new File(MTLS_MDS_CERT_CHAIN_AND_KEY);
-    if (!rootFile.isFile() || !certKeyFile.isFile()) {
+    if (rootFile.isFile() && certKeyFile.isFile()) {
       // Try to connect to S2A using mTLS.
       ChannelCredentials mtlsToS2AChannelCredentials = null;
       try {
