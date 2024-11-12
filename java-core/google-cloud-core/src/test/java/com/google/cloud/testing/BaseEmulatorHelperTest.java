@@ -16,7 +16,6 @@
 
 package com.google.cloud.testing;
 
-import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 
 import com.google.api.client.util.Charsets;
 import com.google.cloud.ServiceOptions;
@@ -75,7 +74,8 @@ class BaseEmulatorHelperTest {
     @Override
     public void stop(org.threeten.bp.Duration timeout)
         throws IOException, InterruptedException, TimeoutException {
-      stopDuration(toJavaTimeDuration(timeout));
+      // we call the threeten method directly to confirm behavior
+      waitForProcess(timeout);
     }
 
     @Override
@@ -107,6 +107,26 @@ class BaseEmulatorHelperTest {
         new TestEmulatorHelper(ImmutableList.of(emulatorRunner), BLOCK_UNTIL);
     helper.start();
     helper.stopDuration(Duration.ofMinutes(1));
+    EasyMock.verify();
+  }
+
+  @Test
+  void testEmulatorHelperThreeten() throws IOException, InterruptedException, TimeoutException {
+    Process process = EasyMock.createStrictMock(Process.class);
+    InputStream stream = new ByteArrayInputStream(BLOCK_UNTIL.getBytes(Charsets.UTF_8));
+    EmulatorRunner emulatorRunner = EasyMock.createStrictMock(EmulatorRunner.class);
+    EasyMock.expect(process.getInputStream()).andReturn(stream);
+    EasyMock.expect(emulatorRunner.isAvailable()).andReturn(true);
+    emulatorRunner.start();
+    EasyMock.expectLastCall();
+    EasyMock.expect(emulatorRunner.getProcess()).andReturn(process);
+    emulatorRunner.waitForDuration(java.time.Duration.ofMinutes(1));
+    EasyMock.expectLastCall().andReturn(0);
+    EasyMock.replay(process, emulatorRunner);
+    TestEmulatorHelper helper =
+        new TestEmulatorHelper(ImmutableList.of(emulatorRunner), BLOCK_UNTIL);
+    helper.start();
+    helper.stop(org.threeten.bp.Duration.ofMinutes(1));
     EasyMock.verify();
   }
 

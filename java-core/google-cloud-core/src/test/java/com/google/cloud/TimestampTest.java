@@ -335,4 +335,14 @@ class TimestampTest {
   void serialization() {
     reserializeAndAssert(Timestamp.parseTimestamp("9999-12-31T23:59:59.999999999Z"));
   }
+
+  @Test
+  void parseInvalidTimestampThreetenThrowsThreetenException() {
+    assertThrows(
+        org.threeten.bp.format.DateTimeParseException.class,
+        () -> Timestamp.parseTimestamp("00x1-01-01T00:00:00"));
+    assertThrows(
+        java.time.format.DateTimeParseException.class,
+        () -> Timestamp.parseTimestampDuration("00x1-01-01T00:00:00"));
+  }
 }
