@@ -45,4 +45,4 @@ steps:
     id: native-java-kmsinventory
     env:
       - 'MODULES_UNDER_TEST=java-kmsinventory'
-      - 'GOOGLE_CLOUD_PROJECT=cloud-java-ci-test'
+      - 'GOOGLE_CLOUD_PROJECT=java-graalvm-ci-prod'

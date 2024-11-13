@@ -44,4 +44,4 @@ steps:
     waitFor: [ "graalvm-b-build" ]
     env:
       - 'MODULES_UNDER_TEST=java-kms'
-      - 'GOOGLE_CLOUD_PROJECT=cloud-java-ci-test'
+      - 'GOOGLE_CLOUD_PROJECT=java-graalvm-ci-prod'
