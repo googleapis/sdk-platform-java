@@ -46,7 +46,8 @@ import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
-import com.google.auth.oauth2.S2A;
+import com.google.auth.oauth2.SecureSessionAgent;
+import com.google.auth.oauth2.SecureSessionAgentConfig;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -140,6 +141,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Boolean allowNonDefaultServiceAccount;
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
+  @Nullable private final SecureSessionAgent s2aConfigProvider;
   @VisibleForTesting final Map<String, String> headersWithDuplicatesRemoved = new HashMap<>();
 
   @Nullable
@@ -152,6 +154,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.endpoint = builder.endpoint;
     this.useS2A = builder.useS2A;
     this.mtlsProvider = builder.mtlsProvider;
+    this.s2aConfigProvider = builder.s2aConfigProvider;
     this.envProvider = builder.envProvider;
     this.interceptorProvider = builder.interceptorProvider;
     this.maxInboundMessageSize = builder.maxInboundMessageSize;
@@ -492,11 +495,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    *     mtlsEndpoint.
    */
   ChannelCredentials createS2ASecuredChannelCredentials() {
-    S2A s2aUtils = S2A.newBuilder().build();
-    String plaintextAddress = s2aUtils.getPlaintextS2AAddress();
-    String mtlsAddress = s2aUtils.getMtlsS2AAddress();
+    SecureSessionAgentConfig config = s2aConfigProvider.getConfig();
+    String plaintextAddress = config.getPlaintextAddress();
+    String mtlsAddress = config.getMtlsAddress();
     if (Strings.isNullOrEmpty(mtlsAddress)) {
       // Fallback to plaintext connection to S2A.
+      LOG.log(
+          Level.INFO,
+          "Cannot establish an mTLS connection to S2A because autoconfig endpoint did not return a mtls address to reach S2A.");
       return createPlaintextToS2AChannelCredentials(plaintextAddress);
     }
     // Currently, MTLS to MDS is only available on GCE. See:
@@ -523,7 +529,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       // Fallback to plaintext-to-S2A connection if MTLS-MDS creds do not exist.
       LOG.log(
           Level.INFO,
-          "Cannot establish an mTLS connection to S2A  MTLS to MDS credentials do not exist on filesystem, falling back to plaintext connection to S2A");
+          "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not exist on filesystem, falling back to plaintext connection to S2A");
       return createPlaintextToS2AChannelCredentials(plaintextAddress);
     }
   }
@@ -739,6 +745,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private String endpoint;
     private boolean useS2A;
     private EnvironmentProvider envProvider;
+    private SecureSessionAgent s2aConfigProvider = SecureSessionAgent.create();
     private MtlsProvider mtlsProvider = new MtlsProvider();
     @Nullable private GrpcInterceptorProvider interceptorProvider;
     @Nullable private Integer maxInboundMessageSize;
@@ -783,6 +790,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.allowNonDefaultServiceAccount = provider.allowNonDefaultServiceAccount;
       this.directPathServiceConfig = provider.directPathServiceConfig;
       this.mtlsProvider = provider.mtlsProvider;
+      this.s2aConfigProvider = provider.s2aConfigProvider;
     }
 
     /**
@@ -843,6 +851,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @VisibleForTesting
     Builder setMtlsProvider(MtlsProvider mtlsProvider) {
       this.mtlsProvider = mtlsProvider;
+      return this;
+    }
+
+    @VisibleForTesting
+    Builder setS2AConfigProvider(SecureSessionAgent s2aConfigProvider) {
+      this.s2aConfigProvider = s2aConfigProvider;
       return this;
     }
 

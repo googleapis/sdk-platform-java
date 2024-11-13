@@ -51,6 +51,8 @@ import com.google.auth.Credentials;
 import com.google.auth.http.AuthHttpConstants;
 import com.google.auth.oauth2.CloudShellCredentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
+import com.google.auth.oauth2.SecureSessionAgent;
+import com.google.auth.oauth2.SecureSessionAgentConfig;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
@@ -1040,6 +1042,60 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     assertEquals(
         provider.createMtlsToS2AChannelCredentials(trustBundle, privateKey, certChain).getClass(),
         TlsChannelCredentials.class);
+  }
+
+  @Test
+  void createS2ASecuredChannelCredentials_bothS2AAddressesNull_returnsNull() {
+    SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
+    SecureSessionAgentConfig config = SecureSessionAgentConfig.createBuilder().build();
+    Mockito.when(s2aConfigProvider.getConfig()).thenReturn(config);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setS2AConfigProvider(s2aConfigProvider)
+            .build();
+    assertThat(provider.createS2ASecuredChannelCredentials()).isNull();
+  }
+
+  @Test
+  void
+      createS2ASecuredChannelCredentials_mtlsS2AAddressNull_returnsPlaintextToS2AS2AChannelCredentials() {
+    SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
+    SecureSessionAgentConfig config =
+        SecureSessionAgentConfig.createBuilder().setPlaintextAddress("localhost:8080").build();
+    Mockito.when(s2aConfigProvider.getConfig()).thenReturn(config);
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setS2AConfigProvider(s2aConfigProvider)
+            .build();
+    assertThat(provider.createS2ASecuredChannelCredentials()).isNotNull();
+    assertThat(logHandler.getAllMessages())
+        .contains(
+            "Cannot establish an mTLS connection to S2A because autoconfig endpoint did not return a mtls address to reach S2A.");
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
+
+  @Test
+  void createS2ASecuredChannelCredentials_returnsPlaintextToS2AS2AChannelCredentials() {
+    SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
+    SecureSessionAgentConfig config =
+        SecureSessionAgentConfig.createBuilder()
+            .setMtlsAddress("localhost:8080")
+            .setPlaintextAddress("localhost:8080")
+            .build();
+    Mockito.when(s2aConfigProvider.getConfig()).thenReturn(config);
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setS2AConfigProvider(s2aConfigProvider)
+            .build();
+    assertThat(provider.createS2ASecuredChannelCredentials()).isNotNull();
+    assertThat(logHandler.getAllMessages())
+        .contains(
+            "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not exist on filesystem, falling back to plaintext connection to S2A");
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
   }
 
   private static class FakeLogHandler extends Handler {
