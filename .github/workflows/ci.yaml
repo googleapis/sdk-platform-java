@@ -37,6 +37,7 @@ jobs:
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
       - name: Integration Tests
         run: |
+          bazelisk clean --expunge
           bazelisk --batch test //test/integration/...
       - name: Gradle Build Generated Storage Client Library
         run: |
@@ -88,6 +89,7 @@ jobs:
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
       - name: Integration Tests
         run: |
+          bazelisk clean --expunge
           bazelisk --batch test //test/integration/...
   build-java8-except-gapic-generator-java:
     name: "build(8) except for gapic-generator-java"
@@ -160,6 +162,7 @@ jobs:
       - run: bazelisk version
       - name: Integration Tests
         run: |
+          bazelisk clean --expunge
           bazelisk --batch test //test/integration/...
       - name: Gradle Build Generated Storage Client Library
         run: |
