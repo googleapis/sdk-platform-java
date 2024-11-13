@@ -104,10 +104,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
 
   // The public portion of the mTLS MDS root certificate is stored for performing
-  // cert verification when establishing an mTLS connection with the MDS.
+  // cert verification when establishing an mTLS connection with the MDS. See
+  // https://cloud.google.com/compute/docs/metadata/overview#https-mds-root-certs
   private static final String MTLS_MDS_ROOT = "/run/google-mds-mtls/root.crt";
   // The mTLS MDS credentials are formatted as the concatenation of a PEM-encoded certificate chain
-  // followed by a PEM-encoded private key.
+  // followed by a PEM-encoded private key. See
+  // https://cloud.google.com/compute/docs/metadata/overview#https-mds-client-certs
   private static final String MTLS_MDS_CERT_CHAIN_AND_KEY = "/run/google-mds-mtls/client.key";
 
   static final long DIRECT_PATH_KEEP_ALIVE_TIME_SECONDS = 3600;
