@@ -82,7 +82,6 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -320,12 +319,10 @@ class ITOtelMetrics {
     verifyStatusAttribute(actualMetricDataList, statusCountList);
   }
 
-  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   void testHttpJson_operationSucceeded_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
-    EchoRequest echoRequest =
-        EchoRequest.newBuilder().setContent("test_http_operation_succeeded").build();
+    EchoRequest echoRequest = EchoRequest.newBuilder().setContent("content").build();
     httpClient.echo(echoRequest);
 
     List<MetricData> actualMetricDataList = getMetricDataList();
@@ -373,7 +370,6 @@ class ITOtelMetrics {
     verifyStatusAttribute(actualMetricDataList, statusCountList);
   }
 
-  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   void testHttpJson_operationCancelled_recordsMetrics() throws Exception {
     int attemptCount = 1;
@@ -430,7 +426,6 @@ class ITOtelMetrics {
     verifyStatusAttribute(actualMetricDataList, statusCountList);
   }
 
-  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   void testHttpJson_operationFailed_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
@@ -526,7 +521,6 @@ class ITOtelMetrics {
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
-  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   void testHttpJson_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
     int attemptCount = 3;
@@ -621,7 +615,6 @@ class ITOtelMetrics {
     verifyStatusAttribute(actualMetricDataList, statusCountList);
   }
 
-  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   void testHttpJson_attemptPermanentFailure_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
@@ -722,7 +715,6 @@ class ITOtelMetrics {
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
-  @Disabled("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   void testHttpJson_multipleFailedAttempts_successfulOperation() throws Exception {
     int attemptCount = 3;
@@ -737,7 +729,7 @@ class ITOtelMetrics {
 
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     httpJsonEchoSettingsBuilder
-        .echoSettings()
+        .blockSettings()
         .setRetrySettings(retrySettings)
         .setRetryableCodes(ImmutableSet.of(Code.DEADLINE_EXCEEDED));
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
@@ -771,7 +763,7 @@ class ITOtelMetrics {
             .setSuccess(BlockResponse.newBuilder().setContent("httpjsonBlockResponse"))
             .build();
 
-    grpcClient.block(blockRequest);
+    httpClient.block(blockRequest);
 
     List<MetricData> actualMetricDataList = getMetricDataList();
     verifyPointDataSum(actualMetricDataList, attemptCount);
