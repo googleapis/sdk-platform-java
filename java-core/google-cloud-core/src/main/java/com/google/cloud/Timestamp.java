@@ -18,18 +18,19 @@ package com.google.cloud;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+import com.google.api.core.ObsoleteApi;
 import com.google.protobuf.util.Timestamps;
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import org.threeten.bp.Instant;
-import org.threeten.bp.LocalDateTime;
-import org.threeten.bp.ZoneOffset;
-import org.threeten.bp.format.DateTimeFormatter;
-import org.threeten.bp.format.DateTimeFormatterBuilder;
-import org.threeten.bp.format.DateTimeParseException;
-import org.threeten.bp.temporal.TemporalAccessor;
 
 /**
  * Represents a timestamp with nanosecond precision. Timestamps cover the range [0001-01-01,
@@ -54,7 +55,7 @@ public final class Timestamp implements Comparable<Timestamp>, Serializable {
       new DateTimeFormatterBuilder()
           .appendOptional(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
           .optionalStart()
-          .appendOffsetId()
+          .appendZoneOrOffsetId()
           .optionalEnd()
           .toFormatter()
           .withZone(ZoneOffset.UTC);
@@ -189,6 +190,17 @@ public final class Timestamp implements Comparable<Timestamp>, Serializable {
     return com.google.protobuf.Timestamp.newBuilder().setSeconds(seconds).setNanos(nanos).build();
   }
 
+  /** This method is obsolete. Use {@link #parseTimestampDuration(String)} instead */
+  @ObsoleteApi("Use parseTimestampDuration(String) instead")
+  public static Timestamp parseTimestamp(String timestamp) {
+    try {
+      return parseTimestampDuration(timestamp);
+    } catch (DateTimeParseException ex) {
+      throw new org.threeten.bp.format.DateTimeParseException(
+          ex.getMessage(), ex.getParsedString(), ex.getErrorIndex());
+    }
+  }
+
   /**
    * Creates a Timestamp instance from the given string. Input string should be in the RFC 3339
    * format, like '2020-12-01T10:15:30.000Z' or with the timezone offset, such as
@@ -198,7 +210,7 @@ public final class Timestamp implements Comparable<Timestamp>, Serializable {
    * @return created Timestamp
    * @throws DateTimeParseException if unable to parse
    */
-  public static Timestamp parseTimestamp(String timestamp) {
+  public static Timestamp parseTimestampDuration(String timestamp) {
     TemporalAccessor temporalAccessor = timestampParser.parse(timestamp);
     Instant instant = Instant.from(temporalAccessor);
     return ofTimeSecondsAndNanos(instant.getEpochSecond(), instant.getNano());
