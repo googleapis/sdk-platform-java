@@ -64,6 +64,10 @@
   ],
   "packageRules": [
     {
+      "matchPackageNames": ["com.google.cloud:google-cloud-shared-config"],
+      "registryUrls": ["https://repo1.maven.org/maven2"]
+    },
+    {
       "matchUpdateTypes": [
         "major"
       ],
