@@ -15,7 +15,7 @@
 timeout: 7200s # 2 hours
 substitutions:
   _IMAGE_NAME: "gcr.io/cloud-devrel-public-resources/java-library-generation"
-  _GAPIC_GENERATOR_JAVA_VERSION: '2.49.1-SNAPSHOT' # {x-version-update:gapic-generator-java:current}
+  _GAPIC_GENERATOR_JAVA_VERSION: '2.50.0' # {x-version-update:gapic-generator-java:current}
   _SHA_IMAGE_ID: "${_IMAGE_NAME}:${COMMIT_SHA}"
   _LATEST_IMAGE_ID: "${_IMAGE_NAME}:latest"
   _VERSIONED_IMAGE_ID: "${_IMAGE_NAME}:${_GAPIC_GENERATOR_JAVA_VERSION}"

@@ -21,7 +21,7 @@ FROM docker.io/library/maven@sha256:006d25558f9d5244ed55b5d2bd8eaf34d883e447d0c4
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.49.1-SNAPSHOT"
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.50.0"
 # {x-version-update-end}
 
 RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
