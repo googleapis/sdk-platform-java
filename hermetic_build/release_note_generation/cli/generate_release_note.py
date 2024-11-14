@@ -16,7 +16,7 @@ from typing import Optional
 import click as click
 from release_note_generation.generate_pr_description import generate_pr_descriptions
 from common.model.generation_config import from_yaml
-from library_generation.utils.generation_config_comparator import compare_config
+from common.utils.generation_config_comparator import compare_config
 
 
 @click.group(invoke_without_command=False)
@@ -54,8 +54,9 @@ def main(ctx):
     default=".",
     show_default=True,
     help="""
-    The repository path to which the generated files will be sent.
-    If not specified, the repository will be generated to the current working
+    The path where the file `pr_description.txt`, which contains the release
+    notes, will be sent.
+    If not specified, the file will be generated to the current working
     directory.
     """,
 )
