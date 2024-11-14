@@ -196,6 +196,17 @@ class ClientContextTest {
     }
 
     @Override
+    public TransportChannelProvider withUseS2A(boolean useS2A) {
+      return new FakeTransportProvider(
+          this.transport,
+          this.executor,
+          this.shouldAutoClose,
+          this.headers,
+          this.credentials,
+          this.endpoint);
+    }
+
+    @Override
     public boolean acceptsPoolSize() {
       return false;
     }

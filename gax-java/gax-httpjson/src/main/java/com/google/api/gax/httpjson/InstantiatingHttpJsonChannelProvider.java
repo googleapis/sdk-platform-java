@@ -124,6 +124,11 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
     return toBuilder().setEndpoint(endpoint).build();
   }
 
+  @Override
+  public TransportChannelProvider withUseS2A(boolean useS2A) {
+    return this;
+  }
+
   /** @deprecated REST transport channel doesn't support channel pooling */
   @Deprecated
   @Override
