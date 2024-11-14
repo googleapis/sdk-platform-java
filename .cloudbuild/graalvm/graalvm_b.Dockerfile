@@ -15,4 +15,4 @@
 
 ARG JAVA_SHARED_CONFIG_VERSION
 
-FROM gus-docker.pkg.dev/java-graalvm-ci-prod/graalvm-integration-testing/graalvm_b:$JAVA_SHARED_CONFIG_VERSION
+FROM us-docker.pkg.dev/java-graalvm-ci-prod/graalvm-integration-testing/graalvm_b:$JAVA_SHARED_CONFIG_VERSION
