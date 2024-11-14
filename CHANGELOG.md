@@ -1,5 +1,37 @@
 # Changelog
 
+## [2.50.0](https://github.com/googleapis/sdk-platform-java/compare/v2.49.0...v2.50.0) (2024-11-14)
+
+
+### Features
+
+* Add experimental S2A integration in client libraries grpc transport ([#3326](https://github.com/googleapis/sdk-platform-java/issues/3326)) ([1138ca6](https://github.com/googleapis/sdk-platform-java/commit/1138ca682cd47d6164ceaa47803bfe2f68b1bc14))
+* enable selective generation based on service config include list ([#3323](https://github.com/googleapis/sdk-platform-java/issues/3323)) ([0cddadb](https://github.com/googleapis/sdk-platform-java/commit/0cddadb8ad3eddfffa356a479964d8a720937503))
+* introduce `java.time` to java-core ([#3330](https://github.com/googleapis/sdk-platform-java/issues/3330)) ([f202c3b](https://github.com/googleapis/sdk-platform-java/commit/f202c3b550936168b9876860853876aa6d51c6a1))
+* Update Gapic-Generator to generate libraries using `java.time` methods ([#3321](https://github.com/googleapis/sdk-platform-java/issues/3321)) ([b21c9a4](https://github.com/googleapis/sdk-platform-java/commit/b21c9a42121c22a1ab229d2d485265c271305110))
+
+
+### Bug Fixes
+
+* Fix flaky test ScheduledRetryingExecutorTest.testCancelOuterFutureAfterStart ([#3335](https://github.com/googleapis/sdk-platform-java/issues/3335)) ([e73740d](https://github.com/googleapis/sdk-platform-java/commit/e73740dbdb21d7c28908554fe3725504dc8ce84b))
+* httpjson callables to trace attempts (started, failed) ([#3300](https://github.com/googleapis/sdk-platform-java/issues/3300)) ([15a64ee](https://github.com/googleapis/sdk-platform-java/commit/15a64ee2e63165e50fd07b2b3a40f0d2ef2edfe2))
+* instantiate GaxProperties at build time to ensure we get the protobuf version ([#3365](https://github.com/googleapis/sdk-platform-java/issues/3365)) ([bb2a3be](https://github.com/googleapis/sdk-platform-java/commit/bb2a3be87291ae718ac0e8538025a0867a6b6ff6))
+* protobuf version not always getting set in headers ([#3322](https://github.com/googleapis/sdk-platform-java/issues/3322)) ([7f6e470](https://github.com/googleapis/sdk-platform-java/commit/7f6e470fea1673a5cf50fe3b49263615a172afde))
+* use BuildKit instead of legacy builder to build the Hermetic Build images ([#3338](https://github.com/googleapis/sdk-platform-java/issues/3338)) ([222fb45](https://github.com/googleapis/sdk-platform-java/commit/222fb452e00bd195ad51389ea308993a7e1bc956))
+
+
+### Dependencies
+
+* update google auth library dependencies to v1.30.0 ([#3367](https://github.com/googleapis/sdk-platform-java/issues/3367)) ([a31c682](https://github.com/googleapis/sdk-platform-java/commit/a31c68232584bf90bc00ace8310adeab8fa26add))
+* update grpc dependencies to v1.68.1 ([#3240](https://github.com/googleapis/sdk-platform-java/issues/3240)) ([c8e3941](https://github.com/googleapis/sdk-platform-java/commit/c8e3941ef6f5bd1236f5ceedfd488e5113928471))
+
+
+### Documentation
+
+* fix list num ([#3356](https://github.com/googleapis/sdk-platform-java/issues/3356)) ([b7d6296](https://github.com/googleapis/sdk-platform-java/commit/b7d62968cd837a7addc06da8b9bc2131c36c7fbc))
+* **hermetic-build:** indicate usage of Docker Buildkit in development guide ([#3337](https://github.com/googleapis/sdk-platform-java/issues/3337)) ([01e742d](https://github.com/googleapis/sdk-platform-java/commit/01e742de49e151efbd903808a859f595f99bc8de))
+* modify hermetic build docs ([#3331](https://github.com/googleapis/sdk-platform-java/issues/3331)) ([25023af](https://github.com/googleapis/sdk-platform-java/commit/25023afad8f483a3eae8846c4bc1fbe2c7a260c5))
+
 ## [2.49.0](https://github.com/googleapis/sdk-platform-java/compare/v2.48.0...v2.49.0) (2024-10-25)
 
 
