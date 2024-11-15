@@ -42,7 +42,7 @@ class ConfigChangeTest(unittest.TestCase):
             current_config=ConfigChangeTest.__get_a_gen_config(),
         )
         self.assertEqual(
-            ConfigChange.ALL_LIBRARIES_CHANGED,
+            [ConfigChange.ALL_LIBRARIES_CHANGED],
             config_change.get_changed_libraries(),
         )
 
