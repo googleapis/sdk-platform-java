@@ -22,8 +22,9 @@ set -e
 # The parameters of this script is:
 # 1. target_branch, the branch into which the pull request is merged.
 # 2. current_branch, the branch with which the pull request is associated.
-# 3. [optional] image_tag, the tag of gcr.io/cloud-devrel-public-resources/java-library-generation.
-# 4. [optional] generation_config, the path to the generation configuration,
+# 3. image_tag, the tag of gcr.io/cloud-devrel-public-resources/java-library-generation.
+# 4.
+# 5. [optional] generation_config, the path to the generation configuration,
 # the default value is generation_config.yaml in the repository root.
 while [[ $# -gt 0 ]]; do
 key="$1"
@@ -38,6 +39,10 @@ case "${key}" in
     ;;
   --image_tag)
     image_tag="$2"
+    shift
+    ;;
+  --generator_version)
+    generator_version="$2"
     shift
     ;;
   --generation_config)
@@ -62,13 +67,14 @@ if [ -z "${current_branch}" ]; then
   exit 1
 fi
 
+if [ -z "${image_tag}" ]; then
+  echo "missing required argument --image_tag"
+  exit 1
+fi
+
 if [ -z "${generation_config}" ]; then
   generation_config=generation_config.yaml
   echo "Use default generation config: ${generation_config}"
-fi
-
-if [ -z "${image_tag}" ]; then
-  image_tag=$(grep "gapic_generator_version" "${generation_config}" | cut -d ':' -f 2 | xargs)
 fi
 
 workspace_name="/workspace"
@@ -102,7 +108,7 @@ docker run \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):${workspace_name}" \
   -v "${api_def_dir}:${workspace_name}/googleapis" \
-  -e GENERATOR_VERSION="${image_tag}" \
+  -e GENERATOR_VERSION="${generator_version}" \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
   --generation-config-path="${workspace_name}/${generation_config}" \
   --library-names="${changed_libraries}" \

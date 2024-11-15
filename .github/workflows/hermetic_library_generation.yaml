@@ -50,15 +50,18 @@ jobs:
       shell: bash
       run: |
         GENERATOR_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
+        SHARED_DEPENDENCIES_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl java-shared-dependencies)
         echo "GENERATOR_VERSION=${GENERATOR_VERSION}" >> "$GITHUB_ENV"
+        echo "SHARED_DEPENDENCIES_VERSION=${SHARED_DEPENDENCIES_VERSION}" >> "$GITHUB_ENV"
         docker build \
           -f .cloudbuild/library_generation/library_generation.Dockerfile \
-          -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${GENERATOR_VERSION}" \
+          -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${SHARED_DEPENDENCIES_VERSION}" \
           .
     - uses: ./.github/scripts
       if: env.SHOULD_RUN == 'true'
       with:
         base_ref: ${{ github.base_ref }}
         head_ref: ${{ github.head_ref }}
-        image_tag: ${{ env.GENERATOR_VERSION }}
+        image_tag: ${{ env.SHARED_DEPENDENCIES_VERSION }}
+        generator_version: ${{ env.GENERATOR_VERSION }}
         token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
