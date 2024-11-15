@@ -131,6 +131,7 @@ def __generate_repo_impl(
         )
     repository_path = os.path.abspath(repository_path)
     api_definitions_path = os.path.abspath(api_definitions_path)
+    print(f"Library names: {library_names}")
     generation_config = from_yaml(generation_config_path)
     include_library_names = _parse_library_name_from(
         includes=library_names, generation_config=generation_config
