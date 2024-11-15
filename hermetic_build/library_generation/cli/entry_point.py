@@ -44,6 +44,7 @@ def main(ctx):
     show_default=True,
     help="""
     A list of library names that will be generated, separated by comma.
+    If set to `ALL_LIBRARIES`, all libraries will be generated.
     The library name of a library is the value of library_name or api_shortname,
     if library_name is not specified, in the generation configuration.
     """,
@@ -157,7 +158,11 @@ def _needs_full_repo_generation(generation_config: GenerationConfig) -> bool:
 def _parse_library_name_from(
     includes: Optional[str], generation_config: GenerationConfig
 ) -> Optional[list[str]]:
-    if includes is None or _needs_full_repo_generation(generation_config):
+    if (
+        includes is None
+        or includes == "ALL_LIBRARIES"
+        or _needs_full_repo_generation(generation_config)
+    ):
         return None
     return [library_name.strip() for library_name in includes.split(",")]
 
