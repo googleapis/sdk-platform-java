@@ -39,10 +39,26 @@ class ConfigChangeTest(unittest.TestCase):
                 ],
             },
             baseline_config=ConfigChangeTest.__get_a_gen_config(),
-            current_config=ConfigChangeTest.__get_a_gen_config(),
+            current_config=ConfigChangeTest.__get_a_gen_config(
+                googleapis_commitish="",
+                libraries=[
+                    ConfigChangeTest.__get_a_library_config(
+                        library_name="gke-backup",
+                        gapic_configs=[
+                            GapicConfig(proto_path="google/cloud/gkebackup/v1")
+                        ],
+                    ),
+                    ConfigChangeTest.__get_a_library_config(
+                        library_name="test-library",
+                        gapic_configs=[
+                            GapicConfig(proto_path="google/cloud/gkebackup/v1")
+                        ],
+                    ),
+                ],
+            ),
         )
         self.assertEqual(
-            [ConfigChange.ALL_LIBRARIES_CHANGED],
+            ["gke-backup", "test-library"],
             config_change.get_changed_libraries(),
         )
 
