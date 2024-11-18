@@ -100,36 +100,6 @@ remove_grpc_version() {
   sed -i.bak 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {}  \; -exec rm {}.bak \;
 }
 
-# This function returns the version of the grpc plugin to generate the libraries. If
-# DOCKER_GRPC_VERSION is set, this will be the version. Otherwise, the script
-# will exit since this is a necessary env var
-get_grpc_version() {
-  local grpc_version
-  if [[ -n "${DOCKER_GRPC_VERSION}" ]]; then
-    >&2 echo "Using grpc version baked into the container: ${DOCKER_GRPC_VERSION}"
-    echo "${DOCKER_GRPC_VERSION}"
-    return
-  else
-    >&2 echo "Cannot infer grpc version because DOCKER_GRPC_VERSION is not set"
-    exit 1
-  fi
-}
-
-# This function returns the version of protoc to generate the libraries. If
-# DOCKER_PROTOC_VERSION is set, this will be the version. Otherwise, the script
-# will exit since this is a necessary env var
-get_protoc_version() {
-  local protoc_version
-  if [[ -n "${DOCKER_PROTOC_VERSION}" ]]; then
-    >&2 echo "Using protoc version baked into the container: ${DOCKER_PROTOC_VERSION}"
-    echo "${DOCKER_PROTOC_VERSION}"
-    return
-  else
-    >&2 echo "Cannot infer protoc version because DOCKER_PROTOC_VERSION is not set"
-    exit 1
-  fi
-}
-
 # Given the versions of the gapic generator, protoc and the protoc-grpc plugin,
 # this function will download each one of the tools and create the environment
 # variables "protoc_path" and "grpc_path" which are expected upstream. Note that
@@ -143,30 +113,11 @@ get_protoc_version() {
 # Instead, the jar must be located in the well-known location
 # (${HOME}/.library_generation/).
 # More information in `library_generation/DEVELOPMENT.md`.
-download_tools() {
-  local protoc_version=$1
-  local grpc_version=$2
-  local os_architecture=$3
+setup_tools() {
   pushd "${output_folder}"
 
-  # the variable protoc_path is used in generate_library.sh. It is explicitly
-  # exported to make clear that it is used outside this utilities file.
-  if [[ "${DOCKER_PROTOC_VERSION}" == "${protoc_version}" ]]; then
-    # if the specified protoc_version matches the one baked in the docker
-    # container, we just point protoc_path to its location.
-    export protoc_path="${DOCKER_PROTOC_LOCATION}/protoc-${protoc_version}/bin"
-  else
-    export protoc_path=$(download_protoc "${protoc_version}" "${os_architecture}")
-  fi
-
-  # similar case with grpc
-  if [[ "${DOCKER_GRPC_VERSION}" == "${grpc_version}" ]]; then
-    # if the specified grpc_version matches the one baked in the docker
-    # container, we just point grpc_path to its location.
-    export grpc_path="${DOCKER_GRPC_LOCATION}"
-  else
-    export grpc_path=$(download_grpc_plugin "${grpc_version}" "${os_architecture}")
-  fi
+  export protoc_path="${DOCKER_PROTOC_LOCATION}/protoc-${DOCKER_PROTOC_VERSION}/bin"
+  export grpc_path="${DOCKER_GRPC_LOCATION}"
 
   # Here we check whether required tools is stored in the expected location.
   # The docker image will prepare jar files in this location.
@@ -284,8 +235,10 @@ get_proto_path_from_preprocessed_sources() {
   set -e
   local sources=$1
   pushd "${sources}" > /dev/null
-  local proto_library=$(find . -maxdepth 1 -type d -name 'proto-*' | sed 's/\.\///')
-  local found_libraries=$(echo "${proto_library}" | wc -l)
+  local proto_library
+  proto_library=$(find . -maxdepth 1 -type d -name 'proto-*' | sed 's/\.\///')
+  local found_libraries
+  found_libraries=$(echo "${proto_library}" | wc -l)
   if [[ -z ${proto_library} ]]; then
     echo "no proto libraries found in the supplied sources path"
     exit 1
@@ -357,19 +310,6 @@ sparse_clone() {
 # rest of the arguments are the positional arguments to such function
 py_util() {
   python3 "${utilities_script_dir}/utilities.py" "$@"
-}
-
-download_googleapis_files_and_folders() {
-  local output_folder=$1
-  local googleapis_commitish=$2
-  # checkout the master branch of googleapis/google (proto files) and WORKSPACE
-  echo "Checking out googlapis repository..."
-  # sparse_clone will remove folder contents first, so we have to checkout googleapis
-  # only once.
-  sparse_clone https://github.com/googleapis/googleapis.git "google grafeas" "${googleapis_commitish}"
-  pushd googleapis
-  cp -r google "${output_folder}"
-  cp -r grafeas "${output_folder}"
 }
 
 get_gapic_generator_location() {
