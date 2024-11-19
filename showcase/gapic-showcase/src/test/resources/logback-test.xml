@@ -1,0 +1,19 @@
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+      <provider class="net.logstash.logback.composite.loggingevent.ArgumentsJsonProvider" />
+    </encoder>
+    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+      <evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator">
+      <expression>logger.equals("com.google.api.gax.grpc.GrpcLoggingInterceptor")</expression>
+
+      </evaluator>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+  </appender>
+
+  <root level="DEBUG">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>
