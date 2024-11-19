@@ -20,14 +20,15 @@ jobs:
         if [[ ${head_repo_name} == ${base_repo} ]]; then
           git checkout ${base_ref}
           git checkout ${head_ref}
-          changed_directories="$(git diff --name-only ${base_ref} ${head_ref})"
+          changed_files="$(git diff --name-only ${base_ref} ${head_ref})"
         else
           git remote add fork ${head_repo_url}
           git fetch fork # create a mapping of the fork
           git checkout -b "${head_ref}" fork/${head_ref}
-          changed_directories="$(git diff --name-only "fork/${head_ref}" "origin/${base_ref}")"
+          changed_files="$(git diff --name-only "fork/${head_ref}" "origin/${base_ref}")"
         fi
-        if [[ ${changed_directories} =~ "hermetic_build/" ]]; then
+        if [[ ${changed_files} =~ "hermetic_build/" ]] ||
+          [[ ${changed_files} =~ "cloudbuild/library_generation/library_generation.Dockerfile" ]]; then
           echo "should_run=true" >> $GITHUB_OUTPUT
         else
           echo "should_run=false" >> $GITHUB_OUTPUT
