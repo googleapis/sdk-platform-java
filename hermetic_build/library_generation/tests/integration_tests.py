@@ -303,8 +303,6 @@ class IntegrationTest(unittest.TestCase):
                 f"{user_id}:{group_id}",
                 "--rm",
                 "--quiet",
-                "--network",
-                "none",
                 "-v",
                 f"{repo_location}:/workspace/repo",
                 "-v",
