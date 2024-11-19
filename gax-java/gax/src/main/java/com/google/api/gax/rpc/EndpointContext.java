@@ -272,10 +272,6 @@ public abstract class EndpointContext {
 
     /** Determines the fully resolved endpoint and universe domain values */
     private String determineEndpoint() throws IOException {
-      if (shouldUseS2A()) {
-        return mtlsEndpoint();
-      }
-
       MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
       // TransportChannelProvider's endpoint will override the ClientSettings' endpoint
       String customEndpoint =
