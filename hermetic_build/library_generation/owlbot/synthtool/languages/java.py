@@ -175,12 +175,6 @@ def _common_template_metadata() -> Dict[str, Any]:
     repo_metadata = common._load_repo_metadata()
     if repo_metadata:
         metadata["repo"] = repo_metadata
-        group_id, artifact_id = repo_metadata["distribution_name"].split(":")
-
-    metadata["latest_bom_version"] = latest_maven_version(
-        group_id="com.google.cloud",
-        artifact_id="libraries-bom",
-    )
 
     metadata["samples"] = samples.all_samples(["samples/**/src/main/java/**/*.java"])
     metadata["snippets"] = snippets.all_snippets(
