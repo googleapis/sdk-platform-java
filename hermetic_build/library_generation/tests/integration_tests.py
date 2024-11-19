@@ -43,7 +43,7 @@ commitish_map = {
     "google-cloud-java": "chore/test-hermetic-build",
     "java-bigtable": "chore/test-hermetic-build",
 }
-current_config_name = "current_generation_config.yaml"
+generation_config_name = "generation_config.yaml"
 googleapis_commitish = "113a378d5aad5018876ec0a8cbfd4d6a4f746809"
 # This variable is used to override the jar created by building the image
 # with our own downloaded jar in order to lock the integration test to use
@@ -87,7 +87,7 @@ class IntegrationTest(unittest.TestCase):
             self.__run_entry_point_in_docker_container(
                 repo_location=repo_location,
                 config_location=config_location,
-                generation_config=current_config_name,
+                generation_config=generation_config_name,
                 api_definition=api_definitions_path,
             )
             # 4. compare generation result with golden files
@@ -328,7 +328,7 @@ class IntegrationTest(unittest.TestCase):
             repo = sub_dir.name
             if repo in ["golden", "java-bigtable"]:
                 continue
-            config = f"{sub_dir}/{current_config_name}"
+            config = f"{sub_dir}/{generation_config_name}"
             config_files.append((repo, config))
         return config_files
 
