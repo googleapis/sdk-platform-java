@@ -107,17 +107,21 @@ remove_grpc_version() {
 # Instead, the jar must be located in the well-known location
 # (${HOME}/.library_generation/).
 # More information in `library_generation/DEVELOPMENT.md`.
-setup_tools() {
+check_tools() {
   pushd "${output_folder}"
-
-  export protoc_path="${DOCKER_PROTOC_LOCATION}/protoc-${DOCKER_PROTOC_VERSION}/bin"
-  export grpc_path="${DOCKER_GRPC_LOCATION}"
 
   # Here we check whether required tools is stored in the expected location.
   # The docker image will prepare jar files in this location.
   # This check is meant to ensure integrity of the downstream workflow.
+  error_if_not_exists "${DOCKER_PROTOC_LOCATION}"
+  error_if_not_exists "${DOCKER_PROTOC_VERSION}"
+  error_if_not_exists "${DOCKER_GRPC_LOCATION}"
   error_if_not_exists "${GAPIC_GENERATOR_LOCATION}"
   error_if_not_exists "${JAVA_FORMATTER_LOCATION}"
+
+  export protoc_path="${DOCKER_PROTOC_LOCATION}/protoc-${DOCKER_PROTOC_VERSION}/bin"
+  export grpc_path="${DOCKER_GRPC_LOCATION}"
+
   popd
 }
 
