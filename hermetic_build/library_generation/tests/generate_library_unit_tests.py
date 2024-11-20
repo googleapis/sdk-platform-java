@@ -76,34 +76,14 @@ class GenerateLibraryUnitTests(unittest.TestCase):
             command, stderr=subprocess.PIPE, **kwargs
         ).stdout.decode()[:-1]
 
-    def test_get_grpc_version_with_no_env_var_fails(self):
-        # the absence of DOCKER_GRPC_VERSION will make this function to fail
-        result = self._run_command("get_grpc_version")
-        self.assertEqual(1, result.returncode)
-        self.assertRegex(result.stdout.decode(), "DOCKER_GRPC_VERSION is not set")
-
-    def test_get_protoc_version_with_no_env_var_fails(self):
-        # the absence of DOCKER_PROTOC_VERSION will make this function to fail
-        result = self._run_command("get_protoc_version")
-        self.assertEqual(1, result.returncode)
-        self.assertRegex(result.stdout.decode(), "DOCKER_PROTOC_VERSION is not set")
-
-    def test_download_tools_without_baked_generator_fails(self):
-        # This test has the same structure as
-        # download_tools_succeed_with_baked_protoc, but meant for
-        # gapic-generator-java.
-
-        test_protoc_version = "1.64.0"
-        test_grpc_version = "1.64.0"
+    def test_setup_tools_without_baked_generator_fails(self):
         jar_location = (
             f"{self.simulated_home}/.library_generation/gapic-generator-java.jar"
         )
-        # we expect the function to fail because the generator jar is not found in
-        # its well-known location. To achieve this, we temporarily remove the fake
-        # generator jar
+        # we expect the function to fail because the generator jar is not found
+        # in its well-known location.
+        # To achieve this, we temporarily remove the fake generator jar.
         bash_call(f"rm {jar_location}")
-        result = self._run_command(
-            f"download_tools {test_protoc_version} {test_grpc_version} {self.TEST_ARCHITECTURE}"
-        )
+        result = self._run_command(f"setup_tools")
         self.assertEqual(1, result.returncode)
         self.assertRegex(result.stdout.decode(), "Please configure your environment")
