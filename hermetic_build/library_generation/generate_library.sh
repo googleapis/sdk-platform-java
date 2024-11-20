@@ -14,6 +14,14 @@ case $key in
     destination_path="$2"
     shift
     ;;
+  --protoc_version)
+    protoc_version="$2"
+    shift
+    ;;
+  --grpc_version)
+    grpc_version="$2"
+    shift
+    ;;
   --proto_only)
     proto_only="$2"
     shift
@@ -62,6 +70,14 @@ script_dir=$(dirname "$(readlink -f "$0")")
 # source utility functions
 source "${script_dir}"/utils/utilities.sh
 output_folder="$(get_output_folder)"
+
+if [ -z "${protoc_version}" ]; then
+  protoc_version=$(get_protoc_version)
+fi
+
+if [ -z "${grpc_version}" ]; then
+  grpc_version=$(get_grpc_version)
+fi
 
 if [ -z "${proto_only}" ]; then
   proto_only="false"
@@ -156,7 +172,10 @@ case "${proto_path}" in
     ;;
 esac
 
-check_tools
+# download gapic-generator-java, protobuf and grpc plugin.
+# the download_tools function will create the environment variables "protoc_path"
+# and "grpc_path", to be used in the protoc calls below.
+download_tools "${protoc_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
