@@ -59,7 +59,6 @@ def generate_composed_library(
     :return None
     """
     output_folder = repo_config.output_folder
-    base_arguments = __construct_tooling_arg(config=config)
     owlbot_cli_source_folder = util.sh_util("mktemp -d")
     os.makedirs(f"{library_path}", exist_ok=True)
     for gapic in library.get_sorted_gapic_configs():
@@ -81,7 +80,7 @@ def generate_composed_library(
         )
         temp_destination_path = f"java-{gapic.proto_path.replace('/','-')}"
         effective_arguments = __construct_effective_arg(
-            base_arguments=base_arguments,
+            base_arguments=[],
             gapic=gapic,
             gapic_inputs=gapic_inputs,
             temp_destination_path=temp_destination_path,
@@ -118,19 +117,6 @@ def generate_composed_library(
         ],
         "Library postprocessing",
     )
-
-
-def __construct_tooling_arg(config: GenerationConfig) -> List[str]:
-    """
-    Construct arguments of tooling versions used in generate_library.sh
-    :param config: the generation config
-    :return: arguments containing tooling versions
-    """
-    arguments = []
-    arguments += util.create_argument("grpc_version", config)
-    arguments += util.create_argument("protoc_version", config)
-
-    return arguments
 
 
 def __construct_effective_arg(
