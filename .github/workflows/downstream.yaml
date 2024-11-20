@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          java-version: 17
+          java-version: 11
           distribution: temurin
       - run: mvn -version
       - name: Install xmllint
@@ -47,6 +47,8 @@ jobs:
         run: ./.kokoro/presubmit/common_test.sh
       - name: Perform downstream compatibility testing
         run: REPOS_UNDER_TEST="${{ matrix.repo }}" ./.kokoro/presubmit/downstream-compatibility.sh
+      - name: Perform downstream Protobuf compatibility testing
+        run: REPOS_UNDER_TEST="${{ matrix.repo }}" ./.kokoro/presubmit/downstream-protobuf-compatibility.sh
   downstream-compatibility-spring-generator:
     runs-on: ubuntu-22.04
     strategy:
