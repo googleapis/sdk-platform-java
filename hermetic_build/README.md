@@ -25,12 +25,19 @@ for more information.
 
 ## Parameters to generate a repository using the docker image
 
-### Generation configuration yaml (`generation-config-path`)
+### Generation configuration yaml (`generation-config-path`), optional
 
 An absolute or relative path to a configuration file containing parameters to
 generate the repository.
 Please refer to [Configuration to generate a repository](#configuration-to-generate-a-repository)
 for more information.
+
+The default value is `$(pwd)/generation_config.yaml`, i.e., `generation_config.yaml`
+in the current working directory.
+
+Raise `FileNotFoundError` if the specified generation config does not exist or,
+in the case `generation-config-path` is not specified, the default generation
+config does not exist.
 
 ### Repository path (`repository-path`), optional
 
@@ -41,7 +48,7 @@ For example, `cd google-cloud-java && python /path/to/entry_point.py ...` withou
 specifying the `--repository_path` option will modify the `google-cloud-java`
 repository the user `cd`'d into.
 
-Note that versions.txt has to exist in `repository_path` in order to generate
+Note that `versions.txt` has to exist in `repository_path` in order to generate
 right version for each library.
 Please refer [here](go/java-client-releasing#versionstxt-manifest) for more info
 of versions.txt.

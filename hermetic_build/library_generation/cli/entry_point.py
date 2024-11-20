@@ -78,28 +78,18 @@ def generate(
     api_definitions_path: str,
 ):
     """
-    Compare baseline generation config and current generation config and
-    generate changed libraries based on current generation config.
+    Generate libraries based on a generation config.
 
-    If baseline generation config is not specified but current generation
-    config is specified, generate all libraries if `library_names` is not
-    specified, based on current generation config.
-
-    If current generation config is not specified but baseline generation
-    config is specified, raise FileNotFoundError because current generation
-    config should be the source of truth of library generation.
-
-    If both baseline generation config and current generation config are not
-    specified, generate all libraries based on the default generation config,
-    which is generation_config.yaml in the current working directory.
+    If the `generation-config-path` is not specified the default generation
+    config, `$(pwd)/generation_config.yaml`, will be used.
 
     If `library_names` is specified, only libraries whose name can be found in
-    the current generation config or default generation config, if current
-    generation config is not specified, will be generated. Changed libraries
-    will be ignored even if baseline and current generation config are
-    specified.
+    the generation config will be generated; otherwise all libraries in the
+    generation config will be generated.
 
-    Raise FileNotFoundError if the default config does not exist.
+    :raise FileNotFoundError if the specified generation config does not exist
+    or, in the case `generation-config-path` is not specified, the default
+    generation config does not exist.
     """
     __generate_repo_impl(
         generation_config_path=generation_config_path,
