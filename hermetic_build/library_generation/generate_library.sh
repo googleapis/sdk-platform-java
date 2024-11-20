@@ -156,7 +156,7 @@ case "${proto_path}" in
     ;;
 esac
 
-setup_tools
+check_tools
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
