@@ -40,7 +40,6 @@ import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.ExecutorAsBackgroundResource;
 import com.google.api.gax.core.ExecutorProvider;
-import com.google.api.gax.logging.LoggingUtils;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
@@ -64,8 +63,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.event.Level;
 
 /**
  * Encapsulates client state, including executor, credentials, and transport channel.
@@ -76,7 +73,7 @@ import org.slf4j.event.Level;
 @AutoValue
 public abstract class ClientContext {
 
-  private static final Logger LOGGER = LoggingUtils.getLogger(ClientContext.class);
+  // private static final Logger LOGGER = LoggingUtils.getLogger(ClientContext.class);
   private static final String QUOTA_PROJECT_ID_HEADER_KEY = "x-goog-user-project";
 
   /**
@@ -175,9 +172,9 @@ public abstract class ClientContext {
    * settings.
    */
   public static ClientContext create(StubSettings settings) throws IOException {
-    if (LoggingUtils.isLoggingEnabled()) {
-      LoggingUtils.log(LOGGER, Level.INFO, "a dummy message", Collections.emptyMap());
-    }
+    // if (LoggingUtils.isLoggingEnabled()) {
+    //   LoggingUtils.log(LOGGER, Level.INFO, "a dummy message", Collections.emptyMap());
+    // }
     ApiClock clock = settings.getClock();
 
     ExecutorProvider backgroundExecutorProvider = settings.getBackgroundExecutorProvider();
