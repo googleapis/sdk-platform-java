@@ -18,7 +18,16 @@ for additional instructions.
 
 ## Prerequisites
 
-In order to generate a version for each library, a versions.txt has to exist
+### Generation configuration
+
+A generation configuration file is required to generate GAPIC Client Libraries.
+
+Please refer to [Generation configuration yaml](#generation-configuration-yaml--generation-config-path---optional)
+for more information.
+
+### versions.txt
+
+In order to generate a version for each library, a `versions.txt` has to exist
 in `repository-path`.
 Please refer to [Repository path](#repository-path--repositorypath---optional)
 for more information.
