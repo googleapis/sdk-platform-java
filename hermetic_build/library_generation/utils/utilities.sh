@@ -116,8 +116,17 @@ check_tools() {
   error_if_not_exists "${GAPIC_GENERATOR_LOCATION}"
   error_if_not_exists "${JAVA_FORMATTER_LOCATION}"
 
-  export protoc_path="${DOCKER_PROTOC_LOCATION}/protoc-${DOCKER_PROTOC_VERSION}/bin"
-  export grpc_path="${DOCKER_GRPC_LOCATION}"
+  # The variable protoc_path is used in generate_library.sh.
+  # It is explicitly exported to make clear that it is used outside this
+  # utilities file.
+  if [[ -n "${DOCKER_PROTOC_VERSION}" ]]; then
+    export protoc_path="${DOCKER_PROTOC_LOCATION}/protoc-${protoc_version}/bin"
+  fi
+
+  # similar case with grpc
+  if [[ -n "${DOCKER_GRPC_VERSION}" ]]; then
+    export grpc_path="${DOCKER_GRPC_LOCATION}"
+  fi
 
   popd
 }
