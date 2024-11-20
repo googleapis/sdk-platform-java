@@ -88,7 +88,7 @@ def generate(
     generation config will be generated.
 
     :raise FileNotFoundError if the specified generation config does not exist
-    or, in the case `generation-config-path` is not specified, the default
+    or, in case `generation-config-path` is not specified, the default
     generation config does not exist.
     """
     __generate_repo_impl(
