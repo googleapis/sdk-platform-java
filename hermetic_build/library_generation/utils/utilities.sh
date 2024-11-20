@@ -100,14 +100,8 @@ remove_grpc_version() {
   sed -i.bak 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {}  \; -exec rm {}.bak \;
 }
 
-# Given the versions of the gapic generator, protoc and the protoc-grpc plugin,
-# this function will download each one of the tools and create the environment
-# variables "protoc_path" and "grpc_path" which are expected upstream. Note that
-# if the specified versions of protoc and grpc match DOCKER_PROTOC_VERSION and
-# DOCKER_GRPC_VERSION respectively, this function will instead set "protoc_path"
-# and "grpc_path" to DOCKER_PROTOC_PATH and DOCKER_GRPC_PATH respectively (no
-# download), since the docker image will have downloaded these tools beforehand.
-#
+# This function will create the environment variables "protoc_path" and
+# "grpc_path" which are expected upstream.
 # For the case of generator and formatter, no env var will be exported for the
 # upstream flow.
 # Instead, the jar must be located in the well-known location

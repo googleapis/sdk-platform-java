@@ -155,9 +155,7 @@ case "${proto_path}" in
     proto_files="${proto_files//${removed_proto}/}"
     ;;
 esac
-# download gapic-generator-java, protobuf and grpc plugin.
-# the download_tools function will create the environment variables "protoc_path"
-# and "grpc_path", to be used in the protoc calls below.
+
 setup_tools
 ##################### Section 1 #####################
 # generate grpc-*/
