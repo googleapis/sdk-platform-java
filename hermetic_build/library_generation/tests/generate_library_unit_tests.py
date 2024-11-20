@@ -84,6 +84,6 @@ class GenerateLibraryUnitTests(unittest.TestCase):
         # in its well-known location.
         # To achieve this, we temporarily remove the fake generator jar.
         bash_call(f"rm {jar_location}")
-        result = self._run_command(f"setup_tools")
+        result = self._run_command(f"check_tools")
         self.assertEqual(1, result.returncode)
         self.assertRegex(result.stdout.decode(), "Please configure your environment")

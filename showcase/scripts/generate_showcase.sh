@@ -96,9 +96,9 @@ gapic_additional_protos="google/iam/v1/iam_policy.proto google/cloud/location/lo
 path_to_generator_parent_pom="${SCRIPT_DIR}/../../gapic-generator-java-pom-parent/pom.xml"
 protoc_version=$(get_version_from_pom "${path_to_generator_parent_pom}" "protobuf.version" \
   | cut -d. -f2-)
-protoc_path=$(download_protoc "${protoc_version}" "linux-x86_64")
+export protoc_path=$(download_protoc "${protoc_version}" "linux-x86_64")
 grpc_version=$(get_version_from_pom "${path_to_generator_parent_pom}" "grpc.version")
-grpc_path=$(download_grpc_plugin "${grpc_version}" "linux-x86_64")
+export grpc_path=$(download_grpc_plugin "${grpc_version}" "linux-x86_64")
 rest_numeric_enums="false"
 transport="grpc+rest"
 gapic_yaml=""
