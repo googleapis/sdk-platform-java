@@ -219,7 +219,7 @@ libraries:
      --quiet \
      -u "$(id -u):$(id -g)" \
      -v "$(pwd):/workspace" \
-     -v /path/to/api_definition:/workspace \
+     -v /path/to/api_definition:/workspace/apis \
      gcr.io/cloud-devrel-public-resources/java-library-generation:image-tag
    ```
 
@@ -229,7 +229,7 @@ libraries:
    * `-v "$(pwd):/workspace"` maps the host machine's current working directory
      to the /workspace folder. 
      The image is configured to perform changes in this directory.
-   * `-v /path/to/api_definition:/workspace` maps the host machine's API 
+   * `-v /path/to/api_definition:/workspace/apis` maps the host machine's API 
      definitions folder to `/workspace/apis` folder.
  
 3. An advanced example:
