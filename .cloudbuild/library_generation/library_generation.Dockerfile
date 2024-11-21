@@ -62,6 +62,9 @@ ENV OS_ARCHITECTURE="linux-x86_64"
 # install OS tools
 RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git
 
+# Remove unnecessary npm modules
+RUN rm -rf /usr/local/lib/node_modules/npm/node_modules
+
 SHELL [ "/bin/bash", "-c" ]
 
 # Copy glibc shared objects to enable execution of the grpc plugin.
