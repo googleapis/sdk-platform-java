@@ -63,7 +63,7 @@ ENV OS_ARCHITECTURE="linux-x86_64"
 RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git
 
 # Remove unnecessary npm modules
-RUN rm -rf /usr/local/lib/node_modules/npm/node_modules
+RUN rm -rf /usr/lib/node_modules/npm/node_modules
 
 SHELL [ "/bin/bash", "-c" ]
 
