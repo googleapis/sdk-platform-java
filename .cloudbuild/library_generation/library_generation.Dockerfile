@@ -52,8 +52,6 @@ RUN sh compile-x86_64-alpine-linux.sh
 # python:3.12.7-alpine3.20
 FROM docker.io/library/python@sha256:5049c050bdc68575a10bcb1885baa0689b6c15152d8a56a7e399fb49f783bf98 as final
 
-
-
 ARG OWLBOT_CLI_COMMITTISH=ab222d9a20bb27586433caedc70f049b7853db7e
 ARG PROTOC_VERSION=25.5
 ARG GRPC_VERSION=1.68.1
