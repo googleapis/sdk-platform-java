@@ -7,10 +7,6 @@ Running the docker image built from `hermetic_build/library_generation`
 directory, you can generate a repository containing GAPIC client libraries (a
 monorepo, for example, google-cloud-java) from a configuration file.
 
-Instead of running the docker image, if you prefer running the underlying python
-scripts directly, please refer to the [development guide](DEVELOPMENT.md#run-the-script)
-for additional instructions.
-
 ## Environment
 
 - OS: Linux
