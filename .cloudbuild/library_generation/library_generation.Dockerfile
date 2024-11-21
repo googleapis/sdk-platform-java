@@ -62,8 +62,8 @@ ENV OS_ARCHITECTURE="linux-x86_64"
 # install OS tools
 RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git
 
-# Remove unnecessary npm modules
-RUN rm -rf /usr/lib/node_modules/npm/node_modules
+# Remove unnecessary cross-spawn from npm to resolve CVE-2024-21538
+RUN rm -rf /usr/lib/node_modules/npm/node_modules/cross-spawn/
 
 SHELL [ "/bin/bash", "-c" ]
 
