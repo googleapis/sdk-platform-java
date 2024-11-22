@@ -13,15 +13,22 @@ import com.google.cloud.model.QueryResult;
 import com.google.cloud.model.Result;
 import com.google.cloud.model.Version;
 import com.google.cloud.model.VersionKey;
+import com.google.cloud.tools.opensource.classpath.ClassPathBuilder;
+import com.google.cloud.tools.opensource.classpath.DependencyMediation;
+import com.google.cloud.tools.opensource.dependencies.Bom;
+import com.google.cloud.tools.opensource.dependencies.MavenRepositoryException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
+import java.nio.file.Paths;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.version.InvalidVersionSpecificationException;
 
 public class DependencyAnalyzer {
 
@@ -34,6 +41,48 @@ public class DependencyAnalyzer {
   public AnalysisResult analyze(String system, String packageName, String packageVersion)
       throws URISyntaxException, IOException, InterruptedException, IllegalArgumentException {
     VersionKey root = VersionKey.from(system, packageName, packageVersion);
+    return AnalysisResult.of(getPackageInfoFrom(root));
+  }
+
+  public AnalysisResult analyze(String bomPath) {
+    List<PackageInfo> packageInfos = new ArrayList<>();
+    try {
+      Set<VersionKey> roots = getManagedDependenciesFromBom(Bom.readBom(Paths.get(bomPath)));
+      for (VersionKey versionKey : roots) {
+        packageInfos.addAll(getPackageInfoFrom(versionKey));
+      }
+
+    } catch (MavenRepositoryException | InvalidVersionSpecificationException ex) {
+      System.out.printf("Caught exception when resolving dependencies from %s.", bomPath);
+      ex.printStackTrace();
+      System.exit(1);
+    } catch (URISyntaxException | IOException | InterruptedException ex) {
+      System.out.print("Caught exception when retrieving dependency info from https://deps.dev/.");
+      ex.printStackTrace();
+      System.exit(2);
+    }
+
+    return AnalysisResult.of(packageInfos);
+  }
+
+  private static Set<VersionKey> getManagedDependenciesFromBom(Bom bom)
+      throws InvalidVersionSpecificationException {
+    Set<VersionKey> res = new HashSet<>();
+    new ClassPathBuilder()
+        .resolve(bom.getManagedDependencies(), false, DependencyMediation.MAVEN)
+        .getClassPath()
+        .forEach(
+            classPath -> {
+              Artifact artifact = classPath.getArtifact();
+              String pkg = String.format("%s:%s", artifact.getGroupId(), artifact.getArtifactId());
+              res.add(VersionKey.from("MAVEN", pkg, artifact.getVersion()));
+            });
+
+    return res;
+  }
+
+  private List<PackageInfo> getPackageInfoFrom(VersionKey root)
+      throws URISyntaxException, IOException, InterruptedException {
     Set<VersionKey> seenPackage = new HashSet<>();
     seenPackage.add(root);
     Queue<VersionKey> queue = new ArrayDeque<>();
@@ -68,7 +117,7 @@ public class DependencyAnalyzer {
       result.add(new PackageInfo(versionKey, licenses, advisories));
     }
 
-    return AnalysisResult.of(result);
+    return result;
   }
 
   /**
