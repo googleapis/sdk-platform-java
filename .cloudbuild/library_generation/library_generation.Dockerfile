@@ -60,8 +60,7 @@ ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
-RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git
-RUN ls -la /usr/lib/node_modules/npm/node_modules
+RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm=9.9.4 git
 
 SHELL [ "/bin/bash", "-c" ]
 
@@ -121,10 +120,10 @@ RUN python -m pip install src/library_generation
 WORKDIR /tools
 RUN git clone https://github.com/googleapis/repo-automation-bots
 WORKDIR /tools/repo-automation-bots/packages/owl-bot
+RUN git checkout "${OWLBOT_CLI_COMMITTISH}"
 RUN npm i && npm run compile && npm link
 RUN owl-bot copy-code --version
 RUN chmod o+rx $(which owl-bot)
-RUN rm -rf /tools/repo-automation-bots
 
 # download the Java formatter
 ADD https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar \
