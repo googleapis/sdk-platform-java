@@ -61,6 +61,7 @@ ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
 RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git
+RUN ls -la /usr/lib/node_modules/npm/node_modules
 
 SHELL [ "/bin/bash", "-c" ]
 
@@ -120,7 +121,7 @@ RUN python -m pip install src/library_generation
 WORKDIR /tools
 RUN git clone https://github.com/googleapis/repo-automation-bots
 WORKDIR /tools/repo-automation-bots/packages/owl-bot
-RUN npm ci --only=production && npm run compile && npm link && npm prune
+RUN npm i && npm run compile && npm link
 RUN owl-bot copy-code --version
 RUN chmod o+rx $(which owl-bot)
 RUN rm -rf /tools/repo-automation-bots
