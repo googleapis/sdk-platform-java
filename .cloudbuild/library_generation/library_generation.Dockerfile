@@ -126,6 +126,7 @@ RUN git checkout "${OWLBOT_CLI_COMMITTISH}"
 RUN npm i && npm run compile && npm link
 RUN owl-bot copy-code --version
 RUN chmod o+rx $(which owl-bot)
+RUN apk del -r npm && apk cache clean
 
 # download the Java formatter
 ADD https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar \
