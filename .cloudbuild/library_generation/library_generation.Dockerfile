@@ -62,9 +62,6 @@ ENV OS_ARCHITECTURE="linux-x86_64"
 # install OS tools
 RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git
 
-# Remove unnecessary cross-spawn from npm to resolve CVE-2024-21538
-RUN rm -rf /usr/lib/node_modules/npm/node_modules/cross-spawn/
-
 SHELL [ "/bin/bash", "-c" ]
 
 # Copy glibc shared objects to enable execution of the grpc plugin.
@@ -127,6 +124,7 @@ RUN git checkout "${OWLBOT_CLI_COMMITTISH}"
 RUN npm ci && npm run compile && npm link && npm prune
 RUN owl-bot copy-code --version
 RUN chmod o+rx $(which owl-bot)
+RUN rm -rf /tools/repo-automation-bots
 
 # download the Java formatter
 ADD https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar \
