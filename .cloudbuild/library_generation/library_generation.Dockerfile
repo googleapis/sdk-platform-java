@@ -124,7 +124,7 @@ WORKDIR /tools
 RUN git clone https://github.com/googleapis/repo-automation-bots
 WORKDIR /tools/repo-automation-bots/packages/owl-bot
 RUN git checkout "${OWLBOT_CLI_COMMITTISH}"
-RUN npm i && npm run compile && npm link
+RUN npm ci && npm run compile && npm link && npm prune
 RUN owl-bot copy-code --version
 RUN chmod o+rx $(which owl-bot)
 
