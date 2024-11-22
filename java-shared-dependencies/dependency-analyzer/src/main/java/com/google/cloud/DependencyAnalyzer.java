@@ -49,6 +49,9 @@ public class DependencyAnalyzer {
     try {
       Set<VersionKey> roots = getManagedDependenciesFromBom(Bom.readBom(Paths.get(bomPath)));
       for (VersionKey versionKey : roots) {
+        if (versionKey.isSnapshot()) {
+          continue;
+        }
         packageInfos.addAll(getPackageInfoFrom(versionKey));
       }
 
