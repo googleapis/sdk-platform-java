@@ -29,7 +29,7 @@ RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_
   "./gapic-generator-java.jar"
 
 # 3.9.9-eclipse-temurin-8-alpine
-FROM docker.io/library/maven@sha256:sha256:798e5b81963974f181379f3d12520508f114c72bba143b95e4dea2597c7a15e5 AS formatter-build
+FROM docker.io/library/maven@sha256:798e5b81963974f181379f3d12520508f114c72bba143b95e4dea2597c7a15e5 AS formatter-build
 RUN apk update && apk add git
 WORKDIR /
 RUN git clone https://github.com/google/google-java-format.git
