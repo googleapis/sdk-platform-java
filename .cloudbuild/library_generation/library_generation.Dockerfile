@@ -36,7 +36,7 @@ RUN git clone https://github.com/google/google-java-format.git
 WORKDIR /google-java-format
 # Build google-java-format 1.7 from source, with an updated version of guava
 RUN git checkout google-java-format-1.7
-RUN mvn install -B -ntp -DskipTests
+RUN mvn install -B -ntp -DskipTests -Dmaven.javadoc.skip
 RUN cp "/root/.m2/repository/com/google/googlejavaformat/google-java-format/1.7-SNAPSHOT/google-java-format-1.7-SNAPSHOT-all-deps.jar" \
     "./google-java-format.jar"
 
