@@ -27,7 +27,7 @@ jobs:
           git checkout -b "${head_ref}" fork/${head_ref}
           changed_directories="$(git diff --name-only "fork/${head_ref}" "origin/${base_ref}")"
         fi
-        if [[ ${changed_directories} =~ "hermetic_build/" || [[ ${changed_directories} =~ ".cloudbuild/library_generation/" ]] ]]; then
+        if [[ ${changed_directories} =~ "hermetic_build/" ]] || [[ ${changed_directories} =~ ".cloudbuild/library_generation/" ]]; then
           echo "should_run=true" >> $GITHUB_OUTPUT
         else
           echo "should_run=false" >> $GITHUB_OUTPUT
