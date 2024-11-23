@@ -28,6 +28,18 @@ RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
+# 3.9.9-eclipse-temurin-8-alpine
+FROM docker.io/library/maven@sha256:sha256:798e5b81963974f181379f3d12520508f114c72bba143b95e4dea2597c7a15e5 AS formatter-build
+RUN apk update && apk add git
+WORKDIR /
+RUN git clone https://github.com/google/google-java-format.git
+WORKDIR /google-java-format
+# Build google-java-format 1.7 from source, with an updated version of guava
+RUN git checkout google-java-format-1.7
+RUN mvn install -B -ntp -DskipTests
+RUN cp "/root/.m2/repository/com/google/googlejavaformat/google-java-format/1.7-SNAPSHOT/google-java-format-1.7-SNAPSHOT-all-deps.jar" \
+    "./google-java-format.jar"
+
 # alpine:3.20.3
 FROM docker.io/library/alpine@sha256:beefdbd8a1da6d2915566fde36db9db0b524eb737fc57cd1367effd16dc0d06d as glibc-compat
 
@@ -57,7 +69,6 @@ FROM docker.io/library/python@sha256:38e179a0f0436c97ecc76bcd378d7293ab3ee79e4b8
 ARG OWLBOT_CLI_COMMITTISH=38fe6f89a2339ee75c77739b31b371f601b01bb3
 ARG PROTOC_VERSION=25.5
 ARG GRPC_VERSION=1.68.1
-ARG JAVA_FORMAT_VERSION=1.7
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
@@ -102,12 +113,17 @@ ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java-${GRPC_VERSION}-${OS_ARCHIT
 ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 
 
-# Here we transfer gapic-generator-java from the previous stage.
-# Note that the destination is a well-known location that will be assumed at runtime
+# Here we transfer gapic-generator-java and formatter from the previous stage.
+# Note that the destination is a well-known location that will be assumed at
+# runtime.
 # We hard-code the location string to avoid making it configurable (via ARG) as
 # well as to avoid it making it overridable at runtime (via ENV).
-COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
+COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" \
+  "${HOME}/.library_generation/gapic-generator-java.jar"
 RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
+COPY --from=formatter-build "/google-java-format/google-java-format.jar" \
+  "${HOME}/.library_generation/google-java-format.jar"
+RUN chmod 755 "${HOME}/.library_generation/google-java-format.jar"
 
 RUN python -m pip install --upgrade pip
 
@@ -126,11 +142,6 @@ RUN git checkout "${OWLBOT_CLI_COMMITTISH}"
 RUN npm i && npm run compile && npm link
 RUN owl-bot copy-code --version
 RUN chmod o+rx $(which owl-bot)
-
-# download the Java formatter
-ADD https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar \
-  "${HOME}"/.library_generation/google-java-format.jar
-RUN chmod 755 "${HOME}"/.library_generation/google-java-format.jar
 
 # allow users to access the script folders
 RUN chmod -R o+rx /src
