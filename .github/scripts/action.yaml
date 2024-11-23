@@ -29,6 +29,9 @@ inputs:
     required: true
   image_tag:
     description: the tag of hermetic build image
+    required: true
+  generator_version:
+    description: the version of gapic-generator-java
     required: false
   token:
     description: Personal Access Token
@@ -72,9 +75,11 @@ runs:
       bash hermetic_library_generation.sh \
         --target_branch "${BASE_REF}" \
         --current_branch "${HEAD_REF}" \
-        --image_tag "${IMAGE_TAG}"
+        --image_tag "${IMAGE_TAG}" \
+        --generator_version "${GENERATOR_VERSION}"
     env:
       BASE_REF: ${{ inputs.base_ref }}
       HEAD_REF: ${{ inputs.head_ref }}
       IMAGE_TAG: ${{ inputs.image_tag }}
+      GENERATOR_VERSION: ${{ inputs.generator_version }}
       GH_TOKEN: ${{ inputs.token }}

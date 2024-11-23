@@ -16,9 +16,11 @@ timeout: 7200s # 2 hours
 substitutions:
   _IMAGE_NAME: "gcr.io/cloud-devrel-public-resources/java-library-generation"
   _GAPIC_GENERATOR_JAVA_VERSION: '2.50.1-SNAPSHOT' # {x-version-update:gapic-generator-java:current}
+  _SHARED_DEPENDENCIES_VERSION: '3.40.1-SNAPSHOT' # {x-version-update:google-cloud-shared-dependencies:current}
   _SHA_IMAGE_ID: "${_IMAGE_NAME}:${COMMIT_SHA}"
   _LATEST_IMAGE_ID: "${_IMAGE_NAME}:latest"
-  _VERSIONED_IMAGE_ID: "${_IMAGE_NAME}:${_GAPIC_GENERATOR_JAVA_VERSION}"
+  _GENERATOR_VERSIONED_IMAGE_ID: "${_IMAGE_NAME}:${_GAPIC_GENERATOR_JAVA_VERSION}"
+  _SHARED_DEPENDENCIES_VERSIONED_IMAGE_ID: "${_IMAGE_NAME}:${_SHARED_DEPENDENCIES_VERSION}"
 steps:
   # Library generation build
   - name: gcr.io/cloud-builders/docker
@@ -26,7 +28,8 @@ steps:
       "build",
       "-t", "${_SHA_IMAGE_ID}",
       "-t", "${_LATEST_IMAGE_ID}",
-      "-t", "${_VERSIONED_IMAGE_ID}",
+      "-t", "${_GENERATOR_VERSIONED_IMAGE_ID}",
+      "-t", "${_SHARED_DEPENDENCIES_VERSIONED_IMAGE_ID}",
       "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
     id: library-generation-build
     waitFor: ["-"]
@@ -39,4 +42,5 @@ options:
 images:
   - ${_SHA_IMAGE_ID}
   - ${_LATEST_IMAGE_ID}
-  - ${_VERSIONED_IMAGE_ID}
+  - ${_GENERATOR_VERSIONED_IMAGE_ID}
+  - ${_SHARED_DEPENDENCIES_VERSIONED_IMAGE_ID}
