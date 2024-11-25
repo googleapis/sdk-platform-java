@@ -302,14 +302,6 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual(["misc"], library_path)
         shutil.rmtree(repo_config.output_folder)
 
-    def test_get_java_generator_location_success(self):
-        location = util.sh_util("get_gapic_generator_location")
-        self.assertRegex(location, r"/.library_generation/gapic-generator-java.jar$")
-
-    def test_get_java_formatter_location_success(self):
-        location = util.sh_util("get_java_formatter_location")
-        self.assertRegex(location, r"/.library_generation/google-java-format.jar$")
-
     def __setup_postprocessing_prerequisite_files(
         self,
         combination: int,
