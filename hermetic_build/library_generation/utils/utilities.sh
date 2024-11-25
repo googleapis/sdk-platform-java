@@ -130,53 +130,6 @@ get_protoc_version() {
   fi
 }
 
-# Given the versions of the gapic generator, protoc and the protoc-grpc plugin,
-# this function will download each one of the tools and create the environment
-# variables "protoc_path" and "grpc_path" which are expected upstream. Note that
-# if the specified versions of protoc and grpc match DOCKER_PROTOC_VERSION and
-# DOCKER_GRPC_VERSION respectively, this function will instead set "protoc_path"
-# and "grpc_path" to DOCKER_PROTOC_PATH and DOCKER_GRPC_PATH respectively (no
-# download), since the docker image will have downloaded these tools beforehand.
-#
-# For the case of generator and formatter, no env var will be exported for the
-# upstream flow.
-# Instead, the jar must be located in the well-known location
-# (${HOME}/.library_generation/).
-# More information in `library_generation/DEVELOPMENT.md`.
-download_tools() {
-  local protoc_version=$1
-  local grpc_version=$2
-  local os_architecture=$3
-  pushd "${output_folder}"
-
-  # the variable protoc_path is used in generate_library.sh. It is explicitly
-  # exported to make clear that it is used outside this utilities file.
-  if [[ "${DOCKER_PROTOC_VERSION}" == "${protoc_version}" ]]; then
-    # if the specified protoc_version matches the one baked in the docker
-    # container, we just point protoc_path to its location.
-    export protoc_path="${DOCKER_PROTOC_LOCATION}/protoc-${protoc_version}/bin"
-  else
-    export protoc_path=$(download_protoc "${protoc_version}" "${os_architecture}")
-  fi
-
-  # similar case with grpc
-  if [[ "${DOCKER_GRPC_VERSION}" == "${grpc_version}" ]]; then
-    # if the specified grpc_version matches the one baked in the docker
-    # container, we just point grpc_path to its location.
-    export grpc_path="${DOCKER_GRPC_LOCATION}"
-  else
-    grpc_path="${HOME}/protoc-gen-grpc-java.exe"
-    export grpc_path
-  fi
-
-  # Here we check whether required tools is stored in the expected location.
-  # The docker image will prepare jar files in this location.
-  # This check is meant to ensure integrity of the downstream workflow.
-  error_if_not_exists "${GAPIC_GENERATOR_LOCATION}"
-  error_if_not_exists "${JAVA_FORMATTER_LOCATION}"
-  popd
-}
-
 download_protoc() {
   local protoc_version=$1
   local os_architecture=$2
@@ -356,18 +309,28 @@ get_gapic_generator_location() {
 }
 
 get_protoc_location() {
+  local protoc_location
+  protoc_location="${HOME}/.library_generation/protoc/bin"
   if [[ -n "${DOCKER_PROTOC_LOCATION}" ]]; then
     echo "${DOCKER_PROTOC_LOCATION}"
+  elif [[ -d "${protoc_location}" ]]; then
+    echo "${protoc_location}"
   else
-    echo "${HOME}/.library_generation/protoc/bin"
+    echo "Can't find protoc in ${protoc_location}."
+    exit 1
   fi
 }
 
 get_grpc_plugin_location() {
+  local grpc_location
+  grpc_location="${HOME}/.library_generation/protoc-gen-grpc-java.exe"
   if [[ -n "${DOCKER_GRPC_VERSION}" ]]; then
     echo "${DOCKER_GRPC_VERSION}"
+  elif [[ -f "${grpc_location}" ]]; then
+    echo "${grpc_location}"
   else
-    echo "${HOME}/.library_generation/protoc-gen-grpc-java.exe"
+    echo "Can't find grpc plugin in ${grpc_location}."
+    exit 1
   fi
 }
 

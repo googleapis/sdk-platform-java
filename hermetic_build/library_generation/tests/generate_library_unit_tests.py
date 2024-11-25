@@ -76,34 +76,42 @@ class GenerateLibraryUnitTests(unittest.TestCase):
             command, stderr=subprocess.PIPE, **kwargs
         ).stdout.decode()[:-1]
 
-    def test_get_grpc_version_with_no_env_var_fails(self):
-        # the absence of DOCKER_GRPC_VERSION will make this function to fail
-        result = self._run_command("get_grpc_version")
-        self.assertEqual(1, result.returncode)
-        self.assertRegex(result.stdout.decode(), "DOCKER_GRPC_VERSION is not set")
+    def test_get_protoc_location_with_env_returns_env(self):
+        os.environ["DOCKER_PROTOC_LOCATION"] = "/protoc"
+        result = self._run_command_and_get_sdout("get_protoc_location")
+        self.assertEqual("/protoc", result)
+        os.environ.pop("DOCKER_PROTOC_LOCATION")
 
-    def test_get_protoc_version_with_no_env_var_fails(self):
-        # the absence of DOCKER_PROTOC_VERSION will make this function to fail
-        result = self._run_command("get_protoc_version")
-        self.assertEqual(1, result.returncode)
-        self.assertRegex(result.stdout.decode(), "DOCKER_PROTOC_VERSION is not set")
-
-    def test_download_tools_without_baked_generator_fails(self):
-        # This test has the same structure as
-        # download_tools_succeed_with_baked_protoc, but meant for
-        # gapic-generator-java.
-
-        test_protoc_version = "1.64.0"
-        test_grpc_version = "1.64.0"
-        jar_location = (
-            f"{self.simulated_home}/.library_generation/gapic-generator-java.jar"
+    def test_get_protoc_location_without_env_with_local_returns_local(self):
+        bash_call(f"mkdir -p {self.simulated_home}/.library_generation/protoc/bin")
+        result = self._run_command_and_get_sdout("get_protoc_location")
+        self.assertEqual(
+            f"{self.simulated_home}/.library_generation/protoc/bin",
+            result,
         )
-        # we expect the function to fail because the generator jar is not found in
-        # its well-known location. To achieve this, we temporarily remove the fake
-        # generator jar
-        bash_call(f"rm {jar_location}")
-        result = self._run_command(
-            f"download_tools {test_protoc_version} {test_grpc_version} {self.TEST_ARCHITECTURE}"
-        )
+
+    def test_get_protoc_location_with_no_env_no_local_file_failed(self):
+        result = self._run_command("get_protoc_location")
         self.assertEqual(1, result.returncode)
-        self.assertRegex(result.stdout.decode(), "Please configure your environment")
+        self.assertRegex(result.stdout.decode(), "Can't find protoc in")
+
+    def test_get_grpc_plugin_location_with_env_returns_env(self):
+        os.environ["DOCKER_GRPC_VERSION"] = "/grpc"
+        result = self._run_command_and_get_sdout("get_grpc_plugin_location")
+        self.assertEqual("/grpc", result)
+        os.environ.pop("DOCKER_GRPC_VERSION")
+
+    def test_get_grpc_plugin_location_without_env_with_local_returns_local(self):
+        bash_call(
+            f"touch {self.simulated_home}/.library_generation/protoc-gen-grpc-java.exe"
+        )
+        result = self._run_command_and_get_sdout("get_grpc_plugin_location")
+        self.assertEqual(
+            f"{self.simulated_home}/.library_generation/protoc-gen-grpc-java.exe",
+            result,
+        )
+
+    def test_get_grpc_plugin_location_with_no_env_no_local_file_failed(self):
+        result = self._run_command("get_grpc_plugin_location")
+        self.assertEqual(1, result.returncode)
+        self.assertRegex(result.stdout.decode(), "Can't find grpc plugin in")

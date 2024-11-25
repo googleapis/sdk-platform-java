@@ -92,14 +92,14 @@ remove_grpc_version_test() {
 
 download_protoc_succeed_with_valid_version_linux_test() {
   download_protoc "23.2" "linux-x86_64"
-  assertFileOrDirectoryExists "protoc-23.2"
-  rm -rf "protoc-23.2"
+  assertFileOrDirectoryExists "protoc"
+  rm -rf "protoc"
 }
 
 download_protoc_succeed_with_valid_version_macos_test() {
   download_protoc "23.2" "osx-x86_64"
-  assertFileOrDirectoryExists "protoc-23.2"
-  rm -rf "protoc-23.2" "google"
+  assertFileOrDirectoryExists "protoc"
+  rm -rf "protoc" "google"
 }
 
 download_protoc_failed_with_invalid_version_linux_test() {
@@ -114,62 +114,10 @@ download_protoc_failed_with_invalid_arch_test() {
   assertEquals 1 $((res))
 }
 
-download_tools_succeed_with_baked_protoc() {
-  # This mimics a docker container scenario.
-  # This test consists of creating an empty /tmp/.../protoc-99.99/bin folder and map
-  # it to the DOCKER_PROTOC_LOCATION env var (which is treated specially in the
-  # `download_tools` function). If `DOCKER_PROTOC_VERSION` matches exactly as
-  # the version passed to `download_protoc`, then we will not download protoc
-  # but simply have the variable `protoc_path` pointing to DOCKER_PROTOC_LOCATION
-  # (which we manually created in this test)
-  export DOCKER_PROTOC_LOCATION=$(mktemp -d)
-  export DOCKER_PROTOC_VERSION="99.99"
-  export output_folder=$(get_output_folder)
-  mkdir "${output_folder}"
-  local protoc_bin_folder="${DOCKER_PROTOC_LOCATION}/protoc-99.99/bin"
-  mkdir -p "${protoc_bin_folder}"
-
-  local test_grpc_version="1.64.0"
-  # we expect download_tools to decide to use DOCKER_PROTOC_LOCATION because
-  # the protoc version we want to download is the same as DOCKER_PROTOC_VERSION.
-  # Note that `protoc_bin_folder` is just the expected formatted value that
-  # download_tools will format using DOCKER_PROTOC_VERSION (via
-  # download_protoc).
-  download_tools "99.99" "${test_grpc_version}" "linux-x86_64"
-  assertEquals "${protoc_bin_folder}" "${protoc_path}"
-
-  rm -rf "${output_folder}"
-  unset DOCKER_PROTOC_LOCATION
-  unset DOCKER_PROTOC_VERSION
-  unset output_folder
-  unset protoc_path
-}
-
-download_tools_succeed_with_baked_grpc() {
-  # This test has the same structure as
-  # download_tools_succeed_with_baked_protoc, but meant for the grpc plugin.
-  export DOCKER_GRPC_LOCATION=$(mktemp -d)
-  export DOCKER_GRPC_VERSION="99.99"
-  export output_folder=$(get_output_folder)
-  mkdir "${output_folder}"
-
-  local test_protoc_version="1.64.0"
-  # we expect download_tools to decide to use DOCKER_GRPC_LOCATION because
-  # the protoc version we want to download is the same as DOCKER_GRPC_VERSION
-  download_tools "${test_protoc_version}" "99.99" "linux-x86_64"
-  assertEquals "${DOCKER_GRPC_LOCATION}" "${grpc_path}"
-
-  rm -rf "${output_folder}"
-  unset DOCKER_GRPC_LOCATION
-  unset DOCKER_GRPC_VERSION
-  unset output_folder
-  unset grpc_path
-}
-
 download_grpc_plugin_succeed_with_valid_version_linux_test() {
   download_grpc_plugin "1.55.1" "linux-x86_64"
-  assertFileOrDirectoryExists "protoc-gen-grpc-java-1.55.1-linux-x86_64.exe"
-  rm "protoc-gen-grpc-java-1.55.1-linux-x86_64.exe"
+  assertFileOrDirectoryExists "protoc-gen-grpc-java.exe"
+  rm "protoc-gen-grpc-java.exe"
 }
 
 download_grpc_plugin_succeed_with_valid_version_macos_test() {
@@ -293,8 +241,6 @@ test_list=(
   download_protoc_succeed_with_valid_version_macos_test
   download_protoc_failed_with_invalid_version_linux_test
   download_protoc_failed_with_invalid_arch_test
-  download_tools_succeed_with_baked_protoc
-  download_tools_succeed_with_baked_grpc
   download_grpc_plugin_succeed_with_valid_version_linux_test
   download_grpc_plugin_succeed_with_valid_version_macos_test
   download_grpc_plugin_failed_with_invalid_version_linux_test
