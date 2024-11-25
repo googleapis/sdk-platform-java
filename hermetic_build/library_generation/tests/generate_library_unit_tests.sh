@@ -72,14 +72,14 @@ remove_grpc_version_test() {
 
 download_protoc_succeed_with_valid_version_linux_test() {
   download_protoc "23.2" "linux-x86_64"
-  assertFileOrDirectoryExists "protoc"
-  rm -rf "protoc"
+  assertFileOrDirectoryExists "bin"
+  rm -rf "bin"
 }
 
 download_protoc_succeed_with_valid_version_macos_test() {
   download_protoc "23.2" "osx-x86_64"
-  assertFileOrDirectoryExists "protoc"
-  rm -rf "protoc" "google"
+  assertFileOrDirectoryExists "bin"
+  rm -rf "bin"
 }
 
 download_protoc_failed_with_invalid_version_linux_test() {
