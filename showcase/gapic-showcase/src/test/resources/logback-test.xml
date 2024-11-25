@@ -5,8 +5,9 @@
     </encoder>
     <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
       <evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator">
-      <expression>logger.equals("com.google.api.gax.grpc.GrpcLoggingInterceptor")</expression>
-        <expression>logger.equals("com.google.api.gax.httpjson.HttpJsonLoggingInterceptor")</expression>
+        <expression>logger.equals("com.google.api.gax.grpc.GrpcLoggingInterceptor") ||
+          logger.equals("com.google.api.gax.httpjson.HttpJsonLoggingInterceptor") ||
+          logger.equals("com.google.api.gax.tracing.MetricsTracer")</expression>
 
       </evaluator>
       <onMatch>ACCEPT</onMatch>
