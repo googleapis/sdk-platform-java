@@ -106,6 +106,7 @@ download_protoc() {
   "protoc-${protoc_version}.zip" \
   "GitHub"
   unzip -o -q "protoc-${protoc_version}.zip" "bin/protoc"
+  cp -r "protoc-${protoc_version}/include/google" .
   rm "protoc-${protoc_version}.zip"
 }
 
