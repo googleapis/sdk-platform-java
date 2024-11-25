@@ -100,10 +100,10 @@ class GenerateLibraryUnitTests(unittest.TestCase):
         os.environ.pop("DOCKER_PROTOC_LOCATION")
 
     def test_get_protoc_location_without_env_with_local_returns_local(self):
-        bash_call(f"mkdir -p {self.simulated_home}/.library_generation/protoc/bin")
+        bash_call(f"mkdir -p {self.simulated_home}/.library_generation/bin")
         result = self._run_command_and_get_sdout("get_protoc_location")
         self.assertEqual(
-            f"{self.simulated_home}/.library_generation/protoc/bin",
+            f"{self.simulated_home}/.library_generation/bin",
             result,
         )
 

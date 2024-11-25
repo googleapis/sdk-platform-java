@@ -285,7 +285,7 @@ get_gapic_generator_location() {
 
 get_protoc_location() {
   local protoc_location
-  protoc_location="${HOME}/.library_generation/protoc/bin"
+  protoc_location="${HOME}/.library_generation/bin"
   if [[ -n "${DOCKER_PROTOC_LOCATION}" ]]; then
     echo "${DOCKER_PROTOC_LOCATION}"
   elif [[ -d "${protoc_location}" ]]; then
