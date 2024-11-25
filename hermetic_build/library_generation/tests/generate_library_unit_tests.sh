@@ -122,8 +122,8 @@ download_grpc_plugin_succeed_with_valid_version_linux_test() {
 
 download_grpc_plugin_succeed_with_valid_version_macos_test() {
   download_grpc_plugin "1.55.1" "osx-x86_64"
-  assertFileOrDirectoryExists "protoc-gen-grpc-java-1.55.1-osx-x86_64.exe"
-  rm "protoc-gen-grpc-java-1.55.1-osx-x86_64.exe"
+  assertFileOrDirectoryExists "protoc-gen-grpc-java.exe"
+  rm "protoc-gen-grpc-java.exe"
 }
 
 download_grpc_plugin_failed_with_invalid_version_linux_test() {
