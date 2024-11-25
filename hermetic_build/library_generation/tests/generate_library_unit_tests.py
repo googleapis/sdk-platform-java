@@ -132,3 +132,24 @@ class GenerateLibraryUnitTests(unittest.TestCase):
         result = self._run_command("get_grpc_plugin_location")
         self.assertEqual(1, result.returncode)
         self.assertRegex(result.stdout.decode(), "Can't find grpc plugin in")
+
+    def test_get_formatter_location_with_env_returns_env(self):
+        os.environ["JAVA_FORMATTER_LOCATION"] = "/java-formatter"
+        result = self._run_command_and_get_sdout("get_java_formatter_location")
+        self.assertEqual("/java-formatter", result)
+        os.environ.pop("JAVA_FORMATTER_LOCATION")
+
+    def test_get_formatter_location_without_env_with_local_returns_local(self):
+        bash_call(
+            f"touch {self.simulated_home}/.library_generation/google-java-format.jar"
+        )
+        result = self._run_command_and_get_sdout("get_java_formatter_location")
+        self.assertEqual(
+            f"{self.simulated_home}/.library_generation/google-java-format.jar",
+            result,
+        )
+
+    def test_get_formatter_location_with_no_env_no_local_file_failed(self):
+        result = self._run_command("get_java_formatter_location")
+        self.assertEqual(1, result.returncode)
+        self.assertRegex(result.stdout.decode(), "Can't find Java formatter in")

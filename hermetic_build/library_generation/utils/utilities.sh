@@ -342,7 +342,7 @@ get_grpc_plugin_location() {
 
 get_java_formatter_location() {
   local formatter_location
-  formatter_location="${HOME}"/.library_generation/google-java-format.jar
+  formatter_location="${HOME}/.library_generation/google-java-format.jar"
   if [[ -n "${JAVA_FORMATTER_LOCATION}" ]]; then
     echo "${JAVA_FORMATTER_LOCATION}"
   elif [[ -f "${formatter_location}" ]]; then
