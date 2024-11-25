@@ -88,7 +88,7 @@ WORKDIR /protoc
 RUN source /src/library_generation/utils/utilities.sh \
 	&& download_protoc "${PROTOC_VERSION}" "${OS_ARCHITECTURE}"
 # we indicate protoc is available in the container via env vars
-ENV DOCKER_PROTOC_LOCATION=/protoc/protoc/bin
+ENV DOCKER_PROTOC_LOCATION=/protoc/bin
 ENV DOCKER_PROTOC_VERSION="${PROTOC_VERSION}"
 
 # install grpc
