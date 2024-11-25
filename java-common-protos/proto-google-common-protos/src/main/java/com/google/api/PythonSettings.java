@@ -78,6 +78,22 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      * @return The restAsyncIoEnabled.
      */
     boolean getRestAsyncIoEnabled();
+
+    /**
+     *
+     *
+     * <pre>
+     * Enables generation of protobuf code using new types that are more
+     * Pythonic which are included in `protobuf&gt;=5.29.x`. This feature will be
+     * enabled by default 1 month after launching the feature in preview
+     * packages.
+     * </pre>
+     *
+     * <code>bool protobuf_pythonic_types_enabled = 2;</code>
+     *
+     * @return The protobufPythonicTypesEnabled.
+     */
+    boolean getProtobufPythonicTypesEnabled();
   }
   /**
    *
@@ -144,6 +160,27 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       return restAsyncIoEnabled_;
     }
 
+    public static final int PROTOBUF_PYTHONIC_TYPES_ENABLED_FIELD_NUMBER = 2;
+    private boolean protobufPythonicTypesEnabled_ = false;
+    /**
+     *
+     *
+     * <pre>
+     * Enables generation of protobuf code using new types that are more
+     * Pythonic which are included in `protobuf&gt;=5.29.x`. This feature will be
+     * enabled by default 1 month after launching the feature in preview
+     * packages.
+     * </pre>
+     *
+     * <code>bool protobuf_pythonic_types_enabled = 2;</code>
+     *
+     * @return The protobufPythonicTypesEnabled.
+     */
+    @java.lang.Override
+    public boolean getProtobufPythonicTypesEnabled() {
+      return protobufPythonicTypesEnabled_;
+    }
+
     private byte memoizedIsInitialized = -1;
 
     @java.lang.Override
@@ -161,6 +198,9 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       if (restAsyncIoEnabled_ != false) {
         output.writeBool(1, restAsyncIoEnabled_);
       }
+      if (protobufPythonicTypesEnabled_ != false) {
+        output.writeBool(2, protobufPythonicTypesEnabled_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -172,6 +212,10 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       size = 0;
       if (restAsyncIoEnabled_ != false) {
         size += com.google.protobuf.CodedOutputStream.computeBoolSize(1, restAsyncIoEnabled_);
+      }
+      if (protobufPythonicTypesEnabled_ != false) {
+        size +=
+            com.google.protobuf.CodedOutputStream.computeBoolSize(2, protobufPythonicTypesEnabled_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -190,6 +234,8 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
           (com.google.api.PythonSettings.ExperimentalFeatures) obj;
 
       if (getRestAsyncIoEnabled() != other.getRestAsyncIoEnabled()) return false;
+      if (getProtobufPythonicTypesEnabled() != other.getProtobufPythonicTypesEnabled())
+        return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -203,6 +249,9 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + REST_ASYNC_IO_ENABLED_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getRestAsyncIoEnabled());
+      hash = (37 * hash) + PROTOBUF_PYTHONIC_TYPES_ENABLED_FIELD_NUMBER;
+      hash =
+          (53 * hash) + com.google.protobuf.Internal.hashBoolean(getProtobufPythonicTypesEnabled());
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -347,6 +396,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
         super.clear();
         bitField0_ = 0;
         restAsyncIoEnabled_ = false;
+        protobufPythonicTypesEnabled_ = false;
         return this;
       }
 
@@ -385,6 +435,9 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.restAsyncIoEnabled_ = restAsyncIoEnabled_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.protobufPythonicTypesEnabled_ = protobufPythonicTypesEnabled_;
         }
       }
 
@@ -439,6 +492,9 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
         if (other.getRestAsyncIoEnabled() != false) {
           setRestAsyncIoEnabled(other.getRestAsyncIoEnabled());
         }
+        if (other.getProtobufPythonicTypesEnabled() != false) {
+          setProtobufPythonicTypesEnabled(other.getProtobufPythonicTypesEnabled());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
@@ -471,6 +527,12 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
                   bitField0_ |= 0x00000001;
                   break;
                 } // case 8
+              case 16:
+                {
+                  protobufPythonicTypesEnabled_ = input.readBool();
+                  bitField0_ |= 0x00000002;
+                  break;
+                } // case 16
               default:
                 {
                   if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -548,6 +610,68 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       public Builder clearRestAsyncIoEnabled() {
         bitField0_ = (bitField0_ & ~0x00000001);
         restAsyncIoEnabled_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean protobufPythonicTypesEnabled_;
+      /**
+       *
+       *
+       * <pre>
+       * Enables generation of protobuf code using new types that are more
+       * Pythonic which are included in `protobuf&gt;=5.29.x`. This feature will be
+       * enabled by default 1 month after launching the feature in preview
+       * packages.
+       * </pre>
+       *
+       * <code>bool protobuf_pythonic_types_enabled = 2;</code>
+       *
+       * @return The protobufPythonicTypesEnabled.
+       */
+      @java.lang.Override
+      public boolean getProtobufPythonicTypesEnabled() {
+        return protobufPythonicTypesEnabled_;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Enables generation of protobuf code using new types that are more
+       * Pythonic which are included in `protobuf&gt;=5.29.x`. This feature will be
+       * enabled by default 1 month after launching the feature in preview
+       * packages.
+       * </pre>
+       *
+       * <code>bool protobuf_pythonic_types_enabled = 2;</code>
+       *
+       * @param value The protobufPythonicTypesEnabled to set.
+       * @return This builder for chaining.
+       */
+      public Builder setProtobufPythonicTypesEnabled(boolean value) {
+
+        protobufPythonicTypesEnabled_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Enables generation of protobuf code using new types that are more
+       * Pythonic which are included in `protobuf&gt;=5.29.x`. This feature will be
+       * enabled by default 1 month after launching the feature in preview
+       * packages.
+       * </pre>
+       *
+       * <code>bool protobuf_pythonic_types_enabled = 2;</code>
+       *
+       * @return This builder for chaining.
+       */
+      public Builder clearProtobufPythonicTypesEnabled() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        protobufPythonicTypesEnabled_ = false;
         onChanged();
         return this;
       }

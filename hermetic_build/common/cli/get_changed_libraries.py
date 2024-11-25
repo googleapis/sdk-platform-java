@@ -72,10 +72,6 @@ def create(
         baseline_config=from_yaml(baseline_generation_config_path),
         current_config=from_yaml(current_generation_config_path),
     )
-    changed_libraries = config_change.get_changed_libraries()
-    if changed_libraries is None:
-        print("No changed library.")
-        return
     click.echo(",".join(config_change.get_changed_libraries()))
 
 
