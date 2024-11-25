@@ -324,8 +324,8 @@ get_protoc_location() {
 get_grpc_plugin_location() {
   local grpc_location
   grpc_location="${HOME}/.library_generation/protoc-gen-grpc-java.exe"
-  if [[ -n "${DOCKER_GRPC_VERSION}" ]]; then
-    echo "${DOCKER_GRPC_VERSION}"
+  if [[ -n "${DOCKER_GRPC_LOCATION}" ]]; then
+    echo "${DOCKER_GRPC_LOCATION}"
   elif [[ -f "${grpc_location}" ]]; then
     echo "${grpc_location}"
   else

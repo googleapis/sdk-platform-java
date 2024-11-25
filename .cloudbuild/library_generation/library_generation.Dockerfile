@@ -99,8 +99,6 @@ RUN source /src/library_generation/utils/utilities.sh \
 	&& download_grpc_plugin "${GRPC_VERSION}" "${OS_ARCHITECTURE}"
 # similar to protoc, we indicate grpc is available in the container via env vars
 ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java.exe"
-ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
-
 
 # Here we transfer gapic-generator-java from the previous stage.
 # Note that the destination is a well-known location that will be assumed at runtime

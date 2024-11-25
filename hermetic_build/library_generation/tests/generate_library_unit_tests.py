@@ -96,10 +96,10 @@ class GenerateLibraryUnitTests(unittest.TestCase):
         self.assertRegex(result.stdout.decode(), "Can't find protoc in")
 
     def test_get_grpc_plugin_location_with_env_returns_env(self):
-        os.environ["DOCKER_GRPC_VERSION"] = "/grpc"
+        os.environ["DOCKER_GRPC_LOCATION"] = "/grpc"
         result = self._run_command_and_get_sdout("get_grpc_plugin_location")
         self.assertEqual("/grpc", result)
-        os.environ.pop("DOCKER_GRPC_VERSION")
+        os.environ.pop("DOCKER_GRPC_LOCATION")
 
     def test_get_grpc_plugin_location_without_env_with_local_returns_local(self):
         bash_call(
