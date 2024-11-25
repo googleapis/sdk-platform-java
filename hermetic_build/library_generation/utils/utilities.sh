@@ -165,7 +165,8 @@ download_tools() {
     # container, we just point grpc_path to its location.
     export grpc_path="${DOCKER_GRPC_LOCATION}"
   else
-    export grpc_path=$(download_grpc_plugin "${grpc_version}" "${os_architecture}")
+    grpc_path="${HOME}/protoc-gen-grpc-java.exe"
+    export grpc_path
   fi
 
   # Here we check whether required tools is stored in the expected location.
@@ -180,35 +181,24 @@ download_protoc() {
   local protoc_version=$1
   local os_architecture=$2
 
-  local protoc_path="${output_folder}/protoc-${protoc_version}/bin"
-
-  if [ ! -d "${protoc_path}" ]; then
-    # pull proto files and protoc from protobuf repository as maven central
-    # doesn't have proto files
-    download_from \
-    "https://github.com/protocolbuffers/protobuf/releases/download/v${protoc_version}/protoc-${protoc_version}-${os_architecture}.zip" \
-    "protoc-${protoc_version}.zip" \
-    "GitHub"
-    unzip -o -q "protoc-${protoc_version}.zip" -d "protoc-${protoc_version}"
-    cp -r "protoc-${protoc_version}/include/google" .
-    rm "protoc-${protoc_version}.zip"
-  fi
-  echo "${protoc_path}"
-
+  download_from \
+  "https://github.com/protocolbuffers/protobuf/releases/download/v${protoc_version}/protoc-${protoc_version}-${os_architecture}.zip" \
+  "protoc-${protoc_version}.zip" \
+  "GitHub"
+  unzip -o -q "protoc-${protoc_version}.zip" -d "protoc"
+  cp -r "protoc/include/google" .
+  rm "protoc-${protoc_version}.zip"
 }
 
 download_grpc_plugin() {
   local grpc_version=$1
   local os_architecture=$2
-  grpc_filename="protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe"
-  if [ ! -f "${grpc_filename}" ]; then
-    # download protoc-gen-grpc-java plugin from Google maven central mirror.
-    download_from \
-    "https://maven-central.storage-download.googleapis.com/maven2/io/grpc/protoc-gen-grpc-java/${grpc_version}/${grpc_filename}" \
-    "${grpc_filename}"
-    chmod +x "${grpc_filename}"
-  fi
-  echo "$(pwd)/${grpc_filename}"
+  grpc_filename="protoc-gen-grpc-java.exe"
+  # download protoc-gen-grpc-java plugin from Google maven central mirror.
+  download_from \
+  "https://maven-central.storage-download.googleapis.com/maven2/io/grpc/protoc-gen-grpc-java/${grpc_version}/protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
+  "${grpc_filename}"
+  chmod +x "${grpc_filename}"
 }
 
 download_from() {
@@ -363,6 +353,22 @@ py_util() {
 
 get_gapic_generator_location() {
   echo "${GAPIC_GENERATOR_LOCATION}"
+}
+
+get_protoc_location() {
+  if [[ -n "${DOCKER_PROTOC_LOCATION}" ]]; then
+    echo "${DOCKER_PROTOC_LOCATION}"
+  else
+    echo "${HOME}/.library_generation/protoc/bin"
+  fi
+}
+
+get_grpc_plugin_location() {
+  if [[ -n "${DOCKER_GRPC_VERSION}" ]]; then
+    echo "${DOCKER_GRPC_VERSION}"
+  else
+    echo "${HOME}/.library_generation/protoc-gen-grpc-java.exe"
+  fi
 }
 
 get_java_formatter_location() {
