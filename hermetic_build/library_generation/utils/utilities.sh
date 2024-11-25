@@ -105,8 +105,9 @@ download_protoc() {
   "https://github.com/protocolbuffers/protobuf/releases/download/v${protoc_version}/protoc-${protoc_version}-${os_architecture}.zip" \
   "protoc-${protoc_version}.zip" \
   "GitHub"
-  unzip -o -q "protoc-${protoc_version}.zip" "bin/protoc"
-  cp -r "protoc-${protoc_version}/include/google" .
+  unzip -o -q "protoc-${protoc_version}.zip" -d "protoc"
+  cp -r "protoc/include/google" .
+  mv protoc/bin .
   rm "protoc-${protoc_version}.zip"
 }
 
