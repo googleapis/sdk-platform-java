@@ -97,7 +97,7 @@ path_to_generator_parent_pom="${SCRIPT_DIR}/../../gapic-generator-java-pom-paren
 protoc_version=$(get_version_from_pom "${path_to_generator_parent_pom}" "protobuf.version" \
   | cut -d. -f2-)
 download_protoc "${protoc_version}" "linux-x86_64"
-mv "protoc" "${well_known_folder}"
+mv "bin" "include" "${well_known_folder}"
 grpc_version=$(get_version_from_pom "${path_to_generator_parent_pom}" "grpc.version")
 download_grpc_plugin "${grpc_version}" "linux-x86_64"
 mv "protoc-gen-grpc-java.exe" "${well_known_folder}"
