@@ -309,8 +309,6 @@ class ConfigChangeTest(unittest.TestCase):
         return GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish=googleapis_commitish,
-            grpc_version="",
-            protoc_version="",
             libraries=libraries,
         )
 
