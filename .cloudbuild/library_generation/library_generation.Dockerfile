@@ -88,7 +88,7 @@ WORKDIR /protoc
 RUN source /src/library_generation/utils/utilities.sh \
 	&& download_protoc "${PROTOC_VERSION}" "${OS_ARCHITECTURE}"
 # we indicate protoc is available in the container via env vars
-ENV DOCKER_PROTOC_LOCATION=/protoc
+ENV DOCKER_PROTOC_LOCATION=/protoc/bin
 ENV DOCKER_PROTOC_VERSION="${PROTOC_VERSION}"
 
 # install grpc
@@ -96,9 +96,7 @@ WORKDIR /grpc
 RUN source /src/library_generation/utils/utilities.sh \
 	&& download_grpc_plugin "${GRPC_VERSION}" "${OS_ARCHITECTURE}"
 # similar to protoc, we indicate grpc is available in the container via env vars
-ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java-${GRPC_VERSION}-${OS_ARCHITECTURE}.exe"
-ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
-
+ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java.exe"
 
 # Here we transfer gapic-generator-java from the previous stage.
 # Note that the destination is a well-known location that will be assumed at runtime
@@ -106,6 +104,7 @@ ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 # well as to avoid it making it overridable at runtime (via ENV).
 COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
 RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
+ENV GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
 
 RUN python -m pip install --upgrade pip
 
@@ -130,6 +129,7 @@ RUN apk del -r npm && apk cache clean
 ADD https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar \
   "${HOME}"/.library_generation/google-java-format.jar
 RUN chmod 755 "${HOME}"/.library_generation/google-java-format.jar
+ENV JAVA_FORMATTER_LOCATION="${HOME}/.library_generation/google-java-format.jar"
 
 # allow users to access the script folders
 RUN chmod -R o+rx /src

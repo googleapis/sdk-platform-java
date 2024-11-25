@@ -7,10 +7,6 @@ Running the docker image built from `hermetic_build/library_generation`
 directory, you can generate a repository containing GAPIC client libraries (a
 monorepo, for example, google-cloud-java) from a configuration file.
 
-Instead of running the docker image, if you prefer running the underlying python
-scripts directly, please refer to the [development guide](DEVELOPMENT.md#run-the-script)
-for additional instructions.
-
 ## Environment
 
 - OS: Linux
@@ -124,13 +120,11 @@ The repository level parameters define the version of API definition (proto)
 and tools.
 They are shared by library level parameters.
 
-| Name                    | Required | Notes                                        |
-|:------------------------|:--------:|:---------------------------------------------|
-| gapic_generator_version |    No    | set through env variable if not specified    |
-| protoc_version          |    No    | inferred from the generator if not specified |
-| grpc_version            |    No    | inferred from the generator if not specified |
-| googleapis_commitish    |   Yes    |                                              |
-| libraries_bom_version   |    No    | empty string if not specified                |
+| Name                    | Required | Notes                                     |
+|:------------------------|:--------:|:------------------------------------------|
+| gapic_generator_version |    No    | set through env variable if not specified |
+| googleapis_commitish    |   Yes    |                                           |
+| libraries_bom_version   |    No    | empty string if not specified             |
 
 ### Library level parameters
 
@@ -178,7 +172,6 @@ The GAPIC level parameters define how to generate a GAPIC library.
 
 ```yaml
 gapic_generator_version: 2.34.0
-protoc_version: 25.2
 googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
 libraries_bom_version: 26.37.0
 libraries:
