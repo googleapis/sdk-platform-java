@@ -51,7 +51,7 @@ jobs:
       run: |
         GENERATOR_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
         echo "GENERATOR_VERSION=${GENERATOR_VERSION}" >> "$GITHUB_ENV"
-        docker build \
+        DOCKER_BUILDKIT=1 docker build \
           -f .cloudbuild/library_generation/library_generation.Dockerfile \
           -t gcr.io/cloud-devrel-public-resources/java-library-generation:"${GENERATOR_VERSION}" \
           .
