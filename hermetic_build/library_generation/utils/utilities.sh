@@ -105,10 +105,8 @@ download_protoc() {
   "https://github.com/protocolbuffers/protobuf/releases/download/v${protoc_version}/protoc-${protoc_version}-${os_architecture}.zip" \
   "protoc-${protoc_version}.zip" \
   "GitHub"
-  unzip -o -q "protoc-${protoc_version}.zip" -d "protoc"
-  mv protoc/include .
-  mv protoc/bin .
-  rm "protoc-${protoc_version}.zip"
+  unzip -o -q "protoc-${protoc_version}.zip"
+  rm "protoc-${protoc_version}.zip" "readme.txt"
 }
 
 download_grpc_plugin() {
