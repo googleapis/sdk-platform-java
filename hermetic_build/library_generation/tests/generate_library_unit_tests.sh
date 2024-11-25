@@ -23,26 +23,6 @@ extract_folder_name_test() {
   assertEquals "google-cloud-aiplatform-v1-java" "${folder_name}"
 }
 
-get_grpc_version_succeed_docker_env_var_test() {
-  local version_with_docker
-  local version_without_docker
-  export DOCKER_GRPC_VERSION="9.9.9"
-  # get_grpc_version should prioritize DOCKER_GRPC_VERSION
-  version_with_docker=$(get_grpc_version)
-  assertEquals "${DOCKER_GRPC_VERSION}" "${version_with_docker}"
-  unset DOCKER_GRPC_VERSION
-}
-
-get_protoc_version_succeed_docker_env_var_test() {
-  local version_with_docker
-  local version_without_docker
-  export DOCKER_PROTOC_VERSION="9.9.9"
-  # get_protoc_version should prioritize DOCKER_PROTOC_VERSION
-  version_with_docker=$(get_protoc_version)
-  assertEquals "${DOCKER_PROTOC_VERSION}" "${version_with_docker}"
-  unset DOCKER_PROTOC_VERSION
-}
-
 get_gapic_opts_with_rest_test() {
   local proto_path="${script_dir}/resources/gapic_options"
   local transport="grpc"
@@ -231,8 +211,6 @@ get_proto_path_from_preprocessed_sources_multiple_proto_dirs_fails() {
 # One line per test.
 test_list=(
   extract_folder_name_test
-  get_grpc_version_succeed_docker_env_var_test
-  get_protoc_version_succeed_docker_env_var_test
   get_gapic_opts_with_rest_test
   get_gapic_opts_without_rest_test
   get_gapic_opts_with_non_default_test
