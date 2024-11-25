@@ -87,7 +87,7 @@ as per [POSIX env var definition](https://pubs.opengroup.org/onlinepubs/96999197
 2. Move the folder into its well-know location.
 
    ```shell
-   mv /path/to/protoc "${HOME}/.library_generation/protoc"
+   unzip /path/to/zipfile -d "${HOME}/.library_generation/"
    ```
 #### Put the GRPC plugin in its well-known location
 1. Download GRPC plugin from [Maven Central](https://central.sonatype.com/artifact/io.grpc/protoc-gen-grpc-java/versions).
