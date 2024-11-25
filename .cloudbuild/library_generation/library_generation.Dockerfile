@@ -60,7 +60,6 @@ ARG GRPC_VERSION=1.68.1
 ARG JAVA_FORMAT_VERSION=1.7
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
-ENV GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
 
 # install OS tools
 RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git
@@ -107,6 +106,7 @@ ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java.exe"
 # well as to avoid it making it overridable at runtime (via ENV).
 COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
 RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
+ENV GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
 
 RUN python -m pip install --upgrade pip
 
