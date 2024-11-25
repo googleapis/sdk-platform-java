@@ -60,6 +60,7 @@ ARG GRPC_VERSION=1.68.1
 ARG JAVA_FORMAT_VERSION=1.7
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
+ENV GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
 
 # install OS tools
 RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git
@@ -129,6 +130,7 @@ RUN chmod o+rx $(which owl-bot)
 ADD https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar \
   "${HOME}"/.library_generation/google-java-format.jar
 RUN chmod 755 "${HOME}"/.library_generation/google-java-format.jar
+ENV JAVA_FORMATTER_LOCATION="${HOME}/.library_generation/google-java-format.jar"
 
 # allow users to access the script folders
 RUN chmod -R o+rx /src

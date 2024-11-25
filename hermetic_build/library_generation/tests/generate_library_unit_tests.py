@@ -39,10 +39,6 @@ class GenerateLibraryUnitTests(unittest.TestCase):
         # in its well-known location
         self.simulated_home = get_bash_call_output("mktemp -d")
         bash_call(f"mkdir {self.simulated_home}/.library_generation")
-        bash_call(
-            f"touch {self.simulated_home}/.library_generation/gapic-generator-java.jar"
-        )
-
         # We create a per-test directory where all output files will be created into.
         # Each folder will be deleted after its corresponding test finishes.
         test_dir = get_bash_call_output("mktemp -d")
@@ -75,6 +71,27 @@ class GenerateLibraryUnitTests(unittest.TestCase):
         return self._run_command(
             command, stderr=subprocess.PIPE, **kwargs
         ).stdout.decode()[:-1]
+
+    def test_get_generator_location_with_env_returns_env(self):
+        os.environ["GAPIC_GENERATOR_LOCATION"] = "/gapic-generator-java"
+        result = self._run_command_and_get_sdout("get_gapic_generator_location")
+        self.assertEqual("/gapic-generator-java", result)
+        os.environ.pop("GAPIC_GENERATOR_LOCATION")
+
+    def test_get_generator_location_without_env_with_local_returns_local(self):
+        bash_call(
+            f"touch {self.simulated_home}/.library_generation/gapic-generator-java.jar"
+        )
+        result = self._run_command_and_get_sdout("get_gapic_generator_location")
+        self.assertEqual(
+            f"{self.simulated_home}/.library_generation/gapic-generator-java.jar",
+            result,
+        )
+
+    def test_get_generator_location_with_no_env_no_local_file_failed(self):
+        result = self._run_command("get_gapic_generator_location")
+        self.assertEqual(1, result.returncode)
+        self.assertRegex(result.stdout.decode(), "Can't find GAPIC generator in")
 
     def test_get_protoc_location_with_env_returns_env(self):
         os.environ["DOCKER_PROTOC_LOCATION"] = "/protoc"

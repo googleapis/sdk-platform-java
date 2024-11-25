@@ -2,9 +2,6 @@
 
 set -eo pipefail
 utilities_script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
-# The $HOME variable is always set in the OS env as per POSIX specification.
-GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
-JAVA_FORMATTER_LOCATION="${HOME}/.library_generation/google-java-format.jar"
 
 # Utility functions used in `generate_library.sh` and showcase generation.
 extract_folder_name() {
@@ -305,7 +302,16 @@ py_util() {
 }
 
 get_gapic_generator_location() {
-  echo "${GAPIC_GENERATOR_LOCATION}"
+  local generator_location
+  generator_location="${HOME}/.library_generation/gapic-generator-java.jar"
+  if [[ -n "${GAPIC_GENERATOR_LOCATION}" ]]; then
+    echo "${GAPIC_GENERATOR_LOCATION}"
+  elif [[ -f "${generator_location}" ]]; then
+    echo "${generator_location}"
+  else
+    echo "Can't find GAPIC generator in ${generator_location}."
+    exit 1
+  fi
 }
 
 get_protoc_location() {
@@ -335,7 +341,16 @@ get_grpc_plugin_location() {
 }
 
 get_java_formatter_location() {
-  echo "${JAVA_FORMATTER_LOCATION}"
+  local formatter_location
+  formatter_location="${HOME}"/.library_generation/google-java-format.jar
+  if [[ -n "${JAVA_FORMATTER_LOCATION}" ]]; then
+    echo "${JAVA_FORMATTER_LOCATION}"
+  elif [[ -f "${formatter_location}" ]]; then
+    echo "${formatter_location}"
+  else
+    echo "Can't find Java formatter in ${formatter_location}."
+    exit 1
+  fi
 }
 
 error_if_not_exists() {
