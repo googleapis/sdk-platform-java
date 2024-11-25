@@ -97,36 +97,6 @@ remove_grpc_version() {
   sed -i.bak 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {}  \; -exec rm {}.bak \;
 }
 
-# This function returns the version of the grpc plugin to generate the libraries. If
-# DOCKER_GRPC_VERSION is set, this will be the version. Otherwise, the script
-# will exit since this is a necessary env var
-get_grpc_version() {
-  local grpc_version
-  if [[ -n "${DOCKER_GRPC_VERSION}" ]]; then
-    >&2 echo "Using grpc version baked into the container: ${DOCKER_GRPC_VERSION}"
-    echo "${DOCKER_GRPC_VERSION}"
-    return
-  else
-    >&2 echo "Cannot infer grpc version because DOCKER_GRPC_VERSION is not set"
-    exit 1
-  fi
-}
-
-# This function returns the version of protoc to generate the libraries. If
-# DOCKER_PROTOC_VERSION is set, this will be the version. Otherwise, the script
-# will exit since this is a necessary env var
-get_protoc_version() {
-  local protoc_version
-  if [[ -n "${DOCKER_PROTOC_VERSION}" ]]; then
-    >&2 echo "Using protoc version baked into the container: ${DOCKER_PROTOC_VERSION}"
-    echo "${DOCKER_PROTOC_VERSION}"
-    return
-  else
-    >&2 echo "Cannot infer protoc version because DOCKER_PROTOC_VERSION is not set"
-    exit 1
-  fi
-}
-
 download_protoc() {
   local protoc_version=$1
   local os_architecture=$2
