@@ -7,7 +7,7 @@ import com.google.cloud.model.ReportResult;
 import java.net.http.HttpClient;
 import org.junit.Test;
 
-public class DependencyAnalyzerIntegrationTest {
+public class DependencyAnalyzerIT {
   @Test
   public void testAnalyzeFromJavaSharedDependenciesBom() {
     DependencyAnalyzer dependencyAnalyzer = new DependencyAnalyzer(
