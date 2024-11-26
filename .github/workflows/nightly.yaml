@@ -24,7 +24,7 @@ jobs:
           cache: maven
       - run: mvn -version
       - name: Install
-        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -T 1C
+        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip
       - name: Create issue if previous step fails
         if: ${{ failure() }}
         env:
@@ -49,7 +49,7 @@ jobs:
           cache: maven
       - run: mvn -version
       - name: Install with Java 11
-        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -DskipTests -T 1C
+        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -DskipTests
 
       - uses: actions/setup-java@v3
         with:
@@ -58,7 +58,7 @@ jobs:
       - run: mvn -version
       - name: Test with Java 8
         # Direct goal invocation ("surefire:test") prevents recompiling tests
-        run: mvn surefire:test --errors --batch-mode --no-transfer-progress -T 1C
+        run: mvn surefire:test --errors --batch-mode --no-transfer-progress
       - name: Create issue if previous step fails
         if: ${{ failure() }}
         env:
