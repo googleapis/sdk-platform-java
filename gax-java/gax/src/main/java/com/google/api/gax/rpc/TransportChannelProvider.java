@@ -90,12 +90,22 @@ public interface TransportChannelProvider {
   /** True if the TransportProvider has no endpoint set. */
   boolean needsEndpoint();
 
+  /** True if the TransportProvider has no mtlsEndpoint set. */
+  boolean needsMtlsEndpoint();
+
   /**
    * Sets the endpoint to use when constructing a new {@link TransportChannel}.
    *
    * <p>This method should only be called if {@link #needsEndpoint()} returns true.
    */
   TransportChannelProvider withEndpoint(String endpoint);
+
+  /**
+   * Sets the mtlsEndpoint to use when constructing a new {@link TransportChannel}.
+   *
+   * <p>This method should only be called if {@link #needsMtlsEndpoint()} returns true.
+   */
+  TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint);
 
   /** Sets whether to use S2A when constructing a new {@link TransportChannel}. */
   default TransportChannelProvider withUseS2A(boolean useS2A) {

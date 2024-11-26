@@ -123,6 +123,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private final HeaderProvider headerProvider;
   private final boolean useS2A;
   private final String endpoint;
+  private final String mtlsEndpoint;
   // TODO: remove. envProvider currently provides DirectPath environment variable, and is only used
   // during initial rollout for DirectPath. This provider will be removed once the DirectPath
   // environment is not used.
@@ -152,6 +153,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.executor = builder.executor;
     this.headerProvider = builder.headerProvider;
     this.endpoint = builder.endpoint;
+    this.mtlsEndpoint = builder.mtlsEndpoint;
     this.useS2A = builder.useS2A;
     this.mtlsProvider = builder.mtlsProvider;
     this.s2aConfigProvider = builder.s2aConfigProvider;
@@ -229,6 +231,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return endpoint == null;
   }
 
+  @Override
+  public boolean needsMtlsEndpoint() {
+    return mtlsEndpoint == null;
+  }
+
   /**
    * Specify the endpoint the channel should connect to.
    *
@@ -241,6 +248,21 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   public TransportChannelProvider withEndpoint(String endpoint) {
     validateEndpoint(endpoint);
     return toBuilder().setEndpoint(endpoint).build();
+  }
+
+  /**
+   * Specify the mtlsEndpoint the channel should connect to.
+   *
+   * <p>The value of {@code mtlsEndpoint} must be of the form {@code host:port}.
+   *
+   * @param mtlsEndpoint The mtlsEndpoint to connect to
+   * @return A new {@link InstantiatingGrpcChannelProvider} with the specified mtlsEndpoint
+   *     configured
+   */
+  @Override
+  public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
+    validateEndpoint(mtlsEndpoint);
+    return toBuilder().setMtlsEndpoint(mtlsEndpoint).build();
   }
 
   /**
@@ -590,8 +612,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         }
         if (channelCredentials != null) {
           // Create the channel using S2A-secured channel credentials.
-          // {@code endpoint} is set to mtlsEndpoint in {@link EndpointContext} when useS2A is true.
-          builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
+          builder = Grpc.newChannelBuilder(mtlsEndpoint, channelCredentials);
         } else {
           // Use default if we cannot initialize channel credentials via DCA or S2A.
           builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
@@ -743,6 +764,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private Executor executor;
     private HeaderProvider headerProvider;
     private String endpoint;
+    private String mtlsEndpoint;
     private boolean useS2A;
     private EnvironmentProvider envProvider;
     private SecureSessionAgent s2aConfigProvider = SecureSessionAgent.create();
@@ -773,6 +795,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.executor = provider.executor;
       this.headerProvider = provider.headerProvider;
       this.endpoint = provider.endpoint;
+      this.mtlsEndpoint = provider.mtlsEndpoint;
       this.useS2A = provider.useS2A;
       this.envProvider = provider.envProvider;
       this.interceptorProvider = provider.interceptorProvider;
@@ -843,6 +866,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
+    /** Sets the mtlsEndpoint used to reach the service, eg "localhost:8080". */
+    public Builder setMtlsEndpoint(String mtlsEndpoint) {
+      validateEndpoint(mtlsEndpoint);
+      this.mtlsEndpoint = mtlsEndpoint;
+      return this;
+    }
+
     Builder setUseS2A(boolean useS2A) {
       this.useS2A = useS2A;
       return this;
@@ -874,6 +904,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     public String getEndpoint() {
       return endpoint;
+    }
+
+    public String getMtlsEndpoint() {
+      return mtlsEndpoint;
     }
 
     /** The maximum message size allowed to be received on the channel. */
