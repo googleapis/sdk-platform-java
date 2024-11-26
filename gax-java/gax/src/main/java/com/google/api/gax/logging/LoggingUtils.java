@@ -32,10 +32,13 @@ package com.google.api.gax.logging;
 
 import com.google.api.core.InternalApi;
 import com.google.gson.JsonObject;
+import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.slf4j.Marker;
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
@@ -77,6 +80,60 @@ public class LoggingUtils {
     return mergedObject;
   }
 
+  public static Level mapToJulLevel(org.slf4j.event.Level slf4jLevel) {
+    switch (slf4jLevel) {
+      case ERROR:
+        return Level.SEVERE;
+      case WARN:
+        return Level.WARNING;
+      case INFO:
+        return Level.INFO;
+      case DEBUG:
+        return Level.FINE;
+      case TRACE:
+        return Level.FINEST;
+      default:
+        return Level.INFO;
+    }
+  }
+
+  public static void logWithMDC(
+      Logger logger, org.slf4j.event.Level level, Map<String, String> contextMap, String message) {
+
+    if (logger instanceof JulWrapperLogger) {
+      // Simulate MDC behavior for JUL
+      LogRecord record = new LogRecord(mapToJulLevel(level), message);
+      // Add context map to the LogRecord
+      record.setParameters(new Object[] {contextMap});
+      ((JulWrapperLogger) logger).getJulLogger().log(record);
+      return;
+    }
+    contextMap.forEach(MDC::put);
+
+    switch (level) {
+      case TRACE:
+        logger.trace(message);
+        break;
+      case DEBUG:
+        logger.debug(message);
+        break;
+      case INFO:
+        logger.info(message);
+        break;
+      case WARN:
+        logger.warn(message);
+        break;
+      case ERROR:
+        logger.error(message);
+        break;
+      default:
+        logger.info(message);
+        // Default to INFO level
+    }
+
+    MDC.clear();
+  }
+
   // JulWrapperLogger implementation
   static class JulWrapperLogger implements Logger {
 
@@ -84,6 +141,10 @@ public class LoggingUtils {
 
     public JulWrapperLogger(String name) {
       this.julLogger = java.util.logging.Logger.getLogger(name);
+    }
+
+    public java.util.logging.Logger getJulLogger() {
+      return julLogger;
     }
 
     @Override
@@ -102,16 +163,24 @@ public class LoggingUtils {
     }
 
     @Override
-    public void trace(String s, Object o) {}
+    public void trace(String s, Object o) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
 
     @Override
-    public void trace(String s, Object o, Object o1) {}
+    public void trace(String s, Object o, Object o1) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
 
     @Override
-    public void trace(String s, Object... objects) {}
+    public void trace(String s, Object... objects) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
 
     @Override
-    public void trace(String s, Throwable throwable) {}
+    public void trace(String s, Throwable throwable) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
 
     @Override
     public boolean isTraceEnabled(Marker marker) {
@@ -119,19 +188,29 @@ public class LoggingUtils {
     }
 
     @Override
-    public void trace(Marker marker, String s) {}
+    public void trace(Marker marker, String s) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
 
     @Override
-    public void trace(Marker marker, String s, Object o) {}
+    public void trace(Marker marker, String s, Object o) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
 
     @Override
-    public void trace(Marker marker, String s, Object o, Object o1) {}
+    public void trace(Marker marker, String s, Object o, Object o1) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
 
     @Override
-    public void trace(Marker marker, String s, Object... objects) {}
+    public void trace(Marker marker, String s, Object... objects) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
 
     @Override
-    public void trace(Marker marker, String s, Throwable throwable) {}
+    public void trace(Marker marker, String s, Throwable throwable) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
 
     @Override
     public boolean isDebugEnabled() {
@@ -356,22 +435,32 @@ public class LoggingUtils {
 
     @Override
     public boolean isErrorEnabled(Marker marker) {
-      return false;
+      throw new UnsupportedOperationException("This method is not supported.");
     }
 
     @Override
-    public void error(Marker marker, String s) {}
+    public void error(Marker marker, String s) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
 
     @Override
-    public void error(Marker marker, String s, Object o) {}
+    public void error(Marker marker, String s, Object o) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
 
     @Override
-    public void error(Marker marker, String s, Object o, Object o1) {}
+    public void error(Marker marker, String s, Object o, Object o1) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
 
     @Override
-    public void error(Marker marker, String s, Object... objects) {}
+    public void error(Marker marker, String s, Object... objects) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
 
     @Override
-    public void error(Marker marker, String s, Throwable throwable) {}
+    public void error(Marker marker, String s, Throwable throwable) {
+      throw new UnsupportedOperationException("This method is not supported.");
+    }
   }
 }

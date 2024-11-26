@@ -6,14 +6,16 @@ import com.google.gson.JsonObject;
 import io.grpc.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import org.slf4j.Logger;
+import org.slf4j.event.Level;
 
 public class GrpcLoggingInterceptor implements ClientInterceptor {
 
   private static final Logger logger = LoggingUtils.getLogger(GrpcLoggingInterceptor.class);
   private static final Gson gson = new Gson();
-  private JsonObject serviceAndRpc = new JsonObject();
-  private JsonObject requestLogData = new JsonObject();
+  private Map<String, String> serviceAndRpc = new HashMap<>();
+  private Map<String, String> requestLogData = new HashMap<>();
 
   @Override
   public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
@@ -24,33 +26,21 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
       @Override
       public void start(Listener<RespT> responseListener, Metadata headers) {
-        // if (LoggingUtils.isLoggingEnabled()) {
-        // Capture request details
+        String requestId = UUID.randomUUID().toString();
         String serviceName = method.getServiceName();
         String methodName = method.getFullMethodName();
 
-        serviceAndRpc.addProperty("serviceName", serviceName);
-        serviceAndRpc.addProperty("rpcName", methodName);
+        serviceAndRpc.put("serviceName", serviceName);
+        serviceAndRpc.put("rpcName", methodName);
+        serviceAndRpc.put("requestId", requestId);
 
-        JsonObject responseLogData = new JsonObject();
-        // Add request details to MDC// Example system
-        // MDC.put("serviceName", serviceName);
-        // MDC.put("rpcName", methodName);
-        // Capture and log headers
-        headers
-            .keys()
-            .forEach(
-                key -> {
-                  Metadata.Key<String> metadataKey =
-                      Metadata.Key.of(key, Metadata.ASCII_STRING_MARSHALLER);
-                  String headerValue = headers.get(metadataKey);
-                  // MDC.put("request.headers:" + key, headerValue);
-                  requestLogData.addProperty("request.headers:" + key, headerValue);
-                });
+        requestLogData.putAll(serviceAndRpc);
 
-        requestLogData.addProperty("message", "Sending gRPC request");
-        // logger.debug("Sending gRPC request");
-        // }
+        LoggingUtils.logWithMDC(logger, Level.INFO, serviceAndRpc, "Sending gRPC request");
+
+        Map<String, String> responseLogData = new HashMap<>();
+        JsonObject requestHeaders = mapHeadersToJsonObject(headers);
+        requestLogData.put("request.headers", gson.toJson(requestHeaders));
 
         super.start(
             new ForwardingClientCallListener.SimpleForwardingClientCallListener<RespT>(
@@ -58,35 +48,24 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
               @Override
               public void onMessage(RespT message) {
 
-                responseLogData.addProperty("response.payload", gson.toJson(message));
+                responseLogData.put("response.payload", gson.toJson(message));
                 super.onMessage(message);
               }
 
               @Override
               public void onClose(Status status, Metadata trailers) {
-                responseLogData.addProperty("response.status", status.getCode().name());
-                responseLogData.addProperty(
-                    "message", String.format("gRPC request finished with status: %s", status));
+                serviceAndRpc.put("response.status", status.getCode().name());
+                responseLogData.putAll(serviceAndRpc);
 
-                // Create a JsonObject for response headers
-                JsonObject responseHeaders = new JsonObject();
+                LoggingUtils.logWithMDC(logger, Level.INFO, serviceAndRpc, "Received response.");
 
-                // Access and add response headers to the JsonObject
-                trailers
-                    .keys()
-                    .forEach(
-                        key -> {
-                          Metadata.Key<String> metadataKey =
-                              Metadata.Key.of(key, Metadata.ASCII_STRING_MARSHALLER);
-                          String headerValue = trailers.get(metadataKey);
-                          responseHeaders.addProperty(key, headerValue);
-                        });
-                responseLogData.add("response.headers", responseHeaders);
+                // Access and add response headers
+                JsonObject responseHeaders = mapHeadersToJsonObject(trailers);
+                responseLogData.put("response.headers", gson.toJson(responseHeaders));
 
-                logger.debug(
-                    gson.toJson(LoggingUtils.mergeJsonObject(serviceAndRpc, responseLogData)));
-                // logger.info("gRPC request finished with status: {}", status);
-                // MDC.clear(); // Clear MDC after the request
+                LoggingUtils.logWithMDC(
+                    logger, Level.DEBUG, responseLogData, "Received response header and payload.");
+
                 super.onClose(status, trailers);
               }
             },
@@ -95,19 +74,27 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
       @Override
       public void sendMessage(ReqT message) {
-        // MDC.put("request.payload", gson.toJson(message));
-        requestLogData.addProperty("request.payload", gson.toJson(message));
 
-        Map<String, String> map = new HashMap<>();
-        serviceAndRpc
-            .entrySet()
-            .forEach(entry -> map.put(entry.getKey(), entry.getValue().getAsString()));
-        // MDC.setContextMap(map);
-        // logger.info(new MapMessage(map));
-        logger.info(gson.toJson(LoggingUtils.mergeJsonObject(serviceAndRpc, requestLogData)));
-        // MDC.clear();
+        requestLogData.put("request.payload", gson.toJson(message));
+
+        LoggingUtils.logWithMDC(
+            logger, Level.DEBUG, requestLogData, "grpc request header and payload.");
         super.sendMessage(message);
       }
     };
+  }
+
+  private static JsonObject mapHeadersToJsonObject(Metadata headers) {
+    JsonObject jsonHeaders = new JsonObject();
+    headers
+        .keys()
+        .forEach(
+            key -> {
+              Metadata.Key<String> metadataKey =
+                  Metadata.Key.of(key, Metadata.ASCII_STRING_MARSHALLER);
+              String headerValue = headers.get(metadataKey);
+              jsonHeaders.addProperty(key, headerValue);
+            });
+    return jsonHeaders;
   }
 }
