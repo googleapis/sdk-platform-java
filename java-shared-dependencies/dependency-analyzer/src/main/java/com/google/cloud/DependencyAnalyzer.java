@@ -94,6 +94,9 @@ public class DependencyAnalyzer {
     while (!queue.isEmpty()) {
       VersionKey versionKey = queue.poll();
       dependencies.add(versionKey);
+      if (versionKey.toString().equals("org.graalvm.sdk:nativeimage:24.1.1")) {
+        continue;
+      }
       List<VersionKey> directDependencies = depsDevClient.getDirectDependencies(versionKey);
       // only add unseen dependencies to the queue.
       directDependencies
