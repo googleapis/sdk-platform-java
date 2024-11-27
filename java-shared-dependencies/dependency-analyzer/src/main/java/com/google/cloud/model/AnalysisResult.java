@@ -87,11 +87,20 @@ public class AnalysisResult {
     } else {
       for (int i = 1; i < packageInfos.size(); i++) {
         PackageInfo info = packageInfos.get(i);
-        String dependencyInfo = String.format("""
-            ### Package information of %s
-            %s
-            """, info.versionKey(), packageInfoSection(info));
-        builder.append(dependencyInfo);
+        boolean hasNonComplaintLicenses = false;
+        for (License license : info.licenses()) {
+          if (!license.isCompliant()) {
+            hasNonComplaintLicenses = true;
+            break;
+          }
+        }
+        if (hasNonComplaintLicenses) {
+          builder.append(String.format("%s: %s", info.versionKey(), info.licenses()));
+        }
+
+        for (Advisory advisory : info.advisories()) {
+          builder.append(String.format("%s: %s", info.versionKey(), advisory.url()));
+        }
       }
     }
     builder.append("\n");
