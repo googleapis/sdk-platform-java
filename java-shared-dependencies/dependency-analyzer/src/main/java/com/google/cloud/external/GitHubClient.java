@@ -5,6 +5,7 @@ import com.google.cloud.model.PullRequest;
 import com.google.cloud.model.PullRequestStatistics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.net.URI;
@@ -19,6 +20,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * GitHubClient is a class that sends HTTP requests to the GitHub RESTful API. It provides methods
@@ -29,6 +31,8 @@ import java.util.Objects;
  * requests and {@link com.google.gson.Gson} for handling JSON serialization/deserialization.
  */
 public class GitHubClient {
+
+  private final static Logger LOGGER = Logger.getLogger(GitHubClient.class.getName());
   private final HttpClient client;
   private final Gson gson;
   private static final String PULL_REQUESTS_BASE =
@@ -81,12 +85,20 @@ public class GitHubClient {
     List<PullRequest> pullRequests = new ArrayList<>();
     int page = 1;
     while (pullRequests.size() < MAX_PULL_REQUEST_NUM) {
+      System.out.println(getPullRequestsUrl(organization, repo, page));
       HttpResponse<String> response = getResponse(getPullRequestsUrl(organization, repo, page));
-      pullRequests.addAll(
-          gson.fromJson(response.body(), new TypeToken<List<PullRequest>>() {}.getType()));
+      try {
+        pullRequests.addAll(
+            gson.fromJson(response.body(), new TypeToken<List<PullRequest>>() {
+            }.getType()));
+      } catch (JsonSyntaxException ex) {
+        LOGGER.warning(String.format(
+            "Can't parse response from GitHub API.\nOrganization: %s, repo: %s, page: %s\n",
+            organization, repo, page));
+      }
+
       page++;
     }
-
     return pullRequests;
   }
 
