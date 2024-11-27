@@ -85,6 +85,7 @@ public class AnalysisResult {
     if (packageInfos.size() == 1) {
       builder.append(String.format("%s has no dependency.", root.versionKey()));
     } else {
+      builder.append("==========Non-compliant licenses==========\n");
       for (int i = 1; i < packageInfos.size(); i++) {
         PackageInfo info = packageInfos.get(i);
         boolean hasNonComplaintLicenses = false;
@@ -95,11 +96,15 @@ public class AnalysisResult {
           }
         }
         if (hasNonComplaintLicenses) {
-          builder.append(String.format("%s: %s", info.versionKey(), info.licenses()));
+          builder.append(String.format("%s: %s\n", info.versionKey(), info.licenses()));
         }
+      }
 
+      builder.append("==========Security vulnerabilities==========\n");
+      for (int i = 1; i < packageInfos.size(); i++) {
+        PackageInfo info = packageInfos.get(i);
         for (Advisory advisory : info.advisories()) {
-          builder.append(String.format("%s: %s", info.versionKey(), advisory.url()));
+          builder.append(String.format("%s: %s\n", info.versionKey(), advisory.url()));
         }
       }
     }

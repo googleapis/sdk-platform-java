@@ -1,7 +1,5 @@
 package com.google.cloud;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 import com.google.cloud.external.DepsDevClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
@@ -136,7 +134,7 @@ public class DependencyAnalyzer {
         new DepsDevClient(HttpClient.newHttpClient()));
     AnalysisResult analyzeReport = null;
     try {
-      analyzeReport = dependencyAnalyzer.analyze("java-shared-dependencies/pom.xml");
+      analyzeReport = dependencyAnalyzer.analyze("../pom.xml");
     } catch (URISyntaxException | IOException | InterruptedException ex) {
       System.out.println(
           "Caught exception when fetching package information from https://deps.dev/");
