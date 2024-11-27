@@ -42,6 +42,7 @@ import org.slf4j.MDC;
 import org.slf4j.Marker;
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
+import org.slf4j.helpers.NOPLogger;
 
 @InternalApi
 public class LoggingUtils {
@@ -54,7 +55,7 @@ public class LoggingUtils {
   public static Logger getLogger(Class<?> clazz) {
     if (!isLoggingEnabled()) {
       //  use SLF4j's NOP logger regardless of bindings
-      return LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME);
+      return LoggerFactory.getLogger(NOPLogger.class);
     }
 
     ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
