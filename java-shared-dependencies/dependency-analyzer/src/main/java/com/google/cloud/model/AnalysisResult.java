@@ -119,11 +119,13 @@ public class AnalysisResult {
     String packageInfoReport = """
         Licenses: %s
         Vulnerabilities: %s.
+        Pull request freshness: %s.
         Checked in [%s (%s)](%s)
         """;
     return String.format(packageInfoReport,
         packageInfo.licenses(),
         packageInfo.advisories(),
+        packageInfo.pullRequestStatistics().orElse(null),
         versionKey.name(),
         versionKey.version(),
         getQueryUrl(

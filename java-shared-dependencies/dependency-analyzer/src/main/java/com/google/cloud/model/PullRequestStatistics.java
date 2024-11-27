@@ -12,4 +12,12 @@ package com.google.cloud.model;
  * @param merged The number of pull requests merged within the interval.
  * @param interval The time interval over which the statistics were collected.
  */
-public record PullRequestStatistics(long created, long merged, Interval interval) {}
+public record PullRequestStatistics(long created, long merged, Interval interval) {
+
+  @Override
+  public String toString() {
+    return String.format(
+        "%s pull requests are created and %s pull requests are merged in the last %s days", created,
+        merged, interval.getDays());
+  }
+}

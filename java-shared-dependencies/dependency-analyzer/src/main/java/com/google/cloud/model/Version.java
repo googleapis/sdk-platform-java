@@ -13,11 +13,13 @@ import java.util.List;
  * @param versionKey The name of the package version.
  * @param licenses The licenses governing the use of this package version.
  * @param advisoryKeys Security advisories known to affect this package version.
+ * @param relatedProjects Projects that are related to this package version.
  */
 public record Version(
     VersionKey versionKey,
     List<String> licenses,
-    List<AdvisoryKey> advisoryKeys) {
+    List<AdvisoryKey> advisoryKeys,
+    List<RelatedProject> relatedProjects) {
 
   public List<AdvisoryKey> advisoryKeys() {
     return ImmutableList.copyOf(advisoryKeys);

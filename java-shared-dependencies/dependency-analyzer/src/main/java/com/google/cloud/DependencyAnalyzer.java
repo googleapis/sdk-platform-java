@@ -1,12 +1,16 @@
 package com.google.cloud;
 
 import com.google.cloud.external.DepsDevClient;
+import com.google.cloud.external.GitHubClient;
 import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
 import com.google.cloud.model.AnalysisResult;
 import com.google.cloud.model.License;
 import com.google.cloud.model.PackageInfo;
+import com.google.cloud.model.ProjectKey;
+import com.google.cloud.model.PullRequestStatistics;
 import com.google.cloud.model.QueryResult;
+import com.google.cloud.model.RelatedProject;
 import com.google.cloud.model.ReportResult;
 import com.google.cloud.model.Result;
 import com.google.cloud.model.Version;
@@ -23,6 +27,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import org.eclipse.aether.artifact.Artifact;
@@ -31,9 +36,11 @@ import org.eclipse.aether.version.InvalidVersionSpecificationException;
 public class DependencyAnalyzer {
 
   private final DepsDevClient depsDevClient;
+  private final GitHubClient gitHubClient;
 
-  public DependencyAnalyzer(DepsDevClient depsDevClient) {
+  public DependencyAnalyzer(DepsDevClient depsDevClient, GitHubClient gitHubClient) {
     this.depsDevClient = depsDevClient;
+    this.gitHubClient = gitHubClient;
   }
 
   public AnalysisResult analyze(String bomPath)
@@ -98,6 +105,7 @@ public class DependencyAnalyzer {
       QueryResult packageInfo = depsDevClient.getQueryResult(versionKey);
       List<License> licenses = new ArrayList<>();
       List<Advisory> advisories = new ArrayList<>();
+      Optional<PullRequestStatistics> statistics = Optional.empty();
       for (Result res : packageInfo.results()) {
         Version version = res.version();
         for (String license : version.licenses()) {
@@ -106,8 +114,17 @@ public class DependencyAnalyzer {
         for (AdvisoryKey advisoryKey : version.advisoryKeys()) {
           advisories.add(depsDevClient.getAdvisory(advisoryKey.id()));
         }
+
+        for (RelatedProject project : version.relatedProjects()) {
+          ProjectKey projectKey = project.projectKey();
+          if (!projectKey.isGitHubProject()) {
+            continue;
+          }
+          statistics = Optional.of(gitHubClient.listMonthlyPullRequestStatusOf(
+              projectKey.organization(), projectKey.repo()));
+        }
       }
-      result.add(new PackageInfo(versionKey, licenses, advisories));
+      result.add(new PackageInfo(versionKey, licenses, advisories, statistics));
     }
 
     return result;
@@ -131,7 +148,8 @@ public class DependencyAnalyzer {
    */
   public static void main(String[] args) throws IllegalArgumentException {
     DependencyAnalyzer dependencyAnalyzer = new DependencyAnalyzer(
-        new DepsDevClient(HttpClient.newHttpClient()));
+        new DepsDevClient(HttpClient.newHttpClient()),
+        new GitHubClient(HttpClient.newHttpClient()));
     AnalysisResult analyzeReport = null;
     try {
       analyzeReport = dependencyAnalyzer.analyze("../pom.xml");
