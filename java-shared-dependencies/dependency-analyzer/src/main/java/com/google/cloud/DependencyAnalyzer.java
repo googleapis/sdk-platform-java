@@ -43,16 +43,16 @@ public class DependencyAnalyzer {
     this.gitHubClient = gitHubClient;
   }
 
-  public AnalysisResult analyze(String bomPath)
+  public List<AnalysisResult> analyze(String bomPath)
       throws URISyntaxException, IOException, InterruptedException {
-    List<PackageInfo> packageInfos = new ArrayList<>();
+    List<AnalysisResult> analysisResults = new ArrayList<>();
     try {
       Set<VersionKey> roots = getManagedDependenciesFromBom(Bom.readBom(Paths.get(bomPath)));
       for (VersionKey versionKey : roots) {
         if (versionKey.isSnapshot()) {
           continue;
         }
-        packageInfos.addAll(getPackageInfoFrom(versionKey));
+        analysisResults.add(AnalysisResult.of(getPackageInfoFrom(versionKey)));
       }
 
     } catch (MavenRepositoryException | InvalidVersionSpecificationException ex) {
@@ -61,7 +61,7 @@ public class DependencyAnalyzer {
       System.exit(1);
     }
 
-    return AnalysisResult.of(packageInfos);
+    return analysisResults;
   }
 
   private static Set<VersionKey> getManagedDependenciesFromBom(Bom bom)
@@ -150,9 +150,9 @@ public class DependencyAnalyzer {
     DependencyAnalyzer dependencyAnalyzer = new DependencyAnalyzer(
         new DepsDevClient(HttpClient.newHttpClient()),
         new GitHubClient(HttpClient.newHttpClient()));
-    AnalysisResult analyzeReport = null;
+    List<AnalysisResult> analysisResults = null;
     try {
-      analyzeReport = dependencyAnalyzer.analyze("../pom.xml");
+      analysisResults = dependencyAnalyzer.analyze("../pom.xml");
     } catch (URISyntaxException | IOException | InterruptedException ex) {
       System.out.println(
           "Caught exception when fetching package information from https://deps.dev/");
@@ -161,13 +161,9 @@ public class DependencyAnalyzer {
     }
 
     System.out.println("Please copy and paste the package information below to your ticket.\n");
-    System.out.println(analyzeReport.toString());
-    ReportResult result = analyzeReport.getAnalysisResult();
-    System.out.println(result);
-    if (result.equals(ReportResult.FAIL)) {
-      System.out.println(
-          "Please refer to go/cloud-java-rotations#security-advisories-monitoring for further actions");
-      System.exit(1);
-    }
+    analysisResults.forEach(analysisResult -> {
+      System.out.println(analysisResult.toString());
+      System.out.println(analysisResult.getAnalysisResult());
+    });
   }
 }
