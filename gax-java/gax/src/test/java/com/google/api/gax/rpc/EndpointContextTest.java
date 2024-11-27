@@ -33,7 +33,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.core.NoCredentialsProvider;
-import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.api.gax.rpc.testing.FakeMtlsProvider;
 import com.google.auth.Credentials;
@@ -454,98 +453,5 @@ class EndpointContextTest {
             .setUniverseDomain("test.com")
             .build();
     assertDoesNotThrow(() -> endpointContext.validateUniverseDomain(credentials, statusCode));
-  }
-
-  @Test
-  void shouldUseS2A_envVarNotSet_returnsFalse() throws IOException {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("false");
-    defaultEndpointContextBuilder =
-        defaultEndpointContextBuilder
-            .setEnvProvider(envProvider)
-            .setClientSettingsEndpoint("")
-            .setTransportChannelProviderEndpoint("")
-            .setUsingGDCH(false);
-    Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
-  }
-
-  @Test
-  void shouldUseS2A_UsingGDCH_returnsFalse() throws IOException {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("true");
-    defaultEndpointContextBuilder =
-        defaultEndpointContextBuilder
-            .setEnvProvider(envProvider)
-            .setClientSettingsEndpoint("")
-            .setTransportChannelProviderEndpoint("")
-            .setUsingGDCH(true);
-    Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
-  }
-
-  @Test
-  void shouldUseS2A_customEndpointSetViaClientSettings_returnsFalse() throws IOException {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("true");
-    defaultEndpointContextBuilder =
-        defaultEndpointContextBuilder
-            .setEnvProvider(envProvider)
-            .setClientSettingsEndpoint("test.endpoint.com:443")
-            .setTransportChannelProviderEndpoint("")
-            .setUsingGDCH(false);
-    Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
-  }
-
-  @Test
-  void shouldUseS2A_customEndpointSetViaTransportChannelProvider_returnsFalse() throws IOException {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("true");
-    defaultEndpointContextBuilder =
-        defaultEndpointContextBuilder
-            .setEnvProvider(envProvider)
-            .setClientSettingsEndpoint("")
-            .setTransportChannelProviderEndpoint("test.endpoint.com:443")
-            .setUsingGDCH(false);
-    Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
-  }
-
-  @Test
-  void shouldUseS2A_mtlsEndpointEmpty_returnsFalse() throws IOException {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("true");
-    defaultEndpointContextBuilder =
-        defaultEndpointContextBuilder
-            .setEnvProvider(envProvider)
-            .setClientSettingsEndpoint("")
-            .setTransportChannelProviderEndpoint("")
-            .setMtlsEndpoint("")
-            .setUsingGDCH(false);
-    Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
-  }
-
-  @Test
-  void shouldUseS2A_mtlsEndpointNotGoogleDefaultUniverse_returnsFalse() throws IOException {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("true");
-    defaultEndpointContextBuilder =
-        defaultEndpointContextBuilder
-            .setEnvProvider(envProvider)
-            .setClientSettingsEndpoint("")
-            .setTransportChannelProviderEndpoint("")
-            .setMtlsEndpoint("test.mtls.abcd.com:443")
-            .setUsingGDCH(false);
-    Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
-  }
-
-  @Test
-  void shouldUseS2A_success() throws IOException {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("true");
-    defaultEndpointContextBuilder =
-        defaultEndpointContextBuilder
-            .setEnvProvider(envProvider)
-            .setClientSettingsEndpoint("")
-            .setTransportChannelProviderEndpoint("")
-            .setUsingGDCH(false);
-    Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isTrue();
   }
 }
