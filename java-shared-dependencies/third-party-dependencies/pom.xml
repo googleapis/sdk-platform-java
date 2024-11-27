@@ -140,8 +140,13 @@
         <version>${opentelemetry-grpc-instrumentation.version}</version>
       </dependency>
       <dependency>
-        <groupId>io.opentelemetry</groupId>
+        <groupId>io.opentelemetry.semconv</groupId>
         <artifactId>opentelemetry-semconv</artifactId>
+        <version>${opentelemetry-semconv.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry.semconv</groupId>
+        <artifactId>opentelemetry-semconv-incubating</artifactId>
         <version>${opentelemetry-semconv.version}</version>
       </dependency>
       <dependency>
