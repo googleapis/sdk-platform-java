@@ -40,9 +40,24 @@ public enum License {
     try {
       return License.valueOf(value);
     } catch (IllegalArgumentException exception) {
-      LOGGER.log(Level.WARNING, String.format("%s is not recognized as any of the known license.", licenseStr));
+      LOGGER.log(Level.WARNING,
+          String.format("%s is not recognized as any of the known license.", licenseStr));
       return NOT_RECOGNIZED;
     }
+  }
+
+  public boolean isCompliant() {
+    if (categories.isEmpty()) {
+      return false;
+    }
+    Set<LicenseCategory> complaintLicenseCategories = LicenseCategory.compliantCategories();
+    for (LicenseCategory category : categories) {
+      if (!complaintLicenseCategories.contains(category)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   public Set<LicenseCategory> getCategories() {
@@ -53,15 +68,9 @@ public enum License {
   public String toString() {
     String nonCompliantPrefix = "%s (Not Google-compliant!)";
     String compliantPrefix = "%s (Google-compliant)";
-    Set<LicenseCategory> compliantCategories = LicenseCategory.compliantCategories();
-    if (this.categories.isEmpty()) {
-      return String.format(nonCompliantPrefix, this.licenseStr);
-    }
-    for (LicenseCategory category : this.categories) {
-      if (!compliantCategories.contains(category)) {
-        return String.format(nonCompliantPrefix, this.licenseStr);
-      }
-    }
-    return String.format(compliantPrefix, this.licenseStr);
+
+    return isCompliant()
+        ? String.format(compliantPrefix, this.licenseStr)
+        : String.format(nonCompliantPrefix, this.licenseStr);
   }
 }
