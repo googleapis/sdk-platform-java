@@ -180,5 +180,6 @@ public class DependencyAnalyzer {
       writer.writeNext(
           new String[]{analysisResult.getRoot().toString(), licenseProblem, advisories});
     });
+    writer.close();
   }
 }
