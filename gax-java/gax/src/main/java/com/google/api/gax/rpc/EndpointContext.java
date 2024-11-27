@@ -332,6 +332,10 @@ public abstract class EndpointContext {
         return false;
       }
 
+      if (Strings.isNullOrEmpty(mtlsEndpoint())) {
+        return false;
+      }
+
       // mTLS via S2A is not supported in any universe other than googleapis.com.
       return mtlsEndpoint().contains(Credentials.GOOGLE_DEFAULT_UNIVERSE);
     }
