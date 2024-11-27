@@ -20,6 +20,10 @@ public record VersionKey(
     return new VersionKey(pkg, name, version);
   }
 
+  public boolean isSnapshot() {
+    return version.endsWith("SNAPSHOT");
+  }
+
   @Override
   public String toString() {
     if (pkgManagement == PkgManagement.MAVEN) {

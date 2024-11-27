@@ -27,10 +27,10 @@ jobs:
         distribution: temurin
         java-version: 17
         cache: maven
-    - name: Set up Maven
-      uses: stCarolas/setup-maven@v4.5
-      with:
-        maven-version: 3.8.2
+    - name: Install modules
+      shell: bash
+      run: |
+        mvn clean install -V --batch-mode --no-transfer-progress -DskipTests
     - name: Install dependency analyzer
       shell: bash
       run: |
@@ -39,5 +39,5 @@ jobs:
     - name: Check dependency information
       shell: bash
       run: |
-        mvn exec:java -Ddep.system=${{ github.event.inputs.system }} -Ddep.name=${{ github.event.inputs.name }} -Ddep.version=${{ github.event.inputs.version }}
+        mvn exec:java
       working-directory: java-shared-dependencies/dependency-analyzer

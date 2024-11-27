@@ -7,21 +7,28 @@ import com.google.cloud.model.Advisory;
 import com.google.cloud.model.AdvisoryKey;
 import com.google.cloud.model.AnalysisResult;
 import com.google.cloud.model.License;
-import com.google.cloud.model.ReportResult;
 import com.google.cloud.model.PackageInfo;
 import com.google.cloud.model.QueryResult;
+import com.google.cloud.model.ReportResult;
 import com.google.cloud.model.Result;
 import com.google.cloud.model.Version;
 import com.google.cloud.model.VersionKey;
+import com.google.cloud.tools.opensource.classpath.ClassPathBuilder;
+import com.google.cloud.tools.opensource.classpath.DependencyMediation;
+import com.google.cloud.tools.opensource.dependencies.Bom;
+import com.google.cloud.tools.opensource.dependencies.MavenRepositoryException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
+import java.nio.file.Paths;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.version.InvalidVersionSpecificationException;
 
 public class DependencyAnalyzer {
 
@@ -31,9 +38,45 @@ public class DependencyAnalyzer {
     this.depsDevClient = depsDevClient;
   }
 
-  public AnalysisResult analyze(String system, String packageName, String packageVersion)
-      throws URISyntaxException, IOException, InterruptedException, IllegalArgumentException {
-    VersionKey root = VersionKey.from(system, packageName, packageVersion);
+  public AnalysisResult analyze(String bomPath)
+      throws URISyntaxException, IOException, InterruptedException {
+    List<PackageInfo> packageInfos = new ArrayList<>();
+    try {
+      Set<VersionKey> roots = getManagedDependenciesFromBom(Bom.readBom(Paths.get(bomPath)));
+      for (VersionKey versionKey : roots) {
+        if (versionKey.isSnapshot()) {
+          continue;
+        }
+        packageInfos.addAll(getPackageInfoFrom(versionKey));
+      }
+
+    } catch (MavenRepositoryException | InvalidVersionSpecificationException ex) {
+      System.out.printf("Caught exception when resolving dependencies from %s.", bomPath);
+      ex.printStackTrace();
+      System.exit(1);
+    }
+
+    return AnalysisResult.of(packageInfos);
+  }
+
+  private static Set<VersionKey> getManagedDependenciesFromBom(Bom bom)
+      throws InvalidVersionSpecificationException {
+    Set<VersionKey> res = new HashSet<>();
+    new ClassPathBuilder()
+        .resolve(bom.getManagedDependencies(), false, DependencyMediation.MAVEN)
+        .getClassPath()
+        .forEach(
+            classPath -> {
+              Artifact artifact = classPath.getArtifact();
+              String pkg = String.format("%s:%s", artifact.getGroupId(), artifact.getArtifactId());
+              res.add(VersionKey.from("MAVEN", pkg, artifact.getVersion()));
+            });
+
+    return res;
+  }
+
+  private List<PackageInfo> getPackageInfoFrom(VersionKey root)
+      throws URISyntaxException, IOException, InterruptedException {
     Set<VersionKey> seenPackage = new HashSet<>();
     seenPackage.add(root);
     Queue<VersionKey> queue = new ArrayDeque<>();
@@ -42,6 +85,9 @@ public class DependencyAnalyzer {
     while (!queue.isEmpty()) {
       VersionKey versionKey = queue.poll();
       dependencies.add(versionKey);
+      if (versionKey.toString().equals("org.graalvm.sdk:nativeimage:24.1.1")) {
+        continue;
+      }
       List<VersionKey> directDependencies = depsDevClient.getDirectDependencies(versionKey);
       // only add unseen dependencies to the queue.
       directDependencies
@@ -49,7 +95,6 @@ public class DependencyAnalyzer {
           .filter(seenPackage::add)
           .forEach(queue::offer);
     }
-
     List<PackageInfo> result = new ArrayList<>();
     for (VersionKey versionKey : dependencies) {
       QueryResult packageInfo = depsDevClient.getQueryResult(versionKey);
@@ -64,11 +109,10 @@ public class DependencyAnalyzer {
           advisories.add(depsDevClient.getAdvisory(advisoryKey.id()));
         }
       }
-
       result.add(new PackageInfo(versionKey, licenses, advisories));
     }
 
-    return AnalysisResult.of(result);
+    return result;
   }
 
   /**
@@ -88,23 +132,11 @@ public class DependencyAnalyzer {
    * package management system.
    */
   public static void main(String[] args) throws IllegalArgumentException {
-    checkArgument(args.length == 3,
-        """
-            The length of the inputs should be 3.
-            The 1st input should be the package management system.
-            The 2nd input should be the package name.
-            The 3rd input should be the package version.
-            """
-    );
-
-    String system = args[0];
-    String packageName = args[1];
-    String packageVersion = args[2];
     DependencyAnalyzer dependencyAnalyzer = new DependencyAnalyzer(
         new DepsDevClient(HttpClient.newHttpClient()));
     AnalysisResult analyzeReport = null;
     try {
-      analyzeReport = dependencyAnalyzer.analyze(system, packageName, packageVersion);
+      analyzeReport = dependencyAnalyzer.analyze("java-shared-dependencies/pom.xml");
     } catch (URISyntaxException | IOException | InterruptedException ex) {
       System.out.println(
           "Caught exception when fetching package information from https://deps.dev/");
