@@ -4,6 +4,7 @@ package com.google.cloud.model;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
+import java.util.Optional;
 import org.junit.Test;
 
 public class AnalysisResultTest {
@@ -23,7 +24,8 @@ public class AnalysisResultTest {
                 new String[]{"CVE-2019-17571"},
                 9.8,
                 "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
-            ))
+            )),
+            Optional.empty()
         )
     );
     ReportResult result = AnalysisResult.of(results).getAnalysisResult();
@@ -38,7 +40,8 @@ public class AnalysisResultTest {
         new PackageInfo(
             root,
             List.of(License.toLicense("BCL")),
-            List.of()
+            List.of(),
+            Optional.empty()
         )
     );
     ReportResult result = AnalysisResult.of(results).getAnalysisResult();
@@ -53,7 +56,8 @@ public class AnalysisResultTest {
         new PackageInfo(
             root,
             List.of(License.toLicense("Apache-2.0")),
-            List.of()
+            List.of(),
+            Optional.empty()
         )
     );
     ReportResult result = AnalysisResult.of(results).getAnalysisResult();
@@ -67,17 +71,20 @@ public class AnalysisResultTest {
         new PackageInfo(
             root,
             List.of(License.toLicense("Apache-2.0")),
-            List.of()
+            List.of(),
+            Optional.empty()
         ),
         new PackageInfo(
             VersionKey.from("maven", "com.example:dependency", "4.5.6"),
             List.of(License.toLicense("Apache-2.0"), License.toLicense("MIT")),
-            List.of()
+            List.of(),
+            Optional.empty()
         ),
         new PackageInfo(
             VersionKey.from("maven", "com.example:nested-dependency", "2.3.1"),
             List.of(License.toLicense("Apache-2.0"), License.toLicense("MIT")),
-            List.of()
+            List.of(),
+            Optional.empty()
         )
     );
     assertEquals("""
@@ -108,7 +115,8 @@ public class AnalysisResultTest {
         new PackageInfo(
             root,
             List.of(License.APACHE_2_0, License.BCL),
-            List.of()
+            List.of(),
+            Optional.empty()
         ),
         new PackageInfo(
             VersionKey.from("maven", "com.example:dependency", "4.5.6"),
@@ -120,12 +128,14 @@ public class AnalysisResultTest {
                 new String[]{"CVE-2019-17571"},
                 9.8,
                 "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
-            ))
+            )),
+            Optional.empty()
         ),
         new PackageInfo(
             VersionKey.from("maven", "com.example:nested-dependency", "2.3.1"),
             List.of(License.MIT, License.GL2PS),
-            List.of()
+            List.of(),
+            Optional.empty()
         )
     );
     assertEquals("""
