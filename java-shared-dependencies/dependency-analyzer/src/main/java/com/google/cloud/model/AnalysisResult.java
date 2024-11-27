@@ -3,6 +3,7 @@ package com.google.cloud.model;
 import static com.google.cloud.external.DepsDevClient.QUERY_URL_BASE;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,18 @@ public class AnalysisResult {
     this.packageInfos = result;
     this.advisories = getAdvisories(result);
     this.nonCompliantLicenses = getNonCompliantLicenses(result);
+  }
+
+  public Map<VersionKey, List<License>> getNonCompliantLicenses() {
+    return Collections.unmodifiableMap(nonCompliantLicenses);
+  }
+
+  public Map<VersionKey, List<Advisory>> getAdvisories() {
+    return Collections.unmodifiableMap(advisories);
+  }
+
+  public VersionKey getRoot() {
+    return packageInfos.get(0).versionKey();
   }
 
   public static AnalysisResult of(List<PackageInfo> result) {

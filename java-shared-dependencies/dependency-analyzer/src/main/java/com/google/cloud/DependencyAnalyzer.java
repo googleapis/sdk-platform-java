@@ -19,6 +19,9 @@ import com.google.cloud.tools.opensource.classpath.ClassPathBuilder;
 import com.google.cloud.tools.opensource.classpath.DependencyMediation;
 import com.google.cloud.tools.opensource.dependencies.Bom;
 import com.google.cloud.tools.opensource.dependencies.MavenRepositoryException;
+import com.opencsv.CSVWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -115,14 +118,14 @@ public class DependencyAnalyzer {
           advisories.add(depsDevClient.getAdvisory(advisoryKey.id()));
         }
 
-        for (RelatedProject project : version.relatedProjects()) {
-          ProjectKey projectKey = project.projectKey();
-          if (!projectKey.isGitHubProject()) {
-            continue;
-          }
-          statistics = Optional.of(gitHubClient.listMonthlyPullRequestStatusOf(
-              projectKey.organization(), projectKey.repo()));
-        }
+        // for (RelatedProject project : version.relatedProjects()) {
+        //   ProjectKey projectKey = project.projectKey();
+        //   if (!projectKey.isGitHubProject()) {
+        //     continue;
+        //   }
+        //   statistics = Optional.of(gitHubClient.listMonthlyPullRequestStatusOf(
+        //       projectKey.organization(), projectKey.repo()));
+        // }
       }
       result.add(new PackageInfo(versionKey, licenses, advisories, statistics));
     }
@@ -146,7 +149,7 @@ public class DependencyAnalyzer {
    * @throws IllegalArgumentException if the format of package name is incorrect according to the
    * package management system.
    */
-  public static void main(String[] args) throws IllegalArgumentException {
+  public static void main(String[] args) throws IllegalArgumentException, IOException {
     DependencyAnalyzer dependencyAnalyzer = new DependencyAnalyzer(
         new DepsDevClient(HttpClient.newHttpClient()),
         new GitHubClient(HttpClient.newHttpClient()));
@@ -161,9 +164,21 @@ public class DependencyAnalyzer {
     }
 
     System.out.println("Please copy and paste the package information below to your ticket.\n");
+    // create CSVWriter object filewriter object as parameter
+    CSVWriter writer = new CSVWriter(new FileWriter("dependency-report.csv"));
+    writer.writeNext(new String[]{"Dependency", "License problem", "Vulnerabilities"});
     analysisResults.forEach(analysisResult -> {
       System.out.println(analysisResult.toString());
-      System.out.println(analysisResult.getAnalysisResult());
+      String licenseProblem = "";
+      if (!analysisResult.getNonCompliantLicenses().isEmpty()) {
+        licenseProblem = analysisResult.getNonCompliantLicenses().toString();
+      }
+      String advisories = "";
+      if (!analysisResult.getAdvisories().isEmpty()) {
+        advisories = analysisResult.getAdvisories().toString();
+      }
+      writer.writeNext(
+          new String[]{analysisResult.getRoot().toString(), licenseProblem, advisories});
     });
   }
 }
