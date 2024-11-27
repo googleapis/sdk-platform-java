@@ -95,6 +95,7 @@ public class GitHubClient {
         LOGGER.warning(String.format(
             "Can't parse response from GitHub API.\nOrganization: %s, repo: %s, page: %s\n",
             organization, repo, page));
+        break;
       }
 
       page++;
