@@ -55,12 +55,12 @@ FROM docker.io/library/python@sha256:5049c050bdc68575a10bcb1885baa0689b6c15152d8
 ARG OWLBOT_CLI_COMMITTISH=ab222d9a20bb27586433caedc70f049b7853db7e
 ARG PROTOC_VERSION=25.5
 ARG GRPC_VERSION=1.68.1
-ARG JAVA_FORMAT_VERSION=1.7
+ARG JAVA_FORMAT_VERSION=1.25.0
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
 
 # install OS tools
-RUN apk update && apk add unzip curl rsync openjdk11 jq bash nodejs npm git
+RUN apk update && apk add unzip curl rsync openjdk17 jq bash nodejs npm git
 
 SHELL [ "/bin/bash", "-c" ]
 
