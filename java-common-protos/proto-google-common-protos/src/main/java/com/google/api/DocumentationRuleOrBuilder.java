@@ -42,6 +42,7 @@ public interface DocumentationRuleOrBuilder
    * @return The selector.
    */
   java.lang.String getSelector();
+
   /**
    *
    *
@@ -75,6 +76,7 @@ public interface DocumentationRuleOrBuilder
    * @return The description.
    */
   java.lang.String getDescription();
+
   /**
    *
    *
@@ -103,6 +105,7 @@ public interface DocumentationRuleOrBuilder
    * @return The deprecationDescription.
    */
   java.lang.String getDeprecationDescription();
+
   /**
    *
    *

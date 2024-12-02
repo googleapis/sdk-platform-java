@@ -36,6 +36,7 @@ public interface TimeZoneOrBuilder
    * @return The id.
    */
   java.lang.String getId();
+
   /**
    *
    *
@@ -61,6 +62,7 @@ public interface TimeZoneOrBuilder
    * @return The version.
    */
   java.lang.String getVersion();
+
   /**
    *
    *

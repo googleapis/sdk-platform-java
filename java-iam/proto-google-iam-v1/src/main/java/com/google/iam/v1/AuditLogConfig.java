@@ -51,6 +51,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.iam.v1.AuditLogConfig)
     AuditLogConfigOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use AuditLogConfig.newBuilder() to construct.
   private AuditLogConfig(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -144,6 +145,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * <code>LOG_TYPE_UNSPECIFIED = 0;</code>
      */
     public static final int LOG_TYPE_UNSPECIFIED_VALUE = 0;
+
     /**
      *
      *
@@ -154,6 +156,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * <code>ADMIN_READ = 1;</code>
      */
     public static final int ADMIN_READ_VALUE = 1;
+
     /**
      *
      *
@@ -164,6 +167,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * <code>DATA_WRITE = 2;</code>
      */
     public static final int DATA_WRITE_VALUE = 2;
+
     /**
      *
      *
@@ -262,6 +266,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
 
   public static final int LOG_TYPE_FIELD_NUMBER = 1;
   private int logType_ = 0;
+
   /**
    *
    *
@@ -277,6 +282,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
   public int getLogTypeValue() {
     return logType_;
   }
+
   /**
    *
    *
@@ -300,6 +306,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings("serial")
   private com.google.protobuf.LazyStringArrayList exemptedMembers_ =
       com.google.protobuf.LazyStringArrayList.emptyList();
+
   /**
    *
    *
@@ -317,6 +324,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.ProtocolStringList getExemptedMembersList() {
     return exemptedMembers_;
   }
+
   /**
    *
    *
@@ -334,6 +342,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
   public int getExemptedMembersCount() {
     return exemptedMembers_.size();
   }
+
   /**
    *
    *
@@ -352,6 +361,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
   public java.lang.String getExemptedMembers(int index) {
     return exemptedMembers_.get(index);
   }
+
   /**
    *
    *
@@ -544,6 +554,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -762,6 +773,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private int logType_ = 0;
+
     /**
      *
      *
@@ -777,6 +789,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
     public int getLogTypeValue() {
       return logType_;
     }
+
     /**
      *
      *
@@ -795,6 +808,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -812,6 +826,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
           com.google.iam.v1.AuditLogConfig.LogType.forNumber(logType_);
       return result == null ? com.google.iam.v1.AuditLogConfig.LogType.UNRECOGNIZED : result;
     }
+
     /**
      *
      *
@@ -833,6 +848,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -860,6 +876,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ |= 0x00000002;
     }
+
     /**
      *
      *
@@ -878,6 +895,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       exemptedMembers_.makeImmutable();
       return exemptedMembers_;
     }
+
     /**
      *
      *
@@ -895,6 +913,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
     public int getExemptedMembersCount() {
       return exemptedMembers_.size();
     }
+
     /**
      *
      *
@@ -913,6 +932,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
     public java.lang.String getExemptedMembers(int index) {
       return exemptedMembers_.get(index);
     }
+
     /**
      *
      *
@@ -931,6 +951,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.ByteString getExemptedMembersBytes(int index) {
       return exemptedMembers_.getByteString(index);
     }
+
     /**
      *
      *
@@ -957,6 +978,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -982,6 +1004,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1004,6 +1027,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1025,6 +1049,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *

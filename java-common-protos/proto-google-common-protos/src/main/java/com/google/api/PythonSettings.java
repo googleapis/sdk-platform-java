@@ -33,6 +33,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.api.PythonSettings)
     PythonSettingsOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use PythonSettings.newBuilder() to construct.
   private PythonSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -95,6 +96,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      */
     boolean getProtobufPythonicTypesEnabled();
   }
+
   /**
    *
    *
@@ -111,6 +113,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       // @@protoc_insertion_point(message_implements:google.api.PythonSettings.ExperimentalFeatures)
       ExperimentalFeaturesOrBuilder {
     private static final long serialVersionUID = 0L;
+
     // Use ExperimentalFeatures.newBuilder() to construct.
     private ExperimentalFeatures(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -141,6 +144,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
 
     public static final int REST_ASYNC_IO_ENABLED_FIELD_NUMBER = 1;
     private boolean restAsyncIoEnabled_ = false;
+
     /**
      *
      *
@@ -162,6 +166,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
 
     public static final int PROTOBUF_PYTHONIC_TYPES_ENABLED_FIELD_NUMBER = 2;
     private boolean protobufPythonicTypesEnabled_ = false;
+
     /**
      *
      *
@@ -353,6 +358,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       Builder builder = new Builder(parent);
       return builder;
     }
+
     /**
      *
      *
@@ -553,6 +559,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       private int bitField0_;
 
       private boolean restAsyncIoEnabled_;
+
       /**
        *
        *
@@ -571,6 +578,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       public boolean getRestAsyncIoEnabled() {
         return restAsyncIoEnabled_;
       }
+
       /**
        *
        *
@@ -593,6 +601,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -615,6 +624,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       }
 
       private boolean protobufPythonicTypesEnabled_;
+
       /**
        *
        *
@@ -633,6 +643,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       public boolean getProtobufPythonicTypesEnabled() {
         return protobufPythonicTypesEnabled_;
       }
+
       /**
        *
        *
@@ -655,6 +666,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
       /**
        *
        *
@@ -743,6 +755,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int COMMON_FIELD_NUMBER = 1;
   private com.google.api.CommonLanguageSettings common_;
+
   /**
    *
    *
@@ -758,6 +771,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
   public boolean hasCommon() {
     return ((bitField0_ & 0x00000001) != 0);
   }
+
   /**
    *
    *
@@ -773,6 +787,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
   public com.google.api.CommonLanguageSettings getCommon() {
     return common_ == null ? com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
   }
+
   /**
    *
    *
@@ -789,6 +804,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
 
   public static final int EXPERIMENTAL_FEATURES_FIELD_NUMBER = 2;
   private com.google.api.PythonSettings.ExperimentalFeatures experimentalFeatures_;
+
   /**
    *
    *
@@ -804,6 +820,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
   public boolean hasExperimentalFeatures() {
     return ((bitField0_ & 0x00000002) != 0);
   }
+
   /**
    *
    *
@@ -821,6 +838,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
         ? com.google.api.PythonSettings.ExperimentalFeatures.getDefaultInstance()
         : experimentalFeatures_;
   }
+
   /**
    *
    *
@@ -1015,6 +1033,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -1235,6 +1254,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
             com.google.api.CommonLanguageSettings.Builder,
             com.google.api.CommonLanguageSettingsOrBuilder>
         commonBuilder_;
+
     /**
      *
      *
@@ -1249,6 +1269,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
     public boolean hasCommon() {
       return ((bitField0_ & 0x00000001) != 0);
     }
+
     /**
      *
      *
@@ -1269,6 +1290,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
         return commonBuilder_.getMessage();
       }
     }
+
     /**
      *
      *
@@ -1291,6 +1313,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1310,6 +1333,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1337,6 +1361,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1356,6 +1381,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1370,6 +1396,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getCommonFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -1388,6 +1415,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
             : common_;
       }
     }
+
     /**
      *
      *
@@ -1420,6 +1448,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
             com.google.api.PythonSettings.ExperimentalFeatures.Builder,
             com.google.api.PythonSettings.ExperimentalFeaturesOrBuilder>
         experimentalFeaturesBuilder_;
+
     /**
      *
      *
@@ -1434,6 +1463,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
     public boolean hasExperimentalFeatures() {
       return ((bitField0_ & 0x00000002) != 0);
     }
+
     /**
      *
      *
@@ -1454,6 +1484,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
         return experimentalFeaturesBuilder_.getMessage();
       }
     }
+
     /**
      *
      *
@@ -1477,6 +1508,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1497,6 +1529,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1526,6 +1559,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1545,6 +1579,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -1560,6 +1595,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getExperimentalFeaturesFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -1579,6 +1615,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
             : experimentalFeatures_;
       }
     }
+
     /**
      *
      *

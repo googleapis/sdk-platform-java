@@ -49,6 +49,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.apps.card.v1.MaterialIcon)
     MaterialIconOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use MaterialIcon.newBuilder() to construct.
   private MaterialIcon(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -83,6 +84,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
+
   /**
    *
    *
@@ -109,6 +111,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
+
   /**
    *
    *
@@ -138,6 +141,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
 
   public static final int FILL_FIELD_NUMBER = 2;
   private boolean fill_ = false;
+
   /**
    *
    *
@@ -160,6 +164,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
 
   public static final int WEIGHT_FIELD_NUMBER = 3;
   private int weight_ = 0;
+
   /**
    *
    *
@@ -184,6 +189,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
 
   public static final int GRADE_FIELD_NUMBER = 4;
   private int grade_ = 0;
+
   /**
    *
    *
@@ -391,6 +397,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -628,6 +635,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object name_ = "";
+
     /**
      *
      *
@@ -653,6 +661,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -678,6 +687,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -702,6 +712,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -722,6 +733,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -749,6 +761,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
     }
 
     private boolean fill_;
+
     /**
      *
      *
@@ -768,6 +781,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
     public boolean getFill() {
       return fill_;
     }
+
     /**
      *
      *
@@ -791,6 +805,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -814,6 +829,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int weight_;
+
     /**
      *
      *
@@ -835,6 +851,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
     public int getWeight() {
       return weight_;
     }
+
     /**
      *
      *
@@ -860,6 +877,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -885,6 +903,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int grade_;
+
     /**
      *
      *
@@ -907,6 +926,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
     public int getGrade() {
       return grade_;
     }
+
     /**
      *
      *
@@ -933,6 +953,7 @@ public final class MaterialIcon extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *

@@ -36,6 +36,7 @@ public interface ViewportOrBuilder
    * @return Whether the low field is set.
    */
   boolean hasLow();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface ViewportOrBuilder
    * @return The low.
    */
   com.google.type.LatLng getLow();
+
   /**
    *
    *
@@ -71,6 +73,7 @@ public interface ViewportOrBuilder
    * @return Whether the high field is set.
    */
   boolean hasHigh();
+
   /**
    *
    *
@@ -83,6 +86,7 @@ public interface ViewportOrBuilder
    * @return The high.
    */
   com.google.type.LatLng getHigh();
+
   /**
    *
    *
