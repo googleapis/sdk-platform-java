@@ -89,12 +89,6 @@ public class FixedTransportChannelProvider implements TransportChannelProvider {
         "FixedTransportChannelProvider doesn't need an endpoint");
   }
 
-  @Override
-  public TransportChannelProvider withUseS2A(boolean useS2A) throws UnsupportedOperationException {
-    // Overriden for technical reasons. This method is a no-op for FixedTransportChannelProvider.
-    return this;
-  }
-
   /** @deprecated FixedTransportChannelProvider doesn't support ChannelPool configuration */
   @Deprecated
   @Override
