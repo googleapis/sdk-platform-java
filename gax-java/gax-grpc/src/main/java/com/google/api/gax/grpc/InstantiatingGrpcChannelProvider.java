@@ -46,24 +46,19 @@ import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.ApiKeyCredentials;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
-import com.google.auth.oauth2.SecureSessionAgent;
-import com.google.auth.oauth2.SecureSessionAgentConfig;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
 import io.grpc.CallCredentials;
 import io.grpc.ChannelCredentials;
 import io.grpc.Grpc;
-import io.grpc.InsecureChannelCredentials;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.TlsChannelCredentials;
 import io.grpc.alts.GoogleDefaultChannelCredentials;
 import io.grpc.auth.MoreCallCredentials;
-import io.grpc.s2a.S2AChannelCredentials;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -104,15 +99,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting
   static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
 
-  // The public portion of the mTLS MDS root certificate is stored for performing
-  // cert verification when establishing an mTLS connection with the MDS. See
-  // https://cloud.google.com/compute/docs/metadata/overview#https-mds-root-certs
-  private static final String MTLS_MDS_ROOT_PATH = "/run/google-mds-mtls/root.crt";
-  // The mTLS MDS credentials are formatted as the concatenation of a PEM-encoded certificate chain
-  // followed by a PEM-encoded private key. See
-  // https://cloud.google.com/compute/docs/metadata/overview#https-mds-client-certs
-  private static final String MTLS_MDS_CERT_CHAIN_AND_KEY_PATH = "/run/google-mds-mtls/client.key";
-
   static final long DIRECT_PATH_KEEP_ALIVE_TIME_SECONDS = 3600;
   static final long DIRECT_PATH_KEEP_ALIVE_TIMEOUT_SECONDS = 20;
   static final String GCE_PRODUCTION_NAME_PRIOR_2016 = "Google";
@@ -121,7 +107,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private final int processorCount;
   private final Executor executor;
   private final HeaderProvider headerProvider;
-  private final boolean useS2A;
   private final String endpoint;
   // TODO: remove. envProvider currently provides DirectPath environment variable, and is only used
   // during initial rollout for DirectPath. This provider will be removed once the DirectPath
@@ -141,7 +126,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Boolean allowNonDefaultServiceAccount;
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
-  @Nullable private final SecureSessionAgent s2aConfigProvider;
   @VisibleForTesting final Map<String, String> headersWithDuplicatesRemoved = new HashMap<>();
 
   @Nullable
@@ -152,9 +136,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.executor = builder.executor;
     this.headerProvider = builder.headerProvider;
     this.endpoint = builder.endpoint;
-    this.useS2A = builder.useS2A;
     this.mtlsProvider = builder.mtlsProvider;
-    this.s2aConfigProvider = builder.s2aConfigProvider;
     this.envProvider = builder.envProvider;
     this.interceptorProvider = builder.interceptorProvider;
     this.maxInboundMessageSize = builder.maxInboundMessageSize;
@@ -241,17 +223,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   public TransportChannelProvider withEndpoint(String endpoint) {
     validateEndpoint(endpoint);
     return toBuilder().setEndpoint(endpoint).build();
-  }
-
-  /**
-   * Specify whether or not to use S2A.
-   *
-   * @param useS2A
-   * @return A new {@link InstantiatingGrpcChannelProvider} with useS2A set.
-   */
-  @Override
-  public TransportChannelProvider withUseS2A(boolean useS2A) {
-    return toBuilder().setUseS2A(useS2A).build();
   }
 
   /** @deprecated Please modify pool settings via {@link #toBuilder()} */
@@ -439,101 +410,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return null;
   }
 
-  /**
-   * This method creates {@link TlsChannelCredentials} to be used by the client to establish an mTLS
-   * connection to S2A. Returns null if any of {@param trustBundle}, {@param privateKey} or {@param
-   * certChain} are missing.
-   *
-   * @param trustBundle the trust bundle to be used to establish the client -> S2A mTLS connection
-   * @param privateKey the client's private key to be used to establish the client -> S2A mtls
-   *     connection
-   * @param certChain the client's cert chain to be used to establish the client -> S2A mtls
-   *     connection
-   * @return {@link ChannelCredentials} to use to create an mtls connection between client and S2A
-   * @throws IOException on error
-   */
-  @VisibleForTesting
-  ChannelCredentials createMtlsToS2AChannelCredentials(
-      File trustBundle, File privateKey, File certChain) throws IOException {
-    if (trustBundle == null || privateKey == null || certChain == null) {
-      return null;
-    }
-    return TlsChannelCredentials.newBuilder()
-        .keyManager(privateKey, certChain)
-        .trustManager(trustBundle)
-        .build();
-  }
-
-  /**
-   * This method creates {@link ChannelCredentials} to be used by client to establish a plaintext
-   * connection to S2A. if {@param plaintextAddress} is not present, returns null.
-   *
-   * @param plaintextAddress the address to reach S2A which accepts plaintext connections
-   * @return {@link ChannelCredentials} to use to create a plaintext connection between client and
-   *     S2A
-   */
-  ChannelCredentials createPlaintextToS2AChannelCredentials(String plaintextAddress) {
-    if (Strings.isNullOrEmpty(plaintextAddress)) {
-      return null;
-    }
-    return S2AChannelCredentials.newBuilder(plaintextAddress, InsecureChannelCredentials.create())
-        .build();
-  }
-
-  /**
-   * This method creates gRPC {@link ChannelCredentials} configured to use S2A to estbalish a mTLS
-   * connection. First, the address of S2A is discovered by using the {@link S2A} utility to learn
-   * the {@code mtlsAddress} to reach S2A and the {@code plaintextAddress} to reach S2A. Prefer to
-   * use the {@code mtlsAddress} address to reach S2A if it is non-empty and the MTLS-MDS
-   * credentials can successfully be discovered and used to create {@link TlsChannelCredentials}. If
-   * there is any failure using mTLS-to-S2A, fallback to using a plaintext connection to S2A using
-   * the {@code plaintextAddress}. If {@code plaintextAddress} is not available, this function
-   * returns null; in this case S2A will not be used, and a TLS connection to the service will be
-   * established.
-   *
-   * @return {@link ChannelCredentials} configured to use S2A to create mTLS connection to
-   *     mtlsEndpoint.
-   */
-  ChannelCredentials createS2ASecuredChannelCredentials() {
-    SecureSessionAgentConfig config = s2aConfigProvider.getConfig();
-    String plaintextAddress = config.getPlaintextAddress();
-    String mtlsAddress = config.getMtlsAddress();
-    if (Strings.isNullOrEmpty(mtlsAddress)) {
-      // Fallback to plaintext connection to S2A.
-      LOG.log(
-          Level.INFO,
-          "Cannot establish an mTLS connection to S2A because autoconfig endpoint did not return a mtls address to reach S2A.");
-      return createPlaintextToS2AChannelCredentials(plaintextAddress);
-    }
-    // Currently, MTLS to MDS is only available on GCE. See:
-    // https://cloud.google.com/compute/docs/metadata/overview#https-mds
-    // Try to load MTLS-MDS creds.
-    File rootFile = new File(MTLS_MDS_ROOT_PATH);
-    File certKeyFile = new File(MTLS_MDS_CERT_CHAIN_AND_KEY_PATH);
-    if (rootFile.isFile() && certKeyFile.isFile()) {
-      // Try to connect to S2A using mTLS.
-      ChannelCredentials mtlsToS2AChannelCredentials = null;
-      try {
-        mtlsToS2AChannelCredentials =
-            createMtlsToS2AChannelCredentials(rootFile, certKeyFile, certKeyFile);
-      } catch (IOException ignore) {
-        // Fallback to plaintext-to-S2A connection on error.
-        LOG.log(
-            Level.WARNING,
-            "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS TlsChannelCredentials credentials, falling back to plaintext connection to S2A: "
-                + ignore.getMessage());
-        return createPlaintextToS2AChannelCredentials(plaintextAddress);
-      }
-      return S2AChannelCredentials.newBuilder(mtlsAddress, mtlsToS2AChannelCredentials).build();
-    } else {
-      // Fallback to plaintext-to-S2A connection if MTLS-MDS creds do not exist.
-      LOG.log(
-          Level.INFO,
-          "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not exist on filesystem, falling back to plaintext connection to S2A");
-      return createPlaintextToS2AChannelCredentials(plaintextAddress);
-    }
-  }
-
   private ManagedChannel createSingleChannel() throws IOException {
     GrpcHeaderInterceptor headerInterceptor =
         new GrpcHeaderInterceptor(headersWithDuplicatesRemoved);
@@ -571,7 +447,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       builder.keepAliveTime(DIRECT_PATH_KEEP_ALIVE_TIME_SECONDS, TimeUnit.SECONDS);
       builder.keepAliveTimeout(DIRECT_PATH_KEEP_ALIVE_TIMEOUT_SECONDS, TimeUnit.SECONDS);
     } else {
-      // Try and create credentials via DCA. See https://google.aip.dev/auth/4114.
       ChannelCredentials channelCredentials;
       try {
         channelCredentials = createMtlsChannelCredentials();
@@ -579,23 +454,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         throw new IOException(e);
       }
       if (channelCredentials != null) {
-        // Create the channel using channel credentials created via DCA.
         builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
       } else {
-        // Could not create channel credentials via DCA. In accordance with
-        // https://google.aip.dev/auth/4115, if credentials not available through
-        // DCA, try mTLS with credentials held by the S2A (Secure Session Agent).
-        if (useS2A) {
-          channelCredentials = createS2ASecuredChannelCredentials();
-        }
-        if (channelCredentials != null) {
-          // Create the channel using S2A-secured channel credentials.
-          // {@code endpoint} is set to mtlsEndpoint in {@link EndpointContext} when useS2A is true.
-          builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
-        } else {
-          // Use default if we cannot initialize channel credentials via DCA or S2A.
-          builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
-        }
+        builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
       }
     }
     // google-c2p resolver requires service config lookup
@@ -743,9 +604,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     private Executor executor;
     private HeaderProvider headerProvider;
     private String endpoint;
-    private boolean useS2A;
     private EnvironmentProvider envProvider;
-    private SecureSessionAgent s2aConfigProvider = SecureSessionAgent.create();
     private MtlsProvider mtlsProvider = new MtlsProvider();
     @Nullable private GrpcInterceptorProvider interceptorProvider;
     @Nullable private Integer maxInboundMessageSize;
@@ -773,7 +632,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.executor = provider.executor;
       this.headerProvider = provider.headerProvider;
       this.endpoint = provider.endpoint;
-      this.useS2A = provider.useS2A;
       this.envProvider = provider.envProvider;
       this.interceptorProvider = provider.interceptorProvider;
       this.maxInboundMessageSize = provider.maxInboundMessageSize;
@@ -790,7 +648,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.allowNonDefaultServiceAccount = provider.allowNonDefaultServiceAccount;
       this.directPathServiceConfig = provider.directPathServiceConfig;
       this.mtlsProvider = provider.mtlsProvider;
-      this.s2aConfigProvider = provider.s2aConfigProvider;
     }
 
     /**
@@ -843,20 +700,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    Builder setUseS2A(boolean useS2A) {
-      this.useS2A = useS2A;
-      return this;
-    }
-
     @VisibleForTesting
     Builder setMtlsProvider(MtlsProvider mtlsProvider) {
       this.mtlsProvider = mtlsProvider;
-      return this;
-    }
-
-    @VisibleForTesting
-    Builder setS2AConfigProvider(SecureSessionAgent s2aConfigProvider) {
-      this.s2aConfigProvider = s2aConfigProvider;
       return this;
     }
 

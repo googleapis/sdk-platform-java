@@ -107,12 +107,6 @@ public class LocalChannelProvider implements TransportChannelProvider {
   }
 
   @Override
-  public TransportChannelProvider withUseS2A(boolean useS2A) {
-    // Overriden for technical reasons. This method is a no-op for LocalChannelProvider.
-    return this;
-  }
-
-  @Override
   @BetaApi("The surface for customizing pool size is not stable yet and may change in the future.")
   public boolean acceptsPoolSize() {
     return false;
