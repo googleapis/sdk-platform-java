@@ -72,8 +72,6 @@ import javax.annotation.Nullable;
  */
 @AutoValue
 public abstract class ClientContext {
-
-  // private static final Logger LOGGER = LoggingUtils.getLogger(ClientContext.class);
   private static final String QUOTA_PROJECT_ID_HEADER_KEY = "x-goog-user-project";
 
   /**
@@ -172,9 +170,6 @@ public abstract class ClientContext {
    * settings.
    */
   public static ClientContext create(StubSettings settings) throws IOException {
-    // if (LoggingUtils.isLoggingEnabled()) {
-    //   LoggingUtils.log(LOGGER, Level.INFO, "a dummy message", Collections.emptyMap());
-    // }
     ApiClock clock = settings.getClock();
 
     ExecutorProvider backgroundExecutorProvider = settings.getBackgroundExecutorProvider();

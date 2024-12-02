@@ -20,10 +20,9 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.grpc.GrpcStatusCode;
+import com.google.api.gax.logging.JsonContextMapHandler;
 import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.StatusCode;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
@@ -31,11 +30,9 @@ import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.ConsoleHandler;
-import java.util.logging.Filter;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.junit.jupiter.api.AfterAll;
@@ -56,28 +53,26 @@ class ITUnaryCallable {
     // Create Http JSON Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
 
+    // Settings for JUL as fallback
     // Get the root logger
-    Logger rootLogger =
-        LogManager.getLogManager().getLogger("");
-    // Set the root logger's level to ALL or FINEST to see DEBUG messages
-    // rootLogger.setLevel(Level.ALL); // or rootLogger.setLevel(Level.FINEST);
-    // Remove any existing handlers (if needed)
+    Logger rootLogger = LogManager.getLogManager().getLogger("");
+    // Set the root logger's level to ALL to see DEBUG messages
+    // rootLogger.setLevel(Level.ALL);
+    // Remove any existing handlers
     for (Handler handler : rootLogger.getHandlers()) {
       rootLogger.removeHandler(handler);
     }
 
+    // Create and add your ContextMapHandler
+    JsonContextMapHandler contextHandler = new JsonContextMapHandler();
+    contextHandler.setLevel(Level.ALL); // Set the desired level
+    // Add a formatter if needed (optional)
+    // contextHandler.setFormatter(...);
+    rootLogger.addHandler(contextHandler);
     // Create a ConsoleHandler
     ConsoleHandler consoleHandler = new ConsoleHandler();
     consoleHandler.setLevel(Level.ALL);
     consoleHandler.setFormatter(new SimpleFormatter());
-    // String targetClassName = "com.google.api.gax.logging.LoggingUtils$JulWrapperLogger";
-    // Filter filter = new Filter() {
-    //   @Override
-    //   public boolean isLoggable(LogRecord record) {
-    //     return record.getLoggerName().equals(targetClassName);
-    //   }
-    // };
-    // consoleHandler.setFilter(filter);
 
     // Add the ConsoleHandler to the root logger
     rootLogger.addHandler(consoleHandler);
@@ -92,17 +87,6 @@ class ITUnaryCallable {
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     httpjsonClient.awaitTermination(
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-  }
-  @Test
-  void test() {
-    Gson gson = new Gson();
-    JsonObject jsonObject1 = gson.fromJson("{\"name\":\"John\", \"age\":30}", JsonObject.class);
-    JsonObject jsonObject2 = gson.fromJson("{\"city\":\"New York\", \"country\":\"USA\"}", JsonObject.class);
-
-    JsonObject mergedObject = jsonObject1.deepCopy();
-    mergedObject.entrySet().forEach(entry -> jsonObject2.add(entry.getKey(), entry.getValue()));
-
-    System.out.println(jsonObject2); // Output: {"city":"New York", "country":"USA", "name":"John", "age":30}
   }
 
   @Test
