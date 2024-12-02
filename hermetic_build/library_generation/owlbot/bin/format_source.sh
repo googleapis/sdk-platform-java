@@ -45,14 +45,6 @@ do
 done
 
 # use formatter downloaded in the Dockerfile.
-cat $tmp_file | \
-  xargs java \
-  --add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
-  --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED \
-  --add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
-  --add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
-  --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
-  --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
-  -jar "$(get_java_formatter_location)" --replace
+cat $tmp_file | xargs java -jar "$(get_java_formatter_location)" --replace
 
 rm $tmp_file
