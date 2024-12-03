@@ -91,6 +91,7 @@ if [[ "${changed_files}" == "" ]]; then
 else
     git commit -m "${title}"
 fi
+
 unpushed_commit=$(git cherry -v "origin/${current_branch}" | wc -l)
 if [[ "${unpushed_commit}" -eq 0 ]]; then
     echo "No unpushed commits, exit"

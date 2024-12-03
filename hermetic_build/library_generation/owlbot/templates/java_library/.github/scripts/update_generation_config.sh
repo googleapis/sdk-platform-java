@@ -108,7 +108,8 @@ fi
 
 # Only allow fast-forward merging; exit with non-zero result if there's merging
 # conflict.
-if git merge -m "chore: merge ${base_branch} into ${current_branch}" "${base_branch}" -ne 0; then
+git merge -m "chore: merge ${base_branch} into ${current_branch}" "${base_branch}"
+if [[ $? -ne 0 ]]; then
   echo "Merge ${base_branch} into ${current_branch} has conflict, exit."
   exit 1
 fi
@@ -141,6 +142,13 @@ changed_files=$(git diff --cached --name-only)
 if [[ "${changed_files}" == "" ]]; then
     echo "The latest generation config is not changed."
     echo "Skip committing to the pull request."
+else
+    git commit -m "${title}"
+fi
+
+unpushed_commit=$(git cherry -v "origin/${current_branch}" | wc -l)
+if [[ "${unpushed_commit}" -eq 0 ]]; then
+    echo "No unpushed commits, exit"
     exit 0
 fi
 git commit -m "${title}"
