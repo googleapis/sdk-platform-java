@@ -88,9 +88,15 @@ changed_files=$(git diff --cached --name-only)
 if [[ "${changed_files}" == "" ]]; then
     echo "The latest googleapis commit is not changed."
     echo "Skip committing to the pull request."
+else
+    git commit -m "${title}"
+fi
+unpushed_commit=$(git cherry -v "origin/${current_branch}" | wc -l)
+if [[ "${unpushed_commit}" -eq 0 ]]; then
+    echo "No unpushed commits, exit"
     exit 0
 fi
-git commit -m "${title}"
+
 if [ -z "${pr_num}" ]; then
   git remote add remote_repo https://cloud-java-bot:"${GH_TOKEN}@github.com/${repo}.git"
   git fetch -q --unshallow remote_repo
