@@ -30,7 +30,6 @@
 package com.google.api.gax.rpc;
 
 import com.google.api.core.InternalApi;
-import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
@@ -66,9 +65,6 @@ public abstract class EndpointContext {
       "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
   public static final String UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE =
       "Unable to retrieve the Universe Domain from the Credentials.";
-  // This environment variable is a temporary measure. It will be removed when the feature is
-  // non-experimental.
-  static final String S2A_ENV_ENABLE_USE_S2A = "EXPERIMENTAL_GOOGLE_API_USE_S2A";
 
   public static EndpointContext getDefaultInstance() {
     return INSTANCE;
@@ -104,11 +100,6 @@ public abstract class EndpointContext {
   @Nullable
   public abstract String transportChannelProviderEndpoint();
 
-  abstract boolean useS2A();
-
-  @Nullable
-  abstract EnvironmentProvider envProvider();
-
   @Nullable
   public abstract String mtlsEndpoint();
 
@@ -128,8 +119,7 @@ public abstract class EndpointContext {
   public static Builder newBuilder() {
     return new AutoValue_EndpointContext.Builder()
         .setSwitchToMtlsEndpointAllowed(false)
-        .setUsingGDCH(false)
-        .setEnvProvider(System::getenv);
+        .setUsingGDCH(false);
   }
 
   /** Configure the existing EndpointContext to be using GDC-H */
@@ -218,10 +208,6 @@ public abstract class EndpointContext {
 
     public abstract Builder setResolvedUniverseDomain(String resolvedUniverseDomain);
 
-    abstract Builder setUseS2A(boolean useS2A);
-
-    abstract Builder setEnvProvider(EnvironmentProvider envProvider);
-
     abstract String serviceName();
 
     abstract String universeDomain();
@@ -229,10 +215,6 @@ public abstract class EndpointContext {
     abstract String clientSettingsEndpoint();
 
     abstract String transportChannelProviderEndpoint();
-
-    abstract boolean useS2A();
-
-    abstract EnvironmentProvider envProvider();
 
     abstract String mtlsEndpoint();
 
@@ -272,10 +254,6 @@ public abstract class EndpointContext {
 
     /** Determines the fully resolved endpoint and universe domain values */
     private String determineEndpoint() throws IOException {
-      if (shouldUseS2A()) {
-        return mtlsEndpoint();
-      }
-
       MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
       // TransportChannelProvider's endpoint will override the ClientSettings' endpoint
       String customEndpoint =
@@ -308,32 +286,6 @@ public abstract class EndpointContext {
       }
 
       return endpoint;
-    }
-
-    /** Determine if S2A can be used */
-    @VisibleForTesting
-    boolean shouldUseS2A() {
-      // If EXPERIMENTAL_GOOGLE_API_USE_S2A is not set to true, skip S2A.
-      String s2AEnv;
-      s2AEnv = envProvider().getenv(S2A_ENV_ENABLE_USE_S2A);
-      boolean s2AEnabled = Boolean.parseBoolean(s2AEnv);
-      if (!s2AEnabled) {
-        return false;
-      }
-
-      // Skip S2A when using GDC-H
-      if (usingGDCH()) {
-        return false;
-      }
-
-      // If a custom endpoint is being used, skip S2A.
-      if (!Strings.isNullOrEmpty(clientSettingsEndpoint())
-          || !Strings.isNullOrEmpty(transportChannelProviderEndpoint())) {
-        return false;
-      }
-
-      // mTLS via S2A is not supported in any universe other than googleapis.com.
-      return mtlsEndpoint().contains(Credentials.GOOGLE_DEFAULT_UNIVERSE);
     }
 
     // Default to port 443 for HTTPS. Using HTTP requires explicitly setting the endpoint
@@ -369,7 +321,6 @@ public abstract class EndpointContext {
       // The Universe Domain is used to resolve the Endpoint. It should be resolved first
       setResolvedUniverseDomain(determineUniverseDomain());
       setResolvedEndpoint(determineEndpoint());
-      setUseS2A(shouldUseS2A());
       return autoBuild();
     }
   }
