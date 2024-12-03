@@ -75,16 +75,8 @@ workspace_name="/workspace"
 baseline_generation_config="baseline_generation_config.yaml"
 message="chore: generate libraries at $(date)"
 
-# there's no local branch when running in GitHub action,
-# thus no need to use `git pull`.
 git checkout "${target_branch}"
 git checkout "${current_branch}"
-# only allow fast-forward merging; exit with non-zero result if there's merging
-# conflict.
-if git merge -m "chore: merge ${target_branch} into ${current_branch}" "${target_branch}" -ne 0; then
-  echo "Merge ${target_branch} into ${current_branch} has conflict, exit."
-  exit 1
-fi
 
 # copy generation configuration from target branch to current branch.
 git show "${target_branch}":"${generation_config}" > "${baseline_generation_config}"

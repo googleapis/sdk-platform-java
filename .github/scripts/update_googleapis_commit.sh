@@ -64,6 +64,13 @@ else
   gh pr checkout "${pr_num}"
 fi
 
+# only allow fast-forward merging; exit with non-zero result if there's merging
+# conflict.
+if git merge -m "chore: merge ${base_branch} into ${current_branch}" "${base_branch}" -ne 0; then
+  echo "Merge ${base_branch} into ${current_branch} has conflict, exit."
+  exit 1
+fi
+
 mkdir tmp-googleapis
 # use partial clone because only commit history is needed.
 git clone --filter=blob:none https://github.com/googleapis/googleapis.git tmp-googleapis
