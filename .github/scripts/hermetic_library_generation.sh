@@ -81,7 +81,8 @@ git checkout "${target_branch}"
 git checkout "${current_branch}"
 # only allow fast-forward merging; exit with non-zero result if there's merging
 # conflict.
-if [[ $(git merge -m "chore: merge ${target_branch} into ${current_branch}" "${target_branch}") -ne 0 ]]; then
+
+if git merge -m "chore: merge ${target_branch} into ${current_branch}" "${target_branch}" -ne 0; then
   echo "Merge ${target_branch} into ${current_branch} has conflict, exit."
   exit 1
 fi
