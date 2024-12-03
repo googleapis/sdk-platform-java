@@ -95,6 +95,7 @@ fi
 current_branch="generate-libraries-${base_branch}"
 title="chore: Update generation configuration at $(date)"
 
+git checkout "${base_branch}"
 # Try to find a open pull request associated with the branch
 pr_num=$(gh pr list -s open -H "${current_branch}" -q . --json number | jq ".[] | .number")
 # Create a branch if there's no open pull request associated with the

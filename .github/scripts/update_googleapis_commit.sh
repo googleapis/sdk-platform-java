@@ -54,6 +54,7 @@ fi
 current_branch="generate-libraries-${base_branch}"
 title="chore: update googleapis commit at $(date)"
 
+git checkout "${base_branch}"
 # try to find a open pull request associated with the branch
 pr_num=$(gh pr list -s open -H "${current_branch}" -q . --json number | jq ".[] | .number")
 # create a branch if there's no open pull request associated with the
