@@ -67,7 +67,8 @@ fi
 
 # only allow fast-forward merging; exit with non-zero result if there's merging
 # conflict.
-if git merge -m "chore: merge ${base_branch} into ${current_branch}" "${base_branch}" -ne 0; then
+git merge -m "chore: merge ${base_branch} into ${current_branch}" "${base_branch}"
+if [[ $? -ne 0 ]]; then
   echo "Merge ${base_branch} into ${current_branch} has conflict, exit."
   exit 1
 fi
