@@ -97,11 +97,6 @@ public interface TransportChannelProvider {
    */
   TransportChannelProvider withEndpoint(String endpoint);
 
-  /** Sets whether to use S2A when constructing a new {@link TransportChannel}. */
-  default TransportChannelProvider withUseS2A(boolean useS2A) {
-    throw new UnsupportedOperationException("S2A is not supported");
-  }
-
   /**
    * Reports whether this provider allows pool size customization.
    *

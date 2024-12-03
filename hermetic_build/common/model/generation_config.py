@@ -39,8 +39,6 @@ class GenerationConfig:
         libraries: list[LibraryConfig],
         gapic_generator_version: Optional[str] = None,
         libraries_bom_version: Optional[str] = None,
-        grpc_version: Optional[str] = None,
-        protoc_version: Optional[str] = None,
     ):
         self.googleapis_commitish = googleapis_commitish
         self.libraries_bom_version = (
@@ -50,8 +48,6 @@ class GenerationConfig:
             gapic_generator_version
         )
         self.libraries = libraries
-        self.grpc_version = grpc_version
-        self.protoc_version = protoc_version
         # explicit set to None so that we can compute the
         # value in getter.
         self.__contains_common_protos = None
@@ -172,8 +168,6 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
             config, "googleapis_commitish", REPO_LEVEL_PARAMETER
         ),
         gapic_generator_version=__optional(config, GAPIC_GENERATOR_VERSION, None),
-        grpc_version=__optional(config, "grpc_version", None),
-        protoc_version=__optional(config, "protoc_version", None),
         libraries_bom_version=__optional(config, LIBRARIES_BOM_VERSION, None),
         libraries=parsed_libraries,
     )

@@ -82,6 +82,21 @@ as per [POSIX env var definition](https://pubs.opengroup.org/onlinepubs/96999197
    mv /path/to/jar "${HOME}/.library_generation/gapic-generator-java.jar"
    ```
 
+#### Put the protobuf compiler in its well-known location
+1. Download protobuf compiler from [GitHub releases](https://github.com/protocolbuffers/protobuf/releases).
+2. Move the folder into its well-know location.
+
+   ```shell
+   unzip /path/to/zipfile -d "${HOME}/.library_generation/"
+   ```
+#### Put the GRPC plugin in its well-known location
+1. Download GRPC plugin from [Maven Central](https://central.sonatype.com/artifact/io.grpc/protoc-gen-grpc-java/versions).
+2. Move the folder into its well-know location.
+
+   ```shell
+   mv /path/to/protoc-gen-grpc-java.exe "${HOME}/.library_generation/protoc-gen-grpc-java.exe"
+   ```
+
 #### Put the java formatter jar in its well-known location
 
 1. Download google-java-format-{version}-all-deps.jar from [Maven Central](https://central.sonatype.com/artifact/com.google.googlejavaformat/google-java-format)
@@ -197,11 +212,6 @@ python hermetic_build/library_generation/cli/entry_point.py generate \
         --repository-path=/workspace \
         --api-definitions-path=/workspace/apis
    ```
-   Note that if you specify the generator version using environment variable,
-   `-e GENERATOR_VERSION="${LOCAL_GENERATOR_VERSION}"` in the above example,
-   you should not set `gapic_generator_version` and `protoc_version` in the
-   generation configuration because values in the generation configuration will
-   take precedence.
 
 # Debug the library generation container
 If you are working on changing the way the containers are created, you may want
