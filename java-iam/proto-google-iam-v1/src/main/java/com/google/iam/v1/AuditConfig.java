@@ -83,6 +83,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.iam.v1.AuditConfig)
     AuditConfigOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use AuditConfig.newBuilder() to construct.
   private AuditConfig(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -116,6 +117,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object service_ = "";
+
   /**
    *
    *
@@ -141,6 +143,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
+
   /**
    *
    *
@@ -171,6 +174,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.iam.v1.AuditLogConfig> auditLogConfigs_;
+
   /**
    *
    *
@@ -184,6 +188,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.iam.v1.AuditLogConfig> getAuditLogConfigsList() {
     return auditLogConfigs_;
   }
+
   /**
    *
    *
@@ -198,6 +203,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       getAuditLogConfigsOrBuilderList() {
     return auditLogConfigs_;
   }
+
   /**
    *
    *
@@ -211,6 +217,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
   public int getAuditLogConfigsCount() {
     return auditLogConfigs_.size();
   }
+
   /**
    *
    *
@@ -224,6 +231,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
   public com.google.iam.v1.AuditLogConfig getAuditLogConfigs(int index) {
     return auditLogConfigs_.get(index);
   }
+
   /**
    *
    *
@@ -406,6 +414,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -694,6 +703,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private java.lang.Object service_ = "";
+
     /**
      *
      *
@@ -718,6 +728,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -742,6 +753,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -765,6 +777,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -784,6 +797,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -842,6 +856,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
         return auditLogConfigsBuilder_.getMessageList();
       }
     }
+
     /**
      *
      *
@@ -858,6 +873,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
         return auditLogConfigsBuilder_.getCount();
       }
     }
+
     /**
      *
      *
@@ -874,6 +890,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
         return auditLogConfigsBuilder_.getMessage(index);
       }
     }
+
     /**
      *
      *
@@ -896,6 +913,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -916,6 +934,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -938,6 +957,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -960,6 +980,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -979,6 +1000,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -999,6 +1021,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1019,6 +1042,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1038,6 +1062,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1057,6 +1082,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1069,6 +1095,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
     public com.google.iam.v1.AuditLogConfig.Builder getAuditLogConfigsBuilder(int index) {
       return getAuditLogConfigsFieldBuilder().getBuilder(index);
     }
+
     /**
      *
      *
@@ -1085,6 +1112,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
         return auditLogConfigsBuilder_.getMessageOrBuilder(index);
       }
     }
+
     /**
      *
      *
@@ -1102,6 +1130,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(auditLogConfigs_);
       }
     }
+
     /**
      *
      *
@@ -1115,6 +1144,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       return getAuditLogConfigsFieldBuilder()
           .addBuilder(com.google.iam.v1.AuditLogConfig.getDefaultInstance());
     }
+
     /**
      *
      *
@@ -1128,6 +1158,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       return getAuditLogConfigsFieldBuilder()
           .addBuilder(index, com.google.iam.v1.AuditLogConfig.getDefaultInstance());
     }
+
     /**
      *
      *

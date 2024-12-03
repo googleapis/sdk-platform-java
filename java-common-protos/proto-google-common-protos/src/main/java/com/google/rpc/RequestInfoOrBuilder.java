@@ -37,6 +37,7 @@ public interface RequestInfoOrBuilder
    * @return The requestId.
    */
   java.lang.String getRequestId();
+
   /**
    *
    *
@@ -64,6 +65,7 @@ public interface RequestInfoOrBuilder
    * @return The servingData.
    */
   java.lang.String getServingData();
+
   /**
    *
    *

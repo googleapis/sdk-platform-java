@@ -44,6 +44,7 @@ public interface MethodSettingsOrBuilder
    * @return The selector.
    */
   java.lang.String getSelector();
+
   /**
    *
    *
@@ -90,6 +91,7 @@ public interface MethodSettingsOrBuilder
    * @return Whether the longRunning field is set.
    */
   boolean hasLongRunning();
+
   /**
    *
    *
@@ -115,6 +117,7 @@ public interface MethodSettingsOrBuilder
    * @return The longRunning.
    */
   com.google.api.MethodSettings.LongRunning getLongRunning();
+
   /**
    *
    *
@@ -161,6 +164,7 @@ public interface MethodSettingsOrBuilder
    * @return A list containing the autoPopulatedFields.
    */
   java.util.List<java.lang.String> getAutoPopulatedFieldsList();
+
   /**
    *
    *
@@ -183,6 +187,7 @@ public interface MethodSettingsOrBuilder
    * @return The count of autoPopulatedFields.
    */
   int getAutoPopulatedFieldsCount();
+
   /**
    *
    *
@@ -206,6 +211,7 @@ public interface MethodSettingsOrBuilder
    * @return The autoPopulatedFields at the given index.
    */
   java.lang.String getAutoPopulatedFields(int index);
+
   /**
    *
    *

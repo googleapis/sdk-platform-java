@@ -36,6 +36,7 @@ public interface AuthenticationOrBuilder
    * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
    */
   java.util.List<com.google.api.AuthenticationRule> getRulesList();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface AuthenticationOrBuilder
    * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
    */
   com.google.api.AuthenticationRule getRules(int index);
+
   /**
    *
    *
@@ -60,6 +62,7 @@ public interface AuthenticationOrBuilder
    * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
    */
   int getRulesCount();
+
   /**
    *
    *
@@ -72,6 +75,7 @@ public interface AuthenticationOrBuilder
    * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
    */
   java.util.List<? extends com.google.api.AuthenticationRuleOrBuilder> getRulesOrBuilderList();
+
   /**
    *
    *
@@ -95,6 +99,7 @@ public interface AuthenticationOrBuilder
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
   java.util.List<com.google.api.AuthProvider> getProvidersList();
+
   /**
    *
    *
@@ -105,6 +110,7 @@ public interface AuthenticationOrBuilder
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
   com.google.api.AuthProvider getProviders(int index);
+
   /**
    *
    *
@@ -115,6 +121,7 @@ public interface AuthenticationOrBuilder
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
   int getProvidersCount();
+
   /**
    *
    *
@@ -125,6 +132,7 @@ public interface AuthenticationOrBuilder
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
   java.util.List<? extends com.google.api.AuthProviderOrBuilder> getProvidersOrBuilderList();
+
   /**
    *
    *

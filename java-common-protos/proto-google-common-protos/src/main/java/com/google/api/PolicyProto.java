@@ -32,6 +32,7 @@ public final class PolicyProto {
   }
 
   public static final int FIELD_POLICY_FIELD_NUMBER = 158361448;
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public final class PolicyProto {
               com.google.api.FieldPolicy.class, com.google.api.FieldPolicy.getDefaultInstance());
 
   public static final int METHOD_POLICY_FIELD_NUMBER = 161893301;
+
   /**
    *
    *

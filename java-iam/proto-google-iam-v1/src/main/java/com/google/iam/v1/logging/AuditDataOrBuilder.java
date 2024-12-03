@@ -36,6 +36,7 @@ public interface AuditDataOrBuilder
    * @return Whether the policyDelta field is set.
    */
   boolean hasPolicyDelta();
+
   /**
    *
    *
@@ -48,6 +49,7 @@ public interface AuditDataOrBuilder
    * @return The policyDelta.
    */
   com.google.iam.v1.PolicyDelta getPolicyDelta();
+
   /**
    *
    *

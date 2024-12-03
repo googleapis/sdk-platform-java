@@ -39,6 +39,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.rpc.Status)
     StatusOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use Status.newBuilder() to construct.
   private Status(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -69,6 +70,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
 
   public static final int CODE_FIELD_NUMBER = 1;
   private int code_ = 0;
+
   /**
    *
    *
@@ -90,6 +92,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private volatile java.lang.Object message_ = "";
+
   /**
    *
    *
@@ -116,6 +119,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       return s;
     }
   }
+
   /**
    *
    *
@@ -147,6 +151,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
 
   @SuppressWarnings("serial")
   private java.util.List<com.google.protobuf.Any> details_;
+
   /**
    *
    *
@@ -161,6 +166,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<com.google.protobuf.Any> getDetailsList() {
     return details_;
   }
+
   /**
    *
    *
@@ -175,6 +181,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
   public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getDetailsOrBuilderList() {
     return details_;
   }
+
   /**
    *
    *
@@ -189,6 +196,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
   public int getDetailsCount() {
     return details_.size();
   }
+
   /**
    *
    *
@@ -203,6 +211,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
   public com.google.protobuf.Any getDetails(int index) {
     return details_.get(index);
   }
+
   /**
    *
    *
@@ -395,6 +404,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -651,6 +661,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private int code_;
+
     /**
      *
      *
@@ -667,6 +678,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     public int getCode() {
       return code_;
     }
+
     /**
      *
      *
@@ -687,6 +699,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -707,6 +720,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     }
 
     private java.lang.Object message_ = "";
+
     /**
      *
      *
@@ -732,6 +746,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
         return (java.lang.String) ref;
       }
     }
+
     /**
      *
      *
@@ -757,6 +772,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      *
      *
@@ -781,6 +797,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -801,6 +818,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -859,6 +877,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
         return detailsBuilder_.getMessageList();
       }
     }
+
     /**
      *
      *
@@ -876,6 +895,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
         return detailsBuilder_.getCount();
       }
     }
+
     /**
      *
      *
@@ -893,6 +913,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
         return detailsBuilder_.getMessage(index);
       }
     }
+
     /**
      *
      *
@@ -916,6 +937,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -936,6 +958,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -959,6 +982,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -982,6 +1006,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1002,6 +1027,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1022,6 +1048,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1042,6 +1069,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1062,6 +1090,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1082,6 +1111,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -1095,6 +1125,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.Any.Builder getDetailsBuilder(int index) {
       return getDetailsFieldBuilder().getBuilder(index);
     }
+
     /**
      *
      *
@@ -1112,6 +1143,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
         return detailsBuilder_.getMessageOrBuilder(index);
       }
     }
+
     /**
      *
      *
@@ -1129,6 +1161,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
         return java.util.Collections.unmodifiableList(details_);
       }
     }
+
     /**
      *
      *
@@ -1142,6 +1175,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     public com.google.protobuf.Any.Builder addDetailsBuilder() {
       return getDetailsFieldBuilder().addBuilder(com.google.protobuf.Any.getDefaultInstance());
     }
+
     /**
      *
      *
@@ -1156,6 +1190,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       return getDetailsFieldBuilder()
           .addBuilder(index, com.google.protobuf.Any.getDefaultInstance());
     }
+
     /**
      *
      *

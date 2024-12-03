@@ -36,6 +36,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.type.TimeOfDay)
     TimeOfDayOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use TimeOfDay.newBuilder() to construct.
   private TimeOfDay(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -63,6 +64,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
 
   public static final int HOURS_FIELD_NUMBER = 1;
   private int hours_ = 0;
+
   /**
    *
    *
@@ -82,6 +84,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
 
   public static final int MINUTES_FIELD_NUMBER = 2;
   private int minutes_ = 0;
+
   /**
    *
    *
@@ -100,6 +103,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
 
   public static final int SECONDS_FIELD_NUMBER = 3;
   private int seconds_ = 0;
+
   /**
    *
    *
@@ -119,6 +123,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
 
   public static final int NANOS_FIELD_NUMBER = 4;
   private int nanos_ = 0;
+
   /**
    *
    *
@@ -319,6 +324,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -537,6 +543,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private int hours_;
+
     /**
      *
      *
@@ -553,6 +560,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     public int getHours() {
       return hours_;
     }
+
     /**
      *
      *
@@ -573,6 +581,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -593,6 +602,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int minutes_;
+
     /**
      *
      *
@@ -608,6 +618,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     public int getMinutes() {
       return minutes_;
     }
+
     /**
      *
      *
@@ -627,6 +638,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -646,6 +658,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int seconds_;
+
     /**
      *
      *
@@ -662,6 +675,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     public int getSeconds() {
       return seconds_;
     }
+
     /**
      *
      *
@@ -682,6 +696,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -702,6 +717,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int nanos_;
+
     /**
      *
      *
@@ -717,6 +733,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     public int getNanos() {
       return nanos_;
     }
+
     /**
      *
      *
@@ -736,6 +753,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *

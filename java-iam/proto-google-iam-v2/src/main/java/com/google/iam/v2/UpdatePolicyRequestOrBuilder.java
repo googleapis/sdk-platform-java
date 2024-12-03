@@ -40,6 +40,7 @@ public interface UpdatePolicyRequestOrBuilder
    * @return Whether the policy field is set.
    */
   boolean hasPolicy();
+
   /**
    *
    *
@@ -56,6 +57,7 @@ public interface UpdatePolicyRequestOrBuilder
    * @return The policy.
    */
   com.google.iam.v2.Policy getPolicy();
+
   /**
    *
    *

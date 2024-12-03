@@ -35,6 +35,7 @@ public final class Channel extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.shopping.type.Channel)
     ChannelOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use Channel.newBuilder() to construct.
   private Channel(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -115,6 +116,7 @@ public final class Channel extends com.google.protobuf.GeneratedMessageV3
      * <code>CHANNEL_ENUM_UNSPECIFIED = 0;</code>
      */
     public static final int CHANNEL_ENUM_UNSPECIFIED_VALUE = 0;
+
     /**
      *
      *
@@ -125,6 +127,7 @@ public final class Channel extends com.google.protobuf.GeneratedMessageV3
      * <code>ONLINE = 1;</code>
      */
     public static final int ONLINE_VALUE = 1;
+
     /**
      *
      *
@@ -367,6 +370,7 @@ public final class Channel extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *

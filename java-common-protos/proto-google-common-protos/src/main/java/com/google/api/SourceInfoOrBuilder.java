@@ -34,6 +34,7 @@ public interface SourceInfoOrBuilder
    * <code>repeated .google.protobuf.Any source_files = 1;</code>
    */
   java.util.List<com.google.protobuf.Any> getSourceFilesList();
+
   /**
    *
    *
@@ -44,6 +45,7 @@ public interface SourceInfoOrBuilder
    * <code>repeated .google.protobuf.Any source_files = 1;</code>
    */
   com.google.protobuf.Any getSourceFiles(int index);
+
   /**
    *
    *
@@ -54,6 +56,7 @@ public interface SourceInfoOrBuilder
    * <code>repeated .google.protobuf.Any source_files = 1;</code>
    */
   int getSourceFilesCount();
+
   /**
    *
    *
@@ -64,6 +67,7 @@ public interface SourceInfoOrBuilder
    * <code>repeated .google.protobuf.Any source_files = 1;</code>
    */
   java.util.List<? extends com.google.protobuf.AnyOrBuilder> getSourceFilesOrBuilderList();
+
   /**
    *
    *

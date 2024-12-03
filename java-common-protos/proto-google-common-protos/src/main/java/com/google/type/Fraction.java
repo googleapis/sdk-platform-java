@@ -33,6 +33,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.type.Fraction)
     FractionOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use Fraction.newBuilder() to construct.
   private Fraction(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -60,6 +61,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
 
   public static final int NUMERATOR_FIELD_NUMBER = 1;
   private long numerator_ = 0L;
+
   /**
    *
    *
@@ -78,6 +80,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
 
   public static final int DENOMINATOR_FIELD_NUMBER = 2;
   private long denominator_ = 0L;
+
   /**
    *
    *
@@ -261,6 +264,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -450,6 +454,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
     private int bitField0_;
 
     private long numerator_;
+
     /**
      *
      *
@@ -465,6 +470,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
     public long getNumerator() {
       return numerator_;
     }
+
     /**
      *
      *
@@ -484,6 +490,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -503,6 +510,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
     }
 
     private long denominator_;
+
     /**
      *
      *
@@ -519,6 +527,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
     public long getDenominator() {
       return denominator_;
     }
+
     /**
      *
      *
@@ -539,6 +548,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *

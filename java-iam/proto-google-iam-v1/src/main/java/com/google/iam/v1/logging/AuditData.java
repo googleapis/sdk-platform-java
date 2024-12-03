@@ -35,6 +35,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
     // @@protoc_insertion_point(message_implements:google.iam.v1.logging.AuditData)
     AuditDataOrBuilder {
   private static final long serialVersionUID = 0L;
+
   // Use AuditData.newBuilder() to construct.
   private AuditData(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
@@ -66,6 +67,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
   private int bitField0_;
   public static final int POLICY_DELTA_FIELD_NUMBER = 2;
   private com.google.iam.v1.PolicyDelta policyDelta_;
+
   /**
    *
    *
@@ -81,6 +83,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
   public boolean hasPolicyDelta() {
     return ((bitField0_ & 0x00000001) != 0);
   }
+
   /**
    *
    *
@@ -96,6 +99,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
   public com.google.iam.v1.PolicyDelta getPolicyDelta() {
     return policyDelta_ == null ? com.google.iam.v1.PolicyDelta.getDefaultInstance() : policyDelta_;
   }
+
   /**
    *
    *
@@ -272,6 +276,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    *
    *
@@ -476,6 +481,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
             com.google.iam.v1.PolicyDelta.Builder,
             com.google.iam.v1.PolicyDeltaOrBuilder>
         policyDeltaBuilder_;
+
     /**
      *
      *
@@ -490,6 +496,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
     public boolean hasPolicyDelta() {
       return ((bitField0_ & 0x00000001) != 0);
     }
+
     /**
      *
      *
@@ -510,6 +517,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
         return policyDeltaBuilder_.getMessage();
       }
     }
+
     /**
      *
      *
@@ -532,6 +540,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -551,6 +560,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -578,6 +588,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
       }
       return this;
     }
+
     /**
      *
      *
@@ -597,6 +608,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return this;
     }
+
     /**
      *
      *
@@ -611,6 +623,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
       onChanged();
       return getPolicyDeltaFieldBuilder().getBuilder();
     }
+
     /**
      *
      *
@@ -629,6 +642,7 @@ public final class AuditData extends com.google.protobuf.GeneratedMessageV3
             : policyDelta_;
       }
     }
+
     /**
      *
      *

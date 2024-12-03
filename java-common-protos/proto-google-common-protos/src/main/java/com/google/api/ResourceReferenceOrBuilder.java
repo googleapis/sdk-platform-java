@@ -55,6 +55,7 @@ public interface ResourceReferenceOrBuilder
    * @return The type.
    */
   java.lang.String getType();
+
   /**
    *
    *
@@ -109,6 +110,7 @@ public interface ResourceReferenceOrBuilder
    * @return The childType.
    */
   java.lang.String getChildType();
+
   /**
    *
    *

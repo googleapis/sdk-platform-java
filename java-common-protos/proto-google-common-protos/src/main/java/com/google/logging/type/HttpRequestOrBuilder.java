@@ -36,6 +36,7 @@ public interface HttpRequestOrBuilder
    * @return The requestMethod.
    */
   java.lang.String getRequestMethod();
+
   /**
    *
    *
@@ -63,6 +64,7 @@ public interface HttpRequestOrBuilder
    * @return The requestUrl.
    */
   java.lang.String getRequestUrl();
+
   /**
    *
    *
@@ -134,6 +136,7 @@ public interface HttpRequestOrBuilder
    * @return The userAgent.
    */
   java.lang.String getUserAgent();
+
   /**
    *
    *
@@ -163,6 +166,7 @@ public interface HttpRequestOrBuilder
    * @return The remoteIp.
    */
   java.lang.String getRemoteIp();
+
   /**
    *
    *
@@ -192,6 +196,7 @@ public interface HttpRequestOrBuilder
    * @return The serverIp.
    */
   java.lang.String getServerIp();
+
   /**
    *
    *
@@ -221,6 +226,7 @@ public interface HttpRequestOrBuilder
    * @return The referer.
    */
   java.lang.String getReferer();
+
   /**
    *
    *
@@ -249,6 +255,7 @@ public interface HttpRequestOrBuilder
    * @return Whether the latency field is set.
    */
   boolean hasLatency();
+
   /**
    *
    *
@@ -262,6 +269,7 @@ public interface HttpRequestOrBuilder
    * @return The latency.
    */
   com.google.protobuf.Duration getLatency();
+
   /**
    *
    *
@@ -342,6 +350,7 @@ public interface HttpRequestOrBuilder
    * @return The protocol.
    */
   java.lang.String getProtocol();
+
   /**
    *
    *
