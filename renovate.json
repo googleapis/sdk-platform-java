@@ -60,6 +60,19 @@
       ],
       "depNameTemplate": "com.google.cloud:google-cloud-shared-config",
       "datasourceTemplate": "maven"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "^.cloudbuild/library_generation/library_generation.Dockerfile$"
+      ],
+      "matchStrings": [
+        "OWLBOT_CLI_COMMITTISH=(?<currentDigest>.*?)\\n"
+      ],
+      "currentValueTemplate": "main",
+      "depNameTemplate": "repo-automation-bots",
+      "packageNameTemplate": "https://github.com/googleapis/repo-automation-bots",
+      "datasourceTemplate": "git-refs"
     }
   ],
   "packageRules": [
@@ -182,6 +195,19 @@
         "^io.netty"
       ],
       "groupName": "Netty dependencies"
+    },
+    {
+      "groupName": "Library generation image updates",
+      "matchDatasources": [
+        "git-refs",
+        "docker"
+      ],
+      "matchPackagePatterns": [
+        "https://github.com/googleapis/repo-automation-bots",
+        "docker.io/library/maven",
+        "docker.io/library/alpine",
+        "docker.io/library/python"
+      ]
     }
   ]
 }
