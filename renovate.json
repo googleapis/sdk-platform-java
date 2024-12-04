@@ -73,6 +73,19 @@
       "depNameTemplate": "repo-automation-bots",
       "packageNameTemplate": "https://github.com/googleapis/repo-automation-bots",
       "datasourceTemplate": "git-refs"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "^.cloudbuild/library_generation/library_generation.Dockerfile$"
+      ],
+      "matchStrings": [
+        "GLIB_MUS_SHA=(?<currentDigest>.*?)\\n"
+      ],
+      "currentValueTemplate": "master",
+      "depNameTemplate": "glib_mus",
+      "packageNameTemplate": "https://gitlab.com/manoel-linux1/GlibMus-HQ",
+      "datasourceTemplate": "git-refs"
     }
   ],
   "packageRules": [
