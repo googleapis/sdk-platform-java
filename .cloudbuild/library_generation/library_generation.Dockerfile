@@ -50,7 +50,7 @@ RUN chmod a+x compile-x86_64-alpine-linux.sh
 RUN sh compile-x86_64-alpine-linux.sh
 
 # python:3.12.7-alpine3.20
-FROM docker.io/library/python@sha256:5049c050bdc68575a10bcb1885baa0689b6c15152d8a56a7e399fb49f783bf98 as final
+FROM docker.io/library/python@sha256:e95be020750503923c5d4f51a56ab8f5b21e40cdce66fb7000e270df68d04f8e as final
 
 ARG OWLBOT_CLI_COMMITTISH=ab222d9a20bb27586433caedc70f049b7853db7e
 ARG PROTOC_VERSION=25.5
