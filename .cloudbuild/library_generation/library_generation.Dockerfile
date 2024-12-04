@@ -31,7 +31,7 @@ FROM docker.io/library/alpine:3.20.3@sha256:beefdbd8a1da6d2915566fde36db9db0b524
 
 RUN apk add git sudo
 # This SHA is the latest known-to-work version of this binary compatibility tool
-ARG GLIB_MUS_SHA=e94aca542e3ab08b42aa0b0d6e72478b935bb8e8
+ARG GLIB_MUS_SHA=7717dd4dc26377dd9cedcc92b72ebf35f9e68a2d
 WORKDIR /home
 
 # Install compatibility layer to run glibc-based programs (such as the
