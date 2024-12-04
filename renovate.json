@@ -217,6 +217,7 @@
       ],
       "matchPackagePatterns": [
         "https://github.com/googleapis/repo-automation-bots",
+        "https://gitlab.com/manoel-linux1/GlibMus-HQ",
         "docker.io/library/maven",
         "docker.io/library/alpine",
         "docker.io/library/python"
