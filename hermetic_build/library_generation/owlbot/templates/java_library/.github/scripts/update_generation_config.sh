@@ -153,7 +153,7 @@ if [[ "${unpushed_commit}" -eq 0 ]]; then
     echo "No unpushed commits, exit"
     exit 0
 fi
-git commit -m "${title}"
+
 if [ -z "${pr_num}" ]; then
   git remote add remote_repo https://cloud-java-bot:"${GH_TOKEN}@github.com/${repo}.git"
   git fetch -q --unshallow remote_repo
