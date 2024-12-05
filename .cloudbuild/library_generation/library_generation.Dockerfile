@@ -47,7 +47,7 @@ RUN git checkout "${GLIB_MUS_SHA}"
 RUN chmod a+x compile-x86_64-alpine-linux.sh
 RUN sh compile-x86_64-alpine-linux.sh
 
-FROM docker.io/library/python:3.12.7-alpine3.20@sha256:5049c050bdc68575a10bcb1885baa0689b6c15152d8a56a7e399fb49f783bf98 as final
+FROM docker.io/library/python:3.13.1-alpine3.20@sha256:e75706bf1e6b27311be500015333c8d3e05a9b4ca3908253d490a1889ab632ef as final
 
 ARG OWLBOT_CLI_COMMITTISH=ab222d9a20bb27586433caedc70f049b7853db7e
 ARG PROTOC_VERSION=25.5
