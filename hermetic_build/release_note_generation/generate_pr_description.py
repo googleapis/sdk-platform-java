@@ -115,7 +115,8 @@ def get_repo_level_commit_messages(
             f"current_commit ({current_commit_sha[:7]}, committed on "
             f"{current_commit_time}) should be newer than or equal to "
             f"baseline_commit ({baseline_commit_sha[:7]}, committed on "
-            f"{baseline_commit_time})."
+            f"{baseline_commit_time}) (is this branch up to date with "
+            f"the base branch?)."
         )
     qualified_commits = {}
     commit = current_commit
