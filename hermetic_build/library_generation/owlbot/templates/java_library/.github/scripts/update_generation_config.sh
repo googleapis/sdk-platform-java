@@ -142,6 +142,12 @@ else
     git commit -m "${title}"
 fi
 
+# There are potentially at most two commits: merge commit and change commit.
+# We want to exit the script if no commit happens (otherwise this will be an
+# infinite loop).
+# `git cherry` is a way to find whether the local branch has commits that are
+# not in the remote branch.
+# If we find any such commit, push them to remote branch.
 unpushed_commit=$(git cherry -v "origin/${current_branch}" | wc -l)
 if [[ "${unpushed_commit}" -eq 0 ]]; then
     echo "No unpushed commits, exit"

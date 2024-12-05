@@ -55,9 +55,9 @@ current_branch="generate-libraries-${base_branch}"
 title="chore: update googleapis commit at $(date)"
 
 git checkout "${base_branch}"
-# try to find a open pull request associated with the branch
+# Try to find a open pull request associated with the branch
 pr_num=$(gh pr list -s open -H "${current_branch}" -q . --json number | jq ".[] | .number")
-# create a branch if there's no open pull request associated with the
+# Create a branch if there's no open pull request associated with the
 # branch; otherwise checkout the pull request.
 if [ -z "${pr_num}" ]; then
   git checkout -b "${current_branch}"
@@ -65,12 +65,12 @@ else
   gh pr checkout "${pr_num}"
 fi
 
-# only allow fast-forward merging; exit with non-zero result if there's merging
+# Only allow fast-forward merging; exit with non-zero result if there's merging
 # conflict.
 git merge -m "chore: merge ${base_branch} into ${current_branch}" "${base_branch}"
 
 mkdir tmp-googleapis
-# use partial clone because only commit history is needed.
+# Use partial clone because only commit history is needed.
 git clone --filter=blob:none https://github.com/googleapis/googleapis.git tmp-googleapis
 pushd tmp-googleapis
 git pull
@@ -88,6 +88,12 @@ else
     git commit -m "${title}"
 fi
 
+# There are potentially at most two commits: merge commit and change commit.
+# We want to exit the script if no commit happens (otherwise this will be an
+# infinite loop).
+# `git cherry` is a way to find whether the local branch has commits that are
+# not in the remote branch.
+# If we find any such commit, push them to remote branch.
 unpushed_commit=$(git cherry -v "origin/${current_branch}" | wc -l)
 if [[ "${unpushed_commit}" -eq 0 ]]; then
     echo "No unpushed commits, exit"
