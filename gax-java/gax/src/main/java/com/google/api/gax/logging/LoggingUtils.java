@@ -31,86 +31,47 @@
 package com.google.api.gax.logging;
 
 import com.google.api.core.InternalApi;
-import com.google.gson.JsonObject;
+import com.google.api.gax.rpc.internal.EnvironmentProvider;
+import com.google.api.gax.rpc.internal.SystemEnvironmentProvider;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import org.slf4j.Marker;
-import org.slf4j.helpers.FormattingTuple;
-import org.slf4j.helpers.MessageFormatter;
-import org.slf4j.helpers.NOPLogger;
 
 @InternalApi
 public class LoggingUtils {
 
-  private static final java.util.logging.Logger LOGGER =
-      java.util.logging.Logger.getLogger(LoggingUtils.class.getName());
+  private static EnvironmentProvider environmentProvider = SystemEnvironmentProvider.getInstance();
+  private static final Logger NO_OP_LOGGER = org.slf4j.helpers.NOPLogger.NOP_LOGGER;
+  private static boolean loggingEnabled = isLoggingEnabled();
+  static final String GOOGLE_SDK_JAVA_LOGGING = "GOOGLE_SDK_JAVA_LOGGING";
+  // expose this setter for testing purposes
+  static void setEnvironmentProvider(EnvironmentProvider provider) {
+    environmentProvider = provider;
+    // Recalculate LOGGING_ENABLED after setting the new provider
+    loggingEnabled = isLoggingEnabled();
+  }
 
   private LoggingUtils() {}
 
   public static Logger getLogger(Class<?> clazz) {
-    if (!isLoggingEnabled()) {
+    return getLogger(clazz, new DefaultLoggerFactoryProvider());
+  }
+
+  // constructor with LoggerFactoryProvider to make testing easier
+  static Logger getLogger(Class<?> clazz, LoggerFactoryProvider factoryProvider) {
+    if (loggingEnabled) {
+      return factoryProvider.getLoggerFactory().getLogger(clazz.getName());
+    } else {
       //  use SLF4j's NOP logger regardless of bindings
-      return LoggerFactory.getLogger(NOPLogger.class);
-    }
-
-    ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
-    if (loggerFactory != null && !(loggerFactory instanceof org.slf4j.helpers.NOPLoggerFactory)) {
-      // Use SLF4j binding when present
-      return LoggerFactory.getLogger(clazz);
-    }
-    // No SLF4j binding found, use JUL as fallback
-    Logger logger = new JulWrapperLogger(clazz.getName());
-    logger.info("No SLF4J providers were found, fall back to JUL.");
-    return logger;
-  }
-
-  public static boolean isLoggingEnabled() {
-    String enableLogging = System.getenv("GOOGLE_SDK_JAVA_LOGGING");
-    LOGGER.info("GOOGLE_SDK_JAVA_LOGGING=" + enableLogging); // log for debug now, remove it.
-    return "true".equalsIgnoreCase(enableLogging);
-  }
-
-  public static JsonObject mergeJsonObject(JsonObject jsonObject1, JsonObject jsonObject2) {
-    JsonObject mergedObject = jsonObject1.deepCopy();
-    jsonObject2.entrySet().forEach(entry -> mergedObject.add(entry.getKey(), entry.getValue()));
-    return mergedObject;
-  }
-
-  public static Level mapToJulLevel(org.slf4j.event.Level slf4jLevel) {
-    switch (slf4jLevel) {
-      case ERROR:
-        return Level.SEVERE;
-      case WARN:
-        return Level.WARNING;
-      case INFO:
-        return Level.INFO;
-      case DEBUG:
-        return Level.FINE;
-      case TRACE:
-        return Level.FINEST;
-      default:
-        return Level.INFO;
+      return NO_OP_LOGGER;
     }
   }
 
   public static void logWithMDC(
       Logger logger, org.slf4j.event.Level level, Map<String, String> contextMap, String message) {
-
-    if (logger instanceof JulWrapperLogger) {
-      // Simulate MDC behavior for JUL
-      LogRecord record = new LogRecord(mapToJulLevel(level), message);
-      // Add context map to the LogRecord
-      record.setParameters(new Object[] {contextMap});
-      ((JulWrapperLogger) logger).getJulLogger().log(record);
-      return;
-    }
     contextMap.forEach(MDC::put);
-
     switch (level) {
       case TRACE:
         logger.trace(message);
@@ -131,337 +92,22 @@ public class LoggingUtils {
         logger.info(message);
         // Default to INFO level
     }
-
     MDC.clear();
   }
 
-  // JulWrapperLogger implementation
-  static class JulWrapperLogger implements Logger {
+  static boolean isLoggingEnabled() {
+    String enableLogging = environmentProvider.getenv(GOOGLE_SDK_JAVA_LOGGING);
+    return "true".equalsIgnoreCase(enableLogging);
+  }
 
-    private final java.util.logging.Logger julLogger;
+  interface LoggerFactoryProvider {
+    ILoggerFactory getLoggerFactory();
+  }
 
-    public JulWrapperLogger(String name) {
-      this.julLogger = java.util.logging.Logger.getLogger(name);
-    }
-
-    public java.util.logging.Logger getJulLogger() {
-      return julLogger;
-    }
-
+  static class DefaultLoggerFactoryProvider implements LoggerFactoryProvider {
     @Override
-    public String getName() {
-      return julLogger.getName();
-    }
-
-    @Override
-    public boolean isTraceEnabled() {
-      return julLogger.isLoggable(java.util.logging.Level.FINEST);
-    }
-
-    @Override
-    public void trace(String msg) {
-      julLogger.log(java.util.logging.Level.FINEST, msg);
-    }
-
-    @Override
-    public void trace(String s, Object o) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void trace(String s, Object o, Object o1) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void trace(String s, Object... objects) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void trace(String s, Throwable throwable) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public boolean isTraceEnabled(Marker marker) {
-      return false;
-    }
-
-    @Override
-    public void trace(Marker marker, String s) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void trace(Marker marker, String s, Object o) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void trace(Marker marker, String s, Object o, Object o1) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void trace(Marker marker, String s, Object... objects) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void trace(Marker marker, String s, Throwable throwable) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public boolean isDebugEnabled() {
-      return julLogger.isLoggable(Level.FINE);
-    }
-
-    @Override
-    public void debug(String msg) {
-
-      if (isDebugEnabled()) {
-        julLogger.log(java.util.logging.Level.FINE, msg);
-      }
-    }
-
-    @Override
-    public void debug(String format, Object arg) {
-      if (isDebugEnabled()) {
-        FormattingTuple ft = MessageFormatter.format(format, arg);
-        julLogger.log(Level.FINE, ft.getMessage());
-      }
-    }
-
-    @Override
-    public void debug(String s, Object o, Object o1) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void debug(String s, Object... objects) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void debug(String s, Throwable throwable) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public boolean isDebugEnabled(Marker marker) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void debug(Marker marker, String s) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void debug(Marker marker, String s, Object o) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void debug(Marker marker, String s, Object o, Object o1) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void debug(Marker marker, String s, Object... objects) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void debug(Marker marker, String s, Throwable throwable) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public boolean isInfoEnabled() {
-      return julLogger.isLoggable(Level.INFO);
-    }
-
-    @Override
-    public void info(String msg) {
-      if (isInfoEnabled()) {
-        julLogger.log(java.util.logging.Level.INFO, msg);
-      }
-    }
-
-    @Override
-    public void info(String format, Object arg) {
-      if (isInfoEnabled()) {
-        FormattingTuple ft = MessageFormatter.format(format, arg);
-        julLogger.log(java.util.logging.Level.INFO, ft.getMessage());
-      }
-    }
-
-    @Override
-    public void info(String s, Object o, Object o1) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void info(String s, Object... objects) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void info(String s, Throwable throwable) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public boolean isInfoEnabled(Marker marker) {
-      return true;
-    }
-
-    @Override
-    public void info(Marker marker, String s) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void info(Marker marker, String s, Object o) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void info(Marker marker, String s, Object o, Object o1) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void info(Marker marker, String s, Object... objects) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void info(Marker marker, String s, Throwable throwable) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public boolean isWarnEnabled() {
-      return true;
-    }
-
-    @Override
-    public void warn(String msg) {
-      julLogger.log(Level.WARNING, msg);
-    }
-
-    @Override
-    public void warn(String s, Object o) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void warn(String s, Object... objects) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void warn(String s, Object o, Object o1) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void warn(String s, Throwable throwable) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public boolean isWarnEnabled(Marker marker) {
-      return false;
-    }
-
-    @Override
-    public void warn(Marker marker, String s) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void warn(Marker marker, String s, Object o) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void warn(Marker marker, String s, Object o, Object o1) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void warn(Marker marker, String s, Object... objects) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void warn(Marker marker, String s, Throwable throwable) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public boolean isErrorEnabled() {
-      return false;
-    }
-
-    @Override
-    public void error(String s) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void error(String s, Object o) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void error(String s, Object o, Object o1) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void error(String s, Object... objects) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void error(String s, Throwable throwable) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public boolean isErrorEnabled(Marker marker) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void error(Marker marker, String s) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void error(Marker marker, String s, Object o) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void error(Marker marker, String s, Object o, Object o1) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void error(Marker marker, String s, Object... objects) {
-      throw new UnsupportedOperationException("This method is not supported.");
-    }
-
-    @Override
-    public void error(Marker marker, String s, Throwable throwable) {
-      throw new UnsupportedOperationException("This method is not supported.");
+    public ILoggerFactory getLoggerFactory() {
+      return LoggerFactory.getILoggerFactory();
     }
   }
 }
