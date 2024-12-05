@@ -195,19 +195,6 @@
         "^io.netty"
       ],
       "groupName": "Netty dependencies"
-    },
-    {
-      "groupName": "Library generation image updates",
-      "matchDatasources": [
-        "git-refs",
-        "docker"
-      ],
-      "matchPackagePatterns": [
-        "https://github.com/googleapis/repo-automation-bots",
-        "docker.io/library/maven",
-        "docker.io/library/alpine",
-        "docker.io/library/python"
-      ]
     }
   ]
 }
