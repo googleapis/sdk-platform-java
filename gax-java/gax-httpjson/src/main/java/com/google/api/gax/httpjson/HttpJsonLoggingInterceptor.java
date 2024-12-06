@@ -124,7 +124,7 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
                 }
                 if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
                   LoggingUtils.logWithMDC(
-                      logger, Level.INFO, serviceAndRpc, "HTTP request finished.");
+                      logger, Level.INFO, serviceAndRpc, "received HTTP response");
                 }
                 if (logger.isDebugEnabled()) {
                   // Add the array of payloads to the responseLogData

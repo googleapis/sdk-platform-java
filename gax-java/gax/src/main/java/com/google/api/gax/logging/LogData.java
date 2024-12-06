@@ -94,50 +94,32 @@ public abstract class LogData {
 
   // helper functions to convert to map for logging
   // todo: error handling?
-  public Map<String, String> serviceAndRpcToMap() {
-    Map<String, String> map = new HashMap<>();
-    map.put("serviceName", serviceName());
-    map.put("rpcName", rpcName());
-    return map;
-  }
-
-  public Map<String, String> requestDetailsToMap() {
-    Map<String, String> map = new HashMap<>();
-    map.put("serviceName", serviceName());
-    map.put("rpcName", rpcName());
-    map.put("request.headers", requestHeaders());
-    map.put("request.payload", requestPayload());
-    return map;
-  }
-
-  public Map<String, String> responseInfoToMap() {
-    Map<String, String> map = new HashMap<>();
-    map.put("serviceName", serviceName());
-    map.put("rpcName", rpcName());
-    map.put("response.status", responseStatus());
-    return map;
-  }
-
-  public Map<String, String> responseDetailsToMap() {
-    Map<String, String> map = new HashMap<>();
-    map.put("serviceName", serviceName());
-    map.put("rpcName", rpcName());
-    map.put("response.status", responseStatus());
-    map.put("response.payload", gson.toJson(responsePayload()));
-    map.put("response.headers", responseHeaders());
-    return map;
-  }
-
   public Map<String, String> toMap() {
     Map<String, String> map = new HashMap<>();
-    map.put("serviceName", serviceName());
-    map.put("rpcName", rpcName());
-    map.put("requestId", requestId());
-    map.put("request.headers", requestHeaders());
-    map.put("request.payload", requestPayload());
-    map.put("response.status", responseStatus());
-    map.put("response.headers", responseHeaders());
-    map.put("response.payload", gson.toJson(responsePayload()));
+    if (serviceName() != null) {
+      map.put("serviceName", serviceName());
+    }
+    if (rpcName() != null) {
+      map.put("rpcName", rpcName());
+    }
+    if (requestId() != null) {
+      map.put("requestId", requestId());
+    }
+    if (requestHeaders() != null) {
+      map.put("request.headers", requestHeaders());
+    }
+    if (requestPayload() != null) {
+      map.put("request.payload", requestPayload());
+    }
+    if (responseStatus() != null) {
+      map.put("response.status", responseStatus());
+    }
+    if (responseHeaders() != null) {
+      map.put("response.headers", responseHeaders());
+    }
+    if (responsePayload() != null) {
+      map.put("response.payload", gson.toJson(responsePayload()));
+    }
     return map;
   }
 }

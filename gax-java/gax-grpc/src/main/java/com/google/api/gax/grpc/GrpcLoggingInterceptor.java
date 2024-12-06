@@ -117,13 +117,10 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
           JsonObject requestHeaders = mapHeadersToJsonObject(headers);
           logDataBuilder.requestHeaders(gson.toJson(requestHeaders));
           LoggingUtils.logWithMDC(
-              logger, Level.DEBUG, logDataBuilder.build().toMap(), "Sending gRPC request.");
+              logger, Level.DEBUG, logDataBuilder.build().toMap(), "Sending gRPC request");
         } else {
           LoggingUtils.logWithMDC(
-              logger,
-              Level.INFO,
-              logDataBuilder.build().serviceAndRpcToMap(),
-              "Sending gRPC request");
+              logger, Level.INFO, logDataBuilder.build().toMap(), "Sending gRPC request");
         }
       }
     } catch (Exception e) {
@@ -151,11 +148,11 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
       }
       if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
         Map<String, String> responseData = logDataBuilder.build().toMap();
-        LoggingUtils.logWithMDC(logger, Level.INFO, responseData, "Received response.");
+        LoggingUtils.logWithMDC(logger, Level.INFO, responseData, "Received Grpc response");
       }
       if (logger.isDebugEnabled()) {
         Map<String, String> responsedDetailsMap = logDataBuilder.build().toMap();
-        LoggingUtils.logWithMDC(logger, Level.DEBUG, responsedDetailsMap, "Received response.");
+        LoggingUtils.logWithMDC(logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
       }
     } catch (Exception e) {
       logger.error("Error logging request response", e);
@@ -169,7 +166,7 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
         logDataBuilder.requestPayload(gson.toJson(message)).requestId(requestId);
         Map<String, String> requestDetailsMap = logDataBuilder.build().toMap();
         LoggingUtils.logWithMDC(
-            logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request: request payload.");
+            logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request: request payload");
       }
     } catch (Exception e) {
       logger.error("Error logging request details", e);
