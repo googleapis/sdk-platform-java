@@ -30,7 +30,8 @@ fi
 # Get the directory of the build script
 scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
 cd "${scriptDir}/../.." # cd to the root of this repo
-source "$scriptDir/common.sh"
+# common.sh lives in the presubmit folder
+source "$scriptDir/../presubmit/common.sh"
 setup_maven_mirror
 
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
