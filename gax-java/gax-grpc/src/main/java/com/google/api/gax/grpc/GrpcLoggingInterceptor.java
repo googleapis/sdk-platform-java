@@ -30,9 +30,9 @@
 
 package com.google.api.gax.grpc;
 
+import com.google.api.gax.logging.LogData;
 import com.google.api.gax.logging.LoggingUtils;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import io.grpc.CallOptions;
 import io.grpc.Channel;
@@ -43,7 +43,6 @@ import io.grpc.ForwardingClientCallListener.SimpleForwardingClientCallListener;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
 import io.grpc.Status;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import org.slf4j.Logger;
@@ -58,94 +57,119 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
   public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
       MethodDescriptor<ReqT, RespT> method, CallOptions callOptions, Channel next) {
 
-    Map<String, String> serviceAndRpc = new HashMap<>();
-    Map<String, String> requestLogData = new HashMap<>();
-    Map<String, String> responseLogData = new HashMap<>();
-
-    // Initialize a JsonArray to hold all responses
-    JsonArray responsePayloads = new JsonArray();
+    LogData.Builder logDataBuilder = LogData.builder();
 
     return new ForwardingClientCall.SimpleForwardingClientCall<ReqT, RespT>(
         next.newCall(method, callOptions)) {
 
       @Override
       public void start(Listener<RespT> responseListener, Metadata headers) {
-        if (logger.isInfoEnabled()) {
-          String requestId = UUID.randomUUID().toString();
-          String serviceName = method.getServiceName();
-          String methodName = method.getFullMethodName();
-
-          serviceAndRpc.put("serviceName", serviceName);
-          serviceAndRpc.put("rpcName", methodName);
-          serviceAndRpc.put("requestId", requestId);
-        }
-        if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
-          LoggingUtils.logWithMDC(logger, Level.INFO, serviceAndRpc, "Sending gRPC request");
-        }
-        if (logger.isDebugEnabled()) {
-          requestLogData.putAll(serviceAndRpc);
-
-          JsonObject requestHeaders = mapHeadersToJsonObject(headers);
-          requestLogData.put("request.headers", gson.toJson(requestHeaders));
-        }
-
-        SimpleForwardingClientCallListener<RespT> loggingListener =
+        logRequest(method, logDataBuilder, headers);
+        SimpleForwardingClientCallListener<RespT> responseLoggingListener =
             new SimpleForwardingClientCallListener<RespT>(responseListener) {
               @Override
               public void onHeaders(Metadata headers) {
-
-                if (logger.isDebugEnabled()) {
-                  // Access and add response headers
-                  JsonObject responseHeaders = mapHeadersToJsonObject(headers);
-                  responseLogData.put("response.headers", gson.toJson(responseHeaders));
-                }
+                recordResponseHeaders(headers, logDataBuilder);
                 super.onHeaders(headers);
               }
 
               @Override
               public void onMessage(RespT message) {
-                if (logger.isDebugEnabled()) {
-                  // Add each message to the array
-                  responsePayloads.add(gson.toJsonTree(message));
-                }
+                recordResponsePayload(message, logDataBuilder);
                 super.onMessage(message);
               }
 
               @Override
               public void onClose(Status status, Metadata trailers) {
-                if (logger.isInfoEnabled()) {
-                  serviceAndRpc.put("response.status", status.getCode().name());
-                  responseLogData.putAll(serviceAndRpc);
-                }
-                if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
-                  LoggingUtils.logWithMDC(logger, Level.INFO, serviceAndRpc, "Received response.");
-                }
-                if (logger.isDebugEnabled()) {
-                  // Add the array of payloads to the responseLogData
-                  responseLogData.put("response.payload", gson.toJson(responsePayloads));
-
-                  LoggingUtils.logWithMDC(
-                      logger, Level.DEBUG, responseLogData, "Received response.");
-                }
-
+                logResponse(status, logDataBuilder);
                 super.onClose(status, trailers);
               }
             };
 
-        super.start(loggingListener, headers);
+        super.start(responseLoggingListener, headers);
       }
 
       @Override
       public void sendMessage(ReqT message) {
-
-        if (logger.isDebugEnabled()) {
-          requestLogData.put("request.payload", gson.toJson(message));
-          LoggingUtils.logWithMDC(logger, Level.DEBUG, requestLogData, "Sending gRPC request.");
-        }
-
+        logResponseDetails(message, logDataBuilder);
         super.sendMessage(message);
       }
     };
+  }
+
+  // --- Helper methods for logging ---
+  private <ReqT, RespT> void logRequest(
+      MethodDescriptor<ReqT, RespT> method, LogData.Builder logDataBuilder, Metadata headers) {
+
+    if (logger.isInfoEnabled()) {
+      String requestId = UUID.randomUUID().toString();
+      logDataBuilder
+          .serviceName(method.getServiceName())
+          .rpcName(method.getFullMethodName())
+          .requestId(requestId);
+      // serviceAndRpc.put("serviceName", method.getServiceName());
+      // serviceAndRpc.put("rpcName", method.getFullMethodName());
+      // serviceAndRpc.put("requestId", requestId);
+
+      if (!logger.isDebugEnabled()) {
+        LoggingUtils.logWithMDC(
+            logger,
+            Level.INFO,
+            logDataBuilder.build().serviceAndRpcToMap(),
+            "Sending gRPC request");
+      }
+    }
+    if (logger.isDebugEnabled()) {
+      // requestLogData.putAll(serviceAndRpc);
+      JsonObject requestHeaders = mapHeadersToJsonObject(headers);
+      // requestLogData.put("request.headers", gson.toJson(requestHeaders));
+      logDataBuilder.requestHeaders(gson.toJson(requestHeaders));
+    }
+  }
+
+  private void recordResponseHeaders(Metadata headers, LogData.Builder logDataBuilder) {
+    if (logger.isDebugEnabled()) {
+      // Access and add response headers
+      JsonObject responseHeaders = mapHeadersToJsonObject(headers);
+      // responseLogData.put("response.headers", gson.toJson(responseHeaders));
+      logDataBuilder.responseHeaders(gson.toJson(responseHeaders));
+    }
+  }
+
+  private <RespT> void recordResponsePayload(RespT message, LogData.Builder logDataBuilder) {
+    if (logger.isDebugEnabled()) {
+      // Add each message to the array
+      // responsePayloads.add(gson.toJsonTree(message));
+      logDataBuilder.responsePayload(gson.toJsonTree(message));
+    }
+  }
+
+  private void logResponse(Status status, LogData.Builder logDataBuilder) {
+    if (logger.isInfoEnabled()) {
+      // serviceAndRpc.put("response.status", status.getCode().name());
+      // responseLogData.putAll(serviceAndRpc);
+      logDataBuilder.responseStatus(status.getCode().name());
+    }
+    if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
+      Map<String, String> responseData = logDataBuilder.build().responseInfoToMap();
+      LoggingUtils.logWithMDC(logger, Level.INFO, responseData, "Received response.");
+    }
+    if (logger.isDebugEnabled()) {
+      // Add the array of payloads to the responseLogData
+      // responseLogData.put("response.payload", gson.toJson(responsePayloads));
+      // logDataBuilder.responsePayload(gson.toJson(responsePayloads));
+      Map<String, String> responsedDetailsMap = logDataBuilder.build().responseDetailsToMap();
+      LoggingUtils.logWithMDC(logger, Level.DEBUG, responsedDetailsMap, "Received response.");
+    }
+  }
+
+  private <RespT> void logResponseDetails(RespT message, LogData.Builder logDataBuilder) {
+    if (logger.isDebugEnabled()) {
+      // requestLogData.put("request.payload", gson.toJson(message));
+      logDataBuilder.requestPayload(gson.toJson(message));
+      Map<String, String> requestDetailsMap = logDataBuilder.build().requestDetailsToMap();
+      LoggingUtils.logWithMDC(logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request.");
+    }
   }
 
   private static JsonObject mapHeadersToJsonObject(Metadata headers) {
