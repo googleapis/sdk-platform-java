@@ -1,11 +1,13 @@
 package com.google.api.gax.httpjson;
 
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall.SimpleForwardingHttpJsonClientCall;
+import com.google.api.gax.httpjson.ForwardingHttpJsonClientCallListener.SimpleForwardingHttpJsonClientCallListener;
 import com.google.api.gax.logging.LoggingUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.slf4j.Logger;
@@ -56,22 +58,38 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
           LoggingUtils.logWithMDC(logger, Level.INFO, serviceAndRpc, "Sending HTTP request");
         }
         Map<String, String> responseLogData = new HashMap<>();
-        super.start(
-            new HttpJsonClientCall.Listener<RespT>() {
+        Listener<RespT> forwardingResponseListener =
+            new SimpleForwardingHttpJsonClientCallListener<RespT>(responseListener) {
+              @Override
+              public void onHeaders(HttpJsonMetadata responseHeaders) {
+
+                if (logger.isDebugEnabled()) {
+
+                  Map<String, List<String>> map = new HashMap<>();
+                  responseHeaders
+                      .getHeaders()
+                      .forEach((key, value) -> map.put(key, (List<String>) value));
+                  responseLogData.put("response.headers", gson.toJson(map));
+                }
+                super.onHeaders(responseHeaders);
+              }
+
               @Override
               public void onMessage(RespT message) {
+
                 if (logger.isDebugEnabled()) {
                   // Add each message to the array
                   responsePayloads.add(gson.toJsonTree(message));
                 }
-                responseListener.onMessage(message);
+                super.onMessage(message);
               }
 
               @Override
-              public void onClose(int status, HttpJsonMetadata trailers) {
+              public void onClose(int statusCode, HttpJsonMetadata trailers) {
+
                 if (logger.isInfoEnabled()) {
 
-                  serviceAndRpc.put("response.status", String.valueOf(status));
+                  serviceAndRpc.put("response.status", String.valueOf(statusCode));
                   responseLogData.putAll(serviceAndRpc);
                 }
                 if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
@@ -79,13 +97,6 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
                       logger, Level.INFO, serviceAndRpc, "HTTP request finished.");
                 }
                 if (logger.isDebugEnabled()) {
-
-                  JsonObject jsonHeaders = new JsonObject();
-                  headers
-                      .getHeaders()
-                      .forEach((key, value) -> jsonHeaders.addProperty(key, value.toString()));
-                  responseLogData.put("response.headers", gson.toJson(jsonHeaders));
-
                   // Add the array of payloads to the responseLogData
                   responseLogData.put("response.payload", gson.toJson(responsePayloads));
                   LoggingUtils.logWithMDC(
@@ -94,11 +105,11 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
                       responseLogData,
                       "Received response header and payload.");
                 }
-
-                responseListener.onClose(status, trailers);
+                super.onClose(statusCode, trailers);
               }
-            },
-            headers);
+            };
+
+        super.start(forwardingResponseListener, headers);
       }
 
       @Override
@@ -108,7 +119,6 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
           LoggingUtils.logWithMDC(
               logger, Level.DEBUG, requestLogData, "HTTP request header and payload.");
         }
-
         super.sendMessage(message);
       }
     };

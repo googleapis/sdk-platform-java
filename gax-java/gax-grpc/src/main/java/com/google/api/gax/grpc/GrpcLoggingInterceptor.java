@@ -9,7 +9,7 @@ import io.grpc.Channel;
 import io.grpc.ClientCall;
 import io.grpc.ClientInterceptor;
 import io.grpc.ForwardingClientCall;
-import io.grpc.ForwardingClientCallListener;
+import io.grpc.ForwardingClientCallListener.SimpleForwardingClientCallListener;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
 import io.grpc.Status;
@@ -59,9 +59,19 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
           requestLogData.put("request.headers", gson.toJson(requestHeaders));
         }
 
-        super.start(
-            new ForwardingClientCallListener.SimpleForwardingClientCallListener<RespT>(
-                responseListener) {
+        SimpleForwardingClientCallListener<RespT> loggingListener =
+            new SimpleForwardingClientCallListener<RespT>(responseListener) {
+              @Override
+              public void onHeaders(Metadata headers) {
+
+                if (logger.isDebugEnabled()) {
+                  // Access and add response headers
+                  JsonObject responseHeaders = mapHeadersToJsonObject(headers);
+                  responseLogData.put("response.headers", gson.toJson(responseHeaders));
+                }
+                super.onHeaders(headers);
+              }
+
               @Override
               public void onMessage(RespT message) {
                 if (logger.isDebugEnabled()) {
@@ -81,9 +91,6 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
                   LoggingUtils.logWithMDC(logger, Level.INFO, serviceAndRpc, "Received response.");
                 }
                 if (logger.isDebugEnabled()) {
-                  // Access and add response headers
-                  JsonObject responseHeaders = mapHeadersToJsonObject(trailers);
-                  responseLogData.put("response.headers", gson.toJson(responseHeaders));
                   // Add the array of payloads to the responseLogData
                   responseLogData.put("response.payload", gson.toJson(responsePayloads));
 
@@ -93,8 +100,9 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
                 super.onClose(status, trailers);
               }
-            },
-            headers);
+            };
+
+        super.start(loggingListener, headers);
       }
 
       @Override

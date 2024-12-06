@@ -120,7 +120,8 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
         (ManagedHttpJsonInterceptorChannel) httpJsonTransportChannel.getManagedChannel();
     // call getChannel() twice because interceptors are chained in layers by recursive construction
     // inside com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider.createChannel
-    ManagedHttpJsonInterceptorChannel managedHttpJsonChannel = (ManagedHttpJsonInterceptorChannel) interceptorChannel.getChannel();
+    ManagedHttpJsonInterceptorChannel managedHttpJsonChannel =
+        (ManagedHttpJsonInterceptorChannel) interceptorChannel.getChannel();
     ManagedHttpJsonChannel channel = managedHttpJsonChannel.getChannel();
     assertThat(channel.getExecutor()).isNotNull();
 
@@ -151,7 +152,8 @@ class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChan
         (ManagedHttpJsonInterceptorChannel) httpJsonTransportChannel.getManagedChannel();
     // call getChannel() twice because interceptors are chained in layers by recursive construction
     // inside com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider.createChannel
-    ManagedHttpJsonInterceptorChannel managedHttpJsonChannel = (ManagedHttpJsonInterceptorChannel) interceptorChannel.getChannel();
+    ManagedHttpJsonInterceptorChannel managedHttpJsonChannel =
+        (ManagedHttpJsonInterceptorChannel) interceptorChannel.getChannel();
     ManagedHttpJsonChannel channel = managedHttpJsonChannel.getChannel();
 
     assertThat(channel.getExecutor()).isNotNull();
