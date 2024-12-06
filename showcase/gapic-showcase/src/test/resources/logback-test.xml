@@ -8,10 +8,15 @@
     </encoder>
     <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
       <evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator">
-        <expression>logger.equals("com.google.api.gax.grpc.GrpcLoggingInterceptor") ||
+        <expression>
+          ((logger.equals("com.google.api.gax.grpc.GrpcLoggingInterceptor") ||
           logger.equals("com.google.api.gax.httpjson.HttpJsonLoggingInterceptor") ||
-          logger.equals("com.google.api.gax.tracing.MetricsTracer")</expression>
-
+          logger.equals("com.google.api.gax.tracing.MetricsTracer"))
+          &amp;&amp; (mdc.get("serviceName").equals("google.showcase.v1beta1.Echo")))
+        </expression>
+<!--        <expression>-->
+<!--          mdc.get("serviceName").equals("google.showcase.v1beta1.Echo")-->
+<!--        </expression>-->
       </evaluator>
       <onMatch>ACCEPT</onMatch>
       <onMismatch>DENY</onMismatch>

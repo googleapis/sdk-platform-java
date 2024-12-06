@@ -20,7 +20,6 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.gax.grpc.GrpcStatusCode;
-import com.google.api.gax.logging.JsonContextMapHandler;
 import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.rpc.Status;
@@ -29,12 +28,8 @@ import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -53,29 +48,6 @@ class ITUnaryCallable {
     // Create Http JSON Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
 
-    // Settings for JUL as fallback
-    // Get the root logger
-    Logger rootLogger = LogManager.getLogManager().getLogger("");
-    // Set the root logger's level to ALL to see DEBUG messages
-    // rootLogger.setLevel(Level.ALL);
-    // Remove any existing handlers
-    for (Handler handler : rootLogger.getHandlers()) {
-      rootLogger.removeHandler(handler);
-    }
-
-    // Create and add your ContextMapHandler
-    JsonContextMapHandler contextHandler = new JsonContextMapHandler();
-    contextHandler.setLevel(Level.ALL); // Set the desired level
-    // Add a formatter if needed (optional)
-    // contextHandler.setFormatter(...);
-    rootLogger.addHandler(contextHandler);
-    // Create a ConsoleHandler
-    ConsoleHandler consoleHandler = new ConsoleHandler();
-    consoleHandler.setLevel(Level.ALL);
-    consoleHandler.setFormatter(new SimpleFormatter());
-
-    // Add the ConsoleHandler to the root logger
-    rootLogger.addHandler(consoleHandler);
     LOGGER.log(Level.INFO, "This is log message directly from JUL. Clients created.");
   }
 

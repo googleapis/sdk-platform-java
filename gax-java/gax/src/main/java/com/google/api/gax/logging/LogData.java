@@ -90,6 +90,8 @@ public abstract class LogData {
     public abstract LogData build();
   }
 
+  // helper functions to convert to map for logging
+  // todo: error handling?
   public Map<String, String> serviceAndRpcToMap() {
     Map<String, String> map = new HashMap<>();
     map.put("serviceName", serviceName());
