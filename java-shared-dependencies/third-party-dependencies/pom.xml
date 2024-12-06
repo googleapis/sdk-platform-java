@@ -41,7 +41,7 @@
     <opentelemetry-semconv.version>1.26.0-alpha</opentelemetry-semconv.version>
     <flogger.version>0.8</flogger.version>
     <arrow.version>15.0.2</arrow.version>
-    <dev.cel.version>0.7.1</dev.cel.version>
+    <dev.cel.version>0.8.0</dev.cel.version>
     <com.google.crypto.tink.version>1.15.0</com.google.crypto.tink.version>
   </properties>
 
