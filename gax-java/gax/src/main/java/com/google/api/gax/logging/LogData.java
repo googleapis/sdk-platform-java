@@ -43,8 +43,10 @@ import javax.annotation.Nullable;
 public abstract class LogData {
   private static final Gson gson = new Gson();
 
+  @Nullable
   public abstract String serviceName();
 
+  @Nullable
   public abstract String rpcName();
 
   @Nullable
@@ -135,7 +137,7 @@ public abstract class LogData {
     map.put("request.payload", requestPayload());
     map.put("response.status", responseStatus());
     map.put("response.headers", responseHeaders());
-    map.put("response.payload", responsePayload().toString());
+    map.put("response.payload", gson.toJson(responsePayload()));
     return map;
   }
 }
