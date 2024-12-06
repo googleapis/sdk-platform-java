@@ -67,6 +67,12 @@ public abstract class LogData {
   @Nullable
   public abstract JsonElement responsePayload();
 
+  @Nullable
+  public abstract String httpMethod();
+
+  @Nullable
+  public abstract String httpUrl();
+
   public static Builder builder() {
     return new AutoValue_LogData.Builder();
   }
@@ -88,6 +94,10 @@ public abstract class LogData {
     public abstract Builder responseHeaders(String responseHeaders);
 
     public abstract Builder responsePayload(JsonElement responsePayload);
+
+    public abstract Builder httpMethod(String httpMethod);
+
+    public abstract Builder httpUrl(String httpUrl);
 
     public abstract LogData build();
   }
@@ -119,6 +129,12 @@ public abstract class LogData {
     }
     if (responsePayload() != null) {
       map.put("response.payload", gson.toJson(responsePayload()));
+    }
+    if (httpMethod() != null) {
+      map.put("request.method", httpMethod());
+    }
+    if (httpUrl() != null) {
+      map.put("request.url", httpUrl());
     }
     return map;
   }

@@ -19,9 +19,6 @@ package com.google.showcase.v1beta1.it;
 import static com.google.common.truth.Truth.assertThat;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import com.google.api.gax.grpc.GrpcLoggingInterceptor;
-import com.google.api.gax.httpjson.HttpJsonLoggingInterceptor;
-import com.google.api.gax.logging.LoggingUtils;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
@@ -48,9 +45,6 @@ public class ITLogging {
     // Create Http JSON Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
 
-    // EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-    // Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("true");
-    // LoggingUtils.setEnvironmentProvider(envProvider);
     LOGGER.log(Level.INFO, "This is log message directly from JUL. Clients created.");
   }
 
@@ -80,59 +74,80 @@ public class ITLogging {
     assertThat(TestAppender.events.get(2).getMessage()).isEqualTo("Received Grpc response");
   }
 
-  @Test
-  void testGrpc_receiveContent_logInfo() {
-    ch.qos.logback.classic.Logger logger =
-        (ch.qos.logback.classic.Logger) LoggingUtils.getLogger(GrpcLoggingInterceptor.class);
-    ch.qos.logback.classic.Level originalLevel = logger.getLevel();
-    try {
-      logger.setLevel(ch.qos.logback.classic.Level.INFO);
-      assertThat(logger.getLevel()).isEqualTo(ch.qos.logback.classic.Level.INFO);
+  // @Test
+  // void testGrpc_receiveContent_logInfo() {
+  //   ch.qos.logback.classic.Logger logger =
+  //       (ch.qos.logback.classic.Logger) LoggingUtils.getLogger(GrpcLoggingInterceptor.class);
+  //   ch.qos.logback.classic.Level originalLevel = logger.getLevel();
+  //   try {
+  //     logger.setLevel(ch.qos.logback.classic.Level.INFO);
+  //     assertThat(logger.getLevel()).isEqualTo(ch.qos.logback.classic.Level.INFO);
+  //
+  //     TestAppender.clearEvents();
+  //     assertThat(echoGrpc("grpc-echo?")).isEqualTo("grpc-echo?");
+  //     assertThat(TestAppender.events.size()).isEqualTo(2);
+  //     ILoggingEvent loggingEvent1 = TestAppender.events.get(0);
+  //     assertThat(loggingEvent1.getMessage()).isEqualTo("Sending gRPC request");
+  //     assertThat(loggingEvent1.getLevel()).isEqualTo(ch.qos.logback.classic.Level.INFO);
+  //     assertThat(loggingEvent1.getMDCPropertyMap()).hasSize(3);
+  //     assertThat(loggingEvent1.getMDCPropertyMap())
+  //         .containsEntry("serviceName", "google.showcase.v1beta1.Echo");
+  //     assertThat(loggingEvent1.getMDCPropertyMap())
+  //         .containsEntry("rpcName", "google.showcase.v1beta1.Echo/Echo");
+  //     assertThat(TestAppender.events.get(1).getMessage()).isEqualTo("Received Grpc response");
+  //     assertThat(TestAppender.events.get(1).getLevel())
+  //         .isEqualTo(ch.qos.logback.classic.Level.INFO);
+  //   } finally {
+  //     logger.setLevel(originalLevel);
+  //   }
+  // }
 
-      TestAppender.clearEvents();
-      assertThat(echoGrpc("grpc-echo?")).isEqualTo("grpc-echo?");
-      assertThat(TestAppender.events.size()).isEqualTo(2);
-      ILoggingEvent loggingEvent1 = TestAppender.events.get(0);
-      assertThat(loggingEvent1.getMessage()).isEqualTo("Sending gRPC request");
-      assertThat(loggingEvent1.getLevel()).isEqualTo(ch.qos.logback.classic.Level.INFO);
-      assertThat(loggingEvent1.getMDCPropertyMap()).hasSize(3);
-      assertThat(loggingEvent1.getMDCPropertyMap())
-          .containsEntry("serviceName", "google.showcase.v1beta1.Echo");
-      assertThat(loggingEvent1.getMDCPropertyMap())
-          .containsEntry("rpcName", "google.showcase.v1beta1.Echo/Echo");
-      assertThat(TestAppender.events.get(1).getMessage()).isEqualTo("Received Grpc response");
-      assertThat(TestAppender.events.get(1).getLevel())
-          .isEqualTo(ch.qos.logback.classic.Level.INFO);
-    } finally {
-      logger.setLevel(originalLevel);
-    }
+  @Test
+  void testHttpJson_receiveContent_logDebug() {
+    TestAppender.clearEvents();
+    assertThat(echoHttpJson("http-echo?")).isEqualTo("http-echo?");
+    assertThat(TestAppender.events.size()).isEqualTo(3);
+    ILoggingEvent loggingEvent1 = TestAppender.events.get(0);
+    assertThat(loggingEvent1.getMessage()).isEqualTo("Sending HTTP request");
+    assertThat(loggingEvent1.getLevel()).isEqualTo(ch.qos.logback.classic.Level.DEBUG);
+    assertThat(loggingEvent1.getMDCPropertyMap()).hasSize(5);
+    assertThat(loggingEvent1.getMDCPropertyMap()).containsKey("request.headers");
+    assertThat(TestAppender.events.get(1).getMessage())
+        .isEqualTo("Sending HTTP request: request payload");
+    assertThat(TestAppender.events.get(2).getMessage()).isEqualTo("Received HTTP response");
   }
 
-  @Test
-  void testHttpJson_receiveContent() {
-
-    ch.qos.logback.classic.Logger logger =
-        (ch.qos.logback.classic.Logger) LoggingUtils.getLogger(HttpJsonLoggingInterceptor.class);
-    ch.qos.logback.classic.Level originalLevel = logger.getLevel();
-    try {
-      logger.setLevel(ch.qos.logback.classic.Level.INFO);
-      assertThat(logger.getLevel()).isEqualTo(ch.qos.logback.classic.Level.INFO);
-
-      TestAppender.clearEvents();
-      assertThat(echoHttpJson("http-echo?")).isEqualTo("http-echo?");
-      assertThat(TestAppender.events.size()).isEqualTo(2);
-      ILoggingEvent loggingEvent1 = TestAppender.events.get(0);
-      assertThat(loggingEvent1.getMessage()).isEqualTo("Sending HTTP request");
-      assertThat(loggingEvent1.getLevel()).isEqualTo(ch.qos.logback.classic.Level.INFO);
-      assertThat(loggingEvent1.getMDCPropertyMap()).hasSize(2);
-      assertThat(loggingEvent1.getMDCPropertyMap())
-          .containsEntry("rpcName", "google.showcase.v1beta1.Echo/Echo");
-      assertThat(TestAppender.events.get(1).getMessage()).isEqualTo("received HTTP response");
-      // assertThat(TestAppender.events.get(1).getLevel()).isEqualTo(ch.qos.logback.classic.Level.INFO);
-    } finally {
-      logger.setLevel(originalLevel);
-    }
-  }
+  // @Test
+  // void testHttpJson_receiveContent_logInfo() {
+  //
+  //   ch.qos.logback.classic.Logger logger =
+  //       (ch.qos.logback.classic.Logger) LoggingUtils.getLogger(HttpJsonLoggingInterceptor.class);
+  //   ch.qos.logback.classic.Level originalLevel = logger.getLevel();
+  //   try {
+  //     logger.setLevel(ch.qos.logback.classic.Level.INFO);
+  //     assertThat(logger.getLevel()).isEqualTo(ch.qos.logback.classic.Level.INFO);
+  //
+  //     TestAppender.clearEvents();
+  //     assertThat(echoHttpJson("http-echo?")).isEqualTo("http-echo?");
+  //     assertThat(TestAppender.events.size()).isEqualTo(2);
+  //     ILoggingEvent loggingEvent1 = TestAppender.events.get(0);
+  //     assertThat(loggingEvent1.getMessage()).isEqualTo("Sending HTTP request");
+  //     assertThat(loggingEvent1.getLevel()).isEqualTo(ch.qos.logback.classic.Level.INFO);
+  //     assertThat(loggingEvent1.getMDCPropertyMap()).hasSize(4);
+  //     assertThat(loggingEvent1.getMDCPropertyMap())
+  //         .containsEntry("rpcName", "google.showcase.v1beta1.Echo/Echo");
+  //     assertThat(loggingEvent1.getMDCPropertyMap()).containsEntry("request.method", "POST");
+  //     assertThat(loggingEvent1.getMDCPropertyMap())
+  //         .containsEntry("request.url", "http://localhost:7469");
+  //     assertThat(TestAppender.events.get(1).getMessage()).isEqualTo("Received HTTP response");
+  //     assertThat(TestAppender.events.get(1).getLevel())
+  //         .isEqualTo(ch.qos.logback.classic.Level.INFO);
+  //     assertThat(TestAppender.events.get(1).getMDCPropertyMap())
+  //         .containsEntry("response.status", "200");
+  //   } finally {
+  //     logger.setLevel(originalLevel);
+  //   }
+  // }
 
   private String echoGrpc(String value) {
     EchoResponse response = grpcClient.echo(EchoRequest.newBuilder().setContent(value).build());

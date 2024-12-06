@@ -48,7 +48,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.event.Level;
 
-public class GrpcLoggingInterceptor implements ClientInterceptor {
+class GrpcLoggingInterceptor implements ClientInterceptor {
 
   private static final Logger logger = LoggingUtils.getLogger(GrpcLoggingInterceptor.class);
   private static final Gson gson = new Gson();
@@ -59,7 +59,6 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
     return new ForwardingClientCall.SimpleForwardingClientCall<ReqT, RespT>(
         next.newCall(method, callOptions)) {
 
-      // Generate request ID here
       String requestId = UUID.randomUUID().toString();
 
       @Override
@@ -84,7 +83,7 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
               @Override
               public void onClose(Status status, Metadata trailers) {
                 try {
-                  logResponse(status, logDataBuilder, requestId);
+                  logResponse(status.getCode().value(), logDataBuilder, requestId);
                 } finally {
                   logDataBuilder = null; // release resource
                 }
@@ -102,7 +101,8 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
     };
   }
 
-  // --- Helper methods for logging ---
+  // Helper methods for logging
+  // some duplications with http equivalent to avoid exposing as public method
   private <ReqT, RespT> void logRequestInfoAndHeaders(
       MethodDescriptor<ReqT, RespT> method, Metadata headers, String requestId) {
     try {
@@ -141,10 +141,11 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
     }
   }
 
-  private void logResponse(Status status, LogData.Builder logDataBuilder, String requestId) {
+  private void logResponse(int statusCode, LogData.Builder logDataBuilder, String requestId) {
     try {
+
       if (logger.isInfoEnabled()) {
-        logDataBuilder.responseStatus(status.getCode().name()).requestId(requestId);
+        logDataBuilder.responseStatus(String.valueOf(statusCode)).requestId(requestId);
       }
       if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
         Map<String, String> responseData = logDataBuilder.build().toMap();
