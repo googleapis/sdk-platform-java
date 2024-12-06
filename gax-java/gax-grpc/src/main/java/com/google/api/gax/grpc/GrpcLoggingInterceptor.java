@@ -34,6 +34,7 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
     // Initialize a JsonArray to hold all responses
     JsonArray responsePayloads = new JsonArray();
+
     return new ForwardingClientCall.SimpleForwardingClientCall<ReqT, RespT>(
         next.newCall(method, callOptions)) {
 
@@ -51,7 +52,6 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
         if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
           LoggingUtils.logWithMDC(logger, Level.INFO, serviceAndRpc, "Sending gRPC request");
         }
-
         if (logger.isDebugEnabled()) {
           requestLogData.putAll(serviceAndRpc);
 
