@@ -27,11 +27,11 @@ RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
-FROM docker.io/library/alpine:3.20.3@sha256:1e42bbe2508154c9126d48c2b8a75420c3544343bf86fd041fb7527e017a4b4a as glibc-compat
+FROM docker.io/library/alpine:3.21.0@sha256:21dc6063fd678b478f57c0e13f47560d0ea4eeba26dfc947b2a4f81f686b9f45 as glibc-compat
 
 RUN apk add git sudo
 # This SHA is the latest known-to-work version of this binary compatibility tool
-ARG GLIB_MUS_SHA=7717dd4dc26377dd9cedcc92b72ebf35f9e68a2d
+ARG GLIB_MUS_SHA=e94aca542e3ab08b42aa0b0d6e72478b935bb8e8
 WORKDIR /home
 
 # Install compatibility layer to run glibc-based programs (such as the
@@ -47,11 +47,11 @@ RUN git checkout "${GLIB_MUS_SHA}"
 RUN chmod a+x compile-x86_64-alpine-linux.sh
 RUN sh compile-x86_64-alpine-linux.sh
 
-FROM docker.io/library/python:3.12.7-alpine3.20@sha256:5049c050bdc68575a10bcb1885baa0689b6c15152d8a56a7e399fb49f783bf98 as final
+FROM docker.io/library/python:3.13.1-alpine3.20@sha256:804ad02b9ba67ea1f8307eeb6407b121c6bd6bb19d3f182aae166821eb59d6a4 as final
 
-ARG OWLBOT_CLI_COMMITTISH=f3fbbabafde4d708971b269533d1388e2bd2b5f9
+ARG OWLBOT_CLI_COMMITTISH=6662ddc9cff57289c3c1d59224904d78087734b5
 ARG PROTOC_VERSION=25.5
-ARG GRPC_VERSION=1.68.1
+ARG GRPC_VERSION=1.68.2
 ARG JAVA_FORMAT_VERSION=1.7
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
@@ -75,6 +75,9 @@ COPY --from=glibc-compat /lib/libc.* /lib/
 COPY --from=glibc-compat /usr/lib/libgcc* /usr/lib/
 COPY --from=glibc-compat /usr/lib/libstdc* /usr/lib/
 COPY --from=glibc-compat /usr/lib/libobstack* /usr/lib/
+COPY --from=glibc-compat /lib/libm.so.6 /usr/lib/
+COPY --from=glibc-compat /usr/lib/libucontext.so.1 /usr/lib/
+
 
 # copy source code
 COPY hermetic_build/common /src/common

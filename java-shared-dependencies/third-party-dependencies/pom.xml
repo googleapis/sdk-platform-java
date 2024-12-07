@@ -36,12 +36,12 @@
     <checker-qual.version>3.48.3</checker-qual.version>
     <perfmark-api.version>0.27.0</perfmark-api.version>
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
-    <google.cloud.opentelemetry.version>0.32.0</google.cloud.opentelemetry.version>
+    <google.cloud.opentelemetry.version>0.33.0</google.cloud.opentelemetry.version>
     <opentelemetry-grpc-instrumentation.version>2.1.0-alpha</opentelemetry-grpc-instrumentation.version>
     <opentelemetry-semconv.version>1.26.0-alpha</opentelemetry-semconv.version>
     <flogger.version>0.8</flogger.version>
     <arrow.version>15.0.2</arrow.version>
-    <dev.cel.version>0.7.1</dev.cel.version>
+    <dev.cel.version>0.8.0</dev.cel.version>
     <com.google.crypto.tink.version>1.15.0</com.google.crypto.tink.version>
   </properties>
 
