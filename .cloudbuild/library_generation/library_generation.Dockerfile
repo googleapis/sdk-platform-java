@@ -27,11 +27,11 @@ RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
-FROM docker.io/library/alpine:3.20.3@sha256:1e42bbe2508154c9126d48c2b8a75420c3544343bf86fd041fb7527e017a4b4a as glibc-compat
+FROM docker.io/library/alpine:3.21.0@sha256:21dc6063fd678b478f57c0e13f47560d0ea4eeba26dfc947b2a4f81f686b9f45 as glibc-compat
 
 RUN apk add git sudo
 # This SHA is the latest known-to-work version of this binary compatibility tool
-ARG GLIB_MUS_SHA=7717dd4dc26377dd9cedcc92b72ebf35f9e68a2d
+ARG GLIB_MUS_SHA=e94aca542e3ab08b42aa0b0d6e72478b935bb8e8
 WORKDIR /home
 
 # Install compatibility layer to run glibc-based programs (such as the
@@ -75,6 +75,9 @@ COPY --from=glibc-compat /lib/libc.* /lib/
 COPY --from=glibc-compat /usr/lib/libgcc* /usr/lib/
 COPY --from=glibc-compat /usr/lib/libstdc* /usr/lib/
 COPY --from=glibc-compat /usr/lib/libobstack* /usr/lib/
+COPY --from=glibc-compat /lib/libm.so.6 /usr/lib/
+COPY --from=glibc-compat /usr/lib/libucontext.so.1 /usr/lib/
+
 
 # copy source code
 COPY hermetic_build/common /src/common
