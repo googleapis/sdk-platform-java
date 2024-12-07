@@ -20,7 +20,7 @@ FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:cdfb386e8ed1
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.50.1-SNAPSHOT"
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.50.1"
 # {x-version-update-end}
 
 RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
