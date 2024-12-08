@@ -53,6 +53,8 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
   private static final Logger logger = LoggingUtils.getLogger(GrpcLoggingInterceptor.class);
   private static final Gson gson = new Gson();
 
+  ClientCall.Listener<?> currentListener;
+
   @Override
   public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
       MethodDescriptor<ReqT, RespT> method, CallOptions callOptions, Channel next) {
@@ -90,6 +92,7 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
                 super.onClose(status, trailers);
               }
             };
+        currentListener = responseLoggingListener;
         super.start(responseLoggingListener, headers);
       }
 
@@ -103,7 +106,7 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
 
   // Helper methods for logging
   // some duplications with http equivalent to avoid exposing as public method
-  private <ReqT, RespT> void logRequestInfoAndHeaders(
+  <ReqT, RespT> void logRequestInfoAndHeaders(
       MethodDescriptor<ReqT, RespT> method, Metadata headers, String requestId) {
     try {
       if (logger.isInfoEnabled()) {
@@ -128,20 +131,20 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
     }
   }
 
-  private void recordResponseHeaders(Metadata headers, LogData.Builder logDataBuilder) {
+  void recordResponseHeaders(Metadata headers, LogData.Builder logDataBuilder) {
     if (logger.isDebugEnabled()) {
       JsonObject responseHeaders = mapHeadersToJsonObject(headers);
       logDataBuilder.responseHeaders(gson.toJson(responseHeaders));
     }
   }
 
-  private <RespT> void recordResponsePayload(RespT message, LogData.Builder logDataBuilder) {
+  <RespT> void recordResponsePayload(RespT message, LogData.Builder logDataBuilder) {
     if (logger.isDebugEnabled()) {
       logDataBuilder.responsePayload(gson.toJsonTree(message));
     }
   }
 
-  private void logResponse(int statusCode, LogData.Builder logDataBuilder, String requestId) {
+  void logResponse(int statusCode, LogData.Builder logDataBuilder, String requestId) {
     try {
 
       if (logger.isInfoEnabled()) {
@@ -160,7 +163,7 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
     }
   }
 
-  private <RespT> void logRequestDetails(RespT message, String requestId) {
+  <RespT> void logRequestDetails(RespT message, String requestId) {
     try {
       if (logger.isDebugEnabled()) {
         LogData.Builder logDataBuilder = LogData.builder();
