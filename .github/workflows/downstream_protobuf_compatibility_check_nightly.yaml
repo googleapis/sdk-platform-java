@@ -11,7 +11,7 @@ on:
   schedule:
     - cron: '0 1 * * *' # Nightly at 1am
 
-name: Downstream Compatibility Nightly
+name: Downstream Protobuf Compatibility Check Nightly
 jobs:
   downstream-protobuf-test:
     runs-on: ubuntu-22.04
