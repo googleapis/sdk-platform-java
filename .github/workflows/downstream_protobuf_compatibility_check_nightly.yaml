@@ -1,5 +1,8 @@
 on:
   pull_request:
+    # Updates on Release-Please PRs
+    branches:
+      - 'release-please--branches--main'
   workflow_dispatch:
     inputs:
       protobuf_versions:
