@@ -15,7 +15,7 @@
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
 
-FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:cdfb386e8ed1abdc3ee36d43c1e6df0c57042342ea760f5ce10565df1794f3b0 AS ggj-build
+FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:3bab9f2cd4fa8704445bf01444e8e5e0f1ab819a41616069872a898b432a7309 AS ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
