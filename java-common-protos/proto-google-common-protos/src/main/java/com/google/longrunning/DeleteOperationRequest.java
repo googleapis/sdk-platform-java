@@ -23,7 +23,8 @@ package com.google.longrunning;
  *
  *
  * <pre>
- * The request message for [Operations.DeleteOperation][google.longrunning.Operations.DeleteOperation].
+ * The request message for
+ * [Operations.DeleteOperation][google.longrunning.Operations.DeleteOperation].
  * </pre>
  *
  * Protobuf type {@code google.longrunning.DeleteOperationRequest}
@@ -277,7 +278,8 @@ public final class DeleteOperationRequest extends com.google.protobuf.GeneratedM
    *
    *
    * <pre>
-   * The request message for [Operations.DeleteOperation][google.longrunning.Operations.DeleteOperation].
+   * The request message for
+   * [Operations.DeleteOperation][google.longrunning.Operations.DeleteOperation].
    * </pre>
    *
    * Protobuf type {@code google.longrunning.DeleteOperationRequest}

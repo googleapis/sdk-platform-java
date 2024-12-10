@@ -23,7 +23,8 @@ package com.google.longrunning;
  *
  *
  * <pre>
- * The request message for [Operations.CancelOperation][google.longrunning.Operations.CancelOperation].
+ * The request message for
+ * [Operations.CancelOperation][google.longrunning.Operations.CancelOperation].
  * </pre>
  *
  * Protobuf type {@code google.longrunning.CancelOperationRequest}
@@ -277,7 +278,8 @@ public final class CancelOperationRequest extends com.google.protobuf.GeneratedM
    *
    *
    * <pre>
-   * The request message for [Operations.CancelOperation][google.longrunning.Operations.CancelOperation].
+   * The request message for
+   * [Operations.CancelOperation][google.longrunning.Operations.CancelOperation].
    * </pre>
    *
    * Protobuf type {@code google.longrunning.CancelOperationRequest}
