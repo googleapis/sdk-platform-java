@@ -103,7 +103,7 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
   }
 
   // Helper methods for logging
-  // some duplications with http equivalent to avoid exposing as public method
+  // some duplications with http equivalent to avoid exposing as public method for now
   <ReqT, RespT> void logRequestInfo(
       MethodDescriptor<ReqT, RespT> method, LogData.Builder logDataBuilder) {
     try {
@@ -132,15 +132,23 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
   }
 
   void recordResponseHeaders(Metadata headers, LogData.Builder logDataBuilder) {
-    if (logger.isDebugEnabled()) {
-      JsonObject responseHeaders = mapHeadersToJsonObject(headers);
-      logDataBuilder.responseHeaders(gson.toJson(responseHeaders));
+    try {
+      if (logger.isDebugEnabled()) {
+        JsonObject responseHeaders = mapHeadersToJsonObject(headers);
+        logDataBuilder.responseHeaders(gson.toJson(responseHeaders));
+      }
+    } catch (Exception e) {
+      logger.error("Error recording response headers", e);
     }
   }
 
   <RespT> void recordResponsePayload(RespT message, LogData.Builder logDataBuilder) {
-    if (logger.isDebugEnabled()) {
-      logDataBuilder.responsePayload(gson.toJsonTree(message));
+    try {
+      if (logger.isDebugEnabled()) {
+        logDataBuilder.responsePayload(gson.toJsonTree(message));
+      }
+    } catch (Exception e) {
+      logger.error("Error recording response payload", e);
     }
   }
 

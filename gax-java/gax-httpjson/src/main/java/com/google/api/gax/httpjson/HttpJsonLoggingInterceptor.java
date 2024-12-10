@@ -140,24 +140,30 @@ class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
 
   private void recordResponseHeaders(
       HttpJsonMetadata responseHeaders, LogData.Builder logDataBuilder) {
+    try {
+      if (logger.isDebugEnabled()) {
 
-    if (logger.isDebugEnabled()) {
-
-      Map<String, List<String>> map = new HashMap<>();
-      responseHeaders.getHeaders().forEach((key, value) -> map.put(key, (List<String>) value));
-      logDataBuilder.responseHeaders(gson.toJson(map));
+        Map<String, List<String>> map = new HashMap<>();
+        responseHeaders.getHeaders().forEach((key, value) -> map.put(key, (List<String>) value));
+        logDataBuilder.responseHeaders(gson.toJson(map));
+      }
+    } catch (Exception e) {
+      logger.error("Error recording response headers", e);
     }
   }
 
   private <RespT> void recordResponsePayload(RespT message, LogData.Builder logDataBuilder) {
-    if (logger.isDebugEnabled()) {
-      logDataBuilder.responsePayload(gson.toJsonTree(message));
+    try {
+      if (logger.isDebugEnabled()) {
+        logDataBuilder.responsePayload(gson.toJsonTree(message));
+      }
+    } catch (Exception e) {
+      logger.error("Error recording response payload", e);
     }
   }
 
   private void logResponse(int statusCode, LogData.Builder logDataBuilder) {
     try {
-
       if (logger.isInfoEnabled()) {
         logDataBuilder.responseStatus(String.valueOf(statusCode));
       }
