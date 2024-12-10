@@ -47,7 +47,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.event.Level;
 
-class GrpcLoggingInterceptor implements ClientInterceptor {
+public class GrpcLoggingInterceptor implements ClientInterceptor {
 
   private static final Logger logger = LoggingUtils.getLogger(GrpcLoggingInterceptor.class);
   private static final Gson gson = new Gson();

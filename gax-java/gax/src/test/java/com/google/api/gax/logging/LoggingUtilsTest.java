@@ -46,18 +46,19 @@ import com.google.api.gax.logging.LoggingUtils.LoggerFactoryProvider;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.NOPLogger;
 
-public class LoggingUtilsTest {
+class LoggingUtilsTest {
 
   private EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
 
     // need to setup a ConsoleAppender and attach to root logger because TestAppender
@@ -83,13 +84,13 @@ public class LoggingUtilsTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
     loggerContext.getLogger(Logger.ROOT_LOGGER_NAME).detachAppender("CONSOLE");
   }
 
-  @org.junit.Test
-  public void testGetLogger_loggingEnabled_slf4jBindingPresent() {
+  @Test
+  void testGetLogger_loggingEnabled_slf4jBindingPresent() {
     Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("true");
     LoggingUtils.setEnvironmentProvider(envProvider);
     Logger logger = LoggingUtils.getLogger(LoggingUtilsTest.class);
@@ -97,8 +98,8 @@ public class LoggingUtilsTest {
     assertNotEquals(logger.getClass(), NOPLogger.class);
   }
 
-  @org.junit.Test
-  public void testGetLogger_loggingDisabled() {
+  @Test
+  void testGetLogger_loggingDisabled() {
     Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("false");
     LoggingUtils.setEnvironmentProvider(envProvider);
 
@@ -106,8 +107,8 @@ public class LoggingUtilsTest {
     assertEquals(NOPLogger.class, logger.getClass());
   }
 
-  @org.junit.Test
-  public void testGetLogger_loggingEnabled_noBinding() {
+  @Test
+  void testGetLogger_loggingEnabled_noBinding() {
     Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("true");
     LoggingUtils.setEnvironmentProvider(envProvider);
     // Create a mock LoggerFactoryProvider
@@ -124,8 +125,8 @@ public class LoggingUtilsTest {
     assertTrue(logger instanceof org.slf4j.helpers.NOPLogger);
   }
 
-  @org.junit.Test
-  public void testIsLoggingEnabled_true() {
+  @Test
+  void testIsLoggingEnabled_true() {
     Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("true");
     LoggingUtils.setEnvironmentProvider(envProvider);
     assertTrue(LoggingUtils.isLoggingEnabled());
@@ -137,8 +138,8 @@ public class LoggingUtilsTest {
     assertTrue(LoggingUtils.isLoggingEnabled());
   }
 
-  @org.junit.Test
-  public void testIsLoggingEnabled_defaultToFalse() {
+  @Test
+  void testIsLoggingEnabled_defaultToFalse() {
     LoggingUtils.setEnvironmentProvider(envProvider);
     assertFalse(LoggingUtils.isLoggingEnabled());
   }

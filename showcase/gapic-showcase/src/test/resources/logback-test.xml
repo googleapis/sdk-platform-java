@@ -1,43 +1,6 @@
 <configuration>
   <appender name="TEST_APPENDER" class="com.google.showcase.v1beta1.it.util.TestAppender" />
-
-  <logger name="com.google.api.gax.grpc.GrpcLoggingInterceptor" level="DEBUG" additivity="false">
-    <appender-ref ref="TEST_APPENDER" />
-  </logger>
-  <logger name="com.google.api.gax.httpjson.HttpJsonLoggingInterceptor" level="DEBUG" additivity="false">
-    <appender-ref ref="TEST_APPENDER" />
-  </logger>
-
   <root level="INFO">
+    <appender-ref ref="TEST_APPENDER" />
   </root>
 </configuration>
-<!--<configuration>-->
-<!--  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
-<!--    <encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
-<!--      <provider class="net.logstash.logback.composite.loggingevent.ArgumentsJsonProvider" />-->
-<!--      <fieldNames>-->
-<!--        <level>severity</level>-->
-<!--      </fieldNames>-->
-<!--    </encoder>-->
-<!--    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">-->
-<!--      <evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator">-->
-
-<!--        <expression>-->
-<!--          logger.equals("com.google.api.gax.grpc.GrpcLoggingInterceptor")-->
-<!--        </expression>-->
-<!--&lt;!&ndash;        <expression>&ndash;&gt;-->
-<!--&lt;!&ndash;          ((logger.equals("com.google.api.gax.grpc.GrpcLoggingInterceptor") ||&ndash;&gt;-->
-<!--&lt;!&ndash;          logger.equals("com.google.api.gax.httpjson.HttpJsonLoggingInterceptor") ||&ndash;&gt;-->
-<!--&lt;!&ndash;          logger.equals("com.google.api.gax.tracing.MetricsTracer"))&ndash;&gt;-->
-<!--&lt;!&ndash;        </expression>&ndash;&gt;-->
-
-<!--      </evaluator>-->
-<!--      <onMatch>ACCEPT</onMatch>-->
-<!--      <onMismatch>DENY</onMismatch>-->
-<!--    </filter>-->
-<!--  </appender>-->
-
-<!--  <root level="DEBUG">-->
-<!--    <appender-ref ref="STDOUT" />-->
-<!--  </root>-->
-<!--</configuration>-->

@@ -255,6 +255,15 @@ jobs:
             -P enable-integration-tests \
             --batch-mode \
             --no-transfer-progress
+      # The `envVarLoggingTest` profile runs tests that require an environment variable
+      - name: Showcase integration tests - Logging
+        run: |
+          verify -P '!showcase,enable-integration-tests,envVarLoggingTest' 
+            --batch-mode \
+            --no-transfer-progress
+        # Set the Env Var for this step only
+        env:
+          GOOGLE_SDK_JAVA_LOGGING: true
 
   showcase-native:
     runs-on: ubuntu-22.04

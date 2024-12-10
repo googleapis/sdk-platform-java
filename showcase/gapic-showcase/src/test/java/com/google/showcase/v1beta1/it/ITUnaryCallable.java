@@ -28,8 +28,6 @@ import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -39,7 +37,6 @@ class ITUnaryCallable {
   private static EchoClient grpcClient;
 
   private static EchoClient httpjsonClient;
-  static final Logger LOGGER = Logger.getLogger(ITUnaryCallable.class.getName());
 
   @BeforeAll
   static void createClients() throws Exception {
@@ -47,8 +44,6 @@ class ITUnaryCallable {
     grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
-
-    LOGGER.log(Level.INFO, "This is log message directly from JUL. Clients created.");
   }
 
   @AfterAll
@@ -63,9 +58,6 @@ class ITUnaryCallable {
 
   @Test
   void testGrpc_receiveContent() {
-    LOGGER.log(
-        Level.INFO,
-        "This is log message directly from JUL. Starting test: testGrpc_receiveContent.");
     assertThat(echoGrpc("grpc-echo?")).isEqualTo("grpc-echo?");
     assertThat(echoGrpc("grpc-echo!")).isEqualTo("grpc-echo!");
   }

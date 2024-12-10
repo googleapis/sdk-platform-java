@@ -42,7 +42,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.event.Level;
 
-class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
+public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
 
   private static final Logger logger = LoggingUtils.getLogger(HttpJsonLoggingInterceptor.class);
   private static final Gson gson = new Gson();
