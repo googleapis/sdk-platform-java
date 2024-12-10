@@ -33,6 +33,7 @@ package com.google.api.gax.logging;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.api.gax.rpc.internal.SystemEnvironmentProvider;
+import com.google.gson.Gson;
 import java.util.Map;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
@@ -46,6 +47,7 @@ public class LoggingUtils {
   private static final Logger NO_OP_LOGGER = org.slf4j.helpers.NOPLogger.NOP_LOGGER;
   private static boolean loggingEnabled = isLoggingEnabled();
   static final String GOOGLE_SDK_JAVA_LOGGING = "GOOGLE_SDK_JAVA_LOGGING";
+  private static final Gson gson = new Gson();
   // expose this setter for testing purposes
   static void setEnvironmentProvider(EnvironmentProvider provider) {
     environmentProvider = provider;
@@ -71,7 +73,11 @@ public class LoggingUtils {
 
   public static void logWithMDC(
       Logger logger, org.slf4j.event.Level level, Map<String, String> contextMap, String message) {
-    contextMap.forEach(MDC::put);
+    if (!contextMap.isEmpty()) {
+      contextMap.forEach(MDC::put);
+      contextMap.put("message", message);
+      message = gson.toJson(contextMap);
+    }
     switch (level) {
       case TRACE:
         logger.trace(message);
@@ -92,7 +98,9 @@ public class LoggingUtils {
         logger.info(message);
         // Default to INFO level
     }
-    MDC.clear();
+    if (!contextMap.isEmpty()) {
+      MDC.clear();
+    }
   }
 
   static boolean isLoggingEnabled() {
