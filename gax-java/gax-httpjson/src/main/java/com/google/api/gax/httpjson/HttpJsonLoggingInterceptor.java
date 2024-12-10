@@ -30,6 +30,7 @@
 
 package com.google.api.gax.httpjson;
 
+import com.google.api.core.InternalApi;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall.SimpleForwardingHttpJsonClientCall;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCallListener.SimpleForwardingHttpJsonClientCallListener;
 import com.google.api.gax.logging.LogData;
@@ -42,6 +43,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.event.Level;
 
+@InternalApi
 public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
 
   private static final Logger logger = LoggingUtils.getLogger(HttpJsonLoggingInterceptor.class);

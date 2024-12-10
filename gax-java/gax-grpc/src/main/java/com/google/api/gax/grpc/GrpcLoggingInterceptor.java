@@ -30,6 +30,7 @@
 
 package com.google.api.gax.grpc;
 
+import com.google.api.core.InternalApi;
 import com.google.api.gax.logging.LogData;
 import com.google.api.gax.logging.LoggingUtils;
 import com.google.gson.Gson;
@@ -47,6 +48,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.event.Level;
 
+@InternalApi
 public class GrpcLoggingInterceptor implements ClientInterceptor {
 
   private static final Logger logger = LoggingUtils.getLogger(GrpcLoggingInterceptor.class);
