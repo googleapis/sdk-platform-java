@@ -31,7 +31,6 @@
 package com.google.api.gax.grpc;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -110,7 +109,6 @@ class GrpcLoggingInterceptorTest {
     // --- Verify that the response listener's methods were called ---
     verify(interceptor).recordResponseHeaders(eq(responseHeaders), any(LogData.Builder.class));
     verify(interceptor).recordResponsePayload(any(), any(LogData.Builder.class));
-    verify(interceptor)
-        .logResponse(eq(status.getCode().toString()), any(LogData.Builder.class), anyString());
+    verify(interceptor).logResponse(eq(status.getCode().toString()), any(LogData.Builder.class));
   }
 }

@@ -44,7 +44,6 @@ import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
 import io.grpc.Status;
 import java.util.Map;
-import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.event.Level;
 
@@ -58,18 +57,17 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
   @Override
   public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
       MethodDescriptor<ReqT, RespT> method, CallOptions callOptions, Channel next) {
+
     return new ForwardingClientCall.SimpleForwardingClientCall<ReqT, RespT>(
         next.newCall(method, callOptions)) {
-
-      String requestId = UUID.randomUUID().toString();
+      LogData.Builder logDataBuilder = LogData.builder();
 
       @Override
       public void start(Listener<RespT> responseListener, Metadata headers) {
-        logRequestInfoAndHeaders(method, headers, requestId);
+        logRequestInfo(method, logDataBuilder);
+        recordRequestHeaders(headers, logDataBuilder);
         SimpleForwardingClientCallListener<RespT> responseLoggingListener =
             new SimpleForwardingClientCallListener<RespT>(responseListener) {
-              LogData.Builder logDataBuilder = LogData.builder();
-
               @Override
               public void onHeaders(Metadata headers) {
                 recordResponseHeaders(headers, logDataBuilder);
@@ -85,7 +83,7 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
               @Override
               public void onClose(Status status, Metadata trailers) {
                 try {
-                  logResponse(status.getCode().toString(), logDataBuilder, requestId);
+                  logResponse(status.getCode().toString(), logDataBuilder);
                 } finally {
                   logDataBuilder = null; // release resource
                 }
@@ -98,7 +96,7 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
 
       @Override
       public void sendMessage(ReqT message) {
-        logRequestDetails(message, requestId);
+        logRequestDetails(message, logDataBuilder);
         super.sendMessage(message);
       }
     };
@@ -106,28 +104,30 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
 
   // Helper methods for logging
   // some duplications with http equivalent to avoid exposing as public method
-  <ReqT, RespT> void logRequestInfoAndHeaders(
-      MethodDescriptor<ReqT, RespT> method, Metadata headers, String requestId) {
+  <ReqT, RespT> void logRequestInfo(
+      MethodDescriptor<ReqT, RespT> method, LogData.Builder logDataBuilder) {
     try {
       if (logger.isInfoEnabled()) {
-        LogData.Builder logDataBuilder = LogData.builder();
-        logDataBuilder
-            .serviceName(method.getServiceName())
-            .rpcName(method.getFullMethodName())
-            .requestId(requestId);
+        logDataBuilder.serviceName(method.getServiceName()).rpcName(method.getFullMethodName());
 
-        if (logger.isDebugEnabled()) {
-          JsonObject requestHeaders = mapHeadersToJsonObject(headers);
-          logDataBuilder.requestHeaders(gson.toJson(requestHeaders));
+        if (!logger.isDebugEnabled()) {
           LoggingUtils.logWithMDC(
-              logger, Level.DEBUG, logDataBuilder.build().toMap(), "Sending gRPC request");
-        } else {
-          LoggingUtils.logWithMDC(
-              logger, Level.INFO, logDataBuilder.build().toMap(), "Sending gRPC request");
+              logger, Level.INFO, logDataBuilder.build().toMapRequest(), "Sending gRPC request");
         }
       }
     } catch (Exception e) {
       logger.error("Error logging request info (and headers)", e);
+    }
+  }
+
+  private void recordRequestHeaders(Metadata headers, LogData.Builder logDataBuilder) {
+    try {
+      if (logger.isDebugEnabled()) {
+        JsonObject requestHeaders = mapHeadersToJsonObject(headers);
+        logDataBuilder.requestHeaders(gson.toJson(requestHeaders));
+      }
+    } catch (Exception e) {
+      logger.error("Error recording request headers", e);
     }
   }
 
@@ -144,18 +144,18 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
     }
   }
 
-  void logResponse(String statusCode, LogData.Builder logDataBuilder, String requestId) {
+  void logResponse(String statusCode, LogData.Builder logDataBuilder) {
     try {
 
       if (logger.isInfoEnabled()) {
-        logDataBuilder.responseStatus(String.valueOf(statusCode)).requestId(requestId);
+        logDataBuilder.responseStatus(statusCode);
       }
       if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
-        Map<String, String> responseData = logDataBuilder.build().toMap();
+        Map<String, String> responseData = logDataBuilder.build().toMapResponse();
         LoggingUtils.logWithMDC(logger, Level.INFO, responseData, "Received Grpc response");
       }
       if (logger.isDebugEnabled()) {
-        Map<String, String> responsedDetailsMap = logDataBuilder.build().toMap();
+        Map<String, String> responsedDetailsMap = logDataBuilder.build().toMapResponse();
         LoggingUtils.logWithMDC(logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
       }
     } catch (Exception e) {
@@ -163,12 +163,11 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
     }
   }
 
-  <RespT> void logRequestDetails(RespT message, String requestId) {
+  <RespT> void logRequestDetails(RespT message, LogData.Builder logDataBuilder) {
     try {
       if (logger.isDebugEnabled()) {
-        LogData.Builder logDataBuilder = LogData.builder();
-        logDataBuilder.requestPayload(gson.toJson(message)).requestId(requestId);
-        Map<String, String> requestDetailsMap = logDataBuilder.build().toMap();
+        logDataBuilder.requestPayload(gson.toJson(message));
+        Map<String, String> requestDetailsMap = logDataBuilder.build().toMapRequest();
         LoggingUtils.logWithMDC(
             logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request: request payload");
       }

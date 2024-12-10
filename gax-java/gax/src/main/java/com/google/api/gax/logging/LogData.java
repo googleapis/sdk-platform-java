@@ -138,4 +138,53 @@ public abstract class LogData {
     }
     return map;
   }
+
+  public Map<String, String> toMapRequest() {
+    Map<String, String> map = new HashMap<>();
+    if (serviceName() != null) {
+      map.put("serviceName", serviceName());
+    }
+    if (rpcName() != null) {
+      map.put("rpcName", rpcName());
+    }
+    if (requestId() != null) {
+      map.put("requestId", requestId());
+    }
+    if (requestHeaders() != null) {
+      map.put("request.headers", requestHeaders());
+    }
+    if (requestPayload() != null) {
+      map.put("request.payload", requestPayload());
+    }
+    if (httpMethod() != null) {
+      map.put("request.method", httpMethod());
+    }
+    if (httpUrl() != null) {
+      map.put("request.url", httpUrl());
+    }
+    return map;
+  }
+
+  public Map<String, String> toMapResponse() {
+    Map<String, String> map = new HashMap<>();
+    if (serviceName() != null) {
+      map.put("serviceName", serviceName());
+    }
+    if (rpcName() != null) {
+      map.put("rpcName", rpcName());
+    }
+    if (requestId() != null) {
+      map.put("requestId", requestId());
+    }
+    if (responseStatus() != null) {
+      map.put("response.status", responseStatus());
+    }
+    if (responseHeaders() != null) {
+      map.put("response.headers", responseHeaders());
+    }
+    if (responsePayload() != null) {
+      map.put("response.payload", gson.toJson(responsePayload()));
+    }
+    return map;
+  }
 }
