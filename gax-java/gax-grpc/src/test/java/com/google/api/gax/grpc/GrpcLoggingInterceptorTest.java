@@ -111,6 +111,6 @@ class GrpcLoggingInterceptorTest {
     verify(interceptor).recordResponseHeaders(eq(responseHeaders), any(LogData.Builder.class));
     verify(interceptor).recordResponsePayload(any(), any(LogData.Builder.class));
     verify(interceptor)
-        .logResponse(eq(status.getCode().value()), any(LogData.Builder.class), anyString());
+        .logResponse(eq(status.getCode().toString()), any(LogData.Builder.class), anyString());
   }
 }

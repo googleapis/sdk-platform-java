@@ -53,7 +53,7 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
   private static final Logger logger = LoggingUtils.getLogger(GrpcLoggingInterceptor.class);
   private static final Gson gson = new Gson();
 
-  ClientCall.Listener<?> currentListener;
+  ClientCall.Listener<?> currentListener; // expose for test setup
 
   @Override
   public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
@@ -85,7 +85,7 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
               @Override
               public void onClose(Status status, Metadata trailers) {
                 try {
-                  logResponse(status.getCode().value(), logDataBuilder, requestId);
+                  logResponse(status.getCode().toString(), logDataBuilder, requestId);
                 } finally {
                   logDataBuilder = null; // release resource
                 }
@@ -144,7 +144,7 @@ class GrpcLoggingInterceptor implements ClientInterceptor {
     }
   }
 
-  void logResponse(int statusCode, LogData.Builder logDataBuilder, String requestId) {
+  void logResponse(String statusCode, LogData.Builder logDataBuilder, String requestId) {
     try {
 
       if (logger.isInfoEnabled()) {
