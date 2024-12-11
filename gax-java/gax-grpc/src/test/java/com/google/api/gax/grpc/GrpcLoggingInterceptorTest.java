@@ -30,6 +30,7 @@
 
 package com.google.api.gax.grpc;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -37,6 +38,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import ch.qos.logback.classic.Level;
 import com.google.api.gax.grpc.testing.FakeMethodDescriptor;
 import com.google.api.gax.logging.LogData;
 import io.grpc.CallOptions;
@@ -46,11 +48,14 @@ import io.grpc.ClientInterceptors;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
 import io.grpc.Status;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class GrpcLoggingInterceptorTest {
   @Mock private Channel channel;
@@ -59,6 +64,7 @@ class GrpcLoggingInterceptorTest {
 
   private static final MethodDescriptor<String, Integer> method = FakeMethodDescriptor.create();
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(GrpcLoggingInterceptorTest.class);
   /** Sets up mocks. */
   @BeforeEach
   void setUp() {
@@ -110,5 +116,28 @@ class GrpcLoggingInterceptorTest {
     verify(interceptor).recordResponseHeaders(eq(responseHeaders), any(LogData.Builder.class));
     verify(interceptor).recordResponsePayload(any(), any(LogData.Builder.class));
     verify(interceptor).logResponse(eq(status.getCode().toString()), any(LogData.Builder.class));
+  }
+
+  @Test
+  void testLogRequestInfo() {
+
+    TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptorTest.class);
+    GrpcLoggingInterceptor interceptor = new GrpcLoggingInterceptor();
+    interceptor.logRequestInfo(method, LogData.builder(), LOGGER);
+
+    Assertions.assertEquals(1, testAppender.events.size());
+    assertEquals(Level.INFO, testAppender.events.get(0).getLevel());
+    assertEquals(
+        "{\"serviceName\":\"FakeClient\",\"message\":\"Sending gRPC request\",\"rpcName\":\"FakeClient/fake-method\"}",
+        testAppender.events.get(0).getMessage());
+    testAppender.stop();
+  }
+
+  private TestAppender setupTestLogger(Class<?> clazz) {
+    TestAppender testAppender = new TestAppender();
+    testAppender.start();
+    Logger logger = LoggerFactory.getLogger(clazz);
+    ((ch.qos.logback.classic.Logger) logger).addAppender(testAppender);
+    return testAppender;
   }
 }

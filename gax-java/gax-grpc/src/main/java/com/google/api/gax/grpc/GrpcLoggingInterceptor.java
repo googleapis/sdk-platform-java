@@ -66,7 +66,7 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
       @Override
       public void start(Listener<RespT> responseListener, Metadata headers) {
-        logRequestInfo(method, logDataBuilder);
+        logRequestInfo(method, logDataBuilder, logger);
         recordRequestHeaders(headers, logDataBuilder);
         SimpleForwardingClientCallListener<RespT> responseLoggingListener =
             new SimpleForwardingClientCallListener<RespT>(responseListener) {
@@ -107,7 +107,7 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
   // Helper methods for logging
   // some duplications with http equivalent to avoid exposing as public method for now
   <ReqT, RespT> void logRequestInfo(
-      MethodDescriptor<ReqT, RespT> method, LogData.Builder logDataBuilder) {
+      MethodDescriptor<ReqT, RespT> method, LogData.Builder logDataBuilder, Logger logger) {
     try {
       if (logger.isInfoEnabled()) {
         logDataBuilder.serviceName(method.getServiceName()).rpcName(method.getFullMethodName());
