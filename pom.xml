@@ -24,7 +24,6 @@
     <module>gapic-generator-java-bom</module>
     <module>java-shared-dependencies</module>
     <module>sdk-platform-java-config</module>
-    <module>showcase</module>
   </modules>
   <!-- Do not deploy the aggregator POM -->
   <build>
