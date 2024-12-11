@@ -85,11 +85,7 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
 
               @Override
               public void onClose(int statusCode, HttpJsonMetadata trailers) {
-                try {
-                  logResponse(statusCode, logDataBuilder, LOGGER);
-                } finally {
-                  logDataBuilder = null; // release resource
-                }
+                logResponse(statusCode, logDataBuilder, LOGGER);
                 super.onClose(statusCode, trailers);
               }
             };

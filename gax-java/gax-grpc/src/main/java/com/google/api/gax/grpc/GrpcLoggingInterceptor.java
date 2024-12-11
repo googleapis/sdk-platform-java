@@ -84,11 +84,7 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
               @Override
               public void onClose(Status status, Metadata trailers) {
-                try {
-                  logResponse(status, logDataBuilder, LOGGER);
-                } finally {
-                  logDataBuilder = null; // release resource
-                }
+                logResponse(status, logDataBuilder, LOGGER);
                 super.onClose(status, trailers);
               }
             };
@@ -156,7 +152,6 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
   void logResponse(Status status, LogData.Builder logDataBuilder, Logger logger) {
     try {
-
       if (logger.isInfoEnabled()) {
         logDataBuilder.responseStatus(status.getCode().toString());
       }
