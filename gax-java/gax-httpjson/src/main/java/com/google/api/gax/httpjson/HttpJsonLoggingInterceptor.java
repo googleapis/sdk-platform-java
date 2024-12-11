@@ -133,7 +133,6 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
             .getHeaders()
             .forEach((key, value) -> requestHeaders.addProperty(key, value.toString()));
         logDataBuilder.requestHeaders(gson.toJson(requestHeaders));
-        logDataBuilder.requestHeaders(gson.toJson(requestHeaders));
       }
     } catch (Exception e) {
       logger.error("Error recording request headers", e);
