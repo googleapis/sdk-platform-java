@@ -46,8 +46,8 @@ import org.slf4j.event.Level;
 @InternalApi
 public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
 
-  private static final Logger logger = LoggingUtils.getLogger(HttpJsonLoggingInterceptor.class);
-  private static final Gson gson = new Gson();
+  private static final Logger LOGGER = LoggingUtils.getLogger(HttpJsonLoggingInterceptor.class);
+  private static final Gson GSON = new Gson();
 
   @Override
   public <ReqT, RespT> HttpJsonClientCall<ReqT, RespT> interceptCall(
@@ -65,7 +65,7 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
       public void start(
           HttpJsonClientCall.Listener<RespT> responseListener, HttpJsonMetadata headers) {
 
-        logRequestInfo(method, endpoint, logDataBuilder);
+        logRequestInfo(method, endpoint, logDataBuilder, LOGGER);
         recordRequestHeaders(headers, logDataBuilder);
 
         Listener<RespT> forwardingResponseListener =
@@ -106,8 +106,11 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
 
   // Helper methods for logging,
   // some duplications with grpc equivalent to avoid exposing as public method
-  private <ReqT, RespT> void logRequestInfo(
-      ApiMethodDescriptor<ReqT, RespT> method, String endpoint, LogData.Builder logDataBuilder) {
+  <ReqT, RespT> void logRequestInfo(
+      ApiMethodDescriptor<ReqT, RespT> method,
+      String endpoint,
+      LogData.Builder logDataBuilder,
+      Logger logger) {
     try {
       if (logger.isInfoEnabled()) {
         logDataBuilder
@@ -127,70 +130,70 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
 
   private void recordRequestHeaders(HttpJsonMetadata headers, LogData.Builder logDataBuilder) {
     try {
-      if (logger.isDebugEnabled()) {
+      if (LOGGER.isDebugEnabled()) {
         JsonObject requestHeaders = new JsonObject();
         headers
             .getHeaders()
             .forEach((key, value) -> requestHeaders.addProperty(key, value.toString()));
-        logDataBuilder.requestHeaders(gson.toJson(requestHeaders));
+        logDataBuilder.requestHeaders(GSON.toJson(requestHeaders));
       }
     } catch (Exception e) {
-      logger.error("Error recording request headers", e);
+      LOGGER.error("Error recording request headers", e);
     }
   }
 
   private void recordResponseHeaders(
       HttpJsonMetadata responseHeaders, LogData.Builder logDataBuilder) {
     try {
-      if (logger.isDebugEnabled()) {
+      if (LOGGER.isDebugEnabled()) {
 
         Map<String, List<String>> map = new HashMap<>();
         responseHeaders.getHeaders().forEach((key, value) -> map.put(key, (List<String>) value));
-        logDataBuilder.responseHeaders(gson.toJson(map));
+        logDataBuilder.responseHeaders(GSON.toJson(map));
       }
     } catch (Exception e) {
-      logger.error("Error recording response headers", e);
+      LOGGER.error("Error recording response headers", e);
     }
   }
 
   private <RespT> void recordResponsePayload(RespT message, LogData.Builder logDataBuilder) {
     try {
-      if (logger.isDebugEnabled()) {
-        logDataBuilder.responsePayload(gson.toJsonTree(message));
+      if (LOGGER.isDebugEnabled()) {
+        logDataBuilder.responsePayload(GSON.toJsonTree(message));
       }
     } catch (Exception e) {
-      logger.error("Error recording response payload", e);
+      LOGGER.error("Error recording response payload", e);
     }
   }
 
   private void logResponse(int statusCode, LogData.Builder logDataBuilder) {
     try {
-      if (logger.isInfoEnabled()) {
+      if (LOGGER.isInfoEnabled()) {
         logDataBuilder.responseStatus(String.valueOf(statusCode));
       }
-      if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
+      if (LOGGER.isInfoEnabled() && !LOGGER.isDebugEnabled()) {
         Map<String, String> responseData = logDataBuilder.build().toMapResponse();
-        LoggingUtils.logWithMDC(logger, Level.INFO, responseData, "Received HTTP response");
+        LoggingUtils.logWithMDC(LOGGER, Level.INFO, responseData, "Received HTTP response");
       }
-      if (logger.isDebugEnabled()) {
+      if (LOGGER.isDebugEnabled()) {
         Map<String, String> responsedDetailsMap = logDataBuilder.build().toMapResponse();
-        LoggingUtils.logWithMDC(logger, Level.DEBUG, responsedDetailsMap, "Received HTTP response");
+        LoggingUtils.logWithMDC(LOGGER, Level.DEBUG, responsedDetailsMap, "Received HTTP response");
       }
     } catch (Exception e) {
-      logger.error("Error logging request response", e);
+      LOGGER.error("Error logging request response", e);
     }
   }
 
   private <RespT> void logRequestDetails(RespT message, LogData.Builder logDataBuilder) {
     try {
-      if (logger.isDebugEnabled()) {
-        logDataBuilder.requestPayload(gson.toJson(message));
+      if (LOGGER.isDebugEnabled()) {
+        logDataBuilder.requestPayload(GSON.toJson(message));
         Map<String, String> requestDetailsMap = logDataBuilder.build().toMapRequest();
         LoggingUtils.logWithMDC(
-            logger, Level.DEBUG, requestDetailsMap, "Sending HTTP request: request payload");
+            LOGGER, Level.DEBUG, requestDetailsMap, "Sending HTTP request: request payload");
       }
     } catch (Exception e) {
-      logger.error("Error logging request details", e);
+      LOGGER.error("Error logging request details", e);
     }
   }
 }

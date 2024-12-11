@@ -51,8 +51,8 @@ import org.slf4j.event.Level;
 @InternalApi
 public class GrpcLoggingInterceptor implements ClientInterceptor {
 
-  private static final Logger logger = LoggingUtils.getLogger(GrpcLoggingInterceptor.class);
-  private static final Gson gson = new Gson();
+  private static final Logger LOGGER = LoggingUtils.getLogger(GrpcLoggingInterceptor.class);
+  private static final Gson GSON = new Gson();
 
   ClientCall.Listener<?> currentListener; // expose for test setup
 
@@ -66,7 +66,7 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
       @Override
       public void start(Listener<RespT> responseListener, Metadata headers) {
-        logRequestInfo(method, logDataBuilder, logger);
+        logRequestInfo(method, logDataBuilder, LOGGER);
         recordRequestHeaders(headers, logDataBuilder);
         SimpleForwardingClientCallListener<RespT> responseLoggingListener =
             new SimpleForwardingClientCallListener<RespT>(responseListener) {
@@ -124,65 +124,65 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
   private void recordRequestHeaders(Metadata headers, LogData.Builder logDataBuilder) {
     try {
-      if (logger.isDebugEnabled()) {
+      if (LOGGER.isDebugEnabled()) {
         JsonObject requestHeaders = mapHeadersToJsonObject(headers);
-        logDataBuilder.requestHeaders(gson.toJson(requestHeaders));
+        logDataBuilder.requestHeaders(GSON.toJson(requestHeaders));
       }
     } catch (Exception e) {
-      logger.error("Error recording request headers", e);
+      LOGGER.error("Error recording request headers", e);
     }
   }
 
   void recordResponseHeaders(Metadata headers, LogData.Builder logDataBuilder) {
     try {
-      if (logger.isDebugEnabled()) {
+      if (LOGGER.isDebugEnabled()) {
         JsonObject responseHeaders = mapHeadersToJsonObject(headers);
-        logDataBuilder.responseHeaders(gson.toJson(responseHeaders));
+        logDataBuilder.responseHeaders(GSON.toJson(responseHeaders));
       }
     } catch (Exception e) {
-      logger.error("Error recording response headers", e);
+      LOGGER.error("Error recording response headers", e);
     }
   }
 
   <RespT> void recordResponsePayload(RespT message, LogData.Builder logDataBuilder) {
     try {
-      if (logger.isDebugEnabled()) {
-        logDataBuilder.responsePayload(gson.toJsonTree(message));
+      if (LOGGER.isDebugEnabled()) {
+        logDataBuilder.responsePayload(GSON.toJsonTree(message));
       }
     } catch (Exception e) {
-      logger.error("Error recording response payload", e);
+      LOGGER.error("Error recording response payload", e);
     }
   }
 
   void logResponse(String statusCode, LogData.Builder logDataBuilder) {
     try {
 
-      if (logger.isInfoEnabled()) {
+      if (LOGGER.isInfoEnabled()) {
         logDataBuilder.responseStatus(statusCode);
       }
-      if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
+      if (LOGGER.isInfoEnabled() && !LOGGER.isDebugEnabled()) {
         Map<String, String> responseData = logDataBuilder.build().toMapResponse();
-        LoggingUtils.logWithMDC(logger, Level.INFO, responseData, "Received Grpc response");
+        LoggingUtils.logWithMDC(LOGGER, Level.INFO, responseData, "Received Grpc response");
       }
-      if (logger.isDebugEnabled()) {
+      if (LOGGER.isDebugEnabled()) {
         Map<String, String> responsedDetailsMap = logDataBuilder.build().toMapResponse();
-        LoggingUtils.logWithMDC(logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
+        LoggingUtils.logWithMDC(LOGGER, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
       }
     } catch (Exception e) {
-      logger.error("Error logging request response", e);
+      LOGGER.error("Error logging request response", e);
     }
   }
 
   <RespT> void logRequestDetails(RespT message, LogData.Builder logDataBuilder) {
     try {
-      if (logger.isDebugEnabled()) {
-        logDataBuilder.requestPayload(gson.toJson(message));
+      if (LOGGER.isDebugEnabled()) {
+        logDataBuilder.requestPayload(GSON.toJson(message));
         Map<String, String> requestDetailsMap = logDataBuilder.build().toMapRequest();
         LoggingUtils.logWithMDC(
-            logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request: request payload");
+            LOGGER, Level.DEBUG, requestDetailsMap, "Sending gRPC request: request payload");
       }
     } catch (Exception e) {
-      logger.error("Error logging request details", e);
+      LOGGER.error("Error logging request details", e);
     }
   }
 
