@@ -15,7 +15,7 @@
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
 
-FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:cdfb386e8ed1abdc3ee36d43c1e6df0c57042342ea760f5ce10565df1794f3b0 AS ggj-build
+FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:3bab9f2cd4fa8704445bf01444e8e5e0f1ab819a41616069872a898b432a7309 AS ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
@@ -49,7 +49,7 @@ RUN sh compile-x86_64-alpine-linux.sh
 
 FROM docker.io/library/python:3.13.1-alpine3.20@sha256:804ad02b9ba67ea1f8307eeb6407b121c6bd6bb19d3f182aae166821eb59d6a4 as final
 
-ARG OWLBOT_CLI_COMMITTISH=6662ddc9cff57289c3c1d59224904d78087734b5
+ARG OWLBOT_CLI_COMMITTISH=8230b4e1b2f2f622b1d0fb158ed6ee3630255497
 ARG PROTOC_VERSION=25.5
 ARG GRPC_VERSION=1.69.0
 ARG JAVA_FORMAT_VERSION=1.7
