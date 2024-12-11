@@ -15,7 +15,7 @@ name: Downstream Protobuf Compatibility Check Nightly
 jobs:
   downstream-protobuf-test:
     # Checks if PR comes from Release-Please branch or '' if invoked from nightly job
-    if: github.head_ref == 'release-please--branches--main' || github.head_ref == ''
+    if: github.head_ref == 'release-please--branches--main' || github.event_name == 'schedule'
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
