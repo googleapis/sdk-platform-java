@@ -159,7 +159,7 @@ fi
 
 if [ -z "${pr_num}" ]; then
   git remote add remote_repo https://cloud-java-bot:"${GH_TOKEN}@github.com/${repo}.git"
-  git fetch -q --unshallow remote_repo
+  git fetch -q remote_repo
   git push -f remote_repo "${current_branch}"
   gh pr create --title "${title}" --head "${current_branch}" --body "${title}" --base "${base_branch}"
 else
