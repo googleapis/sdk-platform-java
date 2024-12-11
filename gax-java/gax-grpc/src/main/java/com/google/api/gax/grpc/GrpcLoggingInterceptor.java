@@ -85,7 +85,7 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
               @Override
               public void onClose(Status status, Metadata trailers) {
                 try {
-                  logResponse(status.getCode().toString(), logDataBuilder);
+                  logResponse(status, logDataBuilder, LOGGER);
                 } finally {
                   logDataBuilder = null; // release resource
                 }
@@ -154,22 +154,22 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
     }
   }
 
-  void logResponse(String statusCode, LogData.Builder logDataBuilder) {
+  void logResponse(Status status, LogData.Builder logDataBuilder, Logger logger) {
     try {
 
-      if (LOGGER.isInfoEnabled()) {
-        logDataBuilder.responseStatus(statusCode);
+      if (logger.isInfoEnabled()) {
+        logDataBuilder.responseStatus(status.getCode().toString());
       }
-      if (LOGGER.isInfoEnabled() && !LOGGER.isDebugEnabled()) {
+      if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
         Map<String, String> responseData = logDataBuilder.build().toMapResponse();
-        LoggingUtils.logWithMDC(LOGGER, Level.INFO, responseData, "Received Grpc response");
+        LoggingUtils.logWithMDC(logger, Level.INFO, responseData, "Received Grpc response");
       }
-      if (LOGGER.isDebugEnabled()) {
+      if (logger.isDebugEnabled()) {
         Map<String, String> responsedDetailsMap = logDataBuilder.build().toMapResponse();
-        LoggingUtils.logWithMDC(LOGGER, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
+        LoggingUtils.logWithMDC(logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
       }
     } catch (Exception e) {
-      LOGGER.error("Error logging request response", e);
+      logger.error("Error logging request response", e);
     }
   }
 

@@ -86,7 +86,7 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
               @Override
               public void onClose(int statusCode, HttpJsonMetadata trailers) {
                 try {
-                  logResponse(statusCode, logDataBuilder);
+                  logResponse(statusCode, logDataBuilder, LOGGER);
                 } finally {
                   logDataBuilder = null; // release resource
                 }
@@ -166,21 +166,21 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
     }
   }
 
-  private void logResponse(int statusCode, LogData.Builder logDataBuilder) {
+  void logResponse(int statusCode, LogData.Builder logDataBuilder, Logger logger) {
     try {
-      if (LOGGER.isInfoEnabled()) {
+      if (logger.isInfoEnabled()) {
         logDataBuilder.responseStatus(String.valueOf(statusCode));
       }
-      if (LOGGER.isInfoEnabled() && !LOGGER.isDebugEnabled()) {
+      if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
         Map<String, String> responseData = logDataBuilder.build().toMapResponse();
-        LoggingUtils.logWithMDC(LOGGER, Level.INFO, responseData, "Received HTTP response");
+        LoggingUtils.logWithMDC(logger, Level.INFO, responseData, "Received HTTP response");
       }
-      if (LOGGER.isDebugEnabled()) {
+      if (logger.isDebugEnabled()) {
         Map<String, String> responsedDetailsMap = logDataBuilder.build().toMapResponse();
-        LoggingUtils.logWithMDC(LOGGER, Level.DEBUG, responsedDetailsMap, "Received HTTP response");
+        LoggingUtils.logWithMDC(logger, Level.DEBUG, responsedDetailsMap, "Received HTTP response");
       }
     } catch (Exception e) {
-      LOGGER.error("Error logging request response", e);
+      logger.error("Error logging request response", e);
     }
   }
 

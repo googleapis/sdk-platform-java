@@ -115,7 +115,7 @@ class GrpcLoggingInterceptorTest {
     // --- Verify that the response listener's methods were called ---
     verify(interceptor).recordResponseHeaders(eq(responseHeaders), any(LogData.Builder.class));
     verify(interceptor).recordResponsePayload(any(), any(LogData.Builder.class));
-    verify(interceptor).logResponse(eq(status.getCode().toString()), any(LogData.Builder.class));
+    verify(interceptor).logResponse(eq(status), any(LogData.Builder.class), any(Logger.class));
   }
 
   @Test
@@ -129,6 +129,20 @@ class GrpcLoggingInterceptorTest {
     assertEquals(Level.INFO, testAppender.events.get(0).getLevel());
     assertEquals(
         "{\"serviceName\":\"FakeClient\",\"message\":\"Sending gRPC request\",\"rpcName\":\"FakeClient/fake-method\"}",
+        testAppender.events.get(0).getMessage());
+    testAppender.stop();
+  }
+
+  @Test
+  void TestLogResponseInfo() {
+    TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptorTest.class);
+    GrpcLoggingInterceptor interceptor = new GrpcLoggingInterceptor();
+    interceptor.logResponse(Status.CANCELLED, LogData.builder(), LOGGER);
+
+    Assertions.assertEquals(1, testAppender.events.size());
+    assertEquals(Level.INFO, testAppender.events.get(0).getLevel());
+    assertEquals(
+        "{\"response.status\":\"CANCELLED\",\"message\":\"Received Grpc response\"}",
         testAppender.events.get(0).getMessage());
     testAppender.stop();
   }

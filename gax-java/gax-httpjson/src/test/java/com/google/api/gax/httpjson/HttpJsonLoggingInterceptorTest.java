@@ -71,6 +71,21 @@ class HttpJsonLoggingInterceptorTest {
     testAppender.stop();
   }
 
+  @Test
+  void testLogResponseInfo() {
+
+    TestAppender testAppender = setupTestLogger(HttpJsonLoggingInterceptorTest.class);
+    HttpJsonLoggingInterceptor interceptor = new HttpJsonLoggingInterceptor();
+    interceptor.logResponse(200, LogData.builder(), LOGGER);
+
+    Assertions.assertEquals(1, testAppender.events.size());
+    assertEquals(Level.INFO, testAppender.events.get(0).getLevel());
+    assertEquals(
+        "{\"response.status\":\"200\",\"message\":\"Received HTTP response\"}",
+        testAppender.events.get(0).getMessage());
+    testAppender.stop();
+  }
+
   private TestAppender setupTestLogger(Class<?> clazz) {
     TestAppender testAppender = new TestAppender();
     testAppender.start();
