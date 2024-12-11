@@ -171,7 +171,7 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
   <RespT> void logRequestDetails(RespT message, LogData.Builder logDataBuilder) {
     try {
       if (LOGGER.isDebugEnabled()) {
-        logDataBuilder.requestPayload(GSON.toJson(message));
+        logDataBuilder.requestPayload(GSON.toJsonTree(message));
         Map<String, String> requestDetailsMap = logDataBuilder.build().toMapRequest();
         LoggingUtils.logWithMDC(
             LOGGER, Level.DEBUG, requestDetailsMap, "Sending gRPC request: request payload");

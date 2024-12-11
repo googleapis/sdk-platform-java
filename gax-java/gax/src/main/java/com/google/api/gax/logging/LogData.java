@@ -56,7 +56,7 @@ public abstract class LogData {
   public abstract String requestHeaders();
 
   @Nullable
-  public abstract String requestPayload();
+  public abstract JsonElement requestPayload();
 
   @Nullable
   public abstract String responseStatus();
@@ -87,7 +87,7 @@ public abstract class LogData {
 
     public abstract Builder requestHeaders(String requestHeaders);
 
-    public abstract Builder requestPayload(String requestPayload);
+    public abstract Builder requestPayload(JsonElement requestPayload);
 
     public abstract Builder responseStatus(String responseStatus);
 
@@ -119,7 +119,7 @@ public abstract class LogData {
       map.put("request.headers", requestHeaders());
     }
     if (requestPayload() != null) {
-      map.put("request.payload", requestPayload());
+      map.put("request.payload", gson.toJson(requestPayload()));
     }
     if (httpMethod() != null) {
       map.put("request.method", httpMethod());
