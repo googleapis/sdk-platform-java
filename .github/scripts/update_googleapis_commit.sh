@@ -61,6 +61,9 @@ pr_num=$(gh pr list -s open -H "${current_branch}" -q . --json number | jq ".[] 
 # branch; otherwise checkout the pull request.
 if [ -z "${pr_num}" ]; then
   git checkout -b "${current_branch}"
+  # Push the current branch to remote so that we can
+  # compare the commits later.
+  git push -u origin "${current_branch}"
 else
   gh pr checkout "${pr_num}"
 fi
