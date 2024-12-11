@@ -258,7 +258,7 @@ jobs:
       # The `envVarLoggingTest` profile runs tests that require an environment variable
       - name: Showcase integration tests - Logging
         run: |
-          mvn verify -P '!showcase,enable-integration-tests,envVarLoggingTest' 
+          mvn verify -P '!showcase,enable-integration-tests,envVarLoggingTest' \
             --batch-mode \
             --no-transfer-progress
         # Set the Env Var for this step only
