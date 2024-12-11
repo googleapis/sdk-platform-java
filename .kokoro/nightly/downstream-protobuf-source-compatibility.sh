@@ -18,12 +18,14 @@ set -eo pipefail
 # Comma-delimited list of repos to test with the local java-shared-dependencies
 if [ -z "${REPOS_UNDER_TEST}" ]; then
   echo "REPOS_UNDER_TEST must be set to run downstream-protobuf-source-compatibility.sh"
+  echo "Expects a comma-delimited list: i.e REPOS_UNDER_TEST=\"java-bigtable,java-bigquery\""
   exit 1
 fi
 
 # Version of Protobuf-Java runtime to compile with
 if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
   echo "PROTOBUF_RUNTIME_VERSION must be set to run downstream-protobuf-source-compatibility.sh"
+  echo "Expects a single Protobuf-Java runtime version i.e. PROTOBUF_RUNTIME_VERSION=\"4.28.3\""
   exit 1
 fi
 
