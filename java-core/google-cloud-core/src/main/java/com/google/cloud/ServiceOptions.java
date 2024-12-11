@@ -63,6 +63,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -70,7 +71,6 @@ import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.threeten.bp.Duration;
 
 /**
  * Abstract class representing service options.
@@ -787,13 +787,13 @@ public abstract class ServiceOptions<
   private static RetrySettings.Builder getDefaultRetrySettingsBuilder() {
     return RetrySettings.newBuilder()
         .setMaxAttempts(6)
-        .setInitialRetryDelay(Duration.ofMillis(1000L))
-        .setMaxRetryDelay(Duration.ofMillis(32_000L))
+        .setInitialRetryDelayDuration(Duration.ofMillis(1000L))
+        .setMaxRetryDelayDuration(Duration.ofMillis(32_000L))
         .setRetryDelayMultiplier(2.0)
-        .setTotalTimeout(Duration.ofMillis(50_000L))
-        .setInitialRpcTimeout(Duration.ofMillis(50_000L))
+        .setTotalTimeoutDuration(Duration.ofMillis(50_000L))
+        .setInitialRpcTimeoutDuration(Duration.ofMillis(50_000L))
         .setRpcTimeoutMultiplier(1.0)
-        .setMaxRpcTimeout(Duration.ofMillis(50_000L));
+        .setMaxRpcTimeoutDuration(Duration.ofMillis(50_000L));
   }
 
   protected abstract Set<String> getScopes();

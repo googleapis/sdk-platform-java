@@ -7,10 +7,6 @@ Running the docker image built from `hermetic_build/library_generation`
 directory, you can generate a repository containing GAPIC client libraries (a
 monorepo, for example, google-cloud-java) from a configuration file.
 
-Instead of running the docker image, if you prefer running the underlying python
-scripts directly, please refer to the [development guide](DEVELOPMENT.md#run-the-script)
-for additional instructions.
-
 ## Environment
 
 - OS: Linux
@@ -18,19 +14,35 @@ for additional instructions.
 
 ## Prerequisites
 
-In order to generate a version for each library, a versions.txt has to exist
+### Generation configuration
+
+A generation configuration file is required to generate GAPIC Client Libraries.
+
+Please refer to [Generation configuration yaml](#generation-configuration-yaml--generation-config-path---optional)
+for more information.
+
+### versions.txt
+
+In order to generate a version for each library, a `versions.txt` has to exist
 in `repository-path`.
 Please refer to [Repository path](#repository-path--repositorypath---optional)
 for more information.
 
 ## Parameters to generate a repository using the docker image
 
-### Generation configuration yaml (`generation-config-path`)
+### Generation configuration yaml (`generation-config-path`), optional
 
 An absolute or relative path to a configuration file containing parameters to
 generate the repository.
 Please refer to [Configuration to generate a repository](#configuration-to-generate-a-repository)
 for more information.
+
+The default value is `$(pwd)/generation_config.yaml`, i.e., `generation_config.yaml`
+in the current working directory.
+
+This will raise `FileNotFoundError` if the specified generation config does not
+exist or, in case `generation-config-path` is not specified, the default
+generation config does not exist.
 
 ### Repository path (`repository-path`), optional
 
@@ -41,8 +53,8 @@ For example, `cd google-cloud-java && python /path/to/entry_point.py ...` withou
 specifying the `--repository_path` option will modify the `google-cloud-java`
 repository the user `cd`'d into.
 
-Note that versions.txt has to exist in `repository_path` in order to generate
-right version for each library.
+Note that `versions.txt` has to exist in `repository_path` in order to generate
+the right version for each library.
 Please refer [here](go/java-client-releasing#versionstxt-manifest) for more info
 of versions.txt.
 
@@ -108,13 +120,11 @@ The repository level parameters define the version of API definition (proto)
 and tools.
 They are shared by library level parameters.
 
-| Name                    | Required | Notes                                        |
-|:------------------------|:--------:|:---------------------------------------------|
-| gapic_generator_version |    No    | set through env variable if not specified    |
-| protoc_version          |    No    | inferred from the generator if not specified |
-| grpc_version            |    No    | inferred from the generator if not specified |
-| googleapis_commitish    |   Yes    |                                              |
-| libraries_bom_version   |    No    | empty string if not specified                |
+| Name                    | Required | Notes                                     |
+|:------------------------|:--------:|:------------------------------------------|
+| gapic_generator_version |    No    | set through env variable if not specified |
+| googleapis_commitish    |   Yes    |                                           |
+| libraries_bom_version   |    No    | empty string if not specified             |
 
 ### Library level parameters
 
@@ -162,7 +172,6 @@ The GAPIC level parameters define how to generate a GAPIC library.
 
 ```yaml
 gapic_generator_version: 2.34.0
-protoc_version: 25.2
 googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
 libraries_bom_version: 26.37.0
 libraries:
@@ -206,7 +215,7 @@ libraries:
      --quiet \
      -u "$(id -u):$(id -g)" \
      -v "$(pwd):/workspace" \
-     -v /path/to/api_definition:/workspace \
+     -v /path/to/api_definition:/workspace/apis \
      gcr.io/cloud-devrel-public-resources/java-library-generation:image-tag
    ```
 
@@ -216,7 +225,7 @@ libraries:
    * `-v "$(pwd):/workspace"` maps the host machine's current working directory
      to the /workspace folder. 
      The image is configured to perform changes in this directory.
-   * `-v /path/to/api_definition:/workspace` maps the host machine's API 
+   * `-v /path/to/api_definition:/workspace/apis` maps the host machine's API 
      definitions folder to `/workspace/apis` folder.
  
 3. An advanced example:

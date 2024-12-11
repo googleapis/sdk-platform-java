@@ -28,6 +28,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
+        fetch-depth: 0
         token: ${{ secrets.CLOUD_JAVA_BOT_TOKEN }}
     - name: Update googleapis commit to latest
       shell: bash

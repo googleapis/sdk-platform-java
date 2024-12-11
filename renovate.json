@@ -6,7 +6,9 @@
   "ignoreDeps": [
     "rules_pkg"
   ],
-  "ignorePaths": ["^library_generation/requirements\\.txt$"],
+  "ignorePaths": [
+    "^library_generation/requirements\\.txt$"
+  ],
   "customManagers": [
     {
       "customType": "regex",
@@ -44,9 +46,13 @@
     },
     {
       "customType": "regex",
-      "fileMatch": ["^.kokoro/presubmit/graalvm-native.*.cfg$"],
-      "matchStrings": ["value: \"gcr.io/cloud-devrel-kokoro-resources/graalvm:(?<currentValue>.*?)\"",
-        "value: \"gcr.io/cloud-devrel-kokoro-resources/graalvm17:(?<currentValue>.*?)\""],
+      "fileMatch": [
+        "^.kokoro/presubmit/graalvm-native.*.cfg$"
+      ],
+      "matchStrings": [
+        "value: \"gcr.io/cloud-devrel-kokoro-resources/graalvm:(?<currentValue>.*?)\"",
+        "value: \"gcr.io/cloud-devrel-kokoro-resources/graalvm17:(?<currentValue>.*?)\""
+      ],
       "depNameTemplate": "ghcr.io/graalvm/graalvm-ce",
       "datasourceTemplate": "docker"
     },
@@ -60,121 +66,143 @@
       ],
       "depNameTemplate": "com.google.cloud:google-cloud-shared-config",
       "datasourceTemplate": "maven"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "^.cloudbuild/library_generation/library_generation.Dockerfile$"
+      ],
+      "matchStrings": [
+        "OWLBOT_CLI_COMMITTISH=(?<currentDigest>.*?)\\n"
+      ],
+      "currentValueTemplate": "main",
+      "depNameTemplate": "repo-automation-bots",
+      "packageNameTemplate": "https://github.com/googleapis/repo-automation-bots",
+      "datasourceTemplate": "git-refs"
     }
   ],
   "packageRules": [
     {
+      "matchPackageNames": [
+        "com.google.cloud:google-cloud-shared-config"
+      ],
+      "registryUrls": [
+        "https://repo.maven.apache.org/maven2/",
+        "https://repo1.maven.org/maven2"
+      ]
+    },
+    {
       "matchUpdateTypes": [
         "major"
       ],
-      "matchPackagePatterns": [
+      "enabled": false,
+      "matchPackageNames": [
         "*"
-      ],
-      "enabled": false
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^com.google.protobuf:"
-      ],
-      "enabled": false
+      "enabled": false,
+      "matchPackageNames": [
+        "/^com.google.protobuf:/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^com.google.guava:"
-      ],
-      "versioning": "docker"
+      "versioning": "docker",
+      "matchPackageNames": [
+        "/^com.google.guava:/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "*"
-      ],
       "semanticCommitType": "deps",
-      "semanticCommitScope": null
+      "semanticCommitScope": null,
+      "matchPackageNames": [
+        "*"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^org.apache.maven",
-        "^org.jacoco:",
-        "^org.codehaus.mojo:",
-        "^org.sonatype.plugins:",
-        "^com.coveo:",
-        "^com.google.cloud:google-cloud-shared-config"
-      ],
       "semanticCommitType": "build",
       "semanticCommitScope": "deps",
-      "enabled": true
+      "enabled": true,
+      "matchPackageNames": [
+        "/^org.apache.maven/",
+        "/^org.jacoco:/",
+        "/^org.codehaus.mojo:/",
+        "/^org.sonatype.plugins:/",
+        "/^com.coveo:/",
+        "/^com.google.cloud:google-cloud-shared-config/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^{{metadata['repo']['distribution_name']}}",
-        "^com.google.cloud:libraries-bom",
-        "^com.google.cloud.samples:shared-configuration"
-      ],
       "semanticCommitType": "chore",
-      "semanticCommitScope": "deps"
+      "semanticCommitScope": "deps",
+      "matchPackageNames": [
+        "/^{{metadata['repo']['distribution_name']}}/",
+        "/^com.google.cloud:libraries-bom/",
+        "/^com.google.cloud.samples:shared-configuration/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^junit:junit",
-        "^com.google.truth:truth",
-        "^org.mockito:mockito-core",
-        "^org.objenesis:objenesis",
-        "^com.google.cloud:google-cloud-conformance-tests"
-      ],
       "semanticCommitType": "test",
-      "semanticCommitScope": "deps"
+      "semanticCommitScope": "deps",
+      "matchPackageNames": [
+        "/^junit:junit/",
+        "/^com.google.truth:truth/",
+        "/^org.mockito:mockito-core/",
+        "/^org.objenesis:objenesis/",
+        "/^com.google.cloud:google-cloud-conformance-tests/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^com.google.cloud:google-cloud-"
-      ],
-      "ignoreUnstable": false
+      "ignoreUnstable": false,
+      "matchPackageNames": [
+        "/^com.google.cloud:google-cloud-/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^com.fasterxml.jackson.core"
-      ],
-      "groupName": "jackson dependencies"
+      "groupName": "jackson dependencies",
+      "matchPackageNames": [
+        "/^com.fasterxml.jackson.core/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^io.grpc"
-      ],
-      "groupName": "gRPC dependencies"
+      "groupName": "gRPC dependencies",
+      "matchPackageNames": [
+        "/^io.grpc/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^com.google.auth"
-      ],
-      "groupName": "Google Auth Library dependencies"
+      "groupName": "Google Auth Library dependencies",
+      "matchPackageNames": [
+        "/^com.google.auth/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "com.google.api.grpc:grpc-google-common-protos",
-        "com.google.api.grpc:grpc-google-iam-v1",
-        "com.google.api.grpc:proto-google-common-protos",
-        "com.google.api.grpc:proto-google-iam-v1",
-        "com.google.api:api-common"
-      ],
-      "groupName": "Google API dependencies"
+      "groupName": "Google API dependencies",
+      "matchPackageNames": [
+        "/com.google.api.grpc:grpc-google-common-protos/",
+        "/com.google.api.grpc:grpc-google-iam-v1/",
+        "/com.google.api.grpc:proto-google-common-protos/",
+        "/com.google.api.grpc:proto-google-iam-v1/",
+        "/com.google.api:api-common/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^com.google.http-client"
-      ],
-      "groupName": "Google HTTP Client dependencies"
+      "groupName": "Google HTTP Client dependencies",
+      "matchPackageNames": [
+        "/^com.google.http-client/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^io.opencensus"
-      ],
-      "groupName": "OpenCensus dependencies"
+      "groupName": "OpenCensus dependencies",
+      "matchPackageNames": [
+        "/^io.opencensus/"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^io.netty"
-      ],
-      "groupName": "Netty dependencies"
+      "groupName": "Netty dependencies",
+      "matchPackageNames": [
+        "/^io.netty/"
+      ]
     }
   ]
 }
