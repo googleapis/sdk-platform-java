@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -xe
 # This script should be run at the root of the repository.
 # This script is used to update googleapis commit to latest in generation
 # configuration at the time of running and create a pull request.
