@@ -220,13 +220,14 @@
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.5.11</version>
+      <!--   Latest version with java8 support   -->
+      <version>1.3.14</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-core</artifactId>
-      <version>1.5.11</version>
+      <version>1.3.14</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
