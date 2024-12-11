@@ -44,6 +44,8 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.ConsoleAppender;
 import com.google.api.gax.logging.LoggingUtils.LoggerFactoryProvider;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,6 +57,7 @@ import org.slf4j.helpers.NOPLogger;
 
 class LoggingUtilsTest {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(LoggingUtilsTest.class);
   private EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
 
   @BeforeEach
@@ -144,18 +147,29 @@ class LoggingUtilsTest {
     assertFalse(LoggingUtils.isLoggingEnabled());
   }
 
-  // @Test
-  // public void testLogWithMDC_slf4jLogger() {
-  //   TestAppender.clearEvents();
-  //   Map<String, String> contextMap = new HashMap<>();
-  //   contextMap.put("key", "value");
-  //   LoggingUtils.logWithMDC(LOGGER, org.slf4j.event.Level.DEBUG, contextMap, "test message");
-  //
-  //   assertEquals(1, TestAppender.events.size());
-  //   assertEquals("test message", TestAppender.events.get(0).getFormattedMessage());
-  //
-  //   // Verify MDC content
-  //   ILoggingEvent event = TestAppender.events.get(0);
-  //   assertEquals("value", event.getMDCPropertyMap().get("key"));
-  // }
+  private TestAppender setupTestLogger(Class<?> clazz) {
+    TestAppender testAppender = new TestAppender();
+    testAppender.start();
+    Logger logger = LoggerFactory.getLogger(clazz);
+    ((ch.qos.logback.classic.Logger) logger).addAppender(testAppender);
+    return testAppender;
+  }
+
+  @Test
+  public void testLogWithMDC_slf4jLogger() {
+    TestAppender testAppender = setupTestLogger(LoggingUtilsTest.class);
+    Map<String, String> contextMap = new HashMap<>();
+    contextMap.put("key", "value");
+    LoggingUtils.logWithMDC(LOGGER, org.slf4j.event.Level.DEBUG, contextMap, "test message");
+
+    assertEquals(1, testAppender.events.size());
+    assertEquals(
+        "{\"message\":\"test message\",\"key\":\"value\"}",
+        testAppender.events.get(0).getFormattedMessage());
+
+    // Verify MDC content
+    ILoggingEvent event = testAppender.events.get(0);
+    assertEquals("value", event.getMDCPropertyMap().get("key"));
+    testAppender.stop();
+  }
 }
