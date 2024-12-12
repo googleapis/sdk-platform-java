@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       protobuf_runtime_versions:
-        description: 'Comma separated list of Protobuf-Java versions (i.e. "3.25.x","4.x.y"). \
+        description: 'Comma separated list of Protobuf-Java versions (i.e. "3.25.x","4.x.y").
                       Note: Surround each version in the list with quotes ("")'
         required: true
   schedule:
