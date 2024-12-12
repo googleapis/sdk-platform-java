@@ -16,7 +16,7 @@ name: Downstream Protobuf Compatibility Check Nightly
 jobs:
   downstream-protobuf-test:
     # This job runs if any of the three conditions match:
-    # 1. PR is raised from Release-Please (PR comes from branch: release-please--branches-{branch_name})
+    # 1. PR is raised from Release-Please (PR comes from branch: release-please--branches-main)
     # 2. Job is invoked by the nightly job (scheduled event)
     # 3. Job is manually invoked via Github UI (workflow_dispatch event)
     if: github.head_ref == 'release-please--branches--main' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
