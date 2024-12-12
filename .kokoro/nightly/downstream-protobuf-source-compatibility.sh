@@ -29,13 +29,6 @@ if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
   exit 1
 fi
 
-# Get the directory of the build script
-scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
-cd "${scriptDir}/../.." # cd to the root of this repo
-# common.sh lives in the presubmit folder
-source "$scriptDir/../presubmit/common.sh"
-setup_maven_mirror
-
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   # Perform source-compatibility testing on main (latest changes)
   git clone "https://github.com/googleapis/$repo.git" --depth=1
