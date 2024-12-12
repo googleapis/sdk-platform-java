@@ -121,6 +121,7 @@ class ConfigChange:
                 if len(commit_parents) == 0:
                     break
                 commit = commit_parents[0]
+            repo.close()
         return qualified_commits
 
     def __get_library_names_from_qualified_commits(self) -> list[str]:
