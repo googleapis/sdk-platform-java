@@ -6,7 +6,8 @@ on:
   workflow_dispatch:
     inputs:
       protobuf_runtime_versions:
-        description: 'Comma separated list of Protobuf-Java versions (i.e. "3.25.x","4.x.y").\nNote: Surround each version in the list with quotes (\")'
+        description: 'Comma separated list of Protobuf-Java versions (i.e. "3.25.x","4.x.y"). \
+                      Note: Surround each version in the list with quotes ("")'
         required: true
   schedule:
     - cron: '0 1 * * *' # Nightly at 1am
