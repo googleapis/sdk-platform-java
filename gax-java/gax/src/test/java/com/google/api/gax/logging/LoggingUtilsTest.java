@@ -30,24 +30,18 @@
 
 package com.google.api.gax.logging;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.ConsoleAppender;
 import com.google.api.gax.logging.LoggingUtils.LoggerFactoryProvider;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.ILoggerFactory;
@@ -60,32 +54,6 @@ class LoggingUtilsTest {
   private static final Logger LOGGER = LoggerFactory.getLogger(LoggingUtilsTest.class);
   private EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
 
-  @BeforeEach
-  void setup() {
-    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-
-    // need to setup a ConsoleAppender and attach to root logger because TestAppender
-    // does not correctly capture MDC info
-    LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-
-    PatternLayoutEncoder patternLayoutEncoder = new PatternLayoutEncoder();
-    patternLayoutEncoder.setPattern("%-4relative [%thread] %-5level %logger{35} - %msg%n");
-    patternLayoutEncoder.setContext(loggerContext);
-
-    patternLayoutEncoder.start();
-
-    ConsoleAppender<ILoggingEvent> consoleAppender = new ConsoleAppender<>();
-    consoleAppender.setEncoder(patternLayoutEncoder);
-
-    consoleAppender.setContext(loggerContext);
-    consoleAppender.setName("CONSOLE");
-
-    consoleAppender.start();
-
-    ch.qos.logback.classic.Logger rootLogger = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);
-    rootLogger.addAppender(consoleAppender);
-  }
-
   @AfterEach
   void tearDown() {
     LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
@@ -97,8 +65,8 @@ class LoggingUtilsTest {
     Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("true");
     LoggingUtils.setEnvironmentProvider(envProvider);
     Logger logger = LoggingUtils.getLogger(LoggingUtilsTest.class);
-    assertTrue(logger instanceof org.slf4j.Logger);
-    assertNotEquals(logger.getClass(), NOPLogger.class);
+    Assertions.assertInstanceOf(Logger.class, logger);
+    Assertions.assertNotEquals(NOPLogger.class, logger.getClass());
   }
 
   @Test
@@ -107,7 +75,9 @@ class LoggingUtilsTest {
     LoggingUtils.setEnvironmentProvider(envProvider);
 
     Logger logger = LoggingUtils.getLogger(LoggingUtilsTest.class);
-    assertEquals(NOPLogger.class, logger.getClass());
+    Assertions.assertEquals(NOPLogger.class, logger.getClass());
+    Assertions.assertFalse(logger.isInfoEnabled());
+    Assertions.assertFalse(logger.isDebugEnabled());
   }
 
   @Test
@@ -125,26 +95,26 @@ class LoggingUtilsTest {
     Logger logger = LoggingUtils.getLogger(LoggingUtilsTest.class, mockLoggerFactoryProvider);
 
     // Assert that the returned logger is a NOPLogger
-    assertTrue(logger instanceof org.slf4j.helpers.NOPLogger);
+    Assertions.assertInstanceOf(NOPLogger.class, logger);
   }
 
   @Test
   void testIsLoggingEnabled_true() {
     Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("true");
     LoggingUtils.setEnvironmentProvider(envProvider);
-    assertTrue(LoggingUtils.isLoggingEnabled());
+    Assertions.assertTrue(LoggingUtils.isLoggingEnabled());
     Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("TRUE");
     LoggingUtils.setEnvironmentProvider(envProvider);
-    assertTrue(LoggingUtils.isLoggingEnabled());
+    Assertions.assertTrue(LoggingUtils.isLoggingEnabled());
     Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("True");
     LoggingUtils.setEnvironmentProvider(envProvider);
-    assertTrue(LoggingUtils.isLoggingEnabled());
+    Assertions.assertTrue(LoggingUtils.isLoggingEnabled());
   }
 
   @Test
   void testIsLoggingEnabled_defaultToFalse() {
     LoggingUtils.setEnvironmentProvider(envProvider);
-    assertFalse(LoggingUtils.isLoggingEnabled());
+    Assertions.assertFalse(LoggingUtils.isLoggingEnabled());
   }
 
   private TestAppender setupTestLogger(Class<?> clazz) {
@@ -156,20 +126,20 @@ class LoggingUtilsTest {
   }
 
   @Test
-  public void testLogWithMDC_slf4jLogger() {
+  void testLogWithMDC_slf4jLogger() {
     TestAppender testAppender = setupTestLogger(LoggingUtilsTest.class);
     Map<String, String> contextMap = new HashMap<>();
     contextMap.put("key", "value");
     LoggingUtils.logWithMDC(LOGGER, org.slf4j.event.Level.DEBUG, contextMap, "test message");
 
-    assertEquals(1, testAppender.events.size());
-    assertEquals(
+    Assertions.assertEquals(1, testAppender.events.size());
+    Assertions.assertEquals(
         "{\"message\":\"test message\",\"key\":\"value\"}",
         testAppender.events.get(0).getFormattedMessage());
 
     // Verify MDC content
     ILoggingEvent event = testAppender.events.get(0);
-    assertEquals("value", event.getMDCPropertyMap().get("key"));
+    Assertions.assertEquals("value", event.getMDCPropertyMap().get("key"));
     testAppender.stop();
   }
 }
