@@ -6,7 +6,8 @@ on:
   workflow_dispatch:
     inputs:
       protobuf_runtime_versions:
-        description: 'Comma separated list of Protobuf-Java versions (i.e. "3.25.x","4.x.y")'
+        description: 'Comma separated list of Protobuf-Java versions (i.e. "3.25.x","4.x.y").
+                      Note: Surround each version in the list with quotes ("")'
         required: true
   schedule:
     - cron: '0 1 * * *' # Nightly at 1am
@@ -14,8 +15,11 @@ on:
 name: Downstream Protobuf Compatibility Check Nightly
 jobs:
   downstream-protobuf-test:
-    # Checks if PR comes from Release-Please branch or if invoked from nightly job
-    if: github.head_ref == 'release-please--branches--main' || github.event_name == 'schedule'
+    # This job runs if any of the three conditions match:
+    # 1. PR is raised from Release-Please (PR comes from branch: release-please--branches-main)
+    # 2. Job is invoked by the nightly job (scheduled event)
+    # 3. Job is manually invoked via Github UI (workflow_dispatch event)
+    if: github.head_ref == 'release-please--branches--main' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
