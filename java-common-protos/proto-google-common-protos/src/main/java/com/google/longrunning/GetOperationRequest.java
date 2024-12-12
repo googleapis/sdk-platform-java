@@ -23,7 +23,8 @@ package com.google.longrunning;
  *
  *
  * <pre>
- * The request message for [Operations.GetOperation][google.longrunning.Operations.GetOperation].
+ * The request message for
+ * [Operations.GetOperation][google.longrunning.Operations.GetOperation].
  * </pre>
  *
  * Protobuf type {@code google.longrunning.GetOperationRequest}
@@ -277,7 +278,8 @@ public final class GetOperationRequest extends com.google.protobuf.GeneratedMess
    *
    *
    * <pre>
-   * The request message for [Operations.GetOperation][google.longrunning.Operations.GetOperation].
+   * The request message for
+   * [Operations.GetOperation][google.longrunning.Operations.GetOperation].
    * </pre>
    *
    * Protobuf type {@code google.longrunning.GetOperationRequest}
