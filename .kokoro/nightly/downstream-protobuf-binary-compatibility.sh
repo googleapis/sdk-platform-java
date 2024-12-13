@@ -31,6 +31,7 @@ fi
 
 git clone https://github.com/lqiu96/cloud-opensource-java.git
 pushd cloud-opensource-java
+git checkout source-filter
 mvn -B -ntp clean compile
 pushd dependencies
 
@@ -53,7 +54,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   version=$(echo "${primary_artifact}" | tr ':' '\n' | tail -n 1)
   echo "${version}"
 
-  mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="-r --artifacts com.google.cloud:google-cloud-${repo_name}:${version}"
+  mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="-r --artifacts com.google.cloud:google-cloud-${repo_name}:${version},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION} -s com.google.cloud:google-cloud-${repo_name}:${version}"
   popd
 done
 popd
