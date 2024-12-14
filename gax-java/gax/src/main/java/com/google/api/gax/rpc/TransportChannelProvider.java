@@ -33,6 +33,7 @@ import com.google.api.core.BetaApi;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.auth.Credentials;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
@@ -96,6 +97,9 @@ public interface TransportChannelProvider {
    * <p>This method should only be called if {@link #needsEndpoint()} returns true.
    */
   TransportChannelProvider withEndpoint(String endpoint);
+
+  /** Sets the allowed hard bound token types. */
+  TransportChannelProvider setAllowHardBoundTokens(ArrayList<String> allowedValues);
 
   /**
    * Reports whether this provider allows pool size customization.

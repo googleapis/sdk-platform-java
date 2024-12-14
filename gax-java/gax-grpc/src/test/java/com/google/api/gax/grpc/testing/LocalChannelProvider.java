@@ -47,6 +47,7 @@ import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -104,6 +105,12 @@ public class LocalChannelProvider implements TransportChannelProvider {
   @Override
   public TransportChannelProvider withEndpoint(String endpoint) {
     throw new UnsupportedOperationException("LocalChannelProvider doesn't need an endpoint");
+  }
+
+  @Override
+  public TransportChannelProvider setAllowHardBoundTokens(ArrayList<String> allowedValues) {
+    throw new UnsupportedOperationException(
+        "LocalChannelProvider doesn't support hard-bound tokens");
   }
 
   @Override
