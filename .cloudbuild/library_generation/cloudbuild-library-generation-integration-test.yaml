@@ -13,24 +13,16 @@
 # limitations under the License.
 
 timeout: 7200s # 2 hours
-substitutions:
-  _TEST_IMAGE_NAME: "test-image:latest"
 steps:
-- name: gcr.io/cloud-builders/docker
-  args: [
-    "build",
-    "-t", "${_TEST_IMAGE_NAME}",
-    "--file", ".cloudbuild/library_generation/library_generation.Dockerfile",
-    "."
-  ]
-  id: library-generation-build
+- name: python
+  id: install-python-deps
+  entrypoint: python
   waitFor: ["-"]
-  env:
-  - 'DOCKER_BUILDKIT=1'
-
-- name: test-image:latest
-  waitFor: ["library-generation-build"]
-  id: library-generation-integration-test
+  args: [
+    "-m",
+    "unittest",
+    "hermetic_build/library_generation/tests/integration_tests.py"
+  ]
 
 options:
   logging: CLOUD_LOGGING_ONLY
