@@ -49,15 +49,18 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
 
   mvn -B -ntp clean install -T 1C -DskipTests -Dclirr.skip
 
+  # Storage-Nio's artifact ID is google-cloud-nio, not google-cloud-storage-nio
   if [[ "$repo" == "java-storage-nio" ]]; then
     repo_name="nio"
   fi
   primary_artifact=$(grep -E "^google-cloud-${repo_name}" "versions.txt" | head -n 1)
   version=$(echo "${primary_artifact}" | tr ':' '\n' | tail -n 1)
+  artifact_id="google-cloud-${repo_name}"
   echo "Using ${repo} v${version}"
   popd
 
-  program_args="-r --artifacts com.google.cloud:google-cloud-${repo_name}:${version},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION} -s com.google.cloud:google-cloud-${repo_name}:${version}"
+  # The `-s` argument filters the linkage check problems that stem from the artifact
+  program_args="-r --artifacts com.google.cloud:${artifact_id}:${version},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION} -s com.google.cloud:${artifact_id}:${version}"
   echo "Linkage Checker Program Arguments: ${program_args}"
   mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="${program_args}"
 done
