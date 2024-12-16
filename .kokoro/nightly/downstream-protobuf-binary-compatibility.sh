@@ -41,7 +41,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   pushd "$repo"
 
-  mvn clean install -T 1C -DskipTests
+  mvn -B -ntp clean install -T 1C -DskipTests
 
   # For google-cloud-java monorepo, use the parent google-cloud-java version.
   # Otherwise, use the first google-cloud-* artifact's version.
@@ -50,11 +50,13 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   else
     primary_artifact=$(grep -E "^google-cloud-${repo_name}" "versions.txt" | head -n 1)
   fi
-  echo "${primary_artifact}"
   version=$(echo "${primary_artifact}" | tr ':' '\n' | tail -n 1)
-  echo "${version}"
-
-  mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="-r --artifacts com.google.cloud:google-cloud-${repo_name}:${version},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION} -s com.google.cloud:google-cloud-${repo_name}:${version}"
+  echo "Using ${repo} v${version}"
   popd
+
+  program_args="-r --artifacts com.google.cloud:google-cloud-${repo_name}:${version},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION} -s com.google.cloud:google-cloud-${repo_name}:${version}"
+  echo "Linkage Checker Program Arguments: ${program_args}"
+  mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="${program_args}"
 done
+popd
 popd
