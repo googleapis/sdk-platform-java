@@ -45,13 +45,10 @@ steps:
 
 - name: python:3.13.1
   entrypoint: bash
-  args: [
-    "-c",
-    "python",
-    "-m",
-    "unittest",
-    "hermetic_build/library_generation/tests/integration_tests.py"
-  ]
+  args:
+    - "-c"
+    - |
+      python -m unittest hermetic_build/library_generation/tests/integration_tests.py
   waitFor: ["additional-deps"]
   id: integration-test
 
