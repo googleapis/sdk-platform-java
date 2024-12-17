@@ -14,9 +14,8 @@
 
 timeout: 7200s # 2 hours
 substitutions:
-  _IMAGE_NAME: "us-docker.pkg.dev/java-hermetic-build-prod/private-resources/java-library-generation"
-  _TEMP_TEST_IMAGE_ID: "${_IMAGE_NAME}:temp-test-image"
-  _TEST_IMAGE_ID: "${_IMAGE_NAME}:test-image"
+  _TEMP_TEST_IMAGE_ID: "intermediate-test-image:latest"
+  _TEST_IMAGE_ID: "test-image:latest"
 steps:
 - name: gcr.io/cloud-builders/docker
   args: [
@@ -32,13 +31,15 @@ steps:
   id: library-generation-build
   waitFor: ["-"]
 
-- name: ${_TEMP_TEST_IMAGE_ID}
-  entrypoint: bash
-  args:
-  - "-c"
-  - |
-    apk update && apk add maven
-    DOCKER_BUILDKIT=1 docker build -t "${_TEST_IMAGE_ID}" .
+- name: gcr.io/cloud-builders/docker
+  args: [
+    "build",
+    "-t",
+    "${_TEST_IMAGE_ID}",
+    "--file",
+    ".cloudbuild/library_generation/library_generation_it.Dockerfile",
+    "."
+  ]
   id: additional-deps
   waitFor: ["library-generation-build"]
 
