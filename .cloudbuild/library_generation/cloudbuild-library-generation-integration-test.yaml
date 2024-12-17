@@ -16,8 +16,17 @@ timeout: 7200s # 2 hours
 steps:
 - name: python
   id: install-python-deps
-  entrypoint: python
+  entrypoint: pip
   waitFor: ["-"]
+  args: [
+    "install",
+    "GitPython"
+  ]
+
+- name: python
+  id: run-integration-test
+  entrypoint: python
+  waitFor: ["install-python-deps"]
   args: [
     "-m",
     "unittest",
