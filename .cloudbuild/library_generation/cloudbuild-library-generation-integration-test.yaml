@@ -22,7 +22,7 @@ steps:
   args: [
     "build",
     "-t",
-    "${_TEST_IMAGE_ID}",
+    "${_TEMP_TEST_IMAGE_ID}",
     "--file",
     ".cloudbuild/library_generation/library_generation.Dockerfile",
     "."
