@@ -44,8 +44,9 @@ steps:
   waitFor: ["library-generation-build"]
 
 - name: ${_TEST_IMAGE_ID}
-  entrypoint: python
+  entrypoint: bash
   args: [
+    "python",
     "-m",
     "unittest",
     "hermetic_build/library_generation/tests/integration_tests.py"
