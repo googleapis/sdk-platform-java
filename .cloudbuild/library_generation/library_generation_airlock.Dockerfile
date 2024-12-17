@@ -15,7 +15,7 @@
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
 
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/maven@3.9.9-eclipse-temurin-11-alpine AS ggj-build
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/maven:3.9.9-eclipse-temurin-11-alpine AS ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
@@ -47,7 +47,7 @@ RUN git checkout "${GLIB_MUS_SHA}"
 RUN chmod a+x compile-x86_64-alpine-linux.sh
 RUN sh compile-x86_64-alpine-linux.sh
 
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python@3.12.7-alpine3.20 as final
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/python:3.12.7-alpine3.20 as final
 
 ARG OWLBOT_CLI_COMMITTISH=8b7d94b4a8ad0345aeefd6a7ec9c5afcbeb8e2d7
 ARG PROTOC_VERSION=25.5
