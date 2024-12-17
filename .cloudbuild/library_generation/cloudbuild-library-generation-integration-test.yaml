@@ -14,6 +14,7 @@
 
 timeout: 7200s # 2 hours
 substitutions:
+  _TEMP_TEST_IMAGE_ID: "temp-test-image:latest"
   _TEST_IMAGE_ID: "test-image:latest"
 steps:
 - name: gcr.io/cloud-builders/docker
@@ -30,6 +31,20 @@ steps:
   id: library-generation-build
   waitFor: ["-"]
 
+- name: gcr.io/cloud-builders/docker
+  entrypoint: bash
+  args:
+  - "c"
+  - |
+    docker build -t ${_TEST_IMAGE_ID} - << EOF
+    FROM ${_TEMP_TEST_IMAGE_ID}
+    RUN apk update && apk maven
+    EOF
+  env:
+  - "DOCKER_BUILDKIT=1"
+  id: additional-deps
+  waitFor: ["library-generation-build"]
+
 - name: ${_TEST_IMAGE_ID}
   entrypoint: python
   args: [
@@ -37,7 +52,7 @@ steps:
     "unittest",
     "hermetic_build/library_generation/tests/integration_tests.py"
   ]
-  waitFor: [ "library-generation-build" ]
+  waitFor: ["additional-deps"]
   id: integration-test
 
 options:
