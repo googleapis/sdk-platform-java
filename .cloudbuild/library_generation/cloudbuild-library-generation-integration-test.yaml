@@ -50,11 +50,11 @@ steps:
         docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
         maven
       # Install python dependencies
-      pip install --upgrade pip
-      pip install --require-hashes -r hermetic_build/common/requirements.txt
-      pip install hermetic_build/common
-      pip install --require-hashes -r hermetic_build/library_generation/requirements.txt
-      pip install hermetic_build/library_generation
+      python3 -mpip install --upgrade pip
+      python3 -mpip install --require-hashes -r hermetic_build/common/requirements.txt
+      python3 -mpip install hermetic_build/common
+      python3 -mpip install --require-hashes -r hermetic_build/library_generation/requirements.txt
+      python3 -mpip install hermetic_build/library_generation
       python3 -m unittest hermetic_build/library_generation/tests/integration_tests.py
   waitFor: ["-"]
   id: integration-test
