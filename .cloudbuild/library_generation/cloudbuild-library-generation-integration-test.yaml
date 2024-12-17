@@ -15,7 +15,7 @@
 timeout: 7200s # 2 hours
 substitutions:
   _TEST_IMAGE_ID: "test-image:latest"
-  _VERSION_CODENAME: "bookworm"
+  _VERSION_CODENAME: "Noble Numbat"
 steps:
 #- name: gcr.io/cloud-builders/docker
 #  args: [
@@ -31,7 +31,7 @@ steps:
 #  id: library-generation-build
 #  waitFor: ["-"]
 
-- name: ubuntu:25.04
+- name: ubuntu:24.04
   entrypoint: bash
   args:
     - "-c"
