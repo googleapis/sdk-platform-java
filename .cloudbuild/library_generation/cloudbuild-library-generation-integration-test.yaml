@@ -14,8 +14,9 @@
 
 timeout: 7200s # 2 hours
 substitutions:
-  _TEMP_TEST_IMAGE_ID: "temp-test-image:latest"
-  _TEST_IMAGE_ID: "test-image:latest"
+  _IMAGE_NAME: "us-docker.pkg.dev/java-hermetic-build-prod/private-resources/java-library-generation"
+  _TEMP_TEST_IMAGE_ID: "${_IMAGE_NAME}:temp-test-image"
+  _TEST_IMAGE_ID: "${_IMAGE_NAME}:test-image"
 steps:
 - name: gcr.io/cloud-builders/docker
   args: [
