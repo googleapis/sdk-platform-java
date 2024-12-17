@@ -43,7 +43,7 @@ steps:
   id: additional-deps
   waitFor: ["library-generation-build"]
 
-- name: python3.12
+- name: python:3.13.1
   entrypoint: bash
   args: [
     "-c",
