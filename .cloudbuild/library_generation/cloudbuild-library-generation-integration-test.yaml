@@ -54,6 +54,8 @@ steps:
       pip install --require-hashes -r hermetic_build/library_generation/requirements.txt
       pip install hermetic_build/library_generation
       python -m unittest hermetic_build/library_generation/tests/integration_tests.py
+  env:
+  - "VERSION_CODENAME=bookworm"
   waitFor: ["library-generation-build"]
   id: integration-test
 
