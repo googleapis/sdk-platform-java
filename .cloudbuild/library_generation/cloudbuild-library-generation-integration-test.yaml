@@ -17,19 +17,19 @@ substitutions:
   _TEST_IMAGE_ID: "test-image:latest"
   _VERSION_CODENAME: "bookworm"
 steps:
-- name: gcr.io/cloud-builders/docker
-  args: [
-    "build",
-    "-t",
-    "${_TEST_IMAGE_ID}",
-    "--file",
-    ".cloudbuild/library_generation/library_generation.Dockerfile",
-    "."
-  ]
-  env:
-  - "DOCKER_BUILDKIT=1"
-  id: library-generation-build
-  waitFor: ["-"]
+#- name: gcr.io/cloud-builders/docker
+#  args: [
+#    "build",
+#    "-t",
+#    "${_TEST_IMAGE_ID}",
+#    "--file",
+#    ".cloudbuild/library_generation/library_generation.Dockerfile",
+#    "."
+#  ]
+#  env:
+#  - "DOCKER_BUILDKIT=1"
+#  id: library-generation-build
+#  waitFor: ["-"]
 
 - name: ubuntu:25.04
   entrypoint: bash
@@ -37,17 +37,17 @@ steps:
     - "-c"
     - |
       # Install docker, see https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
-      sudo apt-get update
-      sudo apt-get install ca-certificates curl
-      sudo install -m 0755 -d /etc/apt/keyrings
-      sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-      sudo chmod a+r /etc/apt/keyrings/docker.asc
+      apt-get update
+      apt-get install ca-certificates curl
+      install -m 0755 -d /etc/apt/keyrings
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+      chmod a+r /etc/apt/keyrings/docker.asc
       echo \
         "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
         $(. /etc/os-release && echo "${_VERSION_CODENAME}") stable" | \
-        sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-      sudo apt-get update
-      sudo apt-get install \
+        tee /etc/apt/sources.list.d/docker.list > /dev/null
+      apt-get update
+      apt-get install \
         docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
         maven python
       # Install python dependencies
@@ -57,7 +57,7 @@ steps:
       pip install --require-hashes -r hermetic_build/library_generation/requirements.txt
       pip install hermetic_build/library_generation
       python -m unittest hermetic_build/library_generation/tests/integration_tests.py
-  waitFor: ["library-generation-build"]
+  waitFor: ["-"]
   id: integration-test
 
 options:
