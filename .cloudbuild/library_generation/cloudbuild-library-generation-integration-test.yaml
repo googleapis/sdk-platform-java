@@ -31,23 +31,25 @@ steps:
   id: library-generation-build
   waitFor: ["-"]
 
-- name: python:3.13.1
+- name: ubuntu:25.04
   entrypoint: bash
   args:
     - "-c"
     - |
-      apt-get update
-      apt-get -y install maven sudo ca-certificates curl
-      # Install docker, see https://docs.docker.com/engine/install/debian/#install-using-the-repository
+      # Install docker, see https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+      sudo apt-get update
+      sudo apt-get install ca-certificates curl
       sudo install -m 0755 -d /etc/apt/keyrings
-      curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-      chmod a+r /etc/apt/keyrings/docker.asc
-      # Add the repository to Apt sources:
+      sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+      sudo chmod a+r /etc/apt/keyrings/docker.asc
       echo \
-        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
         $(. /etc/os-release && echo "${_VERSION_CODENAME}") stable" | \
         sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-      apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+      sudo apt-get update
+      sudo apt-get install \
+        docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
+        maven python
       # Install python dependencies
       pip install --upgrade pip
       pip install --require-hashes -r hermetic_build/common/requirements.txt
