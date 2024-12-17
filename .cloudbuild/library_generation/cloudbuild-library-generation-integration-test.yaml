@@ -13,44 +13,32 @@
 # limitations under the License.
 
 timeout: 7200s # 2 hours
+substitutions:
+  _TEST_IMAGE_ID: "test-image:latest"
 steps:
-- name: python
-  id: install-venv
-  entrypoint: python
+- name: gcr.io/cloud-builders/docker
+  args: [
+    "build",
+    "-t",
+    "${_TEST_IMAGE_ID}",
+    "--file",
+    ".cloudbuild/library_generation/library_generation.Dockerfile",
+    "."
+  ]
+  env:
+  - "DOCKER_BUILDKIT=1"
+  id: library-generation-build
   waitFor: ["-"]
-  args: [
-    "-m",
-    "venv",
-    ".venv"
-  ]
 
-- name: python
-  id: init-venv
-  entrypoint: bash
-  waitFor: ["install-venv"]
-  args: [
-    "source",
-    ".venv/bin/activate"
-  ]
-
-- name: python
-  id: install-python-deps
-  entrypoint: pip
-  waitFor: ["init-venv"]
-  args: [
-    "install",
-    "GitPython"
-  ]
-
-- name: python
-  id: run-integration-test
+- name: ${_TEST_IMAGE_ID}
   entrypoint: python
-  waitFor: ["install-python-deps"]
   args: [
     "-m",
     "unittest",
     "hermetic_build/library_generation/tests/integration_tests.py"
   ]
+  waitFor: [ "library-generation-build" ]
+  id: integration-test
 
 options:
   logging: CLOUD_LOGGING_ONLY
