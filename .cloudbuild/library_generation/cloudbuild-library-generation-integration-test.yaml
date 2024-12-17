@@ -43,9 +43,10 @@ steps:
   id: additional-deps
   waitFor: ["library-generation-build"]
 
-- name: ${_TEST_IMAGE_ID}
+- name: python3.12
   entrypoint: bash
   args: [
+    "-c",
     "python",
     "-m",
     "unittest",
