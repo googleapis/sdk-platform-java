@@ -13,23 +13,7 @@
 # limitations under the License.
 
 timeout: 7200s # 2 hours
-substitutions:
-  _TEST_IMAGE_ID: "test-image:latest"
 steps:
-#- name: gcr.io/cloud-builders/docker
-#  args: [
-#    "build",
-#    "-t",
-#    "${_TEST_IMAGE_ID}",
-#    "--file",
-#    ".cloudbuild/library_generation/library_generation.Dockerfile",
-#    "."
-#  ]
-#  env:
-#  - "DOCKER_BUILDKIT=1"
-#  id: library-generation-build
-#  waitFor: ["-"]
-
 - name: ubuntu:24.04
   entrypoint: bash
   args:
