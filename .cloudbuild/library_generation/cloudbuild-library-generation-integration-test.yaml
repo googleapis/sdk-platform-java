@@ -15,9 +15,28 @@
 timeout: 7200s # 2 hours
 steps:
 - name: python
+  id: install-venv
+  entrypoint: python
+  waitFor: ["-"]
+  args: [
+    "-m",
+    "venv",
+    ".venv"
+  ]
+
+- name: python
+  id: init-venv
+  entrypoint: bash
+  waitFor: ["install-venv"]
+  args: [
+    "source",
+    ".venv/bin/activate"
+  ]
+
+- name: python
   id: install-python-deps
   entrypoint: pip
-  waitFor: ["-"]
+  waitFor: ["init-venv"]
   args: [
     "install",
     "GitPython"
