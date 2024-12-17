@@ -31,17 +31,13 @@ steps:
   id: library-generation-build
   waitFor: ["-"]
 
-- name: gcr.io/cloud-builders/docker
+- name: ${_TEMP_TEST_IMAGE_ID}
   entrypoint: bash
   args:
   - "-c"
   - |
-    docker build -t ${_TEST_IMAGE_ID} - << EOF
-    FROM ${_TEMP_TEST_IMAGE_ID}
-    RUN apk update && apk maven
-    EOF
-  env:
-  - "DOCKER_BUILDKIT=1"
+    apk update && apk maven
+    DOCKER_BUILDKIT=1 docker build -t "${_TEST_IMAGE_ID}" .
   id: additional-deps
   waitFor: ["library-generation-build"]
 
