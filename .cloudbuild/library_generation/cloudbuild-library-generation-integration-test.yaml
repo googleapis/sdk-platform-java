@@ -48,8 +48,11 @@ steps:
   args:
     - "-c"
     - |
-      python -m pip install --upgrade pip
-      python -m pip install --require-hashes -r .cloudbuild/library_generation/requirements.txt
+      pip install --upgrade pip
+      pip install --require-hashes -r hermetic_build/common/requirements.txt
+      pip install hermetic_build/common
+      pip install --require-hashes -r hermetic_build/library_generation/requirements.txt
+      pip install hermetic_build/library_generation
       python -m unittest hermetic_build/library_generation/tests/integration_tests.py
   waitFor: ["additional-deps"]
   id: integration-test
