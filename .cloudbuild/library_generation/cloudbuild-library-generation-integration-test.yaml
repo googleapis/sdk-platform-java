@@ -34,7 +34,7 @@ steps:
 - name: gcr.io/cloud-builders/docker
   entrypoint: bash
   args:
-  - "c"
+  - "-c"
   - |
     docker build -t ${_TEST_IMAGE_ID} - << EOF
     FROM ${_TEMP_TEST_IMAGE_ID}
