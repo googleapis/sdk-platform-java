@@ -60,6 +60,7 @@ class IntegrationTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.__download_generator_jar(coordinates_file=generator_jar_coordinates_file)
+        cls.__build_image(docker_file=build_file, cwd=repo_root_dir)
 
     @classmethod
     def setUp(cls) -> None:
@@ -193,6 +194,16 @@ class IntegrationTest(unittest.TestCase):
         )
         shutil.rmtree(repo_dest)
         return api_temp_dir
+
+    @classmethod
+    def __build_image(cls, docker_file: str, cwd: str):
+        # we build the docker image without removing intermediate containers, so
+        # we can re-test more quickly
+        subprocess.check_call(
+            ["docker", "build", "-f", docker_file, "-t", image_tag, "."],
+            cwd=cwd,
+            env=dict(os.environ, DOCKER_BUILDKIT="1"),
+        )
 
     @classmethod
     def __download_generator_jar(cls, coordinates_file: str) -> None:
