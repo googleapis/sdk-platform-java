@@ -15,7 +15,6 @@
 timeout: 7200s # 2 hours
 substitutions:
   _TEST_IMAGE_ID: "test-image:latest"
-  _VERSION_CODENAME: "Noble Numbat"
 steps:
 #- name: gcr.io/cloud-builders/docker
 #  args: [
@@ -36,15 +35,15 @@ steps:
   args:
     - "-c"
     - |
-      # Install docker, see https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+      # Install docker
       apt-get update
-      apt-get install -y ca-certificates curl
-      install -m 0755 -d /etc/apt/keyrings
-      curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-      chmod a+r /etc/apt/keyrings/docker.asc
+      apt-get install -y ca-certificates curl gnupg lsb-release
+      mkdir -p /etc/apt/keyrings
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
+        gpg --dearmor -o /etc/apt/keyrings/docker.gpg
       echo \
-        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-        $(. /etc/os-release && echo "${_VERSION_CODENAME}") stable" | \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" | \
         tee /etc/apt/sources.list.d/docker.list > /dev/null
       apt-get update
       apt-get -y install \
