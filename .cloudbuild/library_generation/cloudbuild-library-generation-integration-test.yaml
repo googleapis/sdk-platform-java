@@ -14,14 +14,13 @@
 
 timeout: 7200s # 2 hours
 substitutions:
-  _TEMP_TEST_IMAGE_ID: "intermediate-test-image:latest"
   _TEST_IMAGE_ID: "test-image:latest"
 steps:
 - name: gcr.io/cloud-builders/docker
   args: [
     "build",
     "-t",
-    "${_TEMP_TEST_IMAGE_ID}",
+    "${_TEST_IMAGE_ID}",
     "--file",
     ".cloudbuild/library_generation/library_generation.Dockerfile",
     "."
@@ -31,30 +30,20 @@ steps:
   id: library-generation-build
   waitFor: ["-"]
 
-- name: gcr.io/cloud-builders/docker
-  args: [
-    "build",
-    "-t",
-    "${_TEST_IMAGE_ID}",
-    "--file",
-    ".cloudbuild/library_generation/library_generation_it.Dockerfile",
-    "."
-  ]
-  id: additional-deps
-  waitFor: ["library-generation-build"]
-
 - name: python:3.13.1
   entrypoint: bash
   args:
     - "-c"
     - |
+      sudo apt-get update
+      sudo apt-get install maven
       pip install --upgrade pip
       pip install --require-hashes -r hermetic_build/common/requirements.txt
       pip install hermetic_build/common
       pip install --require-hashes -r hermetic_build/library_generation/requirements.txt
       pip install hermetic_build/library_generation
       python -m unittest hermetic_build/library_generation/tests/integration_tests.py
-  waitFor: ["additional-deps"]
+  waitFor: ["library-generation-build"]
   id: integration-test
 
 options:
