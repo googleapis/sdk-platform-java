@@ -37,7 +37,7 @@ steps:
   args:
   - "-c"
   - |
-    apk update && apk maven
+    apk update && apk add maven
     DOCKER_BUILDKIT=1 docker build -t "${_TEST_IMAGE_ID}" .
   id: additional-deps
   waitFor: ["library-generation-build"]
