@@ -27,7 +27,7 @@ steps:
   waitFor: ["-"]
   env:
   - "DOCKER_BUILDKIT=1"
-- name: ubuntu:24.04
+- name: alpine/git:latest
   entrypoint: bash
   args:
   - "-c"
@@ -38,7 +38,7 @@ steps:
     git switch 113a378d5aad5018876ec0a8cbfd4d6a4f746809
   id: download-api-definitions
   waitFor: ["-"]
-- name: ubuntu:24.04
+- name: alpine/git:latest
   entrypoint: bash
   args:
   - "-c"
