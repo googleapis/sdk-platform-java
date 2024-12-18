@@ -48,6 +48,7 @@ def generate_from_yaml(
     repo_config = util.prepare_repo(
         gen_config=config, library_config=target_libraries, repo_path=repository_path
     )
+    print(f"Contents in api definition: {os.listdir(api_definitions_path)}")
     # copy api definition to output folder.
     shutil.copytree(api_definitions_path, repo_config.output_folder, dirs_exist_ok=True)
     print(f"Contents in output: {os.listdir(repo_config.output_folder)}")
