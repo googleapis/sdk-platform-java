@@ -27,22 +27,24 @@ steps:
   waitFor: ["-"]
   env:
   - "DOCKER_BUILDKIT=1"
-- name: alpine/git@sha256:0528136dcb1c3fc461556c5796d6214efa530166cba922c28e9ae146d9acfb82
+- name: ubuntu:24.04
   entrypoint: bash
   args:
   - "-c"
   - |
+    apt-get update && apt-get install -y git
     cd /workspace
     git clone https://github.com/googleapis/googleapis
     cd googleapis
     git switch 113a378d5aad5018876ec0a8cbfd4d6a4f746809
   id: download-api-definitions
   waitFor: ["-"]
-- name: alpine/git@sha256:0528136dcb1c3fc461556c5796d6214efa530166cba922c28e9ae146d9acfb82
+- name: ubuntu:24.04
   entrypoint: bash
   args:
   - "-c"
   - |
+    apt-get update && apt-get install -y git
     cd /workspace
     git clone https://github.com/googleapis/google-cloud-java
     cd google-cloud-java
