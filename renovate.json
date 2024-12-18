@@ -203,6 +203,12 @@
       "matchPackageNames": [
         "/^io.netty/"
       ]
+    },
+    {
+      "groupName": "Error Prone dependencies",
+      "matchPackagePatterns": [
+        "^com.google.errorprone"
+      ]
     }
   ]
 }
