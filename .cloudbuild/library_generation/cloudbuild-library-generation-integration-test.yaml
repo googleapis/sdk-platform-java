@@ -42,7 +42,7 @@ steps:
       pip install hermetic_build/common
       pip install --require-hashes -r hermetic_build/library_generation/requirements.txt
       pip install hermetic_build/library_generation
-      python3 -m unittest hermetic_build/library_generation/tests/integration_tests.py
+      python3 -m unittest hermetic_build/library_generation/tests/integration_tests_cloud_build.py
   waitFor: ["-"]
   id: integration-test
 

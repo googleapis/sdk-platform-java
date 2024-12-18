@@ -33,7 +33,7 @@ golden_dir = os.path.join(config_dir, "golden")
 generator_jar_coordinates_file = os.path.join(config_dir, "test_generator_coordinates")
 repo_root_dir = os.path.join(script_dir, "..", "..", "..")
 build_file = os.path.join(
-    repo_root_dir, ".cloudbuild", "library_generation", "library_generation.Dockerfile"
+    repo_root_dir, ".cloudbuild", "library_generation", "library_generation_airlock.Dockerfile"
 )
 image_tag = "test-image:latest"
 repo_prefix = "https://github.com/googleapis"
