@@ -14,8 +14,12 @@ branchProtectionRules:
   - build (17)
   - cla/google
   - compatibility
-  - graalvm-presubmit-sdk-platform-java-a (cloud-devrel-kokoro-resources)
-  - graalvm-presubmit-sdk-platform-java-b (cloud-devrel-kokoro-resources)
+  - graalvm-presubmit-sdk-platform-java-a (java-graalvm-ci-prod)
+  - graalvm-presubmit-sdk-platform-java-b (java-graalvm-ci-prod)
+  - graalvm-presubmit-sdk-platform-java-a-downstream-kms (java-graalvm-ci-prod)
+  - graalvm-presubmit-sdk-platform-java-b-downstream-kms (java-graalvm-ci-prod)
+  - graalvm-presubmit-sdk-platform-java-a-downstream-kmsinventory (java-graalvm-ci-prod)
+  - graalvm-presubmit-sdk-platform-java-b-downstream-kmsinventory (java-graalvm-ci-prod)
   - library_generation
   - library-generation-integration-tests
   - library-generation-lint-python

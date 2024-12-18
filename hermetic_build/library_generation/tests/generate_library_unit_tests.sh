@@ -23,26 +23,6 @@ extract_folder_name_test() {
   assertEquals "google-cloud-aiplatform-v1-java" "${folder_name}"
 }
 
-get_grpc_version_succeed_docker_env_var_test() {
-  local version_with_docker
-  local version_without_docker
-  export DOCKER_GRPC_VERSION="9.9.9"
-  # get_grpc_version should prioritize DOCKER_GRPC_VERSION
-  version_with_docker=$(get_grpc_version)
-  assertEquals "${DOCKER_GRPC_VERSION}" "${version_with_docker}"
-  unset DOCKER_GRPC_VERSION
-}
-
-get_protoc_version_succeed_docker_env_var_test() {
-  local version_with_docker
-  local version_without_docker
-  export DOCKER_PROTOC_VERSION="9.9.9"
-  # get_protoc_version should prioritize DOCKER_PROTOC_VERSION
-  version_with_docker=$(get_protoc_version)
-  assertEquals "${DOCKER_PROTOC_VERSION}" "${version_with_docker}"
-  unset DOCKER_PROTOC_VERSION
-}
-
 get_gapic_opts_with_rest_test() {
   local proto_path="${script_dir}/resources/gapic_options"
   local transport="grpc"
@@ -92,14 +72,14 @@ remove_grpc_version_test() {
 
 download_protoc_succeed_with_valid_version_linux_test() {
   download_protoc "23.2" "linux-x86_64"
-  assertFileOrDirectoryExists "protoc-23.2"
-  rm -rf "protoc-23.2"
+  assertFileOrDirectoryExists "bin"
+  rm -rf "bin"
 }
 
 download_protoc_succeed_with_valid_version_macos_test() {
   download_protoc "23.2" "osx-x86_64"
-  assertFileOrDirectoryExists "protoc-23.2"
-  rm -rf "protoc-23.2" "google"
+  assertFileOrDirectoryExists "bin"
+  rm -rf "bin"
 }
 
 download_protoc_failed_with_invalid_version_linux_test() {
@@ -114,68 +94,16 @@ download_protoc_failed_with_invalid_arch_test() {
   assertEquals 1 $((res))
 }
 
-download_tools_succeed_with_baked_protoc() {
-  # This mimics a docker container scenario.
-  # This test consists of creating an empty /tmp/.../protoc-99.99/bin folder and map
-  # it to the DOCKER_PROTOC_LOCATION env var (which is treated specially in the
-  # `download_tools` function). If `DOCKER_PROTOC_VERSION` matches exactly as
-  # the version passed to `download_protoc`, then we will not download protoc
-  # but simply have the variable `protoc_path` pointing to DOCKER_PROTOC_LOCATION 
-  # (which we manually created in this test)
-  export DOCKER_PROTOC_LOCATION=$(mktemp -d)
-  export DOCKER_PROTOC_VERSION="99.99"
-  export output_folder=$(get_output_folder)
-  mkdir "${output_folder}"
-  local protoc_bin_folder="${DOCKER_PROTOC_LOCATION}/protoc-99.99/bin"
-  mkdir -p "${protoc_bin_folder}"
-
-  local test_grpc_version="1.64.0"
-  # we expect download_tools to decide to use DOCKER_PROTOC_LOCATION because
-  # the protoc version we want to download is the same as DOCKER_PROTOC_VERSION.
-  # Note that `protoc_bin_folder` is just the expected formatted value that
-  # download_tools will format using DOCKER_PROTOC_VERSION (via
-  # download_protoc).
-  download_tools "99.99" "${test_grpc_version}" "linux-x86_64"
-  assertEquals "${protoc_bin_folder}" "${protoc_path}"
-
-  rm -rdf "${output_folder}"
-  unset DOCKER_PROTOC_LOCATION
-  unset DOCKER_PROTOC_VERSION
-  unset output_folder
-  unset protoc_path
-}
-
-download_tools_succeed_with_baked_grpc() {
-  # This test has the same structure as
-  # download_tools_succeed_with_baked_protoc, but meant for the grpc plugin.
-  export DOCKER_GRPC_LOCATION=$(mktemp -d)
-  export DOCKER_GRPC_VERSION="99.99"
-  export output_folder=$(get_output_folder)
-  mkdir "${output_folder}"
-
-  local test_protoc_version="1.64.0"
-  # we expect download_tools to decide to use DOCKER_GRPC_LOCATION because
-  # the protoc version we want to download is the same as DOCKER_GRPC_VERSION
-  download_tools "${test_protoc_version}" "99.99" "linux-x86_64"
-  assertEquals "${DOCKER_GRPC_LOCATION}" "${grpc_path}"
-
-  rm -rdf "${output_folder}"
-  unset DOCKER_GRPC_LOCATION
-  unset DOCKER_GRPC_VERSION
-  unset output_folder
-  unset grpc_path
-}
-
 download_grpc_plugin_succeed_with_valid_version_linux_test() {
   download_grpc_plugin "1.55.1" "linux-x86_64"
-  assertFileOrDirectoryExists "protoc-gen-grpc-java-1.55.1-linux-x86_64.exe"
-  rm "protoc-gen-grpc-java-1.55.1-linux-x86_64.exe"
+  assertFileOrDirectoryExists "protoc-gen-grpc-java.exe"
+  rm "protoc-gen-grpc-java.exe"
 }
 
 download_grpc_plugin_succeed_with_valid_version_macos_test() {
   download_grpc_plugin "1.55.1" "osx-x86_64"
-  assertFileOrDirectoryExists "protoc-gen-grpc-java-1.55.1-osx-x86_64.exe"
-  rm "protoc-gen-grpc-java-1.55.1-osx-x86_64.exe"
+  assertFileOrDirectoryExists "protoc-gen-grpc-java.exe"
+  rm "protoc-gen-grpc-java.exe"
 }
 
 download_grpc_plugin_failed_with_invalid_version_linux_test() {
@@ -243,7 +171,7 @@ copy_directory_if_exists_valid_folder_succeeds() {
   mkdir -p "${destination}"
   copy_directory_if_exists "${source_folder}" "gapic" "${destination}/copied-folder"
   n_matching_folders=$(ls "${destination}" | grep -e 'copied-folder' | wc -l)
-  rm -rdf "${destination}"
+  rm -rf "${destination}"
   assertEquals 1 ${n_matching_folders}
 }
 
@@ -253,7 +181,7 @@ copy_directory_if_exists_invalid_folder_does_not_copy() {
   mkdir -p "${destination}"
   copy_directory_if_exists "${source_folder}" "gapic" "${destination}/copied-folder"
   n_matching_folders=$(ls "${destination}" | grep -e 'copied-folder' | wc -l) || res=$?
-  rm -rdf "${destination}"
+  rm -rf "${destination}"
   assertEquals 0 ${n_matching_folders}
 }
 
@@ -283,8 +211,6 @@ get_proto_path_from_preprocessed_sources_multiple_proto_dirs_fails() {
 # One line per test.
 test_list=(
   extract_folder_name_test
-  get_grpc_version_succeed_docker_env_var_test
-  get_protoc_version_succeed_docker_env_var_test
   get_gapic_opts_with_rest_test
   get_gapic_opts_without_rest_test
   get_gapic_opts_with_non_default_test
@@ -293,8 +219,6 @@ test_list=(
   download_protoc_succeed_with_valid_version_macos_test
   download_protoc_failed_with_invalid_version_linux_test
   download_protoc_failed_with_invalid_arch_test
-  download_tools_succeed_with_baked_protoc
-  download_tools_succeed_with_baked_grpc
   download_grpc_plugin_succeed_with_valid_version_linux_test
   download_grpc_plugin_succeed_with_valid_version_macos_test
   download_grpc_plugin_failed_with_invalid_version_linux_test

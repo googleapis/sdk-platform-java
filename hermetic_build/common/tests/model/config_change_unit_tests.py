@@ -13,9 +13,9 @@
 # limitations under the License.
 import unittest
 
-from library_generation.model.config_change import ChangeType
-from library_generation.model.config_change import ConfigChange
-from library_generation.model.config_change import LibraryChange
+from common.model.config_change import ChangeType
+from common.model.config_change import ConfigChange
+from common.model.config_change import LibraryChange
 from common.model.gapic_config import GapicConfig
 from common.model.generation_config import GenerationConfig
 from common.model.library_config import LibraryConfig
@@ -39,10 +39,26 @@ class ConfigChangeTest(unittest.TestCase):
                 ],
             },
             baseline_config=ConfigChangeTest.__get_a_gen_config(),
-            current_config=ConfigChangeTest.__get_a_gen_config(),
+            current_config=ConfigChangeTest.__get_a_gen_config(
+                googleapis_commitish="",
+                libraries=[
+                    ConfigChangeTest.__get_a_library_config(
+                        library_name="gke-backup",
+                        gapic_configs=[
+                            GapicConfig(proto_path="google/cloud/gkebackup/v1")
+                        ],
+                    ),
+                    ConfigChangeTest.__get_a_library_config(
+                        library_name="test-library",
+                        gapic_configs=[
+                            GapicConfig(proto_path="google/cloud/gkebackup/v1")
+                        ],
+                    ),
+                ],
+            ),
         )
         self.assertEqual(
-            ConfigChange.ALL_LIBRARIES_CHANGED,
+            ["gke-backup", "test-library"],
             config_change.get_changed_libraries(),
         )
 
@@ -293,8 +309,6 @@ class ConfigChangeTest(unittest.TestCase):
         return GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish=googleapis_commitish,
-            grpc_version="",
-            protoc_version="",
             libraries=libraries,
         )
 

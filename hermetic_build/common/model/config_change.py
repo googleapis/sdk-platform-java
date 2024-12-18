@@ -11,17 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
-import shutil
+import tempfile
 from enum import Enum
 from typing import Optional
 from git import Commit, Repo
-
 from common.model.gapic_inputs import parse_build_str
 from common.model.generation_config import GenerationConfig
 from common.model.library_config import LibraryConfig
-from library_generation.utils.utilities import sh_util
-from library_generation.utils.proto_path_utils import find_versioned_proto_path
+from common.utils.proto_path_utils import find_versioned_proto_path
 
 INSERTIONS = "insertions"
 LINES = "lines"
@@ -65,7 +62,6 @@ class QualifiedCommit:
 
 
 class ConfigChange:
-    ALL_LIBRARIES_CHANGED = None
 
     def __init__(
         self,
@@ -77,16 +73,16 @@ class ConfigChange:
         self.baseline_config = baseline_config
         self.current_config = current_config
 
-    def get_changed_libraries(self) -> Optional[list[str]]:
+    def get_changed_libraries(self) -> list[str]:
         """
         Returns a unique, sorted list of library name of changed libraries.
-        None if there is a repository level change, which means all libraries
-        in the current_config will be generated.
 
         :return: library names of change libraries.
         """
         if ChangeType.REPO_LEVEL_CHANGE in self.change_to_libraries:
-            return ConfigChange.ALL_LIBRARIES_CHANGED
+            return [
+                library.get_library_name() for library in self.current_config.libraries
+            ]
         library_names = set()
         for change_type, library_changes in self.change_to_libraries.items():
             if change_type == ChangeType.GOOGLEAPIS_COMMIT:
@@ -109,25 +105,23 @@ class ConfigChange:
         :param repo_url: the repository contains the commit history.
         :return: QualifiedCommit objects.
         """
-        tmp_dir = sh_util("get_output_folder")
-        shutil.rmtree(tmp_dir, ignore_errors=True)
-        os.mkdir(tmp_dir)
-        # we only need commit history, thus shadow clone is enough.
-        repo = Repo.clone_from(url=repo_url, to_path=tmp_dir, filter=["blob:none"])
-        commit = repo.commit(self.current_config.googleapis_commitish)
-        proto_paths = self.current_config.get_proto_path_to_library_name()
-        qualified_commits = []
-        while str(commit.hexsha) != self.baseline_config.googleapis_commitish:
-            qualified_commit = ConfigChange.__create_qualified_commit(
-                proto_paths=proto_paths, commit=commit
-            )
-            if qualified_commit is not None:
-                qualified_commits.append(qualified_commit)
-            commit_parents = commit.parents
-            if len(commit_parents) == 0:
-                break
-            commit = commit_parents[0]
-        shutil.rmtree(tmp_dir, ignore_errors=True)
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp_dir:
+            # we only need commit history, thus a shadow clone is enough.
+            repo = Repo.clone_from(url=repo_url, to_path=tmp_dir, filter=["blob:none"])
+            commit = repo.commit(self.current_config.googleapis_commitish)
+            proto_paths = self.current_config.get_proto_path_to_library_name()
+            qualified_commits = []
+            while str(commit.hexsha) != self.baseline_config.googleapis_commitish:
+                qualified_commit = ConfigChange.__create_qualified_commit(
+                    proto_paths=proto_paths, commit=commit
+                )
+                if qualified_commit is not None:
+                    qualified_commits.append(qualified_commit)
+                commit_parents = commit.parents
+                if len(commit_parents) == 0:
+                    break
+                commit = commit_parents[0]
+            repo.close()
         return qualified_commits
 
     def __get_library_names_from_qualified_commits(self) -> list[str]:

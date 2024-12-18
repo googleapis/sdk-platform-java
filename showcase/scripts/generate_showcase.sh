@@ -96,7 +96,11 @@ gapic_additional_protos="google/iam/v1/iam_policy.proto google/cloud/location/lo
 path_to_generator_parent_pom="${SCRIPT_DIR}/../../gapic-generator-java-pom-parent/pom.xml"
 protoc_version=$(get_version_from_pom "${path_to_generator_parent_pom}" "protobuf.version" \
   | cut -d. -f2-)
+download_protoc "${protoc_version}" "linux-x86_64"
+mv "bin" "include" "${well_known_folder}"
 grpc_version=$(get_version_from_pom "${path_to_generator_parent_pom}" "grpc.version")
+download_grpc_plugin "${grpc_version}" "linux-x86_64"
+mv "protoc-gen-grpc-java.exe" "${well_known_folder}"
 rest_numeric_enums="false"
 transport="grpc+rest"
 gapic_yaml=""
@@ -107,8 +111,6 @@ rm -rdf output/showcase-output
 mkdir output/showcase-output
 set +e
 bash "${SCRIPT_DIR}/../../hermetic_build/library_generation/generate_library.sh" \
-  --protoc_version "${protoc_version}" \
-  --grpc_version "${grpc_version}" \
   --proto_path "schema/google/showcase/v1beta1" \
   --destination_path "showcase-output" \
   --gapic_additional_protos "${gapic_additional_protos}" \

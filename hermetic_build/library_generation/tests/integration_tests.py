@@ -43,8 +43,7 @@ commitish_map = {
     "google-cloud-java": "chore/test-hermetic-build",
     "java-bigtable": "chore/test-hermetic-build",
 }
-baseline_config_name = "baseline_generation_config.yaml"
-current_config_name = "current_generation_config.yaml"
+generation_config_name = "generation_config.yaml"
 googleapis_commitish = "113a378d5aad5018876ec0a8cbfd4d6a4f746809"
 # This variable is used to override the jar created by building the image
 # with our own downloaded jar in order to lock the integration test to use
@@ -88,8 +87,7 @@ class IntegrationTest(unittest.TestCase):
             self.__run_entry_point_in_docker_container(
                 repo_location=repo_location,
                 config_location=config_location,
-                baseline_config=baseline_config_name,
-                current_config=current_config_name,
+                generation_config=generation_config_name,
                 api_definition=api_definitions_path,
             )
             # 4. compare generation result with golden files
@@ -204,6 +202,7 @@ class IntegrationTest(unittest.TestCase):
         subprocess.check_call(
             ["docker", "build", "-f", docker_file, "-t", image_tag, "."],
             cwd=cwd,
+            env=dict(os.environ, DOCKER_BUILDKIT="1"),
         )
 
     @classmethod
@@ -222,6 +221,8 @@ class IntegrationTest(unittest.TestCase):
             [
                 "mvn",
                 "dependency:copy",
+                "-B",
+                "-ntp",
                 f"-Dartifact={coordinates}",
                 f"-DoutputDirectory={config_dir}",
             ]
@@ -287,8 +288,7 @@ class IntegrationTest(unittest.TestCase):
         cls,
         repo_location: str,
         config_location: str,
-        baseline_config: str,
-        current_config: str,
+        generation_config: str,
         api_definition: str,
     ):
         # we use the calling user to prevent the mapped volumes from changing
@@ -303,6 +303,8 @@ class IntegrationTest(unittest.TestCase):
                 f"{user_id}:{group_id}",
                 "--rm",
                 "--quiet",
+                "--network",
+                "none",
                 "-v",
                 f"{repo_location}:/workspace/repo",
                 "-v",
@@ -314,8 +316,7 @@ class IntegrationTest(unittest.TestCase):
                 "-w",
                 "/workspace/repo",
                 image_tag,
-                f"--baseline-generation-config-path=/workspace/config/{baseline_config}",
-                f"--current-generation-config-path=/workspace/config/{current_config}",
+                f"--generation-config-path=/workspace/config/{generation_config}",
                 f"--api-definitions-path=/workspace/api",
             ],
         )
@@ -329,7 +330,7 @@ class IntegrationTest(unittest.TestCase):
             repo = sub_dir.name
             if repo in ["golden", "java-bigtable"]:
                 continue
-            config = f"{sub_dir}/{current_config_name}"
+            config = f"{sub_dir}/{generation_config_name}"
             config_files.append((repo, config))
         return config_files
 

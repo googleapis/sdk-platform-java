@@ -18,8 +18,8 @@ import shutil
 from typing import Dict
 from git import Commit, Repo
 
-from library_generation.model.config_change import ConfigChange
-from library_generation.utils.proto_path_utils import find_versioned_proto_path
+from common.model.config_change import ConfigChange
+from common.utils.proto_path_utils import find_versioned_proto_path
 from release_note_generation.commit_message_formatter import (
     format_commit_message,
     format_repo_level_change,
@@ -115,7 +115,8 @@ def get_repo_level_commit_messages(
             f"current_commit ({current_commit_sha[:7]}, committed on "
             f"{current_commit_time}) should be newer than or equal to "
             f"baseline_commit ({baseline_commit_sha[:7]}, committed on "
-            f"{baseline_commit_time})."
+            f"{baseline_commit_time}) (is this branch up to date with "
+            f"the base branch?)."
         )
     qualified_commits = {}
     commit = current_commit

@@ -15,7 +15,6 @@
 import os
 import xml.etree.ElementTree as ET
 import re
-import requests
 import yaml
 import synthtool as s
 import synthtool.gcp as gcp
@@ -123,30 +122,6 @@ def fix_grpc_headers(grpc_root: Path, package_name: str = "unused") -> None:
     )
 
 
-def latest_maven_version(group_id: str, artifact_id: str) -> Optional[str]:
-    """Helper function to find the latest released version of a Maven artifact.
-
-    Fetches metadata from Maven Central and parses out the latest released
-    version.
-
-    Args:
-        group_id (str): The groupId of the Maven artifact
-        artifact_id (str): The artifactId of the Maven artifact
-
-    Returns:
-        The latest version of the artifact as a string or None
-    """
-    group_path = "/".join(group_id.split("."))
-    url = (
-        f"https://repo1.maven.org/maven2/{group_path}/{artifact_id}/maven-metadata.xml"
-    )
-    response = requests.get(url)
-    if response.status_code >= 400:
-        return "0.0.0"
-
-    return version_from_maven_metadata(response.text)
-
-
 def version_from_maven_metadata(metadata: str) -> Optional[str]:
     """Helper function to parse the latest released version from the Maven
     metadata XML file.
@@ -200,16 +175,6 @@ def _common_template_metadata() -> Dict[str, Any]:
     repo_metadata = common._load_repo_metadata()
     if repo_metadata:
         metadata["repo"] = repo_metadata
-        group_id, artifact_id = repo_metadata["distribution_name"].split(":")
-
-        metadata["latest_version"] = latest_maven_version(
-            group_id=group_id, artifact_id=artifact_id
-        )
-
-    metadata["latest_bom_version"] = latest_maven_version(
-        group_id="com.google.cloud",
-        artifact_id="libraries-bom",
-    )
 
     metadata["samples"] = samples.all_samples(["samples/**/src/main/java/**/*.java"])
     metadata["snippets"] = snippets.all_snippets(

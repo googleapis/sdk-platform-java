@@ -1,5 +1,6 @@
 {% set group_id = metadata['repo']['distribution_name'].split(':')|first -%}
 {% set artifact_id = metadata['repo']['distribution_name'].split(':')|last -%}
+{% set version = metadata['library_version'] -%}
 <?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -30,7 +31,7 @@
     <dependency>
       <groupId>{{ group_id }}</groupId>
       <artifactId>{{ artifact_id }}</artifactId>
-      <version>{{ metadata['latest_version'] }}</version>
+      <version>{{ version }}</version>
     </dependency>
     <!-- {x-version-update-end} -->
 

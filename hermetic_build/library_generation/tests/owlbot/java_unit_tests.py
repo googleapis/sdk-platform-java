@@ -21,7 +21,6 @@ from unittest import mock
 
 import yaml
 from pathlib import Path
-import requests_mock
 from synthtool.languages import java
 from library_generation.tests.owlbot import util
 
@@ -68,19 +67,6 @@ SAMPLE_METADATA = """
 class JavaUnitTests(unittest.TestCase):
     def test_version_from_maven_metadata(self):
         self.assertEqual("3.3.0", java.version_from_maven_metadata(SAMPLE_METADATA))
-
-    def test_latest_maven_version(self):
-        with requests_mock.Mocker() as m:
-            m.get(
-                "https://repo1.maven.org/maven2/com/google/cloud/libraries-bom/maven-metadata.xml",
-                text=SAMPLE_METADATA,
-            )
-            self.assertEqual(
-                "3.3.0",
-                java.latest_maven_version(
-                    group_id="com.google.cloud", artifact_id="libraries-bom"
-                ),
-            )
 
     @mock.patch.dict(os.environ, {"SYNTHTOOL_TEMPLATES": f"{TEMPLATES_PATH}"})
     def test_working_common_templates(self):

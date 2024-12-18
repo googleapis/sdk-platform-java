@@ -119,20 +119,20 @@ class RetrySettingsComposerTest {
             "ImmutableMap.Builder<String, RetrySettings> definitions = ImmutableMap.builder();\n",
             "RetrySettings settings = null;\n",
             "settings ="
-                + " RetrySettings.newBuilder().setInitialRetryDelay("
+                + " RetrySettings.newBuilder().setInitialRetryDelayDuration("
                 + "Duration.ofMillis(100L)).setRetryDelayMultiplier(2.0)"
-                + ".setMaxRetryDelay(Duration.ofMillis(3000L))"
-                + ".setInitialRpcTimeout(Duration.ofMillis(10000L))"
+                + ".setMaxRetryDelayDuration(Duration.ofMillis(3000L))"
+                + ".setInitialRpcTimeoutDuration(Duration.ofMillis(10000L))"
                 + ".setRpcTimeoutMultiplier(1.0)"
-                + ".setMaxRpcTimeout(Duration.ofMillis(10000L))"
-                + ".setTotalTimeout(Duration.ofMillis(10000L)).build();\n",
+                + ".setMaxRpcTimeoutDuration(Duration.ofMillis(10000L))"
+                + ".setTotalTimeoutDuration(Duration.ofMillis(10000L)).build();\n",
             "definitions.put(\"retry_policy_1_params\", settings);\n",
             "settings ="
                 + " RetrySettings.newBuilder()"
-                + ".setInitialRpcTimeout(Duration.ofMillis(5000L))"
+                + ".setInitialRpcTimeoutDuration(Duration.ofMillis(5000L))"
                 + ".setRpcTimeoutMultiplier(1.0)"
-                + ".setMaxRpcTimeout(Duration.ofMillis(5000L))"
-                + ".setTotalTimeout(Duration.ofMillis(5000L)).build();\n",
+                + ".setMaxRpcTimeoutDuration(Duration.ofMillis(5000L))"
+                + ".setTotalTimeoutDuration(Duration.ofMillis(5000L)).build();\n",
             "definitions.put(\"no_retry_0_params\", settings);\n",
             "RETRY_PARAM_DEFINITIONS = definitions.build();\n",
             "}\n");
@@ -341,10 +341,10 @@ class RetrySettingsComposerTest {
                 + "WaitResponse.class))"
                 + ".setMetadataTransformer(ProtoOperationTransformers.MetadataTransformer.create("
                 + "WaitMetadata.class)).setPollingAlgorithm(OperationTimedPollAlgorithm.create("
-                + "RetrySettings.newBuilder().setInitialRetryDelay(Duration.ofMillis(5000L))"
-                + ".setRetryDelayMultiplier(1.5).setMaxRetryDelay(Duration.ofMillis(45000L))"
-                + ".setInitialRpcTimeout(Duration.ZERO).setRpcTimeoutMultiplier(1.0)"
-                + ".setMaxRpcTimeout(Duration.ZERO).setTotalTimeout(Duration.ofMillis(300000L))"
+                + "RetrySettings.newBuilder().setInitialRetryDelayDuration(Duration.ofMillis(5000L))"
+                + ".setRetryDelayMultiplier(1.5).setMaxRetryDelayDuration(Duration.ofMillis(45000L))"
+                + ".setInitialRpcTimeoutDuration(Duration.ZERO).setRpcTimeoutMultiplier(1.0)"
+                + ".setMaxRpcTimeoutDuration(Duration.ZERO).setTotalTimeoutDuration(Duration.ofMillis(300000L))"
                 + ".build()))");
     assertEquals(expected, writerVisitor.write());
   }
@@ -394,7 +394,7 @@ class RetrySettingsComposerTest {
             + "BatchingSettings.newBuilder()"
             + ".setElementCountThreshold(100L)"
             + ".setRequestByteThreshold(1048576L)"
-            + ".setDelayThreshold(Duration.ofMillis(10L))"
+            + ".setDelayThresholdDuration(Duration.ofMillis(10L))"
             + ".setFlowControlSettings("
             + "FlowControlSettings.newBuilder()"
             + ".setLimitExceededBehavior(FlowController.LimitExceededBehavior.Ignore)"
@@ -451,7 +451,7 @@ class RetrySettingsComposerTest {
             + "BatchingSettings.newBuilder()"
             + ".setElementCountThreshold(1000L)"
             + ".setRequestByteThreshold(1048576L)"
-            + ".setDelayThreshold(Duration.ofMillis(50L))"
+            + ".setDelayThresholdDuration(Duration.ofMillis(50L))"
             + ".setFlowControlSettings("
             + "FlowControlSettings.newBuilder()"
             + ".setMaxOutstandingElementCount(100000L)"

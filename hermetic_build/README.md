@@ -1,74 +1,94 @@
+> [!IMPORTANT]
+> All scripts/examples assume you are inside the repository root folder.
+
 # Generate a repository containing GAPIC Client Libraries
 
-The script, `entry_point.py`, allows you to generate a repository containing
-GAPIC client libraries (a monorepo, for example, google-cloud-java) from a
-configuration file.
+Running the docker image built from `hermetic_build/library_generation`
+directory, you can generate a repository containing GAPIC client libraries (a
+monorepo, for example, google-cloud-java) from a configuration file.
 
 ## Environment
 
 - OS: Linux
-- Java runtime environment (8 or above)
-- Python (3.12 or above)
-- Docker 
-- Git
+- Docker
 
-## Prerequisite
+## Prerequisites
 
-In order to generate a version for each library, a versions.txt has to exist
-in `repository_path`.
-Please refer to [Repository path](#repository-path--repositorypath---optional) for more information.
+### Generation configuration
 
-## Parameters to generate a repository using `entry_point.py`
+A generation configuration file is required to generate GAPIC Client Libraries.
 
-### Baseline generation configuration yaml (`baseline_generation_config`)
+Please refer to [Generation configuration yaml](#generation-configuration-yaml--generation-config-path---optional)
+for more information.
 
-An absolute or relative path to a generation_config.yaml.
-This config file is used for computing changed libraries, not library
-generation.
+### versions.txt
 
-### Current generation configuration yaml (`current_generation_config`)
+In order to generate a version for each library, a `versions.txt` has to exist
+in `repository-path`.
+Please refer to [Repository path](#repository-path--repositorypath---optional)
+for more information.
+
+## Parameters to generate a repository using the docker image
+
+### Generation configuration yaml (`generation-config-path`), optional
 
 An absolute or relative path to a configuration file containing parameters to
 generate the repository.
-Please refer [Configuration to generate a repository](#configuration-to-generate-a-repository)
+Please refer to [Configuration to generate a repository](#configuration-to-generate-a-repository)
 for more information.
 
-### Repository path (`repository_path`), optional
+The default value is `$(pwd)/generation_config.yaml`, i.e., `generation_config.yaml`
+in the current working directory.
+
+This will raise `FileNotFoundError` if the specified generation config does not
+exist or, in case `generation-config-path` is not specified, the default
+generation config does not exist.
+
+### Repository path (`repository-path`), optional
 
 The path to where the generated repository goes.
 
 The default value is the current working directory when running the script.
-For example, `cd google-cloud-java && python entry_point.py ...` without
+For example, `cd google-cloud-java && python /path/to/entry_point.py ...` without
 specifying the `--repository_path` option will modify the `google-cloud-java`
 repository the user `cd`'d into.
 
-Note that versions.txt has to exist in `repository_path` in order to generate
-right version for each library.
+Note that `versions.txt` has to exist in `repository_path` in order to generate
+the right version for each library.
 Please refer [here](go/java-client-releasing#versionstxt-manifest) for more info
 of versions.txt.
 
-### Api definitions path (`api_definitions_path`), optional
+### A list of library names (`library-names`), optional
+
+A list of library names that will be generated, separated by comma.
+The library name of a library is the value of `library_name` or `api_shortname`,
+if `library_name` is not specified, in the generation configuration.
+
+If not specified, all libraries in the generation
+configuration will be generated.
+
+### Api definitions path (`api-definitions-path`), optional
 
 The path to where the api definition (proto, service yaml) resides.
 
 The default value is the current working directory when running the script.
 
-Note that you need not only the protos defined the service, but also the transitive
-dependencies of those protos.
+**Note that you need not only the protos defined the service, but also the
+transitive dependencies of those protos.**
 Any missing dependencies will cause `File not found` error.
 
-For example, if your service is defined in `example_service.proto` and it imports
-`google/api/annotations.proto`, you need the `annotations.proto` resides in a
-folder that has the exact structure of the import statement (`google/api` in this
-case), and set `api_definitions_path` to the path contains the root folder (`google`
-in this case).
+For example, if your service is defined in `example_service.proto` and it
+imports `google/api/annotations.proto`, you need the `annotations.proto` resides
+in a folder that has the exact structure of the import statement (`google/api`
+in this case), and set `api_definitions_path` to the path contains the root
+folder (`google` in this case).
 
-## Output of `entry_point.py`
+## Output
 
 ### GAPIC libraries
 
-For each module (e.g. `google-cloud-java/java-asset`), the following files/folders
-will be created/modified:
+For each module (e.g. `google-cloud-java/java-asset`), the following
+files/folders will be created/modified:
 
 | Name                                | Notes                                                                    |
 |:------------------------------------|:-------------------------------------------------------------------------|
@@ -100,13 +120,11 @@ The repository level parameters define the version of API definition (proto)
 and tools.
 They are shared by library level parameters.
 
-| Name                    | Required | Notes                                        |
-|:------------------------|:--------:|:---------------------------------------------|
-| gapic_generator_version |    No    | set through env variable if not specified    |
-| protoc_version          |    No    | inferred from the generator if not specified |
-| grpc_version            |    No    | inferred from the generator if not specified |
-| googleapis_commitish    |   Yes    |                                              |
-| libraries_bom_version   |    No    | empty string if not specified                |
+| Name                    | Required | Notes                                     |
+|:------------------------|:--------:|:------------------------------------------|
+| gapic_generator_version |    No    | set through env variable if not specified |
+| googleapis_commitish    |   Yes    |                                           |
+| libraries_bom_version   |    No    | empty string if not specified             |
 
 ### Library level parameters
 
@@ -154,7 +172,6 @@ The GAPIC level parameters define how to generate a GAPIC library.
 
 ```yaml
 gapic_generator_version: 2.34.0
-protoc_version: 25.2
 googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
 libraries_bom_version: 26.37.0
 libraries:
@@ -185,32 +202,58 @@ libraries:
       - proto_path: google/cloud/asset/v1p7beta1
 ```
 
-# Local Environment Setup before running `entry_point.py`
+# Run the library generation image
 
-1. Assuming Python 3 is installed, follow official guide from [Python.org](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments) to create a virtual environment. 
-The virtual environment can be installed to any folder, usually it is recommended to be installed under the root folder of the project(`sdk-platform-java` in this case).
-2. Assuming the virtual environment is installed under `sdk-platform-java`. 
-Run the following command under the root folder of `sdk-platform-java` to install `library_generation` and its dependencies.
+1. Download the API definitions to a local directory, e.g., from [googleapis](https://github.com/googleapis/googleapis).
 
-   ```bash
-   python -m pip install --require-hashes -r hermetic_build/common/requirements.txt
-   python -m pip install hermetic_build/common
-   python -m pip install --require-hashes -r hermetic_build/library_generation/requirements.txt
-   python -m pip install hermetic_build/library_generation
+2. Run the docker image.
+   ```shell
+   # Assume you want to generate the library in the current working directory
+   # and the generation configuration is in the same directory.
+   docker run \
+     --rm \
+     --quiet \
+     -u "$(id -u):$(id -g)" \
+     -v "$(pwd):/workspace" \
+     -v /path/to/api_definition:/workspace/apis \
+     gcr.io/cloud-devrel-public-resources/java-library-generation:image-tag
    ```
 
-3. Download api definition to a local directory
+   * `-u "$(id -u)":"$(id -g)"` makes docker run the container impersonating
+     yourself. 
+     This avoids folder ownership changes since it runs as root by default.
+   * `-v "$(pwd):/workspace"` maps the host machine's current working directory
+     to the /workspace folder. 
+     The image is configured to perform changes in this directory.
+   * `-v /path/to/api_definition:/workspace/apis` maps the host machine's API 
+     definitions folder to `/workspace/apis` folder.
+ 
+3. An advanced example:
+   ```shell
+   docker run \
+     --rm \
+     --quiet \
+     -u "$(id -u):$(id -g)" \
+     -v "$(pwd):/workspace" \
+     -v /path/to/api_definition:/workspace/apis \
+     gcr.io/cloud-devrel-public-resources/java-library-generation:image-tag \
+     --generation-config-path=/workspace/generation_config_file \
+     --library-names=apigee-connect,asset \
+     --repository-path=/workspace \
+     --api-definitions-path=/workspace/apis
+   ```
+    
+   * `--generation-config-path=/workspace/generation_config_file` set the
+     generation configuration to `/workspace/generation_config_file`.
+   * `--api-definitions-path=/workspace/apis` set the API definition path to
+     `/workspace/apis`.
 
-## An example to generate a repository using `entry_point.py`
+To debug the image, please refer to [development guide](DEVELOPMENT.md#debug-the-library-generation-container)
+for more info.
 
-```bash
-python hermetic_build/library_generation/cli/entry_point.py generate \
-  --baseline-generation-config-path=/path/to/baseline_config_file \
-  --current-generation-config-path=/path/to/current_config_file \
-  --repository-path=path/to/repository \
-  --api-definitions-path=path/to/api_definition
-```
-If you run `entry_point.py` with the example [configuration](#an-example-of-generation-configuration)
+## An example to generate a repository using the docker image
+
+If you run the docker image with the example [configuration](#an-example-of-generation-configuration)
 shown above, the repository structure is:
 ```
 $repository_path
@@ -284,7 +327,70 @@ $repository_path
 |_versions.txt
 ```
 
-# Owlbot Java Postprocessor
+# Generate release notes from API definition changes
+
+The script, `hermetic_build/release_note_generation/cli/generate_release_note.py`
+allows you to generate a file containing release notes from API definition
+changes in [googleapis](https://github.com/googleapis/googleapis) GitHub
+repository.
+
+## Environment
+
+- OS: Linux
+- Python (3.12.0 or above)
+
+## Parameters to generate a release note
+
+### Baseline generation configuration path (`baseline-generation-config-path`)
+
+Absolute or relative path to a generation configuration.
+Please refer to [Configuration to generate a repository](#configuration-to-generate-a-repository)
+for more information.
+
+Note that the `googleapis_commitish` in this configuration is used to retrieve
+the first commit, exclusively, to generate the release notes.
+
+### Current generation configuration path (`current-generation-config-path`)
+
+Absolute or relative path to a generation configuration.
+The release notes will be generated from commits that are related to the
+libraries specified in this configuration.
+Please refer to [Configuration to generate a repository](#configuration-to-generate-a-repository)
+for more information.
+
+Note that the `googleapis_commitish` entry in this configuration is used to
+retrieve the last commit, inclusively, to generate the release notes.
+
+### Repository path (`repository-path`), optional
+
+The path to which the file, `pr_description.txt` containing the release notes
+will be sent.
+If not specified, the file will be generated to the current working directory.
+
+## Generate a release notes file in a local environment
+
+1. Install python (>= 3.12.0).
+It is recommended to create a python virtual environment through the
+[official guide](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments).
+
+2. Run the following commands to install python packages
+   ```shell
+   cd /path/to/sdk-platform-java 
+   pip install --require-hashes -r hermetic_build/common/requirements.txt
+   pip install hermetic_build/common
+   pip install --require-hashes -r hermetic_build/release_note_generation/requirements.txt
+   pip install hermetic_build/release_note_generation
+   ```
+3. Run the following commands to generate a release note
+   ```shell
+   cd /path/to/sdk-platform-java 
+   python hermetic_build/release_note_generation/cli/generate_release_note.py generate \
+     --baseline-generation-config-path=/path/to/baseline_generation_config \
+     --current-generation-config-path=/path/to/current_generation_config \
+     --repository-path=/path/to/send/release_note
+   ```
+
+# OwlBot Java Postprocessor
 
 We have transferred the
 [implementation](https://github.com/googleapis/synthtool/tree/59fe44fde9866a26e7ee4e4450fd79f67f8cf599/docker/owlbot/java)
