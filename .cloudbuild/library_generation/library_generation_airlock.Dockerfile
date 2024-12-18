@@ -29,7 +29,7 @@ RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_
   "./gapic-generator-java.jar"
 
 # 3.20.1
-FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/alpine@sha256:647a509e17306d117943c7f91de542d7fb048133f59c72dff7893cffd1836e11 as glibc-compat
+FROM us-docker.pkg.dev/artifact-foundry-prod/docker-3p-trusted/alpine@sha256:dabf91b69c191a1a0a1628fd6bdd029c0c4018041c7f052870bb13c5a222ae76 as glibc-compat
 
 RUN apk update && apk add git sudo
 # This SHA is the latest known-to-work version of this binary compatibility tool
