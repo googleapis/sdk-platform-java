@@ -38,12 +38,13 @@ class IntegrationTest(unittest.TestCase):
     def test_monorepo_generation(self):
         repo_dest = "/workspace/google-cloud-java"
         golden_dir = "/workspace/golden"
-        for library_name in [
-            "apigee-connect",
-            "alloydb",
-            "alloydb-connectors",
-            "cloudcontrolspartner",
-        ]:
+        library_names = [
+            "java-apigee-connect",
+            "java-alloydb",
+            "java-alloydb-connectors",
+            "java-cloudcontrolspartner",
+        ]
+        for library_name in library_names:
             actual_library = f"{repo_dest}/{library_name}"
             print("*" * 50)
             print(f"Checking for differences in '{library_name}'.")
