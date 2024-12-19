@@ -37,7 +37,7 @@
     <errorprone.version>2.36.0</errorprone.version>
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
     <threetenbp.version>1.7.0</threetenbp.version>
-    <junit.version>5.11.3</junit.version>
+    <junit.version>5.11.4</junit.version>
   </properties>
 
   <developers>
