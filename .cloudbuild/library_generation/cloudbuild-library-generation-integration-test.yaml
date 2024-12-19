@@ -27,6 +27,7 @@ steps:
   waitFor: ["-"]
   env:
   - "DOCKER_BUILDKIT=1"
+
 - name: ubuntu:24.04
   entrypoint: bash
   args:
@@ -36,9 +37,10 @@ steps:
     cd /workspace
     git clone https://github.com/googleapis/googleapis
     cd googleapis
-    git switch 113a378d5aad5018876ec0a8cbfd4d6a4f746809
+    git checkout 113a378d5aad5018876ec0a8cbfd4d6a4f746809
   id: download-api-definitions
   waitFor: ["-"]
+
 - name: ubuntu:24.04
   entrypoint: bash
   args:
@@ -61,5 +63,57 @@ steps:
   id: prepare-golden
   waitFor: ["-"]
 
+- name: ubuntu:24.04
+  entrypoint: bash
+  args:
+  - "-c"
+  - |
+    # Install docker
+    apt-get update
+    apt-get install -y ca-certificates curl gnupg lsb-release
+    mkdir -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
+       gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    echo \
+       "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+       $(lsb_release -cs) stable" | \
+       tee /etc/apt/sources.list.d/docker.list > /dev/null
+    apt-get update
+    apt-get -y install \
+       docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    docker run \
+      --rm \
+      --quiet \
+      -u "$(id -u):$(id -g)" \
+      -v "/workspace/google-cloud-java:/workspace" \
+      -v "/workspace/hermetic_build/library_generation/tests/resources/integration/google-cloud-java:/workspace/config" \
+      -v "/workspace/googleapis:/workspace/apis" \
+      "${_TEST_IMAGE}" \
+      --generation-config-path="/workspace/config/generation_config.yaml" \
+      --api-definitions-path="/workspace/apis"
+  id: generate-libraries
+  waitFor: [
+    "build-image",
+    "download-api-definitions",
+    "prepare-golden"
+  ]
 options:
   logging: CLOUD_LOGGING_ONLY
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
