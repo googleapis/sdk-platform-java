@@ -63,12 +63,12 @@ steps:
   id: prepare-golden
   waitFor: ["-"]
 
-- name: ubuntu:24.04
-  entrypoint: bash
+- name: maven:3.9.9-eclipse-temurin-11-alpine
+  entrypoint: /bin/sh
   args:
   - "-c"
   - |
-    apt update && apt install -y maven
+#    apt update && apt install -y maven
     mvn dependency:copy \
       -B -ntp \
       -Dartifact=com.google.api:gapic-generator-java:2.38.1 \
