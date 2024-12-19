@@ -21,16 +21,6 @@ from collections import Counter
 from filecmp import dircmp
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
-# generator_jar_coordinates_file = os.path.join(config_dir, "test_generator_coordinates")
-# This variable is used to override the jar created by building the image
-# with our own downloaded jar in order to lock the integration test to use
-# a constant version specified in
-# library_generation/test/resources/integration/test_generator_coordinates
-# This allows us to decouple the generation workflow testing with what the
-# generator jar will actually generate.
-# See library_generation/DEVELOPMENT.md ("The Hermetic Build's
-# well-known folder").
-WELL_KNOWN_GENERATOR_JAR_FILENAME = "gapic-generator-java.jar"
 
 
 class IntegrationTest(unittest.TestCase):
