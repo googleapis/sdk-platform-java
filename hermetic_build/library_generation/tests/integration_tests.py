@@ -69,8 +69,6 @@ class IntegrationTest(unittest.TestCase):
 
     def test_entry_point_running_in_container(self):
         api_definitions_path = self.__copy_api_definition(googleapis_commitish)
-        print(f"api definition path in host: {api_definitions_path}")
-        print(f"Contents in host: {os.listdir(api_definitions_path)}")
         config_files = self.__get_config_files(config_dir)
         for repo, config_file in config_files:
             config = from_yaml(config_file)
