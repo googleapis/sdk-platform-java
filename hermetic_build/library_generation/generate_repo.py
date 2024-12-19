@@ -12,13 +12,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
 import shutil
 from typing import Optional
 import library_generation.utils.utilities as util
-from library_generation.generate_composed_library import generate_composed_library
 from common.model.generation_config import GenerationConfig
 from common.model.library_config import LibraryConfig
+from library_generation.generate_composed_library import generate_composed_library
 from library_generation.utils.monorepo_postprocessor import monorepo_postprocessing
 
 
