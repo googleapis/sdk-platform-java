@@ -33,7 +33,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 WELL_KNOWN_GENERATOR_JAR_FILENAME = "gapic-generator-java.jar"
 
 
-class CloudBuildIntegrationTest(unittest.TestCase):
+class IntegrationTest(unittest.TestCase):
 
     def test_monorepo_generation(self):
         repo_dest = "/workspace/google-cloud-java"
