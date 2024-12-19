@@ -101,12 +101,11 @@ steps:
     "prepare-generator-jar"
   ]
 
-- name: ubuntu:24.04
-  entrypoint: bash
+- name: python:3.12.7-alpine3.20
+  entrypoint: /bin/sh
   args:
   - "-c"
   - |
-    apt update && apt install -y python3 python3.12-venv
     python3 -m venv .venv
     source .venv/bin/activate
     pip install --require-hashes -r requirements.txt
