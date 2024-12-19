@@ -104,7 +104,7 @@ steps:
   - "-m"
   - |
     pip install --require-hashes -r .cloudbuild/library_generation/scripts/requirements.txt
-    python3 -m unittest .cloudbuild/library_generation/scripts/integration_tests_cloud_build.py
+    python -m unittest .cloudbuild/library_generation/scripts/integration_tests_cloud_build.py
   id: verify-generation
   waitFor: ["generate-libraries"]
 options:
