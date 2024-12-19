@@ -28,12 +28,11 @@ steps:
   env:
   - "DOCKER_BUILDKIT=1"
 
-- name: ubuntu:24.04
-  entrypoint: bash
+- name: alpine/git:latest
+  entrypoint: /bin/sh
   args:
   - "-c"
   - |
-    apt update && apt install -y git
     cd /workspace
     git clone https://github.com/googleapis/googleapis
     cd googleapis
@@ -41,12 +40,11 @@ steps:
   id: download-api-definitions
   waitFor: ["-"]
 
-- name: ubuntu:24.04
-  entrypoint: bash
+- name: alpine/git:latest
+  entrypoint: /bin/sh
   args:
   - "-c"
   - |
-    apt update && apt install -y git
     cd /workspace
     git clone https://github.com/googleapis/google-cloud-java
     cd google-cloud-java
