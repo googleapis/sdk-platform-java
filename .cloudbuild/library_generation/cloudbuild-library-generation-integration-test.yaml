@@ -68,7 +68,6 @@ steps:
   args:
   - "-c"
   - |
-#    apt update && apt install -y maven
     mvn dependency:copy \
       -B -ntp \
       -Dartifact=com.google.api:gapic-generator-java:2.38.1 \
