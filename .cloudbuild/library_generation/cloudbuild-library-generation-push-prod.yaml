@@ -14,19 +14,26 @@
 
 timeout: 7200s # 2 hours
 substitutions:
-  _IMAGE_NAME: "us-docker.pkg.dev/java-hermetic-build-prod/private-resources/java-library-generation"
   _GAPIC_GENERATOR_JAVA_VERSION: '2.51.1-SNAPSHOT' # {x-version-update:gapic-generator-java:current}
-  _SHA_IMAGE_ID: "${_IMAGE_NAME}:${COMMIT_SHA}"
-  _LATEST_IMAGE_ID: "${_IMAGE_NAME}:latest"
-  _VERSIONED_IMAGE_ID: "${_IMAGE_NAME}:${_GAPIC_GENERATOR_JAVA_VERSION}"
+  _PRIVATE_IMAGE_NAME: "us-docker.pkg.dev/java-hermetic-build-prod/private-resources/java-library-generation"
+  _PRIVATE_SHA_IMAGE_ID: "${_PRIVATE_IMAGE_NAME}:${COMMIT_SHA}"
+  _PRIVATE_LATEST_IMAGE_ID: "${_PRIVATE_IMAGE_NAME}:latest"
+  _PRIVATE_VERSIONED_IMAGE_ID: "${_PRIVATE_IMAGE_NAME}:${_GAPIC_GENERATOR_JAVA_VERSION}"
+  _PUBLIC_IMAGE_NAME: "gcr.io/cloud-devrel-public-resources/java-library-generation"
+  _PUBLIC_SHA_IMAGE_ID: "${_PUBLIC_IMAGE_NAME}:${COMMIT_SHA}"
+  _PUBLIC_LATEST_IMAGE_ID: "${_PUBLIC_IMAGE_NAME}:latest"
+  _PUBLIC_VERSIONED_IMAGE_ID: "${_PUBLIC_IMAGE_NAME}:${_GAPIC_GENERATOR_JAVA_VERSION}"
 steps:
   # Library generation build
   - name: gcr.io/cloud-builders/docker
     args: [
       "build",
-      "-t", "${_SHA_IMAGE_ID}",
-      "-t", "${_LATEST_IMAGE_ID}",
-      "-t", "${_VERSIONED_IMAGE_ID}",
+      "-t", "${_PRIVATE_SHA_IMAGE_ID}",
+      "-t", "${_PRIVATE_LATEST_IMAGE_ID}",
+      "-t", "${_PRIVATE_VERSIONED_IMAGE_ID}",
+      "-t", "${_PUBLIC_SHA_IMAGE_ID}",
+      "-t", "${_PUBLIC_LATEST_IMAGE_ID}",
+      "-t", "${_PUBLIC_VERSIONED_IMAGE_ID}",
       "-f", ".cloudbuild/library_generation/library_generation_airlock.Dockerfile",
       "."
     ]
@@ -39,6 +46,9 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 images:
-  - ${_SHA_IMAGE_ID}
-  - ${_LATEST_IMAGE_ID}
-  - ${_VERSIONED_IMAGE_ID}
+  - ${_PRIVATE_SHA_IMAGE_ID}
+  - ${_PRIVATE_LATEST_IMAGE_ID}
+  - ${_PRIVATE_VERSIONED_IMAGE_ID}
+  - ${_PUBLIC_SHA_IMAGE_ID}
+  - ${_PUBLIC_LATEST_IMAGE_ID}
+  - ${_PUBLIC_VERSIONED_IMAGE_ID}
