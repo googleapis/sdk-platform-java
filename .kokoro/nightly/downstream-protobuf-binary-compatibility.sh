@@ -42,27 +42,30 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     continue
   fi
 
-  repo_name=$(echo "$repo" | cut -d '-' -f 2-)
   # Perform source-compatibility testing on main (latest changes)
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   pushd "$repo"
-
   mvn -B -ntp clean install -T 1C -DskipTests -Dclirr.skip
 
-  # Storage-Nio's artifact ID is google-cloud-nio, not google-cloud-storage-nio
-  if [[ "$repo" == "java-storage-nio" ]]; then
-    repo_name="nio"
-  fi
-  primary_artifact=$(grep -E "^google-cloud-${repo_name}" "versions.txt" | head -n 1)
-  version=$(echo "${primary_artifact}" | tr ':' '\n' | tail -n 1)
-  artifact_id="google-cloud-${repo_name}"
-  echo "Using ${repo} v${version}"
+  # Match all artifacts that start with google-cloud (rules out proto and grpc modules)
+  ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-cloud" | tr '\n' ',')
+  ARTIFACT_LIST=${ARTIFACT_LIST%,}
+
+  echo "Found artifacts ${ARTIFACT_LIST}"
   popd
 
-  # The `-s` argument filters the linkage check problems that stem from the artifact
-  program_args="-r --artifacts com.google.cloud:${artifact_id}:${version},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION} -s com.google.cloud:${artifact_id}:${version}"
-  echo "Linkage Checker Program Arguments: ${program_args}"
-  mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="${program_args}"
+  for artifact in ${ARTIFACT_LIST//,/ }; do
+    artifact_id=$(echo "${artifact}" | tr ':' '\n' | head -n 1)
+    version=$(echo "${artifact}" | tr ':' '\n' | tail -n 1)
+
+    maven_coordinates="com.google.cloud:${artifact_id}:${version}"
+    echo "Using ${maven_coordinates}"
+
+    # The `-s` argument filters the linkage check problems that stem from the artifact
+    program_args="-r --artifacts ${maven_coordinates},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION} -s ${maven_coordinates}"
+    echo "Linkage Checker Program Arguments: ${program_args}"
+    mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="${program_args}"
+  done
 done
 popd
 popd
