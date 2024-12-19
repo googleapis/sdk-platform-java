@@ -27,7 +27,9 @@ steps:
       "-t", "${_SHA_IMAGE_ID}",
       "-t", "${_LATEST_IMAGE_ID}",
       "-t", "${_VERSIONED_IMAGE_ID}",
-      "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
+      "-f", ".cloudbuild/library_generation/library_generation_airlock.Dockerfile",
+      "."
+    ]
     id: library-generation-build
     waitFor: ["-"]
     env: 
