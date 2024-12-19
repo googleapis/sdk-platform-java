@@ -48,7 +48,8 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   mvn -B -ntp clean install -T 1C -DskipTests -Dclirr.skip
 
   # Match all artifacts that start with google-cloud (rules out proto and grpc modules)
-  ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-cloud" | tr '\n' ',')
+  # Exclude any matches to BOM artifacts or emulators
+  ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-cloud" | grep -v "bom|emulator" | tr '\n' ',')
   ARTIFACT_LIST=${ARTIFACT_LIST%,}
 
   echo "Found artifacts ${ARTIFACT_LIST}"
