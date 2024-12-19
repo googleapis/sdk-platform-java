@@ -21,7 +21,6 @@ branchProtectionRules:
   - graalvm-presubmit-sdk-platform-java-a-downstream-kmsinventory (java-graalvm-ci-prod)
   - graalvm-presubmit-sdk-platform-java-b-downstream-kmsinventory (java-graalvm-ci-prod)
   - library_generation
-  - library-generation-integration-tests
   - library-generation-lint-python
   - library-generation-lint-shell
   - library-generation-unit-tests
