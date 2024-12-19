@@ -98,14 +98,11 @@ steps:
     "prepare-golden"
   ]
 
-- name: ubuntu:24.04
-  entrypoint: bash
+- name: python:3.13.1-alpine3.21
+  entrypoint: python
   args:
-  - "-c"
+  - "-m"
   - |
-    apt-get update && apt-get -y install python3.12-venv
-    python3 -m venv .venv
-    source .venv/bin/activate
     pip install --require-hashes -r .cloudbuild/library_generation/scripts/requirements.txt
     python3 -m unittest .cloudbuild/library_generation/scripts/integration_tests_cloud_build.py
   id: verify-generation
