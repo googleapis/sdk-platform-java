@@ -33,7 +33,7 @@ steps:
   args:
   - "-c"
   - |
-    apt-get update && apt-get install -y git
+    apt update && apt install -y git
     cd /workspace
     git clone https://github.com/googleapis/googleapis
     cd googleapis
@@ -46,7 +46,7 @@ steps:
   args:
   - "-c"
   - |
-    apt-get update && apt-get install -y git
+    apt update && apt install -y git
     cd /workspace
     git clone https://github.com/googleapis/google-cloud-java
     cd google-cloud-java
@@ -69,8 +69,8 @@ steps:
   - "-c"
   - |
     # Install docker
-    apt-get update
-    apt-get install -y ca-certificates curl gnupg lsb-release
+    apt update
+    apt install -y ca-certificates curl gnupg lsb-release
     mkdir -p /etc/apt/keyrings
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
        gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -78,8 +78,8 @@ steps:
        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
        $(lsb_release -cs) stable" | \
        tee /etc/apt/sources.list.d/docker.list > /dev/null
-    apt-get update
-    apt-get -y install \
+    apt update
+    apt -y install \
        docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     docker run \
       --rm \
@@ -103,7 +103,7 @@ steps:
   args:
   - "-c"
   - |
-    apt-get update && apt-get install -y python3 python3.12-venv
+    apt update && apt install -y python3 python3.12-venv
     python3 -m venv .venv
     source .venv/bin/activate
     pip install --require-hashes -r .cloudbuild/library_generation/scripts/requirements.txt
