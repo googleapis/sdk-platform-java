@@ -215,5 +215,20 @@
       <artifactId>opentelemetry-sdk-testing</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!--  Logging testing dependencies  -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <!--   Latest version with java8 support   -->
+      <version>1.3.14</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>1.3.14</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>

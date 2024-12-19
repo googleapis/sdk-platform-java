@@ -196,6 +196,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
     HttpJsonClientInterceptor headerInterceptor =
         new HttpJsonHeaderInterceptor(headerProvider.getHeaders());
 
+    channel = new ManagedHttpJsonInterceptorChannel(channel, new HttpJsonLoggingInterceptor());
     channel = new ManagedHttpJsonInterceptorChannel(channel, headerInterceptor);
     if (interceptorProvider != null && interceptorProvider.getInterceptors() != null) {
       for (HttpJsonClientInterceptor interceptor : interceptorProvider.getInterceptors()) {
