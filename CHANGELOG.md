@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.51.1](https://github.com/googleapis/sdk-platform-java/compare/v2.51.0...v2.51.1) (2024-12-20)
+
+
+### Dependencies
+
+* update google api dependencies ([#3461](https://github.com/googleapis/sdk-platform-java/issues/3461)) ([12d9ff2](https://github.com/googleapis/sdk-platform-java/commit/12d9ff26e6ab905e6230703a671e188690ec1322))
+* update repo-automation-bots digest to 8b7d94b ([#3458](https://github.com/googleapis/sdk-platform-java/issues/3458)) ([59f9e0a](https://github.com/googleapis/sdk-platform-java/commit/59f9e0a3a101d5425b0c751b39e6b784466e16b8))
+
+
+### Documentation
+
+* update development guide ([#3480](https://github.com/googleapis/sdk-platform-java/issues/3480)) ([9a65386](https://github.com/googleapis/sdk-platform-java/commit/9a65386dfc3146de4f9b36962caae2df0662ac98))
+
 ## [2.51.0](https://github.com/googleapis/sdk-platform-java/compare/v2.50.0...v2.51.0) (2024-12-12)
 
 
