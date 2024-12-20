@@ -1,5 +1,5 @@
 """
-Utility to compare the contents of two XML files. 
+Utility to compare the contents of two XML files.
 This focuses on the tree structure of both XML files, meaning that element order and whitespace will be disregarded.
 The only comparison points are: element path (e.g. project/dependencies) and element text
 There is a special case for `dependency`, where the maven coordinates are prepared as well
