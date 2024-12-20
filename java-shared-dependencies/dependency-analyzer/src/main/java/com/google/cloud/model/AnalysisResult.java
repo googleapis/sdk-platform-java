@@ -3,6 +3,7 @@ package com.google.cloud.model;
 import static com.google.cloud.external.DepsDevClient.QUERY_URL_BASE;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,18 @@ public class AnalysisResult {
     this.packageInfos = result;
     this.advisories = getAdvisories(result);
     this.nonCompliantLicenses = getNonCompliantLicenses(result);
+  }
+
+  public Map<VersionKey, List<License>> getNonCompliantLicenses() {
+    return Collections.unmodifiableMap(nonCompliantLicenses);
+  }
+
+  public Map<VersionKey, List<Advisory>> getAdvisories() {
+    return Collections.unmodifiableMap(advisories);
+  }
+
+  public VersionKey getRoot() {
+    return packageInfos.get(0).versionKey();
   }
 
   public static AnalysisResult of(List<PackageInfo> result) {
@@ -85,13 +98,27 @@ public class AnalysisResult {
     if (packageInfos.size() == 1) {
       builder.append(String.format("%s has no dependency.", root.versionKey()));
     } else {
+      builder.append("==========Non-compliant licenses==========\n");
       for (int i = 1; i < packageInfos.size(); i++) {
         PackageInfo info = packageInfos.get(i);
-        String dependencyInfo = String.format("""
-            ### Package information of %s
-            %s
-            """, info.versionKey(), packageInfoSection(info));
-        builder.append(dependencyInfo);
+        boolean hasNonComplaintLicenses = false;
+        for (License license : info.licenses()) {
+          if (!license.isCompliant()) {
+            hasNonComplaintLicenses = true;
+            break;
+          }
+        }
+        if (hasNonComplaintLicenses) {
+          builder.append(String.format("%s: %s\n", info.versionKey(), info.licenses()));
+        }
+      }
+
+      builder.append("==========Security vulnerabilities==========\n");
+      for (int i = 1; i < packageInfos.size(); i++) {
+        PackageInfo info = packageInfos.get(i);
+        for (Advisory advisory : info.advisories()) {
+          builder.append(String.format("%s: %s\n", info.versionKey(), advisory.url()));
+        }
       }
     }
     builder.append("\n");
@@ -105,11 +132,13 @@ public class AnalysisResult {
     String packageInfoReport = """
         Licenses: %s
         Vulnerabilities: %s.
+        Pull request freshness: %s.
         Checked in [%s (%s)](%s)
         """;
     return String.format(packageInfoReport,
         packageInfo.licenses(),
         packageInfo.advisories(),
+        packageInfo.pullRequestStatistics().orElse(null),
         versionKey.name(),
         versionKey.version(),
         getQueryUrl(
