@@ -25,15 +25,14 @@ python -m pip install hermetic_build/release_note_generation
 # Run the integration tests
 
 The integration tests build the docker image declared in
-`.cloudbuild/library_generation/library_generation.Dockerfile`, pull GAPIC
-repositories, generate the libraries and compare the results with the source
-code declared in a "golden branch" of the repo.
+`.cloudbuild/library_generation/library_generation.Dockerfile`, pull API
+definitions and GAPIC repositories, generate the libraries and compare the
+results with the source code declared in a "golden branch" of the repo.
 
-It requires docker and python (>= 3.12.0) to be installed.
+The integration tests are running in Cloud Build rather than GitHub workflow
+because the workflow doesn't have permission to pull images from Airlock.
 
-```shell
-python -m unittest hermetic_build/library_generation/tests/integration_tests.py
-```
+The Cloud Build job is defined in `.cloudbuild/library_generation/cloudbuild-library-generation-integration-test.yaml` and runs in every pull request.
 
 # Run the unit tests
 
