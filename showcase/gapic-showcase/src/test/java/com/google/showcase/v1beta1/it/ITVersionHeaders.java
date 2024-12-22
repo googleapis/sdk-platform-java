@@ -240,22 +240,18 @@ class ITVersionHeaders {
 
   @Test
   void testGrpcCall_sendsCorrectApiClientHeader() {
-    Pattern defautlGrpcHeaderPattern =
-        Pattern.compile("gl-java/.* gapic/.*?--protobuf-\\d.* gax/.* grpc/.* protobuf/\\d.*");
     grpcClient.echo(EchoRequest.newBuilder().build());
     String headerValue = grpcInterceptor.metadata.get(API_CLIENT_HEADER_KEY);
-    assertTrue(defautlGrpcHeaderPattern.matcher(headerValue).matches());
+    assertTrue(GaxHttpJsonProperties.getDefaultApiClientHeaderPattern().matcher(headerValue).matches());
   }
 
   @Test
   void testHttpJson_sendsCorrectApiClientHeader() {
-    Pattern defautlHttpHeaderPattern =
-        Pattern.compile("gl-java/.* gapic/.*?--protobuf-\\d.* gax/.* rest/ protobuf/\\d.*");
     httpJsonClient.echo(EchoRequest.newBuilder().build());
     ArrayList<String> headerValues =
         (ArrayList<String>)
             httpJsonInterceptor.metadata.getHeaders().get(HTTP_CLIENT_API_HEADER_KEY);
     String headerValue = headerValues.get(0);
-    assertTrue(defautlHttpHeaderPattern.matcher(headerValue).matches());
+    assertTrue(GaxHttpJsonProperties.getDefaultApiClientHeaderPattern().matcher(headerValue).matches());
   }
 }
