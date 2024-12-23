@@ -113,8 +113,8 @@ class GrpcLoggingInterceptorTest {
     interceptor.currentListener.onClose(status, new Metadata());
 
     // --- Verify that the response listener's methods were called ---
-    verify(interceptor).recordResponseHeaders(eq(responseHeaders), any(LogData.Builder.class));
-    verify(interceptor).recordResponsePayload(any(), any(LogData.Builder.class));
+    verify(interceptor).recordResponseHeaders(eq(responseHeaders), any(LogData.Builder.class), any(Logger.class));
+    verify(interceptor).recordResponsePayload(any(), any(LogData.Builder.class), any(Logger.class));
     verify(interceptor).logResponse(eq(status), any(LogData.Builder.class), any(Logger.class));
   }
 
@@ -123,7 +123,9 @@ class GrpcLoggingInterceptorTest {
 
     TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptorTest.class);
     GrpcLoggingInterceptor interceptor = new GrpcLoggingInterceptor();
-    interceptor.logRequestInfo(method, LogData.builder(), LOGGER);
+    LogData.Builder logData = LogData.builder().serviceName("FakeClient")
+        .rpcName("FakeClient/fake-method");
+    interceptor.logRequest(method, logData, LOGGER);
 
     Assertions.assertEquals(1, testAppender.events.size());
     assertEquals(Level.INFO, testAppender.events.get(0).getLevel());

@@ -66,19 +66,18 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
       @Override
       public void start(Listener<RespT> responseListener, Metadata headers) {
-        logRequestInfo(method, logDataBuilder, LOGGER);
-        recordRequestHeaders(headers, logDataBuilder);
+        recordServiceRpcAndRequestHeaders(method, headers, logDataBuilder, LOGGER);
         SimpleForwardingClientCallListener<RespT> responseLoggingListener =
             new SimpleForwardingClientCallListener<RespT>(responseListener) {
               @Override
               public void onHeaders(Metadata headers) {
-                recordResponseHeaders(headers, logDataBuilder);
+                recordResponseHeaders(headers, logDataBuilder, LOGGER);
                 super.onHeaders(headers);
               }
 
               @Override
               public void onMessage(RespT message) {
-                recordResponsePayload(message, logDataBuilder);
+                recordResponsePayload(message, logDataBuilder, LOGGER);
                 super.onMessage(message);
               }
 
@@ -94,7 +93,7 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
       @Override
       public void sendMessage(ReqT message) {
-        logRequestDetails(message, logDataBuilder);
+        logRequest(message, logDataBuilder, LOGGER);
         super.sendMessage(message);
       }
     };
@@ -102,51 +101,41 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
   // Helper methods for logging
   // some duplications with http equivalent to avoid exposing as public method for now
-  <ReqT, RespT> void logRequestInfo(
-      MethodDescriptor<ReqT, RespT> method, LogData.Builder logDataBuilder, Logger logger) {
+
+  private <ReqT, RespT> void recordServiceRpcAndRequestHeaders(
+      MethodDescriptor<ReqT, RespT> method, Metadata headers, LogData.Builder logDataBuilder,
+      Logger logger) {
     try {
       if (logger.isInfoEnabled()) {
         logDataBuilder.serviceName(method.getServiceName()).rpcName(method.getFullMethodName());
-
-        if (!logger.isDebugEnabled()) {
-          LoggingUtils.logWithMDC(
-              logger, Level.INFO, logDataBuilder.build().toMapRequest(), "Sending gRPC request");
-        }
       }
-    } catch (Exception e) {
-      logger.error("Error logging request info (and headers)", e);
-    }
-  }
-
-  private void recordRequestHeaders(Metadata headers, LogData.Builder logDataBuilder) {
-    try {
-      if (LOGGER.isDebugEnabled()) {
+      if (logger.isDebugEnabled()) {
         JsonObject requestHeaders = mapHeadersToJsonObject(headers);
         logDataBuilder.requestHeaders(GSON.toJson(requestHeaders));
       }
-    } catch (Exception e) {
-      LOGGER.error("Error recording request headers", e);
+    } catch (Exception | NoSuchMethodError e) {
+      // should fail silently
     }
   }
 
-  void recordResponseHeaders(Metadata headers, LogData.Builder logDataBuilder) {
+  void recordResponseHeaders(Metadata headers, LogData.Builder logDataBuilder, Logger logger) {
     try {
-      if (LOGGER.isDebugEnabled()) {
+      if (logger.isDebugEnabled()) {
         JsonObject responseHeaders = mapHeadersToJsonObject(headers);
         logDataBuilder.responseHeaders(GSON.toJson(responseHeaders));
       }
-    } catch (Exception e) {
-      LOGGER.error("Error recording response headers", e);
+    } catch (Exception | NoSuchMethodError e) {
+      // should fail silently
     }
   }
 
-  <RespT> void recordResponsePayload(RespT message, LogData.Builder logDataBuilder) {
+  <RespT> void recordResponsePayload(RespT message, LogData.Builder logDataBuilder, Logger logger) {
     try {
-      if (LOGGER.isDebugEnabled()) {
+      if (logger.isDebugEnabled()) {
         logDataBuilder.responsePayload(GSON.toJsonTree(message));
       }
-    } catch (Exception e) {
-      LOGGER.error("Error recording response payload", e);
+    } catch (Exception | NoSuchMethodError e) {
+      // should fail silently
     }
   }
 
@@ -163,21 +152,26 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
         Map<String, String> responsedDetailsMap = logDataBuilder.build().toMapResponse();
         LoggingUtils.logWithMDC(logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
       }
-    } catch (Exception e) {
-      logger.error("Error logging request response", e);
+    } catch (Exception | NoSuchMethodError e) {
+      // should fail silently
     }
   }
 
-  <RespT> void logRequestDetails(RespT message, LogData.Builder logDataBuilder) {
+  <RespT> void logRequest(RespT message, LogData.Builder logDataBuilder, Logger logger) {
     try {
-      if (LOGGER.isDebugEnabled()) {
+
+      if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
+        LoggingUtils.logWithMDC(
+            logger, Level.INFO, logDataBuilder.build().toMapRequest(), "Sending gRPC request");
+      }
+      if (logger.isDebugEnabled()) {
         logDataBuilder.requestPayload(GSON.toJsonTree(message));
         Map<String, String> requestDetailsMap = logDataBuilder.build().toMapRequest();
         LoggingUtils.logWithMDC(
-            LOGGER, Level.DEBUG, requestDetailsMap, "Sending gRPC request: request payload");
+            logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request: request payload");
       }
-    } catch (Exception e) {
-      LOGGER.error("Error logging request details", e);
+    } catch (Exception | NoSuchMethodError e) {
+      // should fail silently
     }
   }
 
