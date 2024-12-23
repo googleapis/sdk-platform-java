@@ -113,7 +113,8 @@ class GrpcLoggingInterceptorTest {
     interceptor.currentListener.onClose(status, new Metadata());
 
     // --- Verify that the response listener's methods were called ---
-    verify(interceptor).recordResponseHeaders(eq(responseHeaders), any(LogData.Builder.class), any(Logger.class));
+    verify(interceptor)
+        .recordResponseHeaders(eq(responseHeaders), any(LogData.Builder.class), any(Logger.class));
     verify(interceptor).recordResponsePayload(any(), any(LogData.Builder.class), any(Logger.class));
     verify(interceptor).logResponse(eq(status), any(LogData.Builder.class), any(Logger.class));
   }
@@ -123,8 +124,8 @@ class GrpcLoggingInterceptorTest {
 
     TestAppender testAppender = setupTestLogger(GrpcLoggingInterceptorTest.class);
     GrpcLoggingInterceptor interceptor = new GrpcLoggingInterceptor();
-    LogData.Builder logData = LogData.builder().serviceName("FakeClient")
-        .rpcName("FakeClient/fake-method");
+    LogData.Builder logData =
+        LogData.builder().serviceName("FakeClient").rpcName("FakeClient/fake-method");
     interceptor.logRequest(method, logData, LOGGER);
 
     Assertions.assertEquals(1, testAppender.events.size());
@@ -155,5 +156,33 @@ class GrpcLoggingInterceptorTest {
     Logger logger = LoggerFactory.getLogger(clazz);
     ((ch.qos.logback.classic.Logger) logger).addAppender(testAppender);
     return testAppender;
+  }
+
+  @Test
+  void testExecuteWithTryCatch_NoException() {
+    Runnable action = Mockito.mock(Runnable.class);
+    GrpcLoggingInterceptor.executeWithTryCatch(action);
+    // Verify that the action was executed
+    Mockito.verify(action, Mockito.times(1)).run();
+  }
+
+  @Test
+  void testExecuteWithTryCatch_WithException() {
+    Runnable action = Mockito.mock(Runnable.class);
+    Mockito.doThrow(new RuntimeException("Test Exception")).when(action).run();
+    GrpcLoggingInterceptor.executeWithTryCatch(action);
+    // Verify that the action was executed (despite the exception)
+    Mockito.verify(action, Mockito.times(1)).run();
+    // No exception should be thrown by executeWithTryCatch
+  }
+
+  @Test
+  void testExecuteWithTryCatch_WithNoSuchMethodError() {
+    Runnable action = Mockito.mock(Runnable.class);
+    Mockito.doThrow(new NoSuchMethodError("Test Error")).when(action).run();
+    GrpcLoggingInterceptor.executeWithTryCatch(action);
+    // Verify that the action was executed (despite the error)
+    Mockito.verify(action, Mockito.times(1)).run();
+    // No error should be thrown by executeWithTryCatch
   }
 }

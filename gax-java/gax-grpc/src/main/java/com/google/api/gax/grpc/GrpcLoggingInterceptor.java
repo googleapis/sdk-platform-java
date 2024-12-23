@@ -103,73 +103,78 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
   // some duplications with http equivalent to avoid exposing as public method for now
 
   private <ReqT, RespT> void recordServiceRpcAndRequestHeaders(
-      MethodDescriptor<ReqT, RespT> method, Metadata headers, LogData.Builder logDataBuilder,
+      MethodDescriptor<ReqT, RespT> method,
+      Metadata headers,
+      LogData.Builder logDataBuilder,
       Logger logger) {
-    try {
-      if (logger.isInfoEnabled()) {
-        logDataBuilder.serviceName(method.getServiceName()).rpcName(method.getFullMethodName());
-      }
-      if (logger.isDebugEnabled()) {
-        JsonObject requestHeaders = mapHeadersToJsonObject(headers);
-        logDataBuilder.requestHeaders(GSON.toJson(requestHeaders));
-      }
-    } catch (Exception | NoSuchMethodError e) {
-      // should fail silently
-    }
+    executeWithTryCatch(
+        () -> {
+          if (logger.isInfoEnabled()) {
+            logDataBuilder.serviceName(method.getServiceName()).rpcName(method.getFullMethodName());
+          }
+          if (logger.isDebugEnabled()) {
+            JsonObject requestHeaders = mapHeadersToJsonObject(headers);
+            logDataBuilder.requestHeaders(GSON.toJson(requestHeaders));
+          }
+        });
   }
 
   void recordResponseHeaders(Metadata headers, LogData.Builder logDataBuilder, Logger logger) {
-    try {
-      if (logger.isDebugEnabled()) {
-        JsonObject responseHeaders = mapHeadersToJsonObject(headers);
-        logDataBuilder.responseHeaders(GSON.toJson(responseHeaders));
-      }
-    } catch (Exception | NoSuchMethodError e) {
-      // should fail silently
-    }
+    executeWithTryCatch(
+        () -> {
+          if (logger.isDebugEnabled()) {
+            JsonObject responseHeaders = mapHeadersToJsonObject(headers);
+            logDataBuilder.responseHeaders(GSON.toJson(responseHeaders));
+          }
+        });
   }
 
   <RespT> void recordResponsePayload(RespT message, LogData.Builder logDataBuilder, Logger logger) {
-    try {
-      if (logger.isDebugEnabled()) {
-        logDataBuilder.responsePayload(GSON.toJsonTree(message));
-      }
-    } catch (Exception | NoSuchMethodError e) {
-      // should fail silently
-    }
+    executeWithTryCatch(
+        () -> {
+          if (logger.isDebugEnabled()) {
+            logDataBuilder.responsePayload(GSON.toJsonTree(message));
+          }
+        });
   }
 
   void logResponse(Status status, LogData.Builder logDataBuilder, Logger logger) {
-    try {
-      if (logger.isInfoEnabled()) {
-        logDataBuilder.responseStatus(status.getCode().toString());
-      }
-      if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
-        Map<String, String> responseData = logDataBuilder.build().toMapResponse();
-        LoggingUtils.logWithMDC(logger, Level.INFO, responseData, "Received Grpc response");
-      }
-      if (logger.isDebugEnabled()) {
-        Map<String, String> responsedDetailsMap = logDataBuilder.build().toMapResponse();
-        LoggingUtils.logWithMDC(logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
-      }
-    } catch (Exception | NoSuchMethodError e) {
-      // should fail silently
-    }
+    executeWithTryCatch(
+        () -> {
+          if (logger.isInfoEnabled()) {
+            logDataBuilder.responseStatus(status.getCode().toString());
+          }
+          if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
+            Map<String, String> responseData = logDataBuilder.build().toMapResponse();
+            LoggingUtils.logWithMDC(logger, Level.INFO, responseData, "Received Grpc response");
+          }
+          if (logger.isDebugEnabled()) {
+            Map<String, String> responsedDetailsMap = logDataBuilder.build().toMapResponse();
+            LoggingUtils.logWithMDC(
+                logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
+          }
+        });
   }
 
   <RespT> void logRequest(RespT message, LogData.Builder logDataBuilder, Logger logger) {
-    try {
+    executeWithTryCatch(
+        () -> {
+          if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
+            LoggingUtils.logWithMDC(
+                logger, Level.INFO, logDataBuilder.build().toMapRequest(), "Sending gRPC request");
+          }
+          if (logger.isDebugEnabled()) {
+            logDataBuilder.requestPayload(GSON.toJsonTree(message));
+            Map<String, String> requestDetailsMap = logDataBuilder.build().toMapRequest();
+            LoggingUtils.logWithMDC(
+                logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request: request payload");
+          }
+        });
+  }
 
-      if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
-        LoggingUtils.logWithMDC(
-            logger, Level.INFO, logDataBuilder.build().toMapRequest(), "Sending gRPC request");
-      }
-      if (logger.isDebugEnabled()) {
-        logDataBuilder.requestPayload(GSON.toJsonTree(message));
-        Map<String, String> requestDetailsMap = logDataBuilder.build().toMapRequest();
-        LoggingUtils.logWithMDC(
-            logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request: request payload");
-      }
+  static void executeWithTryCatch(Runnable action) {
+    try {
+      action.run();
     } catch (Exception | NoSuchMethodError e) {
       // should fail silently
     }
@@ -177,15 +182,16 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
   private static JsonObject mapHeadersToJsonObject(Metadata headers) {
     JsonObject jsonHeaders = new JsonObject();
-    headers
-        .keys()
-        .forEach(
-            key -> {
-              Metadata.Key<String> metadataKey =
-                  Metadata.Key.of(key, Metadata.ASCII_STRING_MARSHALLER);
-              String headerValue = headers.get(metadataKey);
-              jsonHeaders.addProperty(key, headerValue);
-            });
+    for (String key : headers.keys()) {
+
+      if (key.endsWith(Metadata.BINARY_HEADER_SUFFIX)) {
+        continue;
+      }
+      Metadata.Key<String> metadataKey = Metadata.Key.of(key, Metadata.ASCII_STRING_MARSHALLER);
+      String headerValue = headers.get(metadataKey);
+
+      jsonHeaders.addProperty(key, headerValue);
+    }
     return jsonHeaders;
   }
 }
