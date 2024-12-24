@@ -48,10 +48,10 @@ public final class AuditContextProto {
           + "e.protobuf.Struct\0222\n\021scrubbed_response\030\003"
           + " \001(\0132\027.google.protobuf.Struct\022$\n\034scrubbe"
           + "d_response_item_count\030\004 \001(\005\022\027\n\017target_re"
-          + "source\030\005 \001(\tBk\n\026com.google.rpc.contextB\021"
+          + "source\030\005 \001(\tBh\n\026com.google.rpc.contextB\021"
           + "AuditContextProtoP\001Z9google.golang.org/g"
-          + "enproto/googleapis/rpc/context;context\370\001"
-          + "\001b\006proto3"
+          + "enproto/googleapis/rpc/context;contextb\006"
+          + "proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
