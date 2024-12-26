@@ -40,20 +40,22 @@ class LogDataTest {
 
   @Test
   void toMapResponse_correctlyConvertsData() {
+    Map<String, Object> responsePayload= ImmutableMap.of("key",
+        "value", "key2", 123);
     LogData logData =
         LogData.builder()
             .serviceName("MyService")
             .rpcName("myMethod")
             .requestHeaders(ImmutableMap.of("fake header", "item"))
             .requestId("abcd")
-            // .responsePayload(JsonParser.parseString("{\"key\": \"value\"}"))
+            .responsePayload(responsePayload)
             .build();
 
-    Map<String, String> expectedMap =
+    Map<String, Object> expectedMap =
         ImmutableMap.of(
             "serviceName", "MyService",
             "rpcName", "myMethod",
-            "response.payload", "{\"key\":\"value\"}",
+            "response.payload", responsePayload,
             "requestId", "abcd");
 
     assertThat(logData.toMapResponse()).isEqualTo(expectedMap);
@@ -61,21 +63,24 @@ class LogDataTest {
 
   @Test
   void toMapRequest_correctlyConvertsData() {
+    Map<String, String> header=
+    ImmutableMap.of("fake header", "item");
     LogData logData =
         LogData.builder()
             .serviceName("MyService")
             .rpcName("myMethod")
-            .requestHeaders(ImmutableMap.of("fake header", "item"))
+            .requestHeaders(header)
             .requestId("abcd")
             .httpUrl("url")
-            // .responsePayload(JsonParser.parseString("{\"key\": \"value\"}"))
+            .responsePayload(ImmutableMap.of("key",
+                "value", "key2", 123))
             .build();
 
-    Map<String, String> expectedMap =
+    Map<String, Object> expectedMap =
         ImmutableMap.of(
             "serviceName", "MyService",
             "rpcName", "myMethod",
-            "request.headers", "fake header",
+            "request.headers", header,
             "requestId", "abcd",
             "request.url", "url");
 

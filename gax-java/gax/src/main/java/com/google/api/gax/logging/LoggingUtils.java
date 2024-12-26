@@ -166,7 +166,7 @@ public class LoggingUtils {
       RespT message, LogData.Builder logDataBuilder, Logger logger) {
     executeWithTryCatch(
         () -> {
-          if (logger.isInfoEnabled()) {
+          if (logger.isDebugEnabled()) {
             Map<String, Object> messageToMapWithGson =
                 LoggingUtils.messageToMapWithGson((Message) message);
 
