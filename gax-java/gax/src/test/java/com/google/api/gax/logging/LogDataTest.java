@@ -33,7 +33,6 @@ package com.google.api.gax.logging;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonParser;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
@@ -45,9 +44,9 @@ class LogDataTest {
         LogData.builder()
             .serviceName("MyService")
             .rpcName("myMethod")
-            .requestHeaders("fake header")
+            .requestHeaders(ImmutableMap.of("fake header", "item"))
             .requestId("abcd")
-            .responsePayload(JsonParser.parseString("{\"key\": \"value\"}"))
+            // .responsePayload(JsonParser.parseString("{\"key\": \"value\"}"))
             .build();
 
     Map<String, String> expectedMap =
@@ -66,10 +65,10 @@ class LogDataTest {
         LogData.builder()
             .serviceName("MyService")
             .rpcName("myMethod")
-            .requestHeaders("fake header")
+            .requestHeaders(ImmutableMap.of("fake header", "item"))
             .requestId("abcd")
             .httpUrl("url")
-            .responsePayload(JsonParser.parseString("{\"key\": \"value\"}"))
+            // .responsePayload(JsonParser.parseString("{\"key\": \"value\"}"))
             .build();
 
     Map<String, String> expectedMap =

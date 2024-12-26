@@ -34,11 +34,17 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.api.gax.rpc.internal.SystemEnvironmentProvider;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.Message;
+import com.google.protobuf.util.JsonFormat;
 import java.util.Map;
+import java.util.function.Consumer;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
+import org.slf4j.event.Level;
+import org.slf4j.spi.LoggingEventBuilder;
 
 @InternalApi
 public class LoggingUtils {
@@ -72,35 +78,30 @@ public class LoggingUtils {
   }
 
   public static void logWithMDC(
-      Logger logger, org.slf4j.event.Level level, Map<String, String> contextMap, String message) {
-    if (!contextMap.isEmpty()) {
-      contextMap.forEach(MDC::put);
-      contextMap.put("message", message);
-      message = gson.toJson(contextMap);
-    }
+      Logger logger, org.slf4j.event.Level level, Map<String, Object> contextMap, String message) {
+    LoggingEventBuilder loggingEventBuilder;
     switch (level) {
       case TRACE:
-        logger.trace(message);
+        loggingEventBuilder = logger.atTrace();
         break;
       case DEBUG:
-        logger.debug(message);
+        loggingEventBuilder = logger.atDebug();
         break;
       case INFO:
-        logger.info(message);
+        loggingEventBuilder = logger.atInfo();
         break;
       case WARN:
-        logger.warn(message);
+        loggingEventBuilder = logger.atWarn();
         break;
       case ERROR:
-        logger.error(message);
+        loggingEventBuilder = logger.atError();
         break;
       default:
-        logger.info(message);
+        loggingEventBuilder = logger.atInfo();
         // Default to INFO level
     }
-    if (!contextMap.isEmpty()) {
-      MDC.clear();
-    }
+    contextMap.forEach(loggingEventBuilder::addKeyValue);
+    loggingEventBuilder.log(message);
   }
 
   static boolean isLoggingEnabled() {
@@ -117,5 +118,110 @@ public class LoggingUtils {
     public ILoggerFactory getLoggerFactory() {
       return LoggerFactory.getILoggerFactory();
     }
+  }
+
+  // logging helper methods
+  public static Map<String, Object> messageToMapWithGson(Message message)
+      throws InvalidProtocolBufferException {
+    String json = JsonFormat.printer().print(message);
+    return gson.fromJson(json, new TypeToken<Map<String, Object>>() {}.getType());
+  }
+
+  public static void recordServiceRpcAndRequestHeaders(
+      String serviceName,
+      String rpcName,
+      String endpoint,
+      Map<String, String> requestHeaders,
+      LogData.Builder logDataBuilder,
+      Logger logger) {
+    executeWithTryCatch(
+        () -> {
+          if (logger.isInfoEnabled()) {
+            addIfNotEmpty(logDataBuilder::serviceName, serviceName);
+            addIfNotEmpty(logDataBuilder::rpcName, rpcName);
+            addIfNotEmpty(logDataBuilder::httpUrl, endpoint);
+          }
+          if (logger.isDebugEnabled()) {
+            logDataBuilder.requestHeaders(requestHeaders);
+          }
+        });
+  }
+
+  private static void addIfNotEmpty(Consumer<String> setter, String value) {
+    if (value != null && !value.isEmpty()) {
+      setter.accept(value);
+    }
+  }
+  public static void recordResponseHeaders(
+      Map<String, String> headers, LogData.Builder logDataBuilder, Logger logger) {
+    executeWithTryCatch(
+        () -> {
+          if (logger.isDebugEnabled()) {
+            logDataBuilder.responseHeaders(headers);
+          }
+        });
+  }
+
+  public static <RespT> void recordResponsePayload(
+      RespT message, LogData.Builder logDataBuilder, Logger logger) {
+    executeWithTryCatch(
+        () -> {
+          if (logger.isInfoEnabled()) {
+            Map<String, Object> messageToMapWithGson =
+                LoggingUtils.messageToMapWithGson((Message) message);
+
+            logDataBuilder.responsePayload(messageToMapWithGson);
+          }
+        });
+  }
+
+  public static void logResponse(String status, LogData.Builder logDataBuilder, Logger logger) {
+    executeWithTryCatch(
+        () -> {
+          if (logger.isInfoEnabled()) {
+            logDataBuilder.responseStatus(status);
+          }
+          if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
+            Map<String, Object> responseData = logDataBuilder.build().toMapResponse();
+            LoggingUtils.logWithMDC(logger, Level.INFO, responseData, "Received Grpc response");
+          }
+          if (logger.isDebugEnabled()) {
+            Map<String, Object> responsedDetailsMap = logDataBuilder.build().toMapResponse();
+            LoggingUtils.logWithMDC(
+                logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
+          }
+        });
+  }
+
+  public static <RespT> void logRequest(
+      RespT message, LogData.Builder logDataBuilder, Logger logger) {
+    executeWithTryCatch(
+        () -> {
+          if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
+            LoggingUtils.logWithMDC(
+                logger, Level.INFO, logDataBuilder.build().toMapRequest(), "Sending gRPC request");
+          }
+          if (logger.isDebugEnabled()) {
+            Map<String, Object> messageToMapWithGson =
+                LoggingUtils.messageToMapWithGson((Message) message);
+
+            logDataBuilder.requestPayload(messageToMapWithGson);
+            Map<String, Object> requestDetailsMap = logDataBuilder.build().toMapRequest();
+            LoggingUtils.logWithMDC(logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request");
+          }
+        });
+  }
+
+  public static void executeWithTryCatch(ThrowingRunnable action) {
+    try {
+      action.run();
+    } catch (Exception | NoSuchMethodError e) {
+      // should fail silently
+    }
+  }
+
+  @FunctionalInterface
+  public interface ThrowingRunnable {
+    void run() throws Exception;
   }
 }

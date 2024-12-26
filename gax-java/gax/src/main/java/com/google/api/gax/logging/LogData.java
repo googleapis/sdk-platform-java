@@ -33,7 +33,6 @@ package com.google.api.gax.logging;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -53,19 +52,19 @@ public abstract class LogData {
   public abstract String requestId();
 
   @Nullable
-  public abstract String requestHeaders();
+  public abstract Map<String, String> requestHeaders();
 
   @Nullable
-  public abstract JsonElement requestPayload();
+  public abstract Map<String, Object> requestPayload();
 
   @Nullable
   public abstract String responseStatus();
 
   @Nullable
-  public abstract String responseHeaders();
+  public abstract Map<String, String> responseHeaders();
 
   @Nullable
-  public abstract JsonElement responsePayload();
+  public abstract Map<String, Object> responsePayload();
 
   @Nullable
   public abstract String httpMethod();
@@ -85,15 +84,15 @@ public abstract class LogData {
 
     public abstract Builder requestId(String requestId);
 
-    public abstract Builder requestHeaders(String requestHeaders);
+    public abstract Builder requestHeaders(Map<String, String> requestHeaders);
 
-    public abstract Builder requestPayload(JsonElement requestPayload);
+    public abstract Builder requestPayload(Map<String, Object> requestPayload);
 
     public abstract Builder responseStatus(String responseStatus);
 
-    public abstract Builder responseHeaders(String responseHeaders);
+    public abstract Builder responseHeaders(Map<String, String> responseHeaders);
 
-    public abstract Builder responsePayload(JsonElement responsePayload);
+    public abstract Builder responsePayload(Map<String, Object> responsePayload);
 
     public abstract Builder httpMethod(String httpMethod);
 
@@ -104,8 +103,8 @@ public abstract class LogData {
 
   // helper functions to convert to map for logging
   // todo: error handling?
-  public Map<String, String> toMapRequest() {
-    Map<String, String> map = new HashMap<>();
+  public Map<String, Object> toMapRequest() {
+    Map<String, Object> map = new HashMap<>();
     if (serviceName() != null) {
       map.put("serviceName", serviceName());
     }
@@ -119,7 +118,7 @@ public abstract class LogData {
       map.put("request.headers", requestHeaders());
     }
     if (requestPayload() != null) {
-      map.put("request.payload", gson.toJson(requestPayload()));
+      map.put("request.payload", requestPayload());
     }
     if (httpMethod() != null) {
       map.put("request.method", httpMethod());
@@ -130,8 +129,8 @@ public abstract class LogData {
     return map;
   }
 
-  public Map<String, String> toMapResponse() {
-    Map<String, String> map = new HashMap<>();
+  public Map<String, Object> toMapResponse() {
+    Map<String, Object> map = new HashMap<>();
     if (serviceName() != null) {
       map.put("serviceName", serviceName());
     }
@@ -148,7 +147,7 @@ public abstract class LogData {
       map.put("response.headers", responseHeaders());
     }
     if (responsePayload() != null) {
-      map.put("response.payload", gson.toJson(responsePayload()));
+      map.put("response.payload", responsePayload());
     }
     return map;
   }

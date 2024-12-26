@@ -128,7 +128,7 @@ class LoggingUtilsTest {
   @Test
   void testLogWithMDC_slf4jLogger() {
     TestAppender testAppender = setupTestLogger(LoggingUtilsTest.class);
-    Map<String, String> contextMap = new HashMap<>();
+    Map<String, Object> contextMap = new HashMap<>();
     contextMap.put("key", "value");
     LoggingUtils.logWithMDC(LOGGER, org.slf4j.event.Level.DEBUG, contextMap, "test message");
 

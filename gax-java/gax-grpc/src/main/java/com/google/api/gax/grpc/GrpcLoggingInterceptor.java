@@ -30,11 +30,16 @@
 
 package com.google.api.gax.grpc;
 
+import static com.google.api.gax.logging.LoggingUtils.executeWithTryCatch;
+import static com.google.api.gax.logging.LoggingUtils.logRequest;
+import static com.google.api.gax.logging.LoggingUtils.logResponse;
+import static com.google.api.gax.logging.LoggingUtils.recordResponseHeaders;
+import static com.google.api.gax.logging.LoggingUtils.recordResponsePayload;
+import static com.google.api.gax.logging.LoggingUtils.recordServiceRpcAndRequestHeaders;
+
 import com.google.api.core.InternalApi;
 import com.google.api.gax.logging.LogData;
 import com.google.api.gax.logging.LoggingUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import io.grpc.CallOptions;
 import io.grpc.Channel;
 import io.grpc.ClientCall;
@@ -44,15 +49,14 @@ import io.grpc.ForwardingClientCallListener.SimpleForwardingClientCallListener;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
 import io.grpc.Status;
+import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
-import org.slf4j.event.Level;
 
 @InternalApi
 public class GrpcLoggingInterceptor implements ClientInterceptor {
 
   private static final Logger LOGGER = LoggingUtils.getLogger(GrpcLoggingInterceptor.class);
-  private static final Gson GSON = new Gson();
 
   ClientCall.Listener<?> currentListener; // expose for test setup
 
@@ -66,12 +70,18 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
       @Override
       public void start(Listener<RespT> responseListener, Metadata headers) {
-        recordServiceRpcAndRequestHeaders(method, headers, logDataBuilder, LOGGER);
+        recordServiceRpcAndRequestHeaders(
+            method.getServiceName(),
+            method.getFullMethodName(),
+            null,
+            metadataHeadersToMap(headers),
+            logDataBuilder,
+            LOGGER);
         SimpleForwardingClientCallListener<RespT> responseLoggingListener =
             new SimpleForwardingClientCallListener<RespT>(responseListener) {
               @Override
               public void onHeaders(Metadata headers) {
-                recordResponseHeaders(headers, logDataBuilder, LOGGER);
+                recordResponseHeaders(metadataHeadersToMap(headers), logDataBuilder, LOGGER);
                 super.onHeaders(headers);
               }
 
@@ -83,7 +93,7 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
               @Override
               public void onClose(Status status, Metadata trailers) {
-                logResponse(status, logDataBuilder, LOGGER);
+                logResponse(status.getCode().toString(), logDataBuilder, LOGGER);
                 super.onClose(status, trailers);
               }
             };
@@ -100,98 +110,24 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
   }
 
   // Helper methods for logging
-  // some duplications with http equivalent to avoid exposing as public method for now
+  private static Map<String, String> metadataHeadersToMap(Metadata headers) {
 
-  private <ReqT, RespT> void recordServiceRpcAndRequestHeaders(
-      MethodDescriptor<ReqT, RespT> method,
-      Metadata headers,
-      LogData.Builder logDataBuilder,
-      Logger logger) {
+    Map<String, String> headersMap = new HashMap<>();
     executeWithTryCatch(
         () -> {
-          if (logger.isInfoEnabled()) {
-            logDataBuilder.serviceName(method.getServiceName()).rpcName(method.getFullMethodName());
-          }
-          if (logger.isDebugEnabled()) {
-            JsonObject requestHeaders = mapHeadersToJsonObject(headers);
-            logDataBuilder.requestHeaders(GSON.toJson(requestHeaders));
+          for (String key : headers.keys()) {
+
+            if (key.endsWith(Metadata.BINARY_HEADER_SUFFIX)) {
+              continue;
+            }
+            Metadata.Key<String> metadataKey =
+                Metadata.Key.of(key, Metadata.ASCII_STRING_MARSHALLER);
+            String headerValue = headers.get(metadataKey);
+
+            headersMap.put(key, headerValue);
           }
         });
-  }
 
-  void recordResponseHeaders(Metadata headers, LogData.Builder logDataBuilder, Logger logger) {
-    executeWithTryCatch(
-        () -> {
-          if (logger.isDebugEnabled()) {
-            JsonObject responseHeaders = mapHeadersToJsonObject(headers);
-            logDataBuilder.responseHeaders(GSON.toJson(responseHeaders));
-          }
-        });
-  }
-
-  <RespT> void recordResponsePayload(RespT message, LogData.Builder logDataBuilder, Logger logger) {
-    executeWithTryCatch(
-        () -> {
-          if (logger.isDebugEnabled()) {
-            logDataBuilder.responsePayload(GSON.toJsonTree(message));
-          }
-        });
-  }
-
-  void logResponse(Status status, LogData.Builder logDataBuilder, Logger logger) {
-    executeWithTryCatch(
-        () -> {
-          if (logger.isInfoEnabled()) {
-            logDataBuilder.responseStatus(status.getCode().toString());
-          }
-          if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
-            Map<String, String> responseData = logDataBuilder.build().toMapResponse();
-            LoggingUtils.logWithMDC(logger, Level.INFO, responseData, "Received Grpc response");
-          }
-          if (logger.isDebugEnabled()) {
-            Map<String, String> responsedDetailsMap = logDataBuilder.build().toMapResponse();
-            LoggingUtils.logWithMDC(
-                logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
-          }
-        });
-  }
-
-  <RespT> void logRequest(RespT message, LogData.Builder logDataBuilder, Logger logger) {
-    executeWithTryCatch(
-        () -> {
-          if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
-            LoggingUtils.logWithMDC(
-                logger, Level.INFO, logDataBuilder.build().toMapRequest(), "Sending gRPC request");
-          }
-          if (logger.isDebugEnabled()) {
-            logDataBuilder.requestPayload(GSON.toJsonTree(message));
-            Map<String, String> requestDetailsMap = logDataBuilder.build().toMapRequest();
-            LoggingUtils.logWithMDC(
-                logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request: request payload");
-          }
-        });
-  }
-
-  static void executeWithTryCatch(Runnable action) {
-    try {
-      action.run();
-    } catch (Exception | NoSuchMethodError e) {
-      // should fail silently
-    }
-  }
-
-  private static JsonObject mapHeadersToJsonObject(Metadata headers) {
-    JsonObject jsonHeaders = new JsonObject();
-    for (String key : headers.keys()) {
-
-      if (key.endsWith(Metadata.BINARY_HEADER_SUFFIX)) {
-        continue;
-      }
-      Metadata.Key<String> metadataKey = Metadata.Key.of(key, Metadata.ASCII_STRING_MARSHALLER);
-      String headerValue = headers.get(metadataKey);
-
-      jsonHeaders.addProperty(key, headerValue);
-    }
-    return jsonHeaders;
+    return headersMap;
   }
 }
