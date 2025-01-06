@@ -62,7 +62,6 @@ class ComposerTest {
     assertTrue(context.containsServices());
   }
 
-  @Disabled
   @Test
   public void gapicClass_addApacheLicense_validInput_succeeds() {
     ClassDefinition classDef =
