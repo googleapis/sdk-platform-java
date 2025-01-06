@@ -39,7 +39,6 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Disabled;
 
 class ComposerTest {
   private final GapicContext context = GrpcTestProtoLoader.instance().parseShowcaseEcho();
