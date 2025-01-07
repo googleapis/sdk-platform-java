@@ -68,7 +68,7 @@ public abstract class EndpointContext {
       "Unable to retrieve the Universe Domain from the Credentials.";
   // This environment variable is a temporary measure. It will be removed when the feature is
   // non-experimental.
-  static final String S2A_ENV_ENABLE_USE_S2A = "EXPERIMENTAL_GOOGLE_API_USE_S2A";
+  static final String S2A_ENV_ENABLE_USE_S2A = "EXPERIMENTAL_GOOGLE_API_USE_S2A_JAVA";
 
   public static EndpointContext getDefaultInstance() {
     return INSTANCE;
