@@ -272,9 +272,6 @@ public abstract class EndpointContext {
 
     /** Determines the fully resolved endpoint and universe domain values */
     private String determineEndpoint() throws IOException {
-      if (shouldUseS2A()) {
-        return mtlsEndpoint();
-      }
       MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
       // TransportChannelProvider's endpoint will override the ClientSettings' endpoint
       String customEndpoint =
@@ -312,6 +309,11 @@ public abstract class EndpointContext {
     /** Determine if S2A can be used */
     @VisibleForTesting
     boolean shouldUseS2A() {
+      // If mTLS endpoint is not available, skip S2A
+      if (Strings.isNullOrEmpty(mtlsEndpoint())) {
+        return false;
+      }
+
       // If EXPERIMENTAL_GOOGLE_API_USE_S2A is not set to true, skip S2A.
       String s2AEnv;
       s2AEnv = envProvider().getenv(S2A_ENV_ENABLE_USE_S2A);

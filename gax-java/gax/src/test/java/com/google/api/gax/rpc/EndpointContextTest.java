@@ -509,6 +509,20 @@ class EndpointContextTest {
   }
 
   @Test
+  void shouldUseS2A_mtlsEndpointNull_returnsFalse() throws IOException {
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("true");
+    defaultEndpointContextBuilder =
+        defaultEndpointContextBuilder
+            .setEnvProvider(envProvider)
+            .setClientSettingsEndpoint("")
+            .setTransportChannelProviderEndpoint("")
+            .setUsingGDCH(false)
+            .setMtlsEndpoint(null);
+    Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
+  }
+
+  @Test
   void shouldUseS2A_mtlsEndpointEmpty_returnsFalse() throws IOException {
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
     Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("true");
