@@ -15,9 +15,9 @@
 import shutil
 from typing import Optional
 import library_generation.utils.utilities as util
-from library_generation.generate_composed_library import generate_composed_library
 from common.model.generation_config import GenerationConfig
 from common.model.library_config import LibraryConfig
+from library_generation.generate_composed_library import generate_composed_library
 from library_generation.utils.monorepo_postprocessor import monorepo_postprocessing
 
 
@@ -49,7 +49,6 @@ def generate_from_yaml(
     )
     # copy api definition to output folder.
     shutil.copytree(api_definitions_path, repo_config.output_folder, dirs_exist_ok=True)
-
     for library_path, library in repo_config.get_libraries().items():
         print(f"generating library {library.get_library_name()}")
         generate_composed_library(
