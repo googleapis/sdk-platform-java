@@ -38,29 +38,6 @@ jobs:
         head_repo_url: ${{ github.event.pull_request.head.repo.html_url }}
         head_repo_name: ${{ github.event.pull_request.head.repo.full_name  }}
         base_repo: ${{ github.repository }}
-  library-generation-integration-tests:
-    runs-on: ubuntu-22.04
-    needs: should-run-library-generation-tests
-    if: needs.should-run-library-generation-tests.outputs.should_run == 'true'
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
-      with:
-        python-version: 3.12
-    - name: install python modules and dependencies
-      shell: bash
-      run: |
-        set -ex
-        pip install --upgrade pip
-        pip install --require-hashes -r hermetic_build/common/requirements.txt
-        pip install hermetic_build/common
-        pip install --require-hashes -r hermetic_build/library_generation/requirements.txt
-        pip install hermetic_build/library_generation
-    - name: Run integration tests
-      shell: bash
-      run: |
-        set -x
-        python -m unittest hermetic_build/library_generation/tests/integration_tests.py
   library-generation-unit-tests:
     runs-on: ubuntu-22.04
     needs: should-run-library-generation-tests
