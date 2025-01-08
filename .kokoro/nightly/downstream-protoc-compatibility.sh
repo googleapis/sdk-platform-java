@@ -52,7 +52,7 @@ LOCAL_GENERATOR_VERSION=$(mvn \
   -pl gapic-generator-java \
   -DforceStdout \
   -q)
-  
+
 git clone https://github.com/googleapis/googleapis.git
 
 

@@ -42,7 +42,7 @@ jobs:
         # Default Protobuf-Java versions to use are specified here. Without this, the nightly workflow won't know
         # which values to use and would resolve to ''.
         protobuf-runtime-version: ${{ fromJSON(format('[{0}]', inputs.protobuf_runtime_versions || '"3.25.5","4.28.3"')) }}
-        protoc-version: ${{ fromJSON(format('[{0}]', inputs.protobuf_runtime_versions || '"29.0"')) }}
+        protoc-version: ${{ fromJSON(format('[{0}]', inputs.protoc_versions || '"29.0"')) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
