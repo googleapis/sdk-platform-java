@@ -41,17 +41,22 @@ jobs:
           - java-storage-nio
         # Default Protobuf-Java versions to use are specified here. Without this, the nightly workflow won't know
         # which values to use and would resolve to ''.
-        protobuf-version: ${{ fromJSON(format('[{0}]', inputs.protobuf_runtime_versions || '"3.25.5","4.28.3"')) }}
+        protobuf-runtime-version: ${{ fromJSON(format('[{0}]', inputs.protobuf_runtime_versions || '"3.25.5","4.28.3"')) }}
+        protoc-version: ${{ fromJSON(format('[{0}]', inputs.protobuf_runtime_versions || '"25.5","29.0"')) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           java-version: 11
           distribution: temurin
-      - name: Print Protobuf-Java testing version
-        run: echo "Testing with Protobuf-Java v${{ matrix.protobuf-version }}"
+      - name: Print Protoc and Protobuf-Java runtime version
+        run: |
+          echo "Testing with Protoc v${{ matrix.protoc-version }}"
+          echo "Testing with Protobuf-Java v${{ matrix.protobuf-runtime-version }}"
+      - name: Perform downstream protoc compatibility testing
+        run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOC_VERSION="${{ matrix.protoc-version}}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-runtime-version}}" ./.kokoro/nightly/downstream-protoc-compatibility.sh
       - name: Perform downstream source compatibility testing
-        run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-version}}" ./.kokoro/nightly/downstream-protobuf-source-compatibility.sh
+        run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-runtime-version}}" ./.kokoro/nightly/downstream-protobuf-source-compatibility.sh
       - name: Perform downstream binary compatibility testing
-        run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-version}}" ./.kokoro/nightly/downstream-protobuf-binary-compatibility.sh
+        run: REPOS_UNDER_TEST="${{ matrix.repo }}" PROTOBUF_RUNTIME_VERSION="${{ matrix.protobuf-runtime-version}}" ./.kokoro/nightly/downstream-protobuf-binary-compatibility.sh
 
