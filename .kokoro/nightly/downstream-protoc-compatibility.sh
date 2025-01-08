@@ -37,10 +37,11 @@ if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
 fi
 
 pushd ../..
-git clone https://github.com/googleapis/googleapis.git
 root_path=$(pwd)
+echo $root_path
+git clone https://github.com/googleapis/googleapis.git
 
-sed -i "s/ARG PROTOC_VERSION=[0-9.]*/ARG PROTOC_VERSION=${PROTOC_VERSION}/g" .cloudbuild/library_generation/library_generation.Dockerfile
+sed -i "s/ARG PROTOC_VERSION=[0-9.]*/ARG PROTOC_VERSION=${PROTOC_VERSION}/g" "$root_path/.cloudbuild/library_generation/library_generation.Dockerfile"
 
 DOCKER_BUILDKIT=1 docker build \
   -f .cloudbuild/library_generation/library_generation.Dockerfile \
