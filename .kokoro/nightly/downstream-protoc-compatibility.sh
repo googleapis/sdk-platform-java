@@ -17,29 +17,29 @@ set -eo pipefail
 
 # Comma-delimited list of repos to test with the local java-shared-dependencies
 if [ -z "${REPOS_UNDER_TEST}" ]; then
-  echo "REPOS_UNDER_TEST must be set to run downstream-protobuf-source-compatibility.sh"
+  echo "REPOS_UNDER_TEST must be set to run downstream-protoc-compatibility.sh"
   echo "Expects a comma-delimited list: i.e REPOS_UNDER_TEST=\"java-bigtable,java-bigquery\""
   exit 1
 fi
 
 # Version of Protoc to use
 if [ -z "${PROTOC_VERSION}" ]; then
-  echo "PROTOBUF_RUNTIME_VERSION must be set to run downstream-protobuf-source-compatibility.sh"
-  echo "Expects a single Protobuf-Java runtime version i.e. PROTOBUF_RUNTIME_VERSION=\"4.28.3\""
+  echo "PROTOC_VERSION must be set to run downstream-protoc-compatibility.sh"
+  echo "Expects a single Protoc version i.e. PROTOC_VERSION=\"29.0\""
   exit 1
 fi
 
 # Version of Protobuf-Java runtime to compile with
 if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
-  echo "PROTOBUF_RUNTIME_VERSION must be set to run downstream-protobuf-source-compatibility.sh"
+  echo "PROTOBUF_RUNTIME_VERSION must be set to run downstream-protoc-compatibility.sh"
   echo "Expects a single Protobuf-Java runtime version i.e. PROTOBUF_RUNTIME_VERSION=\"4.28.3\""
   exit 1
 fi
 
 root_path=$(pwd)
-git clone https://github.com/googleapis/googleapis.git
 
-sed -i "s/ARG PROTOC_VERSION=[0-9.]*/ARG PROTOC_VERSION=${PROTOC_VERSION}/g" "$root_path/.cloudbuild/library_generation/library_generation.Dockerfile"
+sed -i "s/ARG PROTOC_VERSION=[0-9.]*/ARG PROTOC_VERSION=${PROTOC_VERSION}/g" .cloudbuild/library_generation/library_generation.Dockerfile
+cat .cloudbuild/library_generation/library_generation.Dockerfile
 
 DOCKER_BUILDKIT=1 docker build \
   -f .cloudbuild/library_generation/library_generation.Dockerfile \
@@ -52,6 +52,9 @@ LOCAL_GENERATOR_VERSION=$(mvn \
   -pl gapic-generator-java \
   -DforceStdout \
   -q)
+  
+git clone https://github.com/googleapis/googleapis.git
+
 
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   # Perform source-compatibility testing on main (latest changes)
