@@ -30,9 +30,11 @@ if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
 fi
 
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
-  # Perform source-compatibility testing on main (latest changes)
-  git clone "https://github.com/googleapis/$repo.git" --depth=1
-  pushd "$repo"
+  if [ ! -d "${repo}" ]; then
+    # Perform source-compatibility testing on main (latest changes)
+    git clone "https://github.com/googleapis/${repo}.git" --depth=1
+  fi
+  pushd "${repo}"
 
   # Compile the Handwritten Library with the Protobuf-Java version to test source compatibility
   mvn clean compile -B -V -ntp \

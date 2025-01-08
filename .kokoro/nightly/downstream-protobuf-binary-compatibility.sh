@@ -42,9 +42,11 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     continue
   fi
 
-  # Perform source-compatibility testing on main (latest changes)
-  git clone "https://github.com/googleapis/$repo.git" --depth=1
-  pushd "$repo"
+  if [ ! -d "${repo}" ]; then
+    # Perform binary-compatibility testing on main (latest changes)
+    git clone "https://github.com/googleapis/${repo}.git" --depth=1
+  fi
+  pushd "${repo}"
   mvn -B -ntp clean install -T 1C -DskipTests -Dclirr.skip
 
   # Match all artifacts that start with google-cloud (rules out proto and grpc modules)

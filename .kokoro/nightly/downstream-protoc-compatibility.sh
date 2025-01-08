@@ -72,4 +72,6 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     --repository-path=/workspace \
     --api-definitions-path=/workspace/apis
   popd
+
+  git diff --name-only
 done
