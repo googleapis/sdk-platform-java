@@ -127,7 +127,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Boolean allowNonDefaultServiceAccount;
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
-  @Nullable private final ArrayList<String> allowedValues;
+  @Nullable private final ArrayList<String> allowedHardBoundTokenTypes;
   @VisibleForTesting final Map<String, String> headersWithDuplicatesRemoved = new HashMap<>();
 
   @Nullable
@@ -138,7 +138,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.executor = builder.executor;
     this.headerProvider = builder.headerProvider;
     this.endpoint = builder.endpoint;
-    this.allowedValues = builder.allowedValues;
+    this.allowedHardBoundTokenTypes = builder.allowedHardBoundTokenTypes;
     this.mtlsProvider = builder.mtlsProvider;
     this.envProvider = builder.envProvider;
     this.interceptorProvider = builder.interceptorProvider;
@@ -230,7 +230,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   @Override
   public TransportChannelProvider setAllowHardBoundTokens(ArrayList<String> allowedValues) {
-    return toBuilder().setAllowHardBoundTokens(allowedValues).build();
+    return toBuilder().setAllowHardBoundTokenTypes(allowedValues).build();
   }
 
   /** @deprecated Please modify pool settings via {@link #toBuilder()} */
@@ -628,7 +628,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private Boolean attemptDirectPathXds;
     @Nullable private Boolean allowNonDefaultServiceAccount;
     @Nullable private ImmutableMap<String, ?> directPathServiceConfig;
-    @Nullable private ArrayList<String> allowedValues;
+    @Nullable private ArrayList<String> allowedHardBoundTokenTypes;
 
     private Builder() {
       processorCount = Runtime.getRuntime().availableProcessors();
@@ -709,8 +709,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    public Builder setAllowHardBoundTokens(ArrayList<String> allowedValues) {
-      this.allowedValues = allowedValues;
+    public Builder setAllowHardBoundTokenTypes(ArrayList<String> allowedValues) {
+      this.allowedHardBoundTokenTypes = allowedValues;
       return this;
     }
 
