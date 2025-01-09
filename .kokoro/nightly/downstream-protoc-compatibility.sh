@@ -68,12 +68,13 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     continue
   fi
 
-  if [ ! -d "generation_config.yaml" ]; then
+  git clone "https://github.com/googleapis/$repo.git" --depth=1
+
+  if [ ! -d "${repo}/generation_config.yaml" ]; then
       continue
   fi
 
-  git clone "https://github.com/googleapis/$repo.git" --depth=1
-  pushd "$repo"
+  pushd "${repo}"
 
   docker run \
     --rm \
