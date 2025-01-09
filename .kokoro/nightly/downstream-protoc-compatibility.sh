@@ -95,7 +95,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
       -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
       -T 1C
 
-  mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip
+  mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION}
 
   # Match all artifacts that start with google-cloud (rules out proto and grpc modules)
   # Exclude any matches to BOM artifacts or emulators
