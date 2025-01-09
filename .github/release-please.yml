@@ -3,4 +3,20 @@ bumpMinorPreMajor: true
 handleGHRelease: true
 primaryBranch: main
 manifest: true
-extraFiles: ["WORKSPACE", ".cloudbuild/graalvm/cloudbuild.yaml", ".cloudbuild/graalvm/cloudbuild-test-a.yaml", ".cloudbuild/graalvm/cloudbuild-test-b.yaml"]
+extraFiles:
+  - WORKSPACE
+  - .cloudbuild/graalvm/cloudbuild.yaml
+  - .cloudbuild/graalvm/cloudbuild-test-a.yaml
+  - .cloudbuild/graalvm/cloudbuild-test-b.yaml
+branches:
+  - releaseType: java-backport
+    bumpMinorPreMajor: true
+    handleGHRelease: true
+    primaryBranch: main
+    manifest: true
+    extraFiles:
+      - WORKSPACE
+      - .cloudbuild/graalvm/cloudbuild.yaml
+      - .cloudbuild/graalvm/cloudbuild-test-a.yaml
+      - .cloudbuild/graalvm/cloudbuild-test-b.yaml
+    branch: bump-minor-v-for-LTS
