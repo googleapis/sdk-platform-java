@@ -14,6 +14,7 @@
 # limitations under the License.
 
 set -eo pipefail
+set -x
 
 # Comma-delimited list of repos to test with the local java-shared-dependencies
 if [ -z "${REPOS_UNDER_TEST}" ]; then
@@ -56,6 +57,14 @@ LOCAL_GENERATOR_VERSION=$(mvn \
 git clone https://github.com/googleapis/googleapis.git
 
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
+  if [[ "$repo" == "google-cloud-java" ]]; then
+    continue
+  fi
+
+  if [ ! -d "generation_config.yaml" ]; then
+      continue
+  fi
+
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   pushd "$repo"
 
@@ -69,7 +78,5 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     --generation-config-path=/workspace/generation_config.yaml \
     --repository-path=/workspace \
     --api-definitions-path=/workspace/apis
-
-  git diff --name-only
   popd
 done

@@ -14,6 +14,7 @@
 # limitations under the License.
 
 set -eo pipefail
+set -x
 
 # Comma-delimited list of repos to test with the local java-shared-dependencies
 if [ -z "${REPOS_UNDER_TEST}" ]; then
