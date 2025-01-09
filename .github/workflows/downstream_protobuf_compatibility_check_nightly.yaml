@@ -9,6 +9,10 @@ on:
         description: 'Comma separated list of Protobuf-Java versions (i.e. "3.25.x","4.x.y").
                       Note: Surround each version in the list with quotes ("")'
         required: true
+      protoc_versions:
+        description: 'Comma separated list of Protoc versions (i.e. "25.x","29.x").
+                      Note: Surround each version in the list with quotes ("")'
+        required: true
   schedule:
     - cron: '0 1 * * *' # Nightly at 1am
 
@@ -39,8 +43,8 @@ jobs:
           - java-spanner
           - java-storage
           - java-storage-nio
-        # Default Protobuf-Java versions to use are specified here. Without this, the nightly workflow won't know
-        # which values to use and would resolve to ''.
+        # Default Protoc and Protobuf-Java runtime versions to use are specified here. Without this, the nightly workflow
+        # won't know which values to use and would resolve to ''.
         protobuf-runtime-version: ${{ fromJSON(format('[{0}]', inputs.protobuf_runtime_versions || '"3.25.5","4.29.0"')) }}
         protoc-version: ${{ fromJSON(format('[{0}]', inputs.protoc_versions || '"25.5", "29.0"')) }}
     steps:

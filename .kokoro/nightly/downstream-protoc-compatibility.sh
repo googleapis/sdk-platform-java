@@ -37,6 +37,8 @@ if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
   exit 1
 fi
 
+# Validate that the inputted Protoc version is compatible with the inputted Protobuf-Java runtime version
+# Protoc version cannot be from a version before the the Protobuf-Java runtime
 RUNTIME_VERSION=$(echo "${PROTOBUF_RUNTIME_VERSION}" | cut -d '.' -f2,3)
 if (( $(echo "if ($PROTOC_VERSION > $RUNTIME_VERSION) 1 else 0" | bc) == 1 )); then
   echo "Protoc Version ${PROTOC_VERSION} is incompatible with the Protobuf-Java runtime version ${PROTOBUF_RUNTIME_VERSION}"
@@ -45,8 +47,8 @@ fi
 
 root_path=$(pwd)
 
+# Replace the Protoc version in the Dockerfile with the input version
 sed -i "s/ARG PROTOC_VERSION=[0-9.]*/ARG PROTOC_VERSION=${PROTOC_VERSION}/g" .cloudbuild/library_generation/library_generation.Dockerfile
-cat .cloudbuild/library_generation/library_generation.Dockerfile
 
 DOCKER_BUILDKIT=1 docker build \
   -f .cloudbuild/library_generation/library_generation.Dockerfile \
@@ -66,42 +68,43 @@ git clone https://github.com/lqiu96/cloud-opensource-java.git
 pushd cloud-opensource-java
 git checkout source-filter
 mvn -B -ntp clean compile
-linkage_path="$(pwd)/dependencies"
+linkage_path="$(root_path)/dependencies"
 popd
 
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
-  if [[ "$repo" == "google-cloud-java" ]]; then
+  # Skip the GAPIC monorepo as it should be tested via showcase
+  if [[ "${repo}" == "google-cloud-java" ]]; then
     continue
   fi
 
-  git clone "https://github.com/googleapis/$repo.git" --depth=1
+  git clone "https://github.com/googleapis/${repo}.git" --depth=1
 
-  if [ ! -e "${repo}/generation_config.yaml" ]; then
-      continue
+  # Only regenerate if there is a generation config
+  if [ -e "${repo}/generation_config.yaml" ]; then
+    docker run \
+      --rm \
+      -u "$(id -u):$(id -g)" \
+      -v "${root_path}/${repo}:/workspace" \
+      -e GENERATOR_VERSION="${LOCAL_GENERATOR_VERSION}" \
+      -v "${root_path}/googleapis":/workspace/apis \
+      local:image-tag \
+      --generation-config-path=/workspace/generation_config.yaml \
+      --repository-path=/workspace \
+      --api-definitions-path=/workspace/apis
   fi
 
   pushd "${repo}"
-
-  docker run \
-    --rm \
-    -u "$(id -u):$(id -g)" \
-    -v "$(pwd):/workspace" \
-    -e GENERATOR_VERSION="${LOCAL_GENERATOR_VERSION}" \
-    -v "${root_path}/googleapis":/workspace/apis \
-    local:image-tag \
-    --generation-config-path=/workspace/generation_config.yaml \
-    --repository-path=/workspace \
-    --api-definitions-path=/workspace/apis
 
   # Compile the Handwritten Library with the Protobuf-Java version to test source compatibility
   mvn clean compile -B -V -ntp \
       -Dclirr.skip=true \
       -Denforcer.skip=true \
       -Dmaven.javadoc.skip=true \
-      -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
+      -Dprotobuf.version="${PROTOBUF_RUNTIME_VERSION}" \
       -T 1C
 
-  mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION}
+  # If source compatible, install the artifact locally to run linkage checker
+  mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip -Dprotobuf.version="${PROTOBUF_RUNTIME_VERSION}"
 
   # Match all artifacts that start with google-cloud (rules out proto and grpc modules)
   # Exclude any matches to BOM artifacts or emulators
@@ -111,6 +114,8 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   echo "Found artifacts ${ARTIFACT_LIST}"
   popd
 
+  # cd to the Linkage Checker's dependency folder to run mvn exec:java
+  pushd "${linkage_path}"
   for artifact in ${ARTIFACT_LIST//,/ }; do
     artifact_id=$(echo "${artifact}" | tr ':' '\n' | head -n 1)
     version=$(echo "${artifact}" | tr ':' '\n' | tail -n 1)
@@ -121,8 +126,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     # The `-s` argument filters the linkage check problems that stem from the artifact
     program_args="-r --artifacts ${maven_coordinates},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION} -s ${maven_coordinates}"
     echo "Linkage Checker Program Arguments: ${program_args}"
-    pushd "${linkage_path}"
     mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="${program_args}"
-    popd
   done
+  popd
 done
