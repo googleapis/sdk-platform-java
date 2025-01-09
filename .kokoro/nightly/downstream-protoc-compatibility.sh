@@ -60,7 +60,8 @@ git clone https://github.com/lqiu96/cloud-opensource-java.git
 pushd cloud-opensource-java
 git checkout source-filter
 mvn -B -ntp clean compile
-pushd dependencies
+linkage_path="$(pwd/dependencies)"
+popd
 
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   if [[ "$repo" == "google-cloud-java" ]]; then
@@ -113,7 +114,8 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     # The `-s` argument filters the linkage check problems that stem from the artifact
     program_args="-r --artifacts ${maven_coordinates},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION} -s ${maven_coordinates}"
     echo "Linkage Checker Program Arguments: ${program_args}"
+    pushd "${linkage_path}"
     mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="${program_args}"
+    popd
   done
-  popd
 done
