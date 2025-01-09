@@ -60,7 +60,7 @@ git clone https://github.com/lqiu96/cloud-opensource-java.git
 pushd cloud-opensource-java
 git checkout source-filter
 mvn -B -ntp clean compile
-linkage_path="$(pwd/dependencies)"
+linkage_path="$(pwd)/dependencies"
 popd
 
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
