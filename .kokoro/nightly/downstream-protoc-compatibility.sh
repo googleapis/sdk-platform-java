@@ -70,7 +70,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
 
   git clone "https://github.com/googleapis/$repo.git" --depth=1
 
-  if [ ! -d "${repo}/generation_config.yaml" ]; then
+  if [ ! -e "${repo}/generation_config.yaml" ]; then
       continue
   fi
 
