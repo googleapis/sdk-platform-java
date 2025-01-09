@@ -37,6 +37,12 @@ if [ -z "${PROTOBUF_RUNTIME_VERSION}" ]; then
   exit 1
 fi
 
+RUNTIME_VERSION=$(echo "${PROTOBUF_RUNTIME_VERSION}" | cut -d '.' -f2,3)
+if (( $(echo "if ($PROTOC_VERSION > $RUNTIME_VERSION) 1 else 0" | bc) == 1 )); then
+  echo "Protoc Version ${PROTOC_VERSION} is incompatible with the Protobuf-Java runtime version ${PROTOBUF_RUNTIME_VERSION}"
+  exit 0
+fi
+
 root_path=$(pwd)
 
 sed -i "s/ARG PROTOC_VERSION=[0-9.]*/ARG PROTOC_VERSION=${PROTOC_VERSION}/g" .cloudbuild/library_generation/library_generation.Dockerfile
