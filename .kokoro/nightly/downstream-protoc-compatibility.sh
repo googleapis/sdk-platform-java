@@ -55,9 +55,7 @@ LOCAL_GENERATOR_VERSION=$(mvn \
 
 git clone https://github.com/googleapis/googleapis.git
 
-
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
-  # Perform source-compatibility testing on main (latest changes)
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   pushd "$repo"
 
@@ -71,7 +69,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     --generation-config-path=/workspace/generation_config.yaml \
     --repository-path=/workspace \
     --api-definitions-path=/workspace/apis
-  popd
 
   git diff --name-only
+  popd
 done
