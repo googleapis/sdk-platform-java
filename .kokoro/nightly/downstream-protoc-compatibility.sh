@@ -56,6 +56,12 @@ LOCAL_GENERATOR_VERSION=$(mvn \
 
 git clone https://github.com/googleapis/googleapis.git
 
+git clone https://github.com/lqiu96/cloud-opensource-java.git
+pushd cloud-opensource-java
+git checkout source-filter
+mvn -B -ntp clean compile
+pushd dependencies
+
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   if [[ "$repo" == "google-cloud-java" ]]; then
     continue
@@ -78,5 +84,36 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     --generation-config-path=/workspace/generation_config.yaml \
     --repository-path=/workspace \
     --api-definitions-path=/workspace/apis
+
+  # Compile the Handwritten Library with the Protobuf-Java version to test source compatibility
+  mvn clean compile -B -V -ntp \
+      -Dclirr.skip=true \
+      -Denforcer.skip=true \
+      -Dmaven.javadoc.skip=true \
+      -Dprotobuf.version=${PROTOBUF_RUNTIME_VERSION} \
+      -T 1C
+
+  mvn -B -ntp install -T 1C -DskipTests -Dclirr.skip
+
+  # Match all artifacts that start with google-cloud (rules out proto and grpc modules)
+  # Exclude any matches to BOM artifacts or emulators
+  ARTIFACT_LIST=$(cat "versions.txt" | grep "^google-cloud" | grep -vE "(bom|emulator)" | tr '\n' ',')
+  ARTIFACT_LIST=${ARTIFACT_LIST%,}
+
+  echo "Found artifacts ${ARTIFACT_LIST}"
+  popd
+
+  for artifact in ${ARTIFACT_LIST//,/ }; do
+    artifact_id=$(echo "${artifact}" | tr ':' '\n' | head -n 1)
+    version=$(echo "${artifact}" | tr ':' '\n' | tail -n 1)
+
+    maven_coordinates="com.google.cloud:${artifact_id}:${version}"
+    echo "Using ${maven_coordinates}"
+
+    # The `-s` argument filters the linkage check problems that stem from the artifact
+    program_args="-r --artifacts ${maven_coordinates},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION} -s ${maven_coordinates}"
+    echo "Linkage Checker Program Arguments: ${program_args}"
+    mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="${program_args}"
+  done
   popd
 done
