@@ -14,22 +14,22 @@
 
 
 deep-remove-regex:
-- "/java-showcase/grpc-google-.*/src"
-- "/java-showcase/proto-google-.*/src"
-- "/java-showcase/google-.*/src"
-- "/java-showcase/samples/snippets/generated"
+- "/showcase/grpc-google-.*/src"
+- "/showcase/proto-google-.*/src"
+- "/showcase/gapic-showcase/src"
+- "/showcase/samples/snippets/generated"
 
 deep-preserve-regex:
-- "/java-showcase/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java"
+- "/showcase/gapic-showcase/src/test/*"
 
 deep-copy-regex:
 - source: "/schema/google/showcase/(v.*)/.*-java/proto-google-.*/src"
-  dest: "/owl-bot-staging/java-showcase/$1/proto-gapic-showcase-$1/src"
+  dest: "/owl-bot-staging/showcase/$1/proto-gapic-showcase-$1/src"
 - source: "/schema/google/showcase/(v.*)/.*-java/grpc-google-.*/src"
-  dest: "/owl-bot-staging/java-showcase/$1/grpc-gapic-showcase-$1/src"
+  dest: "/owl-bot-staging/showcase/$1/grpc-gapic-showcase-$1/src"
 - source: "/schema/google/showcase/(v.*)/.*-java/gapic-google-.*/src"
-  dest: "/owl-bot-staging/java-showcase/$1/gapic-showcase/src"
+  dest: "/owl-bot-staging/showcase/$1/gapic-showcase/src"
 - source: "/schema/google/showcase/(v.*)/.*-java/samples/snippets/generated"
-  dest: "/owl-bot-staging/java-showcase/$1/samples/snippets/generated"
+  dest: "/owl-bot-staging/showcase/$1/samples/snippets/generated"
 
 api-name: showcase
