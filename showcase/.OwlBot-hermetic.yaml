@@ -23,11 +23,11 @@ deep-preserve-regex:
 - "/showcase/gapic-showcase/src/test"
 
 deep-copy-regex:
-- source: "/schema/google/showcase/(v.*)/.*-java/proto-gapic-showcase-.*/src"
+- source: "/schema/google/showcase/(v.*)/.*-java/proto-.*/src"
   dest: "/owl-bot-staging/showcase/$1/proto-gapic-showcase-$1/src"
-- source: "/schema/google/showcase/(v.*)/.*-java/grpc-gapic-showcase-.*/src"
+- source: "/schema/google/showcase/(v.*)/.*-java/grpc-.*/src"
   dest: "/owl-bot-staging/showcase/$1/grpc-gapic-showcase-$1/src"
-- source: "/schema/google/showcase/(v.*)/.*-java/gapic-showcase/src"
+- source: "/schema/google/showcase/(v.*)/.*-java/gapic-.*/src"
   dest: "/owl-bot-staging/showcase/$1/gapic-showcase/src"
 - source: "/schema/google/showcase/(v.*)/.*-java/samples/snippets/generated"
   dest: "/owl-bot-staging/showcase/$1/samples/snippets/generated"
