@@ -1,0 +1,33 @@
+# This file is a partial recovery of the BUILD.bazel file, which was last seen on
+# https://github.com/googleapis/sdk-platform-java/commit/d59b87feddce69077c05ef8e44faea8c44f3338b
+#
+# We keep it here in order to leverage the protoc parameter inference of the hermetic build Docker image,
+# which parses BUILD.bazel files from folders with api definitions (e.g. googleapis/googleapis).
+
+java_gapic_library(
+    name = "showcase_java_gapic",
+    srcs = [":showcase_proto_with_info"],
+    gapic_yaml = None,
+    grpc_service_config = "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_grpc_service_config.json",
+    # TODO(#1285): Enable rest_numeric_enums once https://github.com/googleapis/gapic-showcase/issues/1255 is
+    # fixed.
+    rest_numeric_enums = False,
+    service_yaml = "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_v1beta1.yaml",
+    test_deps = [
+        ":showcase_java_grpc",
+#        ":showcase_java_grpc_extended",
+        "@com_google_googleapis//google/cloud/location:location_java_grpc",
+        "@com_google_googleapis//google/iam/v1:iam_java_grpc"
+    ],
+    transport = "grpc+rest",
+    # Since we expect this to be embedded as part of googleapis (i.e. googleapis
+    # will have a manually added folder downloaded from gapic-showcase:
+    # googleapis/schema/google/...), we remove the repository reference (@com_google_googleapis) to match
+    # what hermetic_build/common/model/gapic_inputs.py expects.
+    deps = [
+        ":showcase_java_proto",
+        "//google/api:api_java_proto",
+        "//google/cloud/location:location_java_proto",
+        "//google/iam/v1:iam_java_proto"
+   ],
+)
