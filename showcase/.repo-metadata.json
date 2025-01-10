@@ -1,0 +1,16 @@
+{
+  "api_shortname": "showcase",
+  "name_pretty": "Showcase",
+  "product_documentation": "https://cloud.google.com/dummy",
+  "api_description": "Showcase module",
+  "client_documentation": "https://cloud.google.com/java/docs/reference/gapic-showcase/latest/overview",
+  "release_level": "preview",
+  "transport": "grpc",
+  "language": "java",
+  "repo": "googleapis/google-cloud-java",
+  "repo_short": "java-showcase",
+  "distribution_name": "com.google.cloud:gapic-showcase",
+  "api_id": "showcase.googleapis.com",
+  "library_type": "OTHER",
+  "requires_billing": true
+}
