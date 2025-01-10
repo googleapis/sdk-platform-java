@@ -145,9 +145,9 @@ def prepare_repo(
     os.makedirs(output_folder, exist_ok=True)
     libraries = {}
     for library in library_config:
-        library_name = f"{language}-{library.get_library_name()}"
+        library_folder_name = library.get_folder_name(language)
         library_path = (
-            f"{repo_path}/{library_name}"
+            f"{repo_path}/{library_folder_name}"
             if gen_config.is_monorepo()
             else f"{repo_path}"
         )

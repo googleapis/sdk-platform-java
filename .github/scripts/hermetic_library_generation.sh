@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 # This script should be run at the root of the repository.
 # This script is used to, when a pull request changes the generation
 # configuration (generation_config.yaml by default) or Dockerfile:
@@ -52,6 +52,13 @@ esac
 shift
 done
 
+get_version_from_pom() {
+  target_pom="$1"
+  key="$2"
+  # prints the result to stdout
+  grep -e "<${key}>" "${target_pom}" | cut -d'>' -f2 | cut -d'<' -f1
+}
+
 if [ -z "${target_branch}" ]; then
   echo "missing required argument --target_branch"
   exit 1
@@ -71,12 +78,19 @@ if [ -z "${image_tag}" ]; then
   image_tag=$(grep "gapic_generator_version" "${generation_config}" | cut -d ':' -f 2 | xargs)
 fi
 
+# both the raw scripts and the docker image rely on GENERATOR_VERSION, an env
+# var that's expected to be set in the environment and this script defaults it
+# to be the --image_tag argument.
+if [[ -z "${GENERATOR_VERSION}" ]]; then
+  GENERATOR_VERSION="${image_tag}"
+fi
+
 workspace_name="/workspace"
 baseline_generation_config="baseline_generation_config.yaml"
 message="chore: generate libraries at $(date)"
 
-git checkout "${target_branch}"
-git checkout "${current_branch}"
+#git checkout "${target_branch}"
+#git checkout "${current_branch}"
 
 # copy generation configuration from target branch to current branch.
 git show "${target_branch}":"${generation_config}" > "${baseline_generation_config}"
@@ -85,12 +99,30 @@ git show "${target_branch}":"${generation_config}" > "${baseline_generation_conf
 googleapis_commitish=$(grep googleapis_commitish "${generation_config}" | cut -d ":" -f 2 | xargs)
 api_def_dir=$(mktemp -d)
 git clone https://github.com/googleapis/googleapis.git "${api_def_dir}"
+
 pushd "${api_def_dir}"
 git checkout "${googleapis_commitish}"
 popd
 
+# append showcase definitions to googleapis repository
+showcase_def_dir=$(mktemp -d)
+git clone https://github.com/googleapis/gapic-showcase.git "${showcase_def_dir}"
+# looks at sdk-platform-java/showcase/gapic-showcase/pom.xml to extract the
+# version of gapic-showcase
+# see https://github.com/googleapis/gapic-showcase/releases
+showcase_version=$(get_version_from_pom \
+  "showcase/gapic-showcase/pom.xml" "gapic-showcase.version"
+)
+cp -r "${showcase_def_dir}/schema" "${api_def_dir}/"
+# compliance_suite.json is a symbolic link outside of the schema folder, so we
+# replace it with the actual contents in its original location.
+compliance_suite_path="${api_def_dir}/schema/google/showcase/v1beta1/compliance_suite.json"
+rm "${compliance_suite_path}"
+cp "${showcase_def_dir}/server/services/compliance_suite.json" "${compliance_suite_path}"
+rm -rf "${api_def_dir}/.git"
+
 # get changed library list.
-changed_libraries=$(python hermetic_build/common/cli/get_changed_libraries.py create \
+changed_libraries=$(GENERATOR_VERSION="${GENERATOR_VERSION}" python hermetic_build/common/cli/get_changed_libraries.py create \
   --baseline-generation-config-path="${baseline_generation_config}" \
   --current-generation-config-path="${generation_config}")
 echo "Changed libraries are: ${changed_libraries:-"No changed library"}."
@@ -98,33 +130,33 @@ echo "Changed libraries are: ${changed_libraries:-"No changed library"}."
 # run hermetic code generation docker image.
 docker run \
   --rm \
-  --quiet \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):${workspace_name}" \
   -v "${api_def_dir}:${workspace_name}/googleapis" \
-  -e GENERATOR_VERSION="${image_tag}" \
+  -e GENERATOR_VERSION="${GENERATOR_VERSION}" \
   gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
   --generation-config-path="${workspace_name}/${generation_config}" \
   --library-names="${changed_libraries}" \
   --api-definitions-path="${workspace_name}/googleapis"
 
-python hermetic_build/release_note_generation/cli/generate_release_note.py generate \
+GENERATOR_VERSION="${GENERATOR_VERSION}" python hermetic_build/release_note_generation/cli/generate_release_note.py generate \
   --baseline-generation-config-path="${baseline_generation_config}" \
   --current-generation-config-path="${generation_config}"
 
 # remove api definitions after generation
 rm -rf "${api_def_dir}"
+exit 0
 
 # commit the change to the pull request.
 rm -rdf output googleapis "${baseline_generation_config}"
 git add --all -- ':!pr_description.txt' ':!hermetic_library_generation.sh' ':!hermetic_build'
 changed_files=$(git diff --cached --name-only)
 if [[ "${changed_files}" != "" ]]; then
-    echo "Commit changes..."
+    echo "Committing changes..."
     git commit -m "${message}"
     git push
 else
-    echo "There is no generated code change, skip commit."
+    echo "There is no generated code change. Skipping commit creation."
 fi
 
 # set pr body if pr_description.txt is generated.
