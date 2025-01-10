@@ -5,7 +5,7 @@ googleapis_commitish: 3cef095370b3176f67542e527ffde81e019df091
 libraries:
 - api_shortname: showcase
   folder_name: showcase # prevents java-showcase
-  # the following required entries will generate files that we will delete
+  excluded_poms: gapic-showcase-bom
   name_pretty: Showcase
   api_description: Showcase module
   product_documentation: https://cloud.google.com/dummy
