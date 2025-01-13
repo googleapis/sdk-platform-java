@@ -650,7 +650,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           // Use default if we cannot initialize channel credentials via DCA or S2A.
           builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
         }
-        builder = ManagedChannelBuilder.forAddress(serviceAddress, port);
       }
     }
     // google-c2p resolver requires service config lookup
