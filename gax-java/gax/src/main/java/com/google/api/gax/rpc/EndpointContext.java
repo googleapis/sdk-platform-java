@@ -315,8 +315,7 @@ public abstract class EndpointContext {
       }
 
       // If EXPERIMENTAL_GOOGLE_API_USE_S2A_JAVA is not set to true, skip S2A.
-      String s2AEnv;
-      s2AEnv = envProvider().getenv(S2A_ENV_ENABLE_USE_S2A);
+      String s2AEnv = envProvider().getenv(S2A_ENV_ENABLE_USE_S2A);
       boolean s2AEnabled = Boolean.parseBoolean(s2AEnv);
       if (!s2AEnabled) {
         return false;
