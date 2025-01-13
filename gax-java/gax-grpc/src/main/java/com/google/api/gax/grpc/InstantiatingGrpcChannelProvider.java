@@ -490,7 +490,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       Object retObjCreds = build.invoke(retObjBuilder, null);
       return (ChannelCredentials) retObjCreds;
     } catch (Throwable t) {
-      LOG.log(Level.INFO, "S2A APIs cannot be used: ", t.getMessage());
+      LOG.log(
+          Level.WARNING,
+          "Falling back to default (TLS without S2A) because S2A APIs cannot be used: "
+              + t.getMessage());
       return null;
     }
   }
