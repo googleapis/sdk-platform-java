@@ -5,12 +5,12 @@
   "api_description": "Showcase module",
   "client_documentation": "https://cloud.google.com/java/docs/reference/gapic-showcase/latest/overview",
   "release_level": "preview",
-  "transport": "grpc",
+  "transport": "both",
   "language": "java",
-  "repo": "googleapis/google-cloud-java",
+  "repo": "googleapis/sdk-platform-java",
   "repo_short": "java-showcase",
   "distribution_name": "com.google.cloud:gapic-showcase",
-  "api_id": "showcase.googleapis.com",
   "library_type": "OTHER",
-  "requires_billing": true
+  "requires_billing": true,
+  "excluded_poms": "gapic-showcase-bom"
 }

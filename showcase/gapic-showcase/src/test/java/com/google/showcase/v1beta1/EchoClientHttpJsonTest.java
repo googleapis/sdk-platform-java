@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,6 +104,8 @@ public class EchoClientHttpJsonTest {
         EchoResponse.newBuilder()
             .setContent("content951530617")
             .setSeverity(Severity.forNumber(0))
+            .setRequestId("requestId693933066")
+            .setOtherRequestId("otherRequestId1248995034")
             .build();
     mockService.addResponse(expectedResponse);
 
@@ -112,6 +114,8 @@ public class EchoClientHttpJsonTest {
             .setSeverity(Severity.forNumber(0))
             .setHeader("header-1221270899")
             .setOtherHeader("otherHeader-2026585667")
+            .setRequestId("requestId693933066")
+            .setOtherRequestId("otherRequestId1248995034")
             .build();
 
     EchoResponse actualResponse = client.echo(request);
@@ -145,8 +149,63 @@ public class EchoClientHttpJsonTest {
               .setSeverity(Severity.forNumber(0))
               .setHeader("header-1221270899")
               .setOtherHeader("otherHeader-2026585667")
+              .setRequestId("requestId693933066")
+              .setOtherRequestId("otherRequestId1248995034")
               .build();
       client.echo(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void echoErrorDetailsTest() throws Exception {
+    EchoErrorDetailsResponse expectedResponse =
+        EchoErrorDetailsResponse.newBuilder()
+            .setSingleDetail(EchoErrorDetailsResponse.SingleDetail.newBuilder().build())
+            .setMultipleDetails(EchoErrorDetailsResponse.MultipleDetails.newBuilder().build())
+            .build();
+    mockService.addResponse(expectedResponse);
+
+    EchoErrorDetailsRequest request =
+        EchoErrorDetailsRequest.newBuilder()
+            .setSingleDetailText("singleDetailText1774380934")
+            .addAllMultiDetailText(new ArrayList<String>())
+            .build();
+
+    EchoErrorDetailsResponse actualResponse = client.echoErrorDetails(request);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<String> actualRequests = mockService.getRequestPaths();
+    Assert.assertEquals(1, actualRequests.size());
+
+    String apiClientHeaderKey =
+        mockService
+            .getRequestHeaders()
+            .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
+            .iterator()
+            .next();
+    Assert.assertTrue(
+        GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
+            .matcher(apiClientHeaderKey)
+            .matches());
+  }
+
+  @Test
+  public void echoErrorDetailsExceptionTest() throws Exception {
+    ApiException exception =
+        ApiExceptionFactory.createException(
+            new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
+    mockService.addException(exception);
+
+    try {
+      EchoErrorDetailsRequest request =
+          EchoErrorDetailsRequest.newBuilder()
+              .setSingleDetailText("singleDetailText1774380934")
+              .addAllMultiDetailText(new ArrayList<String>())
+              .build();
+      client.echoErrorDetails(request);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.

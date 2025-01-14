@@ -1,9 +1,23 @@
+/*
+ * Copyright 2025 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.google.showcase.v1beta1;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
-/**
- */
+/** */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler",
     comments = "Source: schema/google/showcase/v1beta1/sequence.proto")
@@ -15,402 +29,549 @@ public final class SequenceServiceGrpc {
   public static final java.lang.String SERVICE_NAME = "google.showcase.v1beta1.SequenceService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.CreateSequenceRequest,
-      com.google.showcase.v1beta1.Sequence> getCreateSequenceMethod;
+  private static volatile io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.CreateSequenceRequest, com.google.showcase.v1beta1.Sequence>
+      getCreateSequenceMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "CreateSequence",
       requestType = com.google.showcase.v1beta1.CreateSequenceRequest.class,
       responseType = com.google.showcase.v1beta1.Sequence.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.google.showcase.v1beta1.CreateSequenceRequest,
-      com.google.showcase.v1beta1.Sequence> getCreateSequenceMethod() {
-    io.grpc.MethodDescriptor<com.google.showcase.v1beta1.CreateSequenceRequest, com.google.showcase.v1beta1.Sequence> getCreateSequenceMethod;
+  public static io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.CreateSequenceRequest, com.google.showcase.v1beta1.Sequence>
+      getCreateSequenceMethod() {
+    io.grpc.MethodDescriptor<
+            com.google.showcase.v1beta1.CreateSequenceRequest, com.google.showcase.v1beta1.Sequence>
+        getCreateSequenceMethod;
     if ((getCreateSequenceMethod = SequenceServiceGrpc.getCreateSequenceMethod) == null) {
       synchronized (SequenceServiceGrpc.class) {
         if ((getCreateSequenceMethod = SequenceServiceGrpc.getCreateSequenceMethod) == null) {
-          SequenceServiceGrpc.getCreateSequenceMethod = getCreateSequenceMethod =
-              io.grpc.MethodDescriptor.<com.google.showcase.v1beta1.CreateSequenceRequest, com.google.showcase.v1beta1.Sequence>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "CreateSequence"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.showcase.v1beta1.CreateSequenceRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.showcase.v1beta1.Sequence.getDefaultInstance()))
-              .setSchemaDescriptor(new SequenceServiceMethodDescriptorSupplier("CreateSequence"))
-              .build();
+          SequenceServiceGrpc.getCreateSequenceMethod =
+              getCreateSequenceMethod =
+                  io.grpc.MethodDescriptor
+                      .<com.google.showcase.v1beta1.CreateSequenceRequest,
+                          com.google.showcase.v1beta1.Sequence>
+                          newBuilder()
+                      .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+                      .setFullMethodName(generateFullMethodName(SERVICE_NAME, "CreateSequence"))
+                      .setSampledToLocalTracing(true)
+                      .setRequestMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.showcase.v1beta1.CreateSequenceRequest
+                                  .getDefaultInstance()))
+                      .setResponseMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.showcase.v1beta1.Sequence.getDefaultInstance()))
+                      .setSchemaDescriptor(
+                          new SequenceServiceMethodDescriptorSupplier("CreateSequence"))
+                      .build();
         }
       }
     }
     return getCreateSequenceMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.CreateStreamingSequenceRequest,
-      com.google.showcase.v1beta1.StreamingSequence> getCreateStreamingSequenceMethod;
+  private static volatile io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.CreateStreamingSequenceRequest,
+          com.google.showcase.v1beta1.StreamingSequence>
+      getCreateStreamingSequenceMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "CreateStreamingSequence",
       requestType = com.google.showcase.v1beta1.CreateStreamingSequenceRequest.class,
       responseType = com.google.showcase.v1beta1.StreamingSequence.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.google.showcase.v1beta1.CreateStreamingSequenceRequest,
-      com.google.showcase.v1beta1.StreamingSequence> getCreateStreamingSequenceMethod() {
-    io.grpc.MethodDescriptor<com.google.showcase.v1beta1.CreateStreamingSequenceRequest, com.google.showcase.v1beta1.StreamingSequence> getCreateStreamingSequenceMethod;
-    if ((getCreateStreamingSequenceMethod = SequenceServiceGrpc.getCreateStreamingSequenceMethod) == null) {
+  public static io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.CreateStreamingSequenceRequest,
+          com.google.showcase.v1beta1.StreamingSequence>
+      getCreateStreamingSequenceMethod() {
+    io.grpc.MethodDescriptor<
+            com.google.showcase.v1beta1.CreateStreamingSequenceRequest,
+            com.google.showcase.v1beta1.StreamingSequence>
+        getCreateStreamingSequenceMethod;
+    if ((getCreateStreamingSequenceMethod = SequenceServiceGrpc.getCreateStreamingSequenceMethod)
+        == null) {
       synchronized (SequenceServiceGrpc.class) {
-        if ((getCreateStreamingSequenceMethod = SequenceServiceGrpc.getCreateStreamingSequenceMethod) == null) {
-          SequenceServiceGrpc.getCreateStreamingSequenceMethod = getCreateStreamingSequenceMethod =
-              io.grpc.MethodDescriptor.<com.google.showcase.v1beta1.CreateStreamingSequenceRequest, com.google.showcase.v1beta1.StreamingSequence>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "CreateStreamingSequence"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.showcase.v1beta1.CreateStreamingSequenceRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.showcase.v1beta1.StreamingSequence.getDefaultInstance()))
-              .setSchemaDescriptor(new SequenceServiceMethodDescriptorSupplier("CreateStreamingSequence"))
-              .build();
+        if ((getCreateStreamingSequenceMethod =
+                SequenceServiceGrpc.getCreateStreamingSequenceMethod)
+            == null) {
+          SequenceServiceGrpc.getCreateStreamingSequenceMethod =
+              getCreateStreamingSequenceMethod =
+                  io.grpc.MethodDescriptor
+                      .<com.google.showcase.v1beta1.CreateStreamingSequenceRequest,
+                          com.google.showcase.v1beta1.StreamingSequence>
+                          newBuilder()
+                      .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+                      .setFullMethodName(
+                          generateFullMethodName(SERVICE_NAME, "CreateStreamingSequence"))
+                      .setSampledToLocalTracing(true)
+                      .setRequestMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.showcase.v1beta1.CreateStreamingSequenceRequest
+                                  .getDefaultInstance()))
+                      .setResponseMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.showcase.v1beta1.StreamingSequence.getDefaultInstance()))
+                      .setSchemaDescriptor(
+                          new SequenceServiceMethodDescriptorSupplier("CreateStreamingSequence"))
+                      .build();
         }
       }
     }
     return getCreateStreamingSequenceMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.GetSequenceReportRequest,
-      com.google.showcase.v1beta1.SequenceReport> getGetSequenceReportMethod;
+  private static volatile io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.GetSequenceReportRequest,
+          com.google.showcase.v1beta1.SequenceReport>
+      getGetSequenceReportMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetSequenceReport",
       requestType = com.google.showcase.v1beta1.GetSequenceReportRequest.class,
       responseType = com.google.showcase.v1beta1.SequenceReport.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.google.showcase.v1beta1.GetSequenceReportRequest,
-      com.google.showcase.v1beta1.SequenceReport> getGetSequenceReportMethod() {
-    io.grpc.MethodDescriptor<com.google.showcase.v1beta1.GetSequenceReportRequest, com.google.showcase.v1beta1.SequenceReport> getGetSequenceReportMethod;
+  public static io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.GetSequenceReportRequest,
+          com.google.showcase.v1beta1.SequenceReport>
+      getGetSequenceReportMethod() {
+    io.grpc.MethodDescriptor<
+            com.google.showcase.v1beta1.GetSequenceReportRequest,
+            com.google.showcase.v1beta1.SequenceReport>
+        getGetSequenceReportMethod;
     if ((getGetSequenceReportMethod = SequenceServiceGrpc.getGetSequenceReportMethod) == null) {
       synchronized (SequenceServiceGrpc.class) {
         if ((getGetSequenceReportMethod = SequenceServiceGrpc.getGetSequenceReportMethod) == null) {
-          SequenceServiceGrpc.getGetSequenceReportMethod = getGetSequenceReportMethod =
-              io.grpc.MethodDescriptor.<com.google.showcase.v1beta1.GetSequenceReportRequest, com.google.showcase.v1beta1.SequenceReport>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetSequenceReport"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.showcase.v1beta1.GetSequenceReportRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.showcase.v1beta1.SequenceReport.getDefaultInstance()))
-              .setSchemaDescriptor(new SequenceServiceMethodDescriptorSupplier("GetSequenceReport"))
-              .build();
+          SequenceServiceGrpc.getGetSequenceReportMethod =
+              getGetSequenceReportMethod =
+                  io.grpc.MethodDescriptor
+                      .<com.google.showcase.v1beta1.GetSequenceReportRequest,
+                          com.google.showcase.v1beta1.SequenceReport>
+                          newBuilder()
+                      .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+                      .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetSequenceReport"))
+                      .setSampledToLocalTracing(true)
+                      .setRequestMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.showcase.v1beta1.GetSequenceReportRequest
+                                  .getDefaultInstance()))
+                      .setResponseMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.showcase.v1beta1.SequenceReport.getDefaultInstance()))
+                      .setSchemaDescriptor(
+                          new SequenceServiceMethodDescriptorSupplier("GetSequenceReport"))
+                      .build();
         }
       }
     }
     return getGetSequenceReportMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.GetStreamingSequenceReportRequest,
-      com.google.showcase.v1beta1.StreamingSequenceReport> getGetStreamingSequenceReportMethod;
+  private static volatile io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.GetStreamingSequenceReportRequest,
+          com.google.showcase.v1beta1.StreamingSequenceReport>
+      getGetStreamingSequenceReportMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetStreamingSequenceReport",
       requestType = com.google.showcase.v1beta1.GetStreamingSequenceReportRequest.class,
       responseType = com.google.showcase.v1beta1.StreamingSequenceReport.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.google.showcase.v1beta1.GetStreamingSequenceReportRequest,
-      com.google.showcase.v1beta1.StreamingSequenceReport> getGetStreamingSequenceReportMethod() {
-    io.grpc.MethodDescriptor<com.google.showcase.v1beta1.GetStreamingSequenceReportRequest, com.google.showcase.v1beta1.StreamingSequenceReport> getGetStreamingSequenceReportMethod;
-    if ((getGetStreamingSequenceReportMethod = SequenceServiceGrpc.getGetStreamingSequenceReportMethod) == null) {
+  public static io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.GetStreamingSequenceReportRequest,
+          com.google.showcase.v1beta1.StreamingSequenceReport>
+      getGetStreamingSequenceReportMethod() {
+    io.grpc.MethodDescriptor<
+            com.google.showcase.v1beta1.GetStreamingSequenceReportRequest,
+            com.google.showcase.v1beta1.StreamingSequenceReport>
+        getGetStreamingSequenceReportMethod;
+    if ((getGetStreamingSequenceReportMethod =
+            SequenceServiceGrpc.getGetStreamingSequenceReportMethod)
+        == null) {
       synchronized (SequenceServiceGrpc.class) {
-        if ((getGetStreamingSequenceReportMethod = SequenceServiceGrpc.getGetStreamingSequenceReportMethod) == null) {
-          SequenceServiceGrpc.getGetStreamingSequenceReportMethod = getGetStreamingSequenceReportMethod =
-              io.grpc.MethodDescriptor.<com.google.showcase.v1beta1.GetStreamingSequenceReportRequest, com.google.showcase.v1beta1.StreamingSequenceReport>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetStreamingSequenceReport"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.showcase.v1beta1.GetStreamingSequenceReportRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.showcase.v1beta1.StreamingSequenceReport.getDefaultInstance()))
-              .setSchemaDescriptor(new SequenceServiceMethodDescriptorSupplier("GetStreamingSequenceReport"))
-              .build();
+        if ((getGetStreamingSequenceReportMethod =
+                SequenceServiceGrpc.getGetStreamingSequenceReportMethod)
+            == null) {
+          SequenceServiceGrpc.getGetStreamingSequenceReportMethod =
+              getGetStreamingSequenceReportMethod =
+                  io.grpc.MethodDescriptor
+                      .<com.google.showcase.v1beta1.GetStreamingSequenceReportRequest,
+                          com.google.showcase.v1beta1.StreamingSequenceReport>
+                          newBuilder()
+                      .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+                      .setFullMethodName(
+                          generateFullMethodName(SERVICE_NAME, "GetStreamingSequenceReport"))
+                      .setSampledToLocalTracing(true)
+                      .setRequestMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.showcase.v1beta1.GetStreamingSequenceReportRequest
+                                  .getDefaultInstance()))
+                      .setResponseMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.showcase.v1beta1.StreamingSequenceReport
+                                  .getDefaultInstance()))
+                      .setSchemaDescriptor(
+                          new SequenceServiceMethodDescriptorSupplier("GetStreamingSequenceReport"))
+                      .build();
         }
       }
     }
     return getGetStreamingSequenceReportMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.AttemptSequenceRequest,
-      com.google.protobuf.Empty> getAttemptSequenceMethod;
+  private static volatile io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.AttemptSequenceRequest, com.google.protobuf.Empty>
+      getAttemptSequenceMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "AttemptSequence",
       requestType = com.google.showcase.v1beta1.AttemptSequenceRequest.class,
       responseType = com.google.protobuf.Empty.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.google.showcase.v1beta1.AttemptSequenceRequest,
-      com.google.protobuf.Empty> getAttemptSequenceMethod() {
-    io.grpc.MethodDescriptor<com.google.showcase.v1beta1.AttemptSequenceRequest, com.google.protobuf.Empty> getAttemptSequenceMethod;
+  public static io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.AttemptSequenceRequest, com.google.protobuf.Empty>
+      getAttemptSequenceMethod() {
+    io.grpc.MethodDescriptor<
+            com.google.showcase.v1beta1.AttemptSequenceRequest, com.google.protobuf.Empty>
+        getAttemptSequenceMethod;
     if ((getAttemptSequenceMethod = SequenceServiceGrpc.getAttemptSequenceMethod) == null) {
       synchronized (SequenceServiceGrpc.class) {
         if ((getAttemptSequenceMethod = SequenceServiceGrpc.getAttemptSequenceMethod) == null) {
-          SequenceServiceGrpc.getAttemptSequenceMethod = getAttemptSequenceMethod =
-              io.grpc.MethodDescriptor.<com.google.showcase.v1beta1.AttemptSequenceRequest, com.google.protobuf.Empty>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "AttemptSequence"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.showcase.v1beta1.AttemptSequenceRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.protobuf.Empty.getDefaultInstance()))
-              .setSchemaDescriptor(new SequenceServiceMethodDescriptorSupplier("AttemptSequence"))
-              .build();
+          SequenceServiceGrpc.getAttemptSequenceMethod =
+              getAttemptSequenceMethod =
+                  io.grpc.MethodDescriptor
+                      .<com.google.showcase.v1beta1.AttemptSequenceRequest,
+                          com.google.protobuf.Empty>
+                          newBuilder()
+                      .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+                      .setFullMethodName(generateFullMethodName(SERVICE_NAME, "AttemptSequence"))
+                      .setSampledToLocalTracing(true)
+                      .setRequestMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.showcase.v1beta1.AttemptSequenceRequest
+                                  .getDefaultInstance()))
+                      .setResponseMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.protobuf.Empty.getDefaultInstance()))
+                      .setSchemaDescriptor(
+                          new SequenceServiceMethodDescriptorSupplier("AttemptSequence"))
+                      .build();
         }
       }
     }
     return getAttemptSequenceMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.AttemptStreamingSequenceRequest,
-      com.google.showcase.v1beta1.AttemptStreamingSequenceResponse> getAttemptStreamingSequenceMethod;
+  private static volatile io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.AttemptStreamingSequenceRequest,
+          com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>
+      getAttemptStreamingSequenceMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "AttemptStreamingSequence",
       requestType = com.google.showcase.v1beta1.AttemptStreamingSequenceRequest.class,
       responseType = com.google.showcase.v1beta1.AttemptStreamingSequenceResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-  public static io.grpc.MethodDescriptor<com.google.showcase.v1beta1.AttemptStreamingSequenceRequest,
-      com.google.showcase.v1beta1.AttemptStreamingSequenceResponse> getAttemptStreamingSequenceMethod() {
-    io.grpc.MethodDescriptor<com.google.showcase.v1beta1.AttemptStreamingSequenceRequest, com.google.showcase.v1beta1.AttemptStreamingSequenceResponse> getAttemptStreamingSequenceMethod;
-    if ((getAttemptStreamingSequenceMethod = SequenceServiceGrpc.getAttemptStreamingSequenceMethod) == null) {
+  public static io.grpc.MethodDescriptor<
+          com.google.showcase.v1beta1.AttemptStreamingSequenceRequest,
+          com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>
+      getAttemptStreamingSequenceMethod() {
+    io.grpc.MethodDescriptor<
+            com.google.showcase.v1beta1.AttemptStreamingSequenceRequest,
+            com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>
+        getAttemptStreamingSequenceMethod;
+    if ((getAttemptStreamingSequenceMethod = SequenceServiceGrpc.getAttemptStreamingSequenceMethod)
+        == null) {
       synchronized (SequenceServiceGrpc.class) {
-        if ((getAttemptStreamingSequenceMethod = SequenceServiceGrpc.getAttemptStreamingSequenceMethod) == null) {
-          SequenceServiceGrpc.getAttemptStreamingSequenceMethod = getAttemptStreamingSequenceMethod =
-              io.grpc.MethodDescriptor.<com.google.showcase.v1beta1.AttemptStreamingSequenceRequest, com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "AttemptStreamingSequence"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.showcase.v1beta1.AttemptStreamingSequenceRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.showcase.v1beta1.AttemptStreamingSequenceResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new SequenceServiceMethodDescriptorSupplier("AttemptStreamingSequence"))
-              .build();
+        if ((getAttemptStreamingSequenceMethod =
+                SequenceServiceGrpc.getAttemptStreamingSequenceMethod)
+            == null) {
+          SequenceServiceGrpc.getAttemptStreamingSequenceMethod =
+              getAttemptStreamingSequenceMethod =
+                  io.grpc.MethodDescriptor
+                      .<com.google.showcase.v1beta1.AttemptStreamingSequenceRequest,
+                          com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>
+                          newBuilder()
+                      .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+                      .setFullMethodName(
+                          generateFullMethodName(SERVICE_NAME, "AttemptStreamingSequence"))
+                      .setSampledToLocalTracing(true)
+                      .setRequestMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.showcase.v1beta1.AttemptStreamingSequenceRequest
+                                  .getDefaultInstance()))
+                      .setResponseMarshaller(
+                          io.grpc.protobuf.ProtoUtils.marshaller(
+                              com.google.showcase.v1beta1.AttemptStreamingSequenceResponse
+                                  .getDefaultInstance()))
+                      .setSchemaDescriptor(
+                          new SequenceServiceMethodDescriptorSupplier("AttemptStreamingSequence"))
+                      .build();
         }
       }
     }
     return getAttemptStreamingSequenceMethod;
   }
 
-  /**
-   * Creates a new async stub that supports all call types for the service
-   */
+  /** Creates a new async stub that supports all call types for the service */
   public static SequenceServiceStub newStub(io.grpc.Channel channel) {
     io.grpc.stub.AbstractStub.StubFactory<SequenceServiceStub> factory =
-      new io.grpc.stub.AbstractStub.StubFactory<SequenceServiceStub>() {
-        @java.lang.Override
-        public SequenceServiceStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-          return new SequenceServiceStub(channel, callOptions);
-        }
-      };
+        new io.grpc.stub.AbstractStub.StubFactory<SequenceServiceStub>() {
+          @java.lang.Override
+          public SequenceServiceStub newStub(
+              io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+            return new SequenceServiceStub(channel, callOptions);
+          }
+        };
     return SequenceServiceStub.newStub(factory, channel);
   }
 
   /**
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
-  public static SequenceServiceBlockingStub newBlockingStub(
-      io.grpc.Channel channel) {
+  public static SequenceServiceBlockingStub newBlockingStub(io.grpc.Channel channel) {
     io.grpc.stub.AbstractStub.StubFactory<SequenceServiceBlockingStub> factory =
-      new io.grpc.stub.AbstractStub.StubFactory<SequenceServiceBlockingStub>() {
-        @java.lang.Override
-        public SequenceServiceBlockingStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-          return new SequenceServiceBlockingStub(channel, callOptions);
-        }
-      };
+        new io.grpc.stub.AbstractStub.StubFactory<SequenceServiceBlockingStub>() {
+          @java.lang.Override
+          public SequenceServiceBlockingStub newStub(
+              io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+            return new SequenceServiceBlockingStub(channel, callOptions);
+          }
+        };
     return SequenceServiceBlockingStub.newStub(factory, channel);
   }
 
-  /**
-   * Creates a new ListenableFuture-style stub that supports unary calls on the service
-   */
-  public static SequenceServiceFutureStub newFutureStub(
-      io.grpc.Channel channel) {
+  /** Creates a new ListenableFuture-style stub that supports unary calls on the service */
+  public static SequenceServiceFutureStub newFutureStub(io.grpc.Channel channel) {
     io.grpc.stub.AbstractStub.StubFactory<SequenceServiceFutureStub> factory =
-      new io.grpc.stub.AbstractStub.StubFactory<SequenceServiceFutureStub>() {
-        @java.lang.Override
-        public SequenceServiceFutureStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-          return new SequenceServiceFutureStub(channel, callOptions);
-        }
-      };
+        new io.grpc.stub.AbstractStub.StubFactory<SequenceServiceFutureStub>() {
+          @java.lang.Override
+          public SequenceServiceFutureStub newStub(
+              io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+            return new SequenceServiceFutureStub(channel, callOptions);
+          }
+        };
     return SequenceServiceFutureStub.newStub(factory, channel);
   }
 
-  /**
-   */
+  /** */
   public interface AsyncService {
 
     /**
+     *
+     *
      * <pre>
      * Creates a sequence.
      * </pre>
      */
-    default void createSequence(com.google.showcase.v1beta1.CreateSequenceRequest request,
+    default void createSequence(
+        com.google.showcase.v1beta1.CreateSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Sequence> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateSequenceMethod(), responseObserver);
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
+          getCreateSequenceMethod(), responseObserver);
     }
 
     /**
+     *
+     *
      * <pre>
      * Creates a sequence.
      * </pre>
      */
-    default void createStreamingSequence(com.google.showcase.v1beta1.CreateStreamingSequenceRequest request,
-        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequence> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateStreamingSequenceMethod(), responseObserver);
+    default void createStreamingSequence(
+        com.google.showcase.v1beta1.CreateStreamingSequenceRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequence>
+            responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
+          getCreateStreamingSequenceMethod(), responseObserver);
     }
 
     /**
+     *
+     *
      * <pre>
      * Retrieves a sequence.
      * </pre>
      */
-    default void getSequenceReport(com.google.showcase.v1beta1.GetSequenceReportRequest request,
+    default void getSequenceReport(
+        com.google.showcase.v1beta1.GetSequenceReportRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.SequenceReport> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetSequenceReportMethod(), responseObserver);
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
+          getGetSequenceReportMethod(), responseObserver);
     }
 
     /**
+     *
+     *
      * <pre>
      * Retrieves a sequence.
      * </pre>
      */
-    default void getStreamingSequenceReport(com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request,
-        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequenceReport> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetStreamingSequenceReportMethod(), responseObserver);
+    default void getStreamingSequenceReport(
+        com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequenceReport>
+            responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
+          getGetStreamingSequenceReportMethod(), responseObserver);
     }
 
     /**
+     *
+     *
      * <pre>
      * Attempts a sequence.
      * </pre>
      */
-    default void attemptSequence(com.google.showcase.v1beta1.AttemptSequenceRequest request,
+    default void attemptSequence(
+        com.google.showcase.v1beta1.AttemptSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getAttemptSequenceMethod(), responseObserver);
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
+          getAttemptSequenceMethod(), responseObserver);
     }
 
     /**
+     *
+     *
      * <pre>
      * Attempts a streaming sequence.
      * </pre>
      */
-    default void attemptStreamingSequence(com.google.showcase.v1beta1.AttemptStreamingSequenceRequest request,
-        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.AttemptStreamingSequenceResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getAttemptStreamingSequenceMethod(), responseObserver);
+    default void attemptStreamingSequence(
+        com.google.showcase.v1beta1.AttemptStreamingSequenceRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>
+            responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
+          getAttemptStreamingSequenceMethod(), responseObserver);
     }
   }
 
-  /**
-   * Base class for the server implementation of the service SequenceService.
-   */
-  public static abstract class SequenceServiceImplBase
+  /** Base class for the server implementation of the service SequenceService. */
+  public abstract static class SequenceServiceImplBase
       implements io.grpc.BindableService, AsyncService {
 
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+    @java.lang.Override
+    public final io.grpc.ServerServiceDefinition bindService() {
       return SequenceServiceGrpc.bindService(this);
     }
   }
 
-  /**
-   * A stub to allow clients to do asynchronous rpc calls to service SequenceService.
-   */
+  /** A stub to allow clients to do asynchronous rpc calls to service SequenceService. */
   public static final class SequenceServiceStub
       extends io.grpc.stub.AbstractAsyncStub<SequenceServiceStub> {
-    private SequenceServiceStub(
-        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+    private SequenceServiceStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
     }
 
     @java.lang.Override
-    protected SequenceServiceStub build(
-        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+    protected SequenceServiceStub build(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new SequenceServiceStub(channel, callOptions);
     }
 
     /**
+     *
+     *
      * <pre>
      * Creates a sequence.
      * </pre>
      */
-    public void createSequence(com.google.showcase.v1beta1.CreateSequenceRequest request,
+    public void createSequence(
+        com.google.showcase.v1beta1.CreateSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Sequence> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getCreateSequenceMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getCreateSequenceMethod(), getCallOptions()),
+          request,
+          responseObserver);
     }
 
     /**
+     *
+     *
      * <pre>
      * Creates a sequence.
      * </pre>
      */
-    public void createStreamingSequence(com.google.showcase.v1beta1.CreateStreamingSequenceRequest request,
-        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequence> responseObserver) {
+    public void createStreamingSequence(
+        com.google.showcase.v1beta1.CreateStreamingSequenceRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequence>
+            responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getCreateStreamingSequenceMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getCreateStreamingSequenceMethod(), getCallOptions()),
+          request,
+          responseObserver);
     }
 
     /**
+     *
+     *
      * <pre>
      * Retrieves a sequence.
      * </pre>
      */
-    public void getSequenceReport(com.google.showcase.v1beta1.GetSequenceReportRequest request,
+    public void getSequenceReport(
+        com.google.showcase.v1beta1.GetSequenceReportRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.SequenceReport> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getGetSequenceReportMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getGetSequenceReportMethod(), getCallOptions()),
+          request,
+          responseObserver);
     }
 
     /**
+     *
+     *
      * <pre>
      * Retrieves a sequence.
      * </pre>
      */
-    public void getStreamingSequenceReport(com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request,
-        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequenceReport> responseObserver) {
+    public void getStreamingSequenceReport(
+        com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequenceReport>
+            responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getGetStreamingSequenceReportMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getGetStreamingSequenceReportMethod(), getCallOptions()),
+          request,
+          responseObserver);
     }
 
     /**
+     *
+     *
      * <pre>
      * Attempts a sequence.
      * </pre>
      */
-    public void attemptSequence(com.google.showcase.v1beta1.AttemptSequenceRequest request,
+    public void attemptSequence(
+        com.google.showcase.v1beta1.AttemptSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getAttemptSequenceMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getAttemptSequenceMethod(), getCallOptions()),
+          request,
+          responseObserver);
     }
 
     /**
+     *
+     *
      * <pre>
      * Attempts a streaming sequence.
      * </pre>
      */
-    public void attemptStreamingSequence(com.google.showcase.v1beta1.AttemptStreamingSequenceRequest request,
-        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.AttemptStreamingSequenceResponse> responseObserver) {
+    public void attemptStreamingSequence(
+        com.google.showcase.v1beta1.AttemptStreamingSequenceRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>
+            responseObserver) {
       io.grpc.stub.ClientCalls.asyncServerStreamingCall(
-          getChannel().newCall(getAttemptStreamingSequenceMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getAttemptStreamingSequenceMethod(), getCallOptions()),
+          request,
+          responseObserver);
     }
   }
 
-  /**
-   * A stub to allow clients to do synchronous rpc calls to service SequenceService.
-   */
+  /** A stub to allow clients to do synchronous rpc calls to service SequenceService. */
   public static final class SequenceServiceBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<SequenceServiceBlockingStub> {
-    private SequenceServiceBlockingStub(
-        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+    private SequenceServiceBlockingStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
     }
 
@@ -421,74 +582,89 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     *
+     *
      * <pre>
      * Creates a sequence.
      * </pre>
      */
-    public com.google.showcase.v1beta1.Sequence createSequence(com.google.showcase.v1beta1.CreateSequenceRequest request) {
+    public com.google.showcase.v1beta1.Sequence createSequence(
+        com.google.showcase.v1beta1.CreateSequenceRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getCreateSequenceMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * Creates a sequence.
      * </pre>
      */
-    public com.google.showcase.v1beta1.StreamingSequence createStreamingSequence(com.google.showcase.v1beta1.CreateStreamingSequenceRequest request) {
+    public com.google.showcase.v1beta1.StreamingSequence createStreamingSequence(
+        com.google.showcase.v1beta1.CreateStreamingSequenceRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getCreateStreamingSequenceMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * Retrieves a sequence.
      * </pre>
      */
-    public com.google.showcase.v1beta1.SequenceReport getSequenceReport(com.google.showcase.v1beta1.GetSequenceReportRequest request) {
+    public com.google.showcase.v1beta1.SequenceReport getSequenceReport(
+        com.google.showcase.v1beta1.GetSequenceReportRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetSequenceReportMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * Retrieves a sequence.
      * </pre>
      */
-    public com.google.showcase.v1beta1.StreamingSequenceReport getStreamingSequenceReport(com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request) {
+    public com.google.showcase.v1beta1.StreamingSequenceReport getStreamingSequenceReport(
+        com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetStreamingSequenceReportMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * Attempts a sequence.
      * </pre>
      */
-    public com.google.protobuf.Empty attemptSequence(com.google.showcase.v1beta1.AttemptSequenceRequest request) {
+    public com.google.protobuf.Empty attemptSequence(
+        com.google.showcase.v1beta1.AttemptSequenceRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getAttemptSequenceMethod(), getCallOptions(), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * Attempts a streaming sequence.
      * </pre>
      */
-    public java.util.Iterator<com.google.showcase.v1beta1.AttemptStreamingSequenceResponse> attemptStreamingSequence(
-        com.google.showcase.v1beta1.AttemptStreamingSequenceRequest request) {
+    public java.util.Iterator<com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>
+        attemptStreamingSequence(
+            com.google.showcase.v1beta1.AttemptStreamingSequenceRequest request) {
       return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
           getChannel(), getAttemptStreamingSequenceMethod(), getCallOptions(), request);
     }
   }
 
-  /**
-   * A stub to allow clients to do ListenableFuture-style rpc calls to service SequenceService.
-   */
+  /** A stub to allow clients to do ListenableFuture-style rpc calls to service SequenceService. */
   public static final class SequenceServiceFutureStub
       extends io.grpc.stub.AbstractFutureStub<SequenceServiceFutureStub> {
-    private SequenceServiceFutureStub(
-        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+    private SequenceServiceFutureStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
     }
 
@@ -499,56 +675,71 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     *
+     *
      * <pre>
      * Creates a sequence.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.Sequence> createSequence(
-        com.google.showcase.v1beta1.CreateSequenceRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.Sequence>
+        createSequence(com.google.showcase.v1beta1.CreateSequenceRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getCreateSequenceMethod(), getCallOptions()), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * Creates a sequence.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.StreamingSequence> createStreamingSequence(
-        com.google.showcase.v1beta1.CreateStreamingSequenceRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<
+            com.google.showcase.v1beta1.StreamingSequence>
+        createStreamingSequence(
+            com.google.showcase.v1beta1.CreateStreamingSequenceRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getCreateStreamingSequenceMethod(), getCallOptions()), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * Retrieves a sequence.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.SequenceReport> getSequenceReport(
-        com.google.showcase.v1beta1.GetSequenceReportRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<
+            com.google.showcase.v1beta1.SequenceReport>
+        getSequenceReport(com.google.showcase.v1beta1.GetSequenceReportRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetSequenceReportMethod(), getCallOptions()), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * Retrieves a sequence.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.StreamingSequenceReport> getStreamingSequenceReport(
-        com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<
+            com.google.showcase.v1beta1.StreamingSequenceReport>
+        getStreamingSequenceReport(
+            com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetStreamingSequenceReportMethod(), getCallOptions()), request);
     }
 
     /**
+     *
+     *
      * <pre>
      * Attempts a sequence.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> attemptSequence(
-        com.google.showcase.v1beta1.AttemptSequenceRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty>
+        attemptSequence(com.google.showcase.v1beta1.AttemptSequenceRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getAttemptSequenceMethod(), getCallOptions()), request);
     }
@@ -561,11 +752,11 @@ public final class SequenceServiceGrpc {
   private static final int METHODID_ATTEMPT_SEQUENCE = 4;
   private static final int METHODID_ATTEMPT_STREAMING_SEQUENCE = 5;
 
-  private static final class MethodHandlers<Req, Resp> implements
-      io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
-      io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
-      io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
-      io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
+  private static final class MethodHandlers<Req, Resp>
+      implements io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
+          io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
+          io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
+          io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
     private final AsyncService serviceImpl;
     private final int methodId;
 
@@ -579,28 +770,39 @@ public final class SequenceServiceGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_CREATE_SEQUENCE:
-          serviceImpl.createSequence((com.google.showcase.v1beta1.CreateSequenceRequest) request,
+          serviceImpl.createSequence(
+              (com.google.showcase.v1beta1.CreateSequenceRequest) request,
               (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Sequence>) responseObserver);
           break;
         case METHODID_CREATE_STREAMING_SEQUENCE:
-          serviceImpl.createStreamingSequence((com.google.showcase.v1beta1.CreateStreamingSequenceRequest) request,
-              (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequence>) responseObserver);
+          serviceImpl.createStreamingSequence(
+              (com.google.showcase.v1beta1.CreateStreamingSequenceRequest) request,
+              (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequence>)
+                  responseObserver);
           break;
         case METHODID_GET_SEQUENCE_REPORT:
-          serviceImpl.getSequenceReport((com.google.showcase.v1beta1.GetSequenceReportRequest) request,
-              (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.SequenceReport>) responseObserver);
+          serviceImpl.getSequenceReport(
+              (com.google.showcase.v1beta1.GetSequenceReportRequest) request,
+              (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.SequenceReport>)
+                  responseObserver);
           break;
         case METHODID_GET_STREAMING_SEQUENCE_REPORT:
-          serviceImpl.getStreamingSequenceReport((com.google.showcase.v1beta1.GetStreamingSequenceReportRequest) request,
-              (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequenceReport>) responseObserver);
+          serviceImpl.getStreamingSequenceReport(
+              (com.google.showcase.v1beta1.GetStreamingSequenceReportRequest) request,
+              (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequenceReport>)
+                  responseObserver);
           break;
         case METHODID_ATTEMPT_SEQUENCE:
-          serviceImpl.attemptSequence((com.google.showcase.v1beta1.AttemptSequenceRequest) request,
+          serviceImpl.attemptSequence(
+              (com.google.showcase.v1beta1.AttemptSequenceRequest) request,
               (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
           break;
         case METHODID_ATTEMPT_STREAMING_SEQUENCE:
-          serviceImpl.attemptStreamingSequence((com.google.showcase.v1beta1.AttemptStreamingSequenceRequest) request,
-              (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>) responseObserver);
+          serviceImpl.attemptStreamingSequence(
+              (com.google.showcase.v1beta1.AttemptStreamingSequenceRequest) request,
+              (io.grpc.stub.StreamObserver<
+                      com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>)
+                  responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -621,52 +823,51 @@ public final class SequenceServiceGrpc {
   public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
     return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
         .addMethod(
-          getCreateSequenceMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.google.showcase.v1beta1.CreateSequenceRequest,
-              com.google.showcase.v1beta1.Sequence>(
-                service, METHODID_CREATE_SEQUENCE)))
+            getCreateSequenceMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.showcase.v1beta1.CreateSequenceRequest,
+                    com.google.showcase.v1beta1.Sequence>(service, METHODID_CREATE_SEQUENCE)))
         .addMethod(
-          getCreateStreamingSequenceMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.google.showcase.v1beta1.CreateStreamingSequenceRequest,
-              com.google.showcase.v1beta1.StreamingSequence>(
-                service, METHODID_CREATE_STREAMING_SEQUENCE)))
+            getCreateStreamingSequenceMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.showcase.v1beta1.CreateStreamingSequenceRequest,
+                    com.google.showcase.v1beta1.StreamingSequence>(
+                    service, METHODID_CREATE_STREAMING_SEQUENCE)))
         .addMethod(
-          getGetSequenceReportMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.google.showcase.v1beta1.GetSequenceReportRequest,
-              com.google.showcase.v1beta1.SequenceReport>(
-                service, METHODID_GET_SEQUENCE_REPORT)))
+            getGetSequenceReportMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.showcase.v1beta1.GetSequenceReportRequest,
+                    com.google.showcase.v1beta1.SequenceReport>(
+                    service, METHODID_GET_SEQUENCE_REPORT)))
         .addMethod(
-          getGetStreamingSequenceReportMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.google.showcase.v1beta1.GetStreamingSequenceReportRequest,
-              com.google.showcase.v1beta1.StreamingSequenceReport>(
-                service, METHODID_GET_STREAMING_SEQUENCE_REPORT)))
+            getGetStreamingSequenceReportMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.showcase.v1beta1.GetStreamingSequenceReportRequest,
+                    com.google.showcase.v1beta1.StreamingSequenceReport>(
+                    service, METHODID_GET_STREAMING_SEQUENCE_REPORT)))
         .addMethod(
-          getAttemptSequenceMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.google.showcase.v1beta1.AttemptSequenceRequest,
-              com.google.protobuf.Empty>(
-                service, METHODID_ATTEMPT_SEQUENCE)))
+            getAttemptSequenceMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.showcase.v1beta1.AttemptSequenceRequest, com.google.protobuf.Empty>(
+                    service, METHODID_ATTEMPT_SEQUENCE)))
         .addMethod(
-          getAttemptStreamingSequenceMethod(),
-          io.grpc.stub.ServerCalls.asyncServerStreamingCall(
-            new MethodHandlers<
-              com.google.showcase.v1beta1.AttemptStreamingSequenceRequest,
-              com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>(
-                service, METHODID_ATTEMPT_STREAMING_SEQUENCE)))
+            getAttemptStreamingSequenceMethod(),
+            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+                new MethodHandlers<
+                    com.google.showcase.v1beta1.AttemptStreamingSequenceRequest,
+                    com.google.showcase.v1beta1.AttemptStreamingSequenceResponse>(
+                    service, METHODID_ATTEMPT_STREAMING_SEQUENCE)))
         .build();
   }
 
-  private static abstract class SequenceServiceBaseDescriptorSupplier
-      implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
+  private abstract static class SequenceServiceBaseDescriptorSupplier
+      implements io.grpc.protobuf.ProtoFileDescriptorSupplier,
+          io.grpc.protobuf.ProtoServiceDescriptorSupplier {
     SequenceServiceBaseDescriptorSupplier() {}
 
     @java.lang.Override
@@ -708,15 +909,17 @@ public final class SequenceServiceGrpc {
       synchronized (SequenceServiceGrpc.class) {
         result = serviceDescriptor;
         if (result == null) {
-          serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
-              .setSchemaDescriptor(new SequenceServiceFileDescriptorSupplier())
-              .addMethod(getCreateSequenceMethod())
-              .addMethod(getCreateStreamingSequenceMethod())
-              .addMethod(getGetSequenceReportMethod())
-              .addMethod(getGetStreamingSequenceReportMethod())
-              .addMethod(getAttemptSequenceMethod())
-              .addMethod(getAttemptStreamingSequenceMethod())
-              .build();
+          serviceDescriptor =
+              result =
+                  io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
+                      .setSchemaDescriptor(new SequenceServiceFileDescriptorSupplier())
+                      .addMethod(getCreateSequenceMethod())
+                      .addMethod(getCreateStreamingSequenceMethod())
+                      .addMethod(getGetSequenceReportMethod())
+                      .addMethod(getGetStreamingSequenceReportMethod())
+                      .addMethod(getAttemptSequenceMethod())
+                      .addMethod(getAttemptStreamingSequenceMethod())
+                      .build();
         }
       }
     }
