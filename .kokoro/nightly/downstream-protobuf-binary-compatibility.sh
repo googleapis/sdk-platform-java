@@ -63,7 +63,7 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
     echo "Using ${maven_coordinates}"
 
     # The `-s` argument filters the linkage check problems that stem from the artifact
-    program_args="-r --artifacts ${maven_coordinates},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION} -s ${maven_coordinates}"
+    program_args="-r --artifacts ${maven_coordinates},com.google.protobuf:protobuf-java:${PROTOBUF_RUNTIME_VERSION},com.google.protobuf:protobuf-java-util:${PROTOBUF_RUNTIME_VERSION} -s ${maven_coordinates}"
     echo "Linkage Checker Program Arguments: ${program_args}"
     mvn -B -ntp exec:java -Dexec.mainClass="com.google.cloud.tools.opensource.classpath.LinkageCheckerMain" -Dexec.args="${program_args}"
   done
