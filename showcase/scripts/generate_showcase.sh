@@ -1,129 +1,95 @@
 #!/bin/bash
-# Generates showcase without post processing (i.e. raw gapic, grpc and proto
-# libraries). It will compute the showcase version from
-# `sdk-platform-java/showcase/gapic-showcase/pom.xml`. The generator version is
-# inferred from versions.txt
+# Generates the showcase library using the docker image, which is built
+# from the current state of the repo in order to test local changes.
 set -ex
 
-readonly SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-readonly LIB_GEN_SCRIPTS_DIR="${SCRIPT_DIR}/../../hermetic_build/library_generation/"
-source "${LIB_GEN_SCRIPTS_DIR}/tests/test_utilities.sh"
-source "${LIB_GEN_SCRIPTS_DIR}/utils/utilities.sh"
-readonly perform_cleanup=$1
+readonly ROOT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/../../"
+pushd "${ROOT_DIR}"
 
-cd "${SCRIPT_DIR}"
-mkdir -p "${SCRIPT_DIR}/output"
+while [[ $# -gt 0 ]]; do
+key="$1"
+case "${key}" in
+  --replace)
+    replace="$2"
+    shift
+    ;;
+  *)
+    echo "Invalid option: [$1]"
+    exit 1
+    ;;
+esac
+shift
+done
 
+if [ -z "${replace}" ]; then
+  replace="false"
+fi
+
+# download api definitions from googleapis repository
+googleapis_commitish=$(grep googleapis_commitish generation_config.yaml | cut -d ":" -f 2 | xargs)
+api_def_dir=$(mktemp -d)
+git clone https://github.com/googleapis/googleapis.git "${api_def_dir}"
+
+pushd "${api_def_dir}"
+git checkout "${googleapis_commitish}"
+# for local setups, we avoid permission issues when the docker image
+# performs version-dependent operations.
+rm -rf ".git/"
+popd
+
+# append showcase definitions to googleapis repository
+showcase_def_dir=$(mktemp -d)
+git clone https://github.com/googleapis/gapic-showcase.git "${showcase_def_dir}"
 get_version_from_pom() {
   target_pom="$1"
   key="$2"
   # prints the result to stdout
   grep -e "<${key}>" "${target_pom}" | cut -d'>' -f2 | cut -d'<' -f1
 }
+# looks at sdk-platform-java/showcase/gapic-showcase/pom.xml to extract the
+# version of gapic-showcase
+# see https://github.com/googleapis/gapic-showcase/releases
+showcase_version=$(get_version_from_pom \
+  "showcase/gapic-showcase/pom.xml" "gapic-showcase.version"
+)
+# compliance_suite.json is a symbolic link outside of the schema folder, so we
+# replace it with the actual contents in its original location.
+compliance_suite_path="${showcase_def_dir}/schema/google/showcase/v1beta1/compliance_suite.json"
+unlink "${compliance_suite_path}"
+cp "${showcase_def_dir}/server/services/compliance_suite.json" "${compliance_suite_path}"
+# we complete the BUILD.bazel in gapic-showcase with our java_library in order
+# to generate the gapic portion.
+cat showcase/scripts/resources/BUILD.partial.bazel >> "${showcase_def_dir}/schema/google/showcase/v1beta1/BUILD.bazel"
+cp -r "${showcase_def_dir}/schema" "${api_def_dir}/"
 
-# gets the latest version of the specified artifact from versions.txt
-get_version_from_versions_txt() {
-  readonly VERSIONS_TXT_PATH="${SCRIPT_DIR}/../../versions.txt"
-  target_artifact="$1"
-  # prints the result to stdout
-  grep -e "${target_artifact}" "${VERSIONS_TXT_PATH}" | cut -d: -f3
-}
+echo "building docker image"
+#DOCKER_BUILDKIT=1 docker build --file .cloudbuild/library_generation/library_generation.Dockerfile --iidfile image-id .
 
-# clone gapic-showcase
-if [ ! -d schema ]; then
-  if [ -d gapic-showcase ]; then
-    rm -rdf gapic-showcase
-  fi
-  # looks at sdk-platform-java/showcase/gapic-showcase/pom.xml to extract the
-  # version of gapic-showcase
-  # see https://github.com/googleapis/gapic-showcase/releases
-  showcase_version=$(get_version_from_pom \
-    "${SCRIPT_DIR}/../gapic-showcase/pom.xml" "gapic-showcase.version"
-  )
-  sparse_clone https://github.com/googleapis/gapic-showcase.git "schema/google/showcase/v1beta1" "v${showcase_version}"
-  cd gapic-showcase
-  mv schema ../output
-  cd ..
-  rm -rdf gapic-showcase
-fi
-if [ ! -d google ];then
-  if [ -d googleapis ]; then
-    rm -rdf googleapis
-  fi
-  sparse_clone https://github.com/googleapis/googleapis.git "WORKSPACE google/api google/rpc google/cloud/common_resources.proto google/longrunning google/iam/v1 google/cloud/location google/type"
-  mv googleapis/google output
-  rm -rdf googleapis
+if [[ "${replace}" == "true" ]]; then
+  generated_files_dir="${ROOT_DIR}"
+else
+  generated_files_dir=$(mktemp -d)
+  # here we store the generated library location for upstream scripts to use
+  # it.
+  echo "${generated_files_dir}/showcase" > "${ROOT_DIR}/generated-showcase-location"
+  # we prepare the temp folder with the minimal setup to perform an incremental
+  # generation.
+  cp -r generation_config.yaml showcase/ versions.txt "${generated_files_dir}"
 fi
 
-# copy the generator and formatter into its well-known location.
-# For more details,
-# refer to library_generation/DEVELOPMENT.md
-java_formatter_name="google-java-format.jar"
-java_formatter_version="1.7"
-well_known_folder="${HOME}/.library_generation"
-well_known_generator_jar_location="${well_known_folder}/gapic-generator-java.jar"
-well_known_formatter_jar_location="${well_known_folder}/${java_formatter_name}"
-if [[ ! -d "${well_known_folder}" ]]; then
-  mkdir "${well_known_folder}"
-fi
-if [[ -f "${well_known_generator_jar_location}" ]]; then
-  echo "replacing well-known generator jar with the latest one"
-  rm "${well_known_generator_jar_location}"
-fi
-if [[ -f "${well_known_formatter_jar_location}" ]]; then
-  echo "replacing well-known formatter jar with the latest one"
-  rm "${well_known_formatter_jar_location}"
-fi
-maven_repository="$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)"
-generator_version=$(get_version_from_versions_txt "gapic-generator-java")
-generator_jar_path="${maven_repository}/com/google/api/gapic-generator-java/${generator_version}/gapic-generator-java-${generator_version}.jar"
+GENERATOR_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -pl gapic-generator-java)
 
-if [[ ! -f "${generator_jar_path}" ]]; then
-  echo "generator jar not found in its assumed location"
-  echo "in the local repository: ${generator_jar_path}"
-  echo "(did you run mvn install in this repository's root?)"
-  exit 1
-fi
-# transfer the snapshot jar into its well-known location
-cp "${generator_jar_path}" "${well_known_generator_jar_location}"
-# transfer java formatter to its well-known location
-download_from \
-  "https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${java_formatter_version}/google-java-format-${java_formatter_version}-all-deps.jar" \
-  "${java_formatter_name}"
-cp "${java_formatter_name}" "${well_known_formatter_jar_location}"
-gapic_additional_protos="google/iam/v1/iam_policy.proto google/cloud/location/locations.proto"
+echo "generating showcase"
+workspace_name="/workspace"
+docker run \
+  --rm \
+  -u "$(id -u):$(id -g)" \
+  -v "${generated_files_dir}:${workspace_name}" \
+  -v "${api_def_dir}:${workspace_name}/googleapis" \
+  -e GENERATOR_VERSION="${GENERATOR_VERSION}" \
+  "$(cat image-id)" \
+  --generation-config-path="${workspace_name}/generation_config.yaml" \
+  --library-names="showcase" \
+  --api-definitions-path="${workspace_name}/googleapis"
 
-path_to_generator_parent_pom="${SCRIPT_DIR}/../../gapic-generator-java-pom-parent/pom.xml"
-protoc_version=$(get_version_from_pom "${path_to_generator_parent_pom}" "protobuf.version" \
-  | cut -d. -f2-)
-download_protoc "${protoc_version}" "linux-x86_64"
-mv "bin" "include" "${well_known_folder}"
-grpc_version=$(get_version_from_pom "${path_to_generator_parent_pom}" "grpc.version")
-download_grpc_plugin "${grpc_version}" "linux-x86_64"
-mv "protoc-gen-grpc-java.exe" "${well_known_folder}"
-rest_numeric_enums="false"
-transport="grpc+rest"
-gapic_yaml=""
-service_config="schema/google/showcase/v1beta1/showcase_grpc_service_config.json"
-service_yaml="schema/google/showcase/v1beta1/showcase_v1beta1.yaml"
-include_samples="false"
-rm -rdf output/showcase-output
-mkdir output/showcase-output
-set +e
-bash "${SCRIPT_DIR}/../../hermetic_build/library_generation/generate_library.sh" \
-  --proto_path "schema/google/showcase/v1beta1" \
-  --destination_path "showcase-output" \
-  --gapic_additional_protos "${gapic_additional_protos}" \
-  --rest_numeric_enums "${rest_numeric_enums}" \
-  --gapic_yaml "${gapic_yaml}" \
-  --service_config "${service_config}" \
-  --service_yaml "${service_yaml}" \
-  --include_samples "${include_samples}" \
-  --transport "${transport}" 
-
-exit_code=$?
-if [ "${exit_code}" -ne 0 ]; then
-  rm -rdf output
-  exit "${exit_code}"
-fi
-set +x
+echo "generated showcase library in ${generated_files_dir}"

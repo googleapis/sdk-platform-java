@@ -181,9 +181,9 @@
                 <configuration>
                   <executable>bash</executable>
                   <arguments>
-                    <argument>scripts/generate_components.sh</argument>
-                    <argument>true</argument> <!-- replace contents -->
-                    <argument>true</argument> <!-- clean generation folder -->
+                    <argument>scripts/generate_showcase.sh</argument>
+                    <argument>--replace</argument>
+                    <argument>true</argument>
                   </arguments>
                 </configuration>
               </execution>
