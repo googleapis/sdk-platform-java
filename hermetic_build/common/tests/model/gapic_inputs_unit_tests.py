@@ -24,6 +24,14 @@ class UtilitiesTest(unittest.TestCase):
                 "BUILD_iam_locations.bazel",
                 "  google/cloud/location/locations.proto google/iam/v1/iam_policy.proto",
             ),
+            (
+                "BUILD_additional_protos_in_gapic.bazel",
+                "  google/cloud/location/locations.proto google/iam/v1/iam_policy.proto"
+            ),
+            (
+                "BUILD_target_with_nested_parenthesis.bazel",
+                "  google/cloud/location/locations.proto google/iam/v1/iam_policy.proto"
+            ),
         ]
     )
     def test_gapic_inputs_parse_additional_protos(self, build_name, expected):
