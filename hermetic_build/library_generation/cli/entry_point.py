@@ -133,12 +133,14 @@ def __generate_repo_impl(
     )
 
 
-def _needs_full_repo_generation(generation_config: GenerationConfig) -> bool:
+def _needs_full_repo_generation(generation_config: GenerationConfig, includes: Optional[str]) -> bool:
     """
     Whether you should need a full repo generation, i.e., generate all
     libraries in the generation configuration.
+    If only showcase is specified, then it will return to false despite
+    other conditions (allows overriding contains_common_protos())
     """
-    return (
+    return (includes is None or includes.strip() != 'showcase') and (
         not generation_config.is_monorepo()
         or generation_config.contains_common_protos()
     )
@@ -147,7 +149,7 @@ def _needs_full_repo_generation(generation_config: GenerationConfig) -> bool:
 def _parse_library_name_from(
     includes: Optional[str], generation_config: GenerationConfig
 ) -> Optional[list[str]]:
-    if includes is None or _needs_full_repo_generation(generation_config):
+    if includes is None or _needs_full_repo_generation(generation_config, includes):
         return None
     return [library_name.strip() for library_name in includes.split(",")]
 
