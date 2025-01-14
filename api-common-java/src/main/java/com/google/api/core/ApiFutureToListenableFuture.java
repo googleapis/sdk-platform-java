@@ -29,6 +29,7 @@
  */
 package com.google.api.core;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -73,5 +74,12 @@ public class ApiFutureToListenableFuture<V> implements ListenableFuture<V> {
   public V get(long l, TimeUnit timeUnit)
       throws InterruptedException, ExecutionException, TimeoutException {
     return apiFuture.get(l, timeUnit);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(ApiFutureToListenableFuture.class.getSimpleName())
+        .add("apiFuture", apiFuture)
+        .toString();
   }
 }

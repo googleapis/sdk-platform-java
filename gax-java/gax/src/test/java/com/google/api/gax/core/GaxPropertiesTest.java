@@ -29,10 +29,15 @@
  */
 package com.google.api.gax.core;
 
+import static com.google.api.gax.core.GaxProperties.getBundleVersion;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.common.base.Strings;
+import com.google.protobuf.Any;
+import java.io.IOException;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -41,17 +46,11 @@ class GaxPropertiesTest {
 
   @Test
   void testGaxVersion() {
-    String gaxVersion = GaxProperties.getGaxVersion();
-    assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(gaxVersion).find());
-    String[] versionComponents = gaxVersion.split("\\.");
-    // This test was added in version 1.56.0, so check that the major and minor numbers are greater
-    // than that.
-    int major = Integer.parseInt(versionComponents[0]);
-    int minor = Integer.parseInt(versionComponents[1]);
+    Version version = readVersion(GaxProperties.getGaxVersion());
 
-    assertTrue(major >= 1);
-    if (major == 1) {
-      assertTrue(minor >= 56);
+    assertTrue(version.major >= 1);
+    if (version.major == 1) {
+      assertTrue(version.minor >= 56);
     }
   }
 
@@ -158,5 +157,75 @@ class GaxPropertiesTest {
 
     String runtimeInfo = GaxProperties.getRuntimeVersion();
     assertEquals("null__oracle__20.0.1", runtimeInfo);
+  }
+
+  @Test
+  public void testGetProtobufVersion() throws IOException {
+    assertTrue(
+        Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(GaxProperties.getProtobufVersion()).find());
+  }
+
+  @Test
+  public void testGetBundleVersion_noManifestFile() throws IOException {
+    Optional<String> version = getBundleVersion(GaxProperties.class);
+
+    assertFalse(version.isPresent());
+  }
+
+  @Test
+  void testGetProtobufVersion_success() {
+    String version =
+        GaxProperties.getProtobufVersion(
+            Any.class, "com.google.api.gax.core.GaxPropertiesTest$RuntimeVersion");
+
+    assertEquals("3.13.6", version);
+  }
+
+  @Test
+  void testGetProtobufVersion_classNotFoundException() throws Exception {
+    String version = GaxProperties.getProtobufVersion(Any.class, "foo.NonExistantClass");
+
+    assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
+  }
+
+  @Test
+  void testgetProtobufVersion_noSuchFieldException() throws Exception {
+    String version = GaxProperties.getProtobufVersion(Any.class, "java.lang.Class");
+
+    assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
+  }
+
+  @Test
+  void testGetProtobufVersion_noManifest() throws Exception {
+    String version = GaxProperties.getProtobufVersion(GaxProperties.class, "foo.NonExistantClass");
+
+    assertEquals("3", version);
+  }
+
+  private Version readVersion(String version) {
+    assertTrue(Pattern.compile("^\\d+\\.\\d+\\.\\d+").matcher(version).find());
+    String[] versionComponents = version.split("\\.");
+    // This test was added in version 1.56.0, so check that the major and minor numbers are greater
+    // than that.
+    int major = Integer.parseInt(versionComponents[0]);
+    int minor = Integer.parseInt(versionComponents[1]);
+    return new Version(major, minor);
+  }
+
+  private static class Version {
+    public int major;
+    public int minor;
+
+    public Version(int major, int minor) {
+      this.major = major;
+      this.minor = minor;
+    }
+  }
+
+  // Test class that emulates com.google.protobuf.RuntimeVersion for reflection lookup of fields
+  class RuntimeVersion {
+    public static final int MAJOR = 3;
+    public static final int MINOR = 13;
+    public static final int PATCH = 6;
   }
 }

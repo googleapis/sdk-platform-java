@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,9 +99,9 @@ import com.google.storage.v2.UpdateObjectRequest;
 import com.google.storage.v2.WriteObjectRequest;
 import com.google.storage.v2.WriteObjectResponse;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
 import javax.annotation.Generated;
-import org.threeten.bp.Duration;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
@@ -118,7 +118,9 @@ import org.threeten.bp.Duration;
  * <p>The builder of this class is recursive, so contained classes are themselves builders. When
  * build() is called, the tree of builders is called to create the complete settings object.
  *
- * <p>For example, to set the total timeout of deleteBucket to 30 seconds:
+ * <p>For example, to set the
+ * [RetrySettings](https://cloud.google.com/java/docs/reference/gax/latest/com.google.api.gax.retrying.RetrySettings)
+ * of deleteBucket:
  *
  * <pre>{@code
  * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -134,10 +136,21 @@ import org.threeten.bp.Duration;
  *             .deleteBucketSettings()
  *             .getRetrySettings()
  *             .toBuilder()
- *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .setInitialRetryDelayDuration(Duration.ofSeconds(1))
+ *             .setInitialRpcTimeoutDuration(Duration.ofSeconds(5))
+ *             .setMaxAttempts(5)
+ *             .setMaxRetryDelayDuration(Duration.ofSeconds(30))
+ *             .setMaxRpcTimeoutDuration(Duration.ofSeconds(60))
+ *             .setRetryDelayMultiplier(1.3)
+ *             .setRpcTimeoutMultiplier(1.5)
+ *             .setTotalTimeoutDuration(Duration.ofSeconds(300))
  *             .build());
  * StorageStubSettings storageSettings = storageSettingsBuilder.build();
  * }</pre>
+ *
+ * Please refer to the [Client Side Retry
+ * Guide](https://github.com/googleapis/google-cloud-java/blob/main/docs/client_retries.md) for
+ * additional support in setting retries.
  */
 @Generated("by gapic-generator-java")
 public class StorageStubSettings extends StubSettings<StorageStubSettings> {
@@ -227,9 +240,7 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
 
             @Override
             public Iterable<Bucket> extractResources(ListBucketsResponse payload) {
-              return payload.getBucketsList() == null
-                  ? ImmutableList.<Bucket>of()
-                  : payload.getBucketsList();
+              return payload.getBucketsList();
             }
           };
 
@@ -267,9 +278,7 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
 
             @Override
             public Iterable<Notification> extractResources(ListNotificationsResponse payload) {
-              return payload.getNotificationsList() == null
-                  ? ImmutableList.<Notification>of()
-                  : payload.getNotificationsList();
+              return payload.getNotificationsList();
             }
           };
 
@@ -303,9 +312,7 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
 
             @Override
             public Iterable<Object> extractResources(ListObjectsResponse payload) {
-              return payload.getObjectsList() == null
-                  ? ImmutableList.<Object>of()
-                  : payload.getObjectsList();
+              return payload.getObjectsList();
             }
           };
 
@@ -340,9 +347,7 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
 
             @Override
             public Iterable<HmacKeyMetadata> extractResources(ListHmacKeysResponse payload) {
-              return payload.getHmacKeysList() == null
-                  ? ImmutableList.<HmacKeyMetadata>of()
-                  : payload.getHmacKeysList();
+              return payload.getHmacKeysList();
             }
           };
 
@@ -767,13 +772,13 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
       RetrySettings settings = null;
       settings =
           RetrySettings.newBuilder()
-              .setInitialRetryDelay(Duration.ofMillis(1000L))
+              .setInitialRetryDelayDuration(Duration.ofMillis(1000L))
               .setRetryDelayMultiplier(2.0)
-              .setMaxRetryDelay(Duration.ofMillis(60000L))
-              .setInitialRpcTimeout(Duration.ofMillis(60000L))
+              .setMaxRetryDelayDuration(Duration.ofMillis(60000L))
+              .setInitialRpcTimeoutDuration(Duration.ofMillis(60000L))
               .setRpcTimeoutMultiplier(1.0)
-              .setMaxRpcTimeout(Duration.ofMillis(60000L))
-              .setTotalTimeout(Duration.ofMillis(60000L))
+              .setMaxRpcTimeoutDuration(Duration.ofMillis(60000L))
+              .setTotalTimeoutDuration(Duration.ofMillis(60000L))
               .build();
       definitions.put("retry_policy_0_params", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();

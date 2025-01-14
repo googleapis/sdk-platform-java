@@ -11,20 +11,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ macOS-12, ubuntu-22.04, windows-2022 ]
+        os: [ macOS-13, ubuntu-22.04, windows-2022 ]
         java: [ 11, 17 ]
     runs-on: ${{ matrix.os }}
     steps:
       - run: git config --global core.longpaths true
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
           cache: maven
       - run: mvn -version
       - name: Install
-        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -T 1C
+        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip
       - name: Create issue if previous step fails
         if: ${{ failure() }}
         env:
@@ -37,28 +37,28 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ macOS-12, ubuntu-22.04, windows-2022 ]
+        os: [ macOS-13, ubuntu-22.04, windows-2022 ]
     runs-on: ${{ matrix.os }}
     steps:
       - run: git config --global core.longpaths true
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: 11
           distribution: temurin
           cache: maven
       - run: mvn -version
       - name: Install with Java 11
-        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -DskipTests -T 1C
+        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -DskipTests
 
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           java-version: 8
           distribution: temurin
       - run: mvn -version
       - name: Test with Java 8
         # Direct goal invocation ("surefire:test") prevents recompiling tests
-        run: mvn surefire:test --errors --batch-mode --no-transfer-progress -T 1C
+        run: mvn surefire:test --errors --batch-mode --no-transfer-progress
       - name: Create issue if previous step fails
         if: ${{ failure() }}
         env:

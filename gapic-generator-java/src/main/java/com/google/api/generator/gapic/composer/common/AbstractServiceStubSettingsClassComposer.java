@@ -65,13 +65,11 @@ import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
-import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.SuperObjectValue;
-import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -106,6 +104,7 @@ import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -122,7 +121,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 public abstract class AbstractServiceStubSettingsClassComposer implements ClassComposer {
   private static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
@@ -423,14 +421,33 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     .findFirst()
                     .orElse(service.methods().get(0)));
     Optional<String> methodNameOpt = methodOpt.map(Method::name);
+
     Optional<Sample> sampleCode =
         SettingsSampleComposer.composeSettingsSample(
             methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
-
     Optional<String> docSampleCode = Optional.empty();
     if (sampleCode.isPresent()) {
       samples.add(sampleCode.get());
       docSampleCode = Optional.of(SampleCodeWriter.writeInlineSample(sampleCode.get().body()));
+    }
+    // Create a sample for a LRO method using LRO-specific RetrySettings, if one exists in the
+    // service.
+    Optional<Method> lroMethodOpt =
+        service.methods().isEmpty()
+            ? Optional.empty()
+            : service.methods().stream()
+                .filter(m -> m.stream() == Stream.NONE && m.hasLro())
+                .findFirst();
+    Optional<String> lroMethodNameOpt =
+        lroMethodOpt.isPresent() ? Optional.of(lroMethodOpt.get().name()) : Optional.empty();
+    Optional<Sample> lroSampleCode =
+        SettingsSampleComposer.composeLroSettingsSample(
+            lroMethodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
+    Optional<String> lroDocSampleCode = Optional.empty();
+    if (lroSampleCode.isPresent()) {
+      samples.add(lroSampleCode.get());
+      lroDocSampleCode =
+          Optional.of(SampleCodeWriter.writeInlineSample(lroSampleCode.get().body()));
     }
 
     return SettingsCommentComposer.createClassHeaderComments(
@@ -439,6 +456,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         service.isDeprecated(),
         methodNameOpt,
         docSampleCode,
+        lroMethodNameOpt,
+        lroDocSampleCode,
         classType);
   }
 
@@ -767,27 +786,9 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 .setGenerics(Arrays.asList(repeatedResponseType.reference()))
                 .build());
 
-    Expr getResponsesExpr;
-    Expr elseExpr;
-    Expr thenExpr;
     if (repeatedResponseType.reference() != null
         && "java.util.Map.Entry".equals(repeatedResponseType.reference().fullName())) {
-      getResponsesExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(payloadVarExpr)
-              .setMethodName(
-                  String.format("get%sMap", JavaStyle.toUpperCamelCase(repeatedFieldName)))
-              .setReturnType(returnType)
-              .build();
-      thenExpr =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(
-                  TypeNode.withReference(ConcreteReference.withClazz(Collections.class)))
-              .setGenerics(Arrays.asList(repeatedResponseType.reference()))
-              .setMethodName("emptySet")
-              .setReturnType(returnType)
-              .build();
-      elseExpr =
+      returnExpr =
           MethodInvocationExpr.builder()
               .setMethodName("entrySet")
               .setExprReferenceExpr(
@@ -799,39 +800,14 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
               .setReturnType(returnType)
               .build();
     } else {
-      getResponsesExpr =
+      returnExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(payloadVarExpr)
               .setMethodName(
                   String.format("get%sList", JavaStyle.toUpperCamelCase(repeatedFieldName)))
               .setReturnType(returnType)
               .build();
-      thenExpr =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(
-                  TypeNode.withReference(ConcreteReference.withClazz(ImmutableList.class)))
-              .setGenerics(Arrays.asList(repeatedResponseType.reference()))
-              .setMethodName("of")
-              .setReturnType(returnType)
-              .build();
-      elseExpr = getResponsesExpr;
     }
-    // While protobufs should not be null, this null-check is needed to protect against NPEs
-    // in paged iteration on clients that use legacy HTTP/JSON types, as these clients can
-    // actually return null instead of an empty list.
-    // Context:
-    //   Original issue: https://github.com/googleapis/google-cloud-java/issues/3736
-    //   Relevant discussion where this check was first added:
-    //        https://github.com/googleapis/google-cloud-java/pull/4499#discussion_r257057409
-    Expr conditionExpr =
-        RelationalOperationExpr.equalToWithExprs(getResponsesExpr, ValueExpr.createNullExpr());
-
-    returnExpr =
-        TernaryExpr.builder()
-            .setConditionExpr(conditionExpr)
-            .setThenExpr(thenExpr)
-            .setElseExpr(elseExpr)
-            .build();
     anonClassMethods.add(
         methodStarterBuilder
             .setReturnType(returnType)

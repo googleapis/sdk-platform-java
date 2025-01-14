@@ -66,11 +66,6 @@
     <className>com/google/api/gax/*/*</className>
     <method>*org.threeten.bp.Duration *()</method>
   </difference>
-  <difference>
-    <differenceType>7002</differenceType>
-    <className>com/google/api/gax/grpc/InstantiatingGrpcChannelProvider$Builder</className>
-    <method>* *</method>
-  </difference>
   <!-- Add a default Endpoint Getter -->
   <difference>
     <differenceType>7012</differenceType>
@@ -104,5 +99,23 @@
     <differenceType>6011</differenceType>
     <className>com/google/api/gax/tracing/MetricsTracer</className>
     <field>*</field>
+  </difference>
+  <!-- Ignore method additions to an InternalExtensionOnly interface-->
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/batching/Batcher</className>
+    <method>*</method>
+  </difference>
+  <!-- Ignore this as this was part of s2a-grpc ExperimentalApi revert -->
+  <difference>
+    <differenceType>7002</differenceType>
+    <className>com/google/api/gax/rpc/FixedTransportChannelProvider</className>
+    <method>* withUseS2A(*)</method>
+  </difference>
+  <!-- Ignore this as this was part of s2a-grpc ExperimentalApi revert -->
+  <difference>
+    <differenceType>7002</differenceType>
+    <className>com/google/api/gax/rpc/TransportChannelProvider</className>
+    <method>* withUseS2A(*)</method>
   </difference>
 </differences>

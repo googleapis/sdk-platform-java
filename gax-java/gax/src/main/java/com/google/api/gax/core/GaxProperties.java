@@ -32,9 +32,14 @@ package com.google.api.gax.core;
 import com.google.api.core.InternalApi;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
+import com.google.protobuf.Any;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.Properties;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
 
 /** Provides properties of the GAX library. */
 @InternalApi
@@ -43,6 +48,8 @@ public class GaxProperties {
   private static final String DEFAULT_VERSION = "";
   private static final String GAX_VERSION = getLibraryVersion(GaxProperties.class, "version.gax");
   private static final String JAVA_VERSION = getRuntimeVersion();
+  private static final String PROTOBUF_VERSION =
+      getProtobufVersion(Any.class, "com.google.protobuf.RuntimeVersion");;
 
   private GaxProperties() {}
 
@@ -91,6 +98,11 @@ public class GaxProperties {
     return GAX_VERSION;
   }
 
+  /** Returns the current version of protobuf runtime library. */
+  public static String getProtobufVersion() {
+    return PROTOBUF_VERSION;
+  }
+
   /**
    * Returns the current runtime version. For GraalVM the values in this method will be fetched at
    * build time and the values should not differ from the runtime (executable)
@@ -112,5 +124,53 @@ public class GaxProperties {
     // replacing all characters that are not numbers, letters, underscores, periods, or backslashes
     // with hyphens.
     return javaRuntimeInformation.replaceAll("[^0-9a-zA-Z_\\\\.]", "-");
+  }
+
+  /**
+   * Returns the current library version as reported by Bundle-Version attribute in library's
+   * META-INF/MANIFEST for libraries using OSGi bundle manifest specification
+   * https://www.ibm.com/docs/en/wasdtfe?topic=overview-osgi-bundles. This should only be used if
+   * MANIFEST file does not contain a widely recognized version declaration such as Specific-Version
+   * OR Implementation-Version declared in Manifest Specification
+   * https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#Manifest_Specification,
+   * otherwise please use #getLibraryVersion
+   */
+  @VisibleForTesting
+  static Optional<String> getBundleVersion(Class<?> clazz) {
+    try {
+      File file = new File(clazz.getProtectionDomain().getCodeSource().getLocation().toURI());
+      try (JarFile jar = new JarFile(file.getPath())) {
+        Attributes attributes = jar.getManifest().getMainAttributes();
+        return Optional.ofNullable(attributes.getValue("Bundle-Version"));
+      }
+    } catch (Exception e) {
+      // Unable to read Bundle-Version from manifest. Recover gracefully.
+      return Optional.empty();
+    }
+  }
+
+  /**
+   * Returns the Protobuf runtime version as reported by com.google.protobuf.RuntimeVersion, if
+   * class is available, otherwise by reading from MANIFEST file. If niether option is available
+   * defaults to protobuf version 3 as RuntimeVersion class is available in protobuf version 4+
+   */
+  @VisibleForTesting
+  static String getProtobufVersion(Class clazz, String protobufRuntimeVersionClassName) {
+    try {
+      Class<?> protobufRuntimeVersionClass = Class.forName(protobufRuntimeVersionClassName);
+      return protobufRuntimeVersionClass.getField("MAJOR").get(null)
+          + "."
+          + protobufRuntimeVersionClass.getField("MINOR").get(null)
+          + "."
+          + protobufRuntimeVersionClass.getField("PATCH").get(null);
+    } catch (ClassNotFoundException
+        | NoSuchFieldException
+        | IllegalAccessException
+        | SecurityException
+        | NullPointerException e) {
+      // If manifest file is not available default to protobuf generic version 3 as we know
+      // RuntimeVersion class is available in protobuf jar 4+.
+      return getBundleVersion(clazz).orElse("3");
+    }
   }
 }
