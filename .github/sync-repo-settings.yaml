@@ -76,3 +76,5 @@ branchProtectionRules:
 permissionRules:
   - team: cloud-java-team-teamsync
     permission: admin
+  - team: cloud-java-bot
+    permission: write
