@@ -16,7 +16,6 @@
 
 package com.google.showcase.v1beta1.it.util;
 
-
 import io.grpc.CallOptions;
 import io.grpc.Channel;
 import io.grpc.ClientCall;
