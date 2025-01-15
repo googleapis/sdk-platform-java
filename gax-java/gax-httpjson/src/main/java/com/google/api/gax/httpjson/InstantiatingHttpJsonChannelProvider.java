@@ -120,18 +120,8 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   }
 
   @Override
-  public boolean needsMtlsEndpoint() {
-    return false;
-  }
-
-  @Override
   public TransportChannelProvider withEndpoint(String endpoint) {
     return toBuilder().setEndpoint(endpoint).build();
-  }
-
-  @Override
-  public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
-    return this;
   }
 
   @Override

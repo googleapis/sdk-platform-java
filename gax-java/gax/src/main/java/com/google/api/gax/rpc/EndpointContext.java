@@ -303,6 +303,10 @@ public abstract class EndpointContext {
             "mTLS is not supported in any universe other than googleapis.com");
       }
 
+      if (shouldUseS2A()) {
+        return mtlsEndpoint();
+      }
+
       return endpoint;
     }
 

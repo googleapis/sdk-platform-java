@@ -103,8 +103,6 @@ class GrpcLongRunningTest {
     when(operationsChannelProvider.getTransportChannel()).thenReturn(transportChannel);
     when(operationsChannelProvider.withUseS2A(Mockito.any(boolean.class)))
         .thenReturn(operationsChannelProvider);
-    when(operationsChannelProvider.withMtlsEndpoint(Mockito.any(String.class)))
-        .thenReturn(operationsChannelProvider);
 
     clock = new FakeApiClock(0L);
     executor = RecordingScheduler.create(clock);

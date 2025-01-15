@@ -180,11 +180,6 @@ class ClientContextTest {
     }
 
     @Override
-    public boolean needsMtlsEndpoint() {
-      return false;
-    }
-
-    @Override
     public String getEndpoint() {
       return endpoint;
     }
@@ -198,17 +193,6 @@ class ClientContextTest {
           this.headers,
           this.credentials,
           endpoint);
-    }
-
-    @Override
-    public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
-      return new FakeTransportProvider(
-          this.transport,
-          this.executor,
-          this.shouldAutoClose,
-          this.headers,
-          this.credentials,
-          this.endpoint);
     }
 
     @Override

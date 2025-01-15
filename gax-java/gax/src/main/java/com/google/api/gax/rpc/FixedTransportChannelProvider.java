@@ -84,20 +84,9 @@ public class FixedTransportChannelProvider implements TransportChannelProvider {
   }
 
   @Override
-  public boolean needsMtlsEndpoint() {
-    return false;
-  }
-
-  @Override
   public TransportChannelProvider withEndpoint(String endpoint) {
     throw new UnsupportedOperationException(
         "FixedTransportChannelProvider doesn't need an endpoint");
-  }
-
-  @Override
-  public TransportChannelProvider withMtlsEndpoint(String mtlsEndpoint) {
-    throw new UnsupportedOperationException(
-        "FixedTransportChannelProvider doesn't need an mtlsEndpoint");
   }
 
   @Override

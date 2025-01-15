@@ -222,10 +222,6 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
     }
-    if (transportChannelProvider.needsMtlsEndpoint()) {
-      transportChannelProvider =
-          transportChannelProvider.withMtlsEndpoint(endpointContext.mtlsEndpoint());
-    }
     transportChannelProvider = transportChannelProvider.withUseS2A(endpointContext.useS2A());
     TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
 
