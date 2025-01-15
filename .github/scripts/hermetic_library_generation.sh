@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 # This script should be run at the root of the repository.
 # This script is used to, when a pull request changes the generation
 # configuration (generation_config.yaml by default) or Dockerfile:
@@ -94,6 +94,10 @@ changed_libraries=$(python hermetic_build/common/cli/get_changed_libraries.py cr
   --baseline-generation-config-path="${baseline_generation_config}" \
   --current-generation-config-path="${generation_config}")
 echo "Changed libraries are: ${changed_libraries:-"No changed library"}."
+
+# do not generate showcase automatically
+changed_libraries=$(echo "${changed_libraries}" | sed 's/showcase,//' | sed 's/,showcase//' | sed 's/showcase//')
+echo "${changed_libraries}"
 
 # run hermetic code generation docker image.
 docker run \
