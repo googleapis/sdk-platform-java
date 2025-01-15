@@ -98,6 +98,9 @@ echo "Changed libraries are: ${changed_libraries:-"No changed library"}."
 # do not generate showcase automatically
 changed_libraries=$(echo "${changed_libraries}" | sed 's/showcase,//' | sed 's/,showcase//' | sed 's/showcase//')
 echo "${changed_libraries}"
+if [[ -z "${changed_libraries}" ]]; then
+  echo 'No libraries to generate. Aborting generation'
+fi
 
 # run hermetic code generation docker image.
 docker run \
