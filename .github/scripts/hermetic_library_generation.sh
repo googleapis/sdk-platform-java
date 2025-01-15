@@ -100,6 +100,7 @@ changed_libraries=$(echo "${changed_libraries}" | sed 's/showcase,//' | sed 's/,
 echo "${changed_libraries}"
 if [[ -z "${changed_libraries}" ]]; then
   echo 'No libraries to generate. Aborting generation'
+  exit 0
 fi
 
 # run hermetic code generation docker image.
