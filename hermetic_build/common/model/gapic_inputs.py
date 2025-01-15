@@ -19,17 +19,17 @@ import re
 proto_library_pattern = r"""
 proto_library_with_info\(
 (.*?)
-\n\)
+\\?[\nn]\)
 """
 gapic_pattern = r"""
 java_gapic_library\(
 (.*?)
-\n\)
+\\?[\nn]\)
 """
 assembly_pattern = r"""
 java_gapic_assembly_gradle_pkg\(
 (.*?)
-\n\)
+\\?[\nn]\)
 """
 # match a line which the first character is "#".
 comment_pattern = r"^\s*\#+"
