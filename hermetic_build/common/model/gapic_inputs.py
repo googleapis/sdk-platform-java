@@ -146,22 +146,26 @@ def parse_build_str(build_str: str, versioned_path: str) -> GapicInputs:
         include_samples=include_samples,
     )
 
-def __get_lines_without_comments(target: list[str]):
-  """
-  skips comment lines
-  """
-  if len(target) == 0:
-    return []
-  result = []
-  for line in target[0].split("\n"):
-    if len(re.findall(comment_pattern, line)) != 0:
-      # skip lines whose first character is "#" since it's
-      # a comment.
-      continue
-    result.append(line)
-  return result
 
-def __parse_additional_protos(proto_library_target: list[str], gapic_library_target: list[str]) -> str:
+def __get_lines_without_comments(target: list[str]):
+    """
+    skips comment lines
+    """
+    if len(target) == 0:
+        return []
+    result = []
+    for line in target[0].split("\n"):
+        if len(re.findall(comment_pattern, line)) != 0:
+            # skip lines whose first character is "#" since it's
+            # a comment.
+            continue
+        result.append(line)
+    return result
+
+
+def __parse_additional_protos(
+    proto_library_target: list[str], gapic_library_target: list[str]
+) -> str:
     res = [" "]
     lines = __get_lines_without_comments(proto_library_target)
     # first, parse the proto library definition

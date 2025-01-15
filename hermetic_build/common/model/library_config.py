@@ -92,7 +92,7 @@ class LibraryConfig:
         For example, sdk-platform-java/showcase
         """
         if self.folder_name is not None:
-          return self.folder_name
+            return self.folder_name
         return f"{language}-{self.get_library_name()}"
 
     def get_library_name(self) -> str:
