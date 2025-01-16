@@ -63,7 +63,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -199,17 +198,6 @@ class ClientContextTest {
     @Override
     public boolean acceptsPoolSize() {
       return false;
-    }
-
-    @Override
-    public TransportChannelProvider setAllowHardBoundTokens(ArrayList<String> allowedValues) {
-      return new FakeTransportProvider(
-          this.transport,
-          this.executor,
-          this.shouldAutoClose,
-          this.headers,
-          this.credentials,
-          this.endpoint);
     }
 
     @Override

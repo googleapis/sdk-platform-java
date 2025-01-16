@@ -33,7 +33,6 @@ import com.google.api.core.InternalExtensionOnly;
 import com.google.auth.Credentials;
 import com.google.common.base.Preconditions;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
@@ -67,12 +66,6 @@ public class FixedTransportChannelProvider implements TransportChannelProvider {
   public FixedTransportChannelProvider withExecutor(Executor executor) {
     throw new UnsupportedOperationException(
         "FixedTransportChannelProvider doesn't need an executor");
-  }
-
-  @Override
-  public TransportChannelProvider setAllowHardBoundTokens(ArrayList<String> allowedValues) {
-    throw new UnsupportedOperationException(
-        "FixedTransportChannelProvider doesn't support hard-bound tokens");
   }
 
   @Override

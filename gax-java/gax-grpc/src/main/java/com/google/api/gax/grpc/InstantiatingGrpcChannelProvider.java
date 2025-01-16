@@ -228,7 +228,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return toBuilder().setEndpoint(endpoint).build();
   }
 
-  @Override
   public TransportChannelProvider setAllowHardBoundTokens(ArrayList<String> allowedValues) {
     return toBuilder().setAllowHardBoundTokenTypes(allowedValues).build();
   }

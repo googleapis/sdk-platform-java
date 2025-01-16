@@ -42,7 +42,6 @@ import com.google.common.annotations.VisibleForTesting;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
@@ -138,12 +137,6 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   public TransportChannelProvider withPoolSize(int size) {
     throw new UnsupportedOperationException(
         "InstantiatingHttpJsonChannelProvider doesn't allow pool size customization");
-  }
-
-  @Override
-  public TransportChannelProvider setAllowHardBoundTokens(ArrayList<String> allowedValues) {
-    throw new UnsupportedOperationException(
-        "InstantiatingHttpJsonChannelProvider doesn't support hard-bound tokens");
   }
 
   @Override
