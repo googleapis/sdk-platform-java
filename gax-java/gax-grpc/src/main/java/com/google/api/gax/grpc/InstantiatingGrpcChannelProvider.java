@@ -106,11 +106,15 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   // The public portion of the mTLS MDS root certificate is stored for performing
   // cert verification when establishing an mTLS connection with the MDS. See
-  // https://cloud.google.com/compute/docs/metadata/overview#https-mds-root-certs
+  // {@link <a
+  // href="https://cloud.google.com/compute/docs/metadata/overview#https-mds-root-certs">this</a>
+  // for more information.}
   private static final String MTLS_MDS_ROOT_PATH = "/run/google-mds-mtls/root.crt";
   // The mTLS MDS credentials are formatted as the concatenation of a PEM-encoded certificate chain
   // followed by a PEM-encoded private key. See
-  // https://cloud.google.com/compute/docs/metadata/overview#https-mds-client-certs
+  // {@link <a
+  // href="https://cloud.google.com/compute/docs/metadata/overview#https-mds-client-certs">this</a>
+  // for more information.}
   private static final String MTLS_MDS_CERT_CHAIN_AND_KEY_PATH = "/run/google-mds-mtls/client.key";
 
   static final long DIRECT_PATH_KEEP_ALIVE_TIME_SECONDS = 3600;
