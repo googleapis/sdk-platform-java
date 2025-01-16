@@ -319,8 +319,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
               Level.WARNING,
               "Env var "
                   + DIRECT_PATH_ENV_ENABLE_XDS
-                  + " was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
-                  + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
+                  + " was found and set to TRUE, but DirectPath was not enabled for this client. If"
+                  + " this is intended for this client, please note that this is a misconfiguration"
+                  + " and set the attemptDirectPath option as well.");
         }
         // Case 2: Direct Path xDS was enabled via Builder. Direct Path Traffic Director must be set
         // (enabled with `setAttemptDirectPath(true)`) along with xDS.
@@ -328,7 +329,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         else if (isDirectPathXdsEnabledViaBuilderOption()) {
           LOG.log(
               Level.WARNING,
-              "DirectPath is misconfigured. The DirectPath XDS option was set, but the attemptDirectPath option was not. Please set both the attemptDirectPath and attemptDirectPathXds options.");
+              "DirectPath is misconfigured. The DirectPath XDS option was set, but the"
+                  + " attemptDirectPath option was not. Please set both the attemptDirectPath and"
+                  + " attemptDirectPathXds options.");
         }
       } else {
         // Case 3: credential is not correctly set
@@ -429,9 +432,35 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
     if (canUseDirectPath()) {
+      CallCredentials altsCallCreds = null;
+      if (true) {
+        // Create gRPC CallCredentials that can fetch DirectPath bound tokens.
+        if (credentials == null) {
+          altsCallCreds =
+              MoreCallCredentials.from(
+                  ComputeEngineCredentials.newBuilder()
+                      .setGoogleAuthTransport(ComputeEngineCredentials.GoogleAuthTransport.ALTS)
+                      .build());
+        } else if (credentials instanceof ComputeEngineCredentials) {
+          // ComputeEngineCredentials.Builder credsBuilder =
+          //     ((ComputeEngineCredentials) credentials).toBuilder();
+          // // We only set scopes and HTTP transport factory from the original credentials because
+          // // only those are used in gRPC CallCredentials to fetch request metadata.
+          altsCallCreds =
+              MoreCallCredentials.from(
+                  ComputeEngineCredentials.newBuilder()
+                      // .setScopes(credsBuilder.getScopes())
+                      // .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
+                      .setGoogleAuthTransport(ComputeEngineCredentials.GoogleAuthTransport.ALTS)
+                      .build());
+        }
+      }
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       ChannelCredentials channelCreds =
-          GoogleDefaultChannelCredentials.newBuilder().callCredentials(callCreds).build();
+          GoogleDefaultChannelCredentials.newBuilder()
+              .callCredentials(callCreds)
+              .altsCallCredentials(altsCallCreds)
+              .build();
       useDirectPathXds = isDirectPathXdsEnabled();
       if (useDirectPathXds) {
         // google-c2p: CloudToProd(C2P) Directpath. This scheme is defined in
@@ -755,6 +784,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     public Builder setKeepAliveTime(org.threeten.bp.Duration duration) {
       return setKeepAliveTimeDuration(toJavaTimeDuration(duration));
     }
+
     /** The time without read activity before sending a keepalive ping. */
     public Builder setKeepAliveTimeDuration(java.time.Duration duration) {
       this.keepAliveTime = duration;
