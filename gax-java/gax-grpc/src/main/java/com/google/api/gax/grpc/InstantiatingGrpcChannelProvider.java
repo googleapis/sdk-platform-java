@@ -64,7 +64,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,7 +126,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Boolean allowNonDefaultServiceAccount;
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
-  @Nullable private final ArrayList<String> allowedHardBoundTokenTypes;
+  @Nullable private final List<String> allowedHardBoundTokenTypes;
   @VisibleForTesting final Map<String, String> headersWithDuplicatesRemoved = new HashMap<>();
 
   @Nullable
@@ -226,10 +225,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   public TransportChannelProvider withEndpoint(String endpoint) {
     validateEndpoint(endpoint);
     return toBuilder().setEndpoint(endpoint).build();
-  }
-
-  public TransportChannelProvider setAllowHardBoundTokens(ArrayList<String> allowedValues) {
-    return toBuilder().setAllowHardBoundTokenTypes(allowedValues).build();
   }
 
   /** @deprecated Please modify pool settings via {@link #toBuilder()} */
@@ -627,7 +622,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private Boolean attemptDirectPathXds;
     @Nullable private Boolean allowNonDefaultServiceAccount;
     @Nullable private ImmutableMap<String, ?> directPathServiceConfig;
-    @Nullable private ArrayList<String> allowedHardBoundTokenTypes;
+    @Nullable private List<String> allowedHardBoundTokenTypes;
 
     private Builder() {
       processorCount = Runtime.getRuntime().availableProcessors();
@@ -708,7 +703,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    public Builder setAllowHardBoundTokenTypes(ArrayList<String> allowedValues) {
+    @InternalApi
+    public Builder setAllowHardBoundTokenTypes(List<String> allowedValues) {
       this.allowedHardBoundTokenTypes = allowedValues;
       return this;
     }
