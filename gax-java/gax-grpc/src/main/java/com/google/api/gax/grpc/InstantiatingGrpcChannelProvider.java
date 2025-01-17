@@ -126,16 +126,32 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Boolean allowNonDefaultServiceAccount;
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
+  @Nullable private final List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
   @VisibleForTesting final Map<String, String> headersWithDuplicatesRemoved = new HashMap<>();
 
   @Nullable
   private final ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
+
+  /*
+   * Experimental feature
+   *
+   * <p>{@link HardBoundTokenTypes} specifies if hard bound tokens should be used if DirectPath
+   * or S2A is used to estabilsh a connection to Google APIs.
+   *
+   */
+  public enum HardBoundTokenTypes {
+    // Use ALTS bound tokens when using DirectPath
+    ALTS,
+    // Use MTLS bound tokens when using S2A
+    MTLS_S2A
+  }
 
   private InstantiatingGrpcChannelProvider(Builder builder) {
     this.processorCount = builder.processorCount;
     this.executor = builder.executor;
     this.headerProvider = builder.headerProvider;
     this.endpoint = builder.endpoint;
+    this.allowedHardBoundTokenTypes = builder.allowedHardBoundTokenTypes;
     this.mtlsProvider = builder.mtlsProvider;
     this.envProvider = builder.envProvider;
     this.interceptorProvider = builder.interceptorProvider;
@@ -620,6 +636,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private Boolean attemptDirectPathXds;
     @Nullable private Boolean allowNonDefaultServiceAccount;
     @Nullable private ImmutableMap<String, ?> directPathServiceConfig;
+    @Nullable private List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
 
     private Builder() {
       processorCount = Runtime.getRuntime().availableProcessors();
@@ -697,6 +714,30 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     public Builder setEndpoint(String endpoint) {
       validateEndpoint(endpoint);
       this.endpoint = endpoint;
+      return this;
+    }
+
+    /*
+     * Sets the allowed hard bound token types for this TransportChannelProvider.
+     *
+     * <p>This is optional; if it is not provided, bearer tokens will be used.
+     *
+     * <p>Examples:
+     *
+     * <p>allowedValues is {HardBoundTokenTypes.ALTS}: If DirectPath is used to create the channel,
+     * use hard ALTS-bound tokens for requests sent on that channel.
+     *
+     * <p>allowedValues is {HardBoundTokenTypes.MTLS_S2A}: If MTLS via S2A is used to create the
+     * channel, use hard MTLS-bound tokens for requests sent on that channel.
+     *
+     * <p>allowedValues is {HardBoundTokenTypes.ALTS, HardBoundTokenTypes.MTLS_S2A}: if DirectPath
+     * is used to create the channel, use hard ALTS-bound tokens for requests sent on that channel.
+     * If MTLS via S2A is used to create the channel, use hard MTLS-bound tokens for requests sent
+     * on that channel.
+     */
+    @InternalApi
+    public Builder setAllowHardBoundTokenTypes(List<HardBoundTokenTypes> allowedValues) {
+      this.allowedHardBoundTokenTypes = allowedValues;
       return this;
     }
 
