@@ -626,7 +626,9 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     createAndCloseTransportChannel(provider);
     assertThat(logHandler.getAllMessages())
         .contains(
-            "DirectPath is misconfigured. The DirectPath XDS option was set, but the attemptDirectPath option was not. Please set both the attemptDirectPath and attemptDirectPathXds options.");
+            "DirectPath is misconfigured. The DirectPath XDS option was set, but the"
+                + " attemptDirectPath option was not. Please set both the attemptDirectPath and"
+                + " attemptDirectPathXds options.");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
   }
 
@@ -641,8 +643,10 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     createAndCloseTransportChannel(provider);
     assertThat(logHandler.getAllMessages())
         .contains(
-            "Env var GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
-                + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
+            "Env var GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS was found and set to TRUE, but DirectPath"
+                + " was not enabled for this client. If this is intended for this client, please"
+                + " note that this is a misconfiguration and set the attemptDirectPath option as"
+                + " well.");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
   }
 
@@ -719,6 +723,37 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             envProvider.getenv(
                 InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
         .thenReturn("false");
+    // FIXME: Remove the following statement.
+    Mockito.when(computeEngineCredentials.toBuilder())
+        .thenReturn(ComputeEngineCredentials.newBuilder());
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setCredentials(computeEngineCredentials)
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEnvProvider(envProvider)
+            .setHeaderProvider(Mockito.mock(HeaderProvider.class));
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
+    Truth.assertThat(provider.canUseDirectPath()).isTrue();
+
+    // verify this info is passed correctly to transport channel
+    TransportChannel transportChannel = provider.getTransportChannel();
+    Truth.assertThat(((GrpcTransportChannel) transportChannel).isDirectPath()).isTrue();
+    transportChannel.shutdownNow();
+  }
+
+  @Test
+  public void canUseDirectPath_happyPathWithBoundToken() throws IOException {
+    System.setProperty("os.name", "Linux");
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    // verifies the credentials gets called and returns a non-null builder.
+    Mockito.when(computeEngineCredentials.toBuilder())
+        .thenReturn(ComputeEngineCredentials.newBuilder());
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
