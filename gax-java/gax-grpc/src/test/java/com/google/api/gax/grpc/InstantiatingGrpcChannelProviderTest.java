@@ -39,6 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider.Builder;
+import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider.HardBoundTokenTypes;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannel;
@@ -723,9 +724,6 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             envProvider.getenv(
                 InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
         .thenReturn("false");
-    // FIXME: Remove the following statement.
-    Mockito.when(computeEngineCredentials.toBuilder())
-        .thenReturn(ComputeEngineCredentials.newBuilder());
     InstantiatingGrpcChannelProvider.Builder builder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
@@ -736,6 +734,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isTrue();
+    Truth.assertThat(provider.isDirectPathBoundTokenEnabled()).isFalse();
 
     // verify this info is passed correctly to transport channel
     TransportChannel transportChannel = provider.getTransportChannel();
@@ -758,6 +757,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setCredentials(computeEngineCredentials)
+            .setAllowHardBoundTokenTypes(Collections.singletonList(HardBoundTokenTypes.ALTS))
             .setEndpoint(DEFAULT_ENDPOINT)
             .setEnvProvider(envProvider)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class));

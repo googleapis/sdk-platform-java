@@ -241,18 +241,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return toBuilder().setEndpoint(endpoint).build();
   }
 
-  /**
-   * @deprecated Please modify pool settings via {@link #toBuilder()}
-   */
+  /** @deprecated Please modify pool settings via {@link #toBuilder()} */
   @Deprecated
   @Override
   public boolean acceptsPoolSize() {
     return true;
   }
 
-  /**
-   * @deprecated Please modify pool settings via {@link #toBuilder()}
-   */
+  /** @deprecated Please modify pool settings via {@link #toBuilder()} */
   @Deprecated
   @Override
   public TransportChannelProvider withPoolSize(int size) {
@@ -386,8 +382,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   @VisibleForTesting
   boolean isDirectPathBoundTokenEnabled() {
-    // FIXME
-    return isCredentialDirectPathCompatible() && credentials instanceof ComputeEngineCredentials;
+    if (allowedHardBoundTokenTypes == null || !(credentials instanceof ComputeEngineCredentials))
+      return false;
+    for (HardBoundTokenTypes boundTokenTypes : allowedHardBoundTokenTypes) {
+      if (boundTokenTypes == HardBoundTokenTypes.ALTS) {
+        return true;
+      }
+    }
+    return false;
   }
 
   // DirectPath should only be used on Compute Engine.
@@ -460,18 +462,17 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     if (canUseDirectPath()) {
       CallCredentials altsCallCreds = null;
       if (isDirectPathBoundTokenEnabled()) {
-          ComputeEngineCredentials.Builder credsBuilder =
-              ((ComputeEngineCredentials) credentials).toBuilder();
-          // We only set scopes and HTTP transport factory from the original credentials because
-          // only those are used in gRPC CallCredentials to fetch request metadata.
-          altsCallCreds =
-              MoreCallCredentials.from(
-                  ComputeEngineCredentials.newBuilder()
-                      .setScopes(credsBuilder.getScopes())
-                      .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
-                      .setGoogleAuthTransport(ComputeEngineCredentials.GoogleAuthTransport.ALTS)
-                      .build());
-        }
+        ComputeEngineCredentials.Builder credsBuilder =
+            ((ComputeEngineCredentials) credentials).toBuilder();
+        // We only set scopes and HTTP transport factory from the original credentials because
+        // only those are used in gRPC CallCredentials to fetch request metadata.
+        altsCallCreds =
+            MoreCallCredentials.from(
+                ComputeEngineCredentials.newBuilder()
+                    .setScopes(credsBuilder.getScopes())
+                    .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
+                    .setGoogleAuthTransport(ComputeEngineCredentials.GoogleAuthTransport.ALTS)
+                    .build());
       }
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       ChannelCredentials channelCreds =
@@ -723,9 +724,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    /**
-     * @deprecated Please use {@link #setExecutor(Executor)}.
-     */
+    /** @deprecated Please use {@link #setExecutor(Executor)}. */
     @Deprecated
     public Builder setExecutorProvider(ExecutorProvider executorProvider) {
       return setExecutor((Executor) executorProvider.getExecutor());
@@ -884,34 +883,26 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return keepAliveWithoutCalls;
     }
 
-    /**
-     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
-     */
+    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
     @Deprecated
     public int getPoolSize() {
       return channelPoolSettings.getInitialChannelCount();
     }
 
-    /**
-     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
-     */
+    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
     @Deprecated
     public Builder setPoolSize(int poolSize) {
       channelPoolSettings = ChannelPoolSettings.staticallySized(poolSize);
       return this;
     }
 
-    /**
-     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
-     */
+    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
     @Deprecated
     public Builder setChannelsPerCpu(double multiplier) {
       return setChannelsPerCpu(multiplier, 100);
     }
 
-    /**
-     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
-     */
+    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
     @Deprecated
     public Builder setChannelsPerCpu(double multiplier, int maxChannels) {
       Preconditions.checkArgument(multiplier > 0, "multiplier must be positive");
