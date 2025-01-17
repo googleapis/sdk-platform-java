@@ -241,14 +241,18 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return toBuilder().setEndpoint(endpoint).build();
   }
 
-  /** @deprecated Please modify pool settings via {@link #toBuilder()} */
+  /**
+   * @deprecated Please modify pool settings via {@link #toBuilder()}
+   */
   @Deprecated
   @Override
   public boolean acceptsPoolSize() {
     return true;
   }
 
-  /** @deprecated Please modify pool settings via {@link #toBuilder()} */
+  /**
+   * @deprecated Please modify pool settings via {@link #toBuilder()}
+   */
   @Deprecated
   @Override
   public TransportChannelProvider withPoolSize(int size) {
@@ -335,8 +339,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
               Level.WARNING,
               "Env var "
                   + DIRECT_PATH_ENV_ENABLE_XDS
-                  + " was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
-                  + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
+                  + " was found and set to TRUE, but DirectPath was not enabled for this client. If"
+                  + " this is intended for this client, please note that this is a misconfiguration"
+                  + " and set the attemptDirectPath option as well.");
         }
         // Case 2: Direct Path xDS was enabled via Builder. Direct Path Traffic Director must be set
         // (enabled with `setAttemptDirectPath(true)`) along with xDS.
@@ -344,7 +349,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         else if (isDirectPathXdsEnabledViaBuilderOption()) {
           LOG.log(
               Level.WARNING,
-              "DirectPath is misconfigured. The DirectPath XDS option was set, but the attemptDirectPath option was not. Please set both the attemptDirectPath and attemptDirectPathXds options.");
+              "DirectPath is misconfigured. The DirectPath XDS option was set, but the"
+                  + " attemptDirectPath option was not. Please set both the attemptDirectPath and"
+                  + " attemptDirectPathXds options.");
         }
       } else {
         // Case 3: credential is not correctly set
@@ -375,6 +382,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return true;
     }
     return credentials instanceof ComputeEngineCredentials;
+  }
+
+  @VisibleForTesting
+  boolean isDirectPathBoundTokenEnabled() {
+    // FIXME
+    return isCredentialDirectPathCompatible() && credentials instanceof ComputeEngineCredentials;
   }
 
   // DirectPath should only be used on Compute Engine.
@@ -445,9 +458,27 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
     if (canUseDirectPath()) {
+      CallCredentials altsCallCreds = null;
+      if (isDirectPathBoundTokenEnabled()) {
+          ComputeEngineCredentials.Builder credsBuilder =
+              ((ComputeEngineCredentials) credentials).toBuilder();
+          // We only set scopes and HTTP transport factory from the original credentials because
+          // only those are used in gRPC CallCredentials to fetch request metadata.
+          altsCallCreds =
+              MoreCallCredentials.from(
+                  ComputeEngineCredentials.newBuilder()
+                      .setScopes(credsBuilder.getScopes())
+                      .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
+                      .setGoogleAuthTransport(ComputeEngineCredentials.GoogleAuthTransport.ALTS)
+                      .build());
+        }
+      }
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       ChannelCredentials channelCreds =
-          GoogleDefaultChannelCredentials.newBuilder().callCredentials(callCreds).build();
+          GoogleDefaultChannelCredentials.newBuilder()
+              .callCredentials(callCreds)
+              .altsCallCredentials(altsCallCreds)
+              .build();
       useDirectPathXds = isDirectPathXdsEnabled();
       if (useDirectPathXds) {
         // google-c2p: CloudToProd(C2P) Directpath. This scheme is defined in
@@ -692,7 +723,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    /** @deprecated Please use {@link #setExecutor(Executor)}. */
+    /**
+     * @deprecated Please use {@link #setExecutor(Executor)}.
+     */
     @Deprecated
     public Builder setExecutorProvider(ExecutorProvider executorProvider) {
       return setExecutor((Executor) executorProvider.getExecutor());
@@ -796,6 +829,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     public Builder setKeepAliveTime(org.threeten.bp.Duration duration) {
       return setKeepAliveTimeDuration(toJavaTimeDuration(duration));
     }
+
     /** The time without read activity before sending a keepalive ping. */
     public Builder setKeepAliveTimeDuration(java.time.Duration duration) {
       this.keepAliveTime = duration;
@@ -850,26 +884,34 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return keepAliveWithoutCalls;
     }
 
-    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
+    /**
+     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
+     */
     @Deprecated
     public int getPoolSize() {
       return channelPoolSettings.getInitialChannelCount();
     }
 
-    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
+    /**
+     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
+     */
     @Deprecated
     public Builder setPoolSize(int poolSize) {
       channelPoolSettings = ChannelPoolSettings.staticallySized(poolSize);
       return this;
     }
 
-    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
+    /**
+     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
+     */
     @Deprecated
     public Builder setChannelsPerCpu(double multiplier) {
       return setChannelsPerCpu(multiplier, 100);
     }
 
-    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
+    /**
+     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
+     */
     @Deprecated
     public Builder setChannelsPerCpu(double multiplier, int maxChannels) {
       Preconditions.checkArgument(multiplier > 0, "multiplier must be positive");
