@@ -764,6 +764,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isTrue();
+    Truth.assertThat(provider.isDirectPathBoundTokenEnabled()).isTrue();
 
     // verify this info is passed correctly to transport channel
     TransportChannel transportChannel = provider.getTransportChannel();

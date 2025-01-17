@@ -368,6 +368,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return credentials instanceof ComputeEngineCredentials;
   }
 
+  @VisibleForTesting
+  boolean isDirectPathBoundTokenEnabled() {
+    // FIXME
+    return isCredentialDirectPathCompatible() && credentials instanceof ComputeEngineCredentials;
+  }
+
   // DirectPath should only be used on Compute Engine.
   // Notice Windows is supported for now.
   @VisibleForTesting
@@ -437,8 +443,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     boolean useDirectPathXds = false;
     if (canUseDirectPath()) {
       CallCredentials altsCallCreds = null;
-      // FIXME: Change the if condition.
-      if (true && credentials instanceof ComputeEngineCredentials) {
+      if (isDirectPathBoundTokenEnabled()) {
           ComputeEngineCredentials.Builder credsBuilder =
               ((ComputeEngineCredentials) credentials).toBuilder();
           // We only set scopes and HTTP transport factory from the original credentials because
