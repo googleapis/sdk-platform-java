@@ -139,6 +139,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    * or S2A is used to estabilsh a connection to Google APIs.
    *
    */
+  @InternalApi
   public enum HardBoundTokenTypes {
     // Use ALTS bound tokens when using DirectPath
     ALTS,
