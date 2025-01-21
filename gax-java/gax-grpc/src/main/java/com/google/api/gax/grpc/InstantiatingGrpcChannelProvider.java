@@ -141,9 +141,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    */
   @InternalApi
   public enum HardBoundTokenTypes {
-    // Use ALTS bound tokens when using DirectPath
+    // If DirectPath is used to create the channel, use hard ALTS-bound tokens for requests sent on
+    // that channel.
     ALTS,
-    // Use MTLS bound tokens when using S2A
+    // If MTLS via S2A is used to create the channel, use hard MTLS-bound tokens for requests sent
+    // on that channel.
     MTLS_S2A
   }
 
@@ -721,20 +723,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     /*
      * Sets the allowed hard bound token types for this TransportChannelProvider.
      *
-     * <p>This is optional; if it is not provided, bearer tokens will be used.
-     *
-     * <p>Examples:
-     *
-     * <p>allowedValues is {HardBoundTokenTypes.ALTS}: If DirectPath is used to create the channel,
-     * use hard ALTS-bound tokens for requests sent on that channel.
-     *
-     * <p>allowedValues is {HardBoundTokenTypes.MTLS_S2A}: If MTLS via S2A is used to create the
-     * channel, use hard MTLS-bound tokens for requests sent on that channel.
-     *
-     * <p>allowedValues is {HardBoundTokenTypes.ALTS, HardBoundTokenTypes.MTLS_S2A}: if DirectPath
-     * is used to create the channel, use hard ALTS-bound tokens for requests sent on that channel.
-     * If MTLS via S2A is used to create the channel, use hard MTLS-bound tokens for requests sent
-     * on that channel.
+     * <p>The list of
+     * {@link HardBoundTokenTypes} indicates for which methods of connecting to Google APIs hard bound tokens should
+     * be used. This is optional; if it is not provided, bearer tokens will be used.
      */
     @InternalApi
     public Builder setAllowHardBoundTokenTypes(List<HardBoundTokenTypes> allowedValues) {
