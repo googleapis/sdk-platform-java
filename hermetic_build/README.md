@@ -156,7 +156,6 @@ They are shared by all GAPICs of a library.
 | cloud_api             |    No    | `true` if not specified                                                                                                                   |
 | requires-billing      |    No    | `true` if not specified                                                                                                                   |
 | transport             |    No    | must be one of `grpc`, `rest` or `both`. This value would only be used for generating .repo-metadata.json and relevant sections in README |
-| folder_name           |    No    | Only used in monorepos. This allows to override the default folder name where the library is created (e.g. monorepo/my-folder)            |
 
 
 Note that `cloud_prefix` is `cloud-` if `cloud_api` is `true`; empty otherwise.
