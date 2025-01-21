@@ -101,7 +101,7 @@ public interface TransportChannelProvider {
   @BetaApi(
       "The S2A feature is not stable yet and may change in the future. https://github.com/grpc/grpc-java/issues/11533.")
   default TransportChannelProvider withUseS2A(boolean useS2A) {
-    throw new UnsupportedOperationException("S2A is not supported");
+    return this;
   }
 
   /**
