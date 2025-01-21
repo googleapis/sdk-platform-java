@@ -743,6 +743,28 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
+  public void canUseDirectPath_boundTokenNotEnabledWithNonComputeCredentials() {
+    System.setProperty("os.name", "Linux");
+    Credentials credentials = Mockito.mock(Credentials.class);
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setAllowHardBoundTokenTypes(Collections.singletonList(HardBoundTokenTypes.ALTS))
+            .setCredentials(credentials)
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEnvProvider(envProvider);
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
+    Truth.assertThat(provider.canUseDirectPath()).isFalse();
+    Truth.assertThat(provider.isDirectPathBoundTokenEnabled()).isFalse();
+  }
+
+  @Test
   public void canUseDirectPath_happyPathWithBoundToken() throws IOException {
     System.setProperty("os.name", "Linux");
     EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
