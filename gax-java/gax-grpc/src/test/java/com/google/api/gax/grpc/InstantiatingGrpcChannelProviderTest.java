@@ -772,7 +772,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             envProvider.getenv(
                 InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
         .thenReturn("false");
-    // verifies the credentials gets called and returns a non-null builder.
+    // verify the credentials gets called and returns a non-null builder.
     Mockito.when(computeEngineCredentials.toBuilder())
         .thenReturn(ComputeEngineCredentials.newBuilder());
     InstantiatingGrpcChannelProvider.Builder builder =
