@@ -19,32 +19,24 @@ import re
 proto_library_pattern = r"""
 proto_library_with_info\(
 (.*?)
-\\?[\nn]\)
+\)
 """
 gapic_pattern = r"""
 java_gapic_library\(
 (.*?)
-\\?[\nn]\)
+\)
 """
 assembly_pattern = r"""
 java_gapic_assembly_gradle_pkg\(
 (.*?)
-\\?[\nn]\)
+\)
 """
 # match a line which the first character is "#".
 comment_pattern = r"^\s*\#+"
-# This pattern ignores api definitions that externally reference other repos.
-# For example: @googleapis_repo//google/cloud/...
-pattern_proto_library_to_additional_protos = {
-    r".*//google/cloud:common_resources_proto": "google/cloud/common_resources.proto",
-    r".*//google/cloud/location:location_proto": "google/cloud/location/locations.proto",
-    r".*//google/iam/v1:iam_policy_proto": "google/iam/v1/iam_policy.proto",
-}
-# This is a special case for showcase, where the additional protos
-# are not declared in the gapic library instead
-pattern_gapic_library_to_additional_protos = {
-    r".*//google/cloud/location:location_java_proto": "google/cloud/location/locations.proto",
-    r".*//google/iam/v1:iam_java_proto": "google/iam/v1/iam_policy.proto",
+pattern_to_proto = {
+    r"//google/cloud:common_resources_proto": "google/cloud/common_resources.proto",
+    r"//google/cloud/location:location_proto": "google/cloud/location/locations.proto",
+    r"//google/iam/v1:iam_policy_proto": "google/iam/v1/iam_policy.proto",
 }
 transport_pattern = r"transport = \"(.*?)\""
 rest_pattern = r"rest_numeric_enums = True"
@@ -116,8 +108,9 @@ def parse_build_str(build_str: str, versioned_path: str) -> GapicInputs:
         proto_library_pattern, re.DOTALL | re.VERBOSE
     ).findall(build_str)
     additional_protos = ""
+    if len(proto_library_target) > 0:
+        additional_protos = __parse_additional_protos(proto_library_target[0])
     gapic_target = re.compile(gapic_pattern, re.DOTALL | re.VERBOSE).findall(build_str)
-    additional_protos = __parse_additional_protos(proto_library_target, gapic_target)
     assembly_target = re.compile(assembly_pattern, re.DOTALL | re.VERBOSE).findall(
         build_str
     )
@@ -147,42 +140,19 @@ def parse_build_str(build_str: str, versioned_path: str) -> GapicInputs:
     )
 
 
-def __get_lines_without_comments(target: list[str]):
-    """
-    skips comment lines
-    """
-    if len(target) == 0:
-        return []
-    result = []
-    for line in target[0].split("\n"):
+def __parse_additional_protos(proto_library_target: str) -> str:
+    res = [" "]
+    lines = proto_library_target.split("\n")
+    for line in lines:
         if len(re.findall(comment_pattern, line)) != 0:
-            # skip lines whose first character is "#" since it's
+            # skip a line which the first charactor is "#" since it's
             # a comment.
             continue
-        result.append(line)
-    return result
-
-
-def __parse_additional_protos(
-    proto_library_target: list[str], gapic_library_target: list[str]
-) -> str:
-    res = [" "]
-    lines = __get_lines_without_comments(proto_library_target)
-    # first, parse the proto library definition
-    for line in lines:
-        for pattern in pattern_proto_library_to_additional_protos:
+        for pattern in pattern_to_proto:
             if len(re.findall(pattern, line)) == 0:
                 continue
-            res.append(pattern_proto_library_to_additional_protos[pattern])
-    # then, parse the gapic library definition
-    lines = __get_lines_without_comments(gapic_library_target)
-    for line in lines:
-        for pattern in pattern_gapic_library_to_additional_protos:
-            if len(re.findall(pattern, line)) == 0:
-                continue
-            res.append(pattern_gapic_library_to_additional_protos[pattern])
-    # finally, return the additional protos without duplicates
-    return " ".join(list(dict.fromkeys(res)))
+            res.append(pattern_to_proto[pattern])
+    return " ".join(res)
 
 
 def __parse_transport(gapic_target: str) -> str:
