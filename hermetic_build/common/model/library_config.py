@@ -54,7 +54,6 @@ class LibraryConfig:
         recommended_package: Optional[str] = None,
         min_java_version: Optional[int] = None,
         transport: Optional[str] = None,
-        folder_name: Optional[str] = None,
     ):
         self.api_shortname = api_shortname
         self.api_description = api_description
@@ -82,18 +81,6 @@ class LibraryConfig:
         self.min_java_version = min_java_version
         self.distribution_name = self.__get_distribution_name(distribution_name)
         self.transport = self.__validate_transport(transport)
-        self.folder_name = folder_name
-
-    def get_folder_name(self, language: str = "java") -> str:
-        """
-        This property is meant to be used for generating monorepos.
-        It will not have any effect when generating a non-monorepo library.
-        It allows specifying the final library's name inside the repo.
-        For example, sdk-platform-java/showcase
-        """
-        if self.folder_name is not None:
-            return self.folder_name
-        return f"{language}-{self.get_library_name()}"
 
     def get_library_name(self) -> str:
         """
