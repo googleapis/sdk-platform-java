@@ -146,10 +146,28 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
   @Nullable private final SecureSessionAgent s2aConfigProvider;
+  @Nullable private final List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
   @VisibleForTesting final Map<String, String> headersWithDuplicatesRemoved = new HashMap<>();
 
   @Nullable
   private final ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
+
+  /*
+   * Experimental feature
+   *
+   * <p>{@link HardBoundTokenTypes} specifies if hard bound tokens should be used if DirectPath
+   * or S2A is used to estabilsh a connection to Google APIs.
+   *
+   */
+  @InternalApi
+  public enum HardBoundTokenTypes {
+    // If DirectPath is used to create the channel, use hard ALTS-bound tokens for requests sent on
+    // that channel.
+    ALTS,
+    // If MTLS via S2A is used to create the channel, use hard MTLS-bound tokens for requests sent
+    // on that channel.
+    MTLS_S2A
+  }
 
   private InstantiatingGrpcChannelProvider(Builder builder) {
     this.processorCount = builder.processorCount;
@@ -157,6 +175,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.headerProvider = builder.headerProvider;
     this.useS2A = builder.useS2A;
     this.endpoint = builder.endpoint;
+    this.allowedHardBoundTokenTypes = builder.allowedHardBoundTokenTypes;
     this.mtlsProvider = builder.mtlsProvider;
     this.s2aConfigProvider = builder.s2aConfigProvider;
     this.envProvider = builder.envProvider;
@@ -799,6 +818,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private Boolean attemptDirectPathXds;
     @Nullable private Boolean allowNonDefaultServiceAccount;
     @Nullable private ImmutableMap<String, ?> directPathServiceConfig;
+    @Nullable private List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
 
     private Builder() {
       processorCount = Runtime.getRuntime().availableProcessors();
@@ -883,6 +903,18 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     Builder setUseS2A(boolean useS2A) {
       this.useS2A = useS2A;
+      return this;
+    }
+    /*
+     * Sets the allowed hard bound token types for this TransportChannelProvider.
+     *
+     * <p>The list of
+     * {@link HardBoundTokenTypes} indicates for which methods of connecting to Google APIs hard bound tokens should
+     * be used. This is optional; if it is not provided, bearer tokens will be used.
+     */
+    @InternalApi
+    public Builder setAllowHardBoundTokenTypes(List<HardBoundTokenTypes> allowedValues) {
+      this.allowedHardBoundTokenTypes = allowedValues;
       return this;
     }
 
