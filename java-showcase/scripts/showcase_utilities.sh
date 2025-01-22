@@ -1,5 +1,5 @@
 #!/bin/bash
-readonly ROOT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/../.."
+readonly REPO_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/../.."
 
 function cleanup {
   script_dir=$1
@@ -24,7 +24,7 @@ append_showcase_to_api_defs() {
   # version of gapic-showcase
   # see https://github.com/googleapis/gapic-showcase/releases
   showcase_version=$(get_version_from_pom \
-    "${ROOT_DIR}/java-showcase/gapic-showcase/pom.xml" "gapic-showcase.version"
+    "${REPO_DIR}/java-showcase/gapic-showcase/pom.xml" "gapic-showcase.version"
   )
   # compliance_suite.json is a symbolic link outside of the schema folder, so we
   # replace it with the actual contents in its original location.
@@ -33,6 +33,6 @@ append_showcase_to_api_defs() {
   cp "${showcase_def_dir}/server/services/compliance_suite.json" "${compliance_suite_path}"
   # we complete the BUILD.bazel in gapic-showcase with our java_library in order
   # to generate the gapic portion.
-  cat "${ROOT_DIR}/java-showcase/scripts/resources/BUILD.partial.bazel" >> "${showcase_def_dir}/schema/google/showcase/v1beta1/BUILD.bazel"
+  cat "${REPO_DIR}/java-showcase/scripts/resources/BUILD.partial.bazel" >> "${showcase_def_dir}/schema/google/showcase/v1beta1/BUILD.bazel"
   cp -r "${showcase_def_dir}/schema" "${api_def_dir}/"
 }
