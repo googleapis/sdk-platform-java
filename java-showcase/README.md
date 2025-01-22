@@ -64,23 +64,32 @@ gapic-showcase run
 ## Running the Integration Tests
 
 Open a new terminal window in the root project directory.
+This step does not require Docker.
 
 ```shell
 cd showcase
-mvn verify -P enable-integration-tests -P enable-golden-tests
+mvn verify -P enable-integration-tests
 ```
 
-Note:
+## Running the Golden tests
 
-* `-P enable-golden-tests` is optional. These tests do not require a local server.
+**NOTE** This requires Docker to be installed in your machine.
+Open a new terminal window in the root project directory.
+
+```shell
+cd java-showcase
+mvn verify -P enable-golden-tests
+```
+
 
 ## Update the Golden Showcase Files
 
+**NOTE** This requires Docker to be installed in your machine.
 Open a new terminal window in the root project directory.
 
 ```shell
 # In repository's root directory
 mvn clean install -DskipTests
-cd showcase
+cd java-showcase
 mvn compile -P update
 ```
