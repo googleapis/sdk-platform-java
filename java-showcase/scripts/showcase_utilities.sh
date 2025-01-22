@@ -26,6 +26,9 @@ append_showcase_to_api_defs() {
   showcase_version=$(get_version_from_pom \
     "${REPO_DIR}/java-showcase/gapic-showcase/pom.xml" "gapic-showcase.version"
   )
+  pushd "${showcase_def_dir}"
+  git checkout "v${showcase_version}"
+  popd
   # compliance_suite.json is a symbolic link outside of the schema folder, so we
   # replace it with the actual contents in its original location.
   compliance_suite_path="${showcase_def_dir}/schema/google/showcase/v1beta1/compliance_suite.json"
