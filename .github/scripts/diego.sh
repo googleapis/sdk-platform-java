@@ -90,7 +90,7 @@ git checkout "${googleapis_commitish}"
 popd
 
 # we also setup showcase
-source java-showcase/scripts/showcase_utilities.sh
+source showcase/scripts/generate_showcase.sh
 append_showcase_to_api_defs "${api_def_dir}"
 
 # get changed library list.

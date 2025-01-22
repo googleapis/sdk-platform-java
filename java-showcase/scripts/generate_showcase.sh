@@ -7,35 +7,7 @@ trap cleanup ERR
 
 readonly ROOT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/../.."
 pushd "${ROOT_DIR}"
-
-get_version_from_pom() {
-  target_pom="$1"
-  key="$2"
-  # prints the result to stdout
-  grep -e "<${key}>" "${target_pom}" | cut -d'>' -f2 | cut -d'<' -f1
-}
-
-append_showcase_to_api_defs() {
-  api_def_dir="$1"
-  # append showcase definitions to googleapis repository
-  export showcase_def_dir=$(mktemp -d)
-  git clone https://github.com/googleapis/gapic-showcase.git "${showcase_def_dir}"
-  # looks at sdk-platform-java/java-showcase/gapic-showcase/pom.xml to extract the
-  # version of gapic-showcase
-  # see https://github.com/googleapis/gapic-showcase/releases
-  showcase_version=$(get_version_from_pom \
-    "${ROOT_DIR}/java-showcase/gapic-showcase/pom.xml" "gapic-showcase.version"
-  )
-  # compliance_suite.json is a symbolic link outside of the schema folder, so we
-  # replace it with the actual contents in its original location.
-  compliance_suite_path="${showcase_def_dir}/schema/google/showcase/v1beta1/compliance_suite.json"
-  unlink "${compliance_suite_path}"
-  cp "${showcase_def_dir}/server/services/compliance_suite.json" "${compliance_suite_path}"
-  # we complete the BUILD.bazel in gapic-showcase with our java_library in order
-  # to generate the gapic portion.
-  cat "${ROOT_DIR}/java-showcase/scripts/resources/BUILD.partial.bazel" >> "${showcase_def_dir}/schema/google/showcase/v1beta1/BUILD.bazel"
-  cp -r "${showcase_def_dir}/schema" "${api_def_dir}/"
-}
+source "${ROOT_DIR}/java-showcase/scripts/showcase_utilities.sh"
 
 cleanup() {
   if [[ -z "${api_def_dir}" ]]; then
