@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.51.1](https://github.com/googleapis/sdk-platform-java/compare/v2.51.0...v2.51.1) (2025-01-08)
+
+
+### Dependencies
+
+* update dependency com.google.guava:guava to v33.4.0-jre ([#3473](https://github.com/googleapis/sdk-platform-java/issues/3473)) ([453b897](https://github.com/googleapis/sdk-platform-java/commit/453b897aabf9a7abdb59e9ea18ac8f8196b9792a))
+* update dependency com.google.guava:guava-bom to v33.4.0-jre ([#3545](https://github.com/googleapis/sdk-platform-java/issues/3545)) ([07eb10e](https://github.com/googleapis/sdk-platform-java/commit/07eb10e848d73a2e8d1d39018e2ec31b881653c8))
+* update dependency com.google.oauth-client:google-oauth-client-bom to v1.37.0 ([#3471](https://github.com/googleapis/sdk-platform-java/issues/3471)) ([1f1c369](https://github.com/googleapis/sdk-platform-java/commit/1f1c369633f0ae9b5b512a2908befdcd1c9cb952))
+* update dependency net.bytebuddy:byte-buddy to v1.15.11 ([#3468](https://github.com/googleapis/sdk-platform-java/issues/3468)) ([fde27db](https://github.com/googleapis/sdk-platform-java/commit/fde27db7f7959953cf480abfa62dc7dc58ac445e))
+* update google api dependencies ([#3461](https://github.com/googleapis/sdk-platform-java/issues/3461)) ([12d9ff2](https://github.com/googleapis/sdk-platform-java/commit/12d9ff26e6ab905e6230703a671e188690ec1322))
+* update googleapis/java-cloud-bom digest to 03f6dcd ([#3465](https://github.com/googleapis/sdk-platform-java/issues/3465)) ([67f5ea2](https://github.com/googleapis/sdk-platform-java/commit/67f5ea23f50eaf57925cdf34d51c7b0bfcc67cf3))
+* update junit5 monorepo to v5.11.4 ([#3470](https://github.com/googleapis/sdk-platform-java/issues/3470)) ([164ebac](https://github.com/googleapis/sdk-platform-java/commit/164ebac30632ca8fd688781b4aaecc5eab932f77))
+* update netty dependencies to v4.1.116.final ([#3543](https://github.com/googleapis/sdk-platform-java/issues/3543)) ([d4fa54d](https://github.com/googleapis/sdk-platform-java/commit/d4fa54d8b25afeacc4c9675f4763a3bff311f595))
+* update repo-automation-bots digest to 8b7d94b ([#3458](https://github.com/googleapis/sdk-platform-java/issues/3458)) ([59f9e0a](https://github.com/googleapis/sdk-platform-java/commit/59f9e0a3a101d5425b0c751b39e6b784466e16b8))
+
+
+### Documentation
+
+* update development guide ([#3480](https://github.com/googleapis/sdk-platform-java/issues/3480)) ([9a65386](https://github.com/googleapis/sdk-platform-java/commit/9a65386dfc3146de4f9b36962caae2df0662ac98))
+
 ## [2.51.0](https://github.com/googleapis/sdk-platform-java/compare/v2.50.0...v2.51.0) (2024-12-12)
 
 
