@@ -7,4 +7,10 @@
     <className>com/google/api/gax/grpc/GrpcTransportChannel</className>
     <method>boolean isDirectPath()</method>
   </difference>
+  <!-- Ignore this as this was part of s2a-grpc ExperimentalApi revert -->
+  <difference>
+    <differenceType>7002</differenceType>
+    <className>com/google/api/gax/grpc/InstantiatingGrpcChannelProvider</className>
+    <method>* withUseS2A(*)</method>
+  </difference>
 </differences>

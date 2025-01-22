@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,10 +44,10 @@ public final class HttpBodyProto {
       "\n\031google/api/httpbody.proto\022\ngoogle.api\032"
           + "\031google/protobuf/any.proto\"X\n\010HttpBody\022\024"
           + "\n\014content_type\030\001 \001(\t\022\014\n\004data\030\002 \001(\014\022(\n\nex"
-          + "tensions\030\003 \003(\0132\024.google.protobuf.AnyBh\n\016"
+          + "tensions\030\003 \003(\0132\024.google.protobuf.AnyBe\n\016"
           + "com.google.apiB\rHttpBodyProtoP\001Z;google."
           + "golang.org/genproto/googleapis/api/httpb"
-          + "ody;httpbody\370\001\001\242\002\004GAPIb\006proto3"
+          + "ody;httpbody\242\002\004GAPIb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(

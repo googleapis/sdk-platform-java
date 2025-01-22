@@ -14,14 +14,6 @@ case $key in
     destination_path="$2"
     shift
     ;;
-  --protoc_version)
-    protoc_version="$2"
-    shift
-    ;;
-  --grpc_version)
-    grpc_version="$2"
-    shift
-    ;;
   --proto_only)
     proto_only="$2"
     shift
@@ -71,14 +63,6 @@ script_dir=$(dirname "$(readlink -f "$0")")
 source "${script_dir}"/utils/utilities.sh
 output_folder="$(get_output_folder)"
 
-if [ -z "${protoc_version}" ]; then
-  protoc_version=$(get_protoc_version)
-fi
-
-if [ -z "${grpc_version}" ]; then
-  grpc_version=$(get_grpc_version)
-fi
-
 if [ -z "${proto_only}" ]; then
   proto_only="false"
 fi
@@ -115,7 +99,7 @@ if [ -z "${os_architecture}" ]; then
   os_architecture=$(detect_os_architecture)
 fi
 
-temp_destination_path="${output_folder}/temp_preprocessed"
+temp_destination_path="${output_folder}/temp_preprocessed-$RANDOM"
 mkdir -p "${output_folder}/${destination_path}"
 if [ -d "${temp_destination_path}" ]; then
   # we don't want the preprocessed sources of a previous run
@@ -171,16 +155,14 @@ case "${proto_path}" in
     proto_files="${proto_files//${removed_proto}/}"
     ;;
 esac
-# download gapic-generator-java, protobuf and grpc plugin.
-# the download_tools function will create the environment variables "protoc_path"
-# and "grpc_path", to be used in the protoc calls below.
-download_tools "${protoc_version}" "${grpc_version}" "${os_architecture}"
+
+protoc_path=$(get_protoc_location)
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
 if [[ ! "${transport}" == "rest" ]]; then
   # do not need to generate grpc-* if the transport is `rest`.
-  "${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=${grpc_path}" \
+  "${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=$(get_grpc_plugin_location)" \
   "--rpc-plugin_out=:${temp_destination_path}/java_grpc.jar" \
   ${proto_files} # Do not quote because this variable should not be treated as one long string.
   # unzip java_grpc.jar to grpc-*/src/main/java

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,8 @@ package com.google.longrunning;
  *
  *
  * <pre>
- * The request message for [Operations.ListOperations][google.longrunning.Operations.ListOperations].
+ * The request message for
+ * [Operations.ListOperations][google.longrunning.Operations.ListOperations].
  * </pre>
  *
  * Protobuf type {@code google.longrunning.ListOperationsRequest}
@@ -426,7 +427,8 @@ public final class ListOperationsRequest extends com.google.protobuf.GeneratedMe
    *
    *
    * <pre>
-   * The request message for [Operations.ListOperations][google.longrunning.Operations.ListOperations].
+   * The request message for
+   * [Operations.ListOperations][google.longrunning.Operations.ListOperations].
    * </pre>
    *
    * Protobuf type {@code google.longrunning.ListOperationsRequest}

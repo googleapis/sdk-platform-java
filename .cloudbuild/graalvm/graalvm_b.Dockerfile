@@ -15,4 +15,4 @@
 
 ARG JAVA_SHARED_CONFIG_VERSION
 
-FROM gcr.io/cloud-devrel-public-resources/graalvm_b:$JAVA_SHARED_CONFIG_VERSION
+FROM us-docker.pkg.dev/java-graalvm-ci-prod/graalvm-integration-testing/graalvm_b:$JAVA_SHARED_CONFIG_VERSION

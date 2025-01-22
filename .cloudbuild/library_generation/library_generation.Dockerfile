@@ -15,25 +15,23 @@
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
 
-# 3.9.9-eclipse-temurin-11-alpine
-FROM docker.io/library/maven@sha256:006d25558f9d5244ed55b5d2bd8eaf34d883e447d0c4b940e67b9f44d21167bf AS ggj-build
+FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:3bab9f2cd4fa8704445bf01444e8e5e0f1ab819a41616069872a898b432a7309 AS ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.49.1-SNAPSHOT"
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.51.2-SNAPSHOT"
 # {x-version-update-end}
 
 RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
-# alpine:3.20.3
-FROM docker.io/library/alpine@sha256:beefdbd8a1da6d2915566fde36db9db0b524eb737fc57cd1367effd16dc0d06d as glibc-compat
+FROM docker.io/library/alpine:3.21.0@sha256:21dc6063fd678b478f57c0e13f47560d0ea4eeba26dfc947b2a4f81f686b9f45 as glibc-compat
 
 RUN apk add git sudo
 # This SHA is the latest known-to-work version of this binary compatibility tool
-ARG GLIB_MUS_SHA=7717dd4dc26377dd9cedcc92b72ebf35f9e68a2d
+ARG GLIB_MUS_SHA=e94aca542e3ab08b42aa0b0d6e72478b935bb8e8
 WORKDIR /home
 
 # Install compatibility layer to run glibc-based programs (such as the
@@ -49,14 +47,11 @@ RUN git checkout "${GLIB_MUS_SHA}"
 RUN chmod a+x compile-x86_64-alpine-linux.sh
 RUN sh compile-x86_64-alpine-linux.sh
 
-# python:3.12.7-alpine3.20
-FROM docker.io/library/python@sha256:38e179a0f0436c97ecc76bcd378d7293ab3ee79e4b8c440fdc7113670cb6e204 as final
+FROM docker.io/library/python:3.13.1-alpine3.20@sha256:804ad02b9ba67ea1f8307eeb6407b121c6bd6bb19d3f182aae166821eb59d6a4 as final
 
-
-
-ARG OWLBOT_CLI_COMMITTISH=38fe6f89a2339ee75c77739b31b371f601b01bb3
+ARG OWLBOT_CLI_COMMITTISH=8b7d94b4a8ad0345aeefd6a7ec9c5afcbeb8e2d7
 ARG PROTOC_VERSION=25.5
-ARG GRPC_VERSION=1.68.1
+ARG GRPC_VERSION=1.69.0
 ARG JAVA_FORMAT_VERSION=1.7
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
@@ -80,6 +75,9 @@ COPY --from=glibc-compat /lib/libc.* /lib/
 COPY --from=glibc-compat /usr/lib/libgcc* /usr/lib/
 COPY --from=glibc-compat /usr/lib/libstdc* /usr/lib/
 COPY --from=glibc-compat /usr/lib/libobstack* /usr/lib/
+COPY --from=glibc-compat /lib/libm.so.6 /usr/lib/
+COPY --from=glibc-compat /usr/lib/libucontext.so.1 /usr/lib/
+
 
 # copy source code
 COPY hermetic_build/common /src/common
@@ -90,7 +88,7 @@ WORKDIR /protoc
 RUN source /src/library_generation/utils/utilities.sh \
 	&& download_protoc "${PROTOC_VERSION}" "${OS_ARCHITECTURE}"
 # we indicate protoc is available in the container via env vars
-ENV DOCKER_PROTOC_LOCATION=/protoc
+ENV DOCKER_PROTOC_LOCATION=/protoc/bin
 ENV DOCKER_PROTOC_VERSION="${PROTOC_VERSION}"
 
 # install grpc
@@ -98,9 +96,7 @@ WORKDIR /grpc
 RUN source /src/library_generation/utils/utilities.sh \
 	&& download_grpc_plugin "${GRPC_VERSION}" "${OS_ARCHITECTURE}"
 # similar to protoc, we indicate grpc is available in the container via env vars
-ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java-${GRPC_VERSION}-${OS_ARCHITECTURE}.exe"
-ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
-
+ENV DOCKER_GRPC_LOCATION="/grpc/protoc-gen-grpc-java.exe"
 
 # Here we transfer gapic-generator-java from the previous stage.
 # Note that the destination is a well-known location that will be assumed at runtime
@@ -108,6 +104,7 @@ ENV DOCKER_GRPC_VERSION="${GRPC_VERSION}"
 # well as to avoid it making it overridable at runtime (via ENV).
 COPY --from=ggj-build "/sdk-platform-java/gapic-generator-java.jar" "${HOME}/.library_generation/gapic-generator-java.jar"
 RUN chmod 755 "${HOME}/.library_generation/gapic-generator-java.jar"
+ENV GAPIC_GENERATOR_LOCATION="${HOME}/.library_generation/gapic-generator-java.jar"
 
 RUN python -m pip install --upgrade pip
 
@@ -126,11 +123,13 @@ RUN git checkout "${OWLBOT_CLI_COMMITTISH}"
 RUN npm i && npm run compile && npm link
 RUN owl-bot copy-code --version
 RUN chmod o+rx $(which owl-bot)
+RUN apk del -r npm && apk cache clean
 
 # download the Java formatter
 ADD https://maven-central.storage-download.googleapis.com/maven2/com/google/googlejavaformat/google-java-format/${JAVA_FORMAT_VERSION}/google-java-format-${JAVA_FORMAT_VERSION}-all-deps.jar \
   "${HOME}"/.library_generation/google-java-format.jar
 RUN chmod 755 "${HOME}"/.library_generation/google-java-format.jar
+ENV JAVA_FORMATTER_LOCATION="${HOME}/.library_generation/google-java-format.jar"
 
 # allow users to access the script folders
 RUN chmod -R o+rx /src
