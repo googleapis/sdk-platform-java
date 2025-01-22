@@ -75,8 +75,8 @@ workspace_name="/workspace"
 baseline_generation_config="baseline_generation_config.yaml"
 message="chore: generate libraries at $(date)"
 
-#git checkout "${target_branch}"
-#git checkout "${current_branch}"
+git checkout "${target_branch}"
+git checkout "${current_branch}"
 
 # copy generation configuration from target branch to current branch.
 git show "${target_branch}":"${generation_config}" > "${baseline_generation_config}"
@@ -99,12 +99,6 @@ changed_libraries=$(python hermetic_build/common/cli/get_changed_libraries.py cr
   --current-generation-config-path="${generation_config}")
 echo "Changed libraries are: ${changed_libraries:-"No changed library"}."
 
-if [[ -z "${changed_libraries}" ]]; then
-  echo 'No libraries to generate. Aborting generation'
-  exit 0
-fi
-image_tag=sha256:6557673834067f149dde8bc669aba04de1214a95876d827679fd3ef62e4f6d78
-
 # run hermetic code generation docker image.
 docker run \
   --rm \
@@ -112,7 +106,7 @@ docker run \
   -v "$(pwd):${workspace_name}" \
   -v "${api_def_dir}:${workspace_name}/googleapis" \
   -e GENERATOR_VERSION="${image_tag}" \
-  "${image_tag}" \
+  gcr.io/cloud-devrel-public-resources/java-library-generation:"${image_tag}" \
   --generation-config-path="${workspace_name}/${generation_config}" \
   --library-names="${changed_libraries}" \
   --api-definitions-path="${workspace_name}/googleapis"

@@ -226,18 +226,18 @@ jobs:
         run: |
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
       - name: Java Linter
-        working-directory: showcase
+        working-directory: java-showcase
         run: |
           mvn -B -ntp fmt:check
       - name: Showcase golden tests
-        working-directory: showcase
+        working-directory: java-showcase
         run: |
           mvn test \
             -P enable-golden-tests \
             --batch-mode \
             --no-transfer-progress
       - name: Parse showcase version
-        working-directory: showcase/gapic-showcase
+        working-directory: java-showcase/gapic-showcase
         run: echo "SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)" >> "$GITHUB_ENV"
       - name: Install showcase server
         run: |
@@ -249,7 +249,7 @@ jobs:
           ./gapic-showcase run &
           cd -
       - name: Showcase integration tests
-        working-directory: showcase
+        working-directory: java-showcase
         run: |
           mvn verify \
             -P enable-integration-tests \
@@ -272,7 +272,7 @@ jobs:
       - name: Install sdk-platform-java and showcase to local maven repository
         run: |
           mvn install -B -ntp -T 1C -DskipTests
-          cd showcase
+          cd java-showcase
           mvn install -B -ntp -T 1C -DskipTests
           SHOWCASE_CLIENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "SHOWCASE_CLIENT_VERSION=$SHOWCASE_CLIENT_VERSION" >> "$GITHUB_ENV"
@@ -282,7 +282,7 @@ jobs:
         run: mvn install -B -ntp -T 1C -DskipTests
         # Showcase golden test ensures that src changes are already reflected in the PR.
       - name: Clirr check
-        working-directory: showcase
+        working-directory: java-showcase
         run: |
           mvn versions:set -B -ntp -DnewVersion=local
           mvn clirr:check -B -ntp -Dclirr.skip=false -DcomparisonVersion=$SHOWCASE_CLIENT_VERSION
