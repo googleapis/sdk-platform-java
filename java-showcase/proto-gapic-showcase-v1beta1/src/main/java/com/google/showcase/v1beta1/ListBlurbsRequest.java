@@ -73,7 +73,7 @@ public final class ListBlurbsRequest extends com.google.protobuf.GeneratedMessag
    *
    *
    * <pre>
-   * The resource name of the requested room or profile who blurbs to list.
+   * The resource name of the requested room or profile whos blurbs to list.
    * </pre>
    *
    * <code>
@@ -98,7 +98,7 @@ public final class ListBlurbsRequest extends com.google.protobuf.GeneratedMessag
    *
    *
    * <pre>
-   * The resource name of the requested room or profile who blurbs to list.
+   * The resource name of the requested room or profile whos blurbs to list.
    * </pre>
    *
    * <code>
@@ -588,7 +588,7 @@ public final class ListBlurbsRequest extends com.google.protobuf.GeneratedMessag
      *
      *
      * <pre>
-     * The resource name of the requested room or profile who blurbs to list.
+     * The resource name of the requested room or profile whos blurbs to list.
      * </pre>
      *
      * <code>
@@ -612,7 +612,7 @@ public final class ListBlurbsRequest extends com.google.protobuf.GeneratedMessag
      *
      *
      * <pre>
-     * The resource name of the requested room or profile who blurbs to list.
+     * The resource name of the requested room or profile whos blurbs to list.
      * </pre>
      *
      * <code>
@@ -636,7 +636,7 @@ public final class ListBlurbsRequest extends com.google.protobuf.GeneratedMessag
      *
      *
      * <pre>
-     * The resource name of the requested room or profile who blurbs to list.
+     * The resource name of the requested room or profile whos blurbs to list.
      * </pre>
      *
      * <code>
@@ -659,7 +659,7 @@ public final class ListBlurbsRequest extends com.google.protobuf.GeneratedMessag
      *
      *
      * <pre>
-     * The resource name of the requested room or profile who blurbs to list.
+     * The resource name of the requested room or profile whos blurbs to list.
      * </pre>
      *
      * <code>
@@ -678,7 +678,7 @@ public final class ListBlurbsRequest extends com.google.protobuf.GeneratedMessag
      *
      *
      * <pre>
-     * The resource name of the requested room or profile who blurbs to list.
+     * The resource name of the requested room or profile whos blurbs to list.
      * </pre>
      *
      * <code>
