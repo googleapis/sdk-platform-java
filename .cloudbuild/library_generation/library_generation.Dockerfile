@@ -15,7 +15,7 @@
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
 
-FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:3bab9f2cd4fa8704445bf01444e8e5e0f1ab819a41616069872a898b432a7309 AS ggj-build
+FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:9a259c69e57564f1d13f6f5b275e37c638c3103dc1978237e90b6d4d66bc9b0c AS ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
@@ -27,7 +27,7 @@ RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
-FROM docker.io/library/alpine:3.21.0@sha256:21dc6063fd678b478f57c0e13f47560d0ea4eeba26dfc947b2a4f81f686b9f45 as glibc-compat
+FROM docker.io/library/alpine:3.21.2@sha256:56fa17d2a7e7f168a043a2712e63aed1f8543aeafdcee47c58dcffe38ed51099 as glibc-compat
 
 RUN apk add git sudo
 # This SHA is the latest known-to-work version of this binary compatibility tool
@@ -47,9 +47,9 @@ RUN git checkout "${GLIB_MUS_SHA}"
 RUN chmod a+x compile-x86_64-alpine-linux.sh
 RUN sh compile-x86_64-alpine-linux.sh
 
-FROM docker.io/library/python:3.13.1-alpine3.20@sha256:804ad02b9ba67ea1f8307eeb6407b121c6bd6bb19d3f182aae166821eb59d6a4 as final
+FROM docker.io/library/python:3.13.1-alpine3.20@sha256:9ab3b6ef4afb7582afaa84e97d40a36f192595bb0578561c282cecc22a45de49 as final
 
-ARG OWLBOT_CLI_COMMITTISH=8b7d94b4a8ad0345aeefd6a7ec9c5afcbeb8e2d7
+ARG OWLBOT_CLI_COMMITTISH=0a12b5d22a1ee0975dae8142d61c828ea74508e4
 ARG PROTOC_VERSION=25.5
 ARG GRPC_VERSION=1.69.0
 ARG JAVA_FORMAT_VERSION=1.7
