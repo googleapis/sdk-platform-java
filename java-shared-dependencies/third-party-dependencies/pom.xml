@@ -42,7 +42,7 @@
     <flogger.version>0.8</flogger.version>
     <arrow.version>15.0.2</arrow.version>
     <dev.cel.version>0.6.0</dev.cel.version>
-    <com.google.crypto.tink.version>1.15.0</com.google.crypto.tink.version>
+    <com.google.crypto.tink.version>1.16.0</com.google.crypto.tink.version>
   </properties>
 
   <dependencyManagement>
