@@ -272,11 +272,6 @@ public abstract class EndpointContext {
 
     /** Determines the fully resolved endpoint and universe domain values */
     private String determineEndpoint() throws IOException {
-      // Check if Experimental S2A feature enabled. When feature is non-experimental, remove this
-      // check from this function, and plumb MTLS endpoint to channel creation logic separately.
-      if (shouldUseS2A()) {
-        return mtlsEndpoint();
-      }
       MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
       // TransportChannelProvider's endpoint will override the ClientSettings' endpoint
       String customEndpoint =
@@ -306,6 +301,12 @@ public abstract class EndpointContext {
           && !resolvedUniverseDomain().equals(Credentials.GOOGLE_DEFAULT_UNIVERSE)) {
         throw new IllegalArgumentException(
             "mTLS is not supported in any universe other than googleapis.com");
+      }
+
+      // Check if Experimental S2A feature enabled. When feature is non-experimental, remove this
+      // check from this function, and plumb MTLS endpoint to channel creation logic separately.
+      if (shouldUseS2A()) {
+        return mtlsEndpoint();
       }
       return endpoint;
     }
