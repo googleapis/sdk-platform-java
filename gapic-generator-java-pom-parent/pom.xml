@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api</groupId>
   <artifactId>gapic-generator-java-pom-parent</artifactId>
-  <version>2.51.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+  <version>2.51.2-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
   <packaging>pom</packaging>
   <name>GAPIC Generator Java POM Parent</name>
   <url>https://github.com/googleapis/sdk-platform-java</url>
@@ -15,7 +15,7 @@
   <parent>
     <groupId>com.google.cloud</groupId>
     <artifactId>google-cloud-shared-config</artifactId>
-    <version>1.12.2</version>
+    <version>1.13.0</version>
     <relativePath/>
   </parent>
 
@@ -37,7 +37,7 @@
     <errorprone.version>2.36.0</errorprone.version>
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
     <threetenbp.version>1.7.0</threetenbp.version>
-    <junit.version>5.11.3</junit.version>
+    <junit.version>5.11.4</junit.version>
   </properties>
 
   <developers>

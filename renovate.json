@@ -110,7 +110,8 @@
       "versioning": "docker",
       "matchPackageNames": [
         "/^com.google.guava:/"
-      ]
+      ],
+      "enabled": false
     },
     {
       "semanticCommitType": "deps",
@@ -168,7 +169,8 @@
       "groupName": "gRPC dependencies",
       "matchPackageNames": [
         "/^io.grpc/"
-      ]
+      ],
+      "enabled": false
     },
     {
       "groupName": "Google Auth Library dependencies",
