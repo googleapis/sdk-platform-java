@@ -305,6 +305,8 @@ public abstract class EndpointContext {
 
       // Check if Experimental S2A feature enabled. When feature is non-experimental, remove this
       // check from this function, and plumb MTLS endpoint to channel creation logic separately.
+      // Note that mTLS via S2A is an independent feature from mTLS via mTLSEndpointResolver (which
+      // uses DCA).
       if (shouldUseS2A()) {
         return mtlsEndpoint();
       }
