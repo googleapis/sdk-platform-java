@@ -25,6 +25,8 @@ set -ex
 # 3. [optional] image_tag, the tag of gcr.io/cloud-devrel-public-resources/java-library-generation.
 # 4. [optional] generation_config, the path to the generation configuration,
 # the default value is generation_config.yaml in the repository root.
+# 5. [optional] showcase_mode, true if we wish to download the showcase api
+# definitions, which are necessary for generating the showcase library.
 while [[ $# -gt 0 ]]; do
 key="$1"
 case "${key}" in
@@ -44,6 +46,10 @@ case "${key}" in
     generation_config="$2"
     shift
     ;;
+  --showcase_mode)
+    showcase_mode="$2"
+    shift
+    ;;
   *)
     echo "Invalid option: [$1]"
     exit 1
@@ -60,6 +66,10 @@ fi
 if [ -z "${current_branch}" ]; then
   echo "missing required argument --current_branch"
   exit 1
+fi
+
+if [ -z "${download_showcase}" ]; then
+  download_showcase="false"
 fi
 
 if [ -z "${generation_config}" ]; then
@@ -90,8 +100,10 @@ git checkout "${googleapis_commitish}"
 popd
 
 # we also setup showcase
-source java-showcase/scripts/showcase_utilities.sh
-append_showcase_to_api_defs "${api_def_dir}"
+if [[ "${showcase_mode}" == "true" ]]; then
+  source java-showcase/scripts/showcase_utilities.sh
+  append_showcase_to_api_defs "${api_def_dir}"
+fi
 
 # get changed library list.
 changed_libraries=$(python hermetic_build/common/cli/get_changed_libraries.py create \
