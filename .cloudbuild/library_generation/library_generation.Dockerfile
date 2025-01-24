@@ -15,25 +15,23 @@
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
 
-# 3.9.9-eclipse-temurin-11-alpine
-FROM docker.io/library/maven@sha256:006d25558f9d5244ed55b5d2bd8eaf34d883e447d0c4b940e67b9f44d21167bf AS ggj-build
+FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:9a259c69e57564f1d13f6f5b275e37c638c3103dc1978237e90b6d4d66bc9b0c AS ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
 # {x-version-update-start:gapic-generator-java:current}
-ENV DOCKER_GAPIC_GENERATOR_VERSION="2.50.1-SNAPSHOT"
+ENV DOCKER_GAPIC_GENERATOR_VERSION="2.51.2-SNAPSHOT"
 # {x-version-update-end}
 
 RUN mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 RUN cp "/root/.m2/repository/com/google/api/gapic-generator-java/${DOCKER_GAPIC_GENERATOR_VERSION}/gapic-generator-java-${DOCKER_GAPIC_GENERATOR_VERSION}.jar" \
   "./gapic-generator-java.jar"
 
-# alpine:3.20.3
-FROM docker.io/library/alpine@sha256:beefdbd8a1da6d2915566fde36db9db0b524eb737fc57cd1367effd16dc0d06d as glibc-compat
+FROM docker.io/library/alpine:3.21.2@sha256:56fa17d2a7e7f168a043a2712e63aed1f8543aeafdcee47c58dcffe38ed51099 as glibc-compat
 
 RUN apk add git sudo
 # This SHA is the latest known-to-work version of this binary compatibility tool
-ARG GLIB_MUS_SHA=7717dd4dc26377dd9cedcc92b72ebf35f9e68a2d
+ARG GLIB_MUS_SHA=e94aca542e3ab08b42aa0b0d6e72478b935bb8e8
 WORKDIR /home
 
 # Install compatibility layer to run glibc-based programs (such as the
@@ -49,12 +47,11 @@ RUN git checkout "${GLIB_MUS_SHA}"
 RUN chmod a+x compile-x86_64-alpine-linux.sh
 RUN sh compile-x86_64-alpine-linux.sh
 
-# python:3.12.7-alpine3.20
-FROM docker.io/library/python@sha256:5049c050bdc68575a10bcb1885baa0689b6c15152d8a56a7e399fb49f783bf98 as final
+FROM docker.io/library/python:3.13.1-alpine3.20@sha256:9ab3b6ef4afb7582afaa84e97d40a36f192595bb0578561c282cecc22a45de49 as final
 
-ARG OWLBOT_CLI_COMMITTISH=ab222d9a20bb27586433caedc70f049b7853db7e
+ARG OWLBOT_CLI_COMMITTISH=0a12b5d22a1ee0975dae8142d61c828ea74508e4
 ARG PROTOC_VERSION=25.5
-ARG GRPC_VERSION=1.68.1
+ARG GRPC_VERSION=1.69.0
 ARG JAVA_FORMAT_VERSION=1.7
 ENV HOME=/home
 ENV OS_ARCHITECTURE="linux-x86_64"
@@ -78,6 +75,9 @@ COPY --from=glibc-compat /lib/libc.* /lib/
 COPY --from=glibc-compat /usr/lib/libgcc* /usr/lib/
 COPY --from=glibc-compat /usr/lib/libstdc* /usr/lib/
 COPY --from=glibc-compat /usr/lib/libobstack* /usr/lib/
+COPY --from=glibc-compat /lib/libm.so.6 /usr/lib/
+COPY --from=glibc-compat /usr/lib/libucontext.so.1 /usr/lib/
+
 
 # copy source code
 COPY hermetic_build/common /src/common

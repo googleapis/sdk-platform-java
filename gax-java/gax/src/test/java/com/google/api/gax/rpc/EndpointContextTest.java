@@ -374,6 +374,21 @@ class EndpointContextTest {
   }
 
   @Test
+  void endpointContextBuild_shouldUseS2A_mtlsEndpoint() throws IOException {
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("true");
+    defaultEndpointContextBuilder =
+        defaultEndpointContextBuilder
+            .setEnvProvider(envProvider)
+            .setClientSettingsEndpoint("")
+            .setTransportChannelProviderEndpoint("")
+            .setUsingGDCH(false);
+    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
+    Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isTrue();
+    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_MTLS_ENDPOINT);
+  }
+
+  @Test
   void hasValidUniverseDomain_gdchFlow_anyCredentials() throws IOException {
     Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
     Credentials validCredentials = Mockito.mock(Credentials.class);
@@ -505,6 +520,20 @@ class EndpointContextTest {
             .setClientSettingsEndpoint("")
             .setTransportChannelProviderEndpoint("test.endpoint.com:443")
             .setUsingGDCH(false);
+    Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
+  }
+
+  @Test
+  void shouldUseS2A_mtlsEndpointNull_returnsFalse() throws IOException {
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(envProvider.getenv(EndpointContext.S2A_ENV_ENABLE_USE_S2A)).thenReturn("true");
+    defaultEndpointContextBuilder =
+        defaultEndpointContextBuilder
+            .setEnvProvider(envProvider)
+            .setClientSettingsEndpoint("")
+            .setTransportChannelProviderEndpoint("")
+            .setUsingGDCH(false)
+            .setMtlsEndpoint(null);
     Truth.assertThat(defaultEndpointContextBuilder.shouldUseS2A()).isFalse();
   }
 

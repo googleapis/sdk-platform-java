@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,13 +27,12 @@ package com.google.longrunning;
  *
  * Example:
  *
- *   rpc LongRunningRecognize(LongRunningRecognizeRequest)
- *       returns (google.longrunning.Operation) {
- *     option (google.longrunning.operation_info) = {
- *       response_type: "LongRunningRecognizeResponse"
- *       metadata_type: "LongRunningRecognizeMetadata"
- *     };
- *   }
+ *     rpc Export(ExportRequest) returns (google.longrunning.Operation) {
+ *       option (google.longrunning.operation_info) = {
+ *         response_type: "ExportResponse"
+ *         metadata_type: "ExportMetadata"
+ *       };
+ *     }
  * </pre>
  *
  * Protobuf type {@code google.longrunning.OperationInfo}
@@ -376,13 +375,12 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * Example:
    *
-   *   rpc LongRunningRecognize(LongRunningRecognizeRequest)
-   *       returns (google.longrunning.Operation) {
-   *     option (google.longrunning.operation_info) = {
-   *       response_type: "LongRunningRecognizeResponse"
-   *       metadata_type: "LongRunningRecognizeMetadata"
-   *     };
-   *   }
+   *     rpc Export(ExportRequest) returns (google.longrunning.Operation) {
+   *       option (google.longrunning.operation_info) = {
+   *         response_type: "ExportResponse"
+   *         metadata_type: "ExportMetadata"
+   *       };
+   *     }
    * </pre>
    *
    * Protobuf type {@code google.longrunning.OperationInfo}

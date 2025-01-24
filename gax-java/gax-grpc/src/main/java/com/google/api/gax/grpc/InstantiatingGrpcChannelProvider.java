@@ -63,9 +63,9 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.TlsChannelCredentials;
 import io.grpc.alts.GoogleDefaultChannelCredentials;
 import io.grpc.auth.MoreCallCredentials;
-import io.grpc.s2a.S2AChannelCredentials;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
@@ -106,11 +106,15 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   // The public portion of the mTLS MDS root certificate is stored for performing
   // cert verification when establishing an mTLS connection with the MDS. See
-  // https://cloud.google.com/compute/docs/metadata/overview#https-mds-root-certs
+  // {@link <a
+  // href="https://cloud.google.com/compute/docs/metadata/overview#https-mds-root-certs">this</a>
+  // for more information.}
   private static final String MTLS_MDS_ROOT_PATH = "/run/google-mds-mtls/root.crt";
   // The mTLS MDS credentials are formatted as the concatenation of a PEM-encoded certificate chain
   // followed by a PEM-encoded private key. See
-  // https://cloud.google.com/compute/docs/metadata/overview#https-mds-client-certs
+  // {@link <a
+  // href="https://cloud.google.com/compute/docs/metadata/overview#https-mds-client-certs">this</a>
+  // for more information.}
   private static final String MTLS_MDS_CERT_CHAIN_AND_KEY_PATH = "/run/google-mds-mtls/client.key";
 
   static final long DIRECT_PATH_KEEP_ALIVE_TIME_SECONDS = 3600;
@@ -142,17 +146,36 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
   @Nullable private final SecureSessionAgent s2aConfigProvider;
+  @Nullable private final List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
   @VisibleForTesting final Map<String, String> headersWithDuplicatesRemoved = new HashMap<>();
 
   @Nullable
   private final ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
 
+  /*
+   * Experimental feature
+   *
+   * <p>{@link HardBoundTokenTypes} specifies if hard bound tokens should be used if DirectPath
+   * or S2A is used to estabilsh a connection to Google APIs.
+   *
+   */
+  @InternalApi
+  public enum HardBoundTokenTypes {
+    // If DirectPath is used to create the channel, use hard ALTS-bound tokens for requests sent on
+    // that channel.
+    ALTS,
+    // If MTLS via S2A is used to create the channel, use hard MTLS-bound tokens for requests sent
+    // on that channel.
+    MTLS_S2A
+  }
+
   private InstantiatingGrpcChannelProvider(Builder builder) {
     this.processorCount = builder.processorCount;
     this.executor = builder.executor;
     this.headerProvider = builder.headerProvider;
-    this.endpoint = builder.endpoint;
     this.useS2A = builder.useS2A;
+    this.endpoint = builder.endpoint;
+    this.allowedHardBoundTokenTypes = builder.allowedHardBoundTokenTypes;
     this.mtlsProvider = builder.mtlsProvider;
     this.s2aConfigProvider = builder.s2aConfigProvider;
     this.envProvider = builder.envProvider;
@@ -440,6 +463,43 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   /**
+   * Create the S2A-Secured Channel credentials. Load the API using reflection. Once the S2A API is
+   * stable in gRPC-Java, all callers of this method can simply use the S2A APIs directly and this
+   * method can be deleted.
+   *
+   * @param s2aAddress the address of the S2A server used to secure the connection.
+   * @param s2aChannelCredentials the credentials to be used when connecting to the S2A.
+   * @return {@code ChannelCredentials} instance.
+   */
+  ChannelCredentials buildS2AChannelCredentials(
+      String s2aAddress, ChannelCredentials s2aChannelCredentials) {
+    try {
+      // Load the S2A API.
+      Class<?> s2aChannelCreds = Class.forName("io.grpc.s2a.S2AChannelCredentials");
+      Class<?> s2aChannelCredsBuilder = Class.forName("io.grpc.s2a.S2AChannelCredentials$Builder");
+
+      // Load and invoke the S2A API methods.
+      Class<?>[] partypes = new Class[2];
+      partypes[0] = String.class;
+      partypes[1] = ChannelCredentials.class;
+      Method newBuilder = s2aChannelCreds.getMethod("newBuilder", partypes);
+      Object arglist[] = new Object[2];
+      arglist[0] = s2aAddress;
+      arglist[1] = s2aChannelCredentials;
+      Object retObjBuilder = newBuilder.invoke(null, arglist);
+      Method build = s2aChannelCredsBuilder.getMethod("build", null);
+      Object retObjCreds = build.invoke(retObjBuilder, null);
+      return (ChannelCredentials) retObjCreds;
+    } catch (Throwable t) {
+      LOG.log(
+          Level.WARNING,
+          "Falling back to default (TLS without S2A) because S2A APIs cannot be used: "
+              + t.getMessage());
+      return null;
+    }
+  }
+
+  /**
    * This method creates {@link TlsChannelCredentials} to be used by the client to establish an mTLS
    * connection to S2A. Returns null if any of {@param trustBundle}, {@param privateKey} or {@param
    * certChain} are missing.
@@ -476,8 +536,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     if (Strings.isNullOrEmpty(plaintextAddress)) {
       return null;
     }
-    return S2AChannelCredentials.newBuilder(plaintextAddress, InsecureChannelCredentials.create())
-        .build();
+    return buildS2AChannelCredentials(plaintextAddress, InsecureChannelCredentials.create());
   }
 
   /**
@@ -491,8 +550,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    * returns null; in this case S2A will not be used, and a TLS connection to the service will be
    * established.
    *
-   * @return {@link ChannelCredentials} configured to use S2A to create mTLS connection to
-   *     mtlsEndpoint.
+   * @return {@link ChannelCredentials} configured to use S2A to create mTLS connection.
    */
   ChannelCredentials createS2ASecuredChannelCredentials() {
     SecureSessionAgentConfig config = s2aConfigProvider.getConfig();
@@ -524,7 +582,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
                 + ignore.getMessage());
         return createPlaintextToS2AChannelCredentials(plaintextAddress);
       }
-      return S2AChannelCredentials.newBuilder(mtlsAddress, mtlsToS2AChannelCredentials).build();
+      return buildS2AChannelCredentials(mtlsAddress, mtlsToS2AChannelCredentials);
     } else {
       // Fallback to plaintext-to-S2A connection if MTLS-MDS creds do not exist.
       LOG.log(
@@ -571,9 +629,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       builder.keepAliveTime(DIRECT_PATH_KEEP_ALIVE_TIME_SECONDS, TimeUnit.SECONDS);
       builder.keepAliveTimeout(DIRECT_PATH_KEEP_ALIVE_TIMEOUT_SECONDS, TimeUnit.SECONDS);
     } else {
-      // Try and create credentials via DCA. See https://google.aip.dev/auth/4114.
       ChannelCredentials channelCredentials;
       try {
+        // Try and create credentials via DCA. See https://google.aip.dev/auth/4114.
         channelCredentials = createMtlsChannelCredentials();
       } catch (GeneralSecurityException e) {
         throw new IOException(e);
@@ -590,7 +648,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         }
         if (channelCredentials != null) {
           // Create the channel using S2A-secured channel credentials.
-          // {@code endpoint} is set to mtlsEndpoint in {@link EndpointContext} when useS2A is true.
           builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
         } else {
           // Use default if we cannot initialize channel credentials via DCA or S2A.
@@ -761,6 +818,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private Boolean attemptDirectPathXds;
     @Nullable private Boolean allowNonDefaultServiceAccount;
     @Nullable private ImmutableMap<String, ?> directPathServiceConfig;
+    @Nullable private List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
 
     private Builder() {
       processorCount = Runtime.getRuntime().availableProcessors();
@@ -845,6 +903,18 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     Builder setUseS2A(boolean useS2A) {
       this.useS2A = useS2A;
+      return this;
+    }
+    /*
+     * Sets the allowed hard bound token types for this TransportChannelProvider.
+     *
+     * <p>The list of
+     * {@link HardBoundTokenTypes} indicates for which methods of connecting to Google APIs hard bound tokens should
+     * be used. This is optional; if it is not provided, bearer tokens will be used.
+     */
+    @InternalApi
+    public Builder setAllowHardBoundTokenTypes(List<HardBoundTokenTypes> allowedValues) {
+      this.allowedHardBoundTokenTypes = allowedValues;
       return this;
     }
 

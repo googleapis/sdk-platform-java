@@ -68,7 +68,7 @@ public abstract class EndpointContext {
       "Unable to retrieve the Universe Domain from the Credentials.";
   // This environment variable is a temporary measure. It will be removed when the feature is
   // non-experimental.
-  static final String S2A_ENV_ENABLE_USE_S2A = "EXPERIMENTAL_GOOGLE_API_USE_S2A";
+  static final String S2A_ENV_ENABLE_USE_S2A = "EXPERIMENTAL_GOOGLE_API_USE_S2A_JAVA";
 
   public static EndpointContext getDefaultInstance() {
     return INSTANCE;
@@ -272,10 +272,6 @@ public abstract class EndpointContext {
 
     /** Determines the fully resolved endpoint and universe domain values */
     private String determineEndpoint() throws IOException {
-      if (shouldUseS2A()) {
-        return mtlsEndpoint();
-      }
-
       MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
       // TransportChannelProvider's endpoint will override the ClientSettings' endpoint
       String customEndpoint =
@@ -307,15 +303,26 @@ public abstract class EndpointContext {
             "mTLS is not supported in any universe other than googleapis.com");
       }
 
+      // Check if Experimental S2A feature enabled. When feature is non-experimental, remove this
+      // check from this function, and plumb MTLS endpoint to channel creation logic separately.
+      // Note that mTLS via S2A is an independent feature from mTLS via DCA (for which endpoint
+      // determined by {@code mtlsEndpointResolver} above).
+      if (shouldUseS2A()) {
+        return mtlsEndpoint();
+      }
       return endpoint;
     }
 
     /** Determine if S2A can be used */
     @VisibleForTesting
     boolean shouldUseS2A() {
-      // If EXPERIMENTAL_GOOGLE_API_USE_S2A is not set to true, skip S2A.
-      String s2AEnv;
-      s2AEnv = envProvider().getenv(S2A_ENV_ENABLE_USE_S2A);
+      // If mTLS endpoint is not available, skip S2A
+      if (Strings.isNullOrEmpty(mtlsEndpoint())) {
+        return false;
+      }
+
+      // If EXPERIMENTAL_GOOGLE_API_USE_S2A_JAVA is not set to true, skip S2A.
+      String s2AEnv = envProvider().getenv(S2A_ENV_ENABLE_USE_S2A);
       boolean s2AEnabled = Boolean.parseBoolean(s2AEnv);
       if (!s2AEnabled) {
         return false;

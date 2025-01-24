@@ -105,7 +105,7 @@ class ConfigChange:
         :param repo_url: the repository contains the commit history.
         :return: QualifiedCommit objects.
         """
-        with tempfile.TemporaryDirectory() as tmp_dir:
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp_dir:
             # we only need commit history, thus a shadow clone is enough.
             repo = Repo.clone_from(url=repo_url, to_path=tmp_dir, filter=["blob:none"])
             commit = repo.commit(self.current_config.googleapis_commitish)
@@ -121,6 +121,7 @@ class ConfigChange:
                 if len(commit_parents) == 0:
                     break
                 commit = commit_parents[0]
+            repo.close()
         return qualified_commits
 
     def __get_library_names_from_qualified_commits(self) -> list[str]:
