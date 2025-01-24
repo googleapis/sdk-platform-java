@@ -167,7 +167,7 @@ final class GrpcNettyFeature implements Feature {
   private static void loadMiscClasses(BeforeAnalysisAccess access) {
     registerClassHierarchyForReflection(access, "com.google.protobuf.DescriptorProtos");
     registerClassForReflection(access, "com.google.api.FieldBehavior");
-
+    registerClassForReflection(access, "java.time.Instant");
     registerForUnsafeFieldAccess(access, "javax.net.ssl.SSLContext", "contextSpi");
   }
 }
