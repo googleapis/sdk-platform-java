@@ -1,7 +1,7 @@
-googleapis_commitish: 3cef095370b3176f67542e527ffde81e019df091
-# the libraries are ordered with respect to library name, which defaults to
-# {library.folder_name} or java-{library.library_name} or
-# java-{library.api-shortname} in sequence (i.e. if first is None, then try second and so on).
+googleapis_commitish: 1a0e353ac4a372cf7016df4ce0a7d7e609f339b3
+# the libraries are ordered with respect to library name, which is
+# java-{library.library_name} or java-{library.api-shortname} when
+# library.library_name is not defined.
 libraries:
 - api_shortname: showcase
   folder_name: showcase # prevents java-showcase
