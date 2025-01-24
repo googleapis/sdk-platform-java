@@ -145,11 +145,6 @@
         <version>${opentelemetry-semconv.version}</version>
       </dependency>
       <dependency>
-        <groupId>io.opentelemetry.semconv</groupId>
-        <artifactId>opentelemetry-semconv-incubating</artifactId>
-        <version>${opentelemetry-semconv.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.google.cloud.opentelemetry</groupId>
         <artifactId>exporter-metrics</artifactId>
         <version>${google.cloud.opentelemetry.version}</version>
