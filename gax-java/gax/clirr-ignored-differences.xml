@@ -106,15 +106,15 @@
     <className>com/google/api/gax/batching/Batcher</className>
     <method>*</method>
   </difference>
-  <!-- Ignore this as this was part of s2a-grpc ExperimentalApi revert -->
+  <!-- Ignore abstract method addition to an EndpointContext (InternalApi) -->
   <difference>
-    <differenceType>7002</differenceType>
-    <className>com/google/api/gax/rpc/FixedTransportChannelProvider</className>
-    <method>* withUseS2A(*)</method>
+    <differenceType>7013</differenceType>
+    <className>com/google/api/gax/rpc/EndpointContext</className>
+    <method>* useS2A()</method>
   </difference>
-  <!-- Ignore this as this was part of s2a-grpc ExperimentalApi revert -->
+  <!-- Ignore method addition to TransportChannelProvider interface (InternalExtensionOnly) -->
   <difference>
-    <differenceType>7002</differenceType>
+    <differenceType>7012</differenceType>
     <className>com/google/api/gax/rpc/TransportChannelProvider</className>
     <method>* withUseS2A(*)</method>
   </difference>
