@@ -592,6 +592,18 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
   }
 
+  boolean isMtlsS2AHardBoundTokensEnabled() {
+    if (allowedHardBoundTokenTypes == null || !(credentials instanceof ComputeEngineCredentials)) {
+      return false;
+    }
+    for (HardBoundTokenTypes boundTokenTypes : allowedHardBoundTokenTypes) {
+      if (boundTokenTypes == HardBoundTokenTypes.MTLS_S2A) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private ManagedChannel createSingleChannel() throws IOException {
     GrpcHeaderInterceptor headerInterceptor =
         new GrpcHeaderInterceptor(headersWithDuplicatesRemoved);
@@ -648,6 +660,23 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         }
         if (channelCredentials != null) {
           // Create the channel using S2A-secured channel credentials.
+          if (isMtlsS2AHardBoundTokensEnabled()) {
+            // Set a {@code ComputeEngineCredentials} instance to be per-RPC call credentials,
+            // which will be used to fetch MTLS_S2A hard bound tokens from the metdata server.
+            ComputeEngineCredentials.Builder credsBuilder =
+                ((ComputeEngineCredentials) credentials).toBuilder();
+            // We only set scopes and HTTP transport factory from the original credentials because
+            // only those are used in gRPC CallCredentials to fetch request metadata.
+            CallCredentials callCreds =
+                MoreCallCredentials.from(
+                    ComputeEngineCredentials.newBuilder()
+                        .setScopes(credsBuilder.getScopes())
+                        .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
+                        .setGoogleAuthTransport(ComputeEngineCredentials.GoogleAuthTransport.MTLS)
+                        .setBindingEnforcement(ComputeEngineCredentials.BindingEnforcement.ON)
+                        .build());
+            channelCredentials = CompositeChannelCredentials.create(channelCredentials, callCreds);
+          }
           builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
         } else {
           // Use default if we cannot initialize channel credentials via DCA or S2A.
