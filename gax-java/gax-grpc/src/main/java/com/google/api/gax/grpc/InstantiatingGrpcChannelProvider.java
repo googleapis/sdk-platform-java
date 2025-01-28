@@ -56,6 +56,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
 import io.grpc.CallCredentials;
 import io.grpc.ChannelCredentials;
+import io.grpc.CompositeChannelCredentials;
 import io.grpc.Grpc;
 import io.grpc.InsecureChannelCredentials;
 import io.grpc.ManagedChannel;
@@ -593,7 +594,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   boolean isMtlsS2AHardBoundTokensEnabled() {
-    if (allowedHardBoundTokenTypes == null || !(credentials instanceof ComputeEngineCredentials)) {
+    if (!useS2A) {
+      // If S2A cannot be used, {@code HardBoundTokenTypes.MTLS_S2A} hard bound tokens should not be
+      // used
+      return false;
+    }
+    if (allowedHardBoundTokenTypes == null
+        || credentials == null
+        || !(credentials instanceof ComputeEngineCredentials)) {
       return false;
     }
     for (HardBoundTokenTypes boundTokenTypes : allowedHardBoundTokenTypes) {
@@ -602,6 +610,22 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       }
     }
     return false;
+  }
+
+  CallCredentials createHardBoundTokensCallCredentials(
+      ComputeEngineCredentials.GoogleAuthTransport googleAuthTransport,
+      ComputeEngineCredentials.BindingEnforcement bindingEnforcement) {
+    ComputeEngineCredentials.Builder credsBuilder =
+        ((ComputeEngineCredentials) credentials).toBuilder();
+    // We only set scopes and HTTP transport factory from the original credentials because
+    // only those are used in gRPC CallCredentials to fetch request metadata.
+    return MoreCallCredentials.from(
+        ComputeEngineCredentials.newBuilder()
+            .setScopes(credsBuilder.getScopes())
+            .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
+            .setGoogleAuthTransport(googleAuthTransport)
+            .setBindingEnforcement(bindingEnforcement)
+            .build());
   }
 
   private ManagedChannel createSingleChannel() throws IOException {
@@ -663,18 +687,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           if (isMtlsS2AHardBoundTokensEnabled()) {
             // Set a {@code ComputeEngineCredentials} instance to be per-RPC call credentials,
             // which will be used to fetch MTLS_S2A hard bound tokens from the metdata server.
-            ComputeEngineCredentials.Builder credsBuilder =
-                ((ComputeEngineCredentials) credentials).toBuilder();
-            // We only set scopes and HTTP transport factory from the original credentials because
-            // only those are used in gRPC CallCredentials to fetch request metadata.
             CallCredentials callCreds =
-                MoreCallCredentials.from(
-                    ComputeEngineCredentials.newBuilder()
-                        .setScopes(credsBuilder.getScopes())
-                        .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
-                        .setGoogleAuthTransport(ComputeEngineCredentials.GoogleAuthTransport.MTLS)
-                        .setBindingEnforcement(ComputeEngineCredentials.BindingEnforcement.ON)
-                        .build());
+                createHardBoundTokensCallCredentials(
+                    ComputeEngineCredentials.GoogleAuthTransport.MTLS,
+                    ComputeEngineCredentials.BindingEnforcement.ON);
             channelCredentials = CompositeChannelCredentials.create(channelCredentials, callCreds);
           }
           builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
