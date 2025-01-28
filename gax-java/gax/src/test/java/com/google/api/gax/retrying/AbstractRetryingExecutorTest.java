@@ -52,10 +52,14 @@ import com.google.api.gax.tracing.ApiTracer;
 import com.google.common.base.Stopwatch;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -65,6 +69,21 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public abstract class AbstractRetryingExecutorTest {
+
+  private static final int DEFAULT_AWAIT_TERMINATION_SEC = 10;
+  // This is the default executor service for tests unless a local executor is used
+  ScheduledExecutorService scheduledExecutorService;
+
+  @BeforeEach
+  void setup() {
+    scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+  }
+
+  @AfterEach
+  void cleanup() throws InterruptedException {
+    scheduledExecutorService.shutdownNow();
+    scheduledExecutorService.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
+  }
 
   public static Stream<Arguments> data() {
     return Stream.of(Arguments.of(false), Arguments.of(true));
