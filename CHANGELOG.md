@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.52.0](https://github.com/googleapis/sdk-platform-java/compare/v2.51.1...v2.52.0) (2025-01-24)
+
+
+### Features
+
+* add support for new setAllowHardBoundTokens field. ([#3467](https://github.com/googleapis/sdk-platform-java/issues/3467)) ([38431a2](https://github.com/googleapis/sdk-platform-java/commit/38431a290ed55174599be0927be32daaa1c49d56))
+* revert [#3400](https://github.com/googleapis/sdk-platform-java/issues/3400): reintroduce experimental S2A integration in client libraries grpc transport ([#3548](https://github.com/googleapis/sdk-platform-java/issues/3548)) ([65a0f11](https://github.com/googleapis/sdk-platform-java/commit/65a0f11d2c8bebade9518ff338103e92a332252c))
+
+
+### Dependencies
+
+* update dependency com.google.api-client:google-api-client-bom to v2.7.2 ([#3578](https://github.com/googleapis/sdk-platform-java/issues/3578)) ([f6e5ad9](https://github.com/googleapis/sdk-platform-java/commit/f6e5ad90aced32f8a738b2e52b30fcfa02c7af4b))
+* update dependency commons-codec:commons-codec to v1.17.2 ([#3557](https://github.com/googleapis/sdk-platform-java/issues/3557)) ([07ce801](https://github.com/googleapis/sdk-platform-java/commit/07ce801599479020629ce726afb9c06b2f711093))
+* update dependency gitpython to v3.1.44 ([#3559](https://github.com/googleapis/sdk-platform-java/issues/3559)) ([e924db0](https://github.com/googleapis/sdk-platform-java/commit/e924db06590648ad40b5b3aa0f6269084270064b))
+* update dependency org.checkerframework:checker-qual to v3.48.4 ([#3560](https://github.com/googleapis/sdk-platform-java/issues/3560)) ([a4726e9](https://github.com/googleapis/sdk-platform-java/commit/a4726e9d96e9f54d839b6822a6372b1905839b6d))
+* update dependency smmap to v5.0.2 ([#3561](https://github.com/googleapis/sdk-platform-java/issues/3561)) ([6cd5d0d](https://github.com/googleapis/sdk-platform-java/commit/6cd5d0dfa4c5cd981b2d27771ca4b681ef415c63))
+* update docker.io/library/alpine docker tag to v3.21.1 ([#3551](https://github.com/googleapis/sdk-platform-java/issues/3551)) ([edd5a4c](https://github.com/googleapis/sdk-platform-java/commit/edd5a4c04db6b16cb005301d4dbcd3f8c28b7537))
+* update docker.io/library/alpine docker tag to v3.21.2 ([#3580](https://github.com/googleapis/sdk-platform-java/issues/3580)) ([f577ecd](https://github.com/googleapis/sdk-platform-java/commit/f577ecd044fc30dbeb2209292ecc6dcfdedaa758))
+* update docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine docker digest to 9a259c6 ([#3554](https://github.com/googleapis/sdk-platform-java/issues/3554)) ([eb2cbd6](https://github.com/googleapis/sdk-platform-java/commit/eb2cbd6515ded9278ffd0dae92af80b321e95c25))
+* update docker.io/library/python:3.13.1-alpine3.20 docker digest to 9ab3b6e ([#3555](https://github.com/googleapis/sdk-platform-java/issues/3555)) ([40a74fe](https://github.com/googleapis/sdk-platform-java/commit/40a74fe322b9cc4fc50919e17472c617dd331e86))
+* update google auth library dependencies to v1.31.0 ([#3577](https://github.com/googleapis/sdk-platform-java/issues/3577)) ([7fa879a](https://github.com/googleapis/sdk-platform-java/commit/7fa879a0e795094d481c090123d612f0e3a3968e))
+* update googleapis/java-cloud-bom digest to c7c443f ([#3579](https://github.com/googleapis/sdk-platform-java/issues/3579)) ([fcf40b7](https://github.com/googleapis/sdk-platform-java/commit/fcf40b72d43346e43d78d1e87060be6e621e9d52))
+* update repo-automation-bots digest to 0a12b5d ([#3464](https://github.com/googleapis/sdk-platform-java/issues/3464)) ([b9c9d21](https://github.com/googleapis/sdk-platform-java/commit/b9c9d212ea57598de5ddf2e4ead2ee323c5a8135))
+
 ## [2.51.1](https://github.com/googleapis/sdk-platform-java/compare/v2.51.0...v2.51.1) (2025-01-08)
 
 
