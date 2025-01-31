@@ -70,6 +70,7 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -147,7 +148,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
   @Nullable private final SecureSessionAgent s2aConfigProvider;
-  @Nullable private final List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
+  @Nullable private List<HardBoundTokenTypes> allowedHardBoundTokenTypes = new ArrayList<>();
   @VisibleForTesting final Map<String, String> headersWithDuplicatesRemoved = new HashMap<>();
 
   @Nullable
@@ -594,22 +595,16 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   boolean isMtlsS2AHardBoundTokensEnabled() {
-    if (!useS2A) {
-      // If S2A cannot be used, {@code HardBoundTokenTypes.MTLS_S2A} hard bound tokens should not be
-      // used
-      return false;
-    }
-    if (allowedHardBoundTokenTypes == null
+    if (!useS2A
+        // If S2A cannot be used, {@code HardBoundTokenTypes.MTLS_S2A} hard bound tokens should not
+        // be used
+        || allowedHardBoundTokenTypes.isEmpty()
         || credentials == null
         || !(credentials instanceof ComputeEngineCredentials)) {
       return false;
     }
-    for (HardBoundTokenTypes boundTokenTypes : allowedHardBoundTokenTypes) {
-      if (boundTokenTypes == HardBoundTokenTypes.MTLS_S2A) {
-        return true;
-      }
-    }
-    return false;
+    return allowedHardBoundTokenTypes.stream()
+        .anyMatch(val -> val.equals(HardBoundTokenTypes.MTLS_S2A));
   }
 
   CallCredentials createHardBoundTokensCallCredentials(
@@ -959,7 +954,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
      */
     @InternalApi
     public Builder setAllowHardBoundTokenTypes(List<HardBoundTokenTypes> allowedValues) {
-      this.allowedHardBoundTokenTypes = allowedValues;
+      if (allowedValues == null) {
+        this.allowedHardBoundTokenTypes = new ArrayList<>();
+      } else {
+        this.allowedHardBoundTokenTypes = allowedValues;
+      }
       return this;
     }
 
