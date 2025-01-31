@@ -52,12 +52,16 @@ import com.google.auth.Credentials;
 import com.google.auth.http.AuthHttpConstants;
 import com.google.auth.oauth2.CloudShellCredentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
+import com.google.auth.oauth2.SecureSessionAgent;
+import com.google.auth.oauth2.SecureSessionAgentConfig;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.TlsChannelCredentials;
 import io.grpc.alts.ComputeEngineChannelBuilder;
+import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.time.Duration;
@@ -226,6 +230,10 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
           throw new UnsupportedOperationException();
         };
     Map<String, ?> directPathServiceConfig = ImmutableMap.of("loadbalancingConfig", "grpclb");
+    List<InstantiatingGrpcChannelProvider.HardBoundTokenTypes> hardBoundTokenTypes =
+        new ArrayList<>();
+    hardBoundTokenTypes.add(InstantiatingGrpcChannelProvider.HardBoundTokenTypes.ALTS);
+    hardBoundTokenTypes.add(InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A);
 
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
@@ -239,6 +247,7 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setChannelConfigurator(channelConfigurator)
             .setChannelsPerCpu(2.5)
             .setDirectPathServiceConfig(directPathServiceConfig)
+            .setAllowHardBoundTokenTypes(hardBoundTokenTypes)
             .build();
 
     InstantiatingGrpcChannelProvider.Builder builder = provider.toBuilder();
@@ -1036,6 +1045,120 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     Map<String, String> header = new HashMap<>();
     header.put(API_KEY_AUTH_HEADER_KEY, API_KEY_HEADER_VALUE);
     return FixedHeaderProvider.create(header);
+  }
+
+  @Test
+  void createPlaintextToS2AChannelCredentials_emptyPlaintextAddress_returnsNull() {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    assertThat(provider.createPlaintextToS2AChannelCredentials("")).isNull();
+  }
+
+  @Test
+  void createPlaintextToS2AChannelCredentials_success() {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    assertThat(provider.createPlaintextToS2AChannelCredentials("localhost:8080")).isNotNull();
+  }
+
+  @Test
+  void createMtlsToS2AChannelCredentials_missingAllFiles_throws() throws IOException {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    assertThat(provider.createMtlsToS2AChannelCredentials(null, null, null)).isNull();
+  }
+
+  @Test
+  void createMtlsToS2AChannelCredentials_missingRootFile_throws() throws IOException {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    File privateKey = new File("src/test/resources/client_key.pem");
+    File certChain = new File("src/test/resources/client_cert.pem");
+    assertThat(provider.createMtlsToS2AChannelCredentials(null, privateKey, certChain)).isNull();
+  }
+
+  @Test
+  void createMtlsToS2AChannelCredentials_missingKeyFile_throws() throws IOException {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    File trustBundle = new File("src/test/resources/root_cert.pem");
+    File certChain = new File("src/test/resources/client_cert.pem");
+    assertThat(provider.createMtlsToS2AChannelCredentials(trustBundle, null, certChain)).isNull();
+  }
+
+  @Test
+  void createMtlsToS2AChannelCredentials_missingCertChainFile_throws() throws IOException {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    File trustBundle = new File("src/test/resources/root_cert.pem");
+    File privateKey = new File("src/test/resources/client_key.pem");
+    assertThat(provider.createMtlsToS2AChannelCredentials(trustBundle, privateKey, null)).isNull();
+  }
+
+  @Test
+  void createMtlsToS2AChannelCredentials_success() throws IOException {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+    File trustBundle = new File("src/test/resources/root_cert.pem");
+    File privateKey = new File("src/test/resources/client_key.pem");
+    File certChain = new File("src/test/resources/client_cert.pem");
+    assertEquals(
+        provider.createMtlsToS2AChannelCredentials(trustBundle, privateKey, certChain).getClass(),
+        TlsChannelCredentials.class);
+  }
+
+  @Test
+  void createS2ASecuredChannelCredentials_bothS2AAddressesNull_returnsNull() {
+    SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
+    SecureSessionAgentConfig config = SecureSessionAgentConfig.createBuilder().build();
+    Mockito.when(s2aConfigProvider.getConfig()).thenReturn(config);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setS2AConfigProvider(s2aConfigProvider)
+            .build();
+    assertThat(provider.createS2ASecuredChannelCredentials()).isNull();
+  }
+
+  @Test
+  void
+      createS2ASecuredChannelCredentials_mtlsS2AAddressNull_returnsPlaintextToS2AS2AChannelCredentials() {
+    SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
+    SecureSessionAgentConfig config =
+        SecureSessionAgentConfig.createBuilder().setPlaintextAddress("localhost:8080").build();
+    Mockito.when(s2aConfigProvider.getConfig()).thenReturn(config);
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setS2AConfigProvider(s2aConfigProvider)
+            .build();
+    assertThat(provider.createS2ASecuredChannelCredentials()).isNotNull();
+    assertThat(logHandler.getAllMessages())
+        .contains(
+            "Cannot establish an mTLS connection to S2A because autoconfig endpoint did not return a mtls address to reach S2A.");
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
+
+  @Test
+  void createS2ASecuredChannelCredentials_returnsPlaintextToS2AS2AChannelCredentials() {
+    SecureSessionAgent s2aConfigProvider = Mockito.mock(SecureSessionAgent.class);
+    SecureSessionAgentConfig config =
+        SecureSessionAgentConfig.createBuilder()
+            .setMtlsAddress("localhost:8080")
+            .setPlaintextAddress("localhost:8080")
+            .build();
+    Mockito.when(s2aConfigProvider.getConfig()).thenReturn(config);
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setS2AConfigProvider(s2aConfigProvider)
+            .build();
+    assertThat(provider.createS2ASecuredChannelCredentials()).isNotNull();
+    assertThat(logHandler.getAllMessages())
+        .contains(
+            "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not exist on filesystem, falling back to plaintext connection to S2A");
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
   }
 
   private static class FakeLogHandler extends Handler {
