@@ -30,7 +30,6 @@
     <dependency>
       <groupId>com.google.auth</groupId>
       <artifactId>google-auth-library-credentials</artifactId>
-      <version>1.30.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -51,7 +50,6 @@
     <dependency>
       <groupId>com.google.auth</groupId>
       <artifactId>google-auth-library-oauth2-http</artifactId>
-      <version>1.30.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>io.grpc</groupId>
