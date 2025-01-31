@@ -148,7 +148,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
   @Nullable private final SecureSessionAgent s2aConfigProvider;
-  @Nullable private List<HardBoundTokenTypes> allowedHardBoundTokenTypes = new ArrayList<>();
+  private final List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
   @VisibleForTesting final Map<String, String> headersWithDuplicatesRemoved = new HashMap<>();
 
   @Nullable
@@ -177,7 +177,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.headerProvider = builder.headerProvider;
     this.useS2A = builder.useS2A;
     this.endpoint = builder.endpoint;
-    this.allowedHardBoundTokenTypes = builder.allowedHardBoundTokenTypes;
+    this.allowedHardBoundTokenTypes =
+        builder.allowedHardBoundTokenTypes == null
+            ? new ArrayList<>()
+            : builder.allowedHardBoundTokenTypes;
     this.mtlsProvider = builder.mtlsProvider;
     this.s2aConfigProvider = builder.s2aConfigProvider;
     this.envProvider = builder.envProvider;
@@ -886,6 +889,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.attemptDirectPath = provider.attemptDirectPath;
       this.attemptDirectPathXds = provider.attemptDirectPathXds;
       this.allowNonDefaultServiceAccount = provider.allowNonDefaultServiceAccount;
+      this.allowedHardBoundTokenTypes = provider.allowedHardBoundTokenTypes;
       this.directPathServiceConfig = provider.directPathServiceConfig;
       this.mtlsProvider = provider.mtlsProvider;
       this.s2aConfigProvider = provider.s2aConfigProvider;
@@ -954,11 +958,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
      */
     @InternalApi
     public Builder setAllowHardBoundTokenTypes(List<HardBoundTokenTypes> allowedValues) {
-      if (allowedValues == null) {
-        this.allowedHardBoundTokenTypes = new ArrayList<>();
-      } else {
-        this.allowedHardBoundTokenTypes = allowedValues;
-      }
+      this.allowedHardBoundTokenTypes =
+          Preconditions.checkNotNull(
+              allowedValues, "Illegal Argument, allowedValues cannot be null");
+      ;
       return this;
     }
 

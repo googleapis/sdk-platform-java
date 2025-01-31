@@ -1117,11 +1117,11 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
   }
 
   @Test
-  void isMtlsS2AHardBoundTokensEnabled_hardBoundTokenTypesNull() {
+  void isMtlsS2AHardBoundTokensEnabled_hardBoundTokenTypesEmpty() {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setUseS2A(true)
-            .setAllowHardBoundTokenTypes(null)
+            .setAllowHardBoundTokenTypes(new ArrayList<>())
             .setCredentials(computeEngineCredentials)
             .build();
     Truth.assertThat(provider.isMtlsS2AHardBoundTokensEnabled()).isFalse();
