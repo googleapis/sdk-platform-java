@@ -861,7 +861,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private Boolean attemptDirectPathXds;
     @Nullable private Boolean allowNonDefaultServiceAccount;
     @Nullable private ImmutableMap<String, ?> directPathServiceConfig;
-    @Nullable private List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
+    private List<HardBoundTokenTypes> allowedHardBoundTokenTypes;
 
     private Builder() {
       processorCount = Runtime.getRuntime().availableProcessors();
