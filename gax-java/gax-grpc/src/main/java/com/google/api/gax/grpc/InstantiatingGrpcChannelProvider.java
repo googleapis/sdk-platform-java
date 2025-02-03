@@ -598,9 +598,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   boolean isMtlsS2AHardBoundTokensEnabled() {
+    // If S2A cannot be used, the list of allowed hard bound token types is empty or doesn't contain
+    // {@code HardBoundTokenTypes.MTLS_S2A}, the {@code credentials} are null or not of type {@code
+    // ComputeEngineCredentials} then {@code HardBoundTokenTypes.MTLS_S2A} hard bound tokens should
+    // not
+    // be used. {@code HardBoundTokenTypes.MTLS_S2A} hard bound tokens can only be used on MTLS
+    // channels established using S2A and when tokens from MDS (i.e {@code ComputeEngineCredentials}
+    // are being used.
     if (!useS2A
-        // If S2A cannot be used, {@code HardBoundTokenTypes.MTLS_S2A} hard bound tokens should not
-        // be used
         || allowedHardBoundTokenTypes.isEmpty()
         || credentials == null
         || !(credentials instanceof ComputeEngineCredentials)) {
@@ -960,7 +965,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     public Builder setAllowHardBoundTokenTypes(List<HardBoundTokenTypes> allowedValues) {
       this.allowedHardBoundTokenTypes =
           Preconditions.checkNotNull(
-              allowedValues, "Illegal Argument, allowedValues cannot be null");
+              allowedValues, "List of allowed HardBoundTokenTypes cannot be null");
       ;
       return this;
     }
