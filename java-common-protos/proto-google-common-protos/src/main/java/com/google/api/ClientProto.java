@@ -330,23 +330,24 @@ public final class ClientProto {
           + "oll_delay_multiplier\030\002 \001(\002\0221\n\016max_poll_d"
           + "elay\030\003 \001(\0132\031.google.protobuf.Duration\0225\n"
           + "\022total_poll_timeout\030\004 \001(\0132\031.google.proto"
-          + "buf.Duration\"+\n\030SelectiveGapicGeneration"
-          + "\022\017\n\007methods\030\001 \003(\t*\243\001\n\031ClientLibraryOrgan"
-          + "ization\022+\n\'CLIENT_LIBRARY_ORGANIZATION_U"
-          + "NSPECIFIED\020\000\022\t\n\005CLOUD\020\001\022\007\n\003ADS\020\002\022\n\n\006PHOT"
-          + "OS\020\003\022\017\n\013STREET_VIEW\020\004\022\014\n\010SHOPPING\020\005\022\007\n\003G"
-          + "EO\020\006\022\021\n\rGENERATIVE_AI\020\007*g\n\030ClientLibrary"
-          + "Destination\022*\n&CLIENT_LIBRARY_DESTINATIO"
-          + "N_UNSPECIFIED\020\000\022\n\n\006GITHUB\020\n\022\023\n\017PACKAGE_M"
-          + "ANAGER\020\024:9\n\020method_signature\022\036.google.pr"
-          + "otobuf.MethodOptions\030\233\010 \003(\t:6\n\014default_h"
-          + "ost\022\037.google.protobuf.ServiceOptions\030\231\010 "
-          + "\001(\t:6\n\014oauth_scopes\022\037.google.protobuf.Se"
-          + "rviceOptions\030\232\010 \001(\t:8\n\013api_version\022\037.goo"
-          + "gle.protobuf.ServiceOptions\030\301\272\253\372\001 \001(\tBi\n"
-          + "\016com.google.apiB\013ClientProtoP\001ZAgoogle.g"
-          + "olang.org/genproto/googleapis/api/annota"
-          + "tions;annotations\242\002\004GAPIb\006proto3"
+          + "buf.Duration\"Q\n\030SelectiveGapicGeneration"
+          + "\022\017\n\007methods\030\001 \003(\t\022$\n\034generate_omitted_as"
+          + "_internal\030\002 \001(\010*\243\001\n\031ClientLibraryOrganiz"
+          + "ation\022+\n\'CLIENT_LIBRARY_ORGANIZATION_UNS"
+          + "PECIFIED\020\000\022\t\n\005CLOUD\020\001\022\007\n\003ADS\020\002\022\n\n\006PHOTOS"
+          + "\020\003\022\017\n\013STREET_VIEW\020\004\022\014\n\010SHOPPING\020\005\022\007\n\003GEO"
+          + "\020\006\022\021\n\rGENERATIVE_AI\020\007*g\n\030ClientLibraryDe"
+          + "stination\022*\n&CLIENT_LIBRARY_DESTINATION_"
+          + "UNSPECIFIED\020\000\022\n\n\006GITHUB\020\n\022\023\n\017PACKAGE_MAN"
+          + "AGER\020\024:9\n\020method_signature\022\036.google.prot"
+          + "obuf.MethodOptions\030\233\010 \003(\t:6\n\014default_hos"
+          + "t\022\037.google.protobuf.ServiceOptions\030\231\010 \001("
+          + "\t:6\n\014oauth_scopes\022\037.google.protobuf.Serv"
+          + "iceOptions\030\232\010 \001(\t:8\n\013api_version\022\037.googl"
+          + "e.protobuf.ServiceOptions\030\301\272\253\372\001 \001(\tBi\n\016c"
+          + "om.google.apiB\013ClientProtoP\001ZAgoogle.gol"
+          + "ang.org/genproto/googleapis/api/annotati"
+          + "ons;annotations\242\002\004GAPIb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
@@ -522,7 +523,7 @@ public final class ClientProto {
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_api_SelectiveGapicGeneration_descriptor,
             new java.lang.String[] {
-              "Methods",
+              "Methods", "GenerateOmittedAsInternal",
             });
     methodSignature.internalInit(descriptor.getExtensions().get(0));
     defaultHost.internalInit(descriptor.getExtensions().get(1));
