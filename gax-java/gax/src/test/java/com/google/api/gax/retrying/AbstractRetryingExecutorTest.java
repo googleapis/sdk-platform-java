@@ -71,7 +71,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public abstract class AbstractRetryingExecutorTest {
 
   private static final int DEFAULT_AWAIT_TERMINATION_SEC = 10;
-  // This is the default executor service for tests unless a local executor is used
+
+  // This is the default executor service for RetryingExecutor tests unless
+  // a local executor is specifically used
   ScheduledExecutorService scheduledExecutorService;
 
   @BeforeEach

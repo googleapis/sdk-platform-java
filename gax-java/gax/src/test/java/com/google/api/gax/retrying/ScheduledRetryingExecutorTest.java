@@ -75,12 +75,11 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
 
   @Test
   void testSuccessWithFailuresPeekAttempt() throws Exception {
-    final int maxRetries = 100;
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
             .setTotalTimeoutDuration(java.time.Duration.ofMillis(1000L))
-            .setMaxAttempts(maxRetries)
+            .setMaxAttempts(100)
             .build();
     for (int executionsCount = 0; executionsCount < EXECUTIONS_COUNT; executionsCount++) {
 
@@ -126,7 +125,7 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
 
   @Test
   void testSuccessWithFailuresGetAttempt() throws Exception {
-    final int maxRetries = 100;
+    int maxRetries = 100;
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
@@ -180,7 +179,7 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
 
   @Test
   void testCancelGetAttempt() throws Exception {
-    final int maxRetries = 100;
+    int maxRetries = 100;
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
@@ -188,7 +187,6 @@ class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest {
             .setMaxRpcTimeoutDuration(java.time.Duration.ofMillis(50L))
             .setTotalTimeoutDuration(java.time.Duration.ofMillis(5000L))
             .setMaxAttempts(maxRetries)
-            .setJittered(false)
             .build();
     FailingCallable callable = new FailingCallable(maxRetries - 1, "request", "SUCCESS", tracer);
 
