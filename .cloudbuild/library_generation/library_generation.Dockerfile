@@ -15,7 +15,7 @@
 # install gapic-generator-java in a separate layer so we don't overload the image
 # with the transferred source code and jars
 
-FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:9a259c69e57564f1d13f6f5b275e37c638c3103dc1978237e90b6d4d66bc9b0c AS ggj-build
+FROM docker.io/library/maven:3.9.9-eclipse-temurin-11-alpine@sha256:d323c2bf4d095c661930481ad2179d41aa3a5b807c7bf9f4cb15ed331fc6997a AS ggj-build
 
 WORKDIR /sdk-platform-java
 COPY . .
@@ -47,7 +47,7 @@ RUN git checkout "${GLIB_MUS_SHA}"
 RUN chmod a+x compile-x86_64-alpine-linux.sh
 RUN sh compile-x86_64-alpine-linux.sh
 
-FROM docker.io/library/python:3.13.1-alpine3.20@sha256:9ab3b6ef4afb7582afaa84e97d40a36f192595bb0578561c282cecc22a45de49 as final
+FROM docker.io/library/python:3.13.1-alpine3.20@sha256:7788ec80bdacc4736a50adce4c3711581e83650a8895c6dbf202caf4af7a3270 as final
 
 ARG OWLBOT_CLI_COMMITTISH=0a12b5d22a1ee0975dae8142d61c828ea74508e4
 ARG PROTOC_VERSION=25.5
