@@ -178,10 +178,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.headerProvider = builder.headerProvider;
     this.useS2A = builder.useS2A;
     this.endpoint = builder.endpoint;
-    this.allowedHardBoundTokenTypes =
-        builder.allowedHardBoundTokenTypes == null
-            ? new ArrayList<>()
-            : builder.allowedHardBoundTokenTypes;
+    this.allowedHardBoundTokenTypes = builder.allowedHardBoundTokenTypes;
     this.mtlsProvider = builder.mtlsProvider;
     this.s2aConfigProvider = builder.s2aConfigProvider;
     this.envProvider = builder.envProvider;
@@ -838,6 +835,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       processorCount = Runtime.getRuntime().availableProcessors();
       envProvider = System::getenv;
       channelPoolSettings = ChannelPoolSettings.staticallySized(1);
+      allowedHardBoundTokenTypes = new ArrayList<>();
     }
 
     private Builder(InstantiatingGrpcChannelProvider provider) {
@@ -1177,14 +1175,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     CallCredentials createHardBoundTokensCallCredentials(
         ComputeEngineCredentials.GoogleAuthTransport googleAuthTransport,
         ComputeEngineCredentials.BindingEnforcement bindingEnforcement) {
-      ComputeEngineCredentials.Builder credsBuilder =
-          ((ComputeEngineCredentials) this.credentials).toBuilder();
       // We only set scopes and HTTP transport factory from the original credentials because
       // only those are used in gRPC CallCredentials to fetch request metadata.
       return MoreCallCredentials.from(
-          ComputeEngineCredentials.newBuilder()
-              .setScopes(credsBuilder.getScopes())
-              .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
+          ((ComputeEngineCredentials) this.credentials)
+              .toBuilder()
               .setGoogleAuthTransport(googleAuthTransport)
               .setBindingEnforcement(bindingEnforcement)
               .build());
