@@ -141,6 +141,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Boolean keepAliveWithoutCalls;
   private final ChannelPoolSettings channelPoolSettings;
   @Nullable private final Credentials credentials;
+  @Nullable private final CallCredentials mtlsS2ACallCredentials;
   @Nullable private final ChannelPrimer channelPrimer;
   @Nullable private final Boolean attemptDirectPath;
   @Nullable private final Boolean attemptDirectPathXds;
@@ -193,6 +194,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.channelPoolSettings = builder.channelPoolSettings;
     this.channelConfigurator = builder.channelConfigurator;
     this.credentials = builder.credentials;
+    this.mtlsS2ACallCredentials = builder.mtlsS2ACallCredentials;
     this.channelPrimer = builder.channelPrimer;
     this.attemptDirectPath = builder.attemptDirectPath;
     this.attemptDirectPathXds = builder.attemptDirectPathXds;
@@ -597,40 +599,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
   }
 
-  boolean isMtlsS2AHardBoundTokensEnabled() {
-    // If S2A cannot be used, the list of allowed hard bound token types is empty or doesn't contain
-    // {@code HardBoundTokenTypes.MTLS_S2A}, the {@code credentials} are null or not of type {@code
-    // ComputeEngineCredentials} then {@code HardBoundTokenTypes.MTLS_S2A} hard bound tokens should
-    // not
-    // be used. {@code HardBoundTokenTypes.MTLS_S2A} hard bound tokens can only be used on MTLS
-    // channels established using S2A and when tokens from MDS (i.e {@code ComputeEngineCredentials}
-    // are being used.
-    if (!useS2A
-        || allowedHardBoundTokenTypes.isEmpty()
-        || credentials == null
-        || !(credentials instanceof ComputeEngineCredentials)) {
-      return false;
-    }
-    return allowedHardBoundTokenTypes.stream()
-        .anyMatch(val -> val.equals(HardBoundTokenTypes.MTLS_S2A));
-  }
-
-  CallCredentials createHardBoundTokensCallCredentials(
-      ComputeEngineCredentials.GoogleAuthTransport googleAuthTransport,
-      ComputeEngineCredentials.BindingEnforcement bindingEnforcement) {
-    ComputeEngineCredentials.Builder credsBuilder =
-        ((ComputeEngineCredentials) credentials).toBuilder();
-    // We only set scopes and HTTP transport factory from the original credentials because
-    // only those are used in gRPC CallCredentials to fetch request metadata.
-    return MoreCallCredentials.from(
-        ComputeEngineCredentials.newBuilder()
-            .setScopes(credsBuilder.getScopes())
-            .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
-            .setGoogleAuthTransport(googleAuthTransport)
-            .setBindingEnforcement(bindingEnforcement)
-            .build());
-  }
-
   private ManagedChannel createSingleChannel() throws IOException {
     GrpcHeaderInterceptor headerInterceptor =
         new GrpcHeaderInterceptor(headersWithDuplicatesRemoved);
@@ -687,14 +655,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         }
         if (channelCredentials != null) {
           // Create the channel using S2A-secured channel credentials.
-          if (isMtlsS2AHardBoundTokensEnabled()) {
-            // Set a {@code ComputeEngineCredentials} instance to be per-RPC call credentials,
+          if (mtlsS2ACallCredentials != null) {
+            // Set {@code mtlsS2ACallCredentials} to be per-RPC call credentials,
             // which will be used to fetch MTLS_S2A hard bound tokens from the metdata server.
-            CallCredentials callCreds =
-                createHardBoundTokensCallCredentials(
-                    ComputeEngineCredentials.GoogleAuthTransport.MTLS,
-                    ComputeEngineCredentials.BindingEnforcement.ON);
-            channelCredentials = CompositeChannelCredentials.create(channelCredentials, callCreds);
+            channelCredentials =
+                CompositeChannelCredentials.create(channelCredentials, mtlsS2ACallCredentials);
           }
           builder = Grpc.newChannelBuilder(endpoint, channelCredentials);
         } else {
@@ -860,6 +825,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private Boolean keepAliveWithoutCalls;
     @Nullable private ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
     @Nullable private Credentials credentials;
+    @Nullable private CallCredentials mtlsS2ACallCredentials;
     @Nullable private ChannelPrimer channelPrimer;
     private ChannelPoolSettings channelPoolSettings;
     @Nullable private Boolean attemptDirectPath;
@@ -889,6 +855,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.keepAliveWithoutCalls = provider.keepAliveWithoutCalls;
       this.channelConfigurator = provider.channelConfigurator;
       this.credentials = provider.credentials;
+      this.mtlsS2ACallCredentials = provider.mtlsS2ACallCredentials;
       this.channelPrimer = provider.channelPrimer;
       this.channelPoolSettings = provider.channelPoolSettings;
       this.attemptDirectPath = provider.attemptDirectPath;
@@ -1185,7 +1152,53 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
+    boolean isMtlsS2AHardBoundTokensEnabled() {
+      // If S2A cannot be used, the list of allowed hard bound token types is empty or doesn't
+      // contain
+      // {@code HardBoundTokenTypes.MTLS_S2A}, the {@code credentials} are null or not of type
+      // {@code
+      // ComputeEngineCredentials} then {@code HardBoundTokenTypes.MTLS_S2A} hard bound tokens
+      // should
+      // not
+      // be used. {@code HardBoundTokenTypes.MTLS_S2A} hard bound tokens can only be used on MTLS
+      // channels established using S2A and when tokens from MDS (i.e {@code
+      // ComputeEngineCredentials}
+      // are being used.
+      if (!this.useS2A
+          || this.allowedHardBoundTokenTypes.isEmpty()
+          || this.credentials == null
+          || !(this.credentials instanceof ComputeEngineCredentials)) {
+        return false;
+      }
+      return allowedHardBoundTokenTypes.stream()
+          .anyMatch(val -> val.equals(HardBoundTokenTypes.MTLS_S2A));
+    }
+
+    CallCredentials createHardBoundTokensCallCredentials(
+        ComputeEngineCredentials.GoogleAuthTransport googleAuthTransport,
+        ComputeEngineCredentials.BindingEnforcement bindingEnforcement) {
+      ComputeEngineCredentials.Builder credsBuilder =
+          ((ComputeEngineCredentials) this.credentials).toBuilder();
+      // We only set scopes and HTTP transport factory from the original credentials because
+      // only those are used in gRPC CallCredentials to fetch request metadata.
+      return MoreCallCredentials.from(
+          ComputeEngineCredentials.newBuilder()
+              .setScopes(credsBuilder.getScopes())
+              .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
+              .setGoogleAuthTransport(googleAuthTransport)
+              .setBindingEnforcement(bindingEnforcement)
+              .build());
+    }
+
     public InstantiatingGrpcChannelProvider build() {
+      if (isMtlsS2AHardBoundTokensEnabled()) {
+        // Set a {@code ComputeEngineCredentials} instance to be per-RPC call credentials,
+        // which will be used to fetch MTLS_S2A hard bound tokens from the metdata server.
+        this.mtlsS2ACallCredentials =
+            createHardBoundTokensCallCredentials(
+                ComputeEngineCredentials.GoogleAuthTransport.MTLS,
+                ComputeEngineCredentials.BindingEnforcement.ON);
+      }
       InstantiatingGrpcChannelProvider instantiatingGrpcChannelProvider =
           new InstantiatingGrpcChannelProvider(this);
       instantiatingGrpcChannelProvider.removeApiKeyCredentialDuplicateHeaders();

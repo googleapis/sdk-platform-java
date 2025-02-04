@@ -1105,65 +1105,60 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
 
   @Test
   void isMtlsS2AHardBoundTokensEnabled_useS2AFalse() {
-    InstantiatingGrpcChannelProvider provider =
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setUseS2A(false)
             .setAllowHardBoundTokenTypes(
                 Collections.singletonList(
                     InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A))
-            .setCredentials(computeEngineCredentials)
-            .build();
-    Truth.assertThat(provider.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+            .setCredentials(computeEngineCredentials);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
   }
 
   @Test
   void isMtlsS2AHardBoundTokensEnabled_hardBoundTokenTypesEmpty() {
-    InstantiatingGrpcChannelProvider provider =
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setUseS2A(true)
             .setAllowHardBoundTokenTypes(new ArrayList<>())
-            .setCredentials(computeEngineCredentials)
-            .build();
-    Truth.assertThat(provider.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+            .setCredentials(computeEngineCredentials);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
   }
 
   @Test
   void isMtlsS2AHardBoundTokensEnabled_nullCreds() {
-    InstantiatingGrpcChannelProvider provider =
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setUseS2A(true)
             .setAllowHardBoundTokenTypes(
                 Collections.singletonList(
                     InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A))
-            .setCredentials(null)
-            .build();
-    Truth.assertThat(provider.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+            .setCredentials(null);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
   }
 
   @Test
   void isMtlsS2AHardBoundTokensEnabled_notComputeEngineCreds() {
-    InstantiatingGrpcChannelProvider provider =
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setUseS2A(true)
             .setAllowHardBoundTokenTypes(
                 Collections.singletonList(
                     InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A))
-            .setCredentials(CloudShellCredentials.create(3000))
-            .build();
-    Truth.assertThat(provider.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+            .setCredentials(CloudShellCredentials.create(3000));
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
   }
 
   @Test
   void isMtlsS2AHardBoundTokensEnabled_mtlsS2ANotInList() {
-    InstantiatingGrpcChannelProvider provider =
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setUseS2A(true)
             .setAllowHardBoundTokenTypes(
                 Collections.singletonList(
                     InstantiatingGrpcChannelProvider.HardBoundTokenTypes.ALTS))
-            .setCredentials(computeEngineCredentials)
-            .build();
-    Truth.assertThat(provider.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+            .setCredentials(computeEngineCredentials);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
   }
 
   @Test
@@ -1173,13 +1168,12 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     allowHardBoundTokenTypes.add(InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A);
     allowHardBoundTokenTypes.add(InstantiatingGrpcChannelProvider.HardBoundTokenTypes.ALTS);
 
-    InstantiatingGrpcChannelProvider provider =
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setUseS2A(true)
             .setAllowHardBoundTokenTypes(allowHardBoundTokenTypes)
-            .setCredentials(computeEngineCredentials)
-            .build();
-    Truth.assertThat(provider.isMtlsS2AHardBoundTokensEnabled()).isTrue();
+            .setCredentials(computeEngineCredentials);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isTrue();
   }
 
   private static class FakeLogHandler extends Handler {
