@@ -3,6 +3,6 @@ alwaysCreateStatusCheck: false
 ignoreFiles:
   - src/test/**
   - test/**
-  - showcase/**
+  - java-showcase/**
   - library_generation/owlbot/templates/java_library/samples/install-without-bom/pom.xml
   - library_generation/owlbot/synthtool/gcp/snippets.py

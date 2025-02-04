@@ -38,7 +38,7 @@ mvn install --projects '!gapic-generator-java' \
 SHARED_DEPS_VERSION=$(parse_pom_version java-shared-dependencies)
 
 # Run showcase integration tests in GraalVM
-pushd showcase/gapic-showcase
+pushd java-showcase/gapic-showcase
 SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)
 popd
 # Start showcase server
@@ -52,7 +52,7 @@ tar -xf showcase-*
 popd
 
 # Run showcase tests with `native` profile
-pushd showcase
+pushd java-showcase
 mvn test -Pnative,-showcase \
   -Denforcer.skip=true \
   -Dcheckstyle.skip \
