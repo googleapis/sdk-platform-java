@@ -77,6 +77,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
@@ -142,5 +143,6 @@
         </plugins>
       </build>
     </profile>
+
   </profiles>
 </project>

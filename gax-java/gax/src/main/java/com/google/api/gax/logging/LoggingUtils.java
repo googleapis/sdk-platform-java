@@ -39,10 +39,12 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.util.JsonFormat;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.slf4j.event.Level;
 import org.slf4j.spi.LoggingEventBuilder;
 
@@ -61,6 +63,20 @@ public class LoggingUtils {
     loggingEnabled = isLoggingEnabled();
   }
 
+  private static boolean hasAddKeyValue;
+
+  static {
+    try {
+      // try to find this class
+      Class.forName("org.slf4j.event.KeyValuePair");
+      // If no exception, it means SLF4j 2.x or later is present
+      hasAddKeyValue = true;
+    } catch (ClassNotFoundException e) {
+      // If ClassNotFoundException, it's likely SLF4j 1.x
+      hasAddKeyValue = false;
+    }
+  }
+
   private LoggingUtils() {}
 
   public static Logger getLogger(Class<?> clazz) {
@@ -77,7 +93,52 @@ public class LoggingUtils {
     }
   }
 
-  public static void logWithMDC(
+  public static void log(
+      Logger logger, org.slf4j.event.Level level, Map<String, Object> contextMap, String message) {
+    if (hasAddKeyValue) {
+      logWithKeyValuePair(logger, level, contextMap, message);
+    } else {
+      logWithMDC(logger, level, contextMap, message);
+    }
+  }
+
+  private static void logWithMDC(
+      Logger logger, org.slf4j.event.Level level, Map<String, Object> contextMap, String message) {
+    if (!contextMap.isEmpty()) {
+      for (Entry<String, Object> entry : contextMap.entrySet()) {
+        String key = entry.getKey();
+        Object value = entry.getValue();
+        MDC.put(key, value.toString());
+      }
+      // contextMap.put("message", message);
+      // message = gson.toJson(contextMap);
+    }
+    switch (level) {
+      case TRACE:
+        logger.trace(message);
+        break;
+      case DEBUG:
+        logger.debug(message);
+        break;
+      case INFO:
+        logger.info(message);
+        break;
+      case WARN:
+        logger.warn(message);
+        break;
+      case ERROR:
+        logger.error(message);
+        break;
+      default:
+        logger.debug(message);
+        // Default to DEBUG level
+    }
+    if (!contextMap.isEmpty()) {
+      MDC.clear();
+    }
+  }
+
+  private static void logWithKeyValuePair(
       Logger logger, org.slf4j.event.Level level, Map<String, Object> contextMap, String message) {
     LoggingEventBuilder loggingEventBuilder;
     switch (level) {
@@ -97,8 +158,8 @@ public class LoggingUtils {
         loggingEventBuilder = logger.atError();
         break;
       default:
-        loggingEventBuilder = logger.atInfo();
-        // Default to INFO level
+        loggingEventBuilder = logger.atDebug();
+        // Default to DEBUG level
     }
     contextMap.forEach(loggingEventBuilder::addKeyValue);
     loggingEventBuilder.log(message);
@@ -141,7 +202,7 @@ public class LoggingUtils {
             addIfNotEmpty(logDataBuilder::rpcName, rpcName);
             addIfNotEmpty(logDataBuilder::httpUrl, endpoint);
           }
-          if (logger.isDebugEnabled()) {
+          if (logger.isInfoEnabled()) {
             logDataBuilder.requestHeaders(requestHeaders);
           }
         });
@@ -152,6 +213,7 @@ public class LoggingUtils {
       setter.accept(value);
     }
   }
+
   public static void recordResponseHeaders(
       Map<String, String> headers, LogData.Builder logDataBuilder, Logger logger) {
     executeWithTryCatch(
@@ -166,7 +228,7 @@ public class LoggingUtils {
       RespT message, LogData.Builder logDataBuilder, Logger logger) {
     executeWithTryCatch(
         () -> {
-          if (logger.isDebugEnabled()) {
+          if (logger.isInfoEnabled()) {
             Map<String, Object> messageToMapWithGson =
                 LoggingUtils.messageToMapWithGson((Message) message);
 
@@ -183,11 +245,11 @@ public class LoggingUtils {
           }
           if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
             Map<String, Object> responseData = logDataBuilder.build().toMapResponse();
-            LoggingUtils.logWithMDC(logger, Level.INFO, responseData, "Received Grpc response");
+            LoggingUtils.log(logger, Level.INFO, responseData, "Received Grpc response");
           }
-          if (logger.isDebugEnabled()) {
+          if (logger.isInfoEnabled()) {
             Map<String, Object> responsedDetailsMap = logDataBuilder.build().toMapResponse();
-            LoggingUtils.logWithMDC(
+            LoggingUtils.log(
                 logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
           }
         });
@@ -198,7 +260,7 @@ public class LoggingUtils {
     executeWithTryCatch(
         () -> {
           if (logger.isInfoEnabled() && !logger.isDebugEnabled()) {
-            LoggingUtils.logWithMDC(
+            LoggingUtils.log(
                 logger, Level.INFO, logDataBuilder.build().toMapRequest(), "Sending gRPC request");
           }
           if (logger.isDebugEnabled()) {
@@ -207,7 +269,7 @@ public class LoggingUtils {
 
             logDataBuilder.requestPayload(messageToMapWithGson);
             Map<String, Object> requestDetailsMap = logDataBuilder.build().toMapRequest();
-            LoggingUtils.logWithMDC(logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request");
+            LoggingUtils.log(logger, Level.DEBUG, requestDetailsMap, "Sending gRPC request");
           }
         });
   }
@@ -215,8 +277,8 @@ public class LoggingUtils {
   public static void executeWithTryCatch(ThrowingRunnable action) {
     try {
       action.run();
-    } catch (Exception | NoSuchMethodError e) {
-      // should fail silently
+    } catch (Exception e) {
+      // let logging exceptions fail silently
     }
   }
 
