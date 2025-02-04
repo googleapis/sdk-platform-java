@@ -102,7 +102,8 @@ public class LoggingUtils {
     }
   }
 
-  private static void logWithMDC(
+  // exposed for testing
+  static void logWithMDC(
       Logger logger, org.slf4j.event.Level level, Map<String, Object> contextMap, String message) {
     if (!contextMap.isEmpty()) {
       for (Entry<String, Object> entry : contextMap.entrySet()) {
@@ -249,8 +250,7 @@ public class LoggingUtils {
           }
           if (logger.isInfoEnabled()) {
             Map<String, Object> responsedDetailsMap = logDataBuilder.build().toMapResponse();
-            LoggingUtils.log(
-                logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
+            LoggingUtils.log(logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
           }
         });
   }
@@ -286,4 +286,29 @@ public class LoggingUtils {
   public interface ThrowingRunnable {
     void run() throws Exception;
   }
+
+  // public interface loggerHelper {
+  //   void log(
+  //       Logger logger, org.slf4j.event.Level level, Map<String, Object> contextMap,
+  //       String message) ;
+  // }
+  //
+  // public class Slf4j1xLogger implements loggerHelper {
+  //
+  //   @Override
+  //   public void log(Logger logger, Level level, Map<String, Object> contextMap,
+  //       String message) {
+  //     logWithMDC(logger, level, contextMap, message);
+  //   }
+  // }
+  //
+  //
+  // public class Slf4j2xLogger implements loggerHelper {
+  //
+  //   @Override
+  //   public void log(Logger logger, Level level, Map<String, Object> contextMap,
+  //       String message) {
+  //     logWithKeyValuePair(logger, level, contextMap, message);
+  //   }
+  // }
 }

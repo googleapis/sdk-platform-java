@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -30,14 +30,20 @@
 
 package com.google.api.gax.logging;
 
+import static com.google.api.gax.logging.LoggingUtils.messageToMapWithGson;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.google.api.gax.logging.LoggingUtils.LoggerFactoryProvider;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
+import com.google.protobuf.Field;
+import com.google.protobuf.Field.Cardinality;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.Option;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
@@ -47,6 +53,8 @@ import org.mockito.Mockito;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.slf4j.event.Level;
 import org.slf4j.helpers.NOPLogger;
 
 class LoggingUtilsTest {
@@ -75,7 +83,7 @@ class LoggingUtilsTest {
     LoggingUtils.setEnvironmentProvider(envProvider);
 
     Logger logger = LoggingUtils.getLogger(LoggingUtilsTest.class);
-    Assertions.assertEquals(NOPLogger.class, logger.getClass());
+    assertEquals(NOPLogger.class, logger.getClass());
     Assertions.assertFalse(logger.isInfoEnabled());
     Assertions.assertFalse(logger.isDebugEnabled());
   }
@@ -117,29 +125,58 @@ class LoggingUtilsTest {
     Assertions.assertFalse(LoggingUtils.isLoggingEnabled());
   }
 
-  private TestAppender setupTestLogger(Class<?> clazz) {
-    TestAppender testAppender = new TestAppender();
-    testAppender.start();
-    Logger logger = LoggerFactory.getLogger(clazz);
-    ((ch.qos.logback.classic.Logger) logger).addAppender(testAppender);
-    return testAppender;
+  // run with slf4j2_logback profile
+  @Test
+  void testLog_slf4JLogger() {
+    Map<String, Object> contextMap = new HashMap<>();
+    contextMap.put("key1", "value");
+    contextMap.put("key2", 123);
+    String message = "Test message";
+    TestLogger testLogger = new TestLogger("test-logger");
+    LoggingUtils.log(testLogger, org.slf4j.event.Level.DEBUG, contextMap, message);
+
+    assertEquals(message, testLogger.messageList.get(0));
+
+    assertEquals("value", testLogger.keyValuePairsMap.get("key1"));
+    assertEquals(123, testLogger.keyValuePairsMap.get("key2"));
+  }
+
+  // run with slf4j1_logback profile
+  @Test
+  void testLogWithMDC_InfoLevel_VerifyMDC() {
+    TestLogger testLogger = new TestLogger("test-logger");
+    Map<String, Object> contextMap = new HashMap<>();
+    contextMap.put("key1", "value1");
+    contextMap.put("key2", 123);
+    String message = "Test message";
+
+    LoggingUtils.logWithMDC(testLogger, Level.INFO, contextMap, message);
+
+    Map<String, String> mdcMap = testLogger.MDCMap;
+
+    assertEquals(2, mdcMap.size());
+    assertEquals("value1", mdcMap.get("key1"));
+    assertEquals("123", mdcMap.get("key2"));
+
+    assertEquals(message, testLogger.messageList.get(0));
+    // verify MDC is cleared
+    assertNull(MDC.getCopyOfContextMap());
   }
 
   @Test
-  void testLogWithMDC_slf4jLogger() {
-    TestAppender testAppender = setupTestLogger(LoggingUtilsTest.class);
-    Map<String, Object> contextMap = new HashMap<>();
-    contextMap.put("key", "value");
-    LoggingUtils.logWithMDC(LOGGER, org.slf4j.event.Level.DEBUG, contextMap, "test message");
+  void testMessageToMap_ValidMessage() throws InvalidProtocolBufferException {
+    Field field =
+        Field.newBuilder()
+            .setNumber(2)
+            .setName("field_name1")
+            .addOptions(Option.newBuilder().setName("opt_name1").build())
+            .addOptions(Option.newBuilder().setName("opt_name2").build())
+            .setCardinality(Cardinality.CARDINALITY_OPTIONAL)
+            .build();
 
-    Assertions.assertEquals(1, testAppender.events.size());
-    Assertions.assertEquals(
-        "{\"message\":\"test message\",\"key\":\"value\"}",
-        testAppender.events.get(0).getFormattedMessage());
+    Map<String, Object> map = messageToMapWithGson(field);
 
-    // Verify MDC content
-    ILoggingEvent event = testAppender.events.get(0);
-    Assertions.assertEquals("value", event.getMDCPropertyMap().get("key"));
-    testAppender.stop();
+    assertEquals("field_name1", map.get("name"));
+    assertEquals(2.0, map.get("number")); // Gson converts ints to doubles by default
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -40,8 +40,7 @@ class LogDataTest {
 
   @Test
   void toMapResponse_correctlyConvertsData() {
-    Map<String, Object> responsePayload= ImmutableMap.of("key",
-        "value", "key2", 123);
+    Map<String, Object> responsePayload = ImmutableMap.of("key", "value", "key2", 123);
     LogData logData =
         LogData.builder()
             .serviceName("MyService")
@@ -63,8 +62,7 @@ class LogDataTest {
 
   @Test
   void toMapRequest_correctlyConvertsData() {
-    Map<String, String> header=
-    ImmutableMap.of("fake header", "item");
+    Map<String, String> header = ImmutableMap.of("fake header", "item");
     LogData logData =
         LogData.builder()
             .serviceName("MyService")
@@ -72,8 +70,7 @@ class LogDataTest {
             .requestHeaders(header)
             .requestId("abcd")
             .httpUrl("url")
-            .responsePayload(ImmutableMap.of("key",
-                "value", "key2", 123))
+            .responsePayload(ImmutableMap.of("key", "value", "key2", 123))
             .build();
 
     Map<String, Object> expectedMap =
