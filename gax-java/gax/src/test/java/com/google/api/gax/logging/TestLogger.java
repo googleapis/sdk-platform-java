@@ -170,7 +170,9 @@ public class TestLogger implements Logger, LoggingEventAware {
   public void info(String msg, Throwable t) {}
 
   @Override
-  public boolean isInfoEnabled(Marker marker) {}
+  public boolean isInfoEnabled(Marker marker) {
+    return false;
+  }
 
   @Override
   public void info(Marker marker, String msg) {}

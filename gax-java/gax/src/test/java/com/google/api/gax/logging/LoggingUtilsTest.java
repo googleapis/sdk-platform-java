@@ -37,7 +37,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ch.qos.logback.classic.LoggerContext;
 import com.google.api.gax.logging.LoggingUtils.LoggerFactoryProvider;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.protobuf.Field;
@@ -46,7 +45,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Option;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -61,12 +59,6 @@ class LoggingUtilsTest {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LoggingUtilsTest.class);
   private EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-
-  @AfterEach
-  void tearDown() {
-    LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-    loggerContext.getLogger(Logger.ROOT_LOGGER_NAME).detachAppender("CONSOLE");
-  }
 
   @Test
   void testGetLogger_loggingEnabled_slf4jBindingPresent() {
