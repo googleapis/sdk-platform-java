@@ -566,8 +566,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       // Fallback to plaintext connection to S2A.
       LOG.log(
           Level.INFO,
-          "Cannot establish an mTLS connection to S2A because autoconfig endpoint did not return a"
-              + " mtls address to reach S2A.");
+          "Cannot establish an mTLS connection to S2A because autoconfig endpoint did not return a mtls address to reach S2A.");
       return createPlaintextToS2AChannelCredentials(plaintextAddress);
     }
     // Currently, MTLS to MDS is only available on GCE. See:
@@ -585,9 +584,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         // Fallback to plaintext-to-S2A connection on error.
         LOG.log(
             Level.WARNING,
-            "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS"
-                + " TlsChannelCredentials credentials, falling back to plaintext connection to S2A:"
-                + " "
+            "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS TlsChannelCredentials credentials, falling back to plaintext connection to S2A: "
                 + ignore.getMessage());
         return createPlaintextToS2AChannelCredentials(plaintextAddress);
       }
@@ -596,8 +593,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       // Fallback to plaintext-to-S2A connection if MTLS-MDS creds do not exist.
       LOG.log(
           Level.INFO,
-          "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not exist"
-              + " on filesystem, falling back to plaintext connection to S2A");
+          "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not exist on filesystem, falling back to plaintext connection to S2A");
       return createPlaintextToS2AChannelCredentials(plaintextAddress);
     }
   }
