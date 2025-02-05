@@ -33,6 +33,7 @@ package com.google.api.gax.logging;
 import static com.google.api.gax.logging.LoggingUtils.messageToMapWithGson;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -285,6 +286,8 @@ class LoggingUtilsTest {
     assertEquals(2, ((TestLogger) logger).keyValuePairsMap.size());
     assertEquals("Sending gRPC request", ((TestLogger) logger).messageList.get(0));
     verify(logDataBuilder, never()).requestPayload(anyMap()); // Ensure debug path is not taken
+
+    assertEquals(Level.INFO, ((TestLogger) logger).level);
   }
 
   @Test
@@ -304,7 +307,7 @@ class LoggingUtilsTest {
             .requestPayload(LoggingUtils.messageToMapWithGson(field));
     when(logDataBuilder.build()).thenReturn(testLogDataBuilder.build());
 
-    TestLogger logger = new TestLogger("test-logger", false, true);
+    TestLogger logger = new TestLogger("test-logger", true, true);
 
     LoggingUtils.logRequest(field, logDataBuilder, logger);
 
@@ -313,6 +316,56 @@ class LoggingUtilsTest {
     assertEquals(3, ((TestLogger) logger).keyValuePairsMap.size());
     assertEquals(2, ((Map) ((TestLogger) logger).keyValuePairsMap.get("request.payload")).size());
     assertEquals("Sending gRPC request", ((TestLogger) logger).messageList.get(0));
+
+    assertEquals(Level.DEBUG, ((TestLogger) logger).level);
+  }
+
+  @Test
+  void testLogResponse_infoEnabled_debugDisabled() {
+    String status = "OK";
+    Map<String, Object> responseData = new HashMap<>();
+
+    LogData.Builder logDataBuilder = Mockito.mock(LogData.Builder.class);
+    LogData.Builder testLogDataBuilder =
+        LogData.builder()
+            .serviceName("service-name")
+            .rpcName("rpc-name")
+            .responsePayload(responseData);
+    when(logDataBuilder.build()).thenReturn(testLogDataBuilder.build());
+    TestLogger logger = new TestLogger("test-logger", true, false);
+
+    LoggingUtils.logResponse(status, logDataBuilder, logger);
+
+    verify(logDataBuilder).responseStatus(status);
+    assertEquals("Received Grpc response", ((TestLogger) logger).messageList.get(0));
+    assertEquals(3, ((TestLogger) logger).keyValuePairsMap.size());
+    assertTrue(((TestLogger) logger).keyValuePairsMap.containsKey("response.payload"));
+    assertEquals(Level.INFO, ((TestLogger) logger).level);
+    Map<String, Object> keyValuePairsMap = ((TestLogger) logger).keyValuePairsMap;
+  }
+
+  @Test
+  void testLogResponse_infoEnabled_debugEnabled() {
+    String status = "OK";
+    Map<String, Object> responseData = new HashMap<>();
+
+    LogData.Builder logDataBuilder = Mockito.mock(LogData.Builder.class);
+    LogData.Builder testLogDataBuilder =
+        LogData.builder()
+            .serviceName("service-name")
+            .rpcName("rpc-name")
+            .responsePayload(responseData);
+    when(logDataBuilder.build()).thenReturn(testLogDataBuilder.build());
+    TestLogger logger = new TestLogger("test-logger", true, true);
+
+    LoggingUtils.logResponse(status, logDataBuilder, logger);
+
+    verify(logDataBuilder).responseStatus(status);
+    assertEquals("Received Grpc response", ((TestLogger) logger).messageList.get(0));
+    assertEquals(3, ((TestLogger) logger).keyValuePairsMap.size());
+    assertTrue(((TestLogger) logger).keyValuePairsMap.containsKey("response.payload"));
+
+    assertEquals(Level.DEBUG, ((TestLogger) logger).level);
   }
 
   @Test
@@ -325,7 +378,6 @@ class LoggingUtilsTest {
                   int x = 5;
                   int y = 10;
                   int z = x + y;
-                  assertEquals(15, z); // Example assertion
                 }));
   }
 
@@ -335,7 +387,6 @@ class LoggingUtilsTest {
         () ->
             LoggingUtils.executeWithTryCatch(
                 () -> {
-                  // Code that throws an exception
                   throw new Exception("Test Exception");
                 }));
   }
@@ -346,7 +397,6 @@ class LoggingUtilsTest {
         () ->
             LoggingUtils.executeWithTryCatch(
                 () -> {
-                  // Code that throws a RuntimeException
                   throw new RuntimeException("Test RuntimeException");
                 }));
   }

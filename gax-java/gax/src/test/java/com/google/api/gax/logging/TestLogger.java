@@ -38,6 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.MDC;
 import org.slf4j.Marker;
 import org.slf4j.event.KeyValuePair;
+import org.slf4j.event.Level;
 import org.slf4j.event.LoggingEvent;
 import org.slf4j.spi.LoggingEventAware;
 
@@ -45,6 +46,7 @@ import org.slf4j.spi.LoggingEventAware;
 public class TestLogger implements Logger, LoggingEventAware {
   Map<String, String> MDCMap = new HashMap<>();
   List<String> messageList = new ArrayList<>();
+  Level level;
 
   Map<String, Object> keyValuePairsMap = new HashMap<>();
 
@@ -283,6 +285,7 @@ public class TestLogger implements Logger, LoggingEventAware {
   @Override
   public void log(LoggingEvent event) {
     messageList.add(event.getMessage());
+    level = event.getLevel();
     List<KeyValuePair> keyValuePairs = event.getKeyValuePairs();
     for (KeyValuePair pair : keyValuePairs) {
       keyValuePairsMap.put(pair.key, pair.value);

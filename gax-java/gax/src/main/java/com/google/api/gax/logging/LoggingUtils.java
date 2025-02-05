@@ -115,8 +115,6 @@ public class LoggingUtils {
         Object value = entry.getValue();
         MDC.put(key, value.toString());
       }
-      // contextMap.put("message", message);
-      // message = gson.toJson(contextMap);
       MDC.getMDCAdapter();
     }
     switch (level) {
