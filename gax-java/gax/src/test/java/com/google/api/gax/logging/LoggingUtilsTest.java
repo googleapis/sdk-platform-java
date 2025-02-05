@@ -33,7 +33,10 @@ package com.google.api.gax.logging;
 import static com.google.api.gax.logging.LoggingUtils.messageToMapWithGson;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.google.api.gax.logging.LoggingUtils.LoggerFactoryProvider;
@@ -265,6 +268,51 @@ class LoggingUtilsTest {
     assertEquals(
         "[{name=opt_name1}, {name=opt_name2}]",
         logData.responsePayload().get("options").toString());
+  }
+
+  @Test
+  void testLogRequest_infoEnabled_debugDisabled() {
+    Object message = new Object(); // not used in info path
+    LogData.Builder logDataBuilder = Mockito.mock(LogData.Builder.class);
+
+    LogData.Builder testLogDataBuilder =
+        LogData.builder().serviceName("service-name").rpcName("rpc-name");
+    when(logDataBuilder.build()).thenReturn(testLogDataBuilder.build());
+
+    Logger logger = new TestLogger("test", true, false);
+    LoggingUtils.logRequest(message, logDataBuilder, logger);
+
+    assertEquals(2, ((TestLogger) logger).keyValuePairsMap.size());
+    assertEquals("Sending gRPC request", ((TestLogger) logger).messageList.get(0));
+    verify(logDataBuilder, never()).requestPayload(anyMap()); // Ensure debug path is not taken
+  }
+
+  @Test
+  void testLogRequest_debugEnabled() throws InvalidProtocolBufferException {
+    Field field =
+        Field.newBuilder()
+            .setName("field_name1")
+            .addOptions(Option.newBuilder().setName("opt_name1").build())
+            .addOptions(Option.newBuilder().setName("opt_name2").build())
+            .build();
+
+    LogData.Builder logDataBuilder = Mockito.mock(LogData.Builder.class);
+    LogData.Builder testLogDataBuilder =
+        LogData.builder()
+            .serviceName("service-name")
+            .rpcName("rpc-name")
+            .requestPayload(LoggingUtils.messageToMapWithGson(field));
+    when(logDataBuilder.build()).thenReturn(testLogDataBuilder.build());
+
+    TestLogger logger = new TestLogger("test-logger", false, true);
+
+    LoggingUtils.logRequest(field, logDataBuilder, logger);
+
+    verify(logDataBuilder).requestPayload(LoggingUtils.messageToMapWithGson(field));
+
+    assertEquals(3, ((TestLogger) logger).keyValuePairsMap.size());
+    assertEquals(2, ((Map) ((TestLogger) logger).keyValuePairsMap.get("request.payload")).size());
+    assertEquals("Sending gRPC request", ((TestLogger) logger).messageList.get(0));
   }
 
   @Test
