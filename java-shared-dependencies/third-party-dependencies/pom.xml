@@ -33,7 +33,7 @@
     <httpcomponents.httpcore.version>4.4.16</httpcomponents.httpcore.version>
     <httpcomponents.httpclient.version>4.5.14</httpcomponents.httpclient.version>
     <!-- ensure checker-qual version matches what Guava uses -->
-    <checker-qual.version>3.48.4</checker-qual.version>
+    <checker-qual.version>3.49.0</checker-qual.version>
     <perfmark-api.version>0.27.0</perfmark-api.version>
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
     <google.cloud.opentelemetry.version>0.33.0</google.cloud.opentelemetry.version>
@@ -138,6 +138,11 @@
         <groupId>io.opentelemetry.instrumentation</groupId>
         <artifactId>opentelemetry-grpc-1.6</artifactId>
         <version>${opentelemetry-grpc-instrumentation.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry.semconv</groupId>
+        <artifactId>opentelemetry-semconv</artifactId>
+        <version>${opentelemetry-semconv.version}</version>
       </dependency>
       <dependency>
         <groupId>io.opentelemetry</groupId>

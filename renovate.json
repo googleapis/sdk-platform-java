@@ -208,8 +208,8 @@
     },
     {
       "groupName": "Error Prone dependencies",
-      "matchPackagePatterns": [
-        "^com.google.errorprone"
+      "matchPackageNames": [
+        "/^com.google.errorprone/"
       ]
     }
   ]

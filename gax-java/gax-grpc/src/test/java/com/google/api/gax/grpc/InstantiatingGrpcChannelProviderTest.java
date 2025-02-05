@@ -1161,6 +1161,79 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
   }
 
+  @Test
+  void isMtlsS2AHardBoundTokensEnabled_useS2AFalse() {
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setUseS2A(false)
+            .setAllowHardBoundTokenTypes(
+                Collections.singletonList(
+                    InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A))
+            .setCredentials(computeEngineCredentials);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+  }
+
+  @Test
+  void isMtlsS2AHardBoundTokensEnabled_hardBoundTokenTypesEmpty() {
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setUseS2A(true)
+            .setAllowHardBoundTokenTypes(new ArrayList<>())
+            .setCredentials(computeEngineCredentials);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+  }
+
+  @Test
+  void isMtlsS2AHardBoundTokensEnabled_nullCreds() {
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setUseS2A(true)
+            .setAllowHardBoundTokenTypes(
+                Collections.singletonList(
+                    InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A))
+            .setCredentials(null);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+  }
+
+  @Test
+  void isMtlsS2AHardBoundTokensEnabled_notComputeEngineCreds() {
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setUseS2A(true)
+            .setAllowHardBoundTokenTypes(
+                Collections.singletonList(
+                    InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A))
+            .setCredentials(CloudShellCredentials.create(3000));
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+  }
+
+  @Test
+  void isMtlsS2AHardBoundTokensEnabled_mtlsS2ANotInList() {
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setUseS2A(true)
+            .setAllowHardBoundTokenTypes(
+                Collections.singletonList(
+                    InstantiatingGrpcChannelProvider.HardBoundTokenTypes.ALTS))
+            .setCredentials(computeEngineCredentials);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isFalse();
+  }
+
+  @Test
+  void isMtlsS2AHardBoundTokensEnabled_mtlsS2ATokenAllowedInList() {
+    List<InstantiatingGrpcChannelProvider.HardBoundTokenTypes> allowHardBoundTokenTypes =
+        new ArrayList<>();
+    allowHardBoundTokenTypes.add(InstantiatingGrpcChannelProvider.HardBoundTokenTypes.MTLS_S2A);
+    allowHardBoundTokenTypes.add(InstantiatingGrpcChannelProvider.HardBoundTokenTypes.ALTS);
+
+    InstantiatingGrpcChannelProvider.Builder providerBuilder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setUseS2A(true)
+            .setAllowHardBoundTokenTypes(allowHardBoundTokenTypes)
+            .setCredentials(computeEngineCredentials);
+    Truth.assertThat(providerBuilder.isMtlsS2AHardBoundTokensEnabled()).isTrue();
+  }
+
   private static class FakeLogHandler extends Handler {
 
     List<LogRecord> records = new ArrayList<>();
