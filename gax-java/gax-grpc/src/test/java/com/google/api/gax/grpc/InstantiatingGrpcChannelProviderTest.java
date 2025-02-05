@@ -740,10 +740,10 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setEndpoint(DEFAULT_ENDPOINT)
             .setEnvProvider(envProvider)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class));
+    Truth.assertThat(builder.isDirectPathBoundTokenEnabled()).isFalse();
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isTrue();
-    Truth.assertThat(provider.isDirectPathBoundTokenEnabled()).isFalse();
 
     // verify this info is passed correctly to transport channel
     TransportChannel transportChannel = provider.getTransportChannel();
@@ -767,10 +767,10 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setCredentials(credentials)
             .setEndpoint(DEFAULT_ENDPOINT)
             .setEnvProvider(envProvider);
+    Truth.assertThat(builder.isDirectPathBoundTokenEnabled()).isFalse();
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isFalse();
-    Truth.assertThat(provider.isDirectPathBoundTokenEnabled()).isFalse();
   }
 
   @Test
@@ -792,10 +792,10 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setEndpoint(DEFAULT_ENDPOINT)
             .setEnvProvider(envProvider)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class));
+    Truth.assertThat(builder.isDirectPathBoundTokenEnabled()).isTrue();
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isTrue();
-    Truth.assertThat(provider.isDirectPathBoundTokenEnabled()).isTrue();
 
     // verify this info is passed correctly to transport channel
     TransportChannel transportChannel = provider.getTransportChannel();

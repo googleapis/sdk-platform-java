@@ -192,6 +192,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.channelPoolSettings = builder.channelPoolSettings;
     this.channelConfigurator = builder.channelConfigurator;
     this.credentials = builder.credentials;
+    this.altsCallCredentials = builder.altsCallCredentials;
     this.mtlsS2ACallCredentials = builder.mtlsS2ACallCredentials;
     this.channelPrimer = builder.channelPrimer;
     this.attemptDirectPath = builder.attemptDirectPath;
@@ -282,18 +283,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return toBuilder().setUseS2A(useS2A).build();
   }
 
-  /**
-   * @deprecated Please modify pool settings via {@link #toBuilder()}
-   */
+  /** @deprecated Please modify pool settings via {@link #toBuilder()} */
   @Deprecated
   @Override
   public boolean acceptsPoolSize() {
     return true;
   }
 
-  /**
-   * @deprecated Please modify pool settings via {@link #toBuilder()}
-   */
+  /** @deprecated Please modify pool settings via {@link #toBuilder()} */
   @Deprecated
   @Override
   public TransportChannelProvider withPoolSize(int size) {
@@ -380,9 +377,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
               Level.WARNING,
               "Env var "
                   + DIRECT_PATH_ENV_ENABLE_XDS
-                  + " was found and set to TRUE, but DirectPath was not enabled for this client. If"
-                  + " this is intended for this client, please note that this is a misconfiguration"
-                  + " and set the attemptDirectPath option as well.");
+                  + " was found and set to TRUE, but DirectPath was not enabled for this client. If this is intended for "
+                  + "this client, please note that this is a misconfiguration and set the attemptDirectPath option as well.");
         }
         // Case 2: Direct Path xDS was enabled via Builder. Direct Path Traffic Director must be set
         // (enabled with `setAttemptDirectPath(true)`) along with xDS.
@@ -390,9 +386,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         else if (isDirectPathXdsEnabledViaBuilderOption()) {
           LOG.log(
               Level.WARNING,
-              "DirectPath is misconfigured. The DirectPath XDS option was set, but the"
-                  + " attemptDirectPath option was not. Please set both the attemptDirectPath and"
-                  + " attemptDirectPathXds options.");
+              "DirectPath is misconfigured. The DirectPath XDS option was set, but the attemptDirectPath option was not. Please set both the attemptDirectPath and attemptDirectPathXds options.");
         }
       } else {
         // Case 3: credential is not correctly set
@@ -423,14 +417,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return true;
     }
     return credentials instanceof ComputeEngineCredentials;
-  }
-
-  @VisibleForTesting
-  boolean isDirectPathBoundTokenEnabled() {
-    if (allowedHardBoundTokenTypes == null || !(credentials instanceof ComputeEngineCredentials))
-      return false;
-    return allowedHardBoundTokenTypes.stream()
-        .anyMatch(val -> val.equals(HardBoundTokenTypes.ALTS));
   }
 
   // DirectPath should only be used on Compute Engine.
@@ -635,22 +621,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
     if (canUseDirectPath()) {
-      CallCredentials altsCallCreds = null;
-      if (isDirectPathBoundTokenEnabled()) {
-        // We only set scopes and HTTP transport factory from the original credentials because
-        // only those are used in gRPC CallCredentials to fetch request metadata.
-        altsCallCreds =
-            MoreCallCredentials.from(
-                ((ComputeEngineCredentials) credentials)
-                    .toBuilder()
-                        .setGoogleAuthTransport(ComputeEngineCredentials.GoogleAuthTransport.ALTS)
-                        .build());
-      }
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       ChannelCredentials channelCreds =
           GoogleDefaultChannelCredentials.newBuilder()
               .callCredentials(callCreds)
-              .altsCallCredentials(altsCallCreds)
+              .altsCallCredentials(altsCallCredentials)
               .build();
       useDirectPathXds = isDirectPathXdsEnabled();
       if (useDirectPathXds) {
@@ -926,9 +901,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    /**
-     * @deprecated Please use {@link #setExecutor(Executor)}.
-     */
+    /** @deprecated Please use {@link #setExecutor(Executor)}. */
     @Deprecated
     public Builder setExecutorProvider(ExecutorProvider executorProvider) {
       return setExecutor((Executor) executorProvider.getExecutor());
@@ -1090,34 +1063,26 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return keepAliveWithoutCalls;
     }
 
-    /**
-     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
-     */
+    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
     @Deprecated
     public int getPoolSize() {
       return channelPoolSettings.getInitialChannelCount();
     }
 
-    /**
-     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
-     */
+    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
     @Deprecated
     public Builder setPoolSize(int poolSize) {
       channelPoolSettings = ChannelPoolSettings.staticallySized(poolSize);
       return this;
     }
 
-    /**
-     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
-     */
+    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
     @Deprecated
     public Builder setChannelsPerCpu(double multiplier) {
       return setChannelsPerCpu(multiplier, 100);
     }
 
-    /**
-     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
-     */
+    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
     @Deprecated
     public Builder setChannelsPerCpu(double multiplier, int maxChannels) {
       Preconditions.checkArgument(multiplier > 0, "multiplier must be positive");
@@ -1220,6 +1185,18 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
           .anyMatch(val -> val.equals(HardBoundTokenTypes.MTLS_S2A));
     }
 
+    boolean isDirectPathBoundTokenEnabled() {
+      // If the list of allowed hard bound token types is empty or doesn't contain
+      // {@code HardBoundTokenTypes.ALTS}, the {@code credentials} are null or not of type
+      // {@code ComputeEngineCredentials} then DirectPath hard bound tokens should not be used.
+      // DirectPath hard bound tokens should only be used on ALTS channels.
+      if (allowedHardBoundTokenTypes == null
+          || this.credentials == null
+          || !(credentials instanceof ComputeEngineCredentials)) return false;
+      return allowedHardBoundTokenTypes.stream()
+          .anyMatch(val -> val.equals(HardBoundTokenTypes.ALTS));
+    }
+
     CallCredentials createHardBoundTokensCallCredentials(
         ComputeEngineCredentials.GoogleAuthTransport googleAuthTransport,
         ComputeEngineCredentials.BindingEnforcement bindingEnforcement) {
@@ -1241,6 +1218,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             createHardBoundTokensCallCredentials(
                 ComputeEngineCredentials.GoogleAuthTransport.MTLS,
                 ComputeEngineCredentials.BindingEnforcement.ON);
+      }
+      if (isDirectPathBoundTokenEnabled()) {
+        this.altsCallCredentials =
+            createHardBoundTokensCallCredentials(
+                ComputeEngineCredentials.GoogleAuthTransport.ALTS, null);
       }
       InstantiatingGrpcChannelProvider instantiatingGrpcChannelProvider =
           new InstantiatingGrpcChannelProvider(this);
