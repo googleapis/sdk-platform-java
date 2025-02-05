@@ -139,6 +139,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Boolean keepAliveWithoutCalls;
   private final ChannelPoolSettings channelPoolSettings;
   @Nullable private final Credentials credentials;
+  @Nullable private final CallCredentials altsCallCredentials;
   @Nullable private final ChannelPrimer channelPrimer;
   @Nullable private final Boolean attemptDirectPath;
   @Nullable private final Boolean attemptDirectPathXds;
@@ -277,14 +278,18 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return toBuilder().setUseS2A(useS2A).build();
   }
 
-  /** @deprecated Please modify pool settings via {@link #toBuilder()} */
+  /**
+   * @deprecated Please modify pool settings via {@link #toBuilder()}
+   */
   @Deprecated
   @Override
   public boolean acceptsPoolSize() {
     return true;
   }
 
-  /** @deprecated Please modify pool settings via {@link #toBuilder()} */
+  /**
+   * @deprecated Please modify pool settings via {@link #toBuilder()}
+   */
   @Deprecated
   @Override
   public TransportChannelProvider withPoolSize(int size) {
@@ -420,12 +425,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   boolean isDirectPathBoundTokenEnabled() {
     if (allowedHardBoundTokenTypes == null || !(credentials instanceof ComputeEngineCredentials))
       return false;
-    for (HardBoundTokenTypes boundTokenTypes : allowedHardBoundTokenTypes) {
-      if (boundTokenTypes == HardBoundTokenTypes.ALTS) {
-        return true;
-      }
-    }
-    return false;
+    return allowedHardBoundTokenTypes.stream()
+        .anyMatch(val -> val.equals(HardBoundTokenTypes.ALTS));
   }
 
   // DirectPath should only be used on Compute Engine.
@@ -575,7 +576,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       // Fallback to plaintext connection to S2A.
       LOG.log(
           Level.INFO,
-          "Cannot establish an mTLS connection to S2A because autoconfig endpoint did not return a mtls address to reach S2A.");
+          "Cannot establish an mTLS connection to S2A because autoconfig endpoint did not return a"
+              + " mtls address to reach S2A.");
       return createPlaintextToS2AChannelCredentials(plaintextAddress);
     }
     // Currently, MTLS to MDS is only available on GCE. See:
@@ -593,7 +595,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         // Fallback to plaintext-to-S2A connection on error.
         LOG.log(
             Level.WARNING,
-            "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS TlsChannelCredentials credentials, falling back to plaintext connection to S2A: "
+            "Cannot establish an mTLS connection to S2A due to error creating MTLS to MDS"
+                + " TlsChannelCredentials credentials, falling back to plaintext connection to S2A:"
+                + " "
                 + ignore.getMessage());
         return createPlaintextToS2AChannelCredentials(plaintextAddress);
       }
@@ -602,7 +606,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       // Fallback to plaintext-to-S2A connection if MTLS-MDS creds do not exist.
       LOG.log(
           Level.INFO,
-          "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not exist on filesystem, falling back to plaintext connection to S2A");
+          "Cannot establish an mTLS connection to S2A because MTLS to MDS credentials do not exist"
+              + " on filesystem, falling back to plaintext connection to S2A");
       return createPlaintextToS2AChannelCredentials(plaintextAddress);
     }
   }
@@ -628,17 +633,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     if (canUseDirectPath()) {
       CallCredentials altsCallCreds = null;
       if (isDirectPathBoundTokenEnabled()) {
-        ComputeEngineCredentials.Builder credsBuilder =
-            ((ComputeEngineCredentials) credentials).toBuilder();
         // We only set scopes and HTTP transport factory from the original credentials because
         // only those are used in gRPC CallCredentials to fetch request metadata.
         altsCallCreds =
             MoreCallCredentials.from(
-                ComputeEngineCredentials.newBuilder()
-                    .setScopes(credsBuilder.getScopes())
-                    .setHttpTransportFactory(credsBuilder.getHttpTransportFactory())
-                    .setGoogleAuthTransport(ComputeEngineCredentials.GoogleAuthTransport.ALTS)
-                    .build());
+                ((ComputeEngineCredentials) credentials)
+                    .toBuilder()
+                        .setGoogleAuthTransport(ComputeEngineCredentials.GoogleAuthTransport.ALTS)
+                        .build());
       }
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       ChannelCredentials channelCreds =
@@ -844,6 +846,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private Boolean keepAliveWithoutCalls;
     @Nullable private ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
     @Nullable private Credentials credentials;
+    @Nullable private CallCredentials altsCallCredentials;
     @Nullable private ChannelPrimer channelPrimer;
     private ChannelPoolSettings channelPoolSettings;
     @Nullable private Boolean attemptDirectPath;
@@ -873,6 +876,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.keepAliveWithoutCalls = provider.keepAliveWithoutCalls;
       this.channelConfigurator = provider.channelConfigurator;
       this.credentials = provider.credentials;
+      this.altsCallCredentials = provider.altsCallCredentials;
       this.channelPrimer = provider.channelPrimer;
       this.channelPoolSettings = provider.channelPoolSettings;
       this.attemptDirectPath = provider.attemptDirectPath;
@@ -908,7 +912,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    /** @deprecated Please use {@link #setExecutor(Executor)}. */
+    /**
+     * @deprecated Please use {@link #setExecutor(Executor)}.
+     */
     @Deprecated
     public Builder setExecutorProvider(ExecutorProvider executorProvider) {
       return setExecutor((Executor) executorProvider.getExecutor());
@@ -937,6 +943,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.useS2A = useS2A;
       return this;
     }
+
     /*
      * Sets the allowed hard bound token types for this TransportChannelProvider.
      *
@@ -1066,26 +1073,34 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return keepAliveWithoutCalls;
     }
 
-    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
+    /**
+     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
+     */
     @Deprecated
     public int getPoolSize() {
       return channelPoolSettings.getInitialChannelCount();
     }
 
-    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
+    /**
+     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
+     */
     @Deprecated
     public Builder setPoolSize(int poolSize) {
       channelPoolSettings = ChannelPoolSettings.staticallySized(poolSize);
       return this;
     }
 
-    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
+    /**
+     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
+     */
     @Deprecated
     public Builder setChannelsPerCpu(double multiplier) {
       return setChannelsPerCpu(multiplier, 100);
     }
 
-    /** @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)} */
+    /**
+     * @deprecated Please use {@link #setChannelPoolSettings(ChannelPoolSettings)}
+     */
     @Deprecated
     public Builder setChannelsPerCpu(double multiplier, int maxChannels) {
       Preconditions.checkArgument(multiplier > 0, "multiplier must be positive");
