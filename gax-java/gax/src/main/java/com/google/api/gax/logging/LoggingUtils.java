@@ -79,6 +79,10 @@ public class LoggingUtils {
 
   private LoggingUtils() {}
 
+  static boolean isHasAddKeyValue() {
+    return hasAddKeyValue;
+  }
+
   public static Logger getLogger(Class<?> clazz) {
     return getLogger(clazz, new DefaultLoggerFactoryProvider());
   }
@@ -113,6 +117,7 @@ public class LoggingUtils {
       }
       // contextMap.put("message", message);
       // message = gson.toJson(contextMap);
+      MDC.getMDCAdapter();
     }
     switch (level) {
       case TRACE:
@@ -229,7 +234,7 @@ public class LoggingUtils {
       RespT message, LogData.Builder logDataBuilder, Logger logger) {
     executeWithTryCatch(
         () -> {
-          if (logger.isInfoEnabled()) {
+          if (logger.isDebugEnabled()) {
             Map<String, Object> messageToMapWithGson =
                 LoggingUtils.messageToMapWithGson((Message) message);
 
@@ -248,7 +253,7 @@ public class LoggingUtils {
             Map<String, Object> responseData = logDataBuilder.build().toMapResponse();
             LoggingUtils.log(logger, Level.INFO, responseData, "Received Grpc response");
           }
-          if (logger.isInfoEnabled()) {
+          if (logger.isDebugEnabled()) {
             Map<String, Object> responsedDetailsMap = logDataBuilder.build().toMapResponse();
             LoggingUtils.log(logger, Level.DEBUG, responsedDetailsMap, "Received Grpc response");
           }
@@ -286,29 +291,4 @@ public class LoggingUtils {
   public interface ThrowingRunnable {
     void run() throws Exception;
   }
-
-  // public interface loggerHelper {
-  //   void log(
-  //       Logger logger, org.slf4j.event.Level level, Map<String, Object> contextMap,
-  //       String message) ;
-  // }
-  //
-  // public class Slf4j1xLogger implements loggerHelper {
-  //
-  //   @Override
-  //   public void log(Logger logger, Level level, Map<String, Object> contextMap,
-  //       String message) {
-  //     logWithMDC(logger, level, contextMap, message);
-  //   }
-  // }
-  //
-  //
-  // public class Slf4j2xLogger implements loggerHelper {
-  //
-  //   @Override
-  //   public void log(Logger logger, Level level, Map<String, Object> contextMap,
-  //       String message) {
-  //     logWithKeyValuePair(logger, level, contextMap, message);
-  //   }
-  // }
 }

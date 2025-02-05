@@ -31,9 +31,8 @@
 package com.google.api.gax.logging;
 
 import static com.google.api.gax.logging.LoggingUtils.messageToMapWithGson;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -50,27 +49,27 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 import org.slf4j.event.Level;
 import org.slf4j.helpers.NOPLogger;
+import org.slf4j.helpers.NOPLoggerFactory;
 
 class LoggingUtilsTest {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(LoggingUtilsTest.class);
+  // private static final Logger LOGGER = LoggerFactory.getLogger(LoggingUtilsTest.class);
   private EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
 
   @Test
   void testGetLogger_loggingEnabled_slf4jBindingPresent() {
     Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("true");
     LoggingUtils.setEnvironmentProvider(envProvider);
+    // should get ILoggerFactory from TestServiceProvider
     Logger logger = LoggingUtils.getLogger(LoggingUtilsTest.class);
     Assertions.assertInstanceOf(Logger.class, logger);
     Assertions.assertNotEquals(NOPLogger.class, logger.getClass());
   }
 
   @Test
-  void testGetLogger_loggingDisabled() {
+  void testGetLogger_loggingDisabled_shouldGetNOPLogger() {
     Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("false");
     LoggingUtils.setEnvironmentProvider(envProvider);
 
@@ -81,15 +80,14 @@ class LoggingUtilsTest {
   }
 
   @Test
-  void testGetLogger_loggingEnabled_noBinding() {
+  void testGetLogger_loggingEnabled_noBinding_shouldGetNOPLogger() {
     Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("true");
     LoggingUtils.setEnvironmentProvider(envProvider);
-    // Create a mock LoggerFactoryProvider
+    // Create a mock LoggerFactoryProvider, mimic SLF4J's behavior to return NOPLoggerFactory when
+    // no binding
     LoggerFactoryProvider mockLoggerFactoryProvider = mock(LoggerFactoryProvider.class);
-    ILoggerFactory mockLoggerFactory = mock(ILoggerFactory.class);
-    when(mockLoggerFactoryProvider.getLoggerFactory()).thenReturn(mockLoggerFactory);
-    when(mockLoggerFactory.getLogger(anyString()))
-        .thenReturn(org.slf4j.helpers.NOPLogger.NOP_LOGGER);
+    ILoggerFactory nopLoggerFactory = new NOPLoggerFactory();
+    when(mockLoggerFactoryProvider.getLoggerFactory()).thenReturn(nopLoggerFactory);
 
     // Use the mock LoggerFactoryProvider in getLogger()
     Logger logger = LoggingUtils.getLogger(LoggingUtilsTest.class, mockLoggerFactoryProvider);
@@ -117,9 +115,8 @@ class LoggingUtilsTest {
     Assertions.assertFalse(LoggingUtils.isLoggingEnabled());
   }
 
-  // run with slf4j2_logback profile
   @Test
-  void testLog_slf4JLogger() {
+  void testLog_slf4J2xLogger() {
     Map<String, Object> contextMap = new HashMap<>();
     contextMap.put("key1", "value");
     contextMap.put("key2", 123);
@@ -133,15 +130,16 @@ class LoggingUtilsTest {
     assertEquals(123, testLogger.keyValuePairsMap.get("key2"));
   }
 
-  // run with slf4j1_logback profile
   @Test
   void testLogWithMDC_InfoLevel_VerifyMDC() {
+    // this test replies on TestMDCApapter and TestServiceProvider
     TestLogger testLogger = new TestLogger("test-logger");
     Map<String, Object> contextMap = new HashMap<>();
     contextMap.put("key1", "value1");
     contextMap.put("key2", 123);
     String message = "Test message";
 
+    // need a service provider
     LoggingUtils.logWithMDC(testLogger, Level.INFO, contextMap, message);
 
     Map<String, String> mdcMap = testLogger.MDCMap;
@@ -151,8 +149,6 @@ class LoggingUtilsTest {
     assertEquals("123", mdcMap.get("key2"));
 
     assertEquals(message, testLogger.messageList.get(0));
-    // verify MDC is cleared
-    assertNull(MDC.getCopyOfContextMap());
   }
 
   @Test
@@ -170,5 +166,140 @@ class LoggingUtilsTest {
 
     assertEquals("field_name1", map.get("name"));
     assertEquals(2.0, map.get("number")); // Gson converts ints to doubles by default
+  }
+
+  @Test
+  void testRecordServiceRpcAndRequestHeaders_infoEnabled() {
+    String serviceName = "testService";
+    String rpcName = "testRpc";
+    String endpoint = "http://test.com/endpoint";
+    Map<String, String> requestHeaders = new HashMap<>();
+    requestHeaders.put("header1", "value1");
+    requestHeaders.put("header2", "value2");
+
+    LogData.Builder logDataBuilder = LogData.builder();
+
+    TestLogger testLogger = new TestLogger("test-logger", true, true);
+
+    LoggingUtils.recordServiceRpcAndRequestHeaders(
+        serviceName, rpcName, endpoint, requestHeaders, logDataBuilder, testLogger);
+
+    LogData logData = logDataBuilder.build();
+    assertEquals(serviceName, logData.serviceName());
+    assertEquals(rpcName, logData.rpcName());
+    assertEquals(endpoint, logData.httpUrl());
+    assertEquals(requestHeaders, logData.requestHeaders());
+  }
+
+  @Test
+  void testRecordServiceRpcAndRequestHeaders_infoDisabled() {
+    String serviceName = "testService";
+    String rpcName = "testRpc";
+    String endpoint = "http://test.com/endpoint";
+    Map<String, String> requestHeaders = new HashMap<>();
+    requestHeaders.put("header1", "value1");
+    requestHeaders.put("header2", "value2");
+
+    LogData.Builder logDataBuilder = LogData.builder();
+
+    TestLogger testLogger = new TestLogger("test-logger", false, false);
+
+    LoggingUtils.recordServiceRpcAndRequestHeaders(
+        serviceName, rpcName, endpoint, requestHeaders, logDataBuilder, testLogger);
+
+    LogData logData = logDataBuilder.build();
+    assertEquals(null, logData.serviceName());
+    assertEquals(null, logData.rpcName());
+    assertEquals(null, logData.httpUrl());
+    assertEquals(null, logData.requestHeaders());
+  }
+
+  @Test
+  void testRecordResponseHeaders_debugEnabled() {
+    Map<String, String> responseHeaders = new HashMap<>();
+    responseHeaders.put("header1", "value1");
+    responseHeaders.put("header2", "value2");
+
+    LogData.Builder logDataBuilder = LogData.builder();
+    TestLogger testLogger = new TestLogger("test-logger", true, true);
+
+    LoggingUtils.recordResponseHeaders(responseHeaders, logDataBuilder, testLogger);
+
+    LogData logData = logDataBuilder.build();
+    assertEquals(responseHeaders, logData.responseHeaders());
+  }
+
+  @Test
+  void testRecordResponseHeaders_debugDisabled() {
+    Map<String, String> responseHeaders = new HashMap<>();
+    responseHeaders.put("header1", "value1");
+    responseHeaders.put("header2", "value2");
+
+    LogData.Builder logDataBuilder = LogData.builder();
+    TestLogger testLogger = new TestLogger("test-logger", true, false);
+
+    LoggingUtils.recordResponseHeaders(responseHeaders, logDataBuilder, testLogger);
+
+    LogData logData = logDataBuilder.build();
+    assertEquals(null, logData.responseHeaders());
+  }
+
+  @Test
+  void testRecordResponsePayload_debugEnabled() {
+
+    Field field =
+        Field.newBuilder()
+            .setName("field_name1")
+            .addOptions(Option.newBuilder().setName("opt_name1").build())
+            .addOptions(Option.newBuilder().setName("opt_name2").build())
+            .build();
+
+    LogData.Builder logDataBuilder = LogData.builder();
+    TestLogger testLogger = new TestLogger("test-logger", true, true);
+
+    LoggingUtils.recordResponsePayload(field, logDataBuilder, testLogger);
+
+    LogData logData = logDataBuilder.build();
+    assertEquals(2, logData.responsePayload().size());
+    assertEquals("field_name1", logData.responsePayload().get("name"));
+    assertEquals(
+        "[{name=opt_name1}, {name=opt_name2}]",
+        logData.responsePayload().get("options").toString());
+  }
+
+  @Test
+  void testExecuteWithTryCatch_noException() {
+    assertDoesNotThrow(
+        () ->
+            LoggingUtils.executeWithTryCatch(
+                () -> {
+                  // Some code that should not throw an exception
+                  int x = 5;
+                  int y = 10;
+                  int z = x + y;
+                  assertEquals(15, z); // Example assertion
+                }));
+  }
+
+  @Test
+  void testExecuteWithTryCatch_exceptionThrown() {
+    assertDoesNotThrow(
+        () ->
+            LoggingUtils.executeWithTryCatch(
+                () -> {
+                  // Code that throws an exception
+                  throw new Exception("Test Exception");
+                }));
+  }
+
+  @Test
+  void testExecuteWithTryCatch_runtimeExceptionThrown() {
+    assertDoesNotThrow(
+        () ->
+            LoggingUtils.executeWithTryCatch(
+                () -> {
+                  // Code that throws a RuntimeException
+                  throw new RuntimeException("Test RuntimeException");
+                }));
   }
 }

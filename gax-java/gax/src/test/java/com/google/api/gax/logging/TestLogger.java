@@ -49,9 +49,19 @@ public class TestLogger implements Logger, LoggingEventAware {
   Map<String, Object> keyValuePairsMap = new HashMap<>();
 
   private String loggerName;
+  private boolean infoEnabled;
+  private boolean debugEnabled;
 
   public TestLogger(String name) {
     loggerName = name;
+    infoEnabled = true;
+    debugEnabled = true;
+  }
+
+  public TestLogger(String name, boolean info, boolean debug) {
+    loggerName = name;
+    infoEnabled = info;
+    debugEnabled = debug;
   }
 
   @Override
@@ -101,16 +111,14 @@ public class TestLogger implements Logger, LoggingEventAware {
 
   @Override
   public boolean isDebugEnabled() {
-    return true;
+    return debugEnabled;
   }
 
   @Override
   public void debug(String msg) {
-    if (isDebugEnabled()) {
-      Map<String, String> currentMDC = MDC.getCopyOfContextMap();
-      MDCMap.putAll(currentMDC);
-      messageList.add(msg);
-    }
+    Map<String, String> currentMDC = MDC.getCopyOfContextMap();
+    MDCMap.putAll(currentMDC);
+    messageList.add(msg);
   }
 
   @Override
@@ -147,11 +155,14 @@ public class TestLogger implements Logger, LoggingEventAware {
 
   @Override
   public boolean isInfoEnabled() {
-    return false;
+    return infoEnabled;
   }
 
   @Override
   public void info(String msg) {
+    // access MDC content here before it is cleared.
+    // TestMDCAdapter is set up via TestServiceProvider
+    // to allow MDC values recorded and copied for testing here
     Map<String, String> currentMDC = MDC.getCopyOfContextMap();
     MDCMap.putAll(currentMDC);
     messageList.add(msg);
