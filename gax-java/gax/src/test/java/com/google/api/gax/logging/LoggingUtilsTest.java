@@ -42,6 +42,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.google.api.gax.logging.LoggingUtils.LoggerFactoryProvider;
+import com.google.api.gax.logging.LoggingUtils.ThrowingRunnable;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.protobuf.Field;
 import com.google.protobuf.Field.Cardinality;
@@ -379,27 +380,26 @@ class LoggingUtilsTest {
                   int x = 5;
                   int y = 10;
                   int z = x + y;
+                  assertEquals(15, z);
                 }));
   }
 
   @Test
-  void testExecuteWithTryCatch_exceptionThrown() {
-    assertDoesNotThrow(
-        () ->
-            LoggingUtils.executeWithTryCatch(
-                () -> {
-                  throw new Exception("Test Exception");
-                }));
+  void testExecuteWithTryCatch_WithException() throws Throwable {
+    ThrowingRunnable action = Mockito.mock(ThrowingRunnable.class);
+    Mockito.doThrow(new RuntimeException("Test Exception")).when(action).run();
+    assertDoesNotThrow(() -> LoggingUtils.executeWithTryCatch(action));
+    // Verify that the action was executed (despite the exception)
+    Mockito.verify(action).run();
   }
 
   @Test
-  void testExecuteWithTryCatch_runtimeExceptionThrown() {
-    assertDoesNotThrow(
-        () ->
-            LoggingUtils.executeWithTryCatch(
-                () -> {
-                  throw new RuntimeException("Test RuntimeException");
-                }));
+  void testExecuteWithTryCatch_WithNoSuchMethodError() throws Throwable {
+    ThrowingRunnable action = Mockito.mock(ThrowingRunnable.class);
+    Mockito.doThrow(new NoSuchMethodError("Test Error")).when(action).run();
+    assertDoesNotThrow(() -> LoggingUtils.executeWithTryCatch(action));
+    // Verify that the action was executed (despite the error)
+    Mockito.verify(action).run();
   }
 
   @Test

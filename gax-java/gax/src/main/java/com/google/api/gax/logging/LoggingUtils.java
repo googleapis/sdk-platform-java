@@ -277,13 +277,13 @@ public class LoggingUtils {
   public static void executeWithTryCatch(ThrowingRunnable action) {
     try {
       action.run();
-    } catch (Exception e) {
+    } catch (Throwable t) {
       // let logging exceptions fail silently
     }
   }
 
   @FunctionalInterface
   public interface ThrowingRunnable {
-    void run() throws Exception;
+    void run() throws Throwable;
   }
 }
