@@ -33,6 +33,7 @@ package com.google.api.gax.logging;
 import static com.google.api.gax.logging.LoggingUtils.messageToMapWithGson;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.mock;
@@ -79,8 +80,8 @@ class LoggingUtilsTest {
 
     Logger logger = LoggingUtils.getLogger(LoggingUtilsTest.class);
     assertEquals(NOPLogger.class, logger.getClass());
-    Assertions.assertFalse(logger.isInfoEnabled());
-    Assertions.assertFalse(logger.isDebugEnabled());
+    assertFalse(logger.isInfoEnabled());
+    assertFalse(logger.isDebugEnabled());
   }
 
   @Test
@@ -116,7 +117,7 @@ class LoggingUtilsTest {
   @Test
   void testIsLoggingEnabled_defaultToFalse() {
     LoggingUtils.setEnvironmentProvider(envProvider);
-    Assertions.assertFalse(LoggingUtils.isLoggingEnabled());
+    assertFalse(LoggingUtils.isLoggingEnabled());
   }
 
   @Test
@@ -399,5 +400,11 @@ class LoggingUtilsTest {
                 () -> {
                   throw new RuntimeException("Test RuntimeException");
                 }));
+  }
+
+  @Test
+  void testCheckIfClazzAvailable() {
+    assertFalse(LoggingUtils.checkIfClazzAvailable("fake.class.should.not.be.in.classpath"));
+    assertTrue(LoggingUtils.checkIfClazzAvailable("org.slf4j.event.KeyValuePair"));
   }
 }

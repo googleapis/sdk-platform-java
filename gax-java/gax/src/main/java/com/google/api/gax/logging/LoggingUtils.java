@@ -66,22 +66,19 @@ public class LoggingUtils {
   private static boolean hasAddKeyValue;
 
   static {
+    hasAddKeyValue = checkIfClazzAvailable("org.slf4j.event.KeyValuePair");
+  }
+
+  static boolean checkIfClazzAvailable(String clazzName) {
     try {
-      // try to find this class
-      Class.forName("org.slf4j.event.KeyValuePair");
-      // If no exception, it means SLF4j 2.x or later is present
-      hasAddKeyValue = true;
+      Class.forName(clazzName);
+      return true; // SLF4j 2.x or later
     } catch (ClassNotFoundException e) {
-      // If ClassNotFoundException, it's likely SLF4j 1.x
-      hasAddKeyValue = false;
+      return false; // SLF4j 1.x or earlier
     }
   }
 
   private LoggingUtils() {}
-
-  static boolean isHasAddKeyValue() {
-    return hasAddKeyValue;
-  }
 
   public static Logger getLogger(Class<?> clazz) {
     return getLogger(clazz, new DefaultLoggerFactoryProvider());
