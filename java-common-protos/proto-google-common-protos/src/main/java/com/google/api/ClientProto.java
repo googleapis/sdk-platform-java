@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -232,6 +232,10 @@ public final class ClientProto {
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_api_GoSettings_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_GoSettings_RenamedServicesEntry_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_GoSettings_RenamedServicesEntry_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
       internal_static_google_api_MethodSettings_descriptor;
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_api_MethodSettings_fieldAccessorTable;
@@ -313,33 +317,37 @@ public final class ClientProto {
           + "enamedResourcesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005val"
           + "ue\030\002 \001(\t:\0028\001\"B\n\014RubySettings\0222\n\006common\030\001"
           + " \001(\0132\".google.api.CommonLanguageSettings"
-          + "\"@\n\nGoSettings\0222\n\006common\030\001 \001(\0132\".google."
-          + "api.CommonLanguageSettings\"\317\002\n\016MethodSet"
-          + "tings\022\020\n\010selector\030\001 \001(\t\022<\n\014long_running\030"
-          + "\002 \001(\0132&.google.api.MethodSettings.LongRu"
-          + "nning\022\035\n\025auto_populated_fields\030\003 \003(\t\032\315\001\n"
-          + "\013LongRunning\0225\n\022initial_poll_delay\030\001 \001(\013"
-          + "2\031.google.protobuf.Duration\022\035\n\025poll_dela"
-          + "y_multiplier\030\002 \001(\002\0221\n\016max_poll_delay\030\003 \001"
-          + "(\0132\031.google.protobuf.Duration\0225\n\022total_p"
-          + "oll_timeout\030\004 \001(\0132\031.google.protobuf.Dura"
-          + "tion\"+\n\030SelectiveGapicGeneration\022\017\n\007meth"
-          + "ods\030\001 \003(\t*\243\001\n\031ClientLibraryOrganization\022"
-          + "+\n\'CLIENT_LIBRARY_ORGANIZATION_UNSPECIFI"
-          + "ED\020\000\022\t\n\005CLOUD\020\001\022\007\n\003ADS\020\002\022\n\n\006PHOTOS\020\003\022\017\n\013"
-          + "STREET_VIEW\020\004\022\014\n\010SHOPPING\020\005\022\007\n\003GEO\020\006\022\021\n\r"
-          + "GENERATIVE_AI\020\007*g\n\030ClientLibraryDestinat"
-          + "ion\022*\n&CLIENT_LIBRARY_DESTINATION_UNSPEC"
-          + "IFIED\020\000\022\n\n\006GITHUB\020\n\022\023\n\017PACKAGE_MANAGER\020\024"
-          + ":9\n\020method_signature\022\036.google.protobuf.M"
-          + "ethodOptions\030\233\010 \003(\t:6\n\014default_host\022\037.go"
-          + "ogle.protobuf.ServiceOptions\030\231\010 \001(\t:6\n\014o"
-          + "auth_scopes\022\037.google.protobuf.ServiceOpt"
-          + "ions\030\232\010 \001(\t:8\n\013api_version\022\037.google.prot"
-          + "obuf.ServiceOptions\030\301\272\253\372\001 \001(\tBi\n\016com.goo"
-          + "gle.apiB\013ClientProtoP\001ZAgoogle.golang.or"
-          + "g/genproto/googleapis/api/annotations;an"
-          + "notations\242\002\004GAPIb\006proto3"
+          + "\"\277\001\n\nGoSettings\0222\n\006common\030\001 \001(\0132\".google"
+          + ".api.CommonLanguageSettings\022E\n\020renamed_s"
+          + "ervices\030\002 \003(\0132+.google.api.GoSettings.Re"
+          + "namedServicesEntry\0326\n\024RenamedServicesEnt"
+          + "ry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\317\002\n\016M"
+          + "ethodSettings\022\020\n\010selector\030\001 \001(\t\022<\n\014long_"
+          + "running\030\002 \001(\0132&.google.api.MethodSetting"
+          + "s.LongRunning\022\035\n\025auto_populated_fields\030\003"
+          + " \003(\t\032\315\001\n\013LongRunning\0225\n\022initial_poll_del"
+          + "ay\030\001 \001(\0132\031.google.protobuf.Duration\022\035\n\025p"
+          + "oll_delay_multiplier\030\002 \001(\002\0221\n\016max_poll_d"
+          + "elay\030\003 \001(\0132\031.google.protobuf.Duration\0225\n"
+          + "\022total_poll_timeout\030\004 \001(\0132\031.google.proto"
+          + "buf.Duration\"Q\n\030SelectiveGapicGeneration"
+          + "\022\017\n\007methods\030\001 \003(\t\022$\n\034generate_omitted_as"
+          + "_internal\030\002 \001(\010*\243\001\n\031ClientLibraryOrganiz"
+          + "ation\022+\n\'CLIENT_LIBRARY_ORGANIZATION_UNS"
+          + "PECIFIED\020\000\022\t\n\005CLOUD\020\001\022\007\n\003ADS\020\002\022\n\n\006PHOTOS"
+          + "\020\003\022\017\n\013STREET_VIEW\020\004\022\014\n\010SHOPPING\020\005\022\007\n\003GEO"
+          + "\020\006\022\021\n\rGENERATIVE_AI\020\007*g\n\030ClientLibraryDe"
+          + "stination\022*\n&CLIENT_LIBRARY_DESTINATION_"
+          + "UNSPECIFIED\020\000\022\n\n\006GITHUB\020\n\022\023\n\017PACKAGE_MAN"
+          + "AGER\020\024:9\n\020method_signature\022\036.google.prot"
+          + "obuf.MethodOptions\030\233\010 \003(\t:6\n\014default_hos"
+          + "t\022\037.google.protobuf.ServiceOptions\030\231\010 \001("
+          + "\t:6\n\014oauth_scopes\022\037.google.protobuf.Serv"
+          + "iceOptions\030\232\010 \001(\t:8\n\013api_version\022\037.googl"
+          + "e.protobuf.ServiceOptions\030\301\272\253\372\001 \001(\tBi\n\016c"
+          + "om.google.apiB\013ClientProtoP\001ZAgoogle.gol"
+          + "ang.org/genproto/googleapis/api/annotati"
+          + "ons;annotations\242\002\004GAPIb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
@@ -483,7 +491,15 @@ public final class ClientProto {
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_api_GoSettings_descriptor,
             new java.lang.String[] {
-              "Common",
+              "Common", "RenamedServices",
+            });
+    internal_static_google_api_GoSettings_RenamedServicesEntry_descriptor =
+        internal_static_google_api_GoSettings_descriptor.getNestedTypes().get(0);
+    internal_static_google_api_GoSettings_RenamedServicesEntry_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_GoSettings_RenamedServicesEntry_descriptor,
+            new java.lang.String[] {
+              "Key", "Value",
             });
     internal_static_google_api_MethodSettings_descriptor =
         getDescriptor().getMessageTypes().get(11);
@@ -507,7 +523,7 @@ public final class ClientProto {
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_api_SelectiveGapicGeneration_descriptor,
             new java.lang.String[] {
-              "Methods",
+              "Methods", "GenerateOmittedAsInternal",
             });
     methodSignature.internalInit(descriptor.getExtensions().get(0));
     defaultHost.internalInit(descriptor.getExtensions().get(1));

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,4 +78,22 @@ public interface SelectiveGapicGenerationOrBuilder
    * @return The bytes of the methods at the given index.
    */
   com.google.protobuf.ByteString getMethodsBytes(int index);
+
+  /**
+   *
+   *
+   * <pre>
+   * Setting this to true indicates to the client generators that methods
+   * that would be excluded from the generation should instead be generated
+   * in a way that indicates these methods should not be consumed by
+   * end users. How this is expressed is up to individual language
+   * implementations to decide. Some examples may be: added annotations,
+   * obfuscated identifiers, or other language idiomatic patterns.
+   * </pre>
+   *
+   * <code>bool generate_omitted_as_internal = 2;</code>
+   *
+   * @return The generateOmittedAsInternal.
+   */
+  boolean getGenerateOmittedAsInternal();
 }

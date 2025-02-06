@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -151,7 +151,7 @@ public interface OperationOrBuilder
    *
    *
    * <pre>
-   * The normal response of the operation in case of success.  If the original
+   * The normal, successful response of the operation.  If the original
    * method returns no data on success, such as `Delete`, the response is
    * `google.protobuf.Empty`.  If the original method is standard
    * `Get`/`Create`/`Update`, the response should be the resource.  For other
@@ -170,7 +170,7 @@ public interface OperationOrBuilder
    *
    *
    * <pre>
-   * The normal response of the operation in case of success.  If the original
+   * The normal, successful response of the operation.  If the original
    * method returns no data on success, such as `Delete`, the response is
    * `google.protobuf.Empty`.  If the original method is standard
    * `Get`/`Create`/`Update`, the response should be the resource.  For other
@@ -189,7 +189,7 @@ public interface OperationOrBuilder
    *
    *
    * <pre>
-   * The normal response of the operation in case of success.  If the original
+   * The normal, successful response of the operation.  If the original
    * method returns no data on success, such as `Delete`, the response is
    * `google.protobuf.Empty`.  If the original method is standard
    * `Get`/`Create`/`Update`, the response should be the resource.  For other

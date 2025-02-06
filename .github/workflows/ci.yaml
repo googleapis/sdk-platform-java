@@ -214,7 +214,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        java: [ 11, 17, 21 ]
+        java: [ 11, 17, 21, 23 ]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -265,36 +265,6 @@ jobs:
         env:
           GOOGLE_SDK_JAVA_LOGGING: true
 
-  showcase-native:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: graalvm/setup-graalvm@v1
-        with:
-          version: '22.3.2'
-          java-version: '17'
-          components: 'native-image'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - run: mvn -version
-      - run: native-image --version
-      - name: Install sdk-platform-java
-        run: mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
-      - name: Parse showcase version
-        working-directory: showcase/gapic-showcase
-        run: echo "SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)" >> "$GITHUB_ENV"
-      - name: Install showcase server
-        run: |
-          sudo mkdir -p /usr/src/showcase
-          sudo chown -R ${USER} /usr/src/
-          curl --location https://github.com/googleapis/gapic-showcase/releases/download/v${{env.SHOWCASE_VERSION}}/gapic-showcase-${{env.SHOWCASE_VERSION}}-linux-amd64.tar.gz --output /usr/src/showcase/showcase-${{env.SHOWCASE_VERSION}}-linux-amd64.tar.gz
-          cd /usr/src/showcase/
-          tar -xf showcase-*
-          ./gapic-showcase run &
-          cd -
-      - name: Build native image
-        working-directory: showcase
-        run: mvn test -Pnative,-showcase -ntp -B
-
   showcase-clirr:
     if: ${{ github.base_ref != '' }} # Only execute on pull_request trigger event
     runs-on: ubuntu-22.04
@@ -339,7 +309,7 @@ jobs:
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: Validate gapic-generator-java-bom
-      uses: googleapis/java-cloud-bom/tests/validate-bom@93740d54e9e5dc9b83972ab8209c239acb993f48
+      uses: googleapis/java-cloud-bom/tests/validate-bom@47ad868794c5d38ee7eb95d69371a7a79f84d890
       with:
         bom-path: gapic-generator-java-bom/pom.xml
 

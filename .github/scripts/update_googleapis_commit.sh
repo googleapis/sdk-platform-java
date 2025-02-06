@@ -61,6 +61,9 @@ pr_num=$(gh pr list -s open -H "${current_branch}" -q . --json number | jq ".[] 
 # branch; otherwise checkout the pull request.
 if [ -z "${pr_num}" ]; then
   git checkout -b "${current_branch}"
+  # Push the current branch to remote so that we can
+  # compare the commits later.
+  git push -u origin "${current_branch}"
 else
   gh pr checkout "${pr_num}"
 fi
@@ -102,7 +105,7 @@ fi
 
 if [ -z "${pr_num}" ]; then
   git remote add remote_repo https://cloud-java-bot:"${GH_TOKEN}@github.com/${repo}.git"
-  git fetch -q --unshallow remote_repo
+  git fetch -q remote_repo
   git push -f remote_repo "${current_branch}"
   gh pr create --title "${title}" --head "${current_branch}" --body "${title}" --base "${base_branch}"
 else

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -132,6 +132,29 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
     return methods_.getByteString(index);
   }
 
+  public static final int GENERATE_OMITTED_AS_INTERNAL_FIELD_NUMBER = 2;
+  private boolean generateOmittedAsInternal_ = false;
+  /**
+   *
+   *
+   * <pre>
+   * Setting this to true indicates to the client generators that methods
+   * that would be excluded from the generation should instead be generated
+   * in a way that indicates these methods should not be consumed by
+   * end users. How this is expressed is up to individual language
+   * implementations to decide. Some examples may be: added annotations,
+   * obfuscated identifiers, or other language idiomatic patterns.
+   * </pre>
+   *
+   * <code>bool generate_omitted_as_internal = 2;</code>
+   *
+   * @return The generateOmittedAsInternal.
+   */
+  @java.lang.Override
+  public boolean getGenerateOmittedAsInternal() {
+    return generateOmittedAsInternal_;
+  }
+
   private byte memoizedIsInitialized = -1;
 
   @java.lang.Override
@@ -148,6 +171,9 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
     for (int i = 0; i < methods_.size(); i++) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, methods_.getRaw(i));
+    }
+    if (generateOmittedAsInternal_ != false) {
+      output.writeBool(2, generateOmittedAsInternal_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -166,6 +192,9 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
       size += dataSize;
       size += 1 * getMethodsList().size();
     }
+    if (generateOmittedAsInternal_ != false) {
+      size += com.google.protobuf.CodedOutputStream.computeBoolSize(2, generateOmittedAsInternal_);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -182,6 +211,7 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
     com.google.api.SelectiveGapicGeneration other = (com.google.api.SelectiveGapicGeneration) obj;
 
     if (!getMethodsList().equals(other.getMethodsList())) return false;
+    if (getGenerateOmittedAsInternal() != other.getGenerateOmittedAsInternal()) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -197,6 +227,8 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
       hash = (37 * hash) + METHODS_FIELD_NUMBER;
       hash = (53 * hash) + getMethodsList().hashCode();
     }
+    hash = (37 * hash) + GENERATE_OMITTED_AS_INTERNAL_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getGenerateOmittedAsInternal());
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -338,6 +370,7 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
       super.clear();
       bitField0_ = 0;
       methods_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      generateOmittedAsInternal_ = false;
       return this;
     }
 
@@ -377,6 +410,9 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
       if (((from_bitField0_ & 0x00000001) != 0)) {
         methods_.makeImmutable();
         result.methods_ = methods_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.generateOmittedAsInternal_ = generateOmittedAsInternal_;
       }
     }
 
@@ -435,6 +471,9 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
         }
         onChanged();
       }
+      if (other.getGenerateOmittedAsInternal() != false) {
+        setGenerateOmittedAsInternal(other.getGenerateOmittedAsInternal());
+      }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -468,6 +507,12 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
                 methods_.add(s);
                 break;
               } // case 10
+            case 16:
+              {
+                generateOmittedAsInternal_ = input.readBool();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 16
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -666,6 +711,74 @@ public final class SelectiveGapicGeneration extends com.google.protobuf.Generate
       ensureMethodsIsMutable();
       methods_.add(value);
       bitField0_ |= 0x00000001;
+      onChanged();
+      return this;
+    }
+
+    private boolean generateOmittedAsInternal_;
+    /**
+     *
+     *
+     * <pre>
+     * Setting this to true indicates to the client generators that methods
+     * that would be excluded from the generation should instead be generated
+     * in a way that indicates these methods should not be consumed by
+     * end users. How this is expressed is up to individual language
+     * implementations to decide. Some examples may be: added annotations,
+     * obfuscated identifiers, or other language idiomatic patterns.
+     * </pre>
+     *
+     * <code>bool generate_omitted_as_internal = 2;</code>
+     *
+     * @return The generateOmittedAsInternal.
+     */
+    @java.lang.Override
+    public boolean getGenerateOmittedAsInternal() {
+      return generateOmittedAsInternal_;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Setting this to true indicates to the client generators that methods
+     * that would be excluded from the generation should instead be generated
+     * in a way that indicates these methods should not be consumed by
+     * end users. How this is expressed is up to individual language
+     * implementations to decide. Some examples may be: added annotations,
+     * obfuscated identifiers, or other language idiomatic patterns.
+     * </pre>
+     *
+     * <code>bool generate_omitted_as_internal = 2;</code>
+     *
+     * @param value The generateOmittedAsInternal to set.
+     * @return This builder for chaining.
+     */
+    public Builder setGenerateOmittedAsInternal(boolean value) {
+
+      generateOmittedAsInternal_ = value;
+      bitField0_ |= 0x00000002;
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Setting this to true indicates to the client generators that methods
+     * that would be excluded from the generation should instead be generated
+     * in a way that indicates these methods should not be consumed by
+     * end users. How this is expressed is up to individual language
+     * implementations to decide. Some examples may be: added annotations,
+     * obfuscated identifiers, or other language idiomatic patterns.
+     * </pre>
+     *
+     * <code>bool generate_omitted_as_internal = 2;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearGenerateOmittedAsInternal() {
+      bitField0_ = (bitField0_ & ~0x00000002);
+      generateOmittedAsInternal_ = false;
       onChanged();
       return this;
     }
