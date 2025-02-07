@@ -73,6 +73,26 @@
           </execution>
         </executions>
       </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-compiler-plugin</artifactId>-->
+<!--        <configuration>-->
+<!--          <testExcludes>-->
+<!--            <testExclude>**/ITLogging.java</testExclude>-->
+<!--          </testExcludes>-->
+
+<!--        </configuration>-->
+<!--      </plugin>-->
+
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-surefire-plugin</artifactId>-->
+<!--        <configuration>-->
+<!--          <excludes>-->
+<!--            <exclude>**/ITLogging.java</exclude>-->
+<!--          </excludes>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
     </plugins>
   </build>
 
@@ -217,18 +237,128 @@
     </dependency>
 
     <!--  Logging testing dependencies  -->
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <!--   Latest version with java8 support   -->
-      <version>1.3.14</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-core</artifactId>
-      <version>1.3.14</version>
-      <scope>test</scope>
-    </dependency>
+
   </dependencies>
+  <profiles>
+    <profile>
+      <id>jul</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jdk14</artifactId>
+          <version>2.0.7</version>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>slf4j2_logback</id>
+<!--      <activation>-->
+<!--        <activeByDefault>true</activeByDefault>-->
+<!--      </activation>-->
+      <activation>
+        <property>
+          <name>slf4j2_logback</name>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+          <version>2.0.16</version>
+        </dependency>
+        <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+          <!--   Latest version with java8 support   -->
+          <version>1.3.14</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-core</artifactId>
+          <version>1.3.14</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>net.logstash.logback</groupId>
+          <artifactId>logstash-logback-encoder</artifactId>
+          <version>8.0</version>
+        </dependency>
+        <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+          <version>2.14.2</version>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <testIncludes>
+                <testInclude>**/ITLogging.java</testInclude>
+              </testIncludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>slf4j1_logback</id>
+<!--      <activation>-->
+<!--        <activeByDefault>true</activeByDefault>-->
+<!--      </activation>-->
+
+      <activation>
+        <property>
+          <name>slf4j1_logback</name>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+          <version>1.7.36</version>
+        </dependency>
+        <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+          <version>1.2.13</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-core</artifactId>
+          <version>1.2.13</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>net.logstash.logback</groupId>
+          <artifactId>logstash-logback-encoder</artifactId>
+          <version>7.3</version>
+        </dependency>
+        <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+          <version>2.14.2</version>
+        </dependency>
+      </dependencies>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <testExcludes>
+                <testExclude>**/ITLogging.java</testExclude>
+              </testExcludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 </project>

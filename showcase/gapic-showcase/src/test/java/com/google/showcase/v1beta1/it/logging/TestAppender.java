@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.showcase.v1beta1.it.util;
+package com.google.showcase.v1beta1.it.logging;
 
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
