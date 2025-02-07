@@ -618,8 +618,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     boolean useDirectPathXds = false;
     if (canUseDirectPath()) {
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
-      // altsCallCredentials may be null and will be correctly ignored by
-      // GoogleDefaultChannelCredentials.
+      // altsCallCredentials may be null and GoogleDefaultChannelCredentials
+      // will solely use callCreds. Otherwise it uses altsCallCredentials
+      // for DirectPath connections and callCreds for CloudPath fallbacks.
       ChannelCredentials channelCreds =
           GoogleDefaultChannelCredentials.newBuilder()
               .callCredentials(callCreds)
