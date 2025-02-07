@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -110,9 +110,10 @@ public class LoggingUtils {
       for (Entry<String, Object> entry : contextMap.entrySet()) {
         String key = entry.getKey();
         Object value = entry.getValue();
-        MDC.put(key, value.toString());
+        // MDC.put(key, value.toString());
+        MDC.put(key, value instanceof String ? (String) value : gson.toJson(value));
       }
-      MDC.getMDCAdapter();
+      // MDC.getMDCAdapter();
     }
     switch (level) {
       case TRACE:
@@ -203,7 +204,7 @@ public class LoggingUtils {
             addIfNotEmpty(logDataBuilder::rpcName, rpcName);
             addIfNotEmpty(logDataBuilder::httpUrl, endpoint);
           }
-          if (logger.isInfoEnabled()) {
+          if (logger.isDebugEnabled()) {
             logDataBuilder.requestHeaders(requestHeaders);
           }
         });
