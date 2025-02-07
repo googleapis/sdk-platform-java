@@ -1188,7 +1188,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       // {@code HardBoundTokenTypes.ALTS}, the {@code credentials} are null or not of type
       // {@code ComputeEngineCredentials} then DirectPath hard bound tokens should not be used.
       // DirectPath hard bound tokens should only be used on ALTS channels.
-      if (allowedHardBoundTokenTypes == null
+      if (allowedHardBoundTokenTypes.isEmpty()
           || this.credentials == null
           || !(credentials instanceof ComputeEngineCredentials)) return false;
       return allowedHardBoundTokenTypes.stream()
