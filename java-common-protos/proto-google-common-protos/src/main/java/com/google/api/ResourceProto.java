@@ -123,10 +123,10 @@ public final class ResourceProto {
           + "s\030\235\010 \003(\0132\036.google.api.ResourceDescriptor"
           + ":R\n\010resource\022\037.google.protobuf.MessageOp"
           + "tions\030\235\010 \001(\0132\036.google.api.ResourceDescri"
-          + "ptorBn\n\016com.google.apiB\rResourceProtoP\001Z"
+          + "ptorBk\n\016com.google.apiB\rResourceProtoP\001Z"
           + "Agoogle.golang.org/genproto/googleapis/a"
-          + "pi/annotations;annotations\370\001\001\242\002\004GAPIb\006pr"
-          + "oto3"
+          + "pi/annotations;annotations\242\002\004GAPIb\006proto"
+          + "3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
