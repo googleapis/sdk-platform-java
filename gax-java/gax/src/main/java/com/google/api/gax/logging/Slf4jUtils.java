@@ -46,6 +46,7 @@ import org.slf4j.MDC;
 import org.slf4j.event.Level;
 import org.slf4j.spi.LoggingEventBuilder;
 
+// Actual interaction with SLF4J happens only in this class.
 @InternalApi
 class Slf4jUtils {
 

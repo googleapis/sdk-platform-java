@@ -133,6 +133,7 @@ jobs:
         env:
           GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
           GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS: true
+          GOOGLE_SDK_JAVA_LOGGING: true
 
   build-java8-gapic-generator-java:
     name: "build(8) for gapic-generator-java"

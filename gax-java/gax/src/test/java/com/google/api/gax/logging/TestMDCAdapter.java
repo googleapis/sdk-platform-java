@@ -36,8 +36,8 @@ import java.util.Map;
 import org.slf4j.spi.MDCAdapter;
 
 /**
- * this adapter is for unit test only. It is setup via TestServiceProvider
- * to test behavior when LogWithMDC
+ * this adapter is for unit test only. It is setup via TestServiceProvider to test behavior when
+ * LogWithMDC
  */
 public class TestMDCAdapter implements MDCAdapter {
   Map<String, String> mdcValues = new HashMap<>();
