@@ -31,7 +31,6 @@
 package com.google.api.gax.logging;
 
 import static com.google.api.gax.logging.LoggingUtils.messageToMapWithGson;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -41,84 +40,27 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.google.api.gax.logging.LoggingUtils.LoggerFactoryProvider;
-import com.google.api.gax.logging.LoggingUtils.ThrowingRunnable;
-import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.protobuf.Field;
 import com.google.protobuf.Field.Cardinality;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Option;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.event.Level;
 import org.slf4j.helpers.NOPLogger;
-import org.slf4j.helpers.NOPLoggerFactory;
 
 class LoggingUtilsTest {
 
-  // private static final Logger LOGGER = LoggerFactory.getLogger(LoggingUtilsTest.class);
-  private EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
-
-  @Test
-  void testGetLogger_loggingEnabled_slf4jBindingPresent() {
-    Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("true");
-    LoggingUtils.setEnvironmentProvider(envProvider);
-    // should get ILoggerFactory from TestServiceProvider
-    Logger logger = LoggingUtils.getLogger(LoggingUtilsTest.class);
-    Assertions.assertInstanceOf(Logger.class, logger);
-    Assertions.assertNotEquals(NOPLogger.class, logger.getClass());
-  }
-
+  // GOOGLE_SDK_JAVA_LOGGING = false
   @Test
   void testGetLogger_loggingDisabled_shouldGetNOPLogger() {
-    Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("false");
-    LoggingUtils.setEnvironmentProvider(envProvider);
-
     Logger logger = LoggingUtils.getLogger(LoggingUtilsTest.class);
     assertEquals(NOPLogger.class, logger.getClass());
     assertFalse(logger.isInfoEnabled());
     assertFalse(logger.isDebugEnabled());
-  }
-
-  @Test
-  void testGetLogger_loggingEnabled_noBinding_shouldGetNOPLogger() {
-    Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("true");
-    LoggingUtils.setEnvironmentProvider(envProvider);
-    // Create a mock LoggerFactoryProvider, mimic SLF4J's behavior to return NOPLoggerFactory when
-    // no binding
-    LoggerFactoryProvider mockLoggerFactoryProvider = mock(LoggerFactoryProvider.class);
-    ILoggerFactory nopLoggerFactory = new NOPLoggerFactory();
-    when(mockLoggerFactoryProvider.getLoggerFactory()).thenReturn(nopLoggerFactory);
-
-    // Use the mock LoggerFactoryProvider in getLogger()
-    Logger logger = LoggingUtils.getLogger(LoggingUtilsTest.class, mockLoggerFactoryProvider);
-
-    // Assert that the returned logger is a NOPLogger
-    Assertions.assertInstanceOf(NOPLogger.class, logger);
-  }
-
-  @Test
-  void testIsLoggingEnabled_true() {
-    Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("true");
-    LoggingUtils.setEnvironmentProvider(envProvider);
-    Assertions.assertTrue(LoggingUtils.isLoggingEnabled());
-    Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("TRUE");
-    LoggingUtils.setEnvironmentProvider(envProvider);
-    Assertions.assertTrue(LoggingUtils.isLoggingEnabled());
-    Mockito.when(envProvider.getenv(LoggingUtils.GOOGLE_SDK_JAVA_LOGGING)).thenReturn("True");
-    LoggingUtils.setEnvironmentProvider(envProvider);
-    Assertions.assertTrue(LoggingUtils.isLoggingEnabled());
-  }
-
-  @Test
-  void testIsLoggingEnabled_defaultToFalse() {
-    LoggingUtils.setEnvironmentProvider(envProvider);
-    assertFalse(LoggingUtils.isLoggingEnabled());
   }
 
   @Test
@@ -188,13 +130,24 @@ class LoggingUtilsTest {
     TestLogger testLogger = new TestLogger("test-logger", true, true);
 
     LoggingUtils.recordServiceRpcAndRequestHeaders(
-        serviceName, rpcName, endpoint, requestHeaders, logDataBuilder, testLogger);
+        serviceName,
+        rpcName,
+        endpoint,
+        requestHeaders,
+        logDataBuilder,
+        setUpLoggerProviderMock(testLogger));
 
     LogData logData = logDataBuilder.build();
     assertEquals(serviceName, logData.serviceName());
     assertEquals(rpcName, logData.rpcName());
     assertEquals(endpoint, logData.httpUrl());
     assertEquals(requestHeaders, logData.requestHeaders());
+  }
+
+  LoggerProvider setUpLoggerProviderMock(TestLogger testLogger) {
+    LoggerProvider loggerProvider = mock(LoggerProvider.class);
+    when(loggerProvider.getLogger()).thenReturn(testLogger);
+    return loggerProvider;
   }
 
   @Test
@@ -210,8 +163,9 @@ class LoggingUtilsTest {
 
     TestLogger testLogger = new TestLogger("test-logger", false, false);
 
+    LoggerProvider loggerProvider = setUpLoggerProviderMock(testLogger);
     LoggingUtils.recordServiceRpcAndRequestHeaders(
-        serviceName, rpcName, endpoint, requestHeaders, logDataBuilder, testLogger);
+        serviceName, rpcName, endpoint, requestHeaders, logDataBuilder, loggerProvider);
 
     LogData logData = logDataBuilder.build();
     assertEquals(null, logData.serviceName());
@@ -229,7 +183,8 @@ class LoggingUtilsTest {
     LogData.Builder logDataBuilder = LogData.builder();
     TestLogger testLogger = new TestLogger("test-logger", true, true);
 
-    LoggingUtils.recordResponseHeaders(responseHeaders, logDataBuilder, testLogger);
+    LoggingUtils.recordResponseHeaders(
+        responseHeaders, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     LogData logData = logDataBuilder.build();
     assertEquals(responseHeaders, logData.responseHeaders());
@@ -244,7 +199,8 @@ class LoggingUtilsTest {
     LogData.Builder logDataBuilder = LogData.builder();
     TestLogger testLogger = new TestLogger("test-logger", true, false);
 
-    LoggingUtils.recordResponseHeaders(responseHeaders, logDataBuilder, testLogger);
+    LoggingUtils.recordResponseHeaders(
+        responseHeaders, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     LogData logData = logDataBuilder.build();
     assertEquals(null, logData.responseHeaders());
@@ -263,7 +219,7 @@ class LoggingUtilsTest {
     LogData.Builder logDataBuilder = LogData.builder();
     TestLogger testLogger = new TestLogger("test-logger", true, true);
 
-    LoggingUtils.recordResponsePayload(field, logDataBuilder, testLogger);
+    LoggingUtils.recordResponsePayload(field, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     LogData logData = logDataBuilder.build();
     assertEquals(2, logData.responsePayload().size());
@@ -282,14 +238,14 @@ class LoggingUtilsTest {
         LogData.builder().serviceName("service-name").rpcName("rpc-name");
     when(logDataBuilder.build()).thenReturn(testLogDataBuilder.build());
 
-    Logger logger = new TestLogger("test", true, false);
-    LoggingUtils.logRequest(message, logDataBuilder, logger);
+    TestLogger testLogger = new TestLogger("test", true, false);
+    LoggingUtils.logRequest(message, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
-    assertEquals(2, ((TestLogger) logger).keyValuePairsMap.size());
-    assertEquals("Sending gRPC request", ((TestLogger) logger).messageList.get(0));
+    assertEquals(2, testLogger.keyValuePairsMap.size());
+    assertEquals("Sending gRPC request", testLogger.messageList.get(0));
     verify(logDataBuilder, never()).requestPayload(anyMap()); // Ensure debug path is not taken
 
-    assertEquals(Level.INFO, ((TestLogger) logger).level);
+    assertEquals(Level.INFO, testLogger.level);
   }
 
   @Test
@@ -309,17 +265,17 @@ class LoggingUtilsTest {
             .requestPayload(LoggingUtils.messageToMapWithGson(field));
     when(logDataBuilder.build()).thenReturn(testLogDataBuilder.build());
 
-    TestLogger logger = new TestLogger("test-logger", true, true);
+    TestLogger testLogger = new TestLogger("test-logger", true, true);
 
-    LoggingUtils.logRequest(field, logDataBuilder, logger);
+    LoggingUtils.logRequest(field, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     verify(logDataBuilder).requestPayload(LoggingUtils.messageToMapWithGson(field));
 
-    assertEquals(3, ((TestLogger) logger).keyValuePairsMap.size());
-    assertEquals(2, ((Map) ((TestLogger) logger).keyValuePairsMap.get("request.payload")).size());
-    assertEquals("Sending gRPC request", ((TestLogger) logger).messageList.get(0));
+    assertEquals(3, testLogger.keyValuePairsMap.size());
+    assertEquals(2, ((Map) testLogger.keyValuePairsMap.get("request.payload")).size());
+    assertEquals("Sending gRPC request", testLogger.messageList.get(0));
 
-    assertEquals(Level.DEBUG, ((TestLogger) logger).level);
+    assertEquals(Level.DEBUG, testLogger.level);
   }
 
   @Test
@@ -334,16 +290,16 @@ class LoggingUtilsTest {
             .rpcName("rpc-name")
             .responsePayload(responseData);
     when(logDataBuilder.build()).thenReturn(testLogDataBuilder.build());
-    TestLogger logger = new TestLogger("test-logger", true, false);
+    TestLogger testLogger = new TestLogger("test-logger", true, false);
 
-    LoggingUtils.logResponse(status, logDataBuilder, logger);
+    LoggingUtils.logResponse(status, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     verify(logDataBuilder).responseStatus(status);
-    assertEquals("Received Grpc response", ((TestLogger) logger).messageList.get(0));
-    assertEquals(3, ((TestLogger) logger).keyValuePairsMap.size());
-    assertTrue(((TestLogger) logger).keyValuePairsMap.containsKey("response.payload"));
-    assertEquals(Level.INFO, ((TestLogger) logger).level);
-    Map<String, Object> keyValuePairsMap = ((TestLogger) logger).keyValuePairsMap;
+    assertEquals("Received Grpc response", ((TestLogger) testLogger).messageList.get(0));
+    assertEquals(3, ((TestLogger) testLogger).keyValuePairsMap.size());
+    assertTrue(((TestLogger) testLogger).keyValuePairsMap.containsKey("response.payload"));
+    assertEquals(Level.INFO, ((TestLogger) testLogger).level);
+    Map<String, Object> keyValuePairsMap = ((TestLogger) testLogger).keyValuePairsMap;
   }
 
   @Test
@@ -358,48 +314,16 @@ class LoggingUtilsTest {
             .rpcName("rpc-name")
             .responsePayload(responseData);
     when(logDataBuilder.build()).thenReturn(testLogDataBuilder.build());
-    TestLogger logger = new TestLogger("test-logger", true, true);
+    TestLogger testLogger = new TestLogger("test-logger", true, true);
 
-    LoggingUtils.logResponse(status, logDataBuilder, logger);
+    LoggingUtils.logResponse(status, logDataBuilder, setUpLoggerProviderMock(testLogger));
 
     verify(logDataBuilder).responseStatus(status);
-    assertEquals("Received Grpc response", ((TestLogger) logger).messageList.get(0));
-    assertEquals(3, ((TestLogger) logger).keyValuePairsMap.size());
-    assertTrue(((TestLogger) logger).keyValuePairsMap.containsKey("response.payload"));
+    assertEquals("Received Grpc response", ((TestLogger) testLogger).messageList.get(0));
+    assertEquals(3, ((TestLogger) testLogger).keyValuePairsMap.size());
+    assertTrue(((TestLogger) testLogger).keyValuePairsMap.containsKey("response.payload"));
 
-    assertEquals(Level.DEBUG, ((TestLogger) logger).level);
-  }
-
-  @Test
-  void testExecuteWithTryCatch_noException() {
-    assertDoesNotThrow(
-        () ->
-            LoggingUtils.executeWithTryCatch(
-                () -> {
-                  // Some code that should not throw an exception
-                  int x = 5;
-                  int y = 10;
-                  int z = x + y;
-                  assertEquals(15, z);
-                }));
-  }
-
-  @Test
-  void testExecuteWithTryCatch_WithException() throws Throwable {
-    ThrowingRunnable action = Mockito.mock(ThrowingRunnable.class);
-    Mockito.doThrow(new RuntimeException("Test Exception")).when(action).run();
-    assertDoesNotThrow(() -> LoggingUtils.executeWithTryCatch(action));
-    // Verify that the action was executed (despite the exception)
-    Mockito.verify(action).run();
-  }
-
-  @Test
-  void testExecuteWithTryCatch_WithNoSuchMethodError() throws Throwable {
-    ThrowingRunnable action = Mockito.mock(ThrowingRunnable.class);
-    Mockito.doThrow(new NoSuchMethodError("Test Error")).when(action).run();
-    assertDoesNotThrow(() -> LoggingUtils.executeWithTryCatch(action));
-    // Verify that the action was executed (despite the error)
-    Mockito.verify(action).run();
+    assertEquals(Level.DEBUG, ((TestLogger) testLogger).level);
   }
 
   @Test

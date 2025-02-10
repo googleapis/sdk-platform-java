@@ -30,25 +30,27 @@
 
 package com.google.api.gax.httpjson;
 
-import static com.google.api.gax.logging.LoggingUtils.logRequest;
-import static com.google.api.gax.logging.LoggingUtils.logResponse;
-import static com.google.api.gax.logging.LoggingUtils.recordResponseHeaders;
-import static com.google.api.gax.logging.LoggingUtils.recordResponsePayload;
-import static com.google.api.gax.logging.LoggingUtils.recordServiceRpcAndRequestHeaders;
+import static com.google.api.gax.logging.LoggingHelpers.logRequest;
+import static com.google.api.gax.logging.LoggingHelpers.logResponse;
+import static com.google.api.gax.logging.LoggingHelpers.recordResponseHeaders;
+import static com.google.api.gax.logging.LoggingHelpers.recordResponsePayload;
+import static com.google.api.gax.logging.LoggingHelpers.recordServiceRpcAndRequestHeaders;
 
 import com.google.api.core.InternalApi;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall.SimpleForwardingHttpJsonClientCall;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCallListener.SimpleForwardingHttpJsonClientCallListener;
 import com.google.api.gax.logging.LogData;
-import com.google.api.gax.logging.LoggingUtils;
+import com.google.api.gax.logging.LoggerProvider;
 import java.util.HashMap;
 import java.util.Map;
-import org.slf4j.Logger;
 
 @InternalApi
 public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
 
-  private static final Logger LOGGER = LoggingUtils.getLogger(HttpJsonLoggingInterceptor.class);
+  // private static final Logger LOGGER = LoggingUtils.getLogger(HttpJsonLoggingInterceptor.class);
+
+  private static final LoggerProvider LOGGER_PROVIDER =
+      LoggerProvider.setLogger(HttpJsonLoggingInterceptor.class);
 
   @Override
   public <ReqT, RespT> HttpJsonClientCall<ReqT, RespT> interceptCall(
@@ -71,7 +73,7 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
             endpoint,
             httpJsonMetadataToMap(headers),
             logDataBuilder,
-            LOGGER);
+            LOGGER_PROVIDER);
 
         Listener<RespT> forwardingResponseListener =
             new SimpleForwardingHttpJsonClientCallListener<RespT>(responseListener) {
@@ -79,19 +81,19 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
               @Override
               public void onHeaders(HttpJsonMetadata responseHeaders) {
                 recordResponseHeaders(
-                    httpJsonMetadataToMap(responseHeaders), logDataBuilder, LOGGER);
+                    httpJsonMetadataToMap(responseHeaders), logDataBuilder, LOGGER_PROVIDER);
                 super.onHeaders(responseHeaders);
               }
 
               @Override
               public void onMessage(RespT message) {
-                recordResponsePayload(message, logDataBuilder, LOGGER);
+                recordResponsePayload(message, logDataBuilder, LOGGER_PROVIDER);
                 super.onMessage(message);
               }
 
               @Override
               public void onClose(int statusCode, HttpJsonMetadata trailers) {
-                logResponse(String.valueOf(statusCode), logDataBuilder, LOGGER);
+                logResponse(String.valueOf(statusCode), logDataBuilder, LOGGER_PROVIDER);
                 super.onClose(statusCode, trailers);
               }
             };
@@ -100,7 +102,7 @@ public class HttpJsonLoggingInterceptor implements HttpJsonClientInterceptor {
 
       @Override
       public void sendMessage(ReqT message) {
-        logRequest(message, logDataBuilder, LOGGER);
+        logRequest(message, logDataBuilder, LOGGER_PROVIDER);
         super.sendMessage(message);
       }
     };

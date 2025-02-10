@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -28,23 +28,27 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.api.gax.rpc.internal;
+package com.google.api.gax.logging;
 
-import com.google.api.core.InternalApi;
+import org.slf4j.Logger;
 
-/** Represents the default system environment provider. */
-@InternalApi
-public class SystemEnvironmentProvider implements EnvironmentProvider {
-  static final SystemEnvironmentProvider INSTANCE = new SystemEnvironmentProvider();
+public class LoggerProvider {
 
-  private SystemEnvironmentProvider() {}
+  private Logger logger;
+  private final Class<?> clazz;
 
-  @Override
-  public String getenv(String name) {
-    return System.getenv(name);
+  private LoggerProvider(Class<?> clazz) {
+    this.clazz = clazz;
   }
 
-  public static SystemEnvironmentProvider getInstance() {
-    return INSTANCE;
+  public static LoggerProvider setLogger(Class<?> clazz) {
+    return new LoggerProvider(clazz);
+  }
+
+  public Logger getLogger() {
+    if (logger == null) {
+      this.logger = LoggingUtils.getLogger(clazz);
+    }
+    return logger;
   }
 }

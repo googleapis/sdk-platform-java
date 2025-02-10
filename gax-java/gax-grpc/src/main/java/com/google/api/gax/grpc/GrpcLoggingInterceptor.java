@@ -30,16 +30,16 @@
 
 package com.google.api.gax.grpc;
 
-import static com.google.api.gax.logging.LoggingUtils.executeWithTryCatch;
-import static com.google.api.gax.logging.LoggingUtils.logRequest;
-import static com.google.api.gax.logging.LoggingUtils.logResponse;
-import static com.google.api.gax.logging.LoggingUtils.recordResponseHeaders;
-import static com.google.api.gax.logging.LoggingUtils.recordResponsePayload;
-import static com.google.api.gax.logging.LoggingUtils.recordServiceRpcAndRequestHeaders;
+import static com.google.api.gax.logging.LoggingHelpers.executeWithTryCatch;
+import static com.google.api.gax.logging.LoggingHelpers.logRequest;
+import static com.google.api.gax.logging.LoggingHelpers.logResponse;
+import static com.google.api.gax.logging.LoggingHelpers.recordResponseHeaders;
+import static com.google.api.gax.logging.LoggingHelpers.recordResponsePayload;
+import static com.google.api.gax.logging.LoggingHelpers.recordServiceRpcAndRequestHeaders;
 
 import com.google.api.core.InternalApi;
 import com.google.api.gax.logging.LogData;
-import com.google.api.gax.logging.LoggingUtils;
+import com.google.api.gax.logging.LoggerProvider;
 import io.grpc.CallOptions;
 import io.grpc.Channel;
 import io.grpc.ClientCall;
@@ -51,12 +51,12 @@ import io.grpc.MethodDescriptor;
 import io.grpc.Status;
 import java.util.HashMap;
 import java.util.Map;
-import org.slf4j.Logger;
 
 @InternalApi
 public class GrpcLoggingInterceptor implements ClientInterceptor {
 
-  private static final Logger LOGGER = LoggingUtils.getLogger(GrpcLoggingInterceptor.class);
+  private static final LoggerProvider LOGGER_PROVIDER =
+      LoggerProvider.setLogger(GrpcLoggingInterceptor.class);
 
   ClientCall.Listener<?> currentListener; // expose for test setup
 
@@ -76,24 +76,25 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
             null,
             metadataHeadersToMap(headers),
             logDataBuilder,
-            LOGGER);
+            LOGGER_PROVIDER);
         SimpleForwardingClientCallListener<RespT> responseLoggingListener =
             new SimpleForwardingClientCallListener<RespT>(responseListener) {
               @Override
               public void onHeaders(Metadata headers) {
-                recordResponseHeaders(metadataHeadersToMap(headers), logDataBuilder, LOGGER);
+                recordResponseHeaders(
+                    metadataHeadersToMap(headers), logDataBuilder, LOGGER_PROVIDER);
                 super.onHeaders(headers);
               }
 
               @Override
               public void onMessage(RespT message) {
-                recordResponsePayload(message, logDataBuilder, LOGGER);
+                recordResponsePayload(message, logDataBuilder, LOGGER_PROVIDER);
                 super.onMessage(message);
               }
 
               @Override
               public void onClose(Status status, Metadata trailers) {
-                logResponse(status.getCode().toString(), logDataBuilder, LOGGER);
+                logResponse(status.getCode().toString(), logDataBuilder, LOGGER_PROVIDER);
                 super.onClose(status, trailers);
               }
             };
@@ -103,7 +104,7 @@ public class GrpcLoggingInterceptor implements ClientInterceptor {
 
       @Override
       public void sendMessage(ReqT message) {
-        logRequest(message, logDataBuilder, LOGGER);
+        logRequest(message, logDataBuilder, LOGGER_PROVIDER);
         super.sendMessage(message);
       }
     };
