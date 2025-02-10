@@ -30,11 +30,11 @@
 
 package com.google.api.gax.httpjson;
 
-import static com.google.api.gax.logging.LoggingHelpers.logRequest;
-import static com.google.api.gax.logging.LoggingHelpers.logResponse;
-import static com.google.api.gax.logging.LoggingHelpers.recordResponseHeaders;
-import static com.google.api.gax.logging.LoggingHelpers.recordResponsePayload;
-import static com.google.api.gax.logging.LoggingHelpers.recordServiceRpcAndRequestHeaders;
+import static com.google.api.gax.logging.LoggingUtils.logRequest;
+import static com.google.api.gax.logging.LoggingUtils.logResponse;
+import static com.google.api.gax.logging.LoggingUtils.recordResponseHeaders;
+import static com.google.api.gax.logging.LoggingUtils.recordResponsePayload;
+import static com.google.api.gax.logging.LoggingUtils.recordServiceRpcAndRequestHeaders;
 
 import com.google.api.core.InternalApi;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall.SimpleForwardingHttpJsonClientCall;

@@ -30,8 +30,10 @@
 
 package com.google.api.gax.logging;
 
+import com.google.api.core.InternalApi;
 import org.slf4j.Logger;
 
+@InternalApi
 public class LoggerProvider {
 
   private Logger logger;
@@ -47,7 +49,7 @@ public class LoggerProvider {
 
   public Logger getLogger() {
     if (logger == null) {
-      this.logger = LoggingUtils.getLogger(clazz);
+      this.logger = Slf4jUtils.getLogger(clazz);
     }
     return logger;
   }

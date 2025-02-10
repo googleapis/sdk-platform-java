@@ -33,7 +33,7 @@ package com.google.api.gax.logging;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.google.api.gax.logging.LoggingUtils.LoggerFactoryProvider;
+import com.google.api.gax.logging.Slf4jUtils.LoggerFactoryProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.ILoggerFactory;
@@ -47,14 +47,14 @@ class LoggingEnabledTest {
 
   @Test
   void testIsLoggingEnabled_true() {
-    Assertions.assertTrue(LoggingHelpers.isLoggingEnabled());
+    Assertions.assertTrue(LoggingUtils.isLoggingEnabled());
   }
 
   // GOOGLE_SDK_JAVA_LOGGING = true
   @Test
   void testGetLogger_loggingEnabled_slf4jBindingPresent() {
     // should get ILoggerFactory from TestServiceProvider
-    Logger logger = LoggingUtils.getLogger(LoggingUtilsTest.class);
+    Logger logger = Slf4jUtils.getLogger(Slf4jUtilsTest.class);
     Assertions.assertInstanceOf(Logger.class, logger);
     Assertions.assertNotEquals(NOPLogger.class, logger.getClass());
   }
@@ -69,7 +69,7 @@ class LoggingEnabledTest {
     when(mockLoggerFactoryProvider.getLoggerFactory()).thenReturn(nopLoggerFactory);
 
     // Use the mock LoggerFactoryProvider in getLogger()
-    Logger logger = LoggingUtils.getLogger(LoggingUtilsTest.class, mockLoggerFactoryProvider);
+    Logger logger = Slf4jUtils.getLogger(Slf4jUtilsTest.class, mockLoggerFactoryProvider);
 
     // Assert that the returned logger is a NOPLogger
     Assertions.assertInstanceOf(NOPLogger.class, logger);
