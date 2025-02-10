@@ -94,6 +94,22 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
      * @return The protobufPythonicTypesEnabled.
      */
     boolean getProtobufPythonicTypesEnabled();
+
+    /**
+     *
+     *
+     * <pre>
+     * Disables generation of an unversioned Python package for this client
+     * library. This means that the module names will need to be versioned in
+     * import statements. For example `import google.cloud.library_v2` instead
+     * of `import google.cloud.library`.
+     * </pre>
+     *
+     * <code>bool unversioned_package_disabled = 3;</code>
+     *
+     * @return The unversionedPackageDisabled.
+     */
+    boolean getUnversionedPackageDisabled();
   }
   /**
    *
@@ -181,6 +197,27 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       return protobufPythonicTypesEnabled_;
     }
 
+    public static final int UNVERSIONED_PACKAGE_DISABLED_FIELD_NUMBER = 3;
+    private boolean unversionedPackageDisabled_ = false;
+    /**
+     *
+     *
+     * <pre>
+     * Disables generation of an unversioned Python package for this client
+     * library. This means that the module names will need to be versioned in
+     * import statements. For example `import google.cloud.library_v2` instead
+     * of `import google.cloud.library`.
+     * </pre>
+     *
+     * <code>bool unversioned_package_disabled = 3;</code>
+     *
+     * @return The unversionedPackageDisabled.
+     */
+    @java.lang.Override
+    public boolean getUnversionedPackageDisabled() {
+      return unversionedPackageDisabled_;
+    }
+
     private byte memoizedIsInitialized = -1;
 
     @java.lang.Override
@@ -201,6 +238,9 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       if (protobufPythonicTypesEnabled_ != false) {
         output.writeBool(2, protobufPythonicTypesEnabled_);
       }
+      if (unversionedPackageDisabled_ != false) {
+        output.writeBool(3, unversionedPackageDisabled_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -216,6 +256,10 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       if (protobufPythonicTypesEnabled_ != false) {
         size +=
             com.google.protobuf.CodedOutputStream.computeBoolSize(2, protobufPythonicTypesEnabled_);
+      }
+      if (unversionedPackageDisabled_ != false) {
+        size +=
+            com.google.protobuf.CodedOutputStream.computeBoolSize(3, unversionedPackageDisabled_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -236,6 +280,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       if (getRestAsyncIoEnabled() != other.getRestAsyncIoEnabled()) return false;
       if (getProtobufPythonicTypesEnabled() != other.getProtobufPythonicTypesEnabled())
         return false;
+      if (getUnversionedPackageDisabled() != other.getUnversionedPackageDisabled()) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -252,6 +297,9 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + PROTOBUF_PYTHONIC_TYPES_ENABLED_FIELD_NUMBER;
       hash =
           (53 * hash) + com.google.protobuf.Internal.hashBoolean(getProtobufPythonicTypesEnabled());
+      hash = (37 * hash) + UNVERSIONED_PACKAGE_DISABLED_FIELD_NUMBER;
+      hash =
+          (53 * hash) + com.google.protobuf.Internal.hashBoolean(getUnversionedPackageDisabled());
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -397,6 +445,7 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
         bitField0_ = 0;
         restAsyncIoEnabled_ = false;
         protobufPythonicTypesEnabled_ = false;
+        unversionedPackageDisabled_ = false;
         return this;
       }
 
@@ -438,6 +487,9 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
         }
         if (((from_bitField0_ & 0x00000002) != 0)) {
           result.protobufPythonicTypesEnabled_ = protobufPythonicTypesEnabled_;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.unversionedPackageDisabled_ = unversionedPackageDisabled_;
         }
       }
 
@@ -495,6 +547,9 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
         if (other.getProtobufPythonicTypesEnabled() != false) {
           setProtobufPythonicTypesEnabled(other.getProtobufPythonicTypesEnabled());
         }
+        if (other.getUnversionedPackageDisabled() != false) {
+          setUnversionedPackageDisabled(other.getUnversionedPackageDisabled());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
@@ -533,6 +588,12 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
                   bitField0_ |= 0x00000002;
                   break;
                 } // case 16
+              case 24:
+                {
+                  unversionedPackageDisabled_ = input.readBool();
+                  bitField0_ |= 0x00000004;
+                  break;
+                } // case 24
               default:
                 {
                   if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -672,6 +733,68 @@ public final class PythonSettings extends com.google.protobuf.GeneratedMessageV3
       public Builder clearProtobufPythonicTypesEnabled() {
         bitField0_ = (bitField0_ & ~0x00000002);
         protobufPythonicTypesEnabled_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean unversionedPackageDisabled_;
+      /**
+       *
+       *
+       * <pre>
+       * Disables generation of an unversioned Python package for this client
+       * library. This means that the module names will need to be versioned in
+       * import statements. For example `import google.cloud.library_v2` instead
+       * of `import google.cloud.library`.
+       * </pre>
+       *
+       * <code>bool unversioned_package_disabled = 3;</code>
+       *
+       * @return The unversionedPackageDisabled.
+       */
+      @java.lang.Override
+      public boolean getUnversionedPackageDisabled() {
+        return unversionedPackageDisabled_;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Disables generation of an unversioned Python package for this client
+       * library. This means that the module names will need to be versioned in
+       * import statements. For example `import google.cloud.library_v2` instead
+       * of `import google.cloud.library`.
+       * </pre>
+       *
+       * <code>bool unversioned_package_disabled = 3;</code>
+       *
+       * @param value The unversionedPackageDisabled to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUnversionedPackageDisabled(boolean value) {
+
+        unversionedPackageDisabled_ = value;
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       *
+       *
+       * <pre>
+       * Disables generation of an unversioned Python package for this client
+       * library. This means that the module names will need to be versioned in
+       * import statements. For example `import google.cloud.library_v2` instead
+       * of `import google.cloud.library`.
+       * </pre>
+       *
+       * <code>bool unversioned_package_disabled = 3;</code>
+       *
+       * @return This builder for chaining.
+       */
+      public Builder clearUnversionedPackageDisabled() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        unversionedPackageDisabled_ = false;
         onChanged();
         return this;
       }

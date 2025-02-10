@@ -90,10 +90,10 @@ public final class PolicyProto {
           + "dOptions\030\350\316\301K \001(\0132\027.google.api.FieldPoli"
           + "cy:R\n\rmethod_policy\022\036.google.protobuf.Me"
           + "thodOptions\030\265\227\231M \001(\0132\030.google.api.Method"
-          + "PolicyBp\n\016com.google.apiB\013PolicyProtoP\001Z"
+          + "PolicyBm\n\016com.google.apiB\013PolicyProtoP\001Z"
           + "Egoogle.golang.org/genproto/googleapis/a"
-          + "pi/serviceconfig;serviceconfig\370\001\001\242\002\004GAPI"
-          + "b\006proto3"
+          + "pi/serviceconfig;serviceconfig\242\002\004GAPIb\006p"
+          + "roto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(

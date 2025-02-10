@@ -172,10 +172,10 @@ public final class VisibilityProto {
           + "\030\257\312\274\" \001(\0132\032.google.api.VisibilityRule:V\n"
           + "\016api_visibility\022\037.google.protobuf.Servic"
           + "eOptions\030\257\312\274\" \001(\0132\032.google.api.Visibilit"
-          + "yRuleBn\n\016com.google.apiB\017VisibilityProto"
+          + "yRuleBk\n\016com.google.apiB\017VisibilityProto"
           + "P\001Z?google.golang.org/genproto/googleapi"
-          + "s/api/visibility;visibility\370\001\001\242\002\004GAPIb\006p"
-          + "roto3"
+          + "s/api/visibility;visibility\242\002\004GAPIb\006prot"
+          + "o3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
