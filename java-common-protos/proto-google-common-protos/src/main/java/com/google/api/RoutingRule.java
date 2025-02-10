@@ -56,7 +56,7 @@ package com.google.api;
  * The routing header consists of one or multiple key-value pairs. Every key
  * and value must be percent-encoded, and joined together in the format of
  * `key1=value1&amp;key2=value2`.
- * In the examples below I am skipping the percent-encoding for readablity.
+ * The examples below skip the percent-encoding for readability.
  *
  * Example 1
  *
@@ -711,7 +711,7 @@ public final class RoutingRule extends com.google.protobuf.GeneratedMessageV3
    * The routing header consists of one or multiple key-value pairs. Every key
    * and value must be percent-encoded, and joined together in the format of
    * `key1=value1&amp;key2=value2`.
-   * In the examples below I am skipping the percent-encoding for readablity.
+   * The examples below skip the percent-encoding for readability.
    *
    * Example 1
    *
