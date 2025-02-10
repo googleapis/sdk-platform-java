@@ -39,6 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider.Builder;
+import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider.HardBoundTokenTypes;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannel;
@@ -735,6 +736,59 @@ class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelT
             .setEndpoint(DEFAULT_ENDPOINT)
             .setEnvProvider(envProvider)
             .setHeaderProvider(Mockito.mock(HeaderProvider.class));
+    Truth.assertThat(builder.isDirectPathBoundTokenEnabled()).isFalse();
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
+    Truth.assertThat(provider.canUseDirectPath()).isTrue();
+
+    // verify this info is passed correctly to transport channel
+    TransportChannel transportChannel = provider.getTransportChannel();
+    Truth.assertThat(((GrpcTransportChannel) transportChannel).isDirectPath()).isTrue();
+    transportChannel.shutdownNow();
+  }
+
+  @Test
+  public void canUseDirectPath_boundTokenNotEnabledWithNonComputeCredentials() {
+    System.setProperty("os.name", "Linux");
+    Credentials credentials = Mockito.mock(Credentials.class);
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setAllowHardBoundTokenTypes(Collections.singletonList(HardBoundTokenTypes.ALTS))
+            .setCredentials(credentials)
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEnvProvider(envProvider);
+    Truth.assertThat(builder.isDirectPathBoundTokenEnabled()).isFalse();
+    InstantiatingGrpcChannelProvider provider =
+        new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
+    Truth.assertThat(provider.canUseDirectPath()).isFalse();
+  }
+
+  @Test
+  public void canUseDirectPath_happyPathWithBoundToken() throws IOException {
+    System.setProperty("os.name", "Linux");
+    EnvironmentProvider envProvider = Mockito.mock(EnvironmentProvider.class);
+    Mockito.when(
+            envProvider.getenv(
+                InstantiatingGrpcChannelProvider.DIRECT_PATH_ENV_DISABLE_DIRECT_PATH))
+        .thenReturn("false");
+    // verify the credentials gets called and returns a non-null builder.
+    Mockito.when(computeEngineCredentials.toBuilder())
+        .thenReturn(ComputeEngineCredentials.newBuilder());
+    InstantiatingGrpcChannelProvider.Builder builder =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setCredentials(computeEngineCredentials)
+            .setAllowHardBoundTokenTypes(Collections.singletonList(HardBoundTokenTypes.ALTS))
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setEnvProvider(envProvider)
+            .setHeaderProvider(Mockito.mock(HeaderProvider.class));
+    Truth.assertThat(builder.isDirectPathBoundTokenEnabled()).isTrue();
     InstantiatingGrpcChannelProvider provider =
         new InstantiatingGrpcChannelProvider(builder, GCE_PRODUCTION_NAME_AFTER_2016);
     Truth.assertThat(provider.canUseDirectPath()).isTrue();
