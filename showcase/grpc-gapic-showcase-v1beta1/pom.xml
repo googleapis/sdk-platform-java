@@ -32,7 +32,7 @@
     </dependency>
     <dependency>
       <groupId>com.google.protobuf</groupId>
-      <artifactId>protobuf-java</artifactId>
+      <artifactId>protobuf-javalite</artifactId>
     </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>

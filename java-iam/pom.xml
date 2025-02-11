@@ -61,12 +61,17 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+<!--      <dependency>-->
+<!--        <groupId>com.google.protobuf</groupId>-->
+<!--        <artifactId>protobuf-bom</artifactId>-->
+<!--        <version>${protobuf.version}</version>-->
+<!--        <type>pom</type>-->
+<!--        <scope>import</scope>-->
+<!--      </dependency>-->
       <dependency>
         <groupId>com.google.protobuf</groupId>
-        <artifactId>protobuf-bom</artifactId>
+        <artifactId>protobuf-javalite</artifactId>
         <version>${protobuf.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>io.grpc</groupId>

@@ -14,7 +14,7 @@
   <dependencies>
     <dependency>
       <groupId>com.google.protobuf</groupId>
-      <artifactId>protobuf-java</artifactId>
+      <artifactId>protobuf-javalite</artifactId>
     </dependency>
   </dependencies>
 
